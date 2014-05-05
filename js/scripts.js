@@ -333,7 +333,7 @@
 /*==Google MAP==*/
 function initialize() {
     var image = 'img/map-marker.png';
-    var myLatlng = new google.maps.LatLng(41.850033, -87.6500523);
+    var myLatlng = new google.maps.LatLng(28.532297, 77.216817);
     var mapOptions = {
         zoom: 15,
         scrollwheel: false,
@@ -349,12 +349,12 @@ function initialize() {
     var contentString = '<div id="content">' +
         '<div id="siteNotice">' +
         '</div>' +
-        '<h3 id="firstHeading" class="firstHeading">CHRIS NISWANDEE</h3>' +
+        '<h3 id="firstHeading" class="firstHeading">Vipul Saxena</h3>' +
         '<div id="bodyContent">' +
-        '<p>SMALLSYS INC ' +
-        '799 E DRAGRAM SUITE 5A ' +
-        '<a href="#">www.themebucket.net </a>' +
-        'TUCSON AZ 85705, USA. </p>' +
+        '<p>R-119, Malviya Nagar' +
+        'Saket Area' +
+        '<a href="#">www.vipulsaxena.com </a>' +
+        'New Delhi 110017, India. </p>' +
         '</div>' +
         '</div>';
 
@@ -402,3 +402,87 @@ $( "#move-me" ).mouseenter(function() {
 $( "#move-me" ).mouseout(function() {
   $( "#move-me" ).animate({ "padding-left": "0px" }, "slow" );
 });
+
+
+// Initialize album
+
+var Page = (function() {
+    
+    var config = {
+            $bookBlock : $( '#bb-bookblock' ),
+            $navNext : $( '#bb-nav-next' ),
+            $navPrev : $( '#bb-nav-prev' ),
+            $navFirst : $( '#bb-nav-first' ),
+            $navLast : $( '#bb-nav-last' )
+        },
+        init = function() {
+            config.$bookBlock.bookblock( {
+                speed : 800,
+                shadowSides : 0.8,
+                shadowFlip : 0.7
+            } );
+            initEvents();
+        },
+        initEvents = function() {
+            
+            var $slides = config.$bookBlock.children();
+
+            // add navigation events
+            config.$navNext.on( 'click touchstart', function() {
+                config.$bookBlock.bookblock( 'next' );
+                return false;
+            } );
+
+            config.$navPrev.on( 'click touchstart', function() {
+                config.$bookBlock.bookblock( 'prev' );
+                return false;
+            } );
+
+            config.$navFirst.on( 'click touchstart', function() {
+                config.$bookBlock.bookblock( 'first' );
+                return false;
+            } );
+
+            config.$navLast.on( 'click touchstart', function() {
+                config.$bookBlock.bookblock( 'last' );
+                return false;
+            } );
+            
+            // add swipe events
+            $slides.on( {
+                'swipeleft' : function( event ) {
+                    config.$bookBlock.bookblock( 'next' );
+                    return false;
+                },
+                'swiperight' : function( event ) {
+                    config.$bookBlock.bookblock( 'prev' );
+                    return false;
+                }
+            } );
+
+            // add keyboard events
+            $( document ).keydown( function(e) {
+                var keyCode = e.keyCode || e.which,
+                    arrow = {
+                        left : 37,
+                        up : 38,
+                        right : 39,
+                        down : 40
+                    };
+
+                switch (keyCode) {
+                    case arrow.left:
+                        config.$bookBlock.bookblock( 'prev' );
+                        break;
+                    case arrow.right:
+                        config.$bookBlock.bookblock( 'next' );
+                        break;
+                }
+            } );
+        };
+
+        return { init : init };
+
+})();
+
+Page.init();

@@ -539,8 +539,6 @@ p.tar {
     background-position: center;
     background-attachment:fixed;
     background-size:cover;
-    padding-top:80px;
-    padding-bottom:80px;
 }
 .vc {
     margin-top:20px;
@@ -697,7 +695,6 @@ p.tar {
 .clients-logo li {
     list-style:none;
     display:inline-block;
-    border:#eaeaea 1px solid;
     margin:5px;
 }
 .data {
@@ -1101,7 +1098,7 @@ p.tar {
     display:inline-block;
     position:absolute;
 }
-.sprite-dribbble {
+.sprite-behance {
     background-position:0 0;
     width:69px;
     height:68px;
@@ -1115,7 +1112,7 @@ p.tar {
     right:15%;
     top:-80px;
 }
-.sprite-flickr {
+.sprite-soundcloud {
     background-position:0 -236px;
     width:69px;
     height:68px;
@@ -1935,8 +1932,7 @@ filter: gray; /* IE6-9 */
     margin: 8% auto;
 }
 .portfolio-modal-content{
-    padding-right: 40px;
-    padding-bottom: 40px;
+    padding: 0% 0% 4% 4%;
 }
 .portfolio-modal-content p{
     line-height: 2em;
