@@ -364,13 +364,13 @@ h2.section-subheading.about {
     padding-bottom:20px;
     margin-top:70px;
     border-radius:4px;
+    line-height: 40px;
 }
 .skillnews h2 {
     margin:0px;
     padding:0px;
     color:#fa6862;
     font-size:28px;
-    text-transform:uppercase;
 }
 .skillnews h3 {
     padding:0px;

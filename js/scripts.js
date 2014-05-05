@@ -396,3 +396,9 @@ if(ww > 480){
 
 
 // move me
+$( "#move-me" ).mouseenter(function() {
+  $( "#move-me" ).animate({ "padding-left": "50px" }, "slow" );
+});
+$( "#move-me" ).mouseout(function() {
+  $( "#move-me" ).animate({ "padding-left": "0px" }, "slow" );
+});
