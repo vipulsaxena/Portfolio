@@ -1,0 +1,230 @@
+/* Sign: vipul Saxena
+-------------------------------------------------*/
+
+html, body {
+	width: 100%; 
+	height: 100%; 
+}
+
+body {
+	background: #1a2630;
+	color: #fff;
+	font-family: 'Roboto Slab', serif;
+	font-size: 16px;
+}
+
+a { 
+	color: #fff; 
+}
+
+/* General styles
+-------------------------------------------------*/
+
+.vegas-background { opacity: .6; }
+.vegas-overlay { opacity: .6; }
+
+#preloader {
+	background-color: #1a2630;
+	bottom: 0;
+	left: 0;
+	position: fixed;
+	right: 0;
+	top: 0;
+	z-index: 999; 
+}
+ 
+#status, .status-mes {
+	background-image: url(../images/369.GIF);
+	background-position: center;
+	background-repeat: no-repeat;
+	height: 200px;
+	left: 50%;
+	margin: -100px 0 0 -100px;
+	position: absolute;
+	top: 50%;
+	width: 200px; 
+}
+ 
+.status-mes {
+	background: none;
+	left: 0;
+	margin: 0;
+	padding-left: 12px;
+	text-align: center;
+	top: 65%; 
+	font-family: 'Lily Script One', cursive;	
+}
+
+.forms {
+	text-align: center;
+}
+
+.form-control {
+	background: rgba(255,255,255,0.1);
+	border-radius: 0px;
+	border: 1px solid #ddd;
+	color: #fff;
+	margin-bottom: 20px; 
+}
+
+.form-control:focus {   
+	border-color: #ddd;
+	box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+	outline: 0 none;
+}
+
+.form-control::-webkit-input-placeholder {
+	color: #fff;
+}
+
+.form-control::-moz-placeholder {
+	color: #fff;
+	opacity: 1;
+}
+
+/* Basic Structure
+-------------------------------------------------*/
+
+.layout {
+	min-height: 100%;
+	position: relative;
+	z-index: 3; 
+}
+ 
+.main {
+	margin: 5% auto 0 auto;
+	max-width: 820px;
+	width: 100%; 
+}
+ 
+.new-modal {
+	background: rgba(26, 38, 48, .7);
+	display: none;
+	left: 0;
+	min-height: 100%;
+	position: absolute;
+	right: 0;
+	top: 0;
+	z-index: 4; 
+}
+
+.new-modal .main { 
+	max-width: 600px;
+} 
+
+.title, .slogan, .more-links, .social {
+	text-align: center;
+}
+
+/* Main
+-------------------------------------------------*/
+
+.title {
+	overflow: hidden;
+}
+
+.slogan, .more-links {
+	margin-bottom: 40px;
+}
+
+.social { 
+	margin-top: 30px;
+}
+
+.social li { 
+	padding: 0; 
+}
+
+.more-links a, .social a {
+	border-radius: 150px;
+	border: 2px solid #fff;
+	display: inline-block;
+	font-size: 18px;
+	height: 50px;
+	line-height: 46px;
+	margin: 0 10px;
+	transition: all 0.5s ease-in-out;
+	width: 50px;
+	-webkit-transition: all 0.5s ease-in-out; 
+	   -moz-transition: all 0.5s ease-in-out;
+	    -ms-transition: all 0.5s ease-in-out;
+	     -o-transition: all 0.5s ease-in-out;
+	}
+
+.social a {
+	height: 40px;
+	line-height: 36px;
+	width: 40px;
+	margin: 0 5px;
+}
+
+.more-links a:hover, .social a:hover {
+	background: #fff;
+	color: #222;
+}
+
+.main > .close {
+	float: none;
+	opacity: 1;
+	text-shadow: none; 
+	text-align: center;
+}
+
+/* Typography
+-------------------------------------------------*/
+h1, h2, h3, h4 {
+	font-family: 'Lily Script One', cursive;
+	font-weight: 400;
+}
+
+.title > h1 {
+	font-size: 44px;
+	text-shadow: 0 1px 1px #888;
+}
+
+.title > h2:after {
+	background: #fff;
+	content: "";
+	display: block;
+	height: 2px;
+	position: relative;
+	width: 20%;
+	margin: 10px auto;
+}
+
+.main .slogan {
+	font-size: 18px;
+}
+
+/* Time circles
+-------------------------------------------------*/
+
+.time_circles {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.time_circles > div {
+    position: absolute;
+    text-align: center;
+}
+
+.time_circles > div > h4 {
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Roboto Slab', serif;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.time_circles > div > span {
+    display: block;
+    width: 100%;
+    text-align: center;
+ 	font-weight: bold;
+    font-size: 300%;
+    margin-top: 0.4em; 
+    font-family: 'Roboto Slab', serif;
+}
