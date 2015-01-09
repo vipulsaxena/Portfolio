@@ -9,6 +9,10 @@
 	background-position: center center;
 	z-index: 1;
 }
+.full{
+	height: 100%;
+	width: 100%;
+}
 /*Background*/
 .big-container {
 	background-image: url('../img/bg.jpg');
@@ -97,6 +101,5 @@ md-card {
 	right: 5%;
 }
 .md-icon{
-	width: 3.5em !important;
-	height: 3.5em !important;
+	width: 100%;
 }
