@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     
-    <!-- Metadata -->
+  <!-- Metadata -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="author" content="Personal portfolio of UI/UX Engineer, live in New Delhi, love working with motivated startups, technology enthusiast & artists.">
@@ -29,11 +29,10 @@
    <!-- Angulars Material CSS using RawGit to load directly from `bower-material/master` -->
   <link rel="stylesheet" href="https://rawgit.com/angular/bower-material/master/angular-material.css">
 
-  <link href='http://fonts.googleapis.com/css?family=Raleway:200,400,800' rel='stylesheet' type='text/css'>
   <!--[if IE]>
-<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js">
-</script>
-<![endif]-->
+	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js">
+	</script>
+	<![endif]-->
   
   </head>
   <body ng-app="portfolioApp">
@@ -44,12 +43,13 @@
 			<div class="main-title">I <3 interaction design</div>
 		</div>
 	  <div layout="column" layout-align="center center" layout-padding, layout-margin>
-	  <md-whiteframe class="md-whiteframe-z1" layout layout-align="center center">
-    <p>Playing around with material design over angular.js</p>
-    <md-button class="md-raised md-primary"> 
-			<a href="https://material.angularjs.org/" target="none">
-    	material.angularjs.org 
-    </a></md-button>
+	  <md-whiteframe layout="column" class="md-whiteframe-z1" layout layout-align="center center">
+	    <h2 >Playing around with material design over angular.js</h2>
+	    <br>
+	    <md-button class="md-raised md-primary"> 
+				<a href="https://material.angularjs.org/" target="none">
+	    	ng-Material
+	    </a></md-button>
   </md-whiteframe>
 	  <md-card>
 			<a class="embedly-card" href="https://www.behance.net/vipulsaxena">Vipul Saxena on Behance</a>
@@ -64,6 +64,11 @@
 			<a class="embedly-card" data-card-type="article-full" href="https://twitter.com/dropyourbass">Vipul Saxena (@dropyourbass) | Twitter</a>
 	  </md-card>
 	  </div>
+	  <!-- Fix material button -->
+		<md-button class="md-fab md-primary fix-major" aria-label="Time" href="mailto:vpul.saxena01@gmail.com?Subject=Hello." target="_blank">
+			<md-icon icon="http://icons.iconarchive.com/icons/graphicloads/100-flat/256/email-2-icon.png"></md-icon>
+			<md-tooltip>You can write to me</md-tooltip>
+		</md-button>
   </md-content>
   
   <!-- Materialize -->
@@ -93,27 +98,24 @@
   <!-- Google Analytics -->
   <script>
     (function(i,s,o,g,r,a,m){
-      i['GoogleAnalyticsObject']=r;
-      i[r]=i[r]||function(){
-		(i[r].q=i[r].q||[]).push(arguments)}
-  ,i[r].l=1*new Date();
-          a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];
-          a.async=1;
-          a.src=g;
-          m.parentNode.insertBefore(a,m)
+    	i['GoogleAnalyticsObject']=r;
+    	i[r]=i[r]||function(){
+				(i[r].q=i[r].q||[]).push(arguments)}
+				,i[r].l=1*new Date();
+    	  a=s.createElement(o),
+    	  m=s.getElementsByTagName(o)[0];
+    	  a.async=1;
+    	  a.src=g;
+    	  m.parentNode.insertBefore(a,m)
 		}
-        )(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-      
+    )(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
       ga('create', 'UA-45963346-1', 'vipulsaxena.com');
       ga('send', 'pageview');
   </script>
 	
-	<!-- Angular.js -->
+	<!-- Angular injection -->
 	<script type="text/javascript">
-		angular.module('portfolioApp', ['ngMaterial'])
-		.controller('folioApp', function($scope) {
-		});
+		angular.module('portfolioApp', ['ngMaterial']).controller('folioApp', function($scope) {});
 	</script>
   </body>
 </html>

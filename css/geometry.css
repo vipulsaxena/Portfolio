@@ -1,4 +1,5 @@
-/* Header */
+/* Genric classes
+-------------------*/
 .big-container {
 	position: relative;
 	width: 100%;
@@ -8,39 +9,16 @@
 	background-position: center center;
 	z-index: 1;
 }
-
-/*Genric*/
-.md-whiteframe-z1{
-	max-width: 39em;
-	padding: 2em;
-	margin: 2em;
+/*Background*/
+.big-container {
+	background-image: url('../img/bg.jpg');
 }
-.md-primary{
-	padding: 1em !important;
-	width: 100%;
+/*Typography*/
+body, md-card, md-tooltip, .md-button, a, p, span, h1,h2,h3,h4{
+	font-family: RobotoDraft, Roboto, 'Helvetica Neue', sans-serif;
+	text-decoration: none !important;
+	text-transform: none !important;
 }
-.md-primary a{
-	text-decoration: none;
-	font-size: 1em;
-	font-weight: normal;
-	color: white;
-}
-*::-webkit-scrollbar
-{
-  width: 12px;  /* for vertical scrollbars */
-  height: 12px; /* for horizontal scrollbars */
-}
-
-*::-webkit-scrollbar-track
-{
-  background: rgba(0, 0, 0, 0.1);
-}
-
-*::-webkit-scrollbar-thumb
-{
-  background: rgba(0, 0, 0, 0.5);
-}
-
 .main-title {
 	font-size: 2em;
 	font-weight: 600;
@@ -54,27 +32,24 @@
 	-webkit-transform: translate3d(-50%,-50%,0);
 	transform: translate3d(-50%,-50%,0);
 }
-@media only screen and (max-width : 768px) {
-	.main-title {
-		font-size: 3em;
-	}
-}
-
 /*Cards*/
-md-card{padding: 1em;margin: 1em;}
-
-/*Background*/
-.big-container {
-	background-image: url('../img/bg.jpg');
+.md-whiteframe-z1{
+	max-width: 39em;
+	padding: 2em;
+	margin: 2em;
+	width: 90%;
+	font-weight: 600 !important;
 }
-
+md-card{
+	padding: 1em;
+	margin: 1em;
+}
 md-card { 
     -webkit-animation-duration: 1s; 
     animation-duration: 1s; 
     -webkit-animation-fill-mode: both; 
     animation-fill-mode: both; 
 } 
-
 @-webkit-keyframes pulse { 
     0% { -webkit-transform: scale(1); } 
     50% { -webkit-transform: scale(1.1); } 
@@ -88,4 +63,40 @@ md-card {
 md-card { 
     -webkit-animation-name: pulse; 
     animation-name: pulse; 
+}
+/*Buttons*/
+.md-primary{
+	padding: 1em !important;
+	width: 100%;
+}
+.md-primary a{
+	text-decoration: none;
+	font-size: 1em;
+	font-weight: normal;
+	color: white;
+}
+/*Scroll*/
+*::-webkit-scrollbar
+{
+  width: 12px;  /* for vertical scrollbars */
+  height: 12px; /* for horizontal scrollbars */
+}
+*::-webkit-scrollbar-track
+{
+  background: rgba(0, 0, 0, 0.1);
+}
+*::-webkit-scrollbar-thumb
+{
+  background: rgba(0, 0, 0, 0.5);
+}
+/*Icon*/
+.fix-major{
+	padding: 0 !important;
+	position: fixed !important;
+	bottom: 5%;
+	right: 5%;
+}
+.md-icon{
+	width: 3.5em !important;
+	height: 3.5em !important;
 }
