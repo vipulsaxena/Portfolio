@@ -4,25 +4,25 @@
     
   <!-- Metadata -->
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="author" content="Personal portfolio of UI/UX Engineer, live in New Delhi, love working with motivated startups, technology enthusiast & artists.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name='keywords' content='Vipul Saxena,vipulsaxena,vipulsaxena.com,UI/UX,UI/UX Delhi,UI/UX New Delhi'/>
+  <meta name='Description' content='Vipul Saxena | UI\UX Design & Development'/>
+  <meta name="author" content="Personal portfolio of UI/UX Engineer, live in New Delhi, love working with motivated startups, technology enthusiast & artists."/>
   
   <!-- For SEO -->
   <meta name="google" content="translate" />
   <meta name="google-site-verification" content="_Pw468vxdtRMyLByV9sPOX9VYJasRQnTRz_-iD-x_e8"/>
-  <meta name="robots" content="noindex,nofollow">
-  
-  <!-- Social -->
-  <meta property=”og:title” content=Personal portfolio of UI/UX Engineer, live in New Delhi, love working with motivated startups, technology enthusiast & artists.”/>
-  <meta property=”og:type” content=”Personal portfolio of UI/UX Engineer, live in New Delhi, love working with motivated startups, technology enthusiast & artists.”/>
-  <meta property=”og:url” content=”http://vipulsaxena.com”/>
-  <meta property=”og:description” content=”Personal portfolio of UI/UX Engineer, live in New Delhi, love working with motivated startups, technology enthusiast & artists.”/>
-  
+  <meta name='google' content='nositelinkssearchbox'/>
+  <meta name="majestic-site-verification" content="MJ12_bd697943-0265-4d5f-9db4-60760044d91b"/>
+  <meta name='google-site-verification' content='you will get google site verification code from your webmaster tools'/>
+  <meta name="robots" content="none"/>
+
   <title>
     Vipul Saxena | UI/UX
   </title>
   
   <!-- Geometry -->
+  <link rel="stylesheet" type="text/css" href="css/parallax.css" />
   <link rel="stylesheet" type="text/css" href="css/normalize.css" />
   <link rel="stylesheet" type="text/css" href="css/geometry.css" />
 
@@ -42,30 +42,55 @@
 			</canvas>
 			<div class="main-title">I <3 interaction design</div>
 		</div>
-	  <div layout="column" layout-align="center center" layout-padding, layout-margin>
-	  <md-whiteframe layout="column" class="md-whiteframe-z1" style="text-align:center" layout layout-align="center center">
-      <img src="img/quote.png" style="width: 100%;">
-	    <!-- <h2 >All life is an experiment. 
-      <br>
-      The more experiments you make the better.</h2> -->
-	    <br>
-	    <md-button class="md-raised md-primary full" onclick="window.open('https://material.angularjs.org/')" target="none"> 
-	    	  ng-Material
-      </md-button>
-  </md-whiteframe>
-	  <md-card>
-			<a class="embedly-card" href="https://www.behance.net/vipulsaxena">Vipul Saxena on Behance</a>
-	  </md-card>
-	  <md-card>
-			<a class="embedly-card" href="https://www.linkedin.com/in/saxenavipul">Vipul Saxena</a>
-	  </md-card>
-	  <md-card>
-			<a class="embedly-card" href="https://github.com/vipulsaxena">vipulsaxena (Vipul Saxena)</a>
-	  </md-card>
-	  <md-card>
-			<a class="embedly-card" data-card-type="article-full" href="https://twitter.com/dropyourbass">Vipul Saxena (@dropyourbass) | Twitter</a>
-	  </md-card>
-	  </div>
+    <div class="wrapper">
+      <ul id="scene" class="scene unselectable"
+        data-friction-x="0.1"
+        data-friction-y="0.1"
+        data-scalar-x="25"
+        data-scalar-y="15">
+        <li class="layer" data-depth="0.00"></li>
+        <!-- BG -->
+        <li class="layer" data-depth="0.10"><div class="background"></div></li>
+        <li class="layer" data-depth="0.15"><div class="triangles"></div></li>
+
+        <!-- Hero -->
+        <li class="layer" data-depth="0.25"><div class="sphere"><img src="img/sphere.png" alt="sphere"></div></li>
+        <!-- Flakes -->
+        <li class="layer" data-depth="0.40">
+          <div class="depth-1 flake1"><img src="img/flakes/depth1/flakes1.png" alt="flake"></div>
+          <div class="depth-1 flake2"><img src="img/flakes/depth1/flakes2.png" alt="flake"></div>
+          <div class="depth-1 flake3"><img src="img/flakes/depth1/flakes3.png" alt="flake"></div>
+          <div class="depth-1 flake4"><img src="img/flakes/depth1/flakes4.png" alt="flake"></div>
+        </li>
+        <li class="layer" data-depth="0.50">
+          <div class="depth-2 flake1"><img src="img/flakes/depth2/flakes1.png" alt="flake"></div>
+          <div class="depth-2 flake2"><img src="img/flakes/depth2/flakes2.png" alt="flake"></div>
+        </li>
+        <li class="layer" data-depth="0.60">
+          <div class="depth-3 flake1"><img src="img/flakes/depth3/flakes1.png" alt="flake"></div>
+          <div class="depth-3 flake2"><img src="img/flakes/depth3/flakes2.png" alt="flake"></div>
+          <div class="depth-3 flake3"><img src="img/flakes/depth3/flakes3.png" alt="flake"></div>
+          <div class="depth-3 flake4"><img src="img/flakes/depth3/flakes4.png" alt="flake"></div>
+        </li>
+        <li class="layer" data-depth="0.80"><div class="depth-4"><img src="img/flakes/depth4/flakes.png" alt="flake"></div></li>
+        <li class="layer" data-depth="1.00"><div class="depth-5"><img src="img/flakes/depth5/flakes.png" alt="flake"></div></li>
+      </ul>
+    </div>
+    <div layout="column" layout-align="center center" layout-padding, layout-margin>
+    <md-card>
+      <a class="embedly-card" href="https://www.behance.net/vipulsaxena">Vipul Saxena on Behance</a>
+    </md-card>
+    <md-card>
+      <a class="embedly-card" href="https://www.linkedin.com/in/saxenavipul">Vipul Saxena</a>
+    </md-card>
+    <md-card>
+      <a class="embedly-card" href="https://github.com/vipulsaxena">vipulsaxena (Vipul Saxena)</a>
+    </md-card>
+    <md-card>
+      <a  data-card-type="article-full" href="https://twitter.com/dropyourbass">Vipul Saxena (@dropyourbass) | Twitter</a>
+    </md-card>
+
+    </div>
 	  <!-- Fix material button -->
 		<md-button class="md-fab fix-major md-raised" aria-label="Time" href="mailto:vpul.saxena01@gmail.com?Subject=Hello." target="_blank">
 			<img src="img/email-icon.png" style="width:100%">
@@ -79,6 +104,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular-animate.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular-aria.js"></script>
+  <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
 
   <!-- Angular Material Javascript using RawGit to load directly from `bower-material/master` -->
   <script src="https://rawgit.com/angular/bower-material/master/angular-material.js"></script>
