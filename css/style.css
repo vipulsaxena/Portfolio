@@ -5,7 +5,7 @@ html {
 body {
     overflow: hidden;
     background: #bcdee7 url("../img/bg.png") no-repeat center center fixed;
-    background-size: 120% auto;
+    background-size: cover;
     position: fixed;
     padding: 0px;
     margin: 0px;
@@ -400,7 +400,7 @@ p {
 }
 @media screen and (min-aspect-ratio: 4/3) {
     body {
-        background-size: 100% auto;
+        background-size: cover;
     }
     body:before {
         width: 0px;
