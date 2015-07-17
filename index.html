@@ -2,148 +2,101 @@
 <html lang="en">
   <head>
     
-  <!-- Metadata -->
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name='keywords' content='Vipul Saxena,vipulsaxena,vipulsaxena.com,UI/UX,UI/UX Delhi,UI/UX New Delhi'/>
-  <meta name='Description' content='Vipul Saxena | UI\UX Design & Development'/>
-  <meta name="author" content="Personal portfolio of UI/UX Engineer, live in New Delhi, love working with motivated startups, technology enthusiast & artists."/>
-  
-  <!-- For SEO -->
-  <meta name="google" content="translate" />
-  <meta name="google-site-verification" content="_Pw468vxdtRMyLByV9sPOX9VYJasRQnTRz_-iD-x_e8"/>
-  <meta name='google' content='nositelinkssearchbox'/>
-  <meta name="majestic-site-verification" content="MJ12_bd697943-0265-4d5f-9db4-60760044d91b"/>
-  <meta name='google-site-verification' content='you will get google site verification code from your webmaster tools'/>
-  <meta name="robots" content="none"/>
-
-  <title>
-    Vipul Saxena | UI/UX
-  </title>
-  
-  <!-- Geometry -->
-  <link rel="stylesheet" type="text/css" href="css/parallax.css" />
-  <link rel="stylesheet" type="text/css" href="css/normalize.css" />
-  <link rel="stylesheet" type="text/css" href="css/geometry.css" />
-
-   <!-- Angulars Material CSS using RawGit to load directly from `bower-material/master` -->
-  <link rel="stylesheet" href="https://rawgit.com/angular/bower-material/master/angular-material.css">
-
-  <!--[if IE]>
-	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js">
-	</script>
-	<![endif]-->
-  
+    <!-- Metadata -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name='keywords' content='Vipul Saxena,vipulsaxena,vipulsaxena.com,UI/UX,UI/UX Delhi,UI/UX New Delhi'/>
+    <meta name='Description' content='Vipul Saxena | UI\UX Design & Development'/>
+    <meta name="author" content="Personal portfolio of UI/UX Engineer, live in New Delhi, love working with motivated startups, technology enthusiast & artists."/>
+    
+    <!-- For SEO -->
+    <meta name="google" content="translate" />
+    <meta name="google-site-verification" content="_Pw468vxdtRMyLByV9sPOX9VYJasRQnTRz_-iD-x_e8"/>
+    <meta name='google' content='nositelinkssearchbox'/>
+    <meta name="majestic-site-verification" content="MJ12_bd697943-0265-4d5f-9db4-60760044d91b"/>
+    <meta name='google-site-verification' content='you will get google site verification code from your webmaster tools'/>
+    <meta name="robots" content="none"/>
+    
+    <link rel="shortcut icon" href="favicon.ico" type="image/icon"> <link rel="icon" href="favicon.ico" type="image/icon">
+    
+    <title>
+      Vipul Saxena | UI/UX
+    </title>
+    
+    <!-- Geometry -->
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    
   </head>
-  <body ng-app="portfolioApp">
-  <md-content ng-controller="folioApp">
-		<div class="big-container" id="big-container">
-			<canvas id="geometry">
-			</canvas>
-			<div class="main-title">I <3 interaction design</div>
-		</div>
-    <div class="wrapper">
-      <ul id="scene" class="scene unselectable"
-        data-friction-x="0.1"
-        data-friction-y="0.1"
-        data-scalar-x="25"
-        data-scalar-y="15">
-        <li class="layer" data-depth="0.00"></li>
-        <!-- BG -->
-        <li class="layer" data-depth="0.10"><div class="background"></div></li>
-        <li class="layer" data-depth="0.15"><div class="triangles"></div></li>
-
-        <!-- Hero -->
-        <li class="layer" data-depth="0.25"><div class="sphere"><img src="img/sphere.png" alt="sphere"></div></li>
-        <!-- Flakes -->
-        <li class="layer" data-depth="0.40">
-          <div class="depth-1 flake1"><img src="img/flakes/depth1/flakes1.png" alt="flake"></div>
-          <div class="depth-1 flake2"><img src="img/flakes/depth1/flakes2.png" alt="flake"></div>
-          <div class="depth-1 flake3"><img src="img/flakes/depth1/flakes3.png" alt="flake"></div>
-          <div class="depth-1 flake4"><img src="img/flakes/depth1/flakes4.png" alt="flake"></div>
+  <body>
+    <aside class="profile-card">
+      
+      <header>
+        
+          <!-- here’s the avatar -->
+          <a target="_blank" href="https://in.linkedin.com/in/saxenavipul">
+            <img src="https://media.licdn.com/mpr/mpr/shrinknp_400_400/p/5/005/08a/109/05bdb89.jpg" />
+          </a>
+          
+          <!-- the username -->
+          <h1>
+            Vipul Saxena
+          </h1>
+          
+          <!-- and role or location -->
+          <h2>
+            Better Visuals
+          </h2>
+          
+      </header>
+      
+      <!-- bit of a bio; who are you? -->
+      <div class="profile-bio">
+        
+          <p>
+            I am an ideas person that loves to bring ideas to life, mainly into digital space.
+            Enjoy working with motivated startups, technology enthusiast & artists.
+          </p>
+          
+      </div>
+      
+      <!-- some social links to show off -->
+      <ul class="profile-social-links">
+        <li>
+          <a target="_blank" href="https://www.facebook.com/creativedonut">
+            <img src="img/facebook.png">
+          </a>
         </li>
-        <li class="layer" data-depth="0.50">
-          <div class="depth-2 flake1"><img src="img/flakes/depth2/flakes1.png" alt="flake"></div>
-          <div class="depth-2 flake2"><img src="img/flakes/depth2/flakes2.png" alt="flake"></div>
+        
+        <li>
+          <a target="_blank" href="https://twitter.com/dropyourbass">
+            <img src="img/twitter.png">
+          </a>
         </li>
-        <li class="layer" data-depth="0.60">
-          <div class="depth-3 flake1"><img src="img/flakes/depth3/flakes1.png" alt="flake"></div>
-          <div class="depth-3 flake2"><img src="img/flakes/depth3/flakes2.png" alt="flake"></div>
-          <div class="depth-3 flake3"><img src="img/flakes/depth3/flakes3.png" alt="flake"></div>
-          <div class="depth-3 flake4"><img src="img/flakes/depth3/flakes4.png" alt="flake"></div>
+        
+        <li>
+          <a target="_blank" href="https://github.com/vipulsaxena">
+            <img src="img/github.png">
+          </a>
         </li>
-        <li class="layer" data-depth="0.80"><div class="depth-4"><img src="img/flakes/depth4/flakes.png" alt="flake"></div></li>
-        <li class="layer" data-depth="1.00"><div class="depth-5"><img src="img/flakes/depth5/flakes.png" alt="flake"></div></li>
       </ul>
-    </div>
-    <div layout="column" layout-align="center center" layout-padding, layout-margin>
-    <md-card>
-      <a class="embedly-card" href="https://www.behance.net/vipulsaxena">Vipul Saxena on Behance</a>
-    </md-card>
-    <md-card>
-      <a class="embedly-card" href="https://www.linkedin.com/in/saxenavipul">Vipul Saxena</a>
-    </md-card>
-    <md-card>
-      <a class="embedly-card" href="https://github.com/vipulsaxena">vipulsaxena (Vipul Saxena)</a>
-    </md-card>
-    <md-card>
-      <a  data-card-type="article-full" href="https://twitter.com/dropyourbass">Vipul Saxena (@dropyourbass) | Twitter</a>
-    </md-card>
-
-    </div>
-	  <!-- Fix material button -->
-		<md-button class="md-fab fix-major md-raised" aria-label="Time" href="mailto:vpul.saxena01@gmail.com?Subject=Hello." target="_blank">
-			<img src="img/email-icon.png" style="width:100%">
-			<md-tooltip style="color:white !important">You can always write to me</md-tooltip>
-		</md-button>
-  </md-content>
-  
-  <!-- Materialize -->
-  <!-- Angular Material Dependencies -->
-  <script src="https://cdn.jsdelivr.net/hammerjs/2.0.4/hammer.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular-animate.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular-aria.js"></script>
-  <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
-
-  <!-- Angular Material Javascript using RawGit to load directly from `bower-material/master` -->
-  <script src="https://rawgit.com/angular/bower-material/master/angular-material.js"></script>
-
-  <!-- Geometry -->
-  <script src="js/geometry.min.js">
-  </script>
-  <script src="js/EasePack.min.js">
-  </script>
-  <script src="js/vendors.js">
-  </script>
-  <script src="js/init.js">
-  </script>
-
-	<!-- embed profiles -->
-	<script async src="HTTPS://cdn.embedly.com/widgets/platform.js" charset="UTF-8"></script>
- 
-
+    </aside>  
+  </body>
   <!-- Google Analytics -->
   <script>
     (function(i,s,o,g,r,a,m){
-    	i['GoogleAnalyticsObject']=r;
-    	i[r]=i[r]||function(){
-				(i[r].q=i[r].q||[]).push(arguments)}
-				,i[r].l=1*new Date();
-    	  a=s.createElement(o),
-    	  m=s.getElementsByTagName(o)[0];
-    	  a.async=1;
-    	  a.src=g;
-    	  m.parentNode.insertBefore(a,m)
-		}
+      i['GoogleAnalyticsObject']=r;
+      i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)}
+        ,i[r].l=1*new Date();
+      a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];
+      a.async=1;
+      a.src=g;
+      m.parentNode.insertBefore(a,m)
+    }
     )(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-      ga('create', 'UA-45963346-1', 'vipulsaxena.com');
-      ga('send', 'pageview');
+    ga('create', 'UA-45963346-1', 'vipulsaxena.com');
+    ga('send', 'pageview');
   </script>
-	
-	<!-- Angular injection -->
-	<script type="text/javascript">
-		angular.module('portfolioApp', ['ngMaterial']).controller('folioApp', function($scope) {});
-	</script>
-  </body>
+</body>
 </html>
