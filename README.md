@@ -1,7 +1,7 @@
 Portfolio
 =========
 
-Portfoli comming soon, vist master_b to see previous folio.
+Pure CSS3 -Material Design
 
 Tech used:
 
