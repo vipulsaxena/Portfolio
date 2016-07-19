@@ -253,8 +253,7 @@ p {
     padding: 40px 20px 30px 20px;
     display: inline-block;
     float: left;
-    border-right: 2px dashed #EEEEEE;
-    background: #FFFFFF;
+    background: #150633;
     color: #000000;
     margin-top: 50px;
     opacity: 0;
@@ -325,7 +324,6 @@ p {
 }
 .profile-social-links p{
     color: rgba(9, 127, 210, 0.54);
-    font-family: "Roboto";
     font-weight: 300;
     font-size: 14px;
     margin-bottom: 10px;
@@ -652,7 +650,6 @@ p {
     }
     .profile-social-links p{
         color: rgba(255, 255, 255, 0.65);
-        font-family: "Roboto";
         font-weight: 300;
         font-size: 14px;
         margin-bottom: 10px;
