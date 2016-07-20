@@ -1,46 +1,46 @@
 @-webkit-keyframes skyline {
-  0% {
-    -webkit-transform: translateX(-845px);
-  }
-  85% {
-    -webkit-transform: translateX(-100px);
-  }
-  100% {
-    -webkit-transform: translateX(-140px);
-  }
+    0% {
+        -webkit-transform: translateX(-845px);
+    }
+    85% {
+        -webkit-transform: translateX(-100px);
+    }
+    100% {
+        -webkit-transform: translateX(-140px);
+    }
 }
 @keyframes skyline {
-  0% {
-    transform: translateX(-845px);
-  }
-  85% {
-    transform: translateX(-100px);
-  }
-  100% {
-    transform: translateX(-140px);
-  }
+    0% {
+        transform: translateX(-845px);
+    }
+    85% {
+        transform: translateX(-100px);
+    }
+    100% {
+        transform: translateX(-140px);
+    }
 }
 @-webkit-keyframes clouds {
-  0% {
-    -webkit-transform: translateX(0px);
-  }
-  50% {
-    -webkit-transform: translateX(-50px);
-  }
-  100% {
-    -webkit-transform: translateX(0px);
-  }
+    0% {
+        -webkit-transform: translateX(0px);
+    }
+    50% {
+        -webkit-transform: translateX(-50px);
+    }
+    100% {
+        -webkit-transform: translateX(0px);
+    }
 }
 @keyframes clouds {
-  0% {
-    transform: translateX(0px);
-  }
-  50% {
-    transform: translateX(-50px);
-  }
-  100% {
-    transform: translateX(0px);
-  }
+    0% {
+        transform: translateX(0px);
+    }
+    50% {
+        transform: translateX(-50px);
+    }
+    100% {
+        transform: translateX(0px);
+    }
 }
 .flex {
     position: absolute;
@@ -50,10 +50,11 @@
     align-items: center;
     justify-content: center;
     z-index: 2;
+    cursor: pointer;
 }
-
 .block {
     /*background: #150633;*/
+    
     width: 100%;
     text-align: center;
     overflow: hidden;
@@ -62,115 +63,183 @@
     box-shadow: 0 19px 48px rgba(0, 0, 0, 0.22), 0 15px 32px rgba(0, 0, 0, 0.15);
 }
 .block .background {
-  top: -60px;
+    top: -60px;
 }
 .block .background.london {
     transition: 0.4s all ease;
     transform: translateY(-70px) translateX(-750px);
 }
 .block .background.london .slidetext {
-  transform: translateX(-845px);
+    transform: translateX(-845px);
 }
 .block .background.paris {
-  transition: 0.4s all ease;
-  transform: translateX(-130px);
+    transition: 0.4s all ease;
+    transform: translateX(-230px);
 }
 .block .background.paris .slidetext {
-  transform: translateX(-130px);
+    transform: translateX(-130px);
 }
 .block .background svg {
     width: 1208px;
 }
 .block .background svg #clouds {
-  animation: clouds 20s ease-in-out forwards infinite;
+    animation: clouds 20s ease-in-out forwards infinite;
 }
 .block .slidetext {
-  text-align: center;
-  position: absolute;
-  width: 100%;
-  bottom: 30px;
+    text-align: center;
+    position: absolute;
+    width: 100%;
+    bottom: 30px;
 }
 .block .slidetext.active {
-  opacity: 0;
+    opacity: 0;
 }
 .block .slidetext h1 {
-  display: block;
-  color: white;
-  font-weight: 300;
-  font-size: 36px;
-  margin-bottom: 0px;
+    display: block;
+    color: white;
+    font-weight: 300;
+    font-size: 36px;
+    margin-bottom: 0px;
 }
 .block .slidetext h2 {
-  margin-top: 0px;
-  margin-bottom: 40px;
-  color: #7b6ca0;
-  font-size: 24px;
-  font-weight: 300;
+    margin-top: 0px;
+    margin-bottom: 40px;
+    color: #7b6ca0;
+    font-size: 24px;
+    font-weight: 300;
 }
 .block .slidetext .bttn {
-  line-height: normal;
-  padding: 12px 35px;
-  background: #3c2075;
-  border-radius: 25px;
-  display: inline-block;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  transition: all 0.2s ease;
+    line-height: normal;
+    padding: 12px 35px;
+    background: #3c2075;
+    border-radius: 25px;
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: all 0.2s ease;
 }
 .block .slidetext .bttn:hover {
-  background: #462589;
+    background: #462589;
 }
 .block .slidetext .dots {
-  padding: 0px;
-  margin: 15px 0px 0px 0px;
+    padding: 0px;
+    margin: 15px 0px 0px 0px;
 }
 .block .slidetext .dots li {
-  list-style-type: none;
-  display: inline-block;
-  height: 5px;
-  width: 5px;
-  border-radius: 3px;
-  background: rgba(255, 255, 255, 0.2);
-  margin-right: 3px;
+    list-style-type: none;
+    display: inline-block;
+    height: 5px;
+    width: 5px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.2);
+    margin-right: 3px;
 }
 .block .slidetext .dots li.active {
-  background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.9);
 }
 .block .slidetext .dots li:last-of-type {
-  margin-right: 0px;
+    margin-right: 0px;
 }
-.st0{opacity:0.83;}
-.st1{opacity:0.74;}
-.st2{fill:#4A3871;}
-.st3{opacity:0.74;fill:#706194;}
-.st4{opacity:0.74;fill:#998CB5;}
-.st5{fill:#F7EFFF;}
-.st6{fill:url(#SVGID_1_);}
-.st7{fill:url(#SVGID_2_);}
-.st8{fill:url(#SVGID_3_);}
-.st9{fill:url(#SVGID_4_);}
-.st10{fill:url(#SVGID_5_);}
-.st11{fill:url(#SVGID_6_);}
-.st12{fill:url(#SVGID_7_);}
-.st13{fill:url(#SVGID_8_);}
-.st14{fill:url(#SVGID_9_);}
-.st15{fill:url(#SVGID_10_);}
-.st16{fill:url(#SVGID_11_);}
-.st17{fill:url(#SVGID_12_);}
-.st18{fill:url(#SVGID_13_);}
-.st19{fill:url(#SVGID_14_);}
-.st20{fill:url(#SVGID_15_);}
-.st21{fill:url(#SVGID_16_);}
-.st22{fill:#150633;}
-.st23{fill:url(#SVGID_17_);}
-.st24{opacity:0.4;fill:url(#SVGID_18_);}
-.st25{opacity:0.4;fill:url(#SVGID_19_);}
-.st26{opacity:0.4;fill:url(#SVGID_20_);}
-.st27{opacity:0.4;fill:url(#SVGID_21_);}
-.st28{fill:#B8AFDB;}
-.st29{opacity:0.56;fill:#B8AFDB;}
-.st30{fill:url(#SVGID_22_);}
-
+.st0 {
+    opacity: 0.83;
+}
+.st1 {
+    opacity: 0.74;
+}
+.st2 {
+    fill: #4A3871;
+}
+.st3 {
+    opacity: 0.74;
+    fill: #706194;
+}
+.st4 {
+    opacity: 0.74;
+    fill: #998CB5;
+}
+.st5 {
+    fill: #F7EFFF;
+}
+.st6 {
+    fill: url(#SVGID_1_);
+}
+.st7 {
+    fill: url(#SVGID_2_);
+}
+.st8 {
+    fill: url(#SVGID_3_);
+}
+.st9 {
+    fill: url(#SVGID_4_);
+}
+.st10 {
+    fill: url(#SVGID_5_);
+}
+.st11 {
+    fill: url(#SVGID_6_);
+}
+.st12 {
+    fill: url(#SVGID_7_);
+}
+.st13 {
+    fill: url(#SVGID_8_);
+}
+.st14 {
+    fill: url(#SVGID_9_);
+}
+.st15 {
+    fill: url(#SVGID_10_);
+}
+.st16 {
+    fill: url(#SVGID_11_);
+}
+.st17 {
+    fill: url(#SVGID_12_);
+}
+.st18 {
+    fill: url(#SVGID_13_);
+}
+.st19 {
+    fill: url(#SVGID_14_);
+}
+.st20 {
+    fill: url(#SVGID_15_);
+}
+.st21 {
+    fill: url(#SVGID_16_);
+}
+.st22 {
+    fill: #150633;
+}
+.st23 {
+    fill: url(#SVGID_17_);
+}
+.st24 {
+    opacity: 0.4;
+    fill: url(#SVGID_18_);
+}
+.st25 {
+    opacity: 0.4;
+    fill: url(#SVGID_19_);
+}
+.st26 {
+    opacity: 0.4;
+    fill: url(#SVGID_20_);
+}
+.st27 {
+    opacity: 0.4;
+    fill: url(#SVGID_21_);
+}
+.st28 {
+    fill: #B8AFDB;
+}
+.st29 {
+    opacity: 0.56;
+    fill: #B8AFDB;
+}
+.st30 {
+    fill: url(#SVGID_22_);
+}
 @import url(http://fonts.googleapis.com/css?family=Roboto);
 html {
     height: 100%;
@@ -238,7 +307,7 @@ p {
     -webkit-animation: init 0.5s 0.2s cubic-bezier(0.55, 0.055, 0.675, 0.19) forwards, moveDown 1s 0.8s cubic-bezier(0.6, -0.28, 0.735, 0.045) forwards, moveUp 1s 1.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, materia 0.5s 2.7s cubic-bezier(0.86, 0, 0.07, 1) forwards;
     animation: init 0.5s 0.2s cubic-bezier(0.55, 0.055, 0.675, 0.19) forwards, moveDown 1s 0.8s cubic-bezier(0.6, -0.28, 0.735, 0.045) forwards, moveUp 1s 1.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, materia 0.5s 2.7s cubic-bezier(0.86, 0, 0.07, 1) forwards;
 }
-.profile-card::before{
+.profile-card::before {
     content: '';
     top: 0;
     left: 0;
@@ -289,6 +358,7 @@ p {
     -webkit-animation: scaleIn 0.3s 3.5s ease forwards;
     animation: scaleIn 0.3s 3.5s ease forwards;
 }*/
+
 .profile-card header a > img {
     width: 140px;
     max-width: 100%;
@@ -322,7 +392,7 @@ p {
     -webkit-animation: moveIn 1s 3.1s ease forwards;
     animation: moveIn 1s 3.1s ease forwards;
 }
-.profile-social-links p{
+.profile-social-links p {
     color: rgba(9, 127, 210, 0.54);
     font-weight: 300;
     font-size: 14px;
@@ -648,7 +718,7 @@ p {
         display: block;
         float: none;
     }
-    .profile-social-links p{
+    .profile-social-links p {
         color: rgba(255, 255, 255, 0.65);
         font-weight: 300;
         font-size: 14px;
