@@ -52,9 +52,16 @@
     z-index: 2;
     cursor: pointer;
 }
+.toggler{
+    transition: 0.4s all ease !important;
+}
+.togglerNegative{
+    opacity: 0 !important;
+}
+.togglerPositive{
+    top: 0 !important;
+}
 .block {
-    /*background: #150633;*/
-    
     width: 100%;
     text-align: center;
     overflow: hidden;
@@ -260,7 +267,7 @@ body:before {
     content: "";
     height: 0px;
     padding: 0px;
-    border: 130em solid #28154e;
+    border: 130em solid #001D59;
     position: absolute;
     left: 50%;
     top: 100%;
@@ -358,7 +365,16 @@ p {
     -webkit-animation: scaleIn 0.3s 3.5s ease forwards;
     animation: scaleIn 0.3s 3.5s ease forwards;
 }*/
-
+.abs-skills{
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 99;
+    cursor: pointer;
+}
+.abs-skills img{
+    width: 100%;
+}
 .profile-card header a > img {
     width: 140px;
     max-width: 100%;
