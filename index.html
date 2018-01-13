@@ -41,11 +41,14 @@
     </title>
 
     <!-- Geometry -->
-    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link rel="stylesheet" type="text/css" href="css/style.min.css" />
 
   </head>
   <body>
     <aside class="profile-card">
+      <div class="tooltip">
+        <span class="tooltip-text">Tap to see my Super Powers!⚡️</span>
+      </div>
       <div class="toggler togglerNegative abs-skills">
         <img src="img/skills.png">
 
@@ -528,7 +531,8 @@
     ga('send', 'pageview');
 
     // Another slide
-    $(".flex").click(function() {
+    $(".flex, .tooltip").click(function() {
+     $('.tooltip').fadeOut();
      $('.toggler').toggleClass("togglerPositive").toggleClass("togglerNegative");
      $(".background").toggleClass("paris").toggleClass("london");
      $(".london").toggleClass("active");
