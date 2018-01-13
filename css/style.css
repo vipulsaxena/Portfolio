@@ -247,7 +247,7 @@
 .st30 {
     fill: url(#SVGID_22_);
 }
-@import url(http://fonts.googleapis.com/css?family=Roboto);
+@import url(https://fonts.googleapis.com/css?family=Rubik);
 html {
     height: 100%;
 }
@@ -260,7 +260,8 @@ body {
     margin: 0px;
     width: 100%;
     height: 100%;
-    font: normal 14px/1.618em "Roboto", sans-serif;
+    font-family: 'Rubik', sans-serif;
+    font: normal 14px/1.618em "Rubik", sans-serif;
     -webkit-font-smoothing: antialiased;
 }
 body:before {
@@ -397,7 +398,7 @@ p {
     display: inline-block;
     float: right;
     padding: 50px 20px 30px 20px;
-    color: #FFFFFF;
+    color: #F5F5F5;
     font-size: 16px;
     font-weight: 300;
     position: absolute;
