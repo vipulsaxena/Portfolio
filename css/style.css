@@ -253,7 +253,7 @@ html {
 }
 body {
     overflow: hidden;
-    background: #bcdee7 url("../img/bg.gif") no-repeat center center fixed;
+    background: #bcdee7 url("../img/bg.jpg") no-repeat center center fixed;
     background-size: cover;
     position: fixed;
     padding: 0px;
@@ -683,7 +683,7 @@ p {
     }
     body:before {
         width: 0px;
-        background: rgba(0, 0, 0, 0.65);
+        background: rgba(0, 0, 0, 0.27);
     }
     @-webkit-keyframes puff {
         0% {
