@@ -372,9 +372,16 @@ p {
     left: 0;
     z-index: 99;
     cursor: pointer;
+    overflow: scroll;
+    height: 100%;
 }
 .abs-skills img{
     width: 100%;
+}
+.abs-skills p{
+  color: white;
+  padding: 24px 24px 0 24px;
+  font-size: 16px;
 }
 .profile-card header a > img {
     width: 140px;
