@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="12px" height="12px" viewBox="0 0 12 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>arrow--direction</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="__icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M6.46966991,2.53033009 C6.1767767,2.23743687 6.1767767,1.76256313 6.46966991,1.46966991 C6.76256313,1.1767767 7.23743687,1.1767767 7.53033009,1.46966991 L11.5303301,5.46966991 C11.8232233,5.76256313 11.8232233,6.23743687 11.5303301,6.53033009 L7.53033009,10.5303301 C7.23743687,10.8232233 6.76256313,10.8232233 6.46966991,10.5303301 C6.1767767,10.2374369 6.1767767,9.76256313 6.46966991,9.46966991 L9.93933983,6 L6.46966991,2.53033009 Z" id="Path-2" fill="#000000" fill-rule="nonzero"></path>
+        <path d="M1,6.75 C0.585786438,6.75 0.25,6.41421356 0.25,6 C0.25,5.58578644 0.585786438,5.25 1,5.25 L11,5.25 C11.4142136,5.25 11.75,5.58578644 11.75,6 C11.75,6.41421356 11.4142136,6.75 11,6.75 L1,6.75 Z" id="Path-2" fill="#000000" fill-rule="nonzero"></path>
+    </g>
+</svg>

@@ -1,9 +1,9 @@
 @font-face {
   font-family: 'sans';
-  src: url("fonts/ibm-text.otf") format("opentype"); }
+  src: url("../fonts/ibm-text.otf") format("opentype"); }
 @font-face {
   font-family: 'serif';
-  src: url("fonts/fj-medium.otf") format("opentype"); }
+  src: url("../fonts/fj-medium.otf") format("opentype"); }
 /**
  * Reset some basic elements
  */
@@ -69,28 +69,28 @@ li p {
   height: 1.2rem;
   width: 1.2rem; }
   .status-icon-external, .status-icon-link {
-    background: url("icons/icon-arrow--direction.svg") no-repeat center center;
+    background: url("../images/icon-arrow--direction.svg") no-repeat center center;
     -webkit-transform: rotateZ(-45deg);
     -ms-transform: rotateZ(-45deg);
     -o-transform: rotateZ(-45deg);
     transform: rotateZ(-45deg); }
   .status-icon-favorite {
-    background: url("icons/icon-heart--filled.svg") no-repeat center center;
+    background: url("../images/icon-heart--filled.svg") no-repeat center center;
     -webkit-transform: rotateZ(-45deg);
     -ms-transform: rotateZ(-45deg);
     -o-transform: rotateZ(-45deg);
     transform: rotateZ(-45deg); }
   .status-icon-direction {
-    background: url("icons/icon-arrow--default.svg") no-repeat center center; }
+    background: url("../images/icon-arrow--default.svg") no-repeat center center; }
   .status-icon-mail {
     background: url("icons/icon-mail.svg") no-repeat center center; }
   .status-icon-mail-white {
-    background: url("icons/icon-mail-white.svg") no-repeat center center; }
+    background: url("../images/icon-mail-white.svg") no-repeat center center; }
   .status-icon-bookmark {
     background: url("icons/icon-bookmark--filled.svg") no-repeat center center; }
   .status-icon-new {
     width: 2.5rem;
-    background: url("icons/icon-label--new.svg") no-repeat center center; }
+    background: url("../images/icon-label--new.svg") no-repeat center center; }
 
 /**
  * Headings
@@ -130,7 +130,7 @@ a:link {
   transition: all 0.2s ease; }
 a:hover, a:visited {
   color: inherit;
-  background: rgba(38, 38, 38, 0.1);
+  /*background: rgba(38, 38, 38, 0.1);*/
   -webkit-transition: all 0.2s ease;
   transition: all 0.2s ease; }
 a.button {
@@ -198,7 +198,8 @@ blockquote {
   z-index: 200; }
   blockquote p {
     padding: 1.5rem;
-    margin-bottom: 0; }
+    margin-bottom: 0; 
+    text-align: center;}
   @media screen and (max-width: 39rem) {
     blockquote {
       margin: calc(-1.5rem + -0.2rem) auto 3rem; } }
@@ -215,7 +216,7 @@ blockquote {
 i, em {
   font-style: normal;
   padding-bottom: 0.2rem;
-  border-bottom: #ffda08 solid 0.2rem; }
+  border-bottom: #0D960E solid 0.2rem; }
 
 b, strong {
   font-family: "sans", sans-serif;
@@ -565,7 +566,7 @@ a#bottom-nav {
       left: 50%;
       transform: translateX(-50%) translateY(-50%);
       height: auto;
-      width: 100%;
+      width: 90%;
       margin: 0 auto; }
 
 .post-infos {
@@ -618,3 +619,63 @@ a#bottom-nav {
         height: auto;
         width: 100%;
         margin: 3rem auto; } }
+
+        /*Over-ride*/
+        .shelf_class{
+          border: 24px solid black;
+          width: 50%;
+          border-top: 0;
+          border-right: 0;
+        }
+        .p-l-0{padding-left: 0;}
+        .link_fix{
+            cursor: pointer;    background: white;
+        }
+
+        .link_fix i{          
+          -webkit-transition: all 0.2s ease-in-out;
+          -moz-transition: all 0.2s ease-in-out;
+          -o-transition: all 0.2s ease-in-out;
+          transition: all 0.2s ease-in-out;
+          cursor: pointer;
+          font-family: "serif", sans-serif !important;
+          background: white;
+        }
+        .link_fix::selection {
+          background: white !important;
+        }
+        .link_fix:hover i{    
+          border-bottom: #0D960E solid 0.6rem; ;
+        }
+        .hotlinks{ 
+          font-size: 18px;
+          margin-right: 24px;
+        }
+        .hotlinks.d i{ 
+          border-bottom: #E64885 solid 0.2rem;
+        }
+        .hotlinks.m i{ 
+          border-bottom: black solid 0.2rem; ;
+        }
+        .hotlinks.l i{ 
+          border-bottom: #0371AE solid 0.2rem; ;
+        }
+        .hotlinks.t i{ 
+          border-bottom: #28A5DB solid 0.2rem; ;
+        }
+        .hotlinks.d:hover i{ 
+          border-bottom: #E64885 solid 0.6rem;
+        }
+        .hotlinks.m:hover i{ 
+          border-bottom: black solid 0.6rem; ;
+        }
+        .hotlinks.l:hover i{ 
+          border-bottom: #0371AE solid 0.6rem; ;
+        }
+        .hotlinks.t:hover i{ 
+          border-bottom: #28A5DB solid 0.6rem; ;
+        }
+
+
+
+
