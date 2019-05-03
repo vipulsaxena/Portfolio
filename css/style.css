@@ -375,7 +375,7 @@ a#bottom-nav {
   height: 0.2rem;
   width: 0.2rem;
   margin: 0 2rem 2rem 0;
-  background: #d0d0d0;
+  background: #000000;
   border-radius: 0.3rem; }
 
 .post-list {
@@ -629,7 +629,9 @@ a#bottom-nav {
         }
         .p-l-0{padding-left: 0;}
         .link_fix{
-            cursor: pointer;    background: white;
+            cursor: pointer;    
+            background: white !important;
+            color: #0D960E !important;
         }
 
         .link_fix i{          
@@ -645,37 +647,41 @@ a#bottom-nav {
           background: white !important;
         }
         .link_fix:hover i{    
-          border-bottom: #0D960E solid 0.6rem; ;
+          border-bottom: #0D960E solid 0.6rem;
         }
         .hotlinks{ 
           font-size: 18px;
           margin-right: 24px;
         }
-        .hotlinks.d i{ 
+        .d i{ 
           border-bottom: #E64885 solid 0.2rem;
+          color: #E64885;
         }
-        .hotlinks.m i{ 
-          border-bottom: black solid 0.2rem; ;
+        .m i{ 
+          border-bottom: black solid 0.2rem;
+          color: black;
         }
-        .hotlinks.l i{ 
-          border-bottom: #0371AE solid 0.2rem; ;
+        .l i{ 
+          border-bottom: #0371AE solid 0.2rem;
+          color: #0371AE;
         }
-        .hotlinks.t i{ 
-          border-bottom: #28A5DB solid 0.2rem; ;
+        .t i{ 
+          border-bottom: #28A5DB solid 0.2rem;
+          color: #28A5DB;
         }
-        .hotlinks.d:hover i{ 
+        .d:hover i{ 
           border-bottom: #E64885 solid 0.6rem;
         }
-        .hotlinks.m:hover i{ 
-          border-bottom: black solid 0.6rem; ;
+        .m:hover i{ 
+          border-bottom: black solid 0.6rem;
         }
-        .hotlinks.l:hover i{ 
-          border-bottom: #0371AE solid 0.6rem; ;
+        .l:hover i{ 
+          border-bottom: #0371AE solid 0.6rem;
         }
-        .hotlinks.t:hover i{ 
-          border-bottom: #28A5DB solid 0.6rem; ;
+        .t:hover i{ 
+          border-bottom: #28A5DB solid 0.6rem;
         }
 
-
+        .center{text-align: center;}
 
 
