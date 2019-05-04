@@ -370,7 +370,8 @@ a#bottom-nav {
 .patterns--dots {
   display: flex;
   flex-wrap: wrap;
-  max-width: 90rem; }
+  max-width: 90rem;     max-height: 240px;
+    overflow: hidden;}
 .patterns .pattern--dot {
   height: 0.2rem;
   width: 0.2rem;
@@ -652,6 +653,9 @@ a#bottom-nav {
         .hotlinks{ 
           font-size: 18px;
           margin-right: 24px;
+          display: inline-block;
+          min-width: 72px;
+          min-height: 48px;
         }
         .d i{ 
           border-bottom: #E64885 solid 0.2rem;
