@@ -662,7 +662,7 @@ a#bottom-nav {
           color: #E64885;
         }
         .m i{ 
-          border-bottom: black solid 0.2rem;
+          border-bottom: #0157FF solid 0.2rem;
           color: black;
         }
         .l i{ 
@@ -677,7 +677,7 @@ a#bottom-nav {
           border-bottom: #E64885 solid 0.6rem;
         }
         .m:hover i{ 
-          border-bottom: black solid 0.6rem;
+          border-bottom: #0157FF solid 0.6rem;
         }
         .l:hover i{ 
           border-bottom: #0371AE solid 0.6rem;
