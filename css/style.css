@@ -689,3 +689,5 @@ a#bottom-nav {
         .center{text-align: center;}
 
         .ixi_spl img{ width: 100%; margin: auto; }
+        
+        .ski-pill {background-color: #ffda08; padding: 4px 12px; line-height: 38px; margin-right: 6px; border-radius: 2px; color: black; font-size: 14px;}
