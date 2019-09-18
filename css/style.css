@@ -125,6 +125,7 @@
      border-radius: 0.2rem;
      -webkit-transition: all 0.2s ease;
      transition: all 0.2s ease;
+
 }
  a:hover, a:visited {
      color: inherit;
@@ -822,6 +823,8 @@
   border: 1px solid #ffda08;
   padding: 4px;
   margin: 6px;
+  margin: 6px 0;
+  display: block;
 }
 .border-frame {
   border-radius: 24px;
