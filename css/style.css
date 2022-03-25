@@ -505,7 +505,7 @@
 }
  @media screen and (max-width: 39rem) {
      .post-item .description {
-         display: none;
+             width: 90%;
     }
 }
  .post-item .status-icon {
