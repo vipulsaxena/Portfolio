@@ -292,7 +292,14 @@
                 <hr>
             </div>
         </div>
-
+    <div class="gfq-wrap">
+        <div class="gfq-panel">
+            <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScKV7IVg-JeodOmY5m7eDIK_qctNltq-QddtYnLrRneSqCIwA/viewform?embedded=true" width="100%" height="650" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+        </div>
+        <div class="gfq-badge">
+            <img src="images/mail-1.svg" alt="Icon"/>
+        </div>
+    </div>
     </main>
 
     <a href="#" id="bottom-nav">Scroll to the top</a>
@@ -323,6 +330,13 @@
         //Font observer loader
         var font = new FontFaceObserver('sans');
         var font = new FontFaceObserver('serif');
+        
+        //Contact form
+        jQuery(document).ready(function( $ ){
+            $('.gfq-badge').click(function() {
+                $('.gfq-panel').toggleClass('panel-active');
+            });
+        });
     </script>
     <!-- Start of Magnify Widget Snippet -->
     <!-- app.usemagnify.com -->
