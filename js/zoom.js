@@ -159,6 +159,13 @@
     $(this._targetImage)
       .addClass('zoom-img')
       .attr('data-action', 'zoom-out')
+      
+      // quick jugad
+      if (this._targetImage.id == 'jug') {
+        $(".tns-outer").addClass( "jugad_1" );
+        $(".tns-ovh").addClass( "jugad_2" );
+        $(".tns-controls").addClass( "jugad_3" );
+      }
 
     this._overlay           = document.createElement('div')
     this._overlay.className = 'zoom-overlay'
@@ -167,6 +174,7 @@
 
     this._calculateZoom()
     this._triggerAnimation()
+
   }
 
   Zoom.prototype._calculateZoom = function () {
@@ -274,6 +282,11 @@
       this._overlay.parentNode.removeChild(this._overlay)
 
       this._$body.removeClass('zoom-overlay-transitioning')
+    }
+    if (this._targetImage.id == 'jug') {
+      $(".tns-outer").removeClass( "jugad_1" );
+      $(".tns-ovh").removeClass( "jugad_2" );
+      $(".tns-controls").removeClass( "jugad_3" );
     }
   }
 
