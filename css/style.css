@@ -609,6 +609,7 @@
      height: 100%;
      width: auto;
      transform: translateX(-50%) translateY(-50%);
+     border-radius: 4px;
 }
  .post-item.experience {
      padding-bottom: 0;
