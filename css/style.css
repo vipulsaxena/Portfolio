@@ -644,7 +644,7 @@
 }
  .post-header figure {
      position: relative;
-     height: 36rem;
+     height: 43rem;
      width: 54rem;
      margin: 0 auto;
      overflow: hidden;
@@ -1071,4 +1071,8 @@
   -webkit-text-fill-color: transparent;
   -moz-background-clip: text;
   -moz-text-fill-color: transparent;
+}
+
+.hide {
+    display: none !important;
 }

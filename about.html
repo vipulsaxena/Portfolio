@@ -56,10 +56,25 @@
 
     <link rel="stylesheet" href="css/style.css">
     <link href="css/zoom.css" rel="stylesheet">
+
+    <!-- AI Colors -->
+    <script type="module"src="js/custom.js" ></script>  
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-45963346-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-45963346-1');
+    </script>
 </head>
 
 <body>
 
+<!-- Canvas -->
+<canvas class="orb-canvas"></canvas>
     <a href="index.html" id="top-nav">Home</a>
 
     <main>
@@ -67,8 +82,8 @@
             <div class="container">
 
                 <div class="post-header">
-                    <figure class="post-cover">
-                        <img class="lazy" data-original="images/profile.jpg">
+                    <figure class="post-cover" data-tilt data-tilt-full-page-listening data-tilt-glare data-tilt-max-glare="0.8" >
+                        <img class="lazy" data-original="images/profile.jpg" >
                     </figure>
                 </div>
                 <p>Beyond design, I'm a natural storyteller. Whether I'm weaving tales inspired by mythological games, exploring the rich tapestry of history, or listening intently to narratives, I have an enduring love for great stories.</p>
@@ -329,6 +344,8 @@
     <a href="#" id="bottom-nav">Scroll to the top</a>
     <a href="javascript:history.back()" id="bottom-nav">Back Home</a>
 
+    <a class='button button--combo overlay__btn--colors hide'><span>AI Colors<span class="status-icon status-icon-new"></span></a>
+
 
     <hr>
 
@@ -345,6 +362,8 @@
     <script src="js/jquery.lazyload.js"></script>
     <script src="js/transition.js"></script>
     <script src="js/fontfaceobserver.js"></script>
+    <script type="text/javascript" src="js/vanilla-tilt.min.js"></script>
+
     <script>
         //lazyload of images
         $("img").lazyload({
