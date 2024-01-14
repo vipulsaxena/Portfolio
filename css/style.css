@@ -102,7 +102,7 @@
 }
  h1 {
      font-size: 2.8rem;
-     font-family: "serif", sans-serif;
+     font-family: sans-serif;
 }
  @media screen and (max-width: 39rem) {
      h1 {
@@ -151,6 +151,7 @@
      padding: 0.75rem 1.875rem 0.9375rem;
      border-radius: 0.2rem;
      background: rgba(38, 38, 38, 0.1);
+     cursor: pointer;
 }
  @media screen and (max-width: 39rem) {
      a.button {
@@ -316,7 +317,7 @@
      text-align: center;
      width: 100%;
      padding: 1.5rem 0 1rem;
-     background: white;
+     background: transparent !important;
      border-top: 0.1rem solid #f7f7f7;
 }
  .site-footer {
@@ -747,7 +748,7 @@
 }
  .link_fix{
      cursor: pointer;
-     background: white !important;
+     background: transparent !important;
      color: #349C89 !important;
 }
  .link_fix i{
@@ -757,7 +758,7 @@
      transition: all 0.2s ease-in-out;
      cursor: pointer;
      font-family: "sans", sans !important;
-     background: white;
+     background: transparent !important;
 }
  .link_fix::selection {
      background: white !important;
@@ -1030,4 +1031,44 @@
 .ol ol > li:before {
     content: counters(item, ".") ". ";
     margin-left: 0px;
+}
+
+/*Color ORL sinpitt here*/
+
+.orb-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.2;
+}
+:root {
+  --dark-color: hsl(var(--hue), 100%, 9%);
+  --light-color: hsl(var(--hue), 95%, 98%);
+  --base: hsl(var(--hue), 95%, 50%);
+  --complimentary1: hsl(var(--hue-complimentary1), 95%, 50%);
+  --complimentary2: hsl(var(--hue-complimentary2), 95%, 50%);
+
+  --font-family: "Poppins", system-ui;
+
+  --bg-gradient: linear-gradient(
+    to bottom,
+    hsl(var(--hue), 95%, 99%),
+    hsl(var(--hue), 95%, 84%)
+  );
+}
+.text-gradient {
+  font-weight: 900 !important;
+  background-image: linear-gradient(
+    45deg,
+    var(--base) 25%,
+    var(--complimentary2)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
 }
