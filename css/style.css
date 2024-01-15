@@ -3,7 +3,7 @@
      src: url("../fonts/ibm-text.otf") format("opentype");
 }
  @font-face {
-     font-family: 'serif';
+     font-family: 'sans-serif';
      src: url("../fonts/fj-medium.otf") format("opentype");
 }
 /** * Reset some basic elements */
@@ -17,9 +17,9 @@
      font-size: 62.5%;
 }
  body {
-     font-family: "sans", sans-serif;
+     font-family: sans;
      font-weight: normal;
-     font-size: 1.6rem;
+     font-size: 1.8rem;
      line-height: 1.6;
      color: #262626;
      background-color: #FFF;
@@ -124,8 +124,7 @@
  a:link {
      position: relative;
      text-decoration: none;
-     font-family: inherit;
-     font-family: "sans", sans-serif;
+     font-family: sans;
      padding: 0.2rem 0.6rem;
      color: inherit;
      background: rgba(38, 38, 38, 0.05);
@@ -243,7 +242,7 @@
      border-bottom: #349C89 solid 0.2rem;
 }
  b, strong {
-     font-family: "sans", sans-serif;
+     font-family: sans;
      font-weight: normal;
      padding: 0.2rem 0.3rem;
      background: #ffda08;
@@ -505,7 +504,6 @@
 }
  .post-item .description {
      font: normal 1.4rem/1.6 "sans", sans-serif;
-     color: gray;
 }
  @media screen and (max-width: 39rem) {
      .post-item .description {
@@ -623,7 +621,7 @@
      font-size: 1.2rem;
 }
  .post-item.experience .description {
-     font-size: 1.2rem;
+     font-size: 1.4rem;
      margin-bottom: 0;
 }
  .post-item.note .author {
@@ -708,7 +706,7 @@
      padding-left: 1.5rem;
 }
  .post-content li {
-     font-size: 1.4rem;
+     font-size: 1.8rem;
      color: #262626;
      margin: 1.5rem auto 1.5rem;
 }
@@ -757,7 +755,7 @@
      -o-transition: all 0.2s ease-in-out;
      transition: all 0.2s ease-in-out;
      cursor: pointer;
-     font-family: "sans", sans !important;
+     font-family: sans;
      background: transparent !important;
 }
  .link_fix::selection {
@@ -1052,7 +1050,7 @@
   --complimentary1: hsl(var(--hue-complimentary1), 95%, 50%);
   --complimentary2: hsl(var(--hue-complimentary2), 95%, 50%);
 
-  --font-family: "Poppins", system-ui;
+  --font-family: sans;
 
   --bg-gradient: linear-gradient(
     to bottom,
