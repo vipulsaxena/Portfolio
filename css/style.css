@@ -1102,7 +1102,7 @@
   );
 }
 .text-gradient {
-  font-weight: 900 !important;
+  font-weight: 700;
   background-image: linear-gradient(
     45deg,
     var(--base) 25%,
