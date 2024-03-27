@@ -559,6 +559,9 @@ Inter
      .post-item .external-link {
          display: none;
     }
+     .post-item .title {
+        font-weight: 700;
+     }
 }
  .post-item .external-link p {
      display: flex;
