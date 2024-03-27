@@ -1,11 +1,5 @@
-@font-face {
-     font-family: 'sans';
-     src: url("../fonts/ibm-text.otf") format("opentype");
-}
- @font-face {
-     font-family: 'sans-serif';
-     src: url("../fonts/fj-medium.otf") format("opentype");
-}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap')
+
 /** * Reset some basic elements */
  body, h1, h2, h3, h4, h5, h6, p, blockquote, pre, hr, dl, dd, ol, ul, figure {
      margin: 0;
@@ -17,7 +11,8 @@
      font-size: 62.5%;
 }
  body {
-     font-family: sans;
+     font-family: "Inter", sans-serif;
+     font-optical-sizing: auto;
      font-weight: normal;
      font-size: 2rem;
      line-height: 1.6;
@@ -102,7 +97,9 @@
 }
  h1 {
      font-size: 3rem;
-     font-family: sans-serif;
+     font-family: "Inter", sans-serif;
+     font-weight: 700;
+     font-optical-sizing: auto;
 }
  @media screen and (max-width: 39rem) {
      h1 {
@@ -110,13 +107,19 @@
     }
 }
  h2 {
-     font: normal 2rem/1.6 "sans", sans-serif;
+     font-family: "Inter", sans-serif;
+     font-weight: bold;
+     font-size: 2rem;
 }
  h3 {
-     font: normal 2rem/1.6 "serif", sans-serif;
+     font-family: "Inter", sans-serif;
+     font-weight: bold;
+     font-size: 2.2rem;
 }
  h4, h5, h6 {
-     font: normal 1.2rem/1.6 "sans", sans-serif;
+     font-family: "Inter", sans-serif;
+     font-weight: normal;
+     font-size: 1.8rem;
 }
  h5, h6 {
      color: gray;
@@ -124,7 +127,8 @@
  a:link {
      position: relative;
      text-decoration: none;
-     font-family: sans;
+     font-family: "Inter", sans-serif;
+     font-optical-sizing: auto;
      padding: 0.2rem 0.6rem;
      color: inherit;
      background: rgba(38, 38, 38, 0.05);
@@ -145,7 +149,9 @@
      display: inline-flex;
      align-items: center;
      text-align: center;
-     font: normal 1.6rem/1.6 "sans", sans-serif;
+     font-size: 1.6rem;
+     font-family: "Inter", sans-serif;
+     font-optical-sizing: auto;
      border: none;
      padding: 0.75rem 1.875rem 0.9375rem;
      border-radius: 0.2rem;
@@ -189,7 +195,9 @@
      transition-delay: 0.3s;
 }
  a.button.tiny {
-     font: normal 1.2rem/1.6 "sans", sans-serif;
+     font-size: 1.2rem;
+     font-family: "Inter", sans-serif;
+     font-optical-sizing: auto;
      padding: 0.6rem 1.875rem 0.75rem;
 }
  a.button.highlight {
@@ -242,7 +250,8 @@
      border-bottom: #349C89 solid 0.2rem;
 }
  b, strong {
-     font-family: sans;
+     font-family: "Inter", sans-serif;
+     font-optical-sizing: auto;
      font-weight: normal;
      padding: 0.2rem 0.3rem;
      background: #ffda08;
@@ -273,7 +282,9 @@
      left: 0;
      min-width: 6rem;
      min-width: 18rem;
-     font: normal 1.2rem/1.6 "sans", sans-serif;
+     font-size: 1.2rem;
+     font-family: "Inter", sans-serif;
+     font-optical-sizing: auto;
      color: #FFF;
      background: #262626;
      padding: 1rem 1.5rem;
@@ -322,7 +333,9 @@
  .site-footer {
      margin-top: 3rem;
      padding: 3rem 0;
-     font: normal 1.2rem/0.8 "sans", sans-serif;
+     font-size: 1.2rem;
+     font-family: "Inter", sans-serif;
+     font-optical-sizing: auto;
      color: gray;
      text-align: center;
 }
@@ -446,7 +459,9 @@
      display: none;
 }
  .date {
-     font: normal 1.2rem/1.6 "sans", sans-serif;
+     font-size: 1.2rem;
+     font-family: "Inter", sans-serif;
+     font-optical-sizing: auto;
      color: #ababab;
      text-transform: uppercase;
      letter-spacing: 0.1rem;
@@ -480,6 +495,13 @@
      -webkit-transition: opacity 0.2s ease;
      transition: opacity 0.2s ease;
 }
+ .post-item:hover .status-icon-lock {
+     transform: translateX(-0.3rem) translateY(0) rotate(0);
+     -webkit-transition: transform 0.2s;
+     transition: transform 0.2s;
+     -webkit-transition-delay: 0.3s;
+     transition-delay: 0.3s;
+}
  .post-item:hover .status-icon-external {
      transform: translateX(0.3rem) translateY(-0.3rem) rotate(-45deg);
      -webkit-transition: transform 0.2s;
@@ -499,11 +521,15 @@
      flex-flow: row;
      align-items: baseline;
      justify-content: flex-start;
-     font: bold 1.8rem/2 "serif", sans-serif;
+     font-size: 1.8rem;
+     font-family: "Inter", sans-serif;
+     font-weight: bold;
+     font-optical-sizing: auto;
      color: #262626;
 }
  .post-item .description {
-     font: normal 1.6rem/1.8 "sans", sans-serif;
+     font-size: 1.6rem;
+     font-family: "Inter", sans-serif;
 }
  @media screen and (max-width: 39rem) {
      .post-item .description {
@@ -520,7 +546,8 @@
      position: absolute;
      bottom: -0.5rem;
      right: 0;
-     font: normal 1.4rem/1.6 "sans", sans-serif;
+     font-size: 1.4rem;
+     font-family: "Inter", sans-serif;
      color: gray;
      background: none;
 }
@@ -543,9 +570,16 @@
  .post-item ul {
      position: relative;
      display: flex;
-     align-items: flex-start;
      list-style: none;
-     margin: 0 auto;
+     margin: 0;
+     padding: 0;
+     align-items: center;
+}
+.post-item.top ul{
+     align-items: start;
+}
+.post-item.top figure {
+    margin-top: 12px;
 }
  .post-item ul .action--icon {
      z-index: 99;
@@ -560,6 +594,7 @@
      opacity: 0;
      -webkit-transition: opacity 0.2s ease;
      transition: opacity 0.2s ease;
+}
 }
  @media screen and (max-width: 39rem) {
      .post-item ul .action--icon {
@@ -585,10 +620,7 @@
          display: none;
     }
 }
- .post-item.featured figure {
-     margin-top: 12px;
- }
- .post-item figure {
+.post-item figure {
      position: relative;
      display: inline-block;
      height: 8rem;
@@ -597,6 +629,7 @@
      border-radius: 0.2rem;
      -webkit-transition: transform 0.6s;
      transition: transform 0.6s;
+     margin: 0;
 }
  .post-item figure svg {
      position: absolute;
@@ -671,7 +704,8 @@
 }
  .post-infos {
      margin: 1.5rem 0 3rem;
-     font: normal 1.2rem/1.6 "sans", sans-serif;
+     font-size: 1.6rem;
+     font-family: "Inter", sans-serif;
 }
  .post-infos__content {
      display: flex;
@@ -759,7 +793,8 @@
      -o-transition: all 0.2s ease-in-out;
      transition: all 0.2s ease-in-out;
      cursor: pointer;
-     font-family: sans;
+     font-family: "Inter", sans-serif;
+     font-optical-sizing: auto;
      background: transparent !important;
 }
  .link_fix::selection {
@@ -1056,7 +1091,7 @@
   --complimentary1: hsl(var(--hue-complimentary1), 95%, 50%);
   --complimentary2: hsl(var(--hue-complimentary2), 95%, 50%);
 
-  --font-family: sans;
+  --font-family: "Inter", sans-serif;
 
   --bg-gradient: linear-gradient(
     to bottom,
