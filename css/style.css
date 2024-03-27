@@ -585,6 +585,9 @@
          display: none;
     }
 }
+ .post-item.featured figure {
+     margin-top: 12px;
+ }
  .post-item figure {
      position: relative;
      display: inline-block;
