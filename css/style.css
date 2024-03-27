@@ -533,6 +533,7 @@ Inter
  .post-item .description {
      font-size: 1.6rem;
      font-family: "Inter", sans-serif;
+     margin-top: 0.8rem;
 }
  @media screen and (max-width: 39rem) {
      .post-item .description {
@@ -656,7 +657,8 @@ Inter
  .post-item.experience .role {
      font-size: 1.4rem;
      font-weight: 500;
-    line-height: 1.2rem;
+     line-height: 1.2rem;
+     margin-top: 0.6rem;
 }
  .post-item.experience .description {
      font-size: 1.6rem;
@@ -1165,4 +1167,8 @@ Inter
     top: 0;
     height: 100%;
     width: 100%;
+}
+
+.trg_cnt {
+    cursor: pointer;
 }
