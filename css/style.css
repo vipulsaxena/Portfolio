@@ -459,10 +459,10 @@
      display: none;
 }
  .date {
-     font-size: 1.2rem;
+     font-size: 1.5rem;
      font-family: "Inter", sans-serif;
      font-optical-sizing: auto;
-     color: #ababab;
+     color: #848484;
      text-transform: uppercase;
      letter-spacing: 0.1rem;
 }
