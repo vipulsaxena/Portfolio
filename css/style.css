@@ -19,7 +19,7 @@
  body {
      font-family: sans;
      font-weight: normal;
-     font-size: 1.8rem;
+     font-size: 2rem;
      line-height: 1.6;
      color: #262626;
      background-color: #FFF;
@@ -101,7 +101,7 @@
      font-weight: normal;
 }
  h1 {
-     font-size: 2.8rem;
+     font-size: 3rem;
      font-family: sans-serif;
 }
  @media screen and (max-width: 39rem) {
@@ -328,7 +328,7 @@
 }
  .container {
      position: relative;
-     max-width: 54rem;
+     max-width: 60rem;
      margin-right: auto;
      margin-left: auto;
      padding-left: 3rem;
@@ -499,11 +499,11 @@
      flex-flow: row;
      align-items: baseline;
      justify-content: flex-start;
-     font: normal 1.6rem/1.6 "serif", sans-serif;
+     font: bold 1.8rem/2 "serif", sans-serif;
      color: #262626;
 }
  .post-item .description {
-     font: normal 1.4rem/1.6 "sans", sans-serif;
+     font: normal 1.6rem/1.8 "sans", sans-serif;
 }
  @media screen and (max-width: 39rem) {
      .post-item .description {
@@ -543,7 +543,7 @@
  .post-item ul {
      position: relative;
      display: flex;
-     align-items: center;
+     align-items: flex-start;
      list-style: none;
      margin: 0 auto;
 }
@@ -588,8 +588,8 @@
  .post-item figure {
      position: relative;
      display: inline-block;
-     height: 6rem;
-     width: 9rem;
+     height: 8rem;
+     width: 10rem;
      overflow: hidden;
      border-radius: 0.2rem;
      -webkit-transition: transform 0.6s;
@@ -618,10 +618,11 @@
      width: 6rem;
 }
  .post-item.experience .role {
-     font-size: 1.2rem;
+     font-size: 1.4rem;
+     font-weight: bold;
 }
  .post-item.experience .description {
-     font-size: 1.4rem;
+     font-size: 1.6rem;
      margin-bottom: 0;
 }
  .post-item.note .author {
@@ -814,12 +815,14 @@
 }
  .ski-pill {
     background-color: #ffda08;
-     padding: 4px 12px;
-     line-height: 38px;
-     margin-right: 6px;
-     border-radius: 2px;
-     color: black;
-     font-size: 14px;
+    padding: 0px 13px;
+    line-height: 30px;
+    margin-right: 6px;
+    margin-bottom: 5px;
+    border-radius: 2px;
+    color: black;
+    font-size: 14px;
+    display: inline-block;
 }
 .post-img {
   text-align: center;
