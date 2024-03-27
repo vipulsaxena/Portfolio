@@ -523,7 +523,7 @@
      justify-content: flex-start;
      font-size: 1.8rem;
      font-family: "Inter", sans-serif;
-     font-weight: bold;
+     font-weight: 600;
      font-optical-sizing: auto;
      color: #262626;
 }
@@ -655,7 +655,8 @@
 }
  .post-item.experience .role {
      font-size: 1.4rem;
-     font-weight: bold;
+     font-weight: 500;
+    line-height: 1.2rem;
 }
  .post-item.experience .description {
      font-size: 1.6rem;
@@ -858,9 +859,10 @@
     margin-right: 6px;
     margin-bottom: 5px;
     border-radius: 2px;
-    color: black;
+    color: #404040;
     font-size: 14px;
     display: inline-block;
+    font-weight: 500;
 }
 .post-img {
   text-align: center;
