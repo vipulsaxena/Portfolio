@@ -533,7 +533,7 @@ Inter
  .post-item .description {
      font-size: 1.6rem;
      font-family: "Inter", sans-serif;
-     margin-top: 0.8rem;
+     margin-top: 1.8rem;
 }
  @media screen and (max-width: 39rem) {
      .post-item .description {
