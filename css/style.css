@@ -208,10 +208,10 @@ Inter
 }
 /** * Clearfix */
  hr {
-     margin: 1rem auto;
+     margin: 2rem auto;
      border: 0;
      height: 0.1rem;
-     background: #f7f7f7;
+/*     background: #f7f7f7;*/
 }
  blockquote {
      position: relative;
@@ -470,7 +470,13 @@ Inter
 }
  .post-item {
      position: relative;
-     padding: 0.75rem 0 0.75rem;
+     padding: 2.4rem;
+     border-radius: 16px;
+     overflow: hidden;
+    background: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
+    backdrop-filter: blur(10px); /* Applies the blur effect */
+    -webkit-backdrop-filter: blur(10px); /* For Safari */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow for the glass effect */
 }
  .post-item :link {
      padding: 0;
@@ -488,7 +494,7 @@ Inter
      transition: all 0.2s ease;
 }
  .post-item:hover::before {
-     background: #f7f7f7;
+     background: #ffffff;
      -webkit-transition: all 0.2s ease;
      transition: all 0.2s ease;
 }
@@ -525,7 +531,7 @@ Inter
      justify-content: flex-start;
      font-size: 1.8rem;
      font-family: "Inter", sans-serif;
-     font-weight: 500;
+     font-weight: 600;
      font-optical-sizing: auto;
      color: #262626;
      margin-top: 0;
@@ -533,7 +539,7 @@ Inter
  .post-item .description {
      font-size: 1.6rem;
      font-family: "Inter", sans-serif;
-     margin-top: 1.8rem;
+     margin-top: 0.8rem;
 }
  @media screen and (max-width: 39rem) {
      .post-item .description {
@@ -594,7 +600,7 @@ Inter
      right: 0;
      height: 100%;
      width: 18rem;
-     background-image: linear-gradient(to right, rgba(248, 247, 247, 0), #f7f7f7, #f7f7f7);
+     background-image: linear-gradient(to right, rgba(248, 247, 247, 0), #ffffff91, #ffffff);
      opacity: 0;
      -webkit-transition: opacity 0.2s ease;
      transition: opacity 0.2s ease;
@@ -634,6 +640,7 @@ Inter
      -webkit-transition: transform 0.6s;
      transition: transform 0.6s;
      margin: 0;
+    border-radius: 4px;
 }
  .post-item figure svg {
      position: absolute;
@@ -648,11 +655,10 @@ Inter
      height: 100%;
      width: auto;
      transform: translateX(-50%) translateY(-50%);
-     border-radius: 4px;
 }
- .post-item.experience {
+/* .post-item.experience {
      padding-bottom: 0;
-}
+}*/
  .post-item.experience figure {
      height: 6rem;
      width: 6rem;
@@ -1175,3 +1181,4 @@ Inter
 .trg_cnt {
     cursor: pointer;
 }
+
