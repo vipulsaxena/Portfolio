@@ -255,7 +255,8 @@ Inter
      font-family: "Inter", sans-serif;
      font-optical-sizing: auto;
      font-weight: normal;
-     padding: 0.2rem 0.3rem;
+    border-radius: 4px;
+    padding: 8px 12px;
      background: #ffda08;
 }
  b.green, strong.green {
@@ -330,7 +331,7 @@ Inter
      width: 100%;
      padding: 1.5rem 0 1rem;
      background: transparent !important;
-     border-top: 0.1rem solid #f7f7f7;
+/*     border-top: 0.1rem solid #f7f7f7;*/
 }
  .site-footer {
      margin-top: 3rem;
@@ -868,12 +869,13 @@ Inter
     padding: 0px 13px;
     line-height: 30px;
     margin-right: 6px;
-    margin-bottom: 5px;
-    border-radius: 2px;
+    margin-bottom: 12px;
+    border-radius: 12px;
     color: #404040;
     font-size: 14px;
     display: inline-block;
     font-weight: 500;
+    border-radius: 24px;
 }
 .post-img {
   text-align: center;
