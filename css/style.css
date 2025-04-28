@@ -53,6 +53,7 @@ Inter
  .status-icon {
      height: 1.2rem;
      width: 1.2rem;
+     padding-left: 1.5rem;
 }
  .status-icon-external, .status-icon-link {
      background: url("../images/icon-arrow--direction.svg") no-repeat center center;
@@ -347,8 +348,8 @@ Inter
      max-width: 60rem;
      margin-right: auto;
      margin-left: auto;
-     padding-left: 3rem;
-     padding-right: 3rem;
+     padding-left: 1.2rem;
+     padding-right: 1.2rem;
 }
  .container_ovr {
      max-width: 84rem;
@@ -543,9 +544,17 @@ Inter
      margin-top: 0.8rem;
 }
  @media screen and (max-width: 39rem) {
+    .post-item .lh-djust{
+        line-height: 4rem;
+    }
+    .post-item {
+        padding: 1.4rem;
+    }
      .post-item .description {
              width: 90%;
              text-align: center;
+    }
+    }
     }
 }
  .post-item .status-icon {
@@ -570,6 +579,7 @@ Inter
      .post-item .title {
         font-weight: 700;
         justify-content: center;
+        text-align: center;
      }
 }
  .post-item .external-link p {
