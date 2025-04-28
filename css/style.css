@@ -545,6 +545,7 @@ Inter
  @media screen and (max-width: 39rem) {
      .post-item .description {
              width: 90%;
+             text-align: center;
     }
 }
  .post-item .status-icon {
@@ -568,6 +569,7 @@ Inter
     }
      .post-item .title {
         font-weight: 700;
+        justify-content: center;
      }
 }
  .post-item .external-link p {
@@ -587,7 +589,8 @@ Inter
      list-style: none;
      margin: 0;
      padding: 0;
-     align-items: normal;
+    text-align: left;
+    margin-bottom: 24px;
 }
 .post-item.top ul{
      align-items: start;
@@ -628,7 +631,16 @@ Inter
 }
  @media screen and (max-width: 39rem) {
      .post-item ul li.cover {
-         display: none;
+        display: block;  /* Make the cover visible on mobile */
+        width: 100%;     /* Make the cover full width */
+        margin-bottom: 16px;
+                text-align: center;
+    }
+     .post-item ul {
+        flex-wrap: wrap; 
+    }
+    .post-item.experience .role {
+        text-align: center;
     }
 }
 .post-item figure {
@@ -668,7 +680,7 @@ Inter
      font-size: 1.4rem;
      font-weight: 500;
      line-height: 1.2rem;
-     margin-top: 0.6rem;
+     margin: 1rem 0;
 }
  .post-item.experience .description {
      font-size: 1.6rem;
