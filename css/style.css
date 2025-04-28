@@ -544,6 +544,9 @@ Inter
      margin-top: 0.8rem;
 }
  @media screen and (max-width: 39rem) {
+    .post-item ul {
+        justify-content: space-around;
+    }
     .post-item .lh-djust{
         line-height: 4rem;
     }
@@ -551,7 +554,7 @@ Inter
         padding: 1.4rem;
     }
      .post-item .description {
-             width: 90%;
+             width: 100%;
              text-align: center;
     }
     }
@@ -600,7 +603,7 @@ Inter
      margin: 0;
      padding: 0;
     text-align: left;
-    margin-bottom: 24px;
+/*    margin-bottom: 24px;*/
 }
 .post-item.top ul{
      align-items: start;
