@@ -644,7 +644,8 @@ Inter
         display: block;  /* Make the cover visible on mobile */
         width: 100%;     /* Make the cover full width */
         margin-bottom: 16px;
-                text-align: center;
+        text-align: center;
+        margin-right: 0;
     }
      .post-item ul {
         flex-wrap: wrap; 
