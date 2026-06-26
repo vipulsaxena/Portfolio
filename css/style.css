@@ -7,6 +7,10 @@
  html {
      box-sizing: border-box;
      font-size: 62.5%;
+     scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+     html { scroll-behavior: auto; }
 }
  body {
      font-family: "Inter", sans-serif;
@@ -479,6 +483,12 @@
 }
  .post-item :link {
      padding: 0;
+     background: transparent;
+}
+ .post-item a:link,
+ .post-item a:visited {
+     padding: 0;
+     background: transparent;
 }
  .post-item::before {
      content: '';
@@ -1140,7 +1150,7 @@
   height: 100%;
   pointer-events: none;
   z-index: -1;
-  opacity: 0.2;
+  opacity: 0.3;
 }
 :root {
   --dark-color: hsl(var(--hue), 100%, 9%);
@@ -1224,5 +1234,230 @@
 
 .trg_cnt {
     cursor: pointer;
+}
+
+/* ============================================================
+   LIQUID GLASS  —  premium CSS glass (lightweight, no WebGL)
+   ============================================================ */
+
+/* Glossy translucent glass: frosted backdrop + specular highlights.
+   Static look reads as glass; an optional cursor sheen adds interactivity. */
+.liquid {
+    position: relative;
+    --mx: 50%;
+    --my: 0%;
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.04) 48%),
+        rgba(255, 255, 255, 0.06);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    backdrop-filter: blur(16px) saturate(180%);
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.08),
+        inset 0 1px 1px rgba(255, 255, 255, 0.75),
+        inset 0 -1px 1px rgba(255, 255, 255, 0.25),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+    isolation: isolate;
+    -webkit-transition: background 0.25s ease, box-shadow 0.25s ease;
+    transition: background 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Hover / pressed state: solid 100% white container. */
+.liquid:hover,
+.liquid.lg-active,
+.liquid:active {
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow:
+        0 14px 40px rgba(0, 0, 0, 0.10),
+        inset 0 0 0 1px rgba(0, 0, 0, 0.04);
+}
+
+/* Keep card content above the glass sheen layers. */
+.liquid > * { position: relative; z-index: 1; }
+
+/* The legacy white hover background would hide the glass — disable it. */
+.liquid.post-item::before { display: none !important; }
+
+/* Cursor-follow specular sheen — cheap (single radial-gradient repaint). */
+.liquid::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 0;
+    background: radial-gradient(16rem 16rem at var(--mx) var(--my),
+        rgba(255, 255, 255, 0.30), rgba(255, 255, 255, 0) 60%);
+    opacity: 0;
+    -webkit-transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease;
+}
+.liquid.lg-active::after { opacity: 1; }
+
+/* Press ripple — one cheap, GPU-friendly keyframe. */
+.liquid .lg-ripple {
+    position: absolute;
+    z-index: 0;
+    width: 6rem;
+    height: 6rem;
+    margin: -3rem 0 0 -3rem;
+    border-radius: 50%;
+    pointer-events: none;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0) 70%);
+    transform: scale(0);
+    opacity: 0.7;
+    will-change: transform, opacity;
+    -webkit-animation: lg-ripple 0.6s ease-out forwards;
+    animation: lg-ripple 0.6s ease-out forwards;
+}
+@-webkit-keyframes lg-ripple { to { transform: scale(6); opacity: 0; } }
+@keyframes lg-ripple { to { transform: scale(6); opacity: 0; } }
+
+/* Accessible keyboard focus state on glass interactive elements. */
+.liquid a:focus-visible,
+.liquid button:focus-visible,
+.liquid[tabindex]:focus-visible {
+    outline: 2px solid #3096FF;
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .liquid,
+    .liquid::after { -webkit-transition: none; transition: none; }
+    .liquid .lg-ripple { display: none; }
+}
+
+/* ============================================================
+   HERO META  —  code-adjacent signature strings
+   ============================================================ */
+.hero-meta {
+    margin-top: 1.8rem;
+    font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+    font-size: 1.2rem;
+    line-height: 1.9;
+    color: #7a7a7a;
+    letter-spacing: 0.01em;
+}
+.hero-meta > span { display: block; }
+.hero-meta b { color: #262626; font-weight: 600; }
+.hero-meta .tok { color: #3096FF; }
+.hero-nav { display: contents; }
+
+/* ============================================================
+   ARCHIVE  —  compressed text-only list of older work
+   ============================================================ */
+.archive { margin: 2rem auto 1rem; }
+.archive__title {
+    font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+    font-size: 1.3rem;
+    color: #9a9a9a;
+    letter-spacing: 0.03em;
+    margin-bottom: 1.4rem;
+    display: block;
+}
+.archive__list { list-style: none; margin: 0; padding: 0; }
+.archive__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1.6rem;
+    padding: 1.1rem 0.2rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.07);
+    font-size: 1.5rem;
+}
+.archive__list .archive__item:last-child { border-bottom: 1px solid rgba(0, 0, 0, 0.07); }
+.archive__item a:link,
+.archive__item a:visited {
+    color: #262626;
+    text-decoration: none;
+    background: transparent;
+    padding: 0;
+    -webkit-transition: color 0.2s ease;
+    transition: color 0.2s ease;
+}
+.archive__item a:hover { color: #000; background: transparent; }
+.archive__meta {
+    font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+    font-size: 1.2rem;
+    color: #9a9a9a;
+    white-space: nowrap;
+}
+@media screen and (max-width: 39rem) {
+    .archive__item { flex-direction: column; gap: 0.3rem; }
+}
+
+/* ============================================================
+   SCHEMATIC  —  "spaceship manual" bento grid for skills
+   ============================================================ */
+.schematic__label {
+    font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+    font-size: 1.3rem;
+    color: #8a8a8a;
+    letter-spacing: 0.02em;
+}
+.schematic__label .tok { color: #3096FF; }
+.schematic { padding: 0 !important; }
+.schematic .schematic__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    gap: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06);
+    counter-reset: cell;
+}
+.schematic__cell {
+    padding: 1.3rem 1.6rem;
+    font-size: 1.4rem;
+    color: #333;
+    box-shadow: inset -1px -1px 0 0 rgba(0, 0, 0, 0.045);
+    -webkit-transition: background 0.2s ease, color 0.2s ease;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+.schematic__cell::before {
+    counter-increment: cell;
+    content: counter(cell, decimal-leading-zero) "  ";
+    font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+    font-size: 1.1rem;
+    color: #b8b8b8;
+}
+.schematic__cell:hover { background: rgba(48, 150, 255, 0.06); color: #111; }
+
+/* ============================================================
+   SONIC TOGGLE  —  muted audio feedback control
+   ============================================================ */
+#sonic-toggle {
+    position: fixed;
+    top: 1.4rem;
+    right: 1.6rem;
+    z-index: 100000;
+    font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+    font-size: 1.15rem;
+    letter-spacing: 0.03em;
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: rgba(255, 255, 255, 0.55);
+    -webkit-backdrop-filter: blur(10px) saturate(160%);
+    backdrop-filter: blur(10px) saturate(160%);
+    color: #555;
+    cursor: pointer;
+    -webkit-transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+#sonic-toggle:hover { color: #000; border-color: rgba(0, 0, 0, 0.28); background: rgba(255, 255, 255, 0.75); }
+#sonic-toggle:focus-visible { outline: 2px solid #3096FF; outline-offset: 2px; }
+#sonic-toggle[aria-pressed="true"] { color: #b0b0b0; }
+#sonic-toggle .dot {
+    display: inline-block;
+    width: 0.6rem; height: 0.6rem;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+    background: #3096FF;
+    vertical-align: middle;
+}
+#sonic-toggle[aria-pressed="true"] .dot { background: #cfcfcf; }
+@media screen and (max-width: 39rem) {
+    #sonic-toggle { top: auto; bottom: 1.2rem; right: 1.2rem; }
 }
 
