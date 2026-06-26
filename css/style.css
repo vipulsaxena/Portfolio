@@ -127,7 +127,7 @@ Inter
  h5, h6 {
      color: gray;
 }
- a:link {
+ a:link:not(.button) {
      position: relative;
      text-decoration: none;
      font-family: "Inter", sans-serif;
@@ -147,7 +147,7 @@ Inter
      -webkit-transition: all 0.2s ease;
      transition: all 0.2s ease;
 }
- a.button {
+ .button {
      position: relative;
      display: inline-flex;
      align-items: center;
@@ -159,51 +159,54 @@ Inter
      padding: 0.75rem 1.875rem 0.9375rem;
      border-radius: 0.2rem;
      background: rgba(38, 38, 38, 0.1);
+     color: inherit;
+     text-decoration: none;
+     line-height: 1.6;
      cursor: pointer;
 }
  @media screen and (max-width: 39rem) {
-     a.button {
+     .button {
          justify-content: space-between;
          width: calc(100% - 3.75rem);
     }
 }
- a.button--bright {
+ .button--bright {
      color: #262626;
      background: #FFF;
 }
- a.button--green {
+ .button--green {
      color: #FFF;
      background: #6BBD2E;
 }
- a.button--combo {
+ .button--combo {
      margin: 1rem 1rem 0 auto;
 }
- a.button--combo .status-icon {
+ .button--combo .status-icon {
      margin-left: 1rem;
      -webkit-transition: transform 0.15s;
      transition: transform 0.15s;
 }
- a.button--combo:hover .status-icon-external {
+ .button--combo:hover .status-icon-external {
      transform: translateX(0.3rem) translateY(-0.3rem) rotate(-45deg);
      -webkit-transition: transform 0.2s;
      transition: transform 0.2s;
      -webkit-transition-delay: 0.3s;
      transition-delay: 0.3s;
 }
- a.button--combo:hover .status-icon-mail, a.button--combo:hover .status-icon-direction {
+ .button--combo:hover .status-icon-mail, .button--combo:hover .status-icon-direction {
      transform: translateX(0.3rem) translateY(0) rotate(0);
      -webkit-transition: transform 0.2s;
      transition: transform 0.2s;
      -webkit-transition-delay: 0.3s;
      transition-delay: 0.3s;
 }
- a.button.tiny {
+ .button.tiny {
      font-size: 1.2rem;
      font-family: "Inter", sans-serif;
      font-optical-sizing: auto;
      padding: 0.6rem 1.875rem 0.75rem;
 }
- a.button.highlight {
+ .button.highlight {
      color: #FFF;
      background: #6BBD2E;
 }
@@ -845,6 +848,24 @@ Inter
  .link_fix:hover i{
      border-bottom: #349C89 solid 0.6rem;
 }
+ button.link_fix {
+     border: 0;
+     padding: 0;
+     font: inherit;
+     line-height: inherit;
+}
+ .visually-hidden {
+     position: absolute;
+     width: 1px;
+     height: 1px;
+     margin: -1px;
+     padding: 0;
+     border: 0;
+     overflow: hidden;
+     clip: rect(0 0 0 0);
+     clip-path: inset(50%);
+     white-space: nowrap;
+}
  .hotlinks{
      font-size: 18px;
      margin-right: 24px;
@@ -937,8 +958,11 @@ Inter
 }
 .gfq-badge {
     background: #71C28E; /*Change this colour to change the circle*/
+    position: relative;
     width: 60px;
     height: 60px;
+    border: none;
+    padding: 0;
     border-radius: 100%;
     box-shadow: 0px 3px 3px rgba(0,0,0,0.1);
     transition: all 0.1s ease-in-out;
@@ -946,10 +970,10 @@ Inter
     float: right;
 }
 .gfq-badge img {
-    position: relative;
+    position: absolute;
     left: 50%;
-    transform: translate(-50% ,-50%);
-    top: 40%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     border: none!important;
     width: 50%!important;
 }
