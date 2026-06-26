@@ -4,6 +4,15 @@
 <head>
     <!-- Priority tags. These must come first. -->
     <meta charset="utf-8">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-35LE56GGGS"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-35LE56GGGS');
+      gtag('config', 'GT-5TN254F');
+    </script>
     <meta http-equiv="x-ua-compatible" content="ie=edge; chrome=1">
     <!-- Render Chrome if available or using latest version of Internet Explorer (Recommended). -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,17 +24,11 @@
    <!-- Search Eengine and Browser Meta Tags. -->
     <meta name="description" content="Redesigning Silent Ninja, a smart call-blocking Android app — a visual and UX refresh of its core flows.">
     <!-- Keep under 500 characters -->
-    <meta name="abstract" content="Vipul Saxena — Senior Product Designer Driving Clarity & Growth">
-    <!-- Keep uder 100 characters -->
-    <meta name="rating" content="General">
-    <!-- General, 14 Years, Mature or Restricted -->
     <meta name="keywords" content="Vipul Saxena, Senior Product Designer, Berlin, UX Design, UI Design, Product Strategy, User-Centered Design, Design Sprints, Product Discovery, Fintech, AI, Digital Products, Collaboration">
     <meta name="author" content="Vipul Saxena" />
 
     <!-- For SEO -->
-    <meta name="google" content="translate" />
     <meta name="google-site-verification" content="_Pw468vxdtRMyLByV9sPOX9VYJasRQnTRz_-iD-x_e8" />
-    <meta name='google' content='nositelinkssearchbox' />
     <meta name="majestic-site-verification" content="MJ12_bd697943-0265-4d5f-9db4-60760044d91b" />
     <meta name="robots" content="index, follow" />
 
@@ -55,6 +58,9 @@
 
     <link rel="alternate" type="application/rss+xml" title="Vipul Saxena | Advocating & Evangelizing UX Design" href="/sitemap.xml">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap">
     <link rel="stylesheet" href="css/style.css">
     <link href="css/zoom.css" rel="stylesheet">
 </head>
@@ -69,7 +75,7 @@
 
                 <!-- <div class="post-header">
                     <figure class="post-cover">
-                        <img class="lazy" data-original="images/silent.jpg">
+                        <img loading="lazy" decoding="async" src="images/silent.jpg">
                     </figure>
                 </div> -->
                         <h1 style="margin-top:24rem">
@@ -135,15 +141,9 @@
 
     <script src="js/jquery-3.1.1.min.js"></script>
     <script src="js/zoom.js"></script>
-    <script src="js/jquery.lazyload.js"></script>
     <script src="js/transition.js"></script>
     <script src="js/fontfaceobserver.js"></script>
     <script>
-        //lazyload of images
-        $("img").lazyload({
-            effect: "fadeIn"
-        });
-
         //Font observer loader
         var font = new FontFaceObserver('sans');
         var font = new FontFaceObserver('serif');

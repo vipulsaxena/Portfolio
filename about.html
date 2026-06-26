@@ -4,6 +4,15 @@
 <head>
     <!-- Priority tags. These must come first. -->
     <meta charset="utf-8">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-35LE56GGGS"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-35LE56GGGS');
+      gtag('config', 'GT-5TN254F');
+    </script>
     <meta http-equiv="x-ua-compatible" content="ie=edge; chrome=1">
     <!-- Render Chrome if available or using latest version of Internet Explorer (Recommended). -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,17 +22,11 @@
     <!-- Search Eengine and Browser Meta Tags. -->
     <meta name="description" content="About Vipul Saxena — a Berlin-based Senior Product Designer with 12+ years across Raisin, OLX, N26, Gojek and Hike. Experience, skills, tools and current focus.">
     <!-- Keep under 500 characters -->
-    <meta name="abstract" content="Vipul Saxena — Senior Product Designer Driving Clarity & Growth">
-    <!-- Keep uder 100 characters -->
-    <meta name="rating" content="General">
-    <!-- General, 14 Years, Mature or Restricted -->
     <meta name='keywords' content='Vipul Saxena,hci,accessibility,empathyinaction,inclusivedesign, 21stcenturylearning' />
     <meta name="author" content="Vipul Saxena" />
 
     <!-- For SEO -->
-    <meta name="google" content="translate" />
     <meta name="google-site-verification" content="_Pw468vxdtRMyLByV9sPOX9VYJasRQnTRz_-iD-x_e8" />
-    <meta name='google' content='nositelinkssearchbox' />
     <meta name="majestic-site-verification" content="MJ12_bd697943-0265-4d5f-9db4-60760044d91b" />
     <meta name="robots" content="index, follow" />
 
@@ -50,6 +53,9 @@
 
     <link rel="alternate" type="application/rss+xml" title="Vipul Saxena | Advocating & Evangelizing UX Design" href="/sitemap.xml">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap">
     <link rel="stylesheet" href="css/style.css">
     <link href="css/zoom.css" rel="stylesheet">
 
@@ -91,7 +97,7 @@
                             <ul>
                                 <li class="cover">
                                     <figure class="tiny">
-                                        <img class="lazy" alt="Raisin logo" data-original="images/raisin_sm.png">
+                                        <img loading="lazy" decoding="async" src="images/raisin_sm.png" alt="Raisin logo">
                                     </figure>
                                 </li>
                                 <li class="infos">
@@ -118,7 +124,7 @@
                             <ul>
                                 <li class="cover">
                                     <figure class="tiny">
-                                        <img class="lazy" alt="OLX Group logo" data-original="images/olx_sm.png">
+                                        <img loading="lazy" decoding="async" src="images/olx_sm.png" alt="OLX Group logo">
                                     </figure>
                                 </li>
                                 <li class="infos">
@@ -145,7 +151,7 @@
                         <ul>
                             <li class="cover">
                                 <figure class="tiny">
-                                    <img class="lazy" alt="N26 logo" data-original="images/n26_sm.png">
+                                    <img loading="lazy" decoding="async" src="images/n26_sm.png" alt="N26 logo">
                                 </figure>
                             </li>
                             <li class="infos">
@@ -173,7 +179,7 @@
                         <ul>
                             <li class="cover">
                                 <figure class="tiny">
-                                    <img class="lazy" alt="Gojek logo" data-original="images/gojek_sm.png">
+                                    <img loading="lazy" decoding="async" src="images/gojek_sm.png" alt="Gojek logo">
                                 </figure>
                             </li>
                             <li class="infos">
@@ -202,7 +208,7 @@
                         <ul>
                             <li class="cover">
                                 <figure class="tiny">
-                                    <img class="lazy" alt="Hike logo" data-original="images/hike_sm.png" width="auto" height="100%">
+                                    <img loading="lazy" decoding="async" src="images/hike_sm.png" alt="Hike logo" width="auto" height="100%">
                                 </figure>
                             </li>
                             <li class="infos">
@@ -226,7 +232,7 @@
                         <ul>
                             <li class="cover">
                                 <figure class="tiny">
-                                    <img class="lazy" alt="InstaLively logo" data-original="images/insta_sm.png" width="auto" height="100%">
+                                    <img loading="lazy" decoding="async" src="images/insta_sm.png" alt="InstaLively logo" width="auto" height="100%">
                                 </figure>
                             </li>
                             <li class="infos">
@@ -255,7 +261,7 @@
                         <ul>
                             <li class="cover">
                                 <figure class="tiny">
-                                    <img class="lazy" alt="GrownOut logo" data-original="images/grownout_sm.png" width="auto" height="100%">
+                                    <img loading="lazy" decoding="async" src="images/grownout_sm.png" alt="GrownOut logo" width="auto" height="100%">
                                 </figure>
                             </li>
                             <li class="infos">
@@ -282,7 +288,7 @@
                         <ul>
                             <li class="cover">
                                 <figure class="tiny">
-                                    <img class="lazy" alt="inoXapps logo" data-original="images/inox_sm.png" width="auto" height="100%">
+                                    <img loading="lazy" decoding="async" src="images/inox_sm.png" alt="inoXapps logo" width="auto" height="100%">
                                 </figure>
                             </li>
                             <li class="infos">
@@ -416,17 +422,11 @@
 
     <script src="js/jquery-3.1.1.min.js"></script>
     <script src="js/zoom.js"></script>
-    <script src="js/jquery.lazyload.js"></script>
     <script src="js/transition.js"></script>
     <script src="js/fontfaceobserver.js"></script>
     <script type="text/javascript" src="js/vanilla-tilt.min.js"></script>
 
     <script>
-        //lazyload of images
-        $("img").lazyload({
-            effect: "fadeIn"
-        });
-
         //Font observer loader
         var font = new FontFaceObserver('sans');
         var font = new FontFaceObserver('serif');
