@@ -1,12 +1,106 @@
 import * as PIXI from "https://cdn.skypack.dev/pixi.js@5.x";
 import { KawaseBlurFilter } from "https://cdn.skypack.dev/@pixi/filter-kawase-blur@3.2.0";
-import SimplexNoise from "https://cdn.skypack.dev/simplex-noise@3.0.0";
-import hsl from "https://cdn.skypack.dev/hsl-to-hex";
-import debounce from "https://esm.sh/debounce";
+
+// NOTE: simplex-noise / hsl-to-hex / debounce were previously imported from
+// skypack/esm.sh. The simplex-noise sub-resource intermittently fails CORS,
+// which made its `import` fail and aborted this whole module (no orbs, dead
+// "AI Colors" button). These three tiny helpers are inlined below so the
+// background works reliably with no CDN/CORS/version risk.
 
 // return a random number within a range
 function random(min, max) {
   return Math.random() * (max - min) + min;
+}
+
+// debounce a function so it only fires after `wait` ms of inactivity
+function debounce(fn, wait) {
+  let t;
+  return function (...args) {
+    clearTimeout(t);
+    t = setTimeout(() => fn.apply(this, args), wait);
+  };
+}
+
+// convert HSL (h:0-360, s/l:0-100) to a "#rrggbb" string (matches hsl-to-hex)
+function hslToHex(h, s, l) {
+  l /= 100;
+  const a = (s * Math.min(l, 1 - l)) / 100;
+  const f = (n) => {
+    const k = (n + h / 30) % 12;
+    const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+    return Math.round(255 * color)
+      .toString(16)
+      .padStart(2, "0");
+  };
+  return `#${f(0)}${f(8)}${f(4)}`;
+}
+
+// Compact 2D simplex noise (adapted from simplex-noise.js by Jonas Wagner, MIT)
+function makeNoise2D(rand = Math.random) {
+  const F2 = 0.5 * (Math.sqrt(3) - 1);
+  const G2 = (3 - Math.sqrt(3)) / 6;
+  const grad = new Float64Array([
+    1, 1, -1, 1, 1, -1, -1, -1, 1, 0, -1, 0, 1, 0, -1, 0, 0, 1, 0, -1, 0, 1, 0, -1
+  ]);
+  const p = new Uint8Array(256);
+  for (let i = 0; i < 256; i++) p[i] = i;
+  for (let i = 255; i > 0; i--) {
+    const n = Math.floor((i + 1) * rand());
+    const q = p[i];
+    p[i] = p[n];
+    p[n] = q;
+  }
+  const perm = new Uint8Array(512);
+  const permMod12 = new Uint8Array(512);
+  for (let i = 0; i < 512; i++) {
+    perm[i] = p[i & 255];
+    permMod12[i] = perm[i] % 12;
+  }
+  return function noise2D(x, y) {
+    let n0 = 0;
+    let n1 = 0;
+    let n2 = 0;
+    const s = (x + y) * F2;
+    const i = Math.floor(x + s);
+    const j = Math.floor(y + s);
+    const t = (i + j) * G2;
+    const x0 = x - (i - t);
+    const y0 = y - (j - t);
+    let i1;
+    let j1;
+    if (x0 > y0) {
+      i1 = 1;
+      j1 = 0;
+    } else {
+      i1 = 0;
+      j1 = 1;
+    }
+    const x1 = x0 - i1 + G2;
+    const y1 = y0 - j1 + G2;
+    const x2 = x0 - 1 + 2 * G2;
+    const y2 = y0 - 1 + 2 * G2;
+    const ii = i & 255;
+    const jj = j & 255;
+    let t0 = 0.5 - x0 * x0 - y0 * y0;
+    if (t0 >= 0) {
+      const gi0 = permMod12[ii + perm[jj]] * 2;
+      t0 *= t0;
+      n0 = t0 * t0 * (grad[gi0] * x0 + grad[gi0 + 1] * y0);
+    }
+    let t1 = 0.5 - x1 * x1 - y1 * y1;
+    if (t1 >= 0) {
+      const gi1 = permMod12[ii + i1 + perm[jj + j1]] * 2;
+      t1 *= t1;
+      n1 = t1 * t1 * (grad[gi1] * x1 + grad[gi1 + 1] * y1);
+    }
+    let t2 = 0.5 - x2 * x2 - y2 * y2;
+    if (t2 >= 0) {
+      const gi2 = permMod12[ii + 1 + perm[jj + 1]] * 2;
+      t2 *= t2;
+      n2 = t2 * t2 * (grad[gi2] * x2 + grad[gi2 + 1] * y2);
+    }
+    return 70 * (n0 + n1 + n2);
+  };
 }
 
 // map a number from 1 range to another
@@ -15,7 +109,7 @@ function map(n, start1, end1, start2, end2) {
 }
 
 // Create a new simplex noise instance
-const simplex = new SimplexNoise();
+const noise2D = makeNoise2D();
 
 // ColorPalette class
 class ColorPalette {
@@ -34,15 +128,15 @@ class ColorPalette {
     this.lightness = 50;
 
     // define a base color
-    this.baseColor = hsl(this.hue, this.saturation, this.lightness);
+    this.baseColor = hslToHex(this.hue, this.saturation, this.lightness);
     // define a complimentary color, 30 degress away from the base
-    this.complimentaryColor1 = hsl(
+    this.complimentaryColor1 = hslToHex(
       this.complimentaryHue1,
       this.saturation,
       this.lightness
     );
     // define a second complimentary color, 60 degrees away from the base
-    this.complimentaryColor2 = hsl(
+    this.complimentaryColor2 = hslToHex(
       this.complimentaryHue2,
       this.saturation,
       this.lightness
@@ -142,9 +236,9 @@ class Orb {
 
   update() {
     // self similar "psuedo-random" or noise values at a given point in "time"
-    const xNoise = simplex.noise2D(this.xOff, this.xOff);
-    const yNoise = simplex.noise2D(this.yOff, this.yOff);
-    const scaleNoise = simplex.noise2D(this.xOff, this.yOff);
+    const xNoise = noise2D(this.xOff, this.xOff);
+    const yNoise = noise2D(this.yOff, this.yOff);
+    const scaleNoise = noise2D(this.xOff, this.yOff);
 
     // map the xNoise/yNoise values (between -1 and 1) to a point within the orb's bounds
     this.x = map(xNoise, -1, 1, this.bounds["x"].min, this.bounds["x"].max);
@@ -185,6 +279,12 @@ const app = new PIXI.Application({
   transparent: true
 });
 
+// Use the blur filter bundled inside pixi.js so it shares the same @pixi/core
+// as the renderer. (A standalone @pixi/filter-* import pulls in a second,
+// mismatched core and throws here, which previously aborted the whole script
+// and left the "AI Colors" button dead.)
+// Kawase blur gives the wide, even, soft spread used on the live site
+// (a Gaussian PIXI.filters.BlurFilter falls off too fast and looks sharp).
 app.stage.filters = [new KawaseBlurFilter(30, 10, true)];
 
 // Create colour palette
@@ -216,9 +316,9 @@ if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
   });
 }
 
-document
-  .querySelector(".overlay__btn--colors")
-  .addEventListener("click", () => {
+const colorsBtn = document.querySelector(".overlay__btn--colors");
+if (colorsBtn) {
+  colorsBtn.addEventListener("click", () => {
     colorPalette.setColors();
     colorPalette.setCustomProperties();
 
@@ -226,3 +326,4 @@ document
       orb.fill = colorPalette.randomColor();
     });
   });
+}
