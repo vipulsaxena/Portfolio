@@ -149,6 +149,7 @@ Inter
 }
  .button {
      position: relative;
+     box-sizing: border-box;
      display: inline-flex;
      align-items: center;
      text-align: center;
@@ -167,7 +168,7 @@ Inter
  @media screen and (max-width: 39rem) {
      .button {
          justify-content: space-between;
-         width: calc(100% - 3.75rem);
+         width: 100%;
     }
 }
  .button--bright {
