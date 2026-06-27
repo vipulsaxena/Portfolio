@@ -1458,6 +1458,6 @@
 }
 #sonic-toggle[aria-pressed="true"] .dot { background: #cfcfcf; }
 @media screen and (max-width: 39rem) {
-    #sonic-toggle { top: auto; bottom: 1.2rem; right: 1.2rem; }
+    #sonic-toggle { top: 1.2rem; bottom: auto; right: 1.2rem; }
 }
 
