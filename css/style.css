@@ -1155,9 +1155,9 @@
 :root {
   --dark-color: hsl(var(--hue), 100%, 9%);
   --light-color: hsl(var(--hue), 95%, 98%);
-  --base: hsl(var(--hue), 95%, 50%);
-  --complimentary1: hsl(var(--hue-complimentary1), 95%, 50%);
-  --complimentary2: hsl(var(--hue-complimentary2), 95%, 50%);
+  --base: hsl(var(--hue), 88%, 45%);
+  --complimentary1: hsl(var(--hue-complimentary1), 88%, 45%);
+  --complimentary2: hsl(var(--hue-complimentary2), 88%, 45%);
 
   --font-family: "Inter", sans-serif;
 

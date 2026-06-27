@@ -119,23 +119,41 @@ class ColorPalette {
   }
 
   setColors() {
-    // pick a random hue somewhere between 220 and 360
-    this.hue = ~~random(220, 360);
-    this.complimentaryHue1 = this.hue + 30;
-    this.complimentaryHue2 = this.hue + 60;
-    // define a fixed saturation and lightness
-    this.saturation = 95;
-    this.lightness = 50;
+    // 1) Pick a base hue anywhere on the wheel so every click feels fresh
+    //    (the old 220–360 window only ever produced blue/purple/magenta).
+    this.hue = ~~random(0, 360);
+
+    // 2) Derive the other two hues from a colour-harmony relationship chosen
+    //    at random, so the trio is always musically related — never clashing.
+    //    [analogous, tight analogous, triadic, split-complementary,
+    //     complementary + accent, wide analogous].
+    const harmonies = [
+      [30, 60],
+      [-25, 25],
+      [120, 240],
+      [150, 210],
+      [180, 150],
+      [45, -45]
+    ];
+    const [offset1, offset2] = harmonies[~~random(0, harmonies.length)];
+    this.complimentaryHue1 = (this.hue + offset1 + 360) % 360;
+    this.complimentaryHue2 = (this.hue + offset2 + 360) % 360;
+
+    // 3) Premium tone: rich but never neon. A single saturation/lightness pair
+    //    per palette keeps the three orbs cohesive and gallery-clean. Values
+    //    are jittered each click for subtle variety between palettes.
+    this.saturation = ~~random(78, 92);
+    this.lightness = ~~random(52, 60);
 
     // define a base color
     this.baseColor = hslToHex(this.hue, this.saturation, this.lightness);
-    // define a complimentary color, 30 degress away from the base
+    // first harmony color
     this.complimentaryColor1 = hslToHex(
       this.complimentaryHue1,
       this.saturation,
       this.lightness
     );
-    // define a second complimentary color, 60 degrees away from the base
+    // second harmony color
     this.complimentaryColor2 = hslToHex(
       this.complimentaryHue2,
       this.saturation,
@@ -191,6 +209,11 @@ class Orb {
     // the original radius of the orb, set relative to window height
     this.radius = random(window.innerHeight / 6, window.innerHeight / 3);
 
+    // give each orb its own organic silhouette (circle / ellipse / polygon /
+    // blob). Computed once and kept within `this.radius` so the overall size,
+    // blur and opacity are identical to the original circular orbs.
+    this.shapePoints = this.makeShapePoints();
+
     // starting points in "time" for the noise/self similar random values
     this.xOff = random(0, 1000);
     this.yOff = random(0, 1000);
@@ -208,6 +231,70 @@ class Orb {
         this.bounds = this.setBounds();
       }, 250)
     );
+  }
+
+  // Build a flat [x0, y0, x1, y1, ...] point list by sampling `n` angles.
+  ring(n, fn) {
+    const out = [];
+    for (let i = 0; i < n; i++) {
+      const a = (i / n) * Math.PI * 2;
+      const [x, y] = fn(a);
+      out.push(x, y);
+    }
+    return out;
+  }
+
+  // Pick a random silhouette for this orb. Returns a flat point array for
+  // PIXI.drawPolygon, or `null` to keep a perfect circle. All shapes stay
+  // within `this.radius`, so size is unchanged — only the outline differs.
+  makeShapePoints() {
+    const r = this.radius;
+    const t = Math.random();
+
+    // ~20%: keep a clean circle
+    if (t < 0.2) return null;
+
+    // ~25%: ellipse (squished circle), random aspect + rotation
+    if (t < 0.45) {
+      const squish = random(0.5, 0.82);
+      const rot = random(0, Math.PI);
+      const cos = Math.cos(rot);
+      const sin = Math.sin(rot);
+      return this.ring(72, (a) => {
+        const x = Math.cos(a) * r;
+        const y = Math.sin(a) * squish * r;
+        return [x * cos - y * sin, x * sin + y * cos];
+      });
+    }
+
+    // ~25%: regular polygon, 3–6 sides, random rotation (blur softens corners)
+    if (t < 0.7) {
+      const sides = ~~random(3, 7);
+      const rot = random(0, Math.PI * 2);
+      const out = [];
+      for (let i = 0; i < sides; i++) {
+        const a = rot + (i / sides) * Math.PI * 2;
+        out.push(Math.cos(a) * r, Math.sin(a) * r);
+      }
+      return out;
+    }
+
+    // ~30%: organic blob via two summed radial harmonics
+    const base = 0.8;
+    const amp1 = random(0.06, 0.14);
+    const amp2 = random(0.03, 0.1);
+    const k1 = ~~random(2, 4);
+    const k2 = ~~random(3, 6);
+    const ph1 = random(0, Math.PI * 2);
+    const ph2 = random(0, Math.PI * 2);
+    return this.ring(96, (a) => {
+      const rr =
+        r *
+        (base +
+          amp1 * (0.5 + 0.5 * Math.sin(a * k1 + ph1)) +
+          amp2 * (0.5 + 0.5 * Math.sin(a * k2 + ph2)));
+      return [Math.cos(a) * rr, Math.sin(a) * rr];
+    });
   }
 
   setBounds() {
@@ -262,8 +349,12 @@ class Orb {
 
     // tell graphics to fill any shapes drawn after this with the orb's fill color
     this.graphics.beginFill(this.fill);
-    // draw a circle at { 0, 0 } with it's size set by this.radius
-    this.graphics.drawCircle(0, 0, this.radius);
+    // draw this orb's silhouette (polygon/ellipse/blob) or fall back to a circle
+    if (this.shapePoints) {
+      this.graphics.drawPolygon(this.shapePoints);
+    } else {
+      this.graphics.drawCircle(0, 0, this.radius);
+    }
     // let graphics know we won't be filling in any more shapes
     this.graphics.endFill();
   }
