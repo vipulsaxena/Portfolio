@@ -1,29 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-      <!-- Priority tags. These must come first. -->
-      <meta charset="utf-8">
-      <!-- Google tag (gtag.js) -->
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-35LE56GGGS"></script>
-      <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-35LE56GGGS');
-        gtag('config', 'GT-5TN254F');
-      </script>
-      <meta http-equiv="x-ua-compatible" content="ie=edge; chrome=1">
-      <!-- Render Chrome if available or using latest version of Internet Explorer (Recommended). -->
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-      <!-- Document Title -->
-      <title>Vipul Saxena | Shaking Up Indonesia's OTT Scene</title>
+<head>
+    <!-- Priority tags. These must come first. -->
+    <meta charset="utf-8">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-35LE56GGGS"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-35LE56GGGS');
+      gtag('config', 'GT-5TN254F');
+    </script>
+    <meta http-equiv="x-ua-compatible" content="ie=edge; chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- Document Title -->
+    <title>Vipul Saxena | Shaking Up Indonesia's OTT Scene</title>
 
-   <!-- Search Eengine and Browser Meta Tags. -->
+    <!-- Search Engine and Browser Meta Tags. -->
     <meta name="description" content="How I led product design for GoPlay, Gojek's OTT platform across iOS, Android and Smart TV — research, information architecture, rapid experimentation and measurable growth.">
-    <!-- Keep under 500 characters -->
-    <meta name="keywords" content="Vipul Saxena, Senior Product Designer, Berlin, UX Design, UI Design, Product Strategy, User-Centered Design, Design Sprints, Product Discovery, Fintech, AI, Digital Products, Collaboration">
+    <meta name="keywords" content="Vipul Saxena, GoPlay, Gojek, OTT, Product Design, Design Leadership, Content Discovery, Usability Testing, Card Sorting, A/B Testing, Design System, Case Study">
     <meta name="author" content="Vipul Saxena" />
 
     <!-- For SEO -->
@@ -32,502 +30,570 @@
     <meta name="robots" content="index, follow" />
 
     <!-- Social -->
-    <!-- OpenGraph -->
     <meta property="og:title" content="Shaking Up Indonesia's OTT Scene — GoPlay Case Study">
     <meta property="og:description" content="How I led product design for GoPlay, Gojek's OTT platform across iOS, Android and Smart TV — research, information architecture, rapid experimentation and measurable growth.">
     <meta property="og:url" content="https://vipulsaxena.com/goplay.html">
-    <meta property="og:image" content="https://vipulsaxena.com/images/self.jpg">
-
-    <!-- Twitter -->
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="Vipulsaxena.com" />
+    <meta property="og:image" content="https://vipulsaxena.com/images/goplay_cover.png">
+    <meta property="og:image:type" content="image/png" />
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Vipul Saxena — Senior Product Designer Driving Clarity & Growth">
-    <meta name="twitter:description" content="Senior Product Designer based in Berlin. Driving user-centered products through strategy, discovery, thoughtful collaboration, and AI-powered execution.">
-    <meta name="twitter:image" content="https://vipulsaxena.com/images/self.jpg">
+    <meta name="twitter:site" content="@vipulsaxena_fc" />
+    <meta name="twitter:title" content="Shaking Up Indonesia's OTT Scene — GoPlay Case Study">
+    <meta name="twitter:description" content="Leading product design for GoPlay, Gojek's OTT platform, through research and rapid experimentation across iOS, Android and Smart TV.">
+    <meta name="twitter:url" content="https://vipulsaxena.com/goplay.html">
+    <meta name="twitter:image" content="https://vipulsaxena.com/images/goplay_cover.png">
 
     <!-- Favicon Meta Tags.  -->
     <link rel="icon" href="fav.png" sizes="32x32" type="image/png">
     <link rel="shortcut icon" href="fav.png" type="image/png">
-
-    <meta name="msapplication-TileColor" content="#603cba">
-    <meta name="theme-color" content="#EEEEEE">
+    <meta name="theme-color" content="#ffffff">
     <link rel="canonical" href="https://vipulsaxena.com/goplay.html">
 
-    <link rel="alternate" type="application/rss+xml" title="Vipul Saxena | Advocating & Evangelizing UX Design" href="/sitemap.xml">
+    <!-- Fonts (match Portfolio: Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap">
+    <link rel="stylesheet" href="css/shell.css">
 
-      <link rel="preconnect" href="https://fonts.googleapis.com">
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap">
-      <link rel="stylesheet" href="css/style.css">
-      <link href="css/zoom.css" rel="stylesheet">
-      <link rel="stylesheet" href="css/tiny-slider.css">
-   </head>
-   <body>
-      <a href="index.html" id="top-nav">Home</a>
-      <main>
-         <article class="post">
-            <div class="container container_ovr">
-               <div class="post-header">
-                  <figure class="post-cover">
-                     <img loading="lazy" decoding="async" src="images/goplay_cover.png" alt="GoPlay app hero cover">
-                  </figure>
-               </div>
+    <!-- Tailwind (Play CDN) + theme config -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              base:'#ffffff', elev:'#f7f7f7', card:'#ffffff', line:'#e7e7e7',
+              ink:'#262626', mute:'#6e6e6e', accent:'#ffda08', accink:'#262626',
+            },
+            fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+            borderRadius: { '2xl': '1.25rem', '3xl': '1.75rem' },
+            maxWidth: { content: '80rem' },
+          }
+        }
+      }
+    </script>
 
-                         <h1>
-                         Shaking Up Indonesia's OTT Scene
-                        </h1>
+    <!-- Component styles (shared with template.html) -->
+    <style type="text/css">
+      html{ scroll-behavior:smooth; }
+      body{ background:#ffffff; font-family:"Inter", system-ui, sans-serif; }
+      ::selection{ background:#ffda08; color:#262626; }
+      .hl{ background:#ffda08; color:#262626; padding:0 .1em; border-radius:.08em; -webkit-box-decoration-break:clone; box-decoration-break:clone; }
 
-               <div class="post-infos">
-                  <div class="post-infos__content">
-                     <div class="post-infos__child">
-                        <p class="date">Role</p>
-                        <p>Product design lead</p>
-                     </div>
-                     <div class="post-infos__child">
-                        <p class="date">Period</p>
-                        <p>2017-2019</p>
-                     </div>
-                     <div class="post-infos__child" id="link">
-                        <p class="date">Try the Experience</p>
-                        <p>
-                           <a target="_blank" href="https://apps.apple.com/au/app/goplay-watch-movies-series/id1445402611">App Store ↗</a>
-                           <a target="_blank" href="https://play.google.com/store/apps/details?id=com.goplay.android&hl=en&gl=US">Play Store ↗</a>
-                           <a target="_blank" href="https://goplay.co.id/movies-and-series">Website ↗</a>
-                        </p>
-                     </div>
-                  </div>
-                  <hr>
-               </div>
-               <div class="post-content">
-                  <h2>Background</h2>
-                  <br>
-                  <p>GoPlay is a OTT platform by GoJek(Indonesian SuperApp with 21+products) which is publicly available to download in whole of Indonesia. The service boasts of an array of exclusive movies and TV shows, including Indonesia‘s 2019 Academy Awards nominee Memories of My Body which was co-financed via an in-house studio the company started in 2018. It also partnered with US media outlet Vice to collaborate on original content.</p>
-                  <p>Press 👉
-                     <a target="_blank" href="https://www.techinasia.com/gojek-launches-video-streaming-platform-goplay-indonesia">techinasia  ↗</a>
-                     <a target="_blank" href="https://techcrunch.com/2019/09/25/indonesias-ride-hailing-giant-gojek-launches-video-streaming-service-goplay/?guccounter=1&guce_referrer=aHR0cHM6Ly93d3cuZ29vZ2xlLmNvbS8&guce_referrer_sig=AQAAAB8AfHCmtHUJ9OXGO8mhqF0BEmp-b4zgyRSXkz3LbHyLbdXxnlDVBGHhOLVaaHUCqzKp1fsiIV9weV6QaUShEkp2q9pPcDKbDNuDedxWQcc-OILFwLUVBe9rV1zTzgQyMdBupExh5TcojJ2_IYCCtLreD9F8ZxeEoIe27og8HNe8">techcrunch  ↗</a>
-                     <a target="_blank" href="https://thenextweb.com/news/indonesias-ride-hailing-giant-gojek-enters-the-streaming-fray-with-goplay">thenextweb  ↗</a>
-                     <a target="_blank" href="https://www.reuters.com/article/us-gojek-video-idUSKBN1WB0AJ">reuters  ↗</a>
-                  </p>
-                  <div class="tvideos">
-                     <video autoplay controls muted playsinline class="my_vid">
-                        <source src="images/tabs.mp4" type="video/mp4">
-                     </video>
-                     <video autoplay controls muted playsinline class="my_vid">
-                        <source src="images/details_page.mp4" type="video/mp4">
-                     </video>
-                  </div>
-                  <blockquote class="post-img">
-                     <p>Preview of Mobile App Experience</p>
-                  </blockquote>
-                  <p> While GoStudio produced original documentaries, short films, and feature-length works from indi-filmmakers, the Product team built ios, android, web and Smart TV platform to showcase the content with SVOD, AVOD and TVOD models all by its v1.
-                  </p>
-                  <div class="my-slider-2">
-                     <div class="slider_par">
-                        <img src="images/goplay_flow.png" alt="" class="void_slider_img lazy">
-                     </div>
-                     <div class="slider_par">
-                        <img src="images/goplay_flow_1.png" alt="" class="void_slider_img lazy">
-                     </div>
-                  </div>
-                  <blockquote class="post-img">
-                     <p>High level flow diagram</p>
-                  </blockquote>
-                  <br>
-                  <br>
-                  <h2>My Role & Process</h2>
-                  <br>
-                  <p> I joined GoPlay at its MVP stage as Product design lead overlooking design across all GoPlay platforms. I managed 2 designers(UX in IC role) directly while I was collaborating with researchers, Writers and Illustrators from the respective Central teams. Engineering running themselves in 3-week sprints, I ensured that Designs are being tested and delivered at-least 1 sprint ahead for us to then continuously track.
-                  </p>
-                  <figure class="post-img">
-                     <img alt="" class="lazy" src="images/my_role_goplay.png">
-                  </figure>
-                  <blockquote class="post-img">
-                     <p>Across Org. collaboration(My POV)</p>
-                  </blockquote>
-                  <br>
-                  <p>At Gojek, we have a standard process that's flexible dpending on the type of product and team.
-                  </p>
-                  <figure class="post-img">
-                     <img alt="" class="lazy" src="images/goplay_design_process.png">
-                  </figure>
-                  <blockquote class="post-img">
-                     <p>Design Process</p>
-                  </blockquote>
-                  <br>
-                  <br>
-                  <h2>Lets get a few things right 1st</h2>
-                  <br>
-                  <p>So GoPlay at its MVP stage lacked multiple things including- documentation, IA maps, Flows, Wireframes and wasn't  compliant to the <a target="_blank" rel="noopener" href="https://asphalt.gojek.io/">Ashpalt(now Aloha)</a> design language system. Once all the potential work was estimated, it was clear enough that its not a solo designers job to maintain design across 3 platforms. That's when we made our 1st hire and kept it scaling as the product grew.
-                  </p>
-                  <p>And here it begins- I started with embedding task management tools like Asana, Documenting design decisions on confluence, reviews, newsletters, etc. I also used the technical flow diagrams from dev teams to deisgn User-flows and Information architecture, using this I also created wireframes of the MVP to further iterate on. And lastly the DLS work- Theming existing light DLS to Dark mode with GoPlay's hot-pink color scheme, making typography compatible and converting essential components to dark-mode for mobile and web</p>
-                  <div class="my-slider">
-                     <div class="slider_par">
-                        <img src="images/gp_6.png" alt="" class="void_slider_img lazy">
-                     </div>
-                     <div class="slider_par">
-                        <img src="images/gp_5.png" alt="" class="void_slider_img lazy">
-                     </div>
-                     <div class="slider_par">
-                        <img src="images/gp_7.png" alt="" class="void_slider_img lazy">
-                     </div>
-                     <div class="slider_par">
-                        <img src="images/gp_9.png" alt="" class="void_slider_img lazy">
-                     </div>
-                     <div class="slider_par">
-                        <img src="images/gp_8.png" alt="" class="void_slider_img lazy">
-                     </div>
-                  </div>
-                  <br>
-                  <br>
-                  <h2>Get acquainted with our target user</h2>
-                  <br>
-                  
-                  <b>Meet Bayu.</b>
-                  <br>
-                  <br>
-                  <p>Bayu is hopeful and ambitious. It's her 1st job, and she is learning more and more about her new career. Her daily-commute between cities is time-consuming. While she socialises, it's often that everyone talks about their favourite show they currently watching. She cook’s her own food and enjoys watching show’s that interests her, often times recommended by friends.
-                     <br>
-                     <br>
-                     <i>Goals—</i>
-                  <ol>
-                     <li>Looking for new inspirational/fun content every day.</li>
-                     <li>Avid English speaker, subtitles are must have.</li>
-                  </ol>
-                  <br>
-                  <i>Pain points—</i>
-                  <ol>
-                     <li>Saturated local content with good quality.</li>
-                     <li>Inability to self decided, What to watch?</li>
-                  </ol>
-                  <figure class="post-img">
-                     <img alt="" class="lazy" src="images/goplay_persona.png">
-                  </figure>
-                  <blockquote class="post-img">
-                     <p>Proto Persona</p>
-                  </blockquote>
-                  <br>
-                  <br>
-                  <h2>Design Challenge</h2>
-                  <br>
-                  <p>GoPlay MVP was created based on business requirement without considering insights from the end-user making it very hard to use. As a result the task performed by users are time consuming and unnecessarily prolonged.
-                  </p>
-                  <br>
-                  <b>Problem statement 🤔</b>
-                  <br>
-                  <br>
-                  <p>The search for relevant content is often a failure and is an unfortunate consequence of bad content discovery experiences.
-                  </p>
-                  <br>
-                  <b>The Solution 💡</b>
-                  <br>
-                  <br>
-                  <p>Apply an evidence-based methodology that involves end-users throughout the design process in order to design a solution that delights user.</p>
-                  <br>
-                  <br>
-                  <h2>Initial Research</h2>
-                  <br>
-                  <p>Goal was to inform Product, Content and Market strategy post MVP launch Listening and understanding our users aspiration from their feedback to get some clue about their preferences and perception about GoPlay. We did competitive analysis, user-interviews, run survey, captured user feedbacks from social media and App Stores to collect quantitative and qualitative data.<br>
-                  </p>
-                  <br>
-                  <div class="my-slider-3">
-                     <div class="slider_par">
-                        <img src="images/goplay_comp_2.png" alt="" class="void_slider_img lazy">
-                     </div>
-                     <div class="slider_par">
-                        <img src="images/goplay_comp_3.png" alt="" class="void_slider_img lazy">
-                     </div>
-                     <div class="slider_par">
-                        <img src="images/goplay_comp_1.png" alt="" class="void_slider_img lazy">
-                     </div>
-                  </div>
-                  <blockquote class="post-img">
-                     <p>UX Analysis</p>
-                  </blockquote>
-                  <br>
-                  <br>
-                  <b>Some Key findings</b><br><br>
-                  <p>
-                     <i>Browsing is a key (often overlooked) component of content discovery:</i> Consumers spend, on average, 42% of their time browsing through content because they don’t know what they want to watch. 37% of respondents say they don’t want to waste their time on starting a new show. Users tend to primarily(IF) continue watching what they have left.
-                     <br>
-                     <br>
-                     <i>Personalised recommendations are not top-of-mind and often not trusted:</i> 60% of respondents believe personalized recommendations reflect shows the service is trying to promote, not necessarily shows they think they’ll like.
-                     <br>
-                     <br>
-                     <i>Don’t just tell me “what.” Tell my “why.”</i> Consumers are smart. Today’s audience wants to understand the “why” behind the what. Why does the show have a high rating? What are critics saying? How likely am I to enjoy this show? How did others like me rate it? Also the existing IA may not be the best way to represent details of catalog that would promote most users to watch content.
-                     <br>
-                     <br>
-                     <u>Patience has dwindled:</u> 74% of respondents know within a few seconds if they’ll like a piece of content. Shorter trailers are preferred since it makes them curious about the episode.
-                     <br>
-                  </p>
-                  <br>
-                  <br>
-                  <h2>Ideation and Prioritisation</h2>
-                  <br>
-                  <p>With all the research in hand now its time for synthesis and prioratisation. Applying design thinking framework here, to identify multiple HMW's and run them through a prioratisation framework of- Desirability, feasibility and profitability as deciding factors.</p>
-                  <figure class="post-img">
-                     <img alt="" class="lazy" src="images/goplay_prio.png">
-                  </figure>
-                  <br>
-                  <p>Our primary objective was to increase MAU, and total minutes watched by at least 25% per quater.
-                  </p>
-                  <figure class="post-img">
-                     <img alt="" class="lazy" src="images/goplay_hmw.png">
-                  </figure>
-                  <blockquote class="post-img">
-                     <p>User Job Stories</p>
-                  </blockquote>
-                  <br>
-                  <figure class="post-img">
-                     <img alt="" class="lazy" src="images/goplay_prio_2.png">
-                  </figure>
-                  <br>
-                  <blockquote class="post-img">
-                     <p>Most desirable? Most Feasible? Most Profitable?</p>
-                  </blockquote>
-                  <br>
-                  <br>
-                  <h2>Iterating Discovery & Navigation</h2>
-                  <br>
-                  <p>How do I approach solving design problems? It is through developing a hypothesis and running it through <u>experimentation</u> to conclude results. I run these experiments in various formats, listing down top 3 approach below along with respective topic of research discussed further—</p>
-                  <h3>1. Usability test: Decide best behaviour for continue watching feed—</h3>
-                  <ul>
-                     <li>Do users need to view content details once catalog is on CW list?</li>
-                     <li>Explore user’s habits of deleting content from CW list</li>
-                  </ul>
-                  <figure class="post-img thumb">
-                     <img alt="" class="lazy" src="images/goplay_idn_1.png">
-                  </figure>
-                  <br>
-                  <p>We don’t know how users view the content details when they want to continue watching something, and if they want to delete the contents on continue watching section.</p>
-                  <br>
-                  <figure class="post-img">
-                     <img alt="" class="lazy" src="images/goplay_ss1.png">
-                  </figure>
-                  <blockquote class="post-img">
-                     <p>Most important behavioral questions</p>
-                  </blockquote>
-                  <br>
-                  <p>12 consumers were selected from the GoPlay MVP app. Each of the session consisted of short interview and cross-questioning and product testing lasting for 45 minutes in total. Facilitator leds the session based on the script. Observers focus on note-taking and towards the end have an opportunity to ask follow up questions.</p>
-                  <br>
-                  <figure class="post-img">
-                     <img alt="" class="lazy" src="images/goplay_ur_1.png">
-                  </figure>
-                  <br>
-                  <blockquote class="post-img">
-                     <p>User Research session with one of Goplay's consumer</p>
-                  </blockquote>
-                  <br>
-                  <p>In total six alternative were send for usability testing to examin which alternatives users prefer and why? Primary goal was to understand user-behaviours and existing habits around the contining watching list.</p>
-                  <br>
-                  <div class="my-slider-5">
-                     <div class="slider_par">
-                        <img src="images/goplay_ss2.png" alt="" class="void_slider_img lazy">
-                     </div>
-                     <div class="slider_par">
-                        <img src="images/goplay_ss9.png" alt="" class="void_slider_img lazy">
-                     </div>
-                     <div class="slider_par">
-                        <img src="images/goplay_ss10.png" alt="" class="void_slider_img lazy">
-                     </div>
-                     <div class="slider_par">
-                        <img src="images/goplay_ss11.png" alt="" class="void_slider_img lazy">
-                     </div>
-                  </div>
-                  <blockquote class="post-img">
-                     <p>Alternative #1 and alt #6 were the most preferred</p>
-                  </blockquote>
-                  <br>
-                  <br>
-                  <b>Research Findings</b>
-                  <ul>
-                     <li>We found two user types on viewing content details in context of continue watching</li>
-                     <li>We found two user types on deleting content in context of Continue Watching section</li>
-                     <li>We also found two user types on their watching habit</li>
-                  </ul>
-                  <figure class="post-img">
-                     <img alt="" class="lazy" src="images/decide.gif">
-                  </figure>
-                  <br>
-                  <br>
-                  <figure class="post-img">
-                     <img alt="" class="lazy" src="images/goplay_ur_2.png">
-                  </figure>
-                  <br>
-                  <br>
-                  <b>👑 Alternative #1—</b><br><br>
-                  <p>40% more effective in task completion rate and 23% more efficient as compared to MVP<br>
-                     “The (play and details) button is separated, nice.”  <br>
-                     “I’ll watch the content with the fewest minutes left first.”
-                  </p>
-                  <br>
-                  <b>👑 Alternative #6—</b><br><br>
-                  <p>Task satisfaction rate increased 66% vs MVP design<br>
-                     “Remove automatically once I’m done watching”  <br>
-                     “Its okay if this feature is inside coz we won’t use it that often but it’s Something nice to have”
-                  </p>
-                  <h3>2. Cards sorting exercise: Redesign details page IA including Trailers—</h3>
-                  <ul class="ol">
-                     <li>How should the information be structured in the page?</li>
-                     <li>Where should trailers be placed?</li>
-                  </ul>
-                  <figure class="post-img thumb">
-                     <img alt="" class="lazy" src="images/goplay_idn_2.png">
-                  </figure>
-                  <br>
-                  <p>I created multiple variation of the details page & ran it through design reviews and usability test to conclude what layout suited GoPlay the best. It was <b>alternative #4</b> that passed the usability test & was loved the most by co-designers during design-review. But information hierarchy was still an open question.</p>
-                  <figure class="post-img">
-                     <img alt="" class="lazy" src="images/goplay_ss3.png">
-                  </figure>
-                  <br>
-                  <p>Now to understand what information hierarchy is best suited for the users, We sent out an online hybrid card sorting exercise to a total This being a qualitative research We requested our participants to take a minimum 10/15 minutes out of their schedules and do this exercise being 100% true. We Made sure this pool of users have watched at least one movie and one series on any streaming apps in the past 1 month.</p>
-                  <figure class="post-img">
-                     <img alt="" class="lazy" src="images/goplay_ss4.png">
-                  </figure>
-                  <p>The card sorting exercise gave us most preferred category to item mapping along with their order of item priority w.r.t each users preference. We then mapped similarity matrix to understand the most suited average of cumulative preferences.
-                  </p>
-                  <figure class="post-img">
-                     <img alt="" class="lazy" src="images/goplay_ss5.png">
-                  </figure>
-                  <p>
-                     And with votes & average similarity ranks the final IA for the redesigned detail-page was decided.
-                  </p>
-                  <h3>3. A/B test: Personalise the content displayed on home page to retain users—</h3>
-                  <ul class="ol">
-                     <li>To what extent are user satisfied by it?</li>
-                     <li>Is there any trade-offs of the solutions?</li>
-                  </ul>
-                  <figure class="post-img thumb">
-                     <img alt="" class="lazy" src="images/goplay_idn_3.png">
-                  </figure>
-                  <p>In production today different presentation layers(feed order/copy/theme-card backgrounds) are being A/B tested with various segment of users based on differences in behavior that we continue to read via analytics.</p>
-                  <figure class="post-img">
-                     <img alt="" class="lazy" src="images/goplay_ur_3.png">
-                  </figure>
-                  <p>Setting context and tone is crucial in ensuring that potential viewers are able to relate to the expectation of the story. Such expectations can lead to their interests in finding out more about the series. </p>
-                  <i>“Observe what people DO and not only relay on what they SAY”</i>
-                  <figure class="post-img">
-                     <img alt="" class="lazy" src="images/goplay_ur_4.png">
-                  </figure>
-                  <blockquote class="post-img">
-                     <p>A/B testing various poster options</p>
-                  </blockquote>
-                  <br>
-                  <br>
-                  <br>
-                  <h2>The Impact</h2>
-                  <p>And finally all the experiementations did pay off. In 3 quaters the result of the above experimentations looked very positive and we were ready for the next challange! But that's for next time :)</p>
-                  <figure class="post-img">
-                     <img alt="" class="lazy" src="images/goplay_mvp_messure.png">
-                  </figure>
-                  <br>
-                  <br>
-                  <h2>What was next?</h2>
-                  <p>With rapid experimentation keeping the user at center of it GoPlay continued to be eveolved. My last project was the addition of Smart TV app that we collaborated with the Wonderful Web Ixd at Gojek. Adding a few screenshots of the SamrtTV and Web Interface to close it :)</p>
-                  <div class="my-slider-4">
-                     <div class="slider_par">
-                        <img src="images/goplay_ss6.png" alt="" class="void_slider_img lazy">
-                     </div>
-                     <div class="slider_par">
-                        <img src="images/goplay_ss7.png" alt="" class="void_slider_img lazy">
-                     </div>
-                     <div class="slider_par">
-                        <img src="images/goplay_ss8.png" alt="" class="void_slider_img lazy">
-                     </div>
-                     <div class="slider_par">
-                        <img src="images/goplay_ss12.png" alt="" class="void_slider_img lazy">
-                     </div>
-                     <div class="slider_par">
-                        <img src="images/goplay_ss13.png" alt="" class="void_slider_img lazy">
-                     </div>
-                     <div class="slider_par">
-                        <img src="images/goplay_ss14.png" alt="" class="void_slider_img lazy">
-                     </div>
-                  </div>
-                  <blockquote class="post-img">
-                     <p>SmartTV and Web Interface</p>
-                  </blockquote>
-                  <h3 class="center">Thanks for reading :)</h3>
-                  <!-- div ends here -->
-               </div>
+      .carousel-track{ display:flex; transition:transform .45s cubic-bezier(.22,.61,.36,1); }
+      .carousel-track > *{ flex:0 0 100%; }
+      .dot{ width:9px; height:9px; border-radius:999px; background:#d4d4d4; transition:all .2s ease; }
+      .dot[aria-current="true"]{ background:#ffda08; width:26px; }
+
+      .marquee{ overflow:hidden; -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent); mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent); }
+      .marquee-track{ display:inline-flex; gap:1rem; white-space:nowrap; animation:marquee 34s linear infinite; }
+      @keyframes marquee{ from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+      [data-reveal]{ opacity:0; transform:translateY(22px); transition:opacity .6s ease, transform .6s ease; }
+      [data-reveal].is-in{ opacity:1; transform:none; }
+      @media (prefers-reduced-motion: reduce){ [data-reveal]{ opacity:1; transform:none; transition:none; } .marquee-track{ animation:none; } html{ scroll-behavior:auto; } }
+
+      #lightbox{ position:fixed; inset:0; z-index:2000; display:none; align-items:center; justify-content:center; background:rgba(38,38,38,.85); padding:5vw; }
+      #lightbox.open{ display:flex; }
+      #lightbox img{ max-width:100%; max-height:90vh; border-radius:.75rem; }
+    </style>
+</head>
+
+<body class="bg-base text-ink font-sans antialiased">
+
+<!-- SECTION: Sticky Navigation (shared shell — see css/shell.css) -->
+<header class="shell-header">
+  <div class="shell-inner shell-bar">
+    <a href="index.html" class="shell-brand">Home</a>
+    <nav class="shell-nav" aria-label="Sections" data-scrollspy>
+      <a href="#overview" class="shell-link">Overview</a>
+      <a href="#problem"  class="shell-link">Problem</a>
+      <a href="#process"  class="shell-link">Process</a>
+      <a href="#solution" class="shell-link">Solution</a>
+      <a href="#impact"   class="shell-link">Impact</a>
+    </nav>
+    <div class="shell-actions">
+      <button type="button" class="shell-burger" data-nav-toggle aria-expanded="false" aria-controls="shell-menu" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="shell-menu" id="shell-menu" data-nav-menu>
+    <nav aria-label="Sections">
+      <a href="#overview" class="shell-link">Overview</a>
+      <a href="#problem"  class="shell-link">Problem</a>
+      <a href="#process"  class="shell-link">Process</a>
+      <a href="#solution" class="shell-link">Solution</a>
+      <a href="#impact"   class="shell-link">Impact</a>
+    </nav>
+  </div>
+</header>
+
+<main class="pt-16">
+
+  <!-- SECTION: Hero -->
+  <section class="mx-auto max-w-content px-5 md:px-8 pt-16 md:pt-24 pb-10">
+    <p class="text-mute text-xs md:text-sm font-bold uppercase tracking-[0.2em] mb-6" data-reveal>Gojek · GoPlay · 2017–2019</p>
+    <h1 class="font-extrabold tracking-tight leading-[1.06] text-5xl md:text-7xl lg:text-[5.25rem] max-w-[16ch]" data-reveal>
+      Shaking up Indonesia's <span class="hl">OTT scene</span>
+    </h1>
+    <p class="mt-8 text-xl md:text-2xl text-mute max-w-[48ch] leading-snug" data-reveal>
+      I led product design for GoPlay — Gojek's OTT platform across iOS, Android, Web and Smart TV — and fixed content discovery through <span class="hl">rapid experimentation</span>, driving engagement quarter after quarter.
+    </p>
+
+    <div class="mt-9 flex flex-wrap gap-x-10 gap-y-6" data-reveal>
+      <div><p class="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-mute mb-1.5">Role</p><p class="font-semibold">Product Design Lead</p></div>
+      <div><p class="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-mute mb-1.5">Timeline</p><p class="font-semibold">2017–2019</p></div>
+      <div><p class="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-mute mb-1.5">Team</p><p class="font-semibold">2 designers · Research · Writing · Illustration</p></div>
+      <div><p class="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-mute mb-1.5">Platforms</p><p class="font-semibold">iOS · Android · Web · Smart TV</p></div>
+    </div>
+
+    <!-- Try the experience -->
+    <div class="mt-6 flex flex-wrap gap-3" data-reveal>
+      <a href="https://apps.apple.com/au/app/goplay-watch-movies-series/id1445402611" target="_blank" rel="noopener" class="px-4 py-2 rounded-full border border-line text-sm font-semibold hover:border-accent transition">App Store ↗</a>
+      <a href="https://play.google.com/store/apps/details?id=com.goplay.android&hl=en&gl=US" target="_blank" rel="noopener" class="px-4 py-2 rounded-full border border-line text-sm font-semibold hover:border-accent transition">Play Store ↗</a>
+      <a href="https://goplay.co.id/movies-and-series" target="_blank" rel="noopener" class="px-4 py-2 rounded-full border border-line text-sm font-semibold hover:border-accent transition">Website ↗</a>
+    </div>
+
+    <figure class="mt-12 md:mt-16" data-reveal>
+      <img loading="lazy" decoding="async" src="images/goplay_cover.png" alt="GoPlay app hero cover" data-lightbox class="w-full rounded-2xl border border-line shadow-xl shadow-ink/5">
+      <figcaption class="mt-4 text-sm text-mute">GoPlay — exclusive Indonesian movies and series, across every screen.</figcaption>
+    </figure>
+
+    <div class="mt-12 grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5" data-reveal>
+      <div class="rounded-2xl border border-line bg-card p-6 shadow-sm hover:-translate-y-1 hover:border-accent hover:shadow-md transition duration-200"><div class="text-4xl md:text-5xl font-extrabold tracking-tight text-ink leading-none">25%+</div><div class="mt-3 text-sm text-mute leading-snug">Quarterly goal for MAU &amp; minutes watched</div></div>
+      <div class="rounded-2xl border border-line bg-card p-6 shadow-sm hover:-translate-y-1 hover:border-accent hover:shadow-md transition duration-200"><div class="text-4xl md:text-5xl font-extrabold tracking-tight text-ink leading-none">40%</div><div class="mt-3 text-sm text-mute leading-snug">More effective task completion — winning Continue-Watching design</div></div>
+      <div class="rounded-2xl border border-line bg-card p-6 shadow-sm hover:-translate-y-1 hover:border-accent hover:shadow-md transition duration-200"><div class="text-4xl md:text-5xl font-extrabold tracking-tight text-ink leading-none">66%</div><div class="mt-3 text-sm text-mute leading-snug">Higher task satisfaction on the chosen alternative</div></div>
+      <div class="rounded-2xl border border-line bg-card p-6 shadow-sm hover:-translate-y-1 hover:border-accent hover:shadow-md transition duration-200"><div class="text-4xl md:text-5xl font-extrabold tracking-tight text-ink leading-none">4</div><div class="mt-3 text-sm text-mute leading-snug">Platforms designed — iOS · Android · Web · TV</div></div>
+    </div>
+  </section>
+
+  <!-- SECTION: Overview -->
+  <section id="overview" class="scroll-mt-24 border-t border-line bg-elev">
+    <div class="mx-auto max-w-content px-5 md:px-8 py-20 md:py-28">
+      <p class="text-mute text-xs font-bold uppercase tracking-[0.18em] mb-5" data-reveal>Overview</p>
+      <div class="grid lg:grid-cols-[1.6fr_1fr] gap-10 lg:gap-20 items-start">
+        <p class="text-2xl md:text-3xl font-medium leading-snug max-w-[32ch]" data-reveal>
+          GoPlay is Gojek's OTT platform — publicly available across Indonesia with exclusive movies and series, including the country's 2019 Academy Awards entry <em>Memories of My Body</em> and originals co-produced with Vice. I joined at the MVP stage as design lead, owning design across every GoPlay surface.
+        </p>
+        <div class="grid gap-6" data-reveal>
+          <div><p class="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-mute mb-2">My contribution</p><p>Research · IA · Interaction · Design System · Design Ops</p></div>
+          <div><p class="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-mute mb-2">Status</p><p>Live — publicly available in Indonesia</p></div>
+          <div>
+            <p class="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-mute mb-2">In the press</p>
+            <p class="flex flex-wrap gap-x-4 gap-y-1">
+              <a href="https://www.techinasia.com/gojek-launches-video-streaming-platform-goplay-indonesia" target="_blank" rel="noopener" class="underline decoration-accent decoration-2 underline-offset-2 hover:text-ink">Tech in Asia ↗</a>
+              <a href="https://techcrunch.com/2019/09/25/indonesias-ride-hailing-giant-gojek-launches-video-streaming-service-goplay/" target="_blank" rel="noopener" class="underline decoration-accent decoration-2 underline-offset-2 hover:text-ink">TechCrunch ↗</a>
+              <a href="https://thenextweb.com/news/indonesias-ride-hailing-giant-gojek-enters-the-streaming-fray-with-goplay" target="_blank" rel="noopener" class="underline decoration-accent decoration-2 underline-offset-2 hover:text-ink">TNW ↗</a>
+              <a href="https://www.reuters.com/article/us-gojek-video-idUSKBN1WB0AJ" target="_blank" rel="noopener" class="underline decoration-accent decoration-2 underline-offset-2 hover:text-ink">Reuters ↗</a>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile app preview -->
+      <div class="mt-14 grid sm:grid-cols-2 gap-6" data-reveal>
+        <figure>
+          <video class="w-full rounded-2xl border border-line bg-black" autoplay muted loop playsinline controls>
+            <source src="images/tabs.mp4" type="video/mp4">
+          </video>
+          <figcaption class="mt-3 text-sm text-mute">Browsing across tabs on the mobile app.</figcaption>
+        </figure>
+        <figure>
+          <video class="w-full rounded-2xl border border-line bg-black" autoplay muted loop playsinline controls>
+            <source src="images/details_page.mp4" type="video/mp4">
+          </video>
+          <figcaption class="mt-3 text-sm text-mute">The redesigned content details experience.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: Context & Problem Statement -->
+  <section id="problem" class="scroll-mt-24">
+    <div class="mx-auto max-w-content px-5 md:px-8 py-20 md:py-28">
+      <p class="text-mute text-xs font-bold uppercase tracking-[0.18em] mb-5" data-reveal>Problem</p>
+
+      <div class="grid md:grid-cols-2 gap-6 md:gap-8">
+        <div class="rounded-2xl border border-line bg-card p-8 md:p-10 shadow-sm" data-reveal>
+          <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-4">The challenge</h2>
+          <p class="text-mute text-lg leading-relaxed">The MVP was built to <strong class="text-ink font-semibold">business requirements without end-user insight</strong>, making it hard to use — tasks were slow and unnecessarily prolonged. It also lacked documentation, IA maps, flows and wireframes, and wasn't compliant with Gojek's Asphalt (now Aloha) design system.</p>
+        </div>
+        <div class="rounded-2xl border border-line bg-card p-8 md:p-10 shadow-sm" data-reveal>
+          <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-4">The goal</h2>
+          <p class="text-mute text-lg leading-relaxed">Apply an <strong class="text-ink font-semibold">evidence-based method</strong> that involves end-users throughout — designing content discovery that delights, and lifts MAU and minutes watched by at least 25% per quarter.</p>
+        </div>
+      </div>
+
+      <blockquote class="mt-8 rounded-2xl border-l-4 border-accent bg-elev p-8 md:p-10" data-reveal>
+        <p class="text-2xl md:text-4xl font-bold tracking-tight leading-snug max-w-[26ch]">
+          The search for relevant content is often a failure — an unfortunate consequence of <span class="hl">bad content-discovery</span> experiences.
+        </p>
+      </blockquote>
+
+      <!-- Persona -->
+      <h3 class="mt-16 mb-6 text-xl font-bold tracking-tight" data-reveal>Who we were designing for</h3>
+      <div class="grid md:grid-cols-2 gap-6 items-start">
+        <article class="rounded-2xl border border-line bg-card p-8 shadow-sm" data-reveal>
+          <div class="flex items-center gap-4 mb-5">
+            <div class="w-12 h-12 rounded-full bg-accent flex items-center justify-center font-extrabold text-accink">B</div>
+            <div>
+              <p class="font-bold">Bayu</p>
+              <p class="text-sm text-mute">Young professional · daily inter-city commuter</p>
             </div>
-         </article>
-      </main>
-      <a href="#" id="bottom-nav">⬆️ Scroll to the top</a>
-      <a href="javascript:history.back()" id="bottom-nav">🏠 Back Home</a>
-      <hr>
-      <footer class="site-footer">
-         <ul>
-            <li>Vipul Saxena | GoPlay</li>
-         </ul>
-      </footer>
-      <script src="js/jquery-3.1.1.min.js"></script>
-      <script src="js/zoom.js"></script>
-      <script src="js/fontfaceobserver.js"></script>
-      <script src="js/tiny-slider.js"></script>
-      <script>
-         //Font observer loader
-         var font = new FontFaceObserver('sans');
-         var font = new FontFaceObserver('serif');
+          </div>
+          <p class="text-lg italic text-ink/80 mb-5">“Everyone talks about the show they're watching — I just want something good to watch on my commute.”</p>
+          <div class="grid sm:grid-cols-2 gap-5">
+            <div>
+              <p class="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-mute mb-2">Goals</p>
+              <ul class="text-mute space-y-1.5 list-disc pl-5">
+                <li>Fresh, inspirational content every day</li>
+                <li>Subtitles are a must-have</li>
+              </ul>
+            </div>
+            <div>
+              <p class="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-mute mb-2">Pain points</p>
+              <ul class="text-mute space-y-1.5 list-disc pl-5">
+                <li>Saturated local content of mixed quality</li>
+                <li>Can't decide what to watch</li>
+              </ul>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-2 mt-5">
+            <span class="text-xs px-3 py-1 rounded-full border border-line text-mute">binges on commute</span>
+            <span class="text-xs px-3 py-1 rounded-full border border-line text-mute">watches on recommendation</span>
+          </div>
+        </article>
+        <figure data-reveal>
+          <img loading="lazy" decoding="async" src="images/goplay_persona.png" alt="GoPlay proto persona — Bayu" data-lightbox class="w-full rounded-2xl border border-line">
+          <figcaption class="mt-3 text-sm text-mute">The proto-persona that anchored our decisions.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
 
-         var slider = tns({
-             container: '.my-slider',
-             controlsPosition: 'bottom',
-             controls: false,
-             nav: false,
-             arrowKeys: true,
-             autoWidth:true,
-             controls: true,
-             controlsPosition: 'bottom',
-             controlsText: ['⬅️','➡️']
-         });
-         var slider = tns({
-             container: '.my-slider-2',
-             controlsPosition: 'bottom',
-             controls: false,
-             nav: false,
-             arrowKeys: true,
-             autoWidth:true,
-             controls: true,
-             controlsPosition: 'bottom',
-             controlsText: ['⬅️','➡️']
-         });
-         var slider = tns({
-             container: '.my-slider-3',
-             controlsPosition: 'bottom',
-             controls: false,
-             nav: false,
-             arrowKeys: true,
-             autoWidth:true,
-             controls: true,
-             controlsPosition: 'bottom',
-             controlsText: ['⬅️','➡️']
-         });
-         var slider = tns({
-             container: '.my-slider-4',
-             controlsPosition: 'bottom',
-             controls: false,
-             nav: false,
-             arrowKeys: true,
-             autoWidth:true,
-             controls: true,
-             controlsPosition: 'bottom',
-             controlsText: ['⬅️','➡️']
-         });
-         var slider = tns({
-             container: '.my-slider-5',
-             controlsPosition: 'bottom',
-             controls: false,
-             nav: false,
-             arrowKeys: true,
-             autoWidth:true,
-             controls: true,
-             controlsPosition: 'bottom',
-             controlsText: ['⬅️','➡️']
-         });
+  <!-- Giant statement band -->
+  <section class="mx-auto max-w-content px-5 md:px-8">
+    <div class="border-y-2 border-ink py-14 md:py-24" data-reveal>
+      <p class="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.12] max-w-[20ch]">
+        How might we make discovery so <span class="hl">effortless</span> that Bayu always finds something worth watching?
+      </p>
+    </div>
+  </section>
 
-      </script>
-      <!-- autoplay: 'true', -->
-      <!-- Start of Magnify Widget Snippet -->
-      <!-- app.usemagnify.com -->
-      <!-- End of Magnify Widget Snippet -->
-   </body>
+  <!-- SECTION: Deep Dive & Process -->
+  <section id="process" class="scroll-mt-24 bg-elev border-t border-line">
+    <div class="mx-auto max-w-content px-5 md:px-8 py-20 md:py-28">
+      <p class="text-mute text-xs font-bold uppercase tracking-[0.18em] mb-5" data-reveal>Process</p>
+      <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4 max-w-[22ch]" data-reveal>From MVP chaos to evidence-led iteration</h2>
+      <p class="text-lg text-mute max-w-[60ch] mb-12" data-reveal>Gojek runs a flexible, product-dependent process. With engineering in 3-week sprints, I kept validated designs at least a sprint ahead — then tracked them continuously.</p>
+
+      <!-- Process timeline -->
+      <ol class="relative grid sm:grid-cols-2 lg:grid-cols-4 gap-8" data-reveal>
+        <div class="hidden lg:block absolute top-5 left-0 right-0 h-px bg-line"></div>
+        <li class="relative">
+          <div class="w-10 h-10 rounded-full bg-accent text-accink font-extrabold flex items-center justify-center relative z-10">1</div>
+          <h3 class="mt-4 font-bold text-lg">Set foundations</h3>
+          <p class="mt-2 text-mute">Docs, task management, user-flows, IA and a dark-mode design system.</p>
+        </li>
+        <li class="relative">
+          <div class="w-10 h-10 rounded-full bg-accent text-accink font-extrabold flex items-center justify-center relative z-10">2</div>
+          <h3 class="mt-4 font-bold text-lg">Listen</h3>
+          <p class="mt-2 text-mute">Competitive analysis, interviews, surveys and store &amp; social feedback.</p>
+        </li>
+        <li class="relative">
+          <div class="w-10 h-10 rounded-full bg-accent text-accink font-extrabold flex items-center justify-center relative z-10">3</div>
+          <h3 class="mt-4 font-bold text-lg">Prioritise</h3>
+          <p class="mt-2 text-mute">HMWs scored on desirability, feasibility and profitability.</p>
+        </li>
+        <li class="relative">
+          <div class="w-10 h-10 rounded-full bg-accent text-accink font-extrabold flex items-center justify-center relative z-10">4</div>
+          <h3 class="mt-4 font-bold text-lg">Experiment &amp; track</h3>
+          <p class="mt-2 text-mute">Usability tests, card sorts and A/B tests, measured in production.</p>
+        </li>
+      </ol>
+
+      <div class="mt-14 grid md:grid-cols-2 gap-6" data-reveal>
+        <figure>
+          <img loading="lazy" decoding="async" src="images/goplay_design_process.png" alt="GoPlay design process" data-lightbox class="w-full rounded-2xl border border-line">
+          <figcaption class="mt-3 text-sm text-mute">The design process we ran at GoPlay.</figcaption>
+        </figure>
+        <figure>
+          <img loading="lazy" decoding="async" src="images/my_role_goplay.png" alt="Cross-organisation collaboration map" data-lightbox class="w-full rounded-2xl border border-line">
+          <figcaption class="mt-3 text-sm text-mute">Cross-org collaboration — my point of view.</figcaption>
+        </figure>
+      </div>
+
+      <!-- Foundations -->
+      <h3 class="mt-20 mb-4 text-xl md:text-2xl font-bold tracking-tight" data-reveal>Getting the basics right first</h3>
+      <p class="text-lg text-mute max-w-[70ch] mb-8" data-reveal>Maintaining design across three platforms was never a solo job, so we made our first hire and scaled with the product. I embedded task management (Asana), documented decisions on Confluence, and turned the engineering flow diagrams into user-flows, IA and wireframes. Then the big one — theming the light Asphalt DLS into a <strong class="text-ink font-semibold">dark mode</strong> with GoPlay's hot-pink scheme, and converting the essential components for mobile and web.</p>
+
+      <div class="grid md:grid-cols-2 gap-6 mb-10" data-reveal>
+        <figure>
+          <img loading="lazy" decoding="async" src="images/goplay_flow.png" alt="High-level flow diagram" data-lightbox class="w-full rounded-2xl border border-line">
+          <figcaption class="mt-3 text-sm text-mute">High-level flow diagram.</figcaption>
+        </figure>
+        <figure>
+          <img loading="lazy" decoding="async" src="images/goplay_flow_1.png" alt="High-level flow diagram, continued" data-lightbox class="w-full rounded-2xl border border-line">
+          <figcaption class="mt-3 text-sm text-mute">SVOD, AVOD and TVOD models — shipped by v1.</figcaption>
+        </figure>
+      </div>
+
+      <!-- DLS carousel -->
+      <div data-carousel data-reveal>
+        <div class="overflow-hidden rounded-2xl ring-1 ring-line">
+          <div class="carousel-track" data-carousel-track>
+            <figure><div class="aspect-video flex items-center justify-center bg-elev"><img src="images/gp_6.png" alt="Dark-mode design language system" data-lightbox class="max-w-full max-h-full object-contain"></div><figcaption class="p-4 text-sm text-mute">Theming the light DLS into a hot-pink dark mode.</figcaption></figure>
+            <figure><div class="aspect-video flex items-center justify-center bg-elev"><img src="images/gp_5.png" alt="Component theming" data-lightbox class="max-w-full max-h-full object-contain"></div><figcaption class="p-4 text-sm text-mute">Typography made compatible with the dark theme.</figcaption></figure>
+            <figure><div class="aspect-video flex items-center justify-center bg-elev"><img src="images/gp_7.png" alt="Essential components in dark mode" data-lightbox class="max-w-full max-h-full object-contain"></div><figcaption class="p-4 text-sm text-mute">Essential components converted for mobile and web.</figcaption></figure>
+            <figure><div class="aspect-video flex items-center justify-center bg-elev"><img src="images/gp_9.png" alt="Dark-mode component set" data-lightbox class="max-w-full max-h-full object-contain"></div><figcaption class="p-4 text-sm text-mute">A cohesive, scalable component set.</figcaption></figure>
+            <figure><div class="aspect-video flex items-center justify-center bg-elev"><img src="images/gp_8.png" alt="GoPlay themed UI" data-lightbox class="max-w-full max-h-full object-contain"></div><figcaption class="p-4 text-sm text-mute">GoPlay's identity, systematised.</figcaption></figure>
+          </div>
+        </div>
+        <div class="mt-4 flex items-center justify-between">
+          <div class="flex items-center gap-2" data-carousel-dots aria-hidden="true"></div>
+          <div class="flex items-center gap-2">
+            <button data-carousel-prev class="w-10 h-10 rounded-full border border-line bg-card hover:border-accent hover:text-ink transition" aria-label="Previous slide">←</button>
+            <button data-carousel-next class="w-10 h-10 rounded-full border border-line bg-card hover:border-accent hover:text-ink transition" aria-label="Next slide">→</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Research + key findings -->
+      <h3 class="mt-20 mb-4 text-xl md:text-2xl font-bold tracking-tight" data-reveal>Listening to users</h3>
+      <p class="text-lg text-mute max-w-[70ch] mb-8" data-reveal>To inform product, content and market strategy post-launch, we ran competitive analysis, user interviews and surveys, and mined feedback from social media and the app stores — collecting both quantitative and qualitative data.</p>
+
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 mb-10" data-reveal>
+        <div class="rounded-2xl border border-line bg-card p-6 shadow-sm"><div class="text-3xl md:text-4xl font-extrabold tracking-tight text-ink leading-none">42%</div><div class="mt-3 text-sm text-mute leading-snug">of viewing time is spent just browsing for something to watch</div></div>
+        <div class="rounded-2xl border border-line bg-card p-6 shadow-sm"><div class="text-3xl md:text-4xl font-extrabold tracking-tight text-ink leading-none">60%</div><div class="mt-3 text-sm text-mute leading-snug">think recs push what the service promotes, not what they'd like</div></div>
+        <div class="rounded-2xl border border-line bg-card p-6 shadow-sm"><div class="text-3xl md:text-4xl font-extrabold tracking-tight text-ink leading-none">“Why?”</div><div class="mt-3 text-sm text-mute leading-snug">audiences want the why behind the what — ratings, critics, fit</div></div>
+        <div class="rounded-2xl border border-line bg-card p-6 shadow-sm"><div class="text-3xl md:text-4xl font-extrabold tracking-tight text-ink leading-none">74%</div><div class="mt-3 text-sm text-mute leading-snug">know within seconds whether they'll like a piece of content</div></div>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6" data-reveal>
+        <figure><img loading="lazy" decoding="async" src="images/goplay_comp_1.png" alt="UX competitive analysis" data-lightbox class="w-full rounded-2xl border border-line"></figure>
+        <figure><img loading="lazy" decoding="async" src="images/goplay_comp_2.png" alt="UX competitive analysis" data-lightbox class="w-full rounded-2xl border border-line"></figure>
+        <figure><img loading="lazy" decoding="async" src="images/goplay_comp_3.png" alt="UX competitive analysis" data-lightbox class="w-full rounded-2xl border border-line"></figure>
+      </div>
+      <p class="mt-4 text-sm text-mute" data-reveal>UX analysis across competing streaming services.</p>
+
+      <!-- Prioritisation -->
+      <h3 class="mt-20 mb-4 text-xl md:text-2xl font-bold tracking-tight" data-reveal>Turning insight into bets</h3>
+      <p class="text-lg text-mute max-w-[70ch] mb-8" data-reveal>With the research in hand, I applied design-thinking to identify multiple “How might we…” statements and ran them through a prioritisation framework — desirability, feasibility and profitability — to decide where to invest.</p>
+      <div class="grid md:grid-cols-3 gap-6" data-reveal>
+        <figure><img loading="lazy" decoding="async" src="images/goplay_prio.png" alt="Prioritisation" data-lightbox class="w-full rounded-2xl border border-line"><figcaption class="mt-3 text-sm text-mute">Prioritisation framework.</figcaption></figure>
+        <figure><img loading="lazy" decoding="async" src="images/goplay_hmw.png" alt="User job stories" data-lightbox class="w-full rounded-2xl border border-line"><figcaption class="mt-3 text-sm text-mute">User job stories.</figcaption></figure>
+        <figure><img loading="lazy" decoding="async" src="images/goplay_prio_2.png" alt="Most desirable, feasible, profitable" data-lightbox class="w-full rounded-2xl border border-line"><figcaption class="mt-3 text-sm text-mute">Most desirable? Feasible? Profitable?</figcaption></figure>
+      </div>
+
+      <!-- Experiments -->
+      <h3 class="mt-20 mb-4 text-xl md:text-2xl font-bold tracking-tight" data-reveal>Iterating discovery through experimentation</h3>
+      <p class="text-lg text-mute max-w-[70ch] mb-8" data-reveal>I approach design problems by forming a hypothesis and running it through experimentation to conclude with evidence. Three experiments did the heavy lifting.</p>
+
+      <div class="grid md:grid-cols-3 gap-6 mb-12" data-reveal>
+        <article class="rounded-2xl border border-line bg-card shadow-sm overflow-hidden">
+          <div class="aspect-video flex items-center justify-center bg-elev border-b border-line"><img src="images/goplay_idn_1.png" alt="Continue-watching experiment" class="max-w-full max-h-full object-contain"></div>
+          <div class="p-8">
+            <div class="inline-block bg-accent text-accink text-lg font-extrabold px-2.5 py-0.5 rounded mb-4">01</div>
+            <h4 class="text-xl font-bold mb-2">Usability test — Continue Watching</h4>
+            <p class="text-mute leading-relaxed mb-4">Do users need content details from the CW list? Do they delete finished items? 12 consumers, 45-minute moderated sessions, six alternatives.</p>
+            <p class="text-sm"><span class="font-semibold text-ink">Result:</span> <span class="text-mute">Alt #1 — 40% more effective, 23% more efficient. Alt #6 — 66% higher satisfaction.</span></p>
+          </div>
+        </article>
+        <article class="rounded-2xl border border-line bg-card shadow-sm overflow-hidden">
+          <div class="aspect-video flex items-center justify-center bg-elev border-b border-line"><img src="images/goplay_idn_2.png" alt="Card-sort experiment" class="max-w-full max-h-full object-contain"></div>
+          <div class="p-8">
+            <div class="inline-block bg-accent text-accink text-lg font-extrabold px-2.5 py-0.5 rounded mb-4">02</div>
+            <h4 class="text-xl font-bold mb-2">Card sort — Details page &amp; trailers</h4>
+            <p class="text-mute leading-relaxed mb-4">How should the page be structured, and where do trailers belong? Design reviews + usability picked the layout; an online hybrid card sort set the hierarchy.</p>
+            <p class="text-sm"><span class="font-semibold text-ink">Result:</span> <span class="text-mute">Variant #4 won; a similarity matrix produced the final IA.</span></p>
+          </div>
+        </article>
+        <article class="rounded-2xl border border-line bg-card shadow-sm overflow-hidden">
+          <div class="aspect-video flex items-center justify-center bg-elev border-b border-line"><img src="images/goplay_idn_3.png" alt="A/B test experiment" class="max-w-full max-h-full object-contain"></div>
+          <div class="p-8">
+            <div class="inline-block bg-accent text-accink text-lg font-extrabold px-2.5 py-0.5 rounded mb-4">03</div>
+            <h4 class="text-xl font-bold mb-2">A/B test — Personalised home</h4>
+            <p class="text-mute leading-relaxed mb-4">Can a personalised home retain users? Presentation layers — feed order, copy, theme-card art — A/B tested by behavioural segment and read via analytics.</p>
+            <p class="text-sm"><span class="font-semibold text-ink">Principle:</span> <span class="text-mute">observe what people DO, not only what they SAY.</span></p>
+          </div>
+        </article>
+      </div>
+
+      <!-- Research gallery -->
+      <div data-carousel data-reveal>
+        <div class="overflow-hidden rounded-2xl ring-1 ring-line">
+          <div class="carousel-track" data-carousel-track>
+            <figure><div class="aspect-video flex items-center justify-center bg-elev"><img src="images/goplay_ur_1.png" alt="Moderated research session" data-lightbox class="max-w-full max-h-full object-contain"></div><figcaption class="p-4 text-sm text-mute">A moderated research session with a GoPlay viewer.</figcaption></figure>
+            <figure><div class="aspect-video flex items-center justify-center bg-elev"><img src="images/goplay_ss1.png" alt="Behavioural questions" data-lightbox class="max-w-full max-h-full object-contain"></div><figcaption class="p-4 text-sm text-mute">The most important behavioural questions, up front.</figcaption></figure>
+            <figure><div class="aspect-video flex items-center justify-center bg-elev"><img src="images/goplay_ss2.png" alt="Continue-watching alternatives" data-lightbox class="max-w-full max-h-full object-contain"></div><figcaption class="p-4 text-sm text-mute">Six alternatives tested — #1 and #6 preferred.</figcaption></figure>
+            <figure><div class="aspect-video flex items-center justify-center bg-elev"><img src="images/decide.gif" alt="User types emerged" data-lightbox class="max-w-full max-h-full object-contain"></div><figcaption class="p-4 text-sm text-mute">Two distinct user types emerged for viewing &amp; deleting.</figcaption></figure>
+            <figure><div class="aspect-video flex items-center justify-center bg-elev"><img src="images/goplay_ur_2.png" alt="Synthesis" data-lightbox class="max-w-full max-h-full object-contain"></div><figcaption class="p-4 text-sm text-mute">Synthesising the continue-watching findings.</figcaption></figure>
+            <figure><div class="aspect-video flex items-center justify-center bg-elev"><img src="images/goplay_ss3.png" alt="Details-page variations" data-lightbox class="max-w-full max-h-full object-contain"></div><figcaption class="p-4 text-sm text-mute">Details-page layout variations for review.</figcaption></figure>
+            <figure><div class="aspect-video flex items-center justify-center bg-elev"><img src="images/goplay_ss4.png" alt="Card sorting exercise" data-lightbox class="max-w-full max-h-full object-contain"></div><figcaption class="p-4 text-sm text-mute">An online hybrid card-sort exercise.</figcaption></figure>
+            <figure><div class="aspect-video flex items-center justify-center bg-elev"><img src="images/goplay_ss5.png" alt="Similarity matrix" data-lightbox class="max-w-full max-h-full object-contain"></div><figcaption class="p-4 text-sm text-mute">Similarity matrix → the final details-page IA.</figcaption></figure>
+            <figure><div class="aspect-video flex items-center justify-center bg-elev"><img src="images/goplay_ur_3.png" alt="A/B testing home feed" data-lightbox class="max-w-full max-h-full object-contain"></div><figcaption class="p-4 text-sm text-mute">A/B testing presentation layers on the home feed.</figcaption></figure>
+            <figure><div class="aspect-video flex items-center justify-center bg-elev"><img src="images/goplay_ur_4.png" alt="Poster and tone A/B tests" data-lightbox class="max-w-full max-h-full object-contain"></div><figcaption class="p-4 text-sm text-mute">Poster and tone A/B tests to set expectation.</figcaption></figure>
+          </div>
+        </div>
+        <div class="mt-4 flex items-center justify-between">
+          <div class="flex items-center gap-2" data-carousel-dots aria-hidden="true"></div>
+          <div class="flex items-center gap-2">
+            <button data-carousel-prev class="w-10 h-10 rounded-full border border-line bg-card hover:border-accent hover:text-ink transition" aria-label="Previous slide">←</button>
+            <button data-carousel-next class="w-10 h-10 rounded-full border border-line bg-card hover:border-accent hover:text-ink transition" aria-label="Next slide">→</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: Solution -->
+  <section id="solution" class="scroll-mt-24">
+    <div class="mx-auto max-w-content px-5 md:px-8 py-20 md:py-28">
+      <p class="text-mute text-xs font-bold uppercase tracking-[0.18em] mb-5" data-reveal>Solution</p>
+      <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-12 max-w-[22ch]" data-reveal>The redesigned experience</h2>
+
+      <!-- Surface tabs -->
+      <div data-tabs data-reveal>
+        <div role="tablist" class="inline-flex p-1 rounded-full border border-line bg-elev mb-6">
+          <button role="tab" data-tab="0" aria-selected="true"  class="px-5 py-2 rounded-full text-sm font-semibold transition">Mobile app</button>
+          <button role="tab" data-tab="1" aria-selected="false" class="px-5 py-2 rounded-full text-sm font-semibold transition">Smart TV</button>
+          <button role="tab" data-tab="2" aria-selected="false" class="px-5 py-2 rounded-full text-sm font-semibold transition">Web</button>
+        </div>
+        <div data-panel="0">
+          <div class="grid sm:grid-cols-2 gap-6 max-w-3xl">
+            <video class="w-full rounded-2xl border border-line bg-black" autoplay muted loop playsinline controls><source src="images/tabs.mp4" type="video/mp4"></video>
+            <video class="w-full rounded-2xl border border-line bg-black" autoplay muted loop playsinline controls><source src="images/details_page.mp4" type="video/mp4"></video>
+          </div>
+        </div>
+        <div data-panel="1" hidden>
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+            <img loading="lazy" decoding="async" src="images/goplay_ss6.png" alt="Smart TV interface" data-lightbox class="w-full rounded-xl border border-line">
+            <img loading="lazy" decoding="async" src="images/goplay_ss7.png" alt="Smart TV interface" data-lightbox class="w-full rounded-xl border border-line">
+            <img loading="lazy" decoding="async" src="images/goplay_ss8.png" alt="Smart TV interface" data-lightbox class="w-full rounded-xl border border-line">
+          </div>
+        </div>
+        <div data-panel="2" hidden>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <img loading="lazy" decoding="async" src="images/goplay_ss12.png" alt="Web interface" data-lightbox class="w-full rounded-xl border border-line">
+            <img loading="lazy" decoding="async" src="images/goplay_ss13.png" alt="Web interface" data-lightbox class="w-full rounded-xl border border-line">
+            <img loading="lazy" decoding="async" src="images/goplay_ss14.png" alt="Web interface" data-lightbox class="w-full rounded-xl border border-line">
+          </div>
+        </div>
+      </div>
+
+      <!-- Feature highlights — zig-zag -->
+      <div class="mt-20 space-y-16">
+        <div class="grid md:grid-cols-2 gap-8 md:gap-14 items-center" data-reveal>
+          <img src="images/goplay_ss2.png" alt="Redesigned Continue Watching rail" data-lightbox class="w-full rounded-2xl border border-line">
+          <div>
+            <p class="text-mute text-xs font-bold uppercase tracking-[0.16em] mb-3">Continue Watching</p>
+            <h3 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-4">Play and details, finally separate</h3>
+            <p class="text-mute text-lg leading-relaxed mb-5">The winning alternative separated the play and details actions and ordered the rail by minutes-left, so returning viewers resume in a single tap.</p>
+            <blockquote class="border-l-4 border-accent pl-4 text-ink/80 italic">“The play and details button is separated, nice — I'll watch the content with the fewest minutes left first.”</blockquote>
+          </div>
+        </div>
+        <div class="grid md:grid-cols-2 gap-8 md:gap-14 items-center" data-reveal>
+          <img src="images/goplay_ss5.png" alt="Details page information architecture" data-lightbox class="md:order-2 w-full rounded-2xl border border-line">
+          <div class="md:order-1">
+            <p class="text-mute text-xs font-bold uppercase tracking-[0.16em] mb-3">Details page &amp; trailers</p>
+            <h3 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-4">An information hierarchy users voted for</h3>
+            <p class="text-mute text-lg leading-relaxed">A card-sort–driven IA put the right details first and gave trailers a proper home — so viewers get the “why” before they commit, and shorter trailers keep them curious.</p>
+          </div>
+        </div>
+        <div class="grid md:grid-cols-2 gap-8 md:gap-14 items-center" data-reveal>
+          <img src="images/goplay_ur_4.png" alt="Personalised home feed" data-lightbox class="w-full rounded-2xl border border-line">
+          <div>
+            <p class="text-mute text-xs font-bold uppercase tracking-[0.16em] mb-3">Personalised home</p>
+            <h3 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-4">Setting context and tone</h3>
+            <p class="text-mute text-lg leading-relaxed">Feed order, copy and theme-card artwork are continuously A/B tested by behavioural segment — helping viewers relate to a story's expectation and decide faster.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: Reflection & Impact -->
+  <section id="impact" class="scroll-mt-24 bg-elev border-t border-line">
+    <div class="mx-auto max-w-content px-5 md:px-8 py-20 md:py-28">
+      <p class="text-mute text-xs font-bold uppercase tracking-[0.18em] mb-5" data-reveal>Impact</p>
+      <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4 max-w-[22ch]" data-reveal>Rapid experimentation that paid off</h2>
+      <p class="text-lg text-mute max-w-[60ch] mb-12" data-reveal>Over three quarters the experiments compounded into clearly positive results across engagement — and set up the next bet: the Smart TV app.</p>
+
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8" data-reveal>
+        <div><div class="text-5xl md:text-7xl font-extrabold tracking-tight leading-none">25%+</div><div class="mt-3 text-mute max-w-[18ch]">Quarterly target for MAU &amp; minutes watched</div></div>
+        <div><div class="text-5xl md:text-7xl font-extrabold tracking-tight leading-none">40%</div><div class="mt-3 text-mute max-w-[18ch]">More effective continue-watching (Alt #1 vs MVP)</div></div>
+        <div><div class="text-5xl md:text-7xl font-extrabold tracking-tight leading-none">66%</div><div class="mt-3 text-mute max-w-[18ch]">Higher task satisfaction (Alt #6 vs MVP)</div></div>
+        <div><div class="text-5xl md:text-7xl font-extrabold tracking-tight leading-none">3 Qtrs</div><div class="mt-3 text-mute max-w-[18ch]">Of positive, compounding results</div></div>
+      </div>
+
+      <figure class="mt-14" data-reveal>
+        <img loading="lazy" decoding="async" src="images/goplay_mvp_messure.png" alt="Measuring the MVP redesign against the baseline" data-lightbox class="w-full rounded-2xl border border-line">
+        <figcaption class="mt-4 text-sm text-mute">Measuring the redesign against the MVP baseline.</figcaption>
+      </figure>
+
+      <!-- Sentiment marquee -->
+      <div class="mt-16 marquee" data-reveal>
+        <div class="marquee-track text-2xl md:text-3xl font-bold text-mute">
+          <span>discover&nbsp;·</span><span>resume&nbsp;·</span><span>decide&nbsp;·</span><span>personalise&nbsp;·</span><span>experiment&nbsp;·</span><span>measure&nbsp;·</span><span>iterate&nbsp;·</span><span>engage&nbsp;·</span>
+          <span aria-hidden="true">discover&nbsp;·</span><span aria-hidden="true">resume&nbsp;·</span><span aria-hidden="true">decide&nbsp;·</span><span aria-hidden="true">personalise&nbsp;·</span><span aria-hidden="true">experiment&nbsp;·</span><span aria-hidden="true">measure&nbsp;·</span><span aria-hidden="true">iterate&nbsp;·</span><span aria-hidden="true">engage&nbsp;·</span>
+        </div>
+      </div>
+
+      <!-- Key takeaways -->
+      <h3 class="mt-20 mb-6 text-xl md:text-2xl font-bold tracking-tight" data-reveal>Key takeaways</h3>
+      <div class="grid md:grid-cols-3 gap-6" data-reveal>
+        <div class="rounded-2xl border border-line bg-card p-8 shadow-sm hover:border-accent transition">
+          <div class="inline-block bg-accent text-accink text-lg font-extrabold px-2.5 py-0.5 rounded mb-4">01</div>
+          <p class="font-bold text-lg mb-2">Keep the user at the centre.</p>
+          <p class="text-mute leading-relaxed">Hypotheses run through real experiments beat opinions — every time.</p>
+        </div>
+        <div class="rounded-2xl border border-line bg-card p-8 shadow-sm hover:border-accent transition">
+          <div class="inline-block bg-accent text-accink text-lg font-extrabold px-2.5 py-0.5 rounded mb-4">02</div>
+          <p class="font-bold text-lg mb-2">Foundations are a force multiplier.</p>
+          <p class="text-mute leading-relaxed">Docs, IA and a dark-mode DLS let a small team scale across four platforms.</p>
+        </div>
+        <div class="rounded-2xl border border-line bg-card p-8 shadow-sm hover:border-accent transition">
+          <div class="inline-block bg-accent text-accink text-lg font-extrabold px-2.5 py-0.5 rounded mb-4">03</div>
+          <p class="font-bold text-lg mb-2">Observe behaviour, not just words.</p>
+          <p class="text-mute leading-relaxed">The A/B mindset — reading what people do — kept every decision honest.</p>
+        </div>
+      </div>
+
+      <h3 class="mt-16 mb-4 text-xl md:text-2xl font-bold tracking-tight" data-reveal>What came next</h3>
+      <p class="text-lg text-mute max-w-[70ch]" data-reveal>With the user at its centre, GoPlay kept evolving. My last project was the addition of the Smart TV app, built with Gojek's wonderful Web IxD team. Thanks for reading 🙌</p>
+    </div>
+  </section>
+
+  <!-- SECTION: Footer (shared shell — see css/shell.css) -->
+  <footer class="shell-footer" id="contact">
+    <div class="shell-inner">
+      <div class="shell-prevnext">
+        <a href="n26.html" class="shell-card"><p class="k">← Previous</p><p class="t">N26 — Multi-activity Feed</p></a>
+        <a href="instalively.html" class="shell-card next"><p class="k">Next →</p><p class="t">InstaLively — Livestreaming</p></a>
+      </div>
+      <div class="shell-footer-lead">
+        <div>
+          <p class="shell-footer-title">Let’s build something.</p>
+          <p class="shell-footer-copy">Please use the <a href="https://docs.google.com/forms/d/e/1FAIpQLScKV7IVg-JeodOmY5m7eDIK_qctNltq-QddtYnLrRneSqCIwA/viewform" target="_blank" rel="noopener">💌 contact form</a> to say Hi 👋 or request any inquiry. You can also <a href="https://twitter.com/intent/tweet?screen_name=vipulsaxena_fc" target="_blank" rel="noopener">tweet me</a>, or send me an old fashioned <a href="mailto:vipul.saxena01@gmail.com">email</a>.</p>
+        </div>
+      </div>
+      <div class="shell-footer-base">
+        <p>© 2019 · Vipul Saxena · GoPlay</p>
+        <p>Product Design Portfolio</p>
+      </div>
+    </div>
+  </footer>
+
+</main>
+
+<!-- Lightbox overlay -->
+<div id="lightbox" aria-hidden="true">
+  <img alt="Expanded view">
+</div>
+
+<script src="template.js" defer></script>
+</body>
 </html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vipul Saxena | N26 — Multi-activity Feed</title>
+  <meta name="description" content="N26 Premium multi-activity feed case study by Vipul Saxena.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="fav.png" sizes="32x32" type="image/png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap">
+  <link rel="stylesheet" href="css/shell.css">
+
+  <style type="text/css">
+    :root{ --ink:#262626; --muted:#6e6e6e; --line:#e7e7e7; --accent:#ffda08; }
+    *{ box-sizing:border-box; }
+    body{ margin:0; font-family:"Inter", sans-serif; color:var(--ink); background:#fff; -webkit-font-smoothing:antialiased; }
+
+    /* ===== Password gate (secure entry) ===== */
+    #n26Gate{ display:none; }
+    html.n26-locked{ overflow:hidden; }
+    html.n26-locked body > *:not(#n26Gate){ display:none !important; }
+    html.n26-locked #n26Gate{ display:flex; }
+    #n26Gate{ position:fixed; inset:0; z-index:10000; align-items:center; justify-content:center; padding:5vw; background:#fff; }
+    .pw-card{ position:relative; width:100%; max-width:520px; background:#fff; border:1px solid var(--line); border-radius:24px; padding:40px; box-shadow:0 30px 60px -20px rgba(0,0,0,.25); }
+    .pw-eyebrow{ font-size:.8rem; letter-spacing:.16em; text-transform:uppercase; font-weight:700; color:var(--muted); margin:0 0 10px; }
+    .pw-title{ font-size:2rem; font-weight:800; letter-spacing:-.02em; color:var(--ink); margin:0 0 8px; }
+    .pw-desc{ font-size:1.08rem; line-height:1.5; color:var(--muted); margin:0 0 20px; }
+    .pw-input{ box-sizing:border-box; width:100%; padding:16px 18px; border:1px solid var(--line); border-radius:14px; font-size:1.05rem; color:var(--ink); outline:none; transition:border-color .15s, box-shadow .15s; }
+    .pw-input:focus-visible{ border-color:var(--accent); box-shadow:0 0 0 3px rgba(255,218,8,.35); }
+    .pw-error{ color:#e0362f; font-size:.9rem; font-weight:600; margin:10px 0 0; }
+    .pw-actions{ display:flex; gap:10px; justify-content:flex-end; align-items:center; margin-top:20px; }
+    .pw-back{ margin-right:auto; font-size:.9rem; font-weight:600; color:var(--muted); text-decoration:none; }
+    .pw-back:hover{ color:var(--ink); }
+    .pw-btn{ border:0; border-radius:999px; padding:14px 28px; font-size:1.02rem; font-weight:700; cursor:pointer; background:var(--accent); color:var(--ink); transition:filter .15s, transform .15s; }
+    .pw-btn:hover{ filter:brightness(1.05); transform:translateY(-1px); }
+
+    /* ===== Placeholder (content will follow) ===== */
+    .placeholder{ min-height:60vh; display:flex; align-items:center; justify-content:center; text-align:center; padding:6vw 5vw; }
+    .placeholder h1{ font-size:clamp(1.75rem, 4vw, 2.75rem); font-weight:800; letter-spacing:-.02em; margin:0 0 12px; }
+    .placeholder p{ font-size:1.05rem; color:var(--muted); margin:0; max-width:34rem; }
+  </style>
+
+  <!-- Runs before render: hide the page until the session is unlocked (no content flash) -->
+  <script>
+    (function(){
+      try { if (sessionStorage.getItem("n26AccessGranted") === "1") return; } catch(_){}
+      document.documentElement.classList.add("n26-locked");
+    })();
+  </script>
+</head>
+
+<body>
+
+<!-- ===================== Password gate (secure entry) ===================== -->
+<div id="n26Gate" role="dialog" aria-modal="true" aria-labelledby="n26GateTitle">
+  <div class="pw-card" role="document">
+    <p class="pw-eyebrow">🔒 Protected case study</p>
+    <h2 class="pw-title" id="n26GateTitle">Enter password to view</h2>
+    <p class="pw-desc">This N26 Premium case study is password-protected. Enter the password to continue.</p>
+    <form id="n26GateForm" novalidate>
+      <input type="password" id="n26GateInput" class="pw-input" placeholder="Password" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Password">
+      <p class="pw-error" id="n26GateError" role="alert" hidden>Incorrect password. Please try again.</p>
+      <div class="pw-actions">
+        <a class="pw-back" href="index.html">&larr; Back home</a>
+        <button type="submit" class="pw-btn">Unlock &rarr;</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- SECTION: Sticky Navigation (shared shell — see css/shell.css) -->
+<header class="shell-header">
+  <div class="shell-inner shell-bar">
+    <a href="index.html" class="shell-brand">Home</a>
+  </div>
+</header>
+
+<main style="padding-top:var(--shell-h)">
+  <!-- Content will follow -->
+  <section class="placeholder">
+    <div>
+      <h1>N26 — Multi-activity Feed</h1>
+      <p>This case study is coming soon. Content will follow.</p>
+    </div>
+  </section>
+</main>
+
+<!-- SECTION: Footer (shared shell — see css/shell.css) -->
+<footer class="shell-footer" id="contact">
+  <div class="shell-inner">
+    <div class="shell-prevnext">
+      <a href="olx.html" class="shell-card"><p class="k">← Previous</p><p class="t">OLX — Ad Package</p></a>
+      <a href="goplay.html" class="shell-card next"><p class="k">Next →</p><p class="t">GoPlay — OTT Platform</p></a>
+    </div>
+    <div class="shell-footer-lead">
+      <div>
+        <p class="shell-footer-title">Let’s build something.</p>
+        <p class="shell-footer-copy">Please use the <a href="https://docs.google.com/forms/d/e/1FAIpQLScKV7IVg-JeodOmY5m7eDIK_qctNltq-QddtYnLrRneSqCIwA/viewform" target="_blank" rel="noopener">💌 contact form</a> to say Hi 👋 or request any inquiry. You can also <a href="https://twitter.com/intent/tweet?screen_name=vipulsaxena_fc" target="_blank" rel="noopener">tweet me</a>, or send me an old fashioned <a href="mailto:vipul.saxena01@gmail.com">email</a>.</p>
+      </div>
+    </div>
+    <div class="shell-footer-base">
+      <p>© 2024 · Vipul Saxena · N26</p>
+      <p>Product Design Portfolio</p>
+    </div>
+  </div>
+</footer>
+
+<!-- Password gate validation -->
+<script>
+  (function(){
+    var PASSWORD = "portfolio26";
+    var granted = false;
+    try { granted = sessionStorage.getItem("n26AccessGranted") === "1"; } catch(_){}
+
+    var gate  = document.getElementById("n26Gate");
+    var form  = document.getElementById("n26GateForm");
+    var input = document.getElementById("n26GateInput");
+    var error = document.getElementById("n26GateError");
+    if (!gate || !form) return;
+
+    if (granted) {
+      document.documentElement.classList.remove("n26-locked");
+      gate.remove();
+    } else {
+      setTimeout(function(){ if (input) input.focus(); }, 80);
+    }
+
+    form.addEventListener("submit", function(e){
+      e.preventDefault();
+      if (input.value === PASSWORD) {
+        try { sessionStorage.setItem("n26AccessGranted", "1"); } catch(_){}
+        document.documentElement.classList.remove("n26-locked");
+        gate.remove();
+      } else {
+        error.hidden = false; input.focus(); input.select();
+      }
+    });
+  })();
+</script>
+
+<script src="template.js" defer></script>
+</body>
+</html>

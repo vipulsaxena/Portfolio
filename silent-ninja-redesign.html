@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-    <!-- Priority tags. These must come first. -->
     <meta charset="utf-8">
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-35LE56GGGS"></script>
@@ -14,20 +13,16 @@
       gtag('config', 'GT-5TN254F');
     </script>
     <meta http-equiv="x-ua-compatible" content="ie=edge; chrome=1">
-    <!-- Render Chrome if available or using latest version of Internet Explorer (Recommended). -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Document Title -->
     <title>Vipul Saxena | Silent Ninja, Redesign</title>
 
-
-   <!-- Search Eengine and Browser Meta Tags. -->
+    <!-- Search engine and browser meta tags -->
     <meta name="description" content="Redesigning Silent Ninja, a smart call-blocking Android app — a visual and UX refresh of its core flows.">
-    <!-- Keep under 500 characters -->
-    <meta name="keywords" content="Vipul Saxena, Senior Product Designer, Berlin, UX Design, UI Design, Product Strategy, User-Centered Design, Design Sprints, Product Discovery, Fintech, AI, Digital Products, Collaboration">
+    <meta name="keywords" content="Vipul Saxena, Product Designer, UX Design, UI Design, Android, Call Blocker, Silent Ninja">
     <meta name="author" content="Vipul Saxena" />
 
-    <!-- For SEO -->
+    <!-- SEO -->
     <meta name="google-site-verification" content="_Pw468vxdtRMyLByV9sPOX9VYJasRQnTRz_-iD-x_e8" />
     <meta name="majestic-site-verification" content="MJ12_bd697943-0265-4d5f-9db4-60760044d91b" />
     <meta name="robots" content="index, follow" />
@@ -39,118 +34,278 @@
     <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="article" />
     <meta property="og:site_name" content="Vipulsaxena.com" />
-    <meta property="og:image" content="https://vipulsaxena.com/images/self.jpg" />
-    <meta property="og:image:type" content="image/jpg" />
+    <meta property="og:image" content="https://vipulsaxena.com/images/ninja-screens.png" />
+    <meta property="og:image:type" content="image/png" />
     <meta name='twitter:card' content='summary_large_image' />
     <meta name='twitter:site' content='@vipulsaxena_fc' />
     <meta name='twitter:title' content='Silent Ninja Redesign — Case Study' />
     <meta name='twitter:description' content='Redesigning Silent Ninja, a smart call-blocking Android app — a visual and UX refresh of its core flows.' />
     <meta name="twitter:url" content="https://vipulsaxena.com/silent-ninja-redesign.html" />
-    <meta name='twitter:image' content="https://vipulsaxena.com/images/self.jpg" />
+    <meta name='twitter:image' content="https://vipulsaxena.com/images/ninja-screens.png" />
 
-    <!-- Favicon Meta Tags.  -->
+    <!-- Favicon -->
     <link rel="icon" href="fav.png" sizes="32x32" type="image/png">
     <link rel="shortcut icon" href="fav.png" type="image/png">
-
-    <meta name="msapplication-TileColor" content="#603cba">
-    <meta name="theme-color" content="#EEEEEE">
+    <meta name="theme-color" content="#ffffff">
     <link rel="canonical" href="https://vipulsaxena.com/silent-ninja-redesign.html">
 
-    <link rel="alternate" type="application/rss+xml" title="Vipul Saxena | Advocating & Evangelizing UX Design" href="/sitemap.xml">
-
+    <!-- Fonts (match Portfolio: Inter) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap">
-    <link rel="stylesheet" href="css/style.css">
-    <link href="css/zoom.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/shell.css">
+
+    <!-- Tailwind (Play CDN) + theme config -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              base:  '#ffffff',
+              elev:  '#f7f7f7',
+              card:  '#ffffff',
+              line:  '#e7e7e7',
+              ink:   '#262626',
+              mute:  '#6e6e6e',
+              accent:'#ffda08',
+              accink:'#262626',
+            },
+            fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+            borderRadius: { '2xl': '1.25rem', '3xl': '1.75rem' },
+            maxWidth: { content: '80rem' },
+          }
+        }
+      }
+    </script>
+
+    <!-- Component styles Tailwind can't express cleanly (reveal, lightbox) -->
+    <style type="text/css">
+      html{ scroll-behavior:smooth; }
+      body{ background:#ffffff; font-family:"Inter", system-ui, sans-serif; }
+      ::selection{ background:#ffda08; color:#262626; }
+
+      .hl{ background:#ffda08; color:#262626; padding:0 .1em; border-radius:.08em;
+           -webkit-box-decoration-break:clone; box-decoration-break:clone; }
+
+      [data-reveal]{ opacity:0; transform:translateY(22px); transition:opacity .6s ease, transform .6s ease; }
+      [data-reveal].is-in{ opacity:1; transform:none; }
+      @media (prefers-reduced-motion: reduce){
+        [data-reveal]{ opacity:1; transform:none; transition:none; }
+        html{ scroll-behavior:auto; }
+      }
+
+      #lightbox{ position:fixed; inset:0; z-index:2000; display:none; align-items:center; justify-content:center; background:rgba(38,38,38,.85); padding:5vw; }
+      #lightbox.open{ display:flex; }
+      #lightbox img{ max-width:100%; max-height:90vh; border-radius:.75rem; }
+    </style>
 </head>
 
-<body>
+<body class="bg-base text-ink font-sans antialiased">
 
-    <a href="index.html" id="top-nav">Home</a>
-
-    <main>
-        <article class="post">
-            <div class="container">
-
-                <!-- <div class="post-header">
-                    <figure class="post-cover">
-                        <img loading="lazy" decoding="async" src="images/silent.jpg">
-                    </figure>
-                </div> -->
-                        <h1 style="margin-top:24rem">
-                        Silent Ninja, Redesign
-                        </h1>
-
-                <div class="post-infos" >
-
-                    <div class="post-infos__content">
-
-                        <div class="post-infos__child">
-                            <p class="date">Role</p>
-                            <p>Product Design / Branding</p>
-                        </div>
-
-                        <div class="post-infos__child">
-                            <p class="date">Period</p>
-
-                            <p>2014</p>
-
-                        </div>
-
-                        <div class="post-infos__child" id="link">
-                            <p class="date">Elsewhere</p>
-                            <p><a href="https://www.youtube.com/watch?v=DaiwzpLh6xQ" target="_blank">Youtube   ↗</a> <a href="https://apk.tools/details-silentninja-dnd-call-blocker-apk/" target="_blank">Download   ↗</a> <a href="https://yourstory.com/2013/09/silent-ninja-flip-flop-app-naval-saini" target="_blank">Press   ↗</a></p>
-                        </div>
-
-                    </div>
-                    <hr>
-                </div>
-                <div class="post-content">
-                    <p>Silent Ninja is a call blocking application suited for meetings, work hours, movies and many other occasions. It has smart filters to identify spam vs [imp]repetative calls and options to auto-respond to a incoming call via sms on user-concent.</p>
-
-                    <p>I collaboratively worked with a Senior product designer in designing the 1st version of the app and then later in 2014 took a re-take to improvise the visual design and UX of the app. What you see below is a compilation of simplified key views of the latest app.</p>
-
-                    <p><img src="images/ninja-screens.png" alt="" /></p>
-                    <br>
-                    <blockquote>
-                        <p>Slidable list-items with most prefered actions and two tabs layout</p>
-                    </blockquote>
-                </div>
-            </div>
-        </article>
-        <!--
-<div class="post-banner">
-  <div class="container">
+<!-- ============================================================= -->
+<!-- SECTION: Sticky Navigation (shared shell — see css/shell.css)  -->
+<!-- ============================================================= -->
+<header class="shell-header">
+  <div class="shell-inner shell-bar">
+    <a href="index.html" class="shell-brand">Home</a>
+    <nav class="shell-nav" aria-label="Sections" data-scrollspy>
+      <a href="#overview" class="shell-link">Overview</a>
+      <a href="#problem"  class="shell-link">Problem</a>
+      <a href="#solution" class="shell-link">Solution</a>
+    </nav>
+    <div class="shell-actions">
+      <button type="button" class="shell-burger" data-nav-toggle aria-expanded="false" aria-controls="shell-menu" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
   </div>
+  <div class="shell-menu" id="shell-menu" data-nav-menu>
+    <nav aria-label="Sections">
+      <a href="#overview" class="shell-link">Overview</a>
+      <a href="#problem"  class="shell-link">Problem</a>
+      <a href="#solution" class="shell-link">Solution</a>
+    </nav>
+  </div>
+</header>
+
+<main class="pt-16">
+
+  <!-- ============================================================= -->
+  <!-- SECTION: Hero                                                 -->
+  <!-- ============================================================= -->
+  <section class="mx-auto max-w-content px-5 md:px-8 pt-16 md:pt-24 pb-10">
+    <p class="text-mute text-xs md:text-sm font-bold uppercase tracking-[0.2em] mb-6" data-reveal>Android App · Call Blocker · 2014</p>
+
+    <h1 class="font-extrabold tracking-tight leading-[1.06] text-5xl md:text-7xl lg:text-[5.25rem] max-w-[16ch]" data-reveal>
+      Silent Ninja — a <span class="hl">smarter call blocker</span>
+    </h1>
+
+    <p class="mt-8 text-xl md:text-2xl text-mute max-w-[48ch] leading-snug" data-reveal>
+      A visual and UX redesign of a smart call-blocking Android app — helping people silence calls during meetings, work hours, and movies, with filters for spam and one-tap auto-responses.
+    </p>
+
+    <!-- Role / meta tags -->
+    <div class="mt-9 flex flex-wrap gap-x-10 gap-y-6" data-reveal>
+      <div>
+        <p class="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-mute mb-1.5">Role</p>
+        <p class="font-semibold">Product &amp; Visual Design</p>
+      </div>
+      <div>
+        <p class="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-mute mb-1.5">Timeline</p>
+        <p class="font-semibold">2014</p>
+      </div>
+      <div>
+        <p class="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-mute mb-1.5">Platform</p>
+        <p class="font-semibold">Android</p>
+      </div>
+      <div>
+        <p class="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-mute mb-1.5">Discipline</p>
+        <p class="font-semibold">UX · UI · Branding</p>
+      </div>
+    </div>
+
+    <!-- Elsewhere links -->
+    <div class="mt-7 flex flex-wrap gap-3" data-reveal>
+      <a href="https://www.youtube.com/watch?v=DaiwzpLh6xQ" target="_blank" rel="noopener" class="px-4 py-2 rounded-full border border-line text-sm font-semibold hover:border-accent hover:bg-elev transition">Watch on YouTube ↗</a>
+      <a href="https://apk.tools/details-silentninja-dnd-call-blocker-apk/" target="_blank" rel="noopener" class="px-4 py-2 rounded-full border border-line text-sm font-semibold hover:border-accent hover:bg-elev transition">Download APK ↗</a>
+      <a href="https://yourstory.com/2013/09/silent-ninja-flip-flop-app-naval-saini" target="_blank" rel="noopener" class="px-4 py-2 rounded-full border border-line text-sm font-semibold hover:border-accent hover:bg-elev transition">In the press ↗</a>
+    </div>
+  </section>
+
+  <!-- ============================================================= -->
+  <!-- SECTION: Overview                                             -->
+  <!-- ============================================================= -->
+  <section id="overview" class="scroll-mt-24 border-t border-line bg-elev">
+    <div class="mx-auto max-w-content px-5 md:px-8 py-20 md:py-28">
+      <p class="text-mute text-xs font-bold uppercase tracking-[0.18em] mb-5" data-reveal>Overview</p>
+      <div class="grid lg:grid-cols-[1.6fr_1fr] gap-10 lg:gap-20 items-start">
+        <p class="text-2xl md:text-3xl font-medium leading-snug max-w-[32ch]" data-reveal>
+          Silent Ninja is a call-blocking app for meetings, work hours, movies, and every other do-not-disturb moment. Smart filters separate spam from repeat callers, and users can auto-respond to incoming calls with an SMS on their own terms.
+        </p>
+        <div class="grid gap-6" data-reveal>
+          <div>
+            <p class="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-mute mb-2">Platform</p>
+            <p>Android</p>
+          </div>
+          <div>
+            <p class="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-mute mb-2">My contribution</p>
+            <p>Visual · Interaction · Branding</p>
+          </div>
+          <div>
+            <p class="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-mute mb-2">Status</p>
+            <p>Shipped</p>
+          </div>
+        </div>
+      </div>
+
+      <p class="mt-14 text-lg text-mute max-w-[70ch]" data-reveal>
+        I collaborated with a Senior Product Designer on the first version of the app, then in 2014 led a re-take to improve the visual design and user experience. What follows is a compilation of the simplified, key views from the redesigned app.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================= -->
+  <!-- SECTION: Context & Problem Statement                          -->
+  <!-- ============================================================= -->
+  <section id="problem" class="scroll-mt-24">
+    <div class="mx-auto max-w-content px-5 md:px-8 py-20 md:py-28">
+      <p class="text-mute text-xs font-bold uppercase tracking-[0.18em] mb-5" data-reveal>Problem</p>
+
+      <div class="grid md:grid-cols-2 gap-6 md:gap-8">
+        <div class="rounded-2xl border border-line bg-card p-8 md:p-10 shadow-sm" data-reveal>
+          <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-4">The challenge</h2>
+          <p class="text-mute text-lg leading-relaxed">The first version worked, but the interface felt dated and the everyday flows — blocking a caller, managing filters, and setting an auto-response — took more taps and attention than they should.</p>
+        </div>
+        <div class="rounded-2xl border border-line bg-card p-8 md:p-10 shadow-sm" data-reveal>
+          <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-4">The goal</h2>
+          <p class="text-mute text-lg leading-relaxed">Refresh the brand and streamline the core interactions so the most-used actions sit one gesture away, while keeping the app light and quick to understand.</p>
+        </div>
+      </div>
+
+      <blockquote class="mt-8 rounded-2xl border-l-4 border-accent bg-elev p-8 md:p-10" data-reveal>
+        <p class="text-2xl md:text-4xl font-bold tracking-tight leading-snug max-w-[26ch]">
+          How might we make <span class="hl">silencing a call</span> feel effortless — in a single gesture?
+        </p>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- ============================================================= -->
+  <!-- SECTION: Solution                                             -->
+  <!-- ============================================================= -->
+  <section id="solution" class="scroll-mt-24 bg-elev border-t border-line">
+    <div class="mx-auto max-w-content px-5 md:px-8 py-20 md:py-28">
+      <p class="text-mute text-xs font-bold uppercase tracking-[0.18em] mb-5" data-reveal>Solution</p>
+      <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-12 max-w-[20ch]" data-reveal>The redesigned experience</h2>
+
+      <!-- Key screens -->
+      <figure class="mb-16" data-reveal>
+        <div class="rounded-2xl ring-1 ring-line bg-card p-4 md:p-8 shadow-sm">
+          <img loading="lazy" decoding="async" src="images/ninja-screens.png" alt="Silent Ninja redesigned key screens — call blocking, filters, and auto-respond" data-lightbox class="w-full h-auto object-contain cursor-zoom-in">
+        </div>
+        <figcaption class="mt-4 text-sm text-mute">A compilation of simplified key views from the latest app.</figcaption>
+      </figure>
+
+      <!-- Feature highlights -->
+      <div class="grid md:grid-cols-2 gap-6" data-reveal>
+        <div class="rounded-2xl border border-line bg-card p-8 shadow-sm hover:border-accent transition">
+          <h3 class="text-xl font-bold tracking-tight mb-2">Slidable list items</h3>
+          <p class="text-mute leading-relaxed">The most-preferred actions surface directly on each list item, so blocking or responding is a single swipe instead of a buried menu.</p>
+        </div>
+        <div class="rounded-2xl border border-line bg-card p-8 shadow-sm hover:border-accent transition">
+          <h3 class="text-xl font-bold tracking-tight mb-2">A simple two-tab layout</h3>
+          <p class="text-mute leading-relaxed">The whole app is organised into two clear tabs, keeping navigation shallow and the mental model easy to hold.</p>
+        </div>
+        <div class="rounded-2xl border border-line bg-card p-8 shadow-sm hover:border-accent transition">
+          <h3 class="text-xl font-bold tracking-tight mb-2">Smart filters</h3>
+          <p class="text-mute leading-relaxed">Filters distinguish spam from repeat callers, so the right calls get through while the noise stays silenced.</p>
+        </div>
+        <div class="rounded-2xl border border-line bg-card p-8 shadow-sm hover:border-accent transition">
+          <h3 class="text-xl font-bold tracking-tight mb-2">Auto-respond via SMS</h3>
+          <p class="text-mute leading-relaxed">When a call is silenced, the app can reply with an SMS on the user's consent — a small courtesy that closes the loop.</p>
+        </div>
+      </div>
+
+      <blockquote class="mt-12 rounded-2xl border-l-4 border-accent bg-card p-8 md:p-10 shadow-sm" data-reveal>
+        <p class="text-xl md:text-2xl font-semibold tracking-tight leading-snug max-w-[46ch]">
+          Slidable list items with the most-preferred actions, organised into a simple two-tab layout.
+        </p>
+      </blockquote>
+
+      <p class="mt-12 text-mute" data-reveal>Thanks for reading 🙌</p>
+    </div>
+  </section>
+
+  <!-- ============================================================= -->
+  <!-- SECTION: Footer (shared shell — see css/shell.css)            -->
+  <!-- ============================================================= -->
+  <footer class="shell-footer" id="contact">
+    <div class="shell-inner">
+      <div class="shell-prevnext">
+        <a href="instalively.html" class="shell-card"><p class="k">← Previous</p><p class="t">InstaLively — Livestreaming</p></a>
+        <a href="index.html" class="shell-card next"><p class="k">Next →</p><p class="t">All case studies</p></a>
+      </div>
+      <div class="shell-footer-lead">
+        <div>
+          <p class="shell-footer-title">Let’s build something.</p>
+          <p class="shell-footer-copy">Please use the <a href="https://docs.google.com/forms/d/e/1FAIpQLScKV7IVg-JeodOmY5m7eDIK_qctNltq-QddtYnLrRneSqCIwA/viewform" target="_blank" rel="noopener">💌 contact form</a> to say Hi 👋 or request any inquiry. You can also <a href="https://twitter.com/intent/tweet?screen_name=vipulsaxena_fc" target="_blank" rel="noopener">tweet me</a>, or send me an old fashioned <a href="mailto:vipul.saxena01@gmail.com">email</a>.</p>
+        </div>
+      </div>
+      <div class="shell-footer-base">
+        <p>© 2014 · Vipul Saxena · Silent Ninja</p>
+        <p>Product Design Portfolio</p>
+      </div>
+    </div>
+  </footer>
+
+</main>
+
+<!-- Lightbox overlay -->
+<div id="lightbox" aria-hidden="true">
+  <img alt="Expanded view">
 </div>
 
- -->
-
-    </main>
-
-    <a href="javascript:history.back()" id="bottom-nav">🏠 Back Home</a>
-
-    <hr>
-
-    <footer class="site-footer">
-        <ul>
-            <li>Vipul Saxena | SilentNinja</li>
-        </ul>
-    </footer>
-
-    <script src="js/jquery-3.1.1.min.js"></script>
-    <script src="js/zoom.js"></script>
-    <script src="js/transition.js"></script>
-    <script src="js/fontfaceobserver.js"></script>
-    <script>
-        //Font observer loader
-        var font = new FontFaceObserver('sans');
-        var font = new FontFaceObserver('serif');
-    </script>
-    <!-- Start of Magnify Widget Snippet -->
-    <!-- app.usemagnify.com -->
-    <!-- End of Magnify Widget Snippet -->
+<script src="template.js" defer></script>
 </body>
-
 </html>

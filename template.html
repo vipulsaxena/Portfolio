@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge; chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Case Study Template · Product Design</title>
+    <meta name="description" content="A modular, reusable product design case study template — clean, bold, and clear. Swap the placeholders to publish a new case study.">
+    <meta name="robots" content="noindex, follow">
+
+    <link rel="icon" href="fav.png" sizes="32x32" type="image/png">
+
+    <!-- Fonts (match Portfolio: Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap">
+    <link rel="stylesheet" href="css/shell.css">
+
+    <!-- Tailwind (Play CDN) + theme config -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              base:  '#ffffff',   /* page background            */
+              elev:  '#f7f7f7',   /* elevated section bg        */
+              card:  '#ffffff',   /* card surface               */
+              line:  '#e7e7e7',   /* hairline borders           */
+              ink:   '#262626',   /* primary text               */
+              mute:  '#6e6e6e',   /* secondary text             */
+              accent:'#ffda08',   /* brand yellow               */
+              accink:'#262626',   /* text on accent             */
+            },
+            fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+            borderRadius: { '2xl': '1.25rem', '3xl': '1.75rem' },
+            maxWidth: { content: '80rem' },
+          }
+        }
+      }
+    </script>
+
+    <!-- Component styles Tailwind can't express cleanly (slider, carousel, wireframes, reveal) -->
+    <style type="text/css">
+      html{ scroll-behavior:smooth; }
+      body{ background:#ffffff; font-family:"Inter", system-ui, sans-serif; }
+      ::selection{ background:#ffda08; color:#262626; }
+
+      /* Brand yellow highlight (matches Portfolio) */
+      .hl{ background:#ffda08; color:#262626; padding:0 .1em; border-radius:.08em;
+           -webkit-box-decoration-break:clone; box-decoration-break:clone; }
+
+      /* Wireframe / screen placeholder */
+      .wf{
+        position:relative; display:flex; align-items:center; justify-content:center;
+        color:#a3a3a3; font-size:.8rem; letter-spacing:.14em; text-transform:uppercase; font-weight:600;
+        background-color:#fafafa;
+        background-image:
+          linear-gradient(#ededed 1px, transparent 1px),
+          linear-gradient(90deg, #ededed 1px, transparent 1px);
+        background-size:26px 26px;
+        border:1px dashed #dcdcdc; border-radius:1rem; overflow:hidden;
+      }
+      .wf span{ position:relative; z-index:1; padding:.4em .8em; background:rgba(255,255,255,.7); border-radius:.5em; }
+
+      /* Device frames */
+      .device-phone{ border:8px solid #e7e7e7; border-radius:2rem; background:#fff; box-shadow:0 24px 50px -24px rgba(38,38,38,.25); }
+      .device-desktop{ border:10px solid #e7e7e7; border-bottom-width:26px; border-radius:1rem; background:#fff; box-shadow:0 24px 50px -24px rgba(38,38,38,.25); }
+
+      /* Before / After compare slider */
+      .compare{ position:relative; overflow:hidden; border-radius:1rem; cursor:ew-resize; user-select:none; touch-action:none; }
+      .compare .after-layer{ position:absolute; inset:0; overflow:hidden; clip-path:inset(0 50% 0 0); }
+      .compare .handle{
+        position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); z-index:5;
+        width:44px; height:44px; border-radius:999px; background:#ffda08; color:#262626;
+        display:flex; align-items:center; justify-content:center; font-weight:800; box-shadow:0 6px 18px rgba(38,38,38,.28);
+      }
+      .compare .handle::before{ /* full-height divider line, clipped by container overflow */
+        content:""; position:absolute; left:50%; top:-100vh; height:200vh; width:2px;
+        background:#ffda08; transform:translateX(-50%); z-index:-1;
+      }
+      .compare .tag{ position:absolute; top:12px; z-index:4; font-size:.7rem; letter-spacing:.12em; text-transform:uppercase; font-weight:700; padding:4px 10px; border-radius:999px; background:rgba(255,255,255,.9); color:#262626; border:1px solid #e7e7e7; }
+
+      /* Carousel */
+      .carousel-track{ display:flex; transition:transform .45s cubic-bezier(.22,.61,.36,1); }
+      .carousel-track > *{ flex:0 0 100%; }
+      .dot{ width:9px; height:9px; border-radius:999px; background:#d4d4d4; transition:all .2s ease; }
+      .dot[aria-current="true"]{ background:#ffda08; width:26px; }
+
+      /* Marquee (sentiment / keywords) */
+      .marquee{ overflow:hidden; -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent); mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent); }
+      .marquee-track{ display:inline-flex; gap:1rem; white-space:nowrap; animation:marquee 34s linear infinite; }
+      @keyframes marquee{ from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+      /* Reveal on scroll */
+      [data-reveal]{ opacity:0; transform:translateY(22px); transition:opacity .6s ease, transform .6s ease; }
+      [data-reveal].is-in{ opacity:1; transform:none; }
+      @media (prefers-reduced-motion: reduce){
+        [data-reveal]{ opacity:1; transform:none; transition:none; }
+        .marquee-track{ animation:none; }
+        html{ scroll-behavior:auto; }
+      }
+
+      /* Lightbox */
+      #lightbox{ position:fixed; inset:0; z-index:2000; display:none; align-items:center; justify-content:center; background:rgba(38,38,38,.85); padding:5vw; }
+      #lightbox.open{ display:flex; }
+      #lightbox img{ max-width:100%; max-height:90vh; border-radius:.75rem; }
+    </style>
+</head>
+
+<body class="bg-base text-ink font-sans antialiased">
+
+<!-- ============================================================= -->
+<!-- SECTION: Sticky Navigation (shared shell — see css/shell.css)  -->
+<!-- ============================================================= -->
+<header class="shell-header">
+  <div class="shell-inner shell-bar">
+    <a href="index.html" class="shell-brand">Home</a>
+    <nav class="shell-nav" aria-label="Sections" data-scrollspy>
+      <a href="#overview" class="shell-link">Overview</a>
+      <a href="#problem"  class="shell-link">Problem</a>
+      <a href="#process"  class="shell-link">Process</a>
+      <a href="#solution" class="shell-link">Solution</a>
+      <a href="#impact"   class="shell-link">Impact</a>
+    </nav>
+    <div class="shell-actions">
+      <button type="button" class="shell-burger" data-nav-toggle aria-expanded="false" aria-controls="shell-menu" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="shell-menu" id="shell-menu" data-nav-menu>
+    <nav aria-label="Sections">
+      <a href="#overview" class="shell-link">Overview</a>
+      <a href="#problem"  class="shell-link">Problem</a>
+      <a href="#process"  class="shell-link">Process</a>
+      <a href="#solution" class="shell-link">Solution</a>
+      <a href="#impact"   class="shell-link">Impact</a>
+    </nav>
+  </div>
+</header>
+
+<main class="pt-16">
+
+  <!-- ============================================================= -->
+  <!-- SECTION: Hero                                                 -->
+  <!-- ============================================================= -->
+  <section class="mx-auto max-w-content px-5 md:px-8 pt-16 md:pt-24 pb-10">
+    <p class="text-mute text-xs md:text-sm font-bold uppercase tracking-[0.2em] mb-6" data-reveal>Category · Client · Year</p>
+
+    <h1 class="font-extrabold tracking-tight leading-[1.06] text-5xl md:text-7xl lg:text-[5.5rem] max-w-[16ch]" data-reveal>
+      A bold, clear headline for the <span class="hl">case&nbsp;study</span>
+    </h1>
+
+    <p class="mt-8 text-xl md:text-2xl text-mute max-w-[46ch] leading-snug" data-reveal>
+      One or two sentences that state the outcome up front — the change you drove and the result it produced.
+    </p>
+
+    <!-- Role / meta tags -->
+    <div class="mt-9 flex flex-wrap gap-x-10 gap-y-6" data-reveal>
+      <div>
+        <p class="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-mute mb-1.5">Role</p>
+        <p class="font-semibold">Lead Product Designer</p>
+      </div>
+      <div>
+        <p class="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-mute mb-1.5">Timeline</p>
+        <p class="font-semibold">XX weeks · 20XX</p>
+      </div>
+      <div>
+        <p class="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-mute mb-1.5">Team</p>
+        <p class="font-semibold">PM · Eng · Research</p>
+      </div>
+      <div>
+        <p class="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-mute mb-1.5">Tools</p>
+        <p class="font-semibold">Figma · Maze · Dovetail</p>
+      </div>
+    </div>
+
+    <!-- Hero visual banner -->
+    <figure class="mt-12 md:mt-16" data-reveal>
+      <div class="wf aspect-video ring-1 ring-line shadow-xl shadow-ink/5" data-lightbox role="img" aria-label="Hero mockup placeholder">
+        <span>Hero mockup — 16:9</span>
+      </div>
+      <figcaption class="mt-4 text-sm text-mute">Caption: the headline visual / final product shot.</figcaption>
+    </figure>
+
+    <!-- At-a-glance metric badges -->
+    <div class="mt-12 grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5" data-reveal>
+      <!-- Metric badge (repeatable) -->
+      <div class="rounded-2xl border border-line bg-card p-6 shadow-sm hover:-translate-y-1 hover:border-accent hover:shadow-md transition duration-200">
+        <div class="text-4xl md:text-5xl font-extrabold tracking-tight text-ink leading-none">+35%</div>
+        <div class="mt-3 text-sm text-mute leading-snug">Metric label goes here</div>
+      </div>
+      <div class="rounded-2xl border border-line bg-card p-6 shadow-sm hover:-translate-y-1 hover:border-accent hover:shadow-md transition duration-200">
+        <div class="text-4xl md:text-5xl font-extrabold tracking-tight text-ink leading-none">4.8★</div>
+        <div class="mt-3 text-sm text-mute leading-snug">Metric label goes here</div>
+      </div>
+      <div class="rounded-2xl border border-line bg-card p-6 shadow-sm hover:-translate-y-1 hover:border-accent hover:shadow-md transition duration-200">
+        <div class="text-4xl md:text-5xl font-extrabold tracking-tight text-ink leading-none">2×</div>
+        <div class="mt-3 text-sm text-mute leading-snug">Metric label goes here</div>
+      </div>
+      <div class="rounded-2xl border border-line bg-card p-6 shadow-sm hover:-translate-y-1 hover:border-accent hover:shadow-md transition duration-200">
+        <div class="text-4xl md:text-5xl font-extrabold tracking-tight text-ink leading-none">−40%</div>
+        <div class="mt-3 text-sm text-mute leading-snug">Metric label goes here</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================= -->
+  <!-- SECTION: Overview                                             -->
+  <!-- ============================================================= -->
+  <section id="overview" class="scroll-mt-24 border-t border-line bg-elev">
+    <div class="mx-auto max-w-content px-5 md:px-8 py-20 md:py-28">
+      <p class="text-mute text-xs font-bold uppercase tracking-[0.18em] mb-5" data-reveal>Overview</p>
+      <div class="grid lg:grid-cols-[1.6fr_1fr] gap-10 lg:gap-20 items-start">
+        <p class="text-2xl md:text-3xl font-medium leading-snug max-w-[28ch]" data-reveal>
+          A big, confident overview paragraph. State what the product is, what you owned, and why the work mattered — in plain language.
+        </p>
+        <div class="grid gap-6" data-reveal>
+          <div>
+            <p class="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-mute mb-2">Platforms</p>
+            <p>Desktop web · Mobile web · iOS</p>
+          </div>
+          <div>
+            <p class="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-mute mb-2">My contribution</p>
+            <p>Research · Interaction · Visual · Prototype</p>
+          </div>
+          <div>
+            <p class="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-mute mb-2">Status</p>
+            <p>Shipped / In development</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================= -->
+  <!-- SECTION: Context & Problem Statement                          -->
+  <!-- ============================================================= -->
+  <section id="problem" class="scroll-mt-24">
+    <div class="mx-auto max-w-content px-5 md:px-8 py-20 md:py-28">
+      <p class="text-mute text-xs font-bold uppercase tracking-[0.18em] mb-5" data-reveal>Problem</p>
+
+      <!-- Split: The Challenge / The Goal -->
+      <div class="grid md:grid-cols-2 gap-6 md:gap-8">
+        <div class="rounded-2xl border border-line bg-card p-8 md:p-10 shadow-sm" data-reveal>
+          <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-4">The challenge</h2>
+          <p class="text-mute text-lg leading-relaxed">Describe the friction, the stakes, and what was breaking. Frame it in numbers where you can, not adjectives.</p>
+        </div>
+        <div class="rounded-2xl border border-line bg-card p-8 md:p-10 shadow-sm" data-reveal>
+          <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-4">The goal</h2>
+          <p class="text-mute text-lg leading-relaxed">Describe the target outcome — the business and user result the work was meant to achieve.</p>
+        </div>
+      </div>
+
+      <!-- Core problem callout -->
+      <blockquote class="mt-8 rounded-2xl border-l-4 border-accent bg-elev p-8 md:p-10" data-reveal>
+        <p class="text-2xl md:text-4xl font-bold tracking-tight leading-snug max-w-[24ch]">
+          A single, punchy statement of the core problem you set out to solve.
+        </p>
+      </blockquote>
+
+      <!-- User / insight cards -->
+      <h3 class="mt-16 mb-6 text-xl font-bold tracking-tight" data-reveal>Who we were designing for</h3>
+      <div class="grid md:grid-cols-2 gap-6">
+        <!-- Persona / insight card (repeatable) -->
+        <article class="rounded-2xl border border-line bg-card p-8 shadow-sm" data-reveal>
+          <div class="flex items-center gap-4 mb-5">
+            <div class="w-12 h-12 rounded-full bg-accent flex items-center justify-center font-extrabold text-accink">A</div>
+            <div>
+              <p class="font-bold">Persona name</p>
+              <p class="text-sm text-mute">Short descriptor</p>
+            </div>
+          </div>
+          <p class="text-lg italic text-ink/80 mb-5">“A representative quote that captures this user's pain point.”</p>
+          <p class="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-mute mb-2">Pain points</p>
+          <ul class="text-mute space-y-1.5 list-disc pl-5 mb-5">
+            <li>Pain point one</li>
+            <li>Pain point two</li>
+          </ul>
+          <div class="flex flex-wrap gap-2">
+            <span class="text-xs px-3 py-1 rounded-full border border-line text-mute">behaviour</span>
+            <span class="text-xs px-3 py-1 rounded-full border border-line text-mute">behaviour</span>
+          </div>
+        </article>
+
+        <article class="rounded-2xl border border-line bg-card p-8 shadow-sm" data-reveal>
+          <div class="flex items-center gap-4 mb-5">
+            <div class="w-12 h-12 rounded-full bg-accent flex items-center justify-center font-extrabold text-accink">B</div>
+            <div>
+              <p class="font-bold">Persona name</p>
+              <p class="text-sm text-mute">Short descriptor</p>
+            </div>
+          </div>
+          <p class="text-lg italic text-ink/80 mb-5">“A second representative quote from a different user type.”</p>
+          <p class="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-mute mb-2">Pain points</p>
+          <ul class="text-mute space-y-1.5 list-disc pl-5 mb-5">
+            <li>Pain point one</li>
+            <li>Pain point two</li>
+          </ul>
+          <div class="flex flex-wrap gap-2">
+            <span class="text-xs px-3 py-1 rounded-full border border-line text-mute">behaviour</span>
+            <span class="text-xs px-3 py-1 rounded-full border border-line text-mute">behaviour</span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Giant statement band -->
+  <section class="mx-auto max-w-content px-5 md:px-8">
+    <div class="border-y-2 border-ink py-14 md:py-24" data-reveal>
+      <p class="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.12] max-w-[18ch]">
+        How might we <span class="hl">reframe the problem</span> into an opportunity?
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================= -->
+  <!-- SECTION: Deep Dive & Process                                  -->
+  <!-- ============================================================= -->
+  <section id="process" class="scroll-mt-24 bg-elev border-t border-line">
+    <div class="mx-auto max-w-content px-5 md:px-8 py-20 md:py-28">
+      <p class="text-mute text-xs font-bold uppercase tracking-[0.18em] mb-5" data-reveal>Process</p>
+      <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-12 max-w-[20ch]" data-reveal>How I got from ambiguity to a shipped decision</h2>
+
+      <!-- Process timeline -->
+      <ol class="relative grid sm:grid-cols-2 lg:grid-cols-4 gap-8" data-reveal>
+        <div class="hidden lg:block absolute top-5 left-0 right-0 h-px bg-line"></div>
+        <li class="relative">
+          <div class="w-10 h-10 rounded-full bg-accent text-accink font-extrabold flex items-center justify-center relative z-10">1</div>
+          <h3 class="mt-4 font-bold text-lg">Discover</h3>
+          <p class="mt-2 text-mute">Interviews, analytics, and framing the real problem.</p>
+        </li>
+        <li class="relative">
+          <div class="w-10 h-10 rounded-full bg-accent text-accink font-extrabold flex items-center justify-center relative z-10">2</div>
+          <h3 class="mt-4 font-bold text-lg">Define</h3>
+          <p class="mt-2 text-mute">Prioritisation and a sharp, testable hypothesis.</p>
+        </li>
+        <li class="relative">
+          <div class="w-10 h-10 rounded-full bg-accent text-accink font-extrabold flex items-center justify-center relative z-10">3</div>
+          <h3 class="mt-4 font-bold text-lg">Ideate</h3>
+          <p class="mt-2 text-mute">Competing concepts, critique, and iteration.</p>
+        </li>
+        <li class="relative">
+          <div class="w-10 h-10 rounded-full bg-accent text-accink font-extrabold flex items-center justify-center relative z-10">4</div>
+          <h3 class="mt-4 font-bold text-lg">Deliver</h3>
+          <p class="mt-2 text-mute">Validation, hand-off, and measuring the result.</p>
+        </li>
+      </ol>
+
+      <!-- Before / After comparison slider -->
+      <h3 class="mt-20 mb-6 text-xl md:text-2xl font-bold tracking-tight" data-reveal>Before &amp; after</h3>
+      <div class="compare aspect-video ring-1 ring-line" data-compare data-reveal>
+        <!-- Base layer = AFTER (new) -->
+        <div class="wf absolute inset-0 rounded-none">
+          <span>New design</span>
+        </div>
+        <span class="tag right-3">After</span>
+        <!-- Top clipped layer = BEFORE (old) -->
+        <div class="after-layer">
+          <div class="wf absolute inset-0 rounded-none" style="background-color:#f0f0f0;">
+            <span>Old design</span>
+          </div>
+          <span class="tag left-3">Before</span>
+        </div>
+        <div class="handle" aria-hidden="true">⟺</div>
+      </div>
+      <p class="mt-3 text-sm text-mute">Drag the handle to compare the old and new design.</p>
+
+      <!-- Interactive image carousel -->
+      <h3 class="mt-20 mb-6 text-xl md:text-2xl font-bold tracking-tight" data-reveal>Exploration gallery</h3>
+      <div data-carousel data-reveal>
+        <div class="overflow-hidden rounded-2xl ring-1 ring-line">
+          <div class="carousel-track" data-carousel-track>
+            <figure><div class="wf aspect-video rounded-none"><span>Iteration 01</span></div></figure>
+            <figure><div class="wf aspect-video rounded-none"><span>Iteration 02</span></div></figure>
+            <figure><div class="wf aspect-video rounded-none"><span>Iteration 03</span></div></figure>
+            <figure><div class="wf aspect-video rounded-none"><span>Iteration 04</span></div></figure>
+          </div>
+        </div>
+        <div class="mt-4 flex items-center justify-between">
+          <div class="flex items-center gap-2" data-carousel-dots aria-hidden="true"></div>
+          <div class="flex items-center gap-2">
+            <button data-carousel-prev class="w-10 h-10 rounded-full border border-line bg-card hover:border-accent hover:text-ink transition" aria-label="Previous slide">←</button>
+            <button data-carousel-next class="w-10 h-10 rounded-full border border-line bg-card hover:border-accent hover:text-ink transition" aria-label="Next slide">→</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Design system / component showcase -->
+      <h3 class="mt-20 mb-6 text-xl md:text-2xl font-bold tracking-tight" data-reveal>Design system snapshot</h3>
+      <div class="grid md:grid-cols-3 gap-6" data-reveal>
+        <!-- Colour palette -->
+        <div class="rounded-2xl border border-line bg-card p-6 shadow-sm">
+          <p class="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-mute mb-4">Palette</p>
+          <div class="grid grid-cols-5 gap-2">
+            <div class="aspect-square rounded-lg bg-accent"></div>
+            <div class="aspect-square rounded-lg bg-ink"></div>
+            <div class="aspect-square rounded-lg bg-elev border border-line"></div>
+            <div class="aspect-square rounded-lg bg-mute"></div>
+            <div class="aspect-square rounded-lg bg-line"></div>
+          </div>
+        </div>
+        <!-- Type scale -->
+        <div class="rounded-2xl border border-line bg-card p-6 shadow-sm">
+          <p class="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-mute mb-4">Type scale</p>
+          <div class="space-y-1">
+            <p class="text-3xl font-extrabold tracking-tight">Aa</p>
+            <p class="text-xl font-bold">Heading</p>
+            <p class="text-base">Body copy</p>
+            <p class="text-xs text-mute uppercase tracking-widest">Label</p>
+          </div>
+        </div>
+        <!-- Components -->
+        <div class="rounded-2xl border border-line bg-card p-6 shadow-sm">
+          <p class="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-mute mb-4">Components</p>
+          <div class="flex flex-wrap gap-2">
+            <span class="px-4 py-2 rounded-full bg-accent text-accink text-sm font-semibold">Button</span>
+            <span class="px-4 py-2 rounded-full border border-line text-sm">Secondary</span>
+            <span class="px-3 py-2 rounded-lg border border-line text-sm text-mute w-full">Input field</span>
+            <span class="px-3 py-1 rounded-full border border-line text-xs text-mute">Chip</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================= -->
+  <!-- SECTION: Interactive Prototype & Final Solution              -->
+  <!-- ============================================================= -->
+  <section id="solution" class="scroll-mt-24">
+    <div class="mx-auto max-w-content px-5 md:px-8 py-20 md:py-28">
+      <p class="text-mute text-xs font-bold uppercase tracking-[0.18em] mb-5" data-reveal>Solution</p>
+      <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-12 max-w-[20ch]" data-reveal>The final experience</h2>
+
+      <!-- Tabs (e.g., switch surfaces) -->
+      <div data-tabs data-reveal>
+        <div role="tablist" class="inline-flex p-1 rounded-full border border-line bg-elev mb-6">
+          <button role="tab" data-tab="0" aria-selected="true"  class="px-5 py-2 rounded-full text-sm font-semibold transition">Desktop</button>
+          <button role="tab" data-tab="1" aria-selected="false" class="px-5 py-2 rounded-full text-sm font-semibold transition">Mobile</button>
+        </div>
+        <div data-panel="0">
+          <div class="device-desktop"><div class="wf aspect-video rounded-md"><span>Desktop screen</span></div></div>
+        </div>
+        <div data-panel="1" hidden>
+          <div class="max-w-[280px] mx-auto device-phone p-1"><div class="wf aspect-[9/19] rounded-[1.4rem]"><span>Mobile screen</span></div></div>
+        </div>
+      </div>
+
+      <!-- Figma embed wrapper -->
+      <h3 class="mt-20 mb-6 text-xl md:text-2xl font-bold tracking-tight" data-reveal>Interactive prototype</h3>
+      <div class="rounded-2xl ring-1 ring-line overflow-hidden bg-elev" data-reveal>
+        <!-- Replace the wireframe below with your Figma iframe:
+             <iframe class="w-full aspect-video" src="https://www.figma.com/embed?embed_host=share&url=YOUR_PROTOTYPE_URL" allowfullscreen></iframe> -->
+        <div class="wf aspect-video rounded-none"><span>Figma prototype embed</span></div>
+      </div>
+
+      <!-- Feature highlights — zig-zag -->
+      <div class="mt-20 space-y-16">
+        <!-- Row: image left / text right -->
+        <div class="grid md:grid-cols-2 gap-8 md:gap-14 items-center" data-reveal>
+          <div class="wf aspect-[4/3]" data-lightbox role="img" aria-label="Feature one"><span>Feature 01</span></div>
+          <div>
+            <p class="text-mute text-xs font-bold uppercase tracking-[0.16em] mb-3">Feature one</p>
+            <h3 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-4">A headline for the key feature</h3>
+            <p class="text-mute text-lg leading-relaxed">Explain the interaction and the decision behind it — what it does for the user and why you built it this way.</p>
+          </div>
+        </div>
+        <!-- Row: text left / image right -->
+        <div class="grid md:grid-cols-2 gap-8 md:gap-14 items-center" data-reveal>
+          <div class="md:order-2 wf aspect-[4/3]" data-lightbox role="img" aria-label="Feature two"><span>Feature 02</span></div>
+          <div class="md:order-1">
+            <p class="text-mute text-xs font-bold uppercase tracking-[0.16em] mb-3">Feature two</p>
+            <h3 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-4">A headline for the second feature</h3>
+            <p class="text-mute text-lg leading-relaxed">Keep the alternating rhythm going. Pair each visual with a crisp explanation of the value.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Video / GIF walkthrough -->
+      <h3 class="mt-20 mb-6 text-xl md:text-2xl font-bold tracking-tight" data-reveal>Walkthrough</h3>
+      <div class="relative wf aspect-video" data-reveal>
+        <span>Screen recording / GIF</span>
+        <div class="absolute inset-0 flex items-center justify-center">
+          <div class="w-16 h-16 rounded-full bg-accent text-accink flex items-center justify-center text-2xl shadow-lg shadow-ink/10">▶</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================= -->
+  <!-- SECTION: Reflection & Impact                                  -->
+  <!-- ============================================================= -->
+  <section id="impact" class="scroll-mt-24 bg-elev border-t border-line">
+    <div class="mx-auto max-w-content px-5 md:px-8 py-20 md:py-28">
+      <p class="text-mute text-xs font-bold uppercase tracking-[0.18em] mb-5" data-reveal>Impact</p>
+      <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-12 max-w-[20ch]" data-reveal>What changed after we shipped</h2>
+
+      <!-- Big impact stats -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8" data-reveal>
+        <div>
+          <div class="text-5xl md:text-7xl font-extrabold tracking-tight leading-none">+35%</div>
+          <div class="mt-3 text-mute max-w-[18ch]">Primary outcome metric</div>
+        </div>
+        <div>
+          <div class="text-5xl md:text-7xl font-extrabold tracking-tight leading-none">−40%</div>
+          <div class="mt-3 text-mute max-w-[18ch]">Secondary metric</div>
+        </div>
+        <div>
+          <div class="text-5xl md:text-7xl font-extrabold tracking-tight leading-none">4×</div>
+          <div class="mt-3 text-mute max-w-[18ch]">A comparative gain</div>
+        </div>
+        <div>
+          <div class="text-5xl md:text-7xl font-extrabold tracking-tight leading-none">4.8★</div>
+          <div class="mt-3 text-mute max-w-[18ch]">Qualitative signal</div>
+        </div>
+      </div>
+
+      <!-- Sentiment marquee (micro-interaction) -->
+      <div class="mt-16 marquee" data-reveal>
+        <div class="marquee-track text-2xl md:text-3xl font-bold text-mute">
+          <span>clear&nbsp;·</span><span>fast&nbsp;·</span><span>intuitive&nbsp;·</span><span>modern&nbsp;·</span><span>simple&nbsp;·</span><span>confident&nbsp;·</span><span>delightful&nbsp;·</span><span>trusted&nbsp;·</span>
+          <span aria-hidden="true">clear&nbsp;·</span><span aria-hidden="true">fast&nbsp;·</span><span aria-hidden="true">intuitive&nbsp;·</span><span aria-hidden="true">modern&nbsp;·</span><span aria-hidden="true">simple&nbsp;·</span><span aria-hidden="true">confident&nbsp;·</span><span aria-hidden="true">delightful&nbsp;·</span><span aria-hidden="true">trusted&nbsp;·</span>
+        </div>
+      </div>
+
+      <!-- Key learnings / takeaway cards -->
+      <h3 class="mt-20 mb-6 text-xl md:text-2xl font-bold tracking-tight" data-reveal>Key takeaways</h3>
+      <div class="grid md:grid-cols-3 gap-6" data-reveal>
+        <div class="rounded-2xl border border-line bg-card p-8 shadow-sm hover:border-accent transition">
+          <div class="inline-block bg-accent text-accink text-lg font-extrabold px-2.5 py-0.5 rounded mb-4">01</div>
+          <p class="font-bold text-lg mb-2">A learning worth keeping</p>
+          <p class="text-mute leading-relaxed">One portable insight — something you'd carry into the next project.</p>
+        </div>
+        <div class="rounded-2xl border border-line bg-card p-8 shadow-sm hover:border-accent transition">
+          <div class="inline-block bg-accent text-accink text-lg font-extrabold px-2.5 py-0.5 rounded mb-4">02</div>
+          <p class="font-bold text-lg mb-2">A learning worth keeping</p>
+          <p class="text-mute leading-relaxed">Name an assumption that broke and what it taught you.</p>
+        </div>
+        <div class="rounded-2xl border border-line bg-card p-8 shadow-sm hover:border-accent transition">
+          <div class="inline-block bg-accent text-accink text-lg font-extrabold px-2.5 py-0.5 rounded mb-4">03</div>
+          <p class="font-bold text-lg mb-2">A learning worth keeping</p>
+          <p class="text-mute leading-relaxed">A leadership or collaboration lesson from the work.</p>
+        </div>
+      </div>
+
+      <!-- What I'd do differently / next steps -->
+      <h3 class="mt-16 mb-6 text-xl md:text-2xl font-bold tracking-tight" data-reveal>What I'd do differently &amp; next steps</h3>
+      <ol class="space-y-4 max-w-3xl" data-reveal>
+        <li class="flex gap-4"><span class="shrink-0 w-8 h-8 rounded-full bg-accent text-accink font-bold flex items-center justify-center">1</span><p class="text-lg text-mute pt-0.5">First thing you'd change or explore next.</p></li>
+        <li class="flex gap-4"><span class="shrink-0 w-8 h-8 rounded-full bg-accent text-accink font-bold flex items-center justify-center">2</span><p class="text-lg text-mute pt-0.5">Second improvement or follow-on opportunity.</p></li>
+        <li class="flex gap-4"><span class="shrink-0 w-8 h-8 rounded-full bg-accent text-accink font-bold flex items-center justify-center">3</span><p class="text-lg text-mute pt-0.5">Third next step for the product or team.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============================================================= -->
+  <!-- SECTION: Footer (shared shell — see css/shell.css)            -->
+  <!-- ============================================================= -->
+  <footer class="shell-footer" id="contact">
+    <div class="shell-inner">
+      <div class="shell-prevnext">
+        <a href="#" class="shell-card"><p class="k">← Previous</p><p class="t">Previous case study title</p></a>
+        <a href="#" class="shell-card next"><p class="k">Next →</p><p class="t">Next case study title</p></a>
+      </div>
+      <div class="shell-footer-lead">
+        <div>
+          <p class="shell-footer-title">Let’s build something.</p>
+          <p class="shell-footer-copy">Please use the <a href="https://docs.google.com/forms/d/e/1FAIpQLScKV7IVg-JeodOmY5m7eDIK_qctNltq-QddtYnLrRneSqCIwA/viewform" target="_blank" rel="noopener">💌 contact form</a> to say Hi 👋 or request any inquiry. You can also <a href="https://twitter.com/intent/tweet?screen_name=vipulsaxena_fc" target="_blank" rel="noopener">tweet me</a>, or send me an old fashioned <a href="mailto:vipul.saxena01@gmail.com">email</a>.</p>
+        </div>
+      </div>
+      <div class="shell-footer-base">
+        <p>© 20XX · Vipul Saxena · Project name</p>
+        <p>Product Design Portfolio</p>
+      </div>
+    </div>
+  </footer>
+
+</main>
+
+<!-- Lightbox overlay -->
+<div id="lightbox" aria-hidden="true">
+  <img alt="Expanded view">
+</div>
+
+<script src="template.js" defer></script>
+</body>
+</html>

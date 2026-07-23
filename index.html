@@ -98,13 +98,39 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap">
     <link rel="stylesheet" href="css/style.css">
     <link href="css/zoom.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/shell.css">
 </head>
 
 <body>
+
+<!-- SECTION: Sticky Navigation (shared shell — see css/shell.css) -->
+<header class="shell-header">
+  <div class="shell-inner shell-bar">
+    <a href="index.html" class="shell-brand is-active" aria-current="page">Home</a>
+    <nav class="shell-nav" aria-label="Primary">
+      <a href="about.html" class="shell-link">About</a>
+    </nav>
+    <div class="shell-actions">
+      <!-- HUD cluster: AI Colors + Sound (sonic toggle is injected here) -->
+      <div id="cta-cluster">
+        <button type="button" class="orb-cta overlay__btn--colors" aria-label="Randomize background colors"><span class="dot"></span>ai colors</button>
+      </div>
+      <button type="button" class="shell-burger" data-nav-toggle aria-expanded="false" aria-controls="shell-menu" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="shell-menu" id="shell-menu" data-nav-menu>
+    <nav aria-label="Primary">
+      <a href="about.html" class="shell-link">About</a>
+    </nav>
+  </div>
+</header>
+
 <!-- Canvas -->
 <canvas class="orb-canvas"></canvas>
 
-    <main>
+    <main style="padding-top:var(--shell-h)">
         <header class="hero">
             <div class="container">
                 <div class="patterns patterns--dots patterns--hero ">                      </div>
@@ -118,12 +144,6 @@
                 <a href="https://dribbble.com/vipulsaxena_fc" target="_blank" rel="noopener" class="hotlinks d link_fix"><i>Dribbble</i></a>
                 <a href="https://www.behance.net/vipulsaxena_fc" target="_blank" rel="noopener" class="hotlinks m link_fix"><i>Behance</i></a>
                 </nav>
-                <div>
-                    <br>
-                    <a href='about.html' class='button button--combo'>About page<span class="status-icon status-icon-direction"></span></a>
-
-                    <button type="button" class='button button--combo overlay__btn--colors' aria-label="Randomize background colors"><span>AI Colors</span><span class="status-icon status-icon-new"></span></button>
-                </div>
             </div>
         </header>
         <div class="container">
@@ -142,6 +162,7 @@
                             <li class="infos">
                                 <p class="title">Brand evolution at Raisin<span class="status-icon status-icon-lock"></span></p>
                                 <p class="description">Led the evolution of Raisin’s brand across core product touchpoints — dashboard, mobile app, email, and marketing surfaces — translating a global brand refresh into cohesive, scalable product experiences.</p>
+                                <button type="button" class="card-cta" id="raisin-gate-trigger" aria-haspopup="dialog" aria-controls="raisinPwModal">🔓 Enter password →</button>
                             </li>
                         </ul>
                     </a>
@@ -159,12 +180,12 @@
                             <li class="infos">
                                 <p class="title">Boosting OLX's Seller Experience<span class="status-icon status-icon-lock"></span></p>
                                 <p class="description">Improved OLX’s Ad Package UX, to enhance clarity, simplify selections, and make purchasing ad packages seamless for sellers.</p>
+                                <button type="button" class="card-cta" id="olx-gate-trigger" aria-haspopup="dialog" aria-controls="olxPwModal">🔓 Enter password →</button>
                             </li>
                         </ul>
                     </a>
                 </div>
                 <hr>
-
                 <div class="post-item post featured trg_cnt liquid" role="button" tabindex="0">
                     <a target="_blank" rel="noopener">
                         <ul>
@@ -177,12 +198,12 @@
                             <li class="infos">
                                 <p class="title">Multi-activity feed for N26 Premium Users<span class="status-icon status-icon-lock"></span></p>
                                 <p class="description">Transformed the Main Account Feed into a unified activity hub, giving users full visibility and control across Spaces, IBANs, and cards.</p>
+                                <button type="button" class="card-cta" id="n26-gate-trigger" aria-haspopup="dialog" aria-controls="n26PwModal">🔓 Enter password →</button>
                             </li>
                         </ul>
                     </a>
                 </div>
                 <hr>
-
                 <div class="post-item post featured trg_cnt liquid" role="button" tabindex="0">
                     <a target="_blank" rel="noopener">
                         <ul>
@@ -272,7 +293,7 @@
                                 </figure>
                             </li>
                             <li class="infos">
-                                <p class="title">InstaLively Takes On Periscope And Meerkat<span class="status-icon status-icon-external"></span></p>
+                                <p class="title">InstaLively Takes On Periscope And Meerkat<span class="status-icon status-icon-direction"></span></p>
 
                                 <p class="description">A live streaming solution that works well on 3G connections allowing creators to go live across most social platforms simultaneously</p>
 
@@ -340,7 +361,7 @@
                                 </figure>
                             </li>
                             <li class="infos">
-                                <p class="title">Silent Ninja Redesigned<span class="status-icon status-icon-external"></span></p>
+                                <p class="title">Silent Ninja Redesigned<span class="status-icon status-icon-direction"></span></p>
 
                                 <p class="description">Led the 2014 redesign of Silent Ninja, refining the visual system and UX for smarter call filtering and seamless auto-responses.</p>
                             </li>
@@ -497,24 +518,8 @@
                
             </div>
         </div>
-        <div class="container">
-            <div class="post-list">
-                <p class="center l-2">
-                    Please use the
-                    <button type="button" class="link_fix trg_cnt" id="trg_cnt" aria-label="Open contact form"><i>💌 contact</i></button>
-                    form to say Hi 👋 or request any inquiry.
-                    <br> You can also
-                    <a href="https://twitter.com/intent/tweet?screen_name=vipulsaxena_fc" class="link_fix t" target="_blank" rel="noopener"><i>tweet me</i></a>
-                    , or send me an old fashioned
-                    <a href="mailto:vipul.saxena01@gmail.com" class="link_fix l" target="_blank" rel="noopener"><i>email</i></a>.
-                </p>
-            </div>
-        </div>
-
     </main>
 
-    <a href="#" id="bottom-nav">⬆️ Scroll to the top</a>
-    <hr>
     <div class="gfq-wrap">
         <div class="gfq-panel">
             <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScKV7IVg-JeodOmY5m7eDIK_qctNltq-QddtYnLrRneSqCIwA/viewform?embedded=true" width="100%" height="650" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
@@ -523,13 +528,230 @@
             <img src="images/mail-1.svg" alt=""/>
         </button>
     </div>
-    <footer class="site-footer">
-        <ul>
-            <li>Vipul Saxena | Product Design Portfolio
-                <br>
-                <br>Last update on 27th June 2026</li>
-        </ul>
+    <!-- SECTION: Footer (shared shell — see css/shell.css) -->
+    <footer class="shell-footer" id="contact">
+      <div class="shell-inner">
+        <div class="shell-footer-lead">
+          <div>
+            <p class="shell-footer-title">Let’s build something.</p>
+            <p class="shell-footer-copy">Please use the <a href="https://docs.google.com/forms/d/e/1FAIpQLScKV7IVg-JeodOmY5m7eDIK_qctNltq-QddtYnLrRneSqCIwA/viewform" id="footer-contact-trigger" target="_blank" rel="noopener">💌 contact form</a> to say Hi 👋 or request any inquiry. You can also <a href="https://twitter.com/intent/tweet?screen_name=vipulsaxena_fc" target="_blank" rel="noopener">tweet me</a>, or send me an old fashioned <a href="mailto:vipul.saxena01@gmail.com">email</a>.</p>
+          </div>
+        </div>
+        <div class="shell-footer-base">
+          <p>© 2026 · Vipul Saxena · Product Design Portfolio</p>
+          <p>Last updated 27 Jun 2026</p>
+        </div>
+      </div>
     </footer>
+
+    <!-- ===================== OLX password gate modal ===================== -->
+    <style type="text/css">
+      .pw-modal{ position:fixed; inset:0; z-index:10000; display:none; align-items:center; justify-content:center; padding:5vw; font-family:"Inter", sans-serif; }
+      .pw-modal.open{ display:flex; }
+      .pw-backdrop{ position:absolute; inset:0; background:rgba(38,38,38,.55); -webkit-backdrop-filter:blur(4px); backdrop-filter:blur(4px); }
+      .pw-card{ position:relative; z-index:1; width:100%; max-width:520px; background:#fff; border:1px solid #e7e7e7; border-radius:24px; padding:40px; box-shadow:0 30px 60px -20px rgba(0,0,0,.35); }
+      .pw-close{ position:absolute; top:16px; right:18px; width:38px; height:38px; background:none; border:0; font-size:26px; line-height:1; color:#6e6e6e; cursor:pointer; border-radius:8px; }
+      .pw-close:hover{ background:#f7f7f7; color:#262626; }
+      .pw-eyebrow{ font-size:.8rem; letter-spacing:.16em; text-transform:uppercase; font-weight:700; color:#6e6e6e; margin:0 0 10px; }
+      .pw-title{ font-size:2rem; font-weight:800; letter-spacing:-.02em; color:#262626; margin:0 0 8px; }
+      .pw-desc{ font-size:1.08rem; line-height:1.5; color:#6e6e6e; margin:0 0 20px; }
+      .pw-input{ box-sizing:border-box; width:100%; padding:16px 18px; border:1px solid #e7e7e7; border-radius:14px; font-size:1.05rem; color:#262626; outline:none; transition:border-color .15s, box-shadow .15s; }
+      .pw-input:focus-visible{ border-color:#ffda08; box-shadow:0 0 0 3px rgba(255,218,8,.35); }
+      .pw-error{ color:#e0362f; font-size:.9rem; font-weight:600; margin:10px 0 0; }
+      .pw-actions{ display:flex; gap:10px; justify-content:flex-end; margin-top:20px; }
+      .pw-btn{ border:0; border-radius:999px; padding:14px 28px; font-size:1.02rem; font-weight:700; cursor:pointer; background:#ffda08; color:#262626; transition:filter .15s, transform .15s; }
+      .pw-btn:hover{ filter:brightness(1.05); transform:translateY(-1px); }
+      .pw-btn--ghost{ background:transparent; color:#262626; border:1px solid #e7e7e7; }
+      /* In-card CTA that opens the password modal (secondary to the card's contact-form click) */
+      .card-cta{ position:relative; z-index:2; display:inline-flex; align-items:center; gap:8px; margin-top:16px;
+        padding:11px 20px; font-family:"Inter", sans-serif; font-size:15px; line-height:1.2; font-weight:700; letter-spacing:-.01em;
+        color:#262626; background:#ffda08; border:0; border-radius:999px; cursor:pointer;
+        transition:filter .15s ease, transform .15s ease; }
+      .card-cta:hover{ filter:brightness(1.05); transform:translateY(-1px); }
+      .card-cta:focus-visible{ outline:none; box-shadow:0 0 0 3px rgba(255,218,8,.55); }
+    </style>
+
+    <div class="pw-modal" id="olxPwModal" role="dialog" aria-modal="true" aria-labelledby="pwTitle" aria-hidden="true">
+      <div class="pw-backdrop" data-pw-close></div>
+      <div class="pw-card" role="document">
+        <button type="button" class="pw-close" aria-label="Close" data-pw-close>&times;</button>
+        <p class="pw-eyebrow">🔒 Protected case study</p>
+        <h2 class="pw-title" id="pwTitle">Enter password to view</h2>
+        <p class="pw-desc">The OLX Ad Package case study is password-protected. Enter the password to continue.</p>
+        <form id="olxPwForm" novalidate>
+          <input type="password" id="olxPwInput" class="pw-input" placeholder="Password" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Password">
+          <p class="pw-error" id="olxPwError" role="alert" hidden>Incorrect password. Please try again.</p>
+          <div class="pw-actions">
+            <button type="button" class="pw-btn pw-btn--ghost" data-pw-close>Cancel</button>
+            <button type="submit" class="pw-btn">Unlock &rarr;</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- ===================== Raisin password gate modal ===================== -->
+    <div class="pw-modal" id="raisinPwModal" role="dialog" aria-modal="true" aria-labelledby="raisinPwTitle" aria-hidden="true">
+      <div class="pw-backdrop" data-pw-close></div>
+      <div class="pw-card" role="document">
+        <button type="button" class="pw-close" aria-label="Close" data-pw-close>&times;</button>
+        <p class="pw-eyebrow">🔒 Protected case study</p>
+        <h2 class="pw-title" id="raisinPwTitle">Enter password to view</h2>
+        <p class="pw-desc">The Raisin brand evolution case study is password-protected. Enter the password to continue.</p>
+        <form id="raisinPwForm" novalidate>
+          <input type="password" id="raisinPwInput" class="pw-input" placeholder="Password" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Password">
+          <p class="pw-error" id="raisinPwError" role="alert" hidden>Incorrect password. Please try again.</p>
+          <div class="pw-actions">
+            <button type="button" class="pw-btn pw-btn--ghost" data-pw-close>Cancel</button>
+            <button type="submit" class="pw-btn">Unlock &rarr;</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- ===================== N26 password gate modal ===================== -->
+    <div class="pw-modal" id="n26PwModal" role="dialog" aria-modal="true" aria-labelledby="n26PwTitle" aria-hidden="true">
+      <div class="pw-backdrop" data-pw-close></div>
+      <div class="pw-card" role="document">
+        <button type="button" class="pw-close" aria-label="Close" data-pw-close>&times;</button>
+        <p class="pw-eyebrow">🔒 Protected case study</p>
+        <h2 class="pw-title" id="n26PwTitle">Enter password to view</h2>
+        <p class="pw-desc">The N26 Premium multi-activity feed case study is password-protected. Enter the password to continue.</p>
+        <form id="n26PwForm" novalidate>
+          <input type="password" id="n26PwInput" class="pw-input" placeholder="Password" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Password">
+          <p class="pw-error" id="n26PwError" role="alert" hidden>Incorrect password. Please try again.</p>
+          <div class="pw-actions">
+            <button type="button" class="pw-btn pw-btn--ghost" data-pw-close>Cancel</button>
+            <button type="submit" class="pw-btn">Unlock &rarr;</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      (function(){
+        var PASSWORD = "portfolio26";
+        var trigger = document.getElementById("raisin-gate-trigger");
+        var modal   = document.getElementById("raisinPwModal");
+        var form    = document.getElementById("raisinPwForm");
+        var input   = document.getElementById("raisinPwInput");
+        var error   = document.getElementById("raisinPwError");
+        if (!trigger || !modal) return;
+
+        function open(){
+          modal.classList.add("open");
+          modal.setAttribute("aria-hidden", "false");
+          error.hidden = true; input.value = "";
+          setTimeout(function(){ input.focus(); }, 60);
+        }
+        function close(){
+          modal.classList.remove("open");
+          modal.setAttribute("aria-hidden", "true");
+        }
+
+        trigger.addEventListener("click", function(e){ e.preventDefault(); e.stopPropagation(); open(); });
+        trigger.addEventListener("keydown", function(e){
+          if (e.key === "Enter" || e.key === " ") { e.preventDefault(); e.stopPropagation(); open(); }
+        });
+        modal.querySelectorAll("[data-pw-close]").forEach(function(el){ el.addEventListener("click", close); });
+        document.addEventListener("keydown", function(e){
+          if (e.key === "Escape" && modal.classList.contains("open")) close();
+        });
+
+        form.addEventListener("submit", function(e){
+          e.preventDefault();
+          if (input.value === PASSWORD) {
+            try { sessionStorage.setItem("raisinAccessGranted", "1"); } catch(_){}
+            window.location.href = "raisin.html";
+          } else {
+            error.hidden = false; input.focus(); input.select();
+          }
+        });
+      })();
+    </script>
+
+    <script>
+      (function(){
+        var PASSWORD = "portfolio26";
+        var trigger = document.getElementById("olx-gate-trigger");
+        var modal   = document.getElementById("olxPwModal");
+        var form    = document.getElementById("olxPwForm");
+        var input   = document.getElementById("olxPwInput");
+        var error   = document.getElementById("olxPwError");
+        if (!trigger || !modal) return;
+
+        function open(){
+          modal.classList.add("open");
+          modal.setAttribute("aria-hidden", "false");
+          error.hidden = true; input.value = "";
+          setTimeout(function(){ input.focus(); }, 60);
+        }
+        function close(){
+          modal.classList.remove("open");
+          modal.setAttribute("aria-hidden", "true");
+        }
+
+        trigger.addEventListener("click", function(e){ e.preventDefault(); e.stopPropagation(); open(); });
+        trigger.addEventListener("keydown", function(e){
+          if (e.key === "Enter" || e.key === " ") { e.preventDefault(); e.stopPropagation(); open(); }
+        });
+        modal.querySelectorAll("[data-pw-close]").forEach(function(el){ el.addEventListener("click", close); });
+        document.addEventListener("keydown", function(e){
+          if (e.key === "Escape" && modal.classList.contains("open")) close();
+        });
+
+        form.addEventListener("submit", function(e){
+          e.preventDefault();
+          if (input.value === PASSWORD) {
+            try { sessionStorage.setItem("olxAccessGranted", "1"); } catch(_){}
+            window.location.href = "olx.html";
+          } else {
+            error.hidden = false; input.focus(); input.select();
+          }
+        });
+      })();
+    </script>
+
+    <script>
+      (function(){
+        var PASSWORD = "portfolio26";
+        var trigger = document.getElementById("n26-gate-trigger");
+        var modal   = document.getElementById("n26PwModal");
+        var form    = document.getElementById("n26PwForm");
+        var input   = document.getElementById("n26PwInput");
+        var error   = document.getElementById("n26PwError");
+        if (!trigger || !modal) return;
+
+        function open(){
+          modal.classList.add("open");
+          modal.setAttribute("aria-hidden", "false");
+          error.hidden = true; input.value = "";
+          setTimeout(function(){ input.focus(); }, 60);
+        }
+        function close(){
+          modal.classList.remove("open");
+          modal.setAttribute("aria-hidden", "true");
+        }
+
+        trigger.addEventListener("click", function(e){ e.preventDefault(); e.stopPropagation(); open(); });
+        trigger.addEventListener("keydown", function(e){
+          if (e.key === "Enter" || e.key === " ") { e.preventDefault(); e.stopPropagation(); open(); }
+        });
+        modal.querySelectorAll("[data-pw-close]").forEach(function(el){ el.addEventListener("click", close); });
+        document.addEventListener("keydown", function(e){
+          if (e.key === "Escape" && modal.classList.contains("open")) close();
+        });
+
+        form.addEventListener("submit", function(e){
+          e.preventDefault();
+          if (input.value === PASSWORD) {
+            try { sessionStorage.setItem("n26AccessGranted", "1"); } catch(_){}
+            window.location.href = "n26.html";
+          } else {
+            error.hidden = false; input.focus(); input.select();
+          }
+        });
+      })();
+    </script>
 
     <script src="js/jquery-3.1.1.min.js"></script>
     <script src="js/zoom.js"></script>
@@ -540,6 +762,8 @@
     <!-- Liquid Glass + Sonic feedback -->
     <script defer src="js/liquid-glass.js"></script>
     <script defer src="js/sonic.js"></script>
+    <!-- Shared shell header interactions (mobile menu, scrollspy, share) -->
+    <script defer src="template.js"></script>
 
     <script>
         //Font observer loader
@@ -548,6 +772,11 @@
 
         jQuery(document).ready(function( $ ){
             $('.gfq-badge, .trg_cnt').click(function() {
+                $('.gfq-panel').toggleClass('panel-active');
+            });
+            // Footer "💌 contact form" link opens the pop-up form instead of navigating
+            $('#footer-contact-trigger').on('click', function(e) {
+                e.preventDefault();
                 $('.gfq-panel').toggleClass('panel-active');
             });
             // Keyboard activation for gated project cards (role=button)

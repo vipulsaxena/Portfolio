@@ -957,7 +957,7 @@
     right: 40px;
 }
 .gfq-badge {
-    background: #71C28E; /*Change this colour to change the circle*/
+    background: #ffda08; /*Change this colour to change the circle*/
     position: relative;
     width: 60px;
     height: 60px;
@@ -1428,8 +1428,9 @@
    ============================================================ */
 #sonic-toggle {
     position: fixed;
-    top: 1.4rem;
-    right: 1.6rem;
+    top: calc(var(--shell-h, 64px) / 2);
+    right: 2rem;
+    transform: translateY(-50%);
     z-index: 100000;
     font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
     font-size: 1.15rem;
@@ -1458,6 +1459,54 @@
 }
 #sonic-toggle[aria-pressed="true"] .dot { background: #cfcfcf; }
 @media screen and (max-width: 39rem) {
-    #sonic-toggle { top: 1.2rem; bottom: auto; right: 1.2rem; }
+    #sonic-toggle { right: 1.25rem; font-size: 1.05rem; padding: 0.45rem 0.85rem; }
+}
+
+/* ---- HUD cluster in the header actions: AI Colors + Sound ------------- */
+#cta-cluster {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+/* When the sonic toggle is placed inside the cluster it drops its own
+   fixed positioning and flows next to the AI Colors button. */
+#cta-cluster #sonic-toggle {
+    position: static;
+    top: auto; right: auto;
+    transform: none;
+    z-index: auto;
+}
+
+/* AI Colors CTA — identical look to #sonic-toggle */
+.orb-cta {
+    font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+    font-size: 1.15rem;
+    letter-spacing: 0.03em;
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: rgba(255, 255, 255, 0.55);
+    -webkit-backdrop-filter: blur(10px) saturate(160%);
+    backdrop-filter: blur(10px) saturate(160%);
+    color: #555;
+    cursor: pointer;
+    -webkit-transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+.orb-cta:hover { color: #000; border-color: rgba(0, 0, 0, 0.28); background: rgba(255, 255, 255, 0.75); }
+.orb-cta:focus-visible { outline: 2px solid #3096FF; outline-offset: 2px; }
+.orb-cta .dot {
+    display: inline-block;
+    width: 0.6rem; height: 0.6rem;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+    background: #3096FF;
+    vertical-align: middle;
+    -webkit-transition: background 0.3s ease;
+    transition: background 0.3s ease;
+}
+@media screen and (max-width: 39rem) {
+    #cta-cluster { gap: 0.45rem; }
+    .orb-cta { font-size: 1rem; padding: 0.4rem 0.7rem; }
 }
 

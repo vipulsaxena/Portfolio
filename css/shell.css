@@ -1,0 +1,116 @@
+/* =====================================================================
+   shell.css — shared sticky header + footer used across index, template,
+   and the case studies. Plain CSS (no framework) so it works everywhere,
+   including index.html which does not load Tailwind. Light theme, Inter,
+   yellow (#ffda08) accent — matched to the Portfolio.
+   Interactions are handled by template.js (scrollspy, mobile menu, share).
+
+   NOTE: sizes are intentionally in px (not rem). The shared chrome must
+   render identically on every page, but the root font-size differs by
+   page — style.css sets html{font-size:62.5%} (1rem = 10px) while the
+   Tailwind case studies keep the 16px browser default. Using px keeps the
+   header/footer pixel-consistent regardless of each page's rem basis
+   (reference basis: 16px, matching instalively.html).
+   ===================================================================== */
+
+:root{ --shell-h:64px; }
+html{ scroll-behavior:smooth; scroll-padding-top:calc(var(--shell-h) + 8px); }
+
+/* ---------------------------------------------------------------- header */
+.shell-header{
+  position:fixed; top:0; left:0; right:0; height:var(--shell-h); z-index:1000;
+  /* Frosted glass — matches the .liquid cards so the orb bleeds through */
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.28), rgba(255,255,255,0.08) 48%),
+    rgba(255,255,255,0.12);
+  -webkit-backdrop-filter:blur(16px) saturate(180%); backdrop-filter:blur(16px) saturate(180%);
+  border-bottom:1px solid rgba(255,255,255,0.45); font-family:"Inter", system-ui, sans-serif;
+}
+.shell-inner{ max-width:1280px; margin:0 auto; padding:0 20px; }
+@media (min-width:768px){ .shell-inner{ padding:0 32px; } }
+
+.shell-bar{ height:var(--shell-h); display:flex; align-items:center; justify-content:flex-start; gap:16px; }
+
+/* left-aligned brand + inline link group (used on index/about) */
+.shell-left{ display:flex; align-items:center; gap:12px; min-width:0; }
+
+.shell-brand{ display:inline-flex; align-items:center; gap:8px; font-weight:800; letter-spacing:-.02em;
+  color:#262626; text-decoration:none; flex:0 0 auto; font-size:16px; }
+/* active-page highlight for the brand (index) — negative margin cancels the
+   padding so the "Home" text stays pinned to the same edge as case studies */
+.shell-brand.is-active{ background:#f7f7f7; border-radius:10px; padding:6px 10px; margin:0 -10px; }
+.shell-dot{ width:10px; height:10px; border-radius:999px; background:#ffda08; display:inline-block; }
+
+.shell-nav{ display:none; align-items:center; gap:4px; }
+@media (min-width:768px){ .shell-nav{ display:flex; } }
+
+.shell-link{ padding:8px 12px; font-size:14px; font-weight:500; color:#6e6e6e; text-decoration:none;
+  border-radius:8px; transition:color .15s ease, background .15s ease; white-space:nowrap; }
+.shell-link:hover{ color:#262626; }
+.shell-link.is-active{ color:#262626; font-weight:600; background:#f7f7f7; }
+/* allow a <button> (e.g. AI Colors) to render as a nav link */
+button.shell-link{ background:transparent; border:0; cursor:pointer; font-family:inherit; }
+button.shell-link:focus-visible{ outline:none; box-shadow:0 0 0 3px rgba(255,218,8,.45); }
+@media (max-width:520px){ .shell-left{ gap:2px; } .shell-left .shell-link{ padding:8px 9px; } }
+
+/* CTA link that navigates to a separate page (distinct from in-page scroll links) */
+.shell-link--cta{ color:#262626; font-weight:600; border:1px solid #e7e7e7; border-radius:999px; padding:7px 16px; }
+.shell-link--cta:hover{ color:#262626; border-color:#ffda08; background:#fff3b0; }
+.shell-link--cta.is-active{ background:transparent; }
+@media (min-width:768px){ .shell-nav .shell-link--cta{ margin-left:6px; } }
+
+.shell-actions{ display:flex; align-items:center; gap:8px; flex:0 0 auto; margin-left:auto; }
+.shell-btn{ display:inline-flex; align-items:center; gap:6px; padding:9px 17px; font-size:14px;
+  font-weight:600; border:0; border-radius:999px; background:#ffda08; color:#262626; text-decoration:none;
+  cursor:pointer; transition:filter .15s ease, transform .15s ease; line-height:1; }
+.shell-btn:hover{ filter:brightness(1.05); transform:translateY(-1px); }
+.shell-btn:focus-visible{ outline:none; box-shadow:0 0 0 3px rgba(255,218,8,.55); }
+
+.shell-share{ display:none; }
+@media (min-width:640px){ .shell-share{ display:inline-flex; } }
+
+.shell-burger{ display:inline-flex; align-items:center; justify-content:center; width:40px; height:40px;
+  border:1px solid #e7e7e7; border-radius:8px; background:transparent; color:#262626; cursor:pointer; }
+.shell-burger svg{ width:20px; height:20px; }
+@media (min-width:768px){ .shell-burger{ display:none; } }
+
+.shell-menu{ display:none; border-top:1px solid #e7e7e7; background:#fff; }
+.shell-menu.open{ display:block; }
+@media (min-width:768px){ .shell-menu{ display:none !important; } }
+.shell-menu nav{ max-width:1280px; margin:0 auto; padding:8px 20px; display:grid; gap:2px; }
+.shell-menu .shell-link{ display:block; padding:10px 12px; }
+
+/* ---------------------------------------------------------------- footer */
+.shell-footer{ border-top:1px solid rgba(255,255,255,0.45); color:#262626;
+  /* Frosted glass — matches the .liquid cards so the orb bleeds through */
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.28), rgba(255,255,255,0.08) 48%),
+    rgba(255,255,255,0.12);
+  -webkit-backdrop-filter:blur(16px) saturate(180%); backdrop-filter:blur(16px) saturate(180%);
+  font-family:"Inter", system-ui, sans-serif; }
+.shell-footer .shell-inner{ padding-top:64px; padding-bottom:64px; }
+
+/* Optional prev/next (case studies only) */
+.shell-prevnext{ display:grid; gap:16px; margin-bottom:56px; }
+@media (min-width:768px){ .shell-prevnext{ grid-template-columns:1fr 1fr; } }
+.shell-card{ display:block; border:1px solid #e7e7e7; border-radius:20px; background:#fff; padding:32px;
+  text-decoration:none; color:#262626; box-shadow:0 1px 2px rgba(0,0,0,.04);
+  transition:border-color .15s ease, box-shadow .15s ease; }
+.shell-card:hover{ border-color:#ffda08; box-shadow:0 10px 28px -14px rgba(0,0,0,.25); }
+.shell-card.next{ text-align:right; }
+.shell-card .k{ font-size:11px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:#6e6e6e; margin:0 0 8px; }
+.shell-card .t{ font-size:20px; font-weight:700; margin:0; }
+
+/* Contact lead */
+.shell-footer-lead{ display:flex; flex-direction:column; gap:24px; }
+@media (min-width:768px){ .shell-footer-lead{ flex-direction:row; align-items:center; justify-content:space-between; } }
+.shell-footer-title{ font-size:28px; font-weight:800; letter-spacing:-.02em; margin:0 0 10px; }
+.shell-footer-copy{ font-size:17px; line-height:1.65; color:#6e6e6e; margin:0; max-width:62ch; }
+.shell-footer-copy a{ color:#262626; text-decoration:none; border-bottom:2px solid #ffda08; padding-bottom:1px; transition:background .15s ease; }
+.shell-footer-copy a:hover{ background:#fff3b0; }
+
+.shell-footer-base{ margin-top:40px; padding-top:24px; border-top:1px solid #e7e7e7;
+  display:flex; flex-wrap:wrap; gap:6px 24px; justify-content:space-between; font-size:14px; color:#6e6e6e; }
+.shell-footer-base p{ margin:0; }
+
+@media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } }

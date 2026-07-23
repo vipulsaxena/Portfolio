@@ -104,6 +104,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap">
     <link rel="stylesheet" href="css/style.css">
     <link href="css/zoom.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/shell.css">
 
     <!-- AI Colors -->
     <script type="module" src="js/custom.js"></script>
@@ -113,11 +114,31 @@
 <script type="module" src="https://unpkg.com/@splinetool/viewer@1.0.76/build/spline-viewer.js"></script>
 <!-- Canvas -->
 <canvas class="orb-canvas"></canvas>
-    <nav aria-label="Primary">
-        <a href="index.html" id="top-nav">Home</a>
-    </nav>
+    <!-- SECTION: Sticky Navigation (shared shell — see css/shell.css) -->
+    <header class="shell-header">
+      <div class="shell-inner shell-bar">
+        <a href="index.html" class="shell-brand">Home</a>
+        <nav class="shell-nav" aria-label="Primary">
+          <a href="about.html" class="shell-link is-active" aria-current="page">About</a>
+        </nav>
+        <div class="shell-actions">
+          <!-- HUD cluster: AI Colors + Sound (sonic toggle is injected here) -->
+          <div id="cta-cluster">
+            <button type="button" class="orb-cta overlay__btn--colors" aria-label="Randomize background colors"><span class="dot"></span>ai colors</button>
+          </div>
+          <button type="button" class="shell-burger" data-nav-toggle aria-expanded="false" aria-controls="shell-menu" aria-label="Menu">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="shell-menu" id="shell-menu" data-nav-menu>
+        <nav aria-label="Primary">
+          <a href="about.html" class="shell-link is-active" aria-current="page">About</a>
+        </nav>
+      </div>
+    </header>
 
-    <main>
+    <main style="padding-top:var(--shell-h)">
         <h1 class="visually-hidden">About Vipul Saxena</h1>
         <article class="post">
             <div class="container">
@@ -452,20 +473,20 @@
     </div>
     </main>
 
-    <a href="#" id="bottom-nav">⬆️ Scroll to the top</a>
-    <a href="javascript:history.back()" id="bottom-nav">🏠 Back Home</a>
-
-    <button type="button" class='button button--combo overlay__btn--colors hide' aria-label="Randomize background colors"><span>AI Colors</span><span class="status-icon status-icon-new"></span></button>
-
-
-    <hr>
-
-    <footer class="site-footer">
-        <ul>
-            <li> Vipul Saxena | Product Design Portfolio
-                <br>
-                <br>Last update on 27th June 2026</li>
-        </ul>
+    <!-- SECTION: Footer (shared shell — see css/shell.css) -->
+    <footer class="shell-footer" id="contact">
+      <div class="shell-inner">
+        <div class="shell-footer-lead">
+          <div>
+            <p class="shell-footer-title">Let’s build something.</p>
+            <p class="shell-footer-copy">Please use the <a href="https://docs.google.com/forms/d/e/1FAIpQLScKV7IVg-JeodOmY5m7eDIK_qctNltq-QddtYnLrRneSqCIwA/viewform" id="footer-contact-trigger" target="_blank" rel="noopener">💌 contact form</a> to say Hi 👋 or request any inquiry. You can also <a href="https://twitter.com/intent/tweet?screen_name=vipulsaxena_fc" target="_blank" rel="noopener">tweet me</a>, or send me an old fashioned <a href="mailto:vipul.saxena01@gmail.com">email</a>.</p>
+          </div>
+        </div>
+        <div class="shell-footer-base">
+          <p>© 2026 · Vipul Saxena · Product Design Portfolio</p>
+          <p>Last updated 27 Jun 2026</p>
+        </div>
+      </div>
     </footer>
 
     <script src="js/jquery-3.1.1.min.js"></script>
@@ -476,6 +497,8 @@
     <!-- Liquid Glass + Sonic feedback -->
     <script defer src="js/liquid-glass.js"></script>
     <script defer src="js/sonic.js"></script>
+    <!-- Shared shell interactions (mobile menu, etc.) -->
+    <script defer src="template.js"></script>
 
     <script>
         //Font observer loader
@@ -485,6 +508,11 @@
         //Contact form
         jQuery(document).ready(function( $ ){
             $('.gfq-badge').click(function() {
+                $('.gfq-panel').toggleClass('panel-active');
+            });
+            // Footer "💌 contact form" link opens the pop-up form instead of navigating
+            $('#footer-contact-trigger').on('click', function(e) {
+                e.preventDefault();
                 $('.gfq-panel').toggleClass('panel-active');
             });
         });

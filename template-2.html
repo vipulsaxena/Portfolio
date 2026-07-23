@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge; chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+    <title>Slideshow Template · Product Design</title>
+    <meta name="description" content="A full-page, keyboard-driven slideshow template — swap each slide for an image, a statement, metrics, an interactive prototype, and more.">
+    <meta name="robots" content="noindex, follow">
+
+    <link rel="icon" href="fav.png" sizes="32x32" type="image/png">
+
+    <!-- Fonts (match Portfolio: Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap">
+    <link rel="stylesheet" href="css/shell.css">
+
+    <!-- Tailwind (Play CDN) + theme config (identical to template.html) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              base:  '#ffffff',   /* page background            */
+              elev:  '#f7f7f7',   /* elevated section bg        */
+              card:  '#ffffff',   /* card surface               */
+              line:  '#e7e7e7',   /* hairline borders           */
+              ink:   '#262626',   /* primary text               */
+              mute:  '#6e6e6e',   /* secondary text             */
+              accent:'#ffda08',   /* brand yellow               */
+              accink:'#262626',   /* text on accent             */
+            },
+            fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+            borderRadius: { '2xl': '1.25rem', '3xl': '1.75rem' },
+            maxWidth: { content: '80rem' },
+          }
+        }
+      }
+    </script>
+
+    <!-- Deck styles Tailwind can't express cleanly (fixed viewport, track, transitions) -->
+    <style type="text/css">
+      :root{ --deck-top:3.5rem; }
+      html,body{ height:100%; }
+      body{ background:#ffffff; font-family:"Inter", system-ui, sans-serif; overflow:hidden; }
+      ::selection{ background:#ffda08; color:#262626; }
+
+      /* Brand yellow highlight (matches Portfolio) */
+      .hl{ background:#ffda08; color:#262626; padding:0 .1em; border-radius:.08em;
+           -webkit-box-decoration-break:clone; box-decoration-break:clone; }
+
+      /* ---------- Deck viewport ---------- */
+      .deck{ position:fixed; inset:0; top:var(--deck-top); overflow:hidden; }
+      .deck-track{
+        display:flex; height:100%; width:100%;
+        transition:transform .6s cubic-bezier(.7,0,.2,1);
+        will-change:transform;
+      }
+      .slide{
+        flex:0 0 100%; height:100%; width:100%; overflow-y:auto;
+        display:flex; flex-direction:column; position:relative;
+      }
+      .slide-inner{
+        margin:0 auto; width:100%; max-width:80rem;
+        padding:clamp(1.5rem,4vw,4rem) clamp(1.25rem,5vw,4rem);
+        flex:1 1 auto; display:flex; flex-direction:column; justify-content:center;
+      }
+
+      /* Per-slide reveal: children fade-up only while the slide is active */
+      .slide [data-anim]{ opacity:0; transform:translateY(26px); transition:opacity .6s ease, transform .6s ease; }
+      .slide.is-active [data-anim]{ opacity:1; transform:none; }
+      .slide.is-active [data-anim]{ transition-delay:calc(var(--i,0) * 90ms); }
+
+      /* Wireframe / screen placeholder (matches template.html) */
+      .wf{
+        position:relative; display:flex; align-items:center; justify-content:center;
+        color:#a3a3a3; font-size:.8rem; letter-spacing:.14em; text-transform:uppercase; font-weight:600;
+        background-color:#fafafa;
+        background-image:
+          linear-gradient(#ededed 1px, transparent 1px),
+          linear-gradient(90deg, #ededed 1px, transparent 1px);
+        background-size:26px 26px;
+        border:1px dashed #dcdcdc; border-radius:1rem; overflow:hidden;
+      }
+      .wf span{ position:relative; z-index:1; padding:.4em .8em; background:rgba(255,255,255,.7); border-radius:.5em; }
+
+      /* Device frames */
+      .device-phone{ border:8px solid #e7e7e7; border-radius:2rem; background:#fff; box-shadow:0 24px 50px -24px rgba(38,38,38,.25); }
+      .device-desktop{ border:10px solid #e7e7e7; border-bottom-width:26px; border-radius:1rem; background:#fff; box-shadow:0 24px 50px -24px rgba(38,38,38,.25); }
+
+      /* Before / After compare slider (matches template.html) */
+      .compare{ position:relative; overflow:hidden; border-radius:1rem; cursor:ew-resize; user-select:none; touch-action:none; }
+      .compare .after-layer{ position:absolute; inset:0; overflow:hidden; clip-path:inset(0 50% 0 0); }
+      .compare .handle{
+        position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); z-index:5;
+        width:44px; height:44px; border-radius:999px; background:#ffda08; color:#262626;
+        display:flex; align-items:center; justify-content:center; font-weight:800; box-shadow:0 6px 18px rgba(38,38,38,.28);
+      }
+      .compare .handle::before{ content:""; position:absolute; left:50%; top:-100vh; height:200vh; width:2px;
+        background:#ffda08; transform:translateX(-50%); z-index:-1; }
+      .compare .tag{ position:absolute; top:12px; z-index:4; font-size:.7rem; letter-spacing:.12em; text-transform:uppercase; font-weight:700; padding:4px 10px; border-radius:999px; background:rgba(255,255,255,.9); color:#262626; border:1px solid #e7e7e7; }
+
+      /* ---------- Bottom control bar ---------- */
+      .ctrl{
+        position:fixed; left:0; right:0; bottom:0; z-index:900;
+        display:flex; align-items:center; gap:1rem;
+        padding:.75rem clamp(1.25rem,5vw,2.5rem);
+        padding-bottom:calc(.75rem + env(safe-area-inset-bottom,0px));
+        background:rgba(255,255,255,.85); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+        border-top:1px solid #e7e7e7;
+      }
+      .ctrl-dots{ display:flex; align-items:center; gap:.4rem; flex-wrap:wrap; }
+      .dot{ width:9px; height:9px; border-radius:999px; background:#d4d4d4; transition:all .2s ease; cursor:pointer; border:0; padding:0; }
+      .dot[aria-current="true"]{ background:#ffda08; width:26px; }
+      .dot:focus-visible{ outline:none; box-shadow:0 0 0 3px rgba(255,218,8,.55); }
+
+      .nav-btn{ display:inline-flex; align-items:center; justify-content:center; width:2.5rem; height:2.5rem;
+        border:1px solid #e7e7e7; border-radius:999px; background:#fff; color:#262626; cursor:pointer;
+        transition:border-color .15s ease, transform .15s ease, background .15s ease; }
+      .nav-btn:hover{ border-color:#ffda08; background:#fff3b0; }
+      .nav-btn:focus-visible{ outline:none; box-shadow:0 0 0 3px rgba(255,218,8,.55); }
+      .nav-btn:disabled{ opacity:.35; cursor:default; }
+      .nav-btn:disabled:hover{ border-color:#e7e7e7; background:#fff; }
+
+      .counter{ font-variant-numeric:tabular-nums; font-weight:700; font-size:.9rem; color:#262626; white-space:nowrap; }
+      .counter .sep{ color:#a3a3a3; }
+
+      /* Scroll progress bar (top of viewport, under header) */
+      .progress{ position:fixed; top:var(--deck-top); left:0; height:3px; z-index:950;
+        background:#ffda08; width:0; transition:width .6s cubic-bezier(.7,0,.2,1); }
+
+      /* Deck title in header */
+      .deck-title{ font-size:.9rem; font-weight:600; color:#6e6e6e; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+
+      /* Keyboard hint pill */
+      .kbd{ display:inline-flex; align-items:center; gap:.35rem; font-size:.75rem; color:#6e6e6e; }
+      .key{ display:inline-block; min-width:1.5rem; padding:.15rem .4rem; text-align:center; font-size:.7rem; font-weight:700;
+        border:1px solid #e7e7e7; border-bottom-width:2px; border-radius:.4rem; background:#fff; color:#262626; }
+
+      @media (prefers-reduced-motion: reduce){
+        .deck-track{ transition:none; }
+        .progress{ transition:none; }
+        .slide [data-anim]{ opacity:1 !important; transform:none !important; transition:none !important; }
+      }
+      /* Hide the shared shell footer inside a fixed deck (kept in DOM for the CTA slide instead) */
+    </style>
+</head>
+
+<body class="bg-base text-ink font-sans antialiased">
+
+<!-- ============================================================= -->
+<!-- Slim header (shared shell shell.css, adapted for the deck)     -->
+<!-- ============================================================= -->
+<header class="shell-header" style="height:var(--deck-top);">
+  <div class="shell-inner shell-bar" style="height:var(--deck-top);">
+    <a href="index.html" class="shell-brand">Home</a>
+    <p class="deck-title" id="deckTitle">Slideshow Template</p>
+    <div class="shell-actions">
+      <span class="kbd" aria-hidden="true">
+        <span class="key">←</span><span class="key">→</span> to navigate
+      </span>
+      <button type="button" class="nav-btn" data-fullscreen aria-label="Toggle fullscreen" title="Fullscreen">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3m13-5v3a2 2 0 0 1-2 2h-3"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Progress bar -->
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<!-- ============================================================= -->
+<!-- DECK — each .slide is one full page. Duplicate / reorder /     -->
+<!-- delete slides freely; controls & counters update automatically.-->
+<!-- ============================================================= -->
+<main class="deck" aria-label="Slideshow">
+  <div class="deck-track" id="track">
+
+    <!-- ============================================================= -->
+    <!-- SLIDE 01 · COVER — title + meta                               -->
+    <!-- data-title feeds the header label + document context          -->
+    <!-- ============================================================= -->
+    <section class="slide is-active" data-title="Cover">
+      <div class="slide-inner">
+        <p class="text-mute text-xs md:text-sm font-bold uppercase tracking-[0.2em] mb-6" data-anim style="--i:0">Category · Client · 20XX</p>
+        <h1 class="font-extrabold tracking-tight leading-[1.06] text-5xl md:text-7xl lg:text-[6rem] max-w-[16ch]" data-anim style="--i:1">
+          A full-page <span class="hl">slideshow</span> for your story
+        </h1>
+        <p class="mt-8 text-xl md:text-2xl text-mute max-w-[52ch] leading-snug" data-anim style="--i:2">
+          One idea per screen. Swap any slide for an image, a bold statement, live metrics, or an interactive prototype.
+        </p>
+        <div class="mt-10 flex flex-wrap items-center gap-4" data-anim style="--i:3">
+          <button type="button" class="shell-btn" data-next>Start ↓</button>
+          <span class="kbd">Use <span class="key">←</span> <span class="key">→</span> · <span class="key">Space</span> · or swipe</span>
+        </div>
+      </div>
+      <!-- soft scroll cue -->
+      <div class="absolute bottom-6 left-1/2 -translate-x-1/2 text-mute text-2xl animate-bounce select-none" aria-hidden="true">↓</div>
+    </section>
+
+    <!-- ============================================================= -->
+    <!-- SLIDE 02 · FULL-BLEED IMAGE — replace .wf with an <img>       -->
+    <!-- ============================================================= -->
+    <section class="slide" data-title="Full-bleed image">
+      <div class="slide-inner !py-0 !max-w-none !px-0">
+        <div class="relative flex-1 min-h-0">
+          <!-- Replace this wireframe with: <img class="absolute inset-0 w-full h-full object-cover" src="..." alt="..."> -->
+          <div class="wf absolute inset-0 !rounded-none" data-anim style="--i:0" role="img" aria-label="Full-bleed image placeholder">
+            <span>Full-bleed image / screen</span>
+          </div>
+          <!-- Caption overlay -->
+          <div class="absolute left-0 bottom-0 p-6 md:p-12 bg-gradient-to-t from-ink/70 to-transparent w-full" data-anim style="--i:1">
+            <p class="text-white/80 text-xs font-bold uppercase tracking-[0.18em] mb-2">Chapter one</p>
+            <h2 class="text-white text-2xl md:text-4xl font-extrabold tracking-tight max-w-[24ch]">Let a single image carry the whole screen.</h2>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================= -->
+    <!-- SLIDE 03 · BIG STATEMENT — centered typographic slide         -->
+    <!-- ============================================================= -->
+    <section class="slide bg-elev" data-title="Statement">
+      <div class="slide-inner items-center text-center">
+        <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-8" data-anim style="--i:0">The thesis</p>
+        <p class="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.12] max-w-[20ch]" data-anim style="--i:1">
+          When the message is the point, give it <span class="hl">the whole screen</span>.
+        </p>
+        <p class="mt-10 text-lg md:text-xl text-mute max-w-[54ch]" data-anim style="--i:2">
+          Use this layout for a mission statement, a "how might we", or the one line you want the room to remember.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================================= -->
+    <!-- SLIDE 04 · SPLIT — content + visual (feature)                 -->
+    <!-- ============================================================= -->
+    <section class="slide" data-title="Split · content + visual">
+      <div class="slide-inner">
+        <div class="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
+          <div>
+            <p class="text-mute text-xs font-bold uppercase tracking-[0.16em] mb-4" data-anim style="--i:0">Feature</p>
+            <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-6 max-w-[16ch]" data-anim style="--i:1">Pair a headline with the visual it describes</h2>
+            <p class="text-mute text-lg leading-relaxed max-w-[46ch] mb-8" data-anim style="--i:2">
+              A two-column split keeps the narrative and the artifact side by side — ideal for explaining a single interaction or decision.
+            </p>
+            <ul class="space-y-3" data-anim style="--i:3">
+              <li class="flex gap-3"><span class="shrink-0 w-6 h-6 rounded-full bg-accent text-accink text-sm font-bold flex items-center justify-center">✓</span><span class="text-mute">A crisp supporting point</span></li>
+              <li class="flex gap-3"><span class="shrink-0 w-6 h-6 rounded-full bg-accent text-accink text-sm font-bold flex items-center justify-center">✓</span><span class="text-mute">Another benefit worth naming</span></li>
+              <li class="flex gap-3"><span class="shrink-0 w-6 h-6 rounded-full bg-accent text-accink text-sm font-bold flex items-center justify-center">✓</span><span class="text-mute">A third, if you have it</span></li>
+            </ul>
+          </div>
+          <div class="wf aspect-[4/3] shadow-xl shadow-ink/5" data-anim style="--i:2" role="img" aria-label="Feature visual placeholder"><span>Feature visual</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================= -->
+    <!-- SLIDE 05 · METRICS — big numbers                              -->
+    <!-- ============================================================= -->
+    <section class="slide bg-elev" data-title="Metrics">
+      <div class="slide-inner">
+        <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-10" data-anim style="--i:0">By the numbers</p>
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10">
+          <div data-anim style="--i:1">
+            <div class="text-5xl md:text-7xl font-extrabold tracking-tight leading-none">+35%</div>
+            <div class="mt-3 text-mute max-w-[18ch]">Primary outcome metric</div>
+          </div>
+          <div data-anim style="--i:2">
+            <div class="text-5xl md:text-7xl font-extrabold tracking-tight leading-none">−40%</div>
+            <div class="mt-3 text-mute max-w-[18ch]">Secondary metric</div>
+          </div>
+          <div data-anim style="--i:3">
+            <div class="text-5xl md:text-7xl font-extrabold tracking-tight leading-none">4×</div>
+            <div class="mt-3 text-mute max-w-[18ch]">A comparative gain</div>
+          </div>
+          <div data-anim style="--i:4">
+            <div class="text-5xl md:text-7xl font-extrabold tracking-tight leading-none">4.8★</div>
+            <div class="mt-3 text-mute max-w-[18ch]">Qualitative signal</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================= -->
+    <!-- SLIDE 06 · INTERACTIVE PROTOTYPE — Figma embed                -->
+    <!-- ============================================================= -->
+    <section class="slide" data-title="Interactive prototype">
+      <div class="slide-inner">
+        <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Try it live</p>
+        <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-6 max-w-[22ch]" data-anim style="--i:1">Drop in a clickable prototype</h2>
+        <div class="rounded-2xl ring-1 ring-line overflow-hidden bg-elev flex-1 min-h-0" data-anim style="--i:2">
+          <!-- Replace the wireframe with your Figma iframe:
+               <iframe class="w-full h-full" src="https://www.figma.com/embed?embed_host=share&url=YOUR_PROTOTYPE_URL" allowfullscreen></iframe> -->
+          <div class="wf w-full h-full min-h-[40vh] !rounded-none"><span>Figma prototype embed</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================= -->
+    <!-- SLIDE 07 · GALLERY — multi-up grid                            -->
+    <!-- ============================================================= -->
+    <section class="slide bg-elev" data-title="Gallery">
+      <div class="slide-inner">
+        <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Exploration</p>
+        <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-8 max-w-[22ch]" data-anim style="--i:1">Show a set of frames at once</h2>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+          <div class="wf aspect-[3/4]" data-anim style="--i:2"><span>Frame 01</span></div>
+          <div class="wf aspect-[3/4]" data-anim style="--i:3"><span>Frame 02</span></div>
+          <div class="wf aspect-[3/4]" data-anim style="--i:4"><span>Frame 03</span></div>
+          <div class="wf aspect-[3/4] hidden md:flex" data-anim style="--i:5"><span>Frame 04</span></div>
+          <div class="wf aspect-[3/4] hidden md:flex" data-anim style="--i:6"><span>Frame 05</span></div>
+          <div class="wf aspect-[3/4] hidden md:flex" data-anim style="--i:7"><span>Frame 06</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================= -->
+    <!-- SLIDE 08 · QUOTE — testimonial (accent field)                 -->
+    <!-- ============================================================= -->
+    <section class="slide bg-accent text-accink" data-title="Quote">
+      <div class="slide-inner items-start">
+        <div class="text-7xl md:text-8xl font-black leading-none mb-4" data-anim style="--i:0" aria-hidden="true">“</div>
+        <blockquote class="text-3xl md:text-5xl font-extrabold tracking-tight leading-snug max-w-[22ch]" data-anim style="--i:1">
+          A short, memorable quote from a user, teammate, or stakeholder lands hard on its own screen.
+        </blockquote>
+        <figcaption class="mt-8 flex items-center gap-4" data-anim style="--i:2">
+          <div class="w-12 h-12 rounded-full bg-ink text-accent flex items-center justify-center font-extrabold">A</div>
+          <div>
+            <p class="font-bold">Name Surname</p>
+            <p class="text-ink/70 text-sm">Role · Company</p>
+          </div>
+        </figcaption>
+      </div>
+    </section>
+
+    <!-- ============================================================= -->
+    <!-- SLIDE 09 · BEFORE / AFTER — drag-to-compare                   -->
+    <!-- ============================================================= -->
+    <section class="slide" data-title="Before &amp; after">
+      <div class="slide-inner">
+        <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Transformation</p>
+        <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-8 max-w-[22ch]" data-anim style="--i:1">Drag to compare old and new</h2>
+        <div class="compare aspect-video ring-1 ring-line max-h-[62vh] w-full" data-compare data-anim style="--i:2">
+          <div class="wf absolute inset-0 !rounded-none"><span>New design</span></div>
+          <span class="tag right-3">After</span>
+          <div class="after-layer">
+            <div class="wf absolute inset-0 !rounded-none" style="background-color:#f0f0f0;"><span>Old design</span></div>
+            <span class="tag left-3">Before</span>
+          </div>
+          <div class="handle" aria-hidden="true">⟺</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================= -->
+    <!-- SLIDE 10 · CLOSING / CTA                                      -->
+    <!-- ============================================================= -->
+    <section class="slide bg-ink text-white" data-title="Thanks">
+      <div class="slide-inner items-center text-center">
+        <p class="text-white/60 text-xs font-bold uppercase tracking-[0.2em] mb-8" data-anim style="--i:0">Fin</p>
+        <h2 class="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.12] max-w-[18ch]" data-anim style="--i:1">
+          Thanks for <span class="hl">watching</span>.
+        </h2>
+        <p class="mt-8 text-lg md:text-xl text-white/70 max-w-[48ch]" data-anim style="--i:2">
+          Let's build something together — say hi, request work, or send an old-fashioned email.
+        </p>
+        <div class="mt-10 flex flex-wrap items-center justify-center gap-4" data-anim style="--i:3">
+          <a class="nav-btn !w-auto !px-5 !text-white !bg-white/10 !border-white/20 hover:!bg-white/20 hover:!border-white/40" href="index.html">Back to home</a>
+        </div>
+        <p class="mt-14 text-white/40 text-sm" data-anim style="--i:4">© 2026 · Vipul Saxena · Product Design Portfolio</p>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<!-- ============================================================= -->
+<!-- Bottom control bar — dots / prev-next / counter               -->
+<!-- ============================================================= -->
+<div class="ctrl" role="group" aria-label="Slideshow controls">
+  <div class="ctrl-dots" id="dots" aria-label="Slides"></div>
+  <div class="ml-auto flex items-center gap-3">
+    <span class="counter"><span id="curNum">01</span> <span class="sep">/</span> <span id="totNum">10</span></span>
+    <button type="button" class="nav-btn" data-prev aria-label="Previous slide">←</button>
+    <button type="button" class="nav-btn" data-next aria-label="Next slide">→</button>
+  </div>
+</div>
+
+<script>
+/* =====================================================================
+   Full-page slideshow — vanilla JS, no dependencies.
+   Advance with: arrows / space / pgup-pgdn / home-end / wheel / swipe /
+   dots / prev-next buttons. URL hash (#3) keeps your place on reload.
+   ===================================================================== */
+(function () {
+  "use strict";
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const track   = document.getElementById("track");
+  const slides   = Array.from(track.children);
+  const dotsWrap = document.getElementById("dots");
+  const progress = document.getElementById("progress");
+  const curNum   = document.getElementById("curNum");
+  const totNum   = document.getElementById("totNum");
+  const deckTitle= document.getElementById("deckTitle");
+  const prevBtns = Array.from(document.querySelectorAll("[data-prev]"));
+  const nextBtns = Array.from(document.querySelectorAll("[data-next]"));
+  const N = slides.length;
+  const pad = (n) => String(n).padStart(2, "0");
+
+  let i = 0;
+
+  /* ---------- build dots ---------- */
+  const dots = slides.map((s, idx) => {
+    const b = document.createElement("button");
+    b.className = "dot";
+    b.type = "button";
+    b.setAttribute("aria-label", `Go to slide ${idx + 1}: ${s.dataset.title || ""}`.trim());
+    b.addEventListener("click", () => go(idx));
+    dotsWrap.appendChild(b);
+    return b;
+  });
+  totNum.textContent = pad(N);
+
+  /* ---------- render current state ---------- */
+  function render() {
+    track.style.transform = `translateX(-${i * 100}%)`;
+    slides.forEach((s, idx) => s.classList.toggle("is-active", idx === i));
+    dots.forEach((d, idx) => d.setAttribute("aria-current", String(idx === i)));
+    curNum.textContent = pad(i + 1);
+    progress.style.width = ((i + 1) / N) * 100 + "%";
+    const t = slides[i].dataset.title;
+    deckTitle.textContent = t ? `${pad(i + 1)} · ${t}` : "Slideshow Template";
+    prevBtns.forEach((b) => (b.disabled = i === 0));
+    nextBtns.forEach((b) => (b.disabled = i === N - 1));
+    if (history.replaceState) history.replaceState(null, "", "#" + (i + 1));
+  }
+
+  function go(n) {
+    i = Math.max(0, Math.min(N - 1, n));
+    render();
+  }
+  const next = () => go(i + 1);
+  const prev = () => go(i - 1);
+
+  prevBtns.forEach((b) => b.addEventListener("click", prev));
+  nextBtns.forEach((b) => b.addEventListener("click", next));
+
+  /* ---------- keyboard ---------- */
+  document.addEventListener("keydown", (e) => {
+    if (e.target.closest("input, textarea, iframe, [contenteditable]")) return;
+    switch (e.key) {
+      case "ArrowRight": case "ArrowDown": case "PageDown":
+        e.preventDefault(); next(); break;
+      case " ":
+        e.preventDefault(); e.shiftKey ? prev() : next(); break;
+      case "ArrowLeft": case "ArrowUp": case "PageUp":
+        e.preventDefault(); prev(); break;
+      case "Home": e.preventDefault(); go(0); break;
+      case "End":  e.preventDefault(); go(N - 1); break;
+    }
+  });
+
+  /* ---------- touch swipe ---------- */
+  let x0 = null, y0 = null;
+  track.addEventListener("touchstart", (e) => {
+    x0 = e.touches[0].clientX; y0 = e.touches[0].clientY;
+  }, { passive: true });
+  track.addEventListener("touchend", (e) => {
+    if (x0 === null) return;
+    const dx = e.changedTouches[0].clientX - x0;
+    const dy = e.changedTouches[0].clientY - y0;
+    x0 = y0 = null;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) (dx < 0 ? next() : prev());
+  }, { passive: true });
+
+  /* ---------- fullscreen ---------- */
+  const fsBtn = document.querySelector("[data-fullscreen]");
+  fsBtn && fsBtn.addEventListener("click", () => {
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
+    else document.exitFullscreen?.();
+  });
+
+  /* ---------- share / copy link ---------- */
+  document.querySelectorAll("[data-share]").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      try {
+        if (navigator.share) { await navigator.share({ title: document.title, url: location.href }); return; }
+        await navigator.clipboard.writeText(location.href);
+        const t = btn.textContent; btn.textContent = "Link copied ✓";
+        setTimeout(() => (btn.textContent = t), 1600);
+      } catch (_) {}
+    });
+  });
+
+  /* ---------- before/after compare (per slide) ---------- */
+  document.querySelectorAll("[data-compare]").forEach((root) => {
+    const after = root.querySelector(".after-layer");
+    const handle = root.querySelector(".handle");
+    if (!after || !handle) return;
+    let dragging = false;
+    const set = (clientX) => {
+      const r = root.getBoundingClientRect();
+      let p = ((clientX - r.left) / r.width) * 100;
+      p = Math.max(0, Math.min(100, p));
+      after.style.clipPath = `inset(0 ${100 - p}% 0 0)`;
+      handle.style.left = p + "%";
+    };
+    root.addEventListener("pointerdown", (e) => { dragging = true; set(e.clientX); root.setPointerCapture(e.pointerId); });
+    root.addEventListener("pointermove", (e) => { if (dragging) set(e.clientX); });
+    const end = () => (dragging = false);
+    root.addEventListener("pointerup", end);
+    root.addEventListener("pointercancel", end);
+    requestAnimationFrame(() => { const r = root.getBoundingClientRect(); set(r.left + r.width / 2); });
+  });
+
+  /* ---------- init from hash ---------- */
+  const start = parseInt((location.hash || "").replace("#", ""), 10);
+  if (!isNaN(start) && start >= 1 && start <= N) i = start - 1;
+  render();
+})();
+</script>
+</body>
+</html>

@@ -407,8 +407,16 @@ if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
   });
 }
 
-const colorsBtn = document.querySelector(".overlay__btn--colors");
-if (colorsBtn) {
+// Keep the "ai colors" button badge in sync with the orb's active primary color
+function updateColorBadge() {
+  document.querySelectorAll(".orb-cta .dot").forEach((dot) => {
+    dot.style.background = colorPalette.baseColor;
+  });
+}
+updateColorBadge();
+
+const colorsBtns = document.querySelectorAll(".overlay__btn--colors");
+colorsBtns.forEach((colorsBtn) => {
   colorsBtn.addEventListener("click", () => {
     colorPalette.setColors();
     colorPalette.setCustomProperties();
@@ -416,5 +424,7 @@ if (colorsBtn) {
     orbs.forEach((orb) => {
       orb.fill = colorPalette.randomColor();
     });
+
+    updateColorBadge();
   });
-}
+});

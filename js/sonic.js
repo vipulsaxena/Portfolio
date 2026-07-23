@@ -1,10 +1,11 @@
 /**
  * Sonic — a muted, native Web Audio feedback layer.
  *
- * Subtle, quiet micro-tones on navigation hover, card press, and Spline canvas
- * interaction. No external libraries. Lazy AudioContext (created on first user
- * gesture per browser autoplay policy). Mute toggle in the header + Ctrl+M,
- * persisted in localStorage. Respects prefers-reduced-motion (starts muted).
+ * Subtle, quiet micro-tones on hover (cards + clickable elements), press, and
+ * Spline canvas interaction. No external libraries or audio files — everything
+ * is synthesised. Lazy AudioContext (created on first user gesture per browser
+ * autoplay policy). Mute toggle in the header + Ctrl+M, persisted in
+ * localStorage. Respects prefers-reduced-motion (starts muted).
  */
 (function () {
   "use strict";
@@ -60,9 +61,9 @@
   }
 
   // Distinct sounds
-  // Short ambient bass swell on hover (low sine, gentle downward glide).
-  function hoverHum() { tone(120, 0.1, "sine", 0.55, 80); }
-  function click()    { tone(880, 0.09, "triangle", 0.6, 1320); }
+  // Soft, warm rising blip on hover (sine, D4 → A4) — gentle and on-brand.
+  function hover()     { tone(294, 0.1, "sine", 0.3, 440); }
+  function click()     { tone(880, 0.09, "triangle", 0.6, 1320); }
   function splineTone(){ tone(220, 0.18, "sine", 0.4, 330); }
 
   /* ---------------------------------------------------------------- toggle -- */
@@ -74,7 +75,8 @@
     btn.setAttribute("aria-label", "Toggle interface sound");
     render(btn);
     btn.addEventListener("click", function () { setMuted(!muted); if (!muted) click(); });
-    document.body.appendChild(btn);
+    var host = document.getElementById("cta-cluster") || document.body;
+    host.appendChild(btn);
     return btn;
   }
 
@@ -94,12 +96,19 @@
   function init() {
     toggleEl = buildToggle();
 
-    var hoverSel = "a.hotlinks, .button, #top-nav, #bottom-nav, .archive__item a, .liquid, .schematic__cell";
-    var clickSel = ".liquid a, .liquid button, .button, a.hotlinks, .archive__item a, .trg_cnt";
-
-    document.querySelectorAll(hoverSel).forEach(function (el) {
-      el.addEventListener("pointerenter", hoverHum);
+    // Hover feedback — cards + every clickable element on the page. Delegated so
+    // nested markup and dynamically-added nodes are covered without stacking the
+    // sound (only fires when the pointer enters a *new* matching element).
+    var hoverSel = 'a, button, [role="button"], .liquid, .archive__item, .schematic__cell';
+    var lastHoverEl = null;
+    document.addEventListener("pointerover", function (e) {
+      var match = e.target && e.target.closest ? e.target.closest(hoverSel) : null;
+      if (!match) { lastHoverEl = null; return; }
+      if (match !== lastHoverEl) { lastHoverEl = match; hover(); }
     });
+
+    // Click feedback.
+    var clickSel = ".liquid a, .liquid button, .button, a.hotlinks, .archive__item a, .trg_cnt";
     document.querySelectorAll(clickSel).forEach(function (el) {
       el.addEventListener("pointerdown", click);
     });
