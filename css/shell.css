@@ -44,6 +44,15 @@ html{ scroll-behavior:smooth; scroll-padding-top:calc(var(--shell-h) + 8px); }
 .shell-nav{ display:none; align-items:center; gap:4px; }
 @media (min-width:768px){ .shell-nav{ display:flex; } }
 
+/* Top-level page nav (index / about): Home + About as a matched pair.
+   Always visible and identical across both pages so their positions never
+   shift; only the active page's link gets the pill background + bold weight.
+   The negative left margin cancels the first link's padding so its text
+   aligns with the same left edge used by case-study headers. */
+.shell-pagenav{ display:flex; align-items:center; gap:2px; margin-left:-12px; }
+.shell-pagenav .shell-link{ font-size:16px; font-weight:600; }
+.shell-pagenav .shell-link.is-active{ color:#262626; font-weight:800; background:#f7f7f7; }
+
 .shell-link{ padding:8px 12px; font-size:14px; font-weight:500; color:#6e6e6e; text-decoration:none;
   border-radius:8px; transition:color .15s ease, background .15s ease; white-space:nowrap; }
 .shell-link:hover{ color:#262626; }
