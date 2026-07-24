@@ -95,7 +95,7 @@
       [data-reveal].is-in{ opacity:1; transform:none; }
       @media (prefers-reduced-motion: reduce){ [data-reveal]{ opacity:1; transform:none; transition:none; } .marquee-track{ animation:none; } html{ scroll-behavior:auto; } }
 
-      #lightbox{ position:fixed; inset:0; z-index:2000; display:none; align-items:center; justify-content:center; background:rgba(38,38,38,.85); padding:5vw; }
+      #lightbox{ position:fixed; inset:0; z-index:2000; display:none; align-items:center; justify-content:center; background:rgb(255 255 255 / 85%); padding:5vw; }
       #lightbox.open{ display:flex; }
       #lightbox img{ max-width:100%; max-height:90vh; border-radius:.75rem; }
     </style>
@@ -137,10 +137,10 @@
   <section class="mx-auto max-w-content px-5 md:px-8 pt-16 md:pt-24 pb-10">
     <p class="text-mute text-xs md:text-sm font-bold uppercase tracking-[0.2em] mb-6" data-reveal>Gojek · GoPlay · 2017–2019</p>
     <h1 class="font-extrabold tracking-tight leading-[1.06] text-5xl md:text-7xl lg:text-[5.25rem] max-w-[16ch]" data-reveal>
-      Shaking up Indonesia's <span class="hl">OTT scene</span>
+      Shaking up Indonesia's OTT scene
     </h1>
     <p class="mt-8 text-xl md:text-2xl text-mute max-w-[48ch] leading-snug" data-reveal>
-      I led product design for GoPlay — Gojek's OTT platform across iOS, Android, Web and Smart TV — and fixed content discovery through <span class="hl">rapid experimentation</span>, driving engagement quarter after quarter.
+      I led product design for GoPlay — Gojek's OTT platform across iOS, Android, Web and Smart TV — and fixed content discovery through rapid experimentation, driving engagement quarter after quarter.
     </p>
 
     <div class="mt-9 flex flex-wrap gap-x-10 gap-y-6" data-reveal>
@@ -422,6 +422,35 @@
         </article>
       </div>
 
+      <!-- Experiment outcomes — zig-zag -->
+      <div class="mt-20 space-y-16">
+        <div class="grid md:grid-cols-2 gap-8 md:gap-14 items-center" data-reveal>
+          <img src="images/goplay_ss2.png" alt="Redesigned Continue Watching rail" data-lightbox class="w-full rounded-2xl border border-line">
+          <div>
+            <p class="text-mute text-xs font-bold uppercase tracking-[0.16em] mb-3">Continue Watching</p>
+            <h3 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-4">Play and details, finally separate</h3>
+            <p class="text-mute text-lg leading-relaxed mb-5">The winning alternative separated the play and details actions and ordered the rail by minutes-left, so returning viewers resume in a single tap.</p>
+            <blockquote class="border-l-4 border-accent pl-4 text-ink/80 italic">“The play and details button is separated, nice — I'll watch the content with the fewest minutes left first.”</blockquote>
+          </div>
+        </div>
+        <div class="grid md:grid-cols-2 gap-8 md:gap-14 items-center" data-reveal>
+          <img src="images/goplay_ss5.png" alt="Details page information architecture" data-lightbox class="md:order-2 w-full rounded-2xl border border-line">
+          <div class="md:order-1">
+            <p class="text-mute text-xs font-bold uppercase tracking-[0.16em] mb-3">Details page &amp; trailers</p>
+            <h3 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-4">An information hierarchy users voted for</h3>
+            <p class="text-mute text-lg leading-relaxed">A card-sort–driven IA put the right details first and gave trailers a proper home — so viewers get the “why” before they commit, and shorter trailers keep them curious.</p>
+          </div>
+        </div>
+        <div class="grid md:grid-cols-2 gap-8 md:gap-14 items-center" data-reveal>
+          <img src="images/goplay_ur_4.png" alt="Personalised home feed" data-lightbox class="w-full rounded-2xl border border-line">
+          <div>
+            <p class="text-mute text-xs font-bold uppercase tracking-[0.16em] mb-3">Personalised home</p>
+            <h3 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-4">Setting context and tone</h3>
+            <p class="text-mute text-lg leading-relaxed">Feed order, copy and theme-card artwork are continuously A/B tested by behavioural segment — helping viewers relate to a story's expectation and decide faster.</p>
+          </div>
+        </div>
+      </div>
+
       <!-- Research gallery -->
       <div data-carousel data-reveal>
         <div class="overflow-hidden rounded-2xl ring-1 ring-line">
@@ -483,35 +512,6 @@
           </div>
         </div>
       </div>
-
-      <!-- Feature highlights — zig-zag -->
-      <div class="mt-20 space-y-16">
-        <div class="grid md:grid-cols-2 gap-8 md:gap-14 items-center" data-reveal>
-          <img src="images/goplay_ss2.png" alt="Redesigned Continue Watching rail" data-lightbox class="w-full rounded-2xl border border-line">
-          <div>
-            <p class="text-mute text-xs font-bold uppercase tracking-[0.16em] mb-3">Continue Watching</p>
-            <h3 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-4">Play and details, finally separate</h3>
-            <p class="text-mute text-lg leading-relaxed mb-5">The winning alternative separated the play and details actions and ordered the rail by minutes-left, so returning viewers resume in a single tap.</p>
-            <blockquote class="border-l-4 border-accent pl-4 text-ink/80 italic">“The play and details button is separated, nice — I'll watch the content with the fewest minutes left first.”</blockquote>
-          </div>
-        </div>
-        <div class="grid md:grid-cols-2 gap-8 md:gap-14 items-center" data-reveal>
-          <img src="images/goplay_ss5.png" alt="Details page information architecture" data-lightbox class="md:order-2 w-full rounded-2xl border border-line">
-          <div class="md:order-1">
-            <p class="text-mute text-xs font-bold uppercase tracking-[0.16em] mb-3">Details page &amp; trailers</p>
-            <h3 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-4">An information hierarchy users voted for</h3>
-            <p class="text-mute text-lg leading-relaxed">A card-sort–driven IA put the right details first and gave trailers a proper home — so viewers get the “why” before they commit, and shorter trailers keep them curious.</p>
-          </div>
-        </div>
-        <div class="grid md:grid-cols-2 gap-8 md:gap-14 items-center" data-reveal>
-          <img src="images/goplay_ur_4.png" alt="Personalised home feed" data-lightbox class="w-full rounded-2xl border border-line">
-          <div>
-            <p class="text-mute text-xs font-bold uppercase tracking-[0.16em] mb-3">Personalised home</p>
-            <h3 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-4">Setting context and tone</h3>
-            <p class="text-mute text-lg leading-relaxed">Feed order, copy and theme-card artwork are continuously A/B tested by behavioural segment — helping viewers relate to a story's expectation and decide faster.</p>
-          </div>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -530,7 +530,7 @@
       </div>
 
       <figure class="mt-14" data-reveal>
-        <img loading="lazy" decoding="async" src="images/goplay_mvp_messure.png" alt="Measuring the MVP redesign against the baseline" data-lightbox class="w-full rounded-2xl border border-line">
+        <img loading="lazy" decoding="async" src="images/goplay_mvp_messure.png" alt="Measuring the MVP redesign against the baseline" data-lightbox class="w-full rounded-none border-0">
         <figcaption class="mt-4 text-sm text-mute">Measuring the redesign against the MVP baseline.</figcaption>
       </figure>
 
@@ -562,8 +562,6 @@
         </div>
       </div>
 
-      <h3 class="mt-16 mb-4 text-xl md:text-2xl font-bold tracking-tight" data-reveal>What came next</h3>
-      <p class="text-lg text-mute max-w-[70ch]" data-reveal>With the user at its centre, GoPlay kept evolving. My last project was the addition of the Smart TV app, built with Gojek's wonderful Web IxD team. Thanks for reading 🙌</p>
     </div>
   </section>
 

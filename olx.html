@@ -99,7 +99,7 @@
       [data-reveal].is-in{ opacity:1; transform:none; }
       @media (prefers-reduced-motion: reduce){ [data-reveal]{ opacity:1; transform:none; transition:none; } html{ scroll-behavior:auto; } }
 
-      #lightbox{ position:fixed; inset:0; z-index:2000; display:none; align-items:center; justify-content:center; background:rgba(38,38,38,.85); padding:5vw; }
+      #lightbox{ position:fixed; inset:0; z-index:2000; display:none; align-items:center; justify-content:center; background:rgb(255 255 255 / 85%); padding:5vw; }
       #lightbox.open{ display:flex; }
       #lightbox img{ max-width:100%; max-height:90vh; border-radius:.75rem; }
 
@@ -123,11 +123,31 @@
       .pw-btn:hover{ filter:brightness(1.05); transform:translateY(-1px); }
     </style>
 
-    <!-- Runs before render: hide the page until the session is unlocked (no content flash) -->
+    <!-- Runs before render: hide the page until unlocked (no content flash).
+         Always re-prompts on EXTERNAL entry (typed URL, bookmark, link from another
+         site). Only skips the prompt for in-site navigation, reloads, and back/forward. -->
     <script>
       (function(){
-        try { if (sessionStorage.getItem("olxAccessGranted") === "1") return; } catch(_){}
-        document.documentElement.classList.add("olx-locked");
+        var KEY = "olxAccessGranted";
+        function navType(){
+          try {
+            var e = performance.getEntriesByType && performance.getEntriesByType("navigation");
+            if (e && e.length) return e[0].type;
+            if (performance.navigation) return ["navigate","reload","back_forward"][performance.navigation.type] || "navigate";
+          } catch(_){}
+          return "navigate";
+        }
+        var internal = false;
+        try { internal = !!document.referrer && new URL(document.referrer).origin === location.origin; } catch(_){}
+        var t = navType();
+        var external = (t !== "reload" && t !== "back_forward") && !internal;
+        var allow = false;
+        try {
+          if (external) sessionStorage.removeItem(KEY);      // external entry -> force a fresh prompt
+          else allow = sessionStorage.getItem(KEY) === "1";  // in-site / reload / back -> honour session
+        } catch(_){}
+        window.__gateAllow = allow;
+        if (!allow) document.documentElement.classList.add("olx-locked");
       })();
     </script>
 </head>
@@ -519,15 +539,19 @@
 <script>
   (function(){
     var PASSWORD = "portfolio26";
-    var granted = false;
-    try { granted = sessionStorage.getItem("olxAccessGranted") === "1"; } catch(_){}
-    if (granted) { document.documentElement.classList.remove("olx-locked"); return; }
-
     var gate  = document.getElementById("olxGate");
     var form  = document.getElementById("olxGateForm");
     var input = document.getElementById("olxGateInput");
     var error = document.getElementById("olxGateError");
     if (!gate || !form) return;
+
+    // window.__gateAllow is decided by the pre-render script in <head>: true only
+    // for in-site navigation / reload / back-forward with a valid session.
+    if (window.__gateAllow) {
+      document.documentElement.classList.remove("olx-locked");
+      gate.remove();
+      return;
+    }
 
     setTimeout(function(){ input && input.focus(); }, 80);
     form.addEventListener("submit", function(e){

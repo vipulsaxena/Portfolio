@@ -1,6 +1,7 @@
 # Temporary working folders used for Figma exports / render checks
 .olx_tmp/
 .tpl_tmp/
+.hdr_tmp/
 
 # Local dev server log
 .serverlog

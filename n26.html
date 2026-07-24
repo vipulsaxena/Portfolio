@@ -43,11 +43,31 @@
     .placeholder p{ font-size:1.05rem; color:var(--muted); margin:0; max-width:34rem; }
   </style>
 
-  <!-- Runs before render: hide the page until the session is unlocked (no content flash) -->
+  <!-- Runs before render: hide the page until unlocked (no content flash).
+       Always re-prompts on EXTERNAL entry (typed URL, bookmark, link from another
+       site). Only skips the prompt for in-site navigation, reloads, and back/forward. -->
   <script>
     (function(){
-      try { if (sessionStorage.getItem("n26AccessGranted") === "1") return; } catch(_){}
-      document.documentElement.classList.add("n26-locked");
+      var KEY = "n26AccessGranted";
+      function navType(){
+        try {
+          var e = performance.getEntriesByType && performance.getEntriesByType("navigation");
+          if (e && e.length) return e[0].type;
+          if (performance.navigation) return ["navigate","reload","back_forward"][performance.navigation.type] || "navigate";
+        } catch(_){}
+        return "navigate";
+      }
+      var internal = false;
+      try { internal = !!document.referrer && new URL(document.referrer).origin === location.origin; } catch(_){}
+      var t = navType();
+      var external = (t !== "reload" && t !== "back_forward") && !internal;
+      var allow = false;
+      try {
+        if (external) sessionStorage.removeItem(KEY);      // external entry -> force a fresh prompt
+        else allow = sessionStorage.getItem(KEY) === "1";  // in-site / reload / back -> honour session
+      } catch(_){}
+      window.__gateAllow = allow;
+      if (!allow) document.documentElement.classList.add("n26-locked");
     })();
   </script>
 </head>
@@ -112,16 +132,15 @@
 <script>
   (function(){
     var PASSWORD = "portfolio26";
-    var granted = false;
-    try { granted = sessionStorage.getItem("n26AccessGranted") === "1"; } catch(_){}
-
     var gate  = document.getElementById("n26Gate");
     var form  = document.getElementById("n26GateForm");
     var input = document.getElementById("n26GateInput");
     var error = document.getElementById("n26GateError");
     if (!gate || !form) return;
 
-    if (granted) {
+    // window.__gateAllow is decided by the pre-render script in <head>: true only
+    // for in-site navigation / reload / back-forward with a valid session.
+    if (window.__gateAllow) {
       document.documentElement.classList.remove("n26-locked");
       gate.remove();
     } else {

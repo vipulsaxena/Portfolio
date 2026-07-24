@@ -9,6 +9,10 @@
      font-size: 62.5%;
      scroll-behavior: smooth;
 }
+/* Inherit border-box everywhere so padding is included in width — matches the
+   Tailwind preflight used on case-study pages, keeping .container / .shell-inner
+   the same 1280px total width (identical left/right margins) across every page. */
+ *, *::before, *::after { box-sizing: inherit; }
 @media (prefers-reduced-motion: reduce) {
      html { scroll-behavior: auto; }
 }
@@ -351,11 +355,17 @@
 }
  .container {
      position: relative;
-     max-width: 90rem;
+     /* Aligned with the shared shell (.shell-inner) and case-study content
+        (max-w-content) so left/right margins match across every page.
+        Root font-size is 62.5% here, so 2rem = 20px and 3.2rem = 32px. */
+     max-width: 1280px;
      margin-right: auto;
      margin-left: auto;
-     padding-left: 1.2rem;
-     padding-right: 1.2rem;
+     padding-left: 2rem;
+     padding-right: 2rem;
+}
+@media (min-width: 768px) {
+     .container { padding-left: 3.2rem; padding-right: 3.2rem; }
 }
  .container_ovr {
      max-width: 84rem;
@@ -429,8 +439,16 @@
  .patterns--hero {
      position: absolute;
      z-index: -1;
-     top: -11.7rem;
-     left: 0.8rem;
+     /* Sits above the "Hey, I'm Vipul" heading; nudged up for more breathing
+        room between the dot pattern and the heading. */
+     top: -14.2rem;
+     /* Span the full body-container width, aligned to the content edges
+        (left/right match the .container horizontal padding). */
+     left: 2rem;
+     right: 2rem;
+}
+ @media (min-width: 768px) {
+     .patterns--hero { left: 3.2rem; right: 3.2rem; }
 }
  @media screen and (max-width: 39rem) {
      .patterns--hero {
@@ -438,13 +456,81 @@
     }
 }
  .patterns--dots {
-     width: 88rem;
-     max-width: calc(100vw - 1.6rem);
+     width: auto;
      height: 154px;
      max-height: 240px;
-     overflow: hidden;
+     /* Visible so dots at the corners/edges aren't clipped and can bloom past
+        the box under the cursor. The fixed top-nav (z-index 1000) still paints
+        over any dots that reach under it. */
+     overflow: visible;
      background-image: radial-gradient(circle at 0.1rem 0.1rem, #000000 0.1rem, transparent 0.1rem);
      background-size: 2.2rem 2.2rem;
+     /* Reveal the rows of dots top-to-bottom on load: a soft-edged mask grows
+        downward, so each line fades in smoothly one after another. */
+     -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent 100%);
+             mask-image: linear-gradient(to bottom, #000 55%, transparent 100%);
+     -webkit-mask-repeat: no-repeat;
+             mask-repeat: no-repeat;
+     -webkit-mask-position: top;
+             mask-position: top;
+     -webkit-mask-size: 100% 220%;
+             mask-size: 100% 220%;
+     -webkit-animation: dots-reveal 1.7s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+             animation: dots-reveal 1.7s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+ @-webkit-keyframes dots-reveal {
+     from { -webkit-mask-size: 100% 0%; }
+     to   { -webkit-mask-size: 100% 220%; }
+}
+ @keyframes dots-reveal {
+     from { -webkit-mask-size: 100% 0%; mask-size: 100% 0%; }
+     to   { -webkit-mask-size: 100% 220%; mask-size: 100% 220%; }
+}
+ @media (prefers-reduced-motion: reduce) {
+     .patterns--dots {
+         -webkit-animation: none;
+                 animation: none;
+         -webkit-mask-image: none;
+                 mask-image: none;
+    }
+}
+ /* ---- Interactive magnetic dot grid (JS-enhanced) --------------------------
+    js/dot-grid.js replaces the single background with real dot nodes so each
+    dot can scale toward the cursor. Falls back to the static pattern above
+    when JS is off. ------------------------------------------------------- */
+ .patterns--dots.dots-live {
+     background-image: none;
+     -webkit-mask-image: none;
+             mask-image: none;
+     -webkit-animation: none;
+             animation: none;
+     display: grid;
+     grid-template-columns: repeat(var(--cols, 40), 2.2rem);
+     grid-auto-rows: 2.2rem;
+     align-content: start;
+}
+ .patterns--dots.dots-live .d {
+     width: 2.2rem;
+     height: 2.2rem;
+     background: radial-gradient(circle at center, #000 1px, transparent 1.4px);
+     transform: scale(1);
+     transform-origin: center;
+     transition: transform 0.2s cubic-bezier(0.22, 0.61, 0.36, 1);
+     will-change: transform;
+}
+ /* Intro: dots fade in row after row on first load */
+ .patterns--dots.dots-intro .d {
+     opacity: 0;
+     -webkit-animation: dot-in 0.5s ease forwards;
+             animation: dot-in 0.5s ease forwards;
+     -webkit-animation-delay: calc(var(--row, 0) * 90ms);
+             animation-delay: calc(var(--row, 0) * 90ms);
+}
+ @-webkit-keyframes dot-in { to { opacity: 1; } }
+ @keyframes dot-in { to { opacity: 1; } }
+ @media (prefers-reduced-motion: reduce) {
+     .patterns--dots.dots-live .d { transition: none; opacity: 1;
+         -webkit-animation: none; animation: none; }
 }
  .post-list {
      margin: 6rem auto;
@@ -663,8 +749,12 @@
 .post-item figure {
      position: relative;
      display: inline-block;
-     height: 20rem;
-     width: 26rem;
+     width: 36rem;
+     max-width: 100%;
+     /* Keep the 36:25 ratio (25rem tall at full width) while scaling
+        fluidly down to the container on smaller screens. */
+     aspect-ratio: 36 / 25;
+     height: auto;
      overflow: hidden;
      border-radius: 0.2rem;
      -webkit-transition: transform 0.6s;

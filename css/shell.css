@@ -50,8 +50,12 @@ html{ scroll-behavior:smooth; scroll-padding-top:calc(var(--shell-h) + 8px); }
    The negative left margin cancels the first link's padding so its text
    aligns with the same left edge used by case-study headers. */
 .shell-pagenav{ display:flex; align-items:center; gap:2px; margin-left:-12px; }
-.shell-pagenav .shell-link{ font-size:16px; font-weight:600; }
-.shell-pagenav .shell-link.is-active{ color:#262626; font-weight:800; background:#f7f7f7; }
+/* NOTE: index/about also load style.css, whose global `a:link:not(.button)`
+   rule paints a gray chip on every link. These selectors are scoped with
+   `.shell-header ... a.shell-link` so they out-specify it — only the active
+   page's link gets the pill background; the other stays transparent. */
+.shell-header .shell-pagenav a.shell-link{ font-size:16px; font-weight:600; background:transparent; padding:8px 12px; border-radius:8px; }
+.shell-header .shell-pagenav a.shell-link.is-active{ color:#262626; font-weight:800; background:#f7f7f7; }
 
 .shell-link{ padding:8px 12px; font-size:14px; font-weight:500; color:#6e6e6e; text-decoration:none;
   border-radius:8px; transition:color .15s ease, background .15s ease; white-space:nowrap; }

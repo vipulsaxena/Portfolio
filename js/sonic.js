@@ -33,15 +33,16 @@
     return ctx;
   }
 
-  function tone(freq, dur, type, vol, glideTo) {
+  function tone(freq, dur, type, vol, glideTo, force) {
     if (muted) return;
     var c = ensureCtx();
     if (!c) return;
     if (c.state === "suspended") c.resume();
 
     var now = c.currentTime;
-    // light throttle so rapid hovers don't stack into noise
-    if (now - lastTone < 0.03) return;
+    // light throttle so rapid hovers don't stack into noise; `force` lets the
+    // click confirm through even if a hover tone just fired on pointer-enter.
+    if (!force && now - lastTone < 0.03) return;
     lastTone = now;
 
     var osc = c.createOscillator();
@@ -63,8 +64,47 @@
   // Distinct sounds
   // Soft, warm rising blip on hover (sine, D4 → A4) — gentle and on-brand.
   function hover()     { tone(294, 0.1, "sine", 0.3, 440); }
-  function click()     { tone(880, 0.09, "triangle", 0.6, 1320); }
+  // Click shares the hover's warm sine timbre, pitched a step up and a touch
+  // louder (G4 → D5) so it reads as a satisfying "confirm" from the same family.
+  function click()     { tone(392, 0.12, "sine", 0.5, 587, true); }
   function splineTone(){ tone(220, 0.18, "sine", 0.4, 330); }
+
+  // Soft bass pluck for the hero dot-grid — a low, rounded tone played per dot
+  // the cursor crosses (see js/dot-grid.js). A quick downward pitch drop gives
+  // it a bassy "thump"; its own light throttle keeps a fast sweep musical.
+  var GRID_NOTES = [130.81, 146.83, 164.81, 196.00, 220.00]; // C3 D3 E3 G3 A3 (bass)
+  var lastGrid = 0;
+  function gridTick(idx) {
+    if (muted) return;
+    var c = ensureCtx();
+    if (!c) return;
+    if (c.state === "suspended") c.resume();
+    var now = c.currentTime;
+    if (now - lastGrid < 0.045) return; // ~max 22 ticks/sec on a fast sweep
+    lastGrid = now;
+    var n = ((idx % GRID_NOTES.length) + GRID_NOTES.length) % GRID_NOTES.length;
+    var freq = GRID_NOTES[n];
+    var osc = c.createOscillator();
+    var g = c.createGain();
+    osc.type = "sine"; // clean, round low end
+    osc.frequency.setValueAtTime(freq * 1.4, now);
+    osc.frequency.exponentialRampToValueAtTime(freq, now + 0.06); // bass drop
+    g.gain.setValueAtTime(0.0001, now);
+    g.gain.exponentialRampToValueAtTime(0.2, now + 0.006); // bass reads quieter, so a touch louder
+    g.gain.exponentialRampToValueAtTime(0.0001, now + 0.16);
+    osc.connect(g);
+    g.connect(master);
+    osc.start(now);
+    osc.stop(now + 0.18);
+  }
+
+  // Minimal public API so other scripts (e.g. the hero dot grid) share this one
+  // AudioContext, the quiet master level, and the mute toggle.
+  window.Sonic = {
+    gridTick: gridTick,
+    tone: tone,
+    isMuted: function () { return muted; }
+  };
 
   /* ---------------------------------------------------------------- toggle -- */
   function buildToggle() {
@@ -107,10 +147,12 @@
       if (match !== lastHoverEl) { lastHoverEl = match; hover(); }
     });
 
-    // Click feedback.
-    var clickSel = ".liquid a, .liquid button, .button, a.hotlinks, .archive__item a, .trg_cnt";
-    document.querySelectorAll(clickSel).forEach(function (el) {
-      el.addEventListener("pointerdown", click);
+    // Click feedback — mirrors the hover coverage so every element that plays a
+    // hover tone also plays a matching click tone. Delegated so nested markup
+    // and dynamically-added nodes are covered too.
+    document.addEventListener("pointerdown", function (e) {
+      var match = e.target && e.target.closest ? e.target.closest(hoverSel) : null;
+      if (match) click();
     });
 
     // Spline 3D canvas (about page)
