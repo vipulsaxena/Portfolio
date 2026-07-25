@@ -98,10 +98,54 @@
     osc.stop(now + 0.18);
   }
 
+  // Futuristic, space-like hover shimmer for the .post-cover component
+  // (about page). Two slightly detuned sines sweep upward for an airy, wide
+  // sci-fi glide, with a soft high sparkle on top and a long, breathy release.
+  var lastSpace = 0;
+  function spaceTone() {
+    if (muted) return;
+    var c = ensureCtx();
+    if (!c) return;
+    if (c.state === "suspended") c.resume();
+    var now = c.currentTime;
+    if (now - lastSpace < 0.12) return; // don't stack on rapid re-entry
+    lastSpace = now;
+
+    var g = c.createGain();
+    g.gain.setValueAtTime(0.0001, now);
+    g.gain.exponentialRampToValueAtTime(0.14, now + 0.04);
+    g.gain.exponentialRampToValueAtTime(0.0001, now + 0.6);
+    g.connect(master);
+
+    [-6, 6].forEach(function (det) { // detuned pair = shimmer/beating
+      var o = c.createOscillator();
+      o.type = "sine";
+      o.detune.setValueAtTime(det, now);
+      o.frequency.setValueAtTime(392, now);                        // G4
+      o.frequency.exponentialRampToValueAtTime(1046.5, now + 0.5); // sweep up to C6
+      o.connect(g);
+      o.start(now);
+      o.stop(now + 0.62);
+    });
+
+    var s = c.createOscillator(); // sparkle on top
+    var sg = c.createGain();
+    s.type = "triangle";
+    s.frequency.setValueAtTime(1568, now); // G6
+    sg.gain.setValueAtTime(0.0001, now);
+    sg.gain.exponentialRampToValueAtTime(0.05, now + 0.02);
+    sg.gain.exponentialRampToValueAtTime(0.0001, now + 0.4);
+    s.connect(sg);
+    sg.connect(master);
+    s.start(now);
+    s.stop(now + 0.42);
+  }
+
   // Minimal public API so other scripts (e.g. the hero dot grid) share this one
   // AudioContext, the quiet master level, and the mute toggle.
   window.Sonic = {
     gridTick: gridTick,
+    spaceTone: spaceTone,
     tone: tone,
     isMuted: function () { return muted; }
   };
@@ -160,6 +204,15 @@
     if (spline) {
       spline.addEventListener("pointerdown", splineTone, { passive: true });
     }
+
+    // Futuristic hover tone — only while the pointer is over the .post-cover
+    // component (about page). Fires once on entry, and again on re-entry.
+    var lastCover = null;
+    document.addEventListener("pointerover", function (e) {
+      var match = e.target && e.target.closest ? e.target.closest(".post-cover") : null;
+      if (!match) { lastCover = null; return; }
+      if (match !== lastCover) { lastCover = match; spaceTone(); }
+    });
 
     // Ctrl+M / Cmd+M toggle
     document.addEventListener("keydown", function (e) {

@@ -113,10 +113,31 @@
         background:rgba(255,255,255,.85); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
         border-top:1px solid #e7e7e7;
       }
-      .ctrl-dots{ display:flex; align-items:center; gap:.4rem; flex-wrap:wrap; }
+      .chapter-tabs{ display:flex; align-items:center; gap:.35rem; }
+      .chapter-tab{ font-size:.75rem; font-weight:700; letter-spacing:.01em; padding:.4rem .8rem; border-radius:999px;
+        color:#6e6e6e; background:transparent; border:1px solid transparent; cursor:pointer; white-space:nowrap;
+        transition:color .15s ease, background .15s ease, border-color .15s ease; }
+      .chapter-tab:hover{ color:#262626; background:#f2f2f2; }
+      .chapter-tab[aria-current="true"]{ color:#262626; background:#fff3b0; border-color:#ffda08; }
+      .chapter-tab:focus-visible{ outline:none; box-shadow:0 0 0 3px rgba(255,218,8,.55); }
+      .chapter-tab .ct-count{ color:#a3a3a3; font-weight:600; margin-left:.35rem; }
+      .chapter-tab[aria-current="true"] .ct-count{ color:#8a7a00; }
+
+      .ctrl-dots{ display:flex; align-items:center; gap:1rem; flex-wrap:wrap; }
+      .dot-group{ display:flex; align-items:center; gap:.4rem; }
       .dot{ width:9px; height:9px; border-radius:999px; background:#d4d4d4; transition:all .2s ease; cursor:pointer; border:0; padding:0; }
       .dot[aria-current="true"]{ background:#ffda08; width:26px; }
       .dot:focus-visible{ outline:none; box-shadow:0 0 0 3px rgba(255,218,8,.55); }
+      .dot{ position:relative; }
+      .dot::after{ content:attr(data-tip); position:absolute; left:50%; bottom:calc(100% + 12px);
+        transform:translateX(-50%) translateY(4px); background:#262626; color:#fff; font-size:.72rem; font-weight:600;
+        padding:.34rem .6rem; border-radius:.45rem; white-space:nowrap; box-shadow:0 10px 24px -10px rgba(0,0,0,.45);
+        opacity:0; pointer-events:none; transition:opacity .14s ease, transform .14s ease; z-index:40; }
+      .dot::before{ content:""; position:absolute; left:50%; bottom:calc(100% + 7px); transform:translateX(-50%) translateY(4px);
+        border:5px solid transparent; border-top-color:#262626; opacity:0; pointer-events:none;
+        transition:opacity .14s ease, transform .14s ease; z-index:40; }
+      .dot:hover::after, .dot:focus-visible::after,
+      .dot:hover::before, .dot:focus-visible::before{ opacity:1; transform:translateX(-50%) translateY(0); }
 
       .nav-btn{ display:inline-flex; align-items:center; justify-content:center; width:2.5rem; height:2.5rem;
         border:1px solid #e7e7e7; border-radius:999px; background:#fff; color:#262626; cursor:pointer;
@@ -125,6 +146,11 @@
       .nav-btn:focus-visible{ outline:none; box-shadow:0 0 0 3px rgba(255,218,8,.55); }
       .nav-btn:disabled{ opacity:.35; cursor:default; }
       .nav-btn:disabled:hover{ border-color:#e7e7e7; background:#fff; }
+      .nav-btn.is-active{ border-color:#ffda08; background:#fff3b0; }
+      .nav-home{ gap:.3rem; }
+      .nav-home .home-count{ display:none; font-size:.72rem; font-weight:700; font-variant-numeric:tabular-nums; }
+      .nav-home.is-active{ width:auto; padding:0 .7rem; }
+      .nav-home.is-active .home-count{ display:inline; }
 
       .counter{ font-variant-numeric:tabular-nums; font-weight:700; font-size:.9rem; color:#262626; white-space:nowrap; }
       .counter .sep{ color:#a3a3a3; }
@@ -160,9 +186,6 @@
     <a href="index.html" class="shell-brand">Home</a>
     <p class="deck-title" id="deckTitle">Slideshow Template</p>
     <div class="shell-actions">
-      <span class="kbd" aria-hidden="true">
-        <span class="key">←</span><span class="key">→</span> to navigate
-      </span>
       <button type="button" class="nav-btn" data-fullscreen aria-label="Toggle fullscreen" title="Fullscreen">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3m13-5v3a2 2 0 0 1-2 2h-3"/></svg>
       </button>
@@ -184,7 +207,7 @@
     <!-- SLIDE 01 · COVER — title + meta                               -->
     <!-- data-title feeds the header label + document context          -->
     <!-- ============================================================= -->
-    <section class="slide is-active" data-title="Cover">
+    <section class="slide is-active" data-chapter="case-study" data-title="Cover" data-home-slide>
       <div class="slide-inner">
         <p class="text-mute text-xs md:text-sm font-bold uppercase tracking-[0.2em] mb-6" data-anim style="--i:0">Category · Client · 20XX</p>
         <h1 class="font-extrabold tracking-tight leading-[1.06] text-5xl md:text-7xl lg:text-[6rem] max-w-[16ch]" data-anim style="--i:1">
@@ -194,8 +217,8 @@
           One idea per screen. Swap any slide for an image, a bold statement, live metrics, or an interactive prototype.
         </p>
         <div class="mt-10 flex flex-wrap items-center gap-4" data-anim style="--i:3">
-          <button type="button" class="shell-btn" data-next>Start ↓</button>
-          <span class="kbd">Use <span class="key">←</span> <span class="key">→</span> · <span class="key">Space</span> · or swipe</span>
+          <button type="button" class="shell-btn" data-next>Start →</button>
+          <span class="kbd">or Use <span class="key">←</span> <span class="key">→</span> · <span class="key">Space</span></span>
         </div>
       </div>
       <!-- soft scroll cue -->
@@ -205,7 +228,7 @@
     <!-- ============================================================= -->
     <!-- SLIDE 02 · FULL-BLEED IMAGE — replace .wf with an <img>       -->
     <!-- ============================================================= -->
-    <section class="slide" data-title="Full-bleed image">
+    <section class="slide" data-chapter="case-study" data-title="Full-bleed image">
       <div class="slide-inner !py-0 !max-w-none !px-0">
         <div class="relative flex-1 min-h-0">
           <!-- Replace this wireframe with: <img class="absolute inset-0 w-full h-full object-cover" src="..." alt="..."> -->
@@ -224,7 +247,7 @@
     <!-- ============================================================= -->
     <!-- SLIDE 03 · BIG STATEMENT — centered typographic slide         -->
     <!-- ============================================================= -->
-    <section class="slide bg-elev" data-title="Statement">
+    <section class="slide bg-elev" data-chapter="case-study" data-title="Statement">
       <div class="slide-inner items-center text-center">
         <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-8" data-anim style="--i:0">The thesis</p>
         <p class="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.12] max-w-[20ch]" data-anim style="--i:1">
@@ -239,7 +262,7 @@
     <!-- ============================================================= -->
     <!-- SLIDE 04 · SPLIT — content + visual (feature)                 -->
     <!-- ============================================================= -->
-    <section class="slide" data-title="Split · content + visual">
+    <section class="slide" data-chapter="case-study" data-title="Split · content + visual">
       <div class="slide-inner">
         <div class="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
           <div>
@@ -262,7 +285,7 @@
     <!-- ============================================================= -->
     <!-- SLIDE 05 · METRICS — big numbers                              -->
     <!-- ============================================================= -->
-    <section class="slide bg-elev" data-title="Metrics">
+    <section class="slide bg-elev" data-chapter="case-study" data-title="Metrics">
       <div class="slide-inner">
         <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-10" data-anim style="--i:0">By the numbers</p>
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10">
@@ -289,7 +312,7 @@
     <!-- ============================================================= -->
     <!-- SLIDE 06 · INTERACTIVE PROTOTYPE — Figma embed                -->
     <!-- ============================================================= -->
-    <section class="slide" data-title="Interactive prototype">
+    <section class="slide" data-chapter="case-study" data-title="Interactive prototype">
       <div class="slide-inner">
         <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Try it live</p>
         <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-6 max-w-[22ch]" data-anim style="--i:1">Drop in a clickable prototype</h2>
@@ -302,9 +325,28 @@
     </section>
 
     <!-- ============================================================= -->
-    <!-- SLIDE 07 · GALLERY — multi-up grid                            -->
+    <!-- BEFORE / AFTER — drag-to-compare (case study)                 -->
     <!-- ============================================================= -->
-    <section class="slide bg-elev" data-title="Gallery">
+    <section class="slide" data-chapter="case-study" data-title="Before &amp; after">
+      <div class="slide-inner">
+        <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Transformation</p>
+        <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-8 max-w-[22ch]" data-anim style="--i:1">Drag to compare old and new</h2>
+        <div class="compare aspect-video ring-1 ring-line max-h-[62vh] w-full" data-compare data-anim style="--i:2">
+          <div class="wf absolute inset-0 !rounded-none"><span>New design</span></div>
+          <span class="tag right-3">After</span>
+          <div class="after-layer">
+            <div class="wf absolute inset-0 !rounded-none" style="background-color:#f0f0f0;"><span>Old design</span></div>
+            <span class="tag left-3">Before</span>
+          </div>
+          <div class="handle" aria-hidden="true">⟺</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================= -->
+    <!-- GALLERY — multi-up grid (highlights)                          -->
+    <!-- ============================================================= -->
+    <section class="slide bg-elev" data-chapter="highlights" data-title="Gallery">
       <div class="slide-inner">
         <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Exploration</p>
         <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-8 max-w-[22ch]" data-anim style="--i:1">Show a set of frames at once</h2>
@@ -322,7 +364,7 @@
     <!-- ============================================================= -->
     <!-- SLIDE 08 · QUOTE — testimonial (accent field)                 -->
     <!-- ============================================================= -->
-    <section class="slide bg-accent text-accink" data-title="Quote">
+    <section class="slide bg-accent text-accink" data-chapter="highlights" data-title="Quote">
       <div class="slide-inner items-start">
         <div class="text-7xl md:text-8xl font-black leading-none mb-4" data-anim style="--i:0" aria-hidden="true">“</div>
         <blockquote class="text-3xl md:text-5xl font-extrabold tracking-tight leading-snug max-w-[22ch]" data-anim style="--i:1">
@@ -339,28 +381,9 @@
     </section>
 
     <!-- ============================================================= -->
-    <!-- SLIDE 09 · BEFORE / AFTER — drag-to-compare                   -->
-    <!-- ============================================================= -->
-    <section class="slide" data-title="Before &amp; after">
-      <div class="slide-inner">
-        <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Transformation</p>
-        <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-8 max-w-[22ch]" data-anim style="--i:1">Drag to compare old and new</h2>
-        <div class="compare aspect-video ring-1 ring-line max-h-[62vh] w-full" data-compare data-anim style="--i:2">
-          <div class="wf absolute inset-0 !rounded-none"><span>New design</span></div>
-          <span class="tag right-3">After</span>
-          <div class="after-layer">
-            <div class="wf absolute inset-0 !rounded-none" style="background-color:#f0f0f0;"><span>Old design</span></div>
-            <span class="tag left-3">Before</span>
-          </div>
-          <div class="handle" aria-hidden="true">⟺</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============================================================= -->
     <!-- SLIDE 10 · CLOSING / CTA                                      -->
     <!-- ============================================================= -->
-    <section class="slide bg-ink text-white" data-title="Thanks">
+    <section class="slide bg-ink text-white" data-chapter="highlights" data-title="Thanks">
       <div class="slide-inner items-center text-center">
         <p class="text-white/60 text-xs font-bold uppercase tracking-[0.2em] mb-8" data-anim style="--i:0">Fin</p>
         <h2 class="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.12] max-w-[18ch]" data-anim style="--i:1">
@@ -383,7 +406,12 @@
 <!-- Bottom control bar — dots / prev-next / counter               -->
 <!-- ============================================================= -->
 <div class="ctrl" role="group" aria-label="Slideshow controls">
-  <div class="ctrl-dots" id="dots" aria-label="Slides"></div>
+  <button type="button" class="nav-btn nav-home" data-home aria-label="Back to first slide" title="Back to first slide">
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>
+    <span class="home-count" data-home-count aria-hidden="true"></span>
+  </button>
+  <div class="chapter-tabs" id="chapters" aria-label="Chapters"></div>
+  <div class="ctrl-dots hidden lg:flex" id="dots" aria-label="Slides"></div>
   <div class="ml-auto flex items-center gap-3">
     <span class="counter"><span id="curNum">01</span> <span class="sep">/</span> <span id="totNum">10</span></span>
     <button type="button" class="nav-btn" data-prev aria-label="Previous slide">←</button>
@@ -410,34 +438,83 @@
   const deckTitle= document.getElementById("deckTitle");
   const prevBtns = Array.from(document.querySelectorAll("[data-prev]"));
   const nextBtns = Array.from(document.querySelectorAll("[data-next]"));
+  const homeBtns = Array.from(document.querySelectorAll("[data-home]"));
   const N = slides.length;
+  const homeIndices = slides.map((s, idx) => (s.hasAttribute("data-home-slide") ? idx : -1)).filter((x) => x >= 0);
   const pad = (n) => String(n).padStart(2, "0");
+
+  const chapWrap = document.getElementById("chapters");
+  const CHAP_LABELS = { "highlights": "Highlights", "case-study": "Case study" };
 
   let i = 0;
 
-  /* ---------- build dots ---------- */
-  const dots = slides.map((s, idx) => {
+  /* ---------- build chapters from data-chapter ---------- */
+  const chapters = [];
+  slides.forEach((s, idx) => {
+    const id = s.dataset.chapter || "main";
+    let ch = chapters.find((c) => c.id === id);
+    if (!ch) { ch = { id, label: CHAP_LABELS[id] || id, start: idx, end: idx, slides: [] }; chapters.push(ch); }
+    ch.end = idx; ch.slides.push(idx);
+  });
+  const chapterOf = (idx) => chapters.find((c) => idx >= c.start && idx <= c.end);
+
+  /* ---------- chapter tabs (hidden when there is only one chapter) ---------- */
+  const chapterTabs = (chapters.length > 1 ? chapters : []).map((ch) => {
     const b = document.createElement("button");
-    b.className = "dot";
+    b.className = "chapter-tab";
     b.type = "button";
-    b.setAttribute("aria-label", `Go to slide ${idx + 1}: ${s.dataset.title || ""}`.trim());
-    b.addEventListener("click", () => go(idx));
-    dotsWrap.appendChild(b);
+    b.innerHTML = ch.label + '<span class="ct-count">' + ch.slides.length + "</span>";
+    b.setAttribute("aria-label", "Jump to " + ch.label);
+    b.addEventListener("click", () => go(ch.start));
+    chapWrap && chapWrap.appendChild(b);
     return b;
+  });
+
+  /* ---------- grouped dots (hover shows the slide title) ---------- */
+  const dots = [];
+  chapters.forEach((ch) => {
+    const group = document.createElement("div");
+    group.className = "dot-group";
+    ch.slides.forEach((idx) => {
+      const b = document.createElement("button");
+      b.className = "dot";
+      b.type = "button";
+      const label = slides[idx].dataset.title || ("Slide " + (idx + 1));
+      b.setAttribute("aria-label", "Go to slide " + (idx + 1) + ": " + label);
+      b.dataset.tip = pad(idx + 1) + " · " + label;
+      b.addEventListener("click", () => go(idx));
+      group.appendChild(b);
+      dots[idx] = b;
+    });
+    dotsWrap.appendChild(group);
   });
   totNum.textContent = pad(N);
 
   /* ---------- render current state ---------- */
   function render() {
     track.style.transform = `translateX(-${i * 100}%)`;
-    slides.forEach((s, idx) => s.classList.toggle("is-active", idx === i));
+    slides.forEach((s, idx) => {
+      const active = idx === i;
+      s.classList.toggle("is-active", active);
+      if (active) s.scrollTop = 0;
+    });
     dots.forEach((d, idx) => d.setAttribute("aria-current", String(idx === i)));
+    const homePos = homeIndices.indexOf(i);
+    const onHome = homePos >= 0;
+    const ch = chapterOf(i);
+    chapterTabs.forEach((t, ci) => t.setAttribute("aria-current", String(!onHome && chapters[ci] === ch)));
     curNum.textContent = pad(i + 1);
     progress.style.width = ((i + 1) / N) * 100 + "%";
     const t = slides[i].dataset.title;
     deckTitle.textContent = t ? `${pad(i + 1)} · ${t}` : "Slideshow Template";
     prevBtns.forEach((b) => (b.disabled = i === 0));
     nextBtns.forEach((b) => (b.disabled = i === N - 1));
+    homeBtns.forEach((b) => {
+      b.classList.toggle("is-active", onHome);
+      b.setAttribute("aria-current", onHome ? "true" : "false");
+      const badge = b.querySelector("[data-home-count]");
+      if (badge) badge.textContent = onHome ? (homePos + 1) + "/" + homeIndices.length : "";
+    });
     if (history.replaceState) history.replaceState(null, "", "#" + (i + 1));
   }
 
@@ -450,17 +527,19 @@
 
   prevBtns.forEach((b) => b.addEventListener("click", prev));
   nextBtns.forEach((b) => b.addEventListener("click", next));
+  document.querySelectorAll("[data-home]").forEach((b) => b.addEventListener("click", () => go(0)));
 
   /* ---------- keyboard ---------- */
   document.addEventListener("keydown", (e) => {
     if (e.target.closest("input, textarea, iframe, [contenteditable]")) return;
     switch (e.key) {
-      case "ArrowRight": case "ArrowDown": case "PageDown":
+      case "ArrowRight": case "PageDown":
         e.preventDefault(); next(); break;
       case " ":
         e.preventDefault(); e.shiftKey ? prev() : next(); break;
-      case "ArrowLeft": case "ArrowUp": case "PageUp":
+      case "ArrowLeft": case "PageUp":
         e.preventDefault(); prev(); break;
+      /* ArrowUp / ArrowDown are intentionally left to scroll the active slide */
       case "Home": e.preventDefault(); go(0); break;
       case "End":  e.preventDefault(); go(N - 1); break;
     }

@@ -2,6 +2,8 @@
 .olx_tmp/
 .tpl_tmp/
 .hdr_tmp/
+.preview/
+olx_preview_tmp.html
 
 # Local dev server log
 .serverlog

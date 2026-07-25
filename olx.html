@@ -14,7 +14,7 @@
       gtag('config', 'GT-5TN254F');
     </script>
     <meta http-equiv="x-ua-compatible" content="ie=edge; chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
     <!-- Document Title -->
     <title>Vipul Saxena | Reimagining the OLX Ad Package Purchase Flow</title>
@@ -36,14 +36,14 @@
     <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="article" />
     <meta property="og:site_name" content="Vipulsaxena.com" />
-    <meta property="og:image" content="https://vipulsaxena.com/images/olx_cover.png" />
+    <meta property="og:image" content="https://vipulsaxena.com/assets/olx/olx_cover.png" />
     <meta property="og:image:type" content="image/png" />
     <meta name='twitter:card' content='summary_large_image' />
     <meta name='twitter:site' content='@vipulsaxena_fc' />
     <meta name='twitter:title' content='OLX Ad Package — Purchase Flow Case Study' />
     <meta name='twitter:description' content='Diagnosing an 80–90% seller drop-off and leading the multi-level category redesign now in an A/B test in Poland.' />
     <meta name="twitter:url" content="https://vipulsaxena.com/olx.html" />
-    <meta name='twitter:image' content="https://vipulsaxena.com/images/olx_cover.png" />
+    <meta name='twitter:image' content="https://vipulsaxena.com/assets/olx/olx_cover.png" />
 
     <!-- Favicon Meta Tags.  -->
     <link rel="icon" href="fav.png" sizes="32x32" type="image/png">
@@ -66,6 +66,7 @@
             colors: {
               base:'#ffffff', elev:'#f7f7f7', card:'#ffffff', line:'#e7e7e7',
               ink:'#262626', mute:'#6e6e6e', accent:'#ffda08', accink:'#262626',
+              navy:'#123b4d', sellers:'#2f8fe0', market:'#17b3a3', buyer:'#ef6b7d',
             },
             fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
             borderRadius: { '2xl': '1.25rem', '3xl': '1.75rem' },
@@ -75,33 +76,177 @@
       }
     </script>
 
-    <!-- Component styles (shared with template.html) -->
+    <!-- Deck styles (adapted from template-2.html) -->
     <style type="text/css">
-      html{ scroll-behavior:smooth; }
-      body{ background:#ffffff; font-family:"Inter", system-ui, sans-serif; }
+      :root{ --deck-top:3.5rem; }
+      html,body{ height:100%; }
+      body{ background:#ffffff; font-family:"Inter", system-ui, sans-serif; overflow:hidden; }
       ::selection{ background:#ffda08; color:#262626; }
-      .hl{ background:#ffda08; color:#262626; padding:0 .1em; border-radius:.08em; -webkit-box-decoration-break:clone; box-decoration-break:clone; }
 
-      .compare{ position:relative; overflow:hidden; border-radius:1rem; cursor:ew-resize; user-select:none; touch-action:none; }
-      .compare .after-layer{ position:absolute; inset:0; overflow:hidden; clip-path:inset(0 50% 0 0); }
-      .compare .handle{ position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); z-index:5; width:44px; height:44px; border-radius:999px; background:#ffda08; color:#262626; display:flex; align-items:center; justify-content:center; font-weight:800; box-shadow:0 6px 18px rgba(38,38,38,.28); }
-      .compare .handle::before{ content:""; position:absolute; left:50%; top:-100vh; height:200vh; width:2px; background:#ffda08; transform:translateX(-50%); z-index:-1; }
-      .compare .tag{ position:absolute; top:12px; z-index:4; font-size:.7rem; letter-spacing:.12em; text-transform:uppercase; font-weight:700; padding:4px 10px; border-radius:999px; background:rgba(255,255,255,.9); color:#262626; border:1px solid #e7e7e7; }
+      .hl{ background:#ffda08; color:#262626; padding:0 .1em; border-radius:.08em;
+           -webkit-box-decoration-break:clone; box-decoration-break:clone; }
 
-      .carousel-track{ display:flex; transition:transform .45s cubic-bezier(.22,.61,.36,1); }
-      .carousel-track > *{ flex:0 0 100%; }
-      .dot{ width:9px; height:9px; border-radius:999px; background:#d4d4d4; transition:all .2s ease; }
+      /* ---------- Deck viewport ---------- */
+      .deck{ position:fixed; inset:0; top:var(--deck-top); overflow:hidden; }
+      .deck-track{ display:flex; height:100%; width:100%;
+        transition:transform .6s cubic-bezier(.7,0,.2,1); will-change:transform; }
+      .slide{ flex:0 0 100%; height:100%; width:100%; overflow-y:auto;
+        display:flex; flex-direction:column; position:relative; }
+      .slide-inner{ margin:0 auto; width:100%; max-width:80rem;
+        padding:clamp(1.5rem,4vw,4rem) clamp(1.25rem,5vw,4rem);
+        flex:1 1 auto; display:flex; flex-direction:column; justify-content:center; }
+      .slide-inner.top{ justify-content:flex-start; }
+
+      /* Per-slide reveal */
+      .slide [data-anim]{ opacity:0; transform:translateY(26px); transition:opacity .6s ease, transform .6s ease; }
+      .slide.is-active [data-anim]{ opacity:1; transform:none; transition-delay:calc(var(--i,0) * 80ms); }
+
+      /* Highlights breadcrumb */
+      .crumb{ display:inline-flex; flex-wrap:wrap; align-items:center; gap:.5rem; font-size:.95rem; color:#6e6e6e; font-weight:600; }
+      .crumb .sep{ color:#c4c4c4; }
+      .crumb .now{ color:#262626; text-decoration:underline; text-decoration-color:#ffda08; text-decoration-thickness:3px; text-underline-offset:3px; }
+
+      .cs-formula{ font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size:.95rem;
+        background:#f7f7f7; border:1px solid #e7e7e7; border-radius:12px; padding:12px 16px; display:inline-block; color:#262626; }
+
+      /* ---------- Chapter-2 component accents ---------- */
+      .tag-pill{ display:inline-flex; align-items:center; gap:.4rem; font-size:.72rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; padding:.35rem .85rem; border-radius:999px; color:#fff; }
+      .tag-sellers{ background:#2f8fe0; } .tag-market{ background:#17b3a3; } .tag-buyer{ background:#ef6b7d; }
+
+      .time-pill{ display:inline-flex; align-items:center; gap:.5rem; font-size:.85rem; font-weight:600; color:#262626; background:#f7f7f7; border:1px solid #e7e7e7; border-radius:999px; padding:.4rem .95rem; }
+
+      /* Cross-hatch texture behind the cover UI frame */
+      .cover-tex{ background-color:#fff; background-image:url("assets/olx/bg2.png"); background-repeat:repeat; background-size:200px auto; background-position:center; }
+      .time-pill::before{ content:""; width:.5rem; height:.5rem; border-radius:999px; background:#ffda08; }
+
+      .dotgrid{ display:grid; grid-template-columns:repeat(3, 2.4rem); gap:.5rem; }
+      .dotgrid i{ width:2.4rem; height:2.4rem; border-radius:999px; display:block; box-shadow:inset 0 0 0 2px rgba(255,255,255,.6); }
+
+      .stage{ background:#fff; border:1px solid #e7e7e7; border-radius:14px; padding:.9rem 1rem; min-width:9.5rem; box-shadow:0 1px 2px rgba(0,0,0,.04); }
+      .stage h5{ font-weight:800; font-size:.9rem; margin:0 0 .35rem; }
+      .stage p{ color:#6e6e6e; font-size:.78rem; line-height:1.35; margin:0; }
+      .flow-arrow{ color:#c4c4c4; font-size:1.3rem; flex:0 0 auto; }
+
+      .note{ border-radius:14px; padding:1rem 1.05rem; font-size:.92rem; line-height:1.4; }
+      .note-y{ background:#fff3b0; border:1px solid #ffe27a; color:#262626; }
+      .note-t{ background:#d5f3ee; border:1px solid #b3e7df; color:#0f3b34; }
+      .note b{ font-weight:800; }
+
+      /* Slide 07 — research-findings spreadsheet as faded backdrop */
+      .lim-bg{ position:absolute; inset:0; pointer-events:none; z-index:0;
+        background:
+          linear-gradient(rgba(247,247,247,.80), rgba(247,247,247,.90)),
+          url("assets/olx/limitation-bg.png") center top / cover no-repeat; }
+
+      .prob{ background:#fff; border:1px solid #e7e7e7; border-radius:16px; padding:1.05rem 1.15rem; box-shadow:0 10px 26px -16px rgba(0,0,0,.28); }
+      .prob b{ display:block; font-weight:800; color:#262626; margin-bottom:.5rem; line-height:1.3; font-size:.95rem; }
+      .prob span{ color:#6e6e6e; font-size:.85rem; line-height:1.45; display:block; }
+      .prob.win{ border-color:#ffda08; box-shadow:0 0 0 3px rgba(255,218,8,.25); }
+
+      .abadge{ flex:0 0 auto; width:1.6rem; height:1.6rem; border-radius:999px; display:inline-flex; align-items:center; justify-content:center; font-size:.78rem; font-weight:800; color:#fff; }
+      .a-a{ background:#ef6b7d; } .a-b{ background:#2f8fe0; }
+
+      .panel-green{ background:#e3f0e4 url("assets/olx/bg3.png") center bottom / cover no-repeat; color:#123b2a; position:relative; overflow:hidden; }
+      /* Research interviews — participant tiles over the teal radial backdrop */
+      .research-users{ background:#8fe6f2 url("assets/olx/bg4.png") center / cover no-repeat; }
+
+      /* Survey panel — SurveyMonkey card over the pink cross-hatch backdrop */
+      .panel-bg5{ background:#ece0dc url("assets/olx/bg5.png") center / cover no-repeat; position:relative; overflow:hidden; }
+
+      .panel-wheat{ background:#f4e3bf; position:relative; overflow:hidden; }
+      .panel-wheat::after{ content:""; position:absolute; inset:0; background:radial-gradient(circle at 80% 20%, rgba(255,255,255,.4), transparent 45%); }
+
+      .vlabel{ display:block; text-align:center; font-weight:800; color:#fff; padding:.6rem; border-radius:14px 14px 0 0; letter-spacing:.01em; font-size:.92rem; }
+      .vlabel-a{ background:#ef6b7d; } .vlabel-b{ background:#2f8fe0; }
+
+      .mini-card{ background:#fff; border:1px solid #e7e7e7; border-radius:14px; box-shadow:0 6px 20px -12px rgba(0,0,0,.2); }
+
+      /* CSAT gauge — fill the meter when slide 4 activates */
+      .csat-arc{ stroke-dashoffset:100; }
+      .slide.is-active .csat-arc{ stroke-dashoffset:0; transition:stroke-dashoffset 1.2s cubic-bezier(.65,0,.35,1) .25s; }
+
+      /* Interactive UX-audit bullets ↔ screenshot */
+      .audit-stage{ position:relative; border-radius:16px; overflow:hidden; border:1px solid #e7e7e7; background:#f7f7f7; aspect-ratio:1024/548; }
+      .audit-shot{ position:absolute; inset:0; width:100%; height:100%; object-fit:contain; opacity:0; transform:scale(1.01); pointer-events:none; transition:opacity .35s ease, transform .35s ease; cursor:zoom-in; }
+      .audit-shot.active{ opacity:1; transform:none; pointer-events:auto; }
+      .audit-item{ display:flex; gap:.85rem; align-items:flex-start; width:100%; text-align:left; padding:.65rem .8rem; border-radius:12px; border:1px solid transparent; background:transparent; cursor:pointer; transition:background .15s ease, border-color .15s ease, box-shadow .15s ease; }
+      .audit-item:hover{ background:#fff; border-color:#e7e7e7; box-shadow:0 1px 2px rgba(0,0,0,.05); }
+      .audit-item.active{ background:#fff; border-color:#ffda08; box-shadow:0 0 0 3px rgba(255,218,8,.22); }
+      .audit-item:focus-visible{ outline:none; border-color:#ffda08; box-shadow:0 0 0 3px rgba(255,218,8,.55); }
+      .audit-num{ flex:0 0 auto; width:1.65rem; height:1.65rem; border-radius:999px; background:#efefef; color:#6e6e6e; font-weight:800; font-size:.78rem; display:inline-flex; align-items:center; justify-content:center; margin-top:.05rem; transition:background .15s ease, color .15s ease; }
+      .audit-item:hover .audit-num, .audit-item.active .audit-num{ background:#ffda08; color:#262626; }
+      .audit-item span{ color:#6e6e6e; line-height:1.45; }
+
+      /* Segmented toggle (Background views) */
+      .seg{ display:inline-flex; padding:4px; background:#efefef; border:1px solid #e7e7e7; border-radius:999px; gap:2px; }
+      .seg-btn{ font-size:.8rem; font-weight:700; padding:.4rem .95rem; border-radius:999px; color:#6e6e6e; background:transparent; border:0; cursor:pointer; white-space:nowrap; transition:color .15s ease, background .15s ease, box-shadow .15s ease; }
+      .seg-btn:hover{ color:#262626; }
+      .seg-btn[aria-selected="true"]{ color:#262626; background:#fff; box-shadow:0 1px 2px rgba(0,0,0,.1); }
+      .seg-btn:focus-visible{ outline:none; box-shadow:0 0 0 3px rgba(255,218,8,.55); }
+      .bgview-shot{ display:none; }
+      .bgview-shot.active{ display:block; animation:bgFade .35s ease; }
+      @keyframes bgFade{ from{ opacity:0; transform:translateY(6px); } to{ opacity:1; transform:none; } }
+
+      /* ---------- Bottom control bar ---------- */
+      .ctrl{ position:fixed; left:0; right:0; bottom:0; z-index:900; display:flex; align-items:center; gap:1rem;
+        padding:.65rem clamp(1rem,4vw,2.5rem); padding-bottom:calc(.65rem + env(safe-area-inset-bottom,0px));
+        background:rgba(255,255,255,.9); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); border-top:1px solid #e7e7e7; }
+      .chapter-tabs{ display:flex; align-items:center; gap:.35rem; }
+      .chapter-tab{ font-size:.75rem; font-weight:700; letter-spacing:.01em; padding:.4rem .8rem; border-radius:999px;
+        color:#6e6e6e; background:transparent; border:1px solid transparent; cursor:pointer; white-space:nowrap;
+        transition:color .15s ease, background .15s ease, border-color .15s ease; }
+      .chapter-tab:hover{ color:#262626; background:#f2f2f2; }
+      .chapter-tab[aria-current="true"]{ color:#262626; background:#fff3b0; border-color:#ffda08; }
+      .chapter-tab:focus-visible{ outline:none; box-shadow:0 0 0 3px rgba(255,218,8,.55); }
+      .chapter-tab .ct-count{ color:#a3a3a3; font-weight:600; margin-left:.35rem; }
+      .chapter-tab[aria-current="true"] .ct-count{ color:#8a7a00; }
+
+      .ctrl-dots{ display:flex; align-items:center; gap:1rem; }
+      .dot-group{ display:flex; align-items:center; gap:.4rem; }
+      .dot{ width:9px; height:9px; border-radius:999px; background:#d4d4d4; transition:all .2s ease; cursor:pointer; border:0; padding:0; }
       .dot[aria-current="true"]{ background:#ffda08; width:26px; }
+      .dot:focus-visible{ outline:none; box-shadow:0 0 0 3px rgba(255,218,8,.55); }
+      .dot{ position:relative; }
+      .dot::after{ content:attr(data-tip); position:absolute; left:50%; bottom:calc(100% + 12px);
+        transform:translateX(-50%) translateY(4px); background:#262626; color:#fff; font-size:.72rem; font-weight:600;
+        padding:.34rem .6rem; border-radius:.45rem; white-space:nowrap; box-shadow:0 10px 24px -10px rgba(0,0,0,.45);
+        opacity:0; pointer-events:none; transition:opacity .14s ease, transform .14s ease; z-index:40; }
+      .dot::before{ content:""; position:absolute; left:50%; bottom:calc(100% + 7px); transform:translateX(-50%) translateY(4px);
+        border:5px solid transparent; border-top-color:#262626; opacity:0; pointer-events:none;
+        transition:opacity .14s ease, transform .14s ease; z-index:40; }
+      .dot:hover::after, .dot:focus-visible::after,
+      .dot:hover::before, .dot:focus-visible::before{ opacity:1; transform:translateX(-50%) translateY(0); }
 
-      .cs-formula{ font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size:1rem; background:#f7f7f7; border:1px solid #e7e7e7; border-radius:12px; padding:14px 18px; display:inline-block; color:#262626; }
+      .nav-btn{ display:inline-flex; align-items:center; justify-content:center; width:2.4rem; height:2.4rem;
+        border:1px solid #e7e7e7; border-radius:999px; background:#fff; color:#262626; cursor:pointer;
+        transition:border-color .15s ease, transform .15s ease, background .15s ease; }
+      .nav-btn:hover{ border-color:#ffda08; background:#fff3b0; }
+      .nav-btn:focus-visible{ outline:none; box-shadow:0 0 0 3px rgba(255,218,8,.55); }
+      .nav-btn:disabled{ opacity:.35; cursor:default; }
+      .nav-btn:disabled:hover{ border-color:#e7e7e7; background:#fff; }
+      .nav-btn.is-active{ border-color:#ffda08; background:#fff3b0; }
+      .nav-home{ gap:.3rem; }
+      .nav-home .home-count{ display:none; font-size:.72rem; font-weight:700; font-variant-numeric:tabular-nums; }
+      .nav-home.is-active{ width:auto; padding:0 .7rem; }
+      .nav-home.is-active .home-count{ display:inline; }
 
-      [data-reveal]{ opacity:0; transform:translateY(22px); transition:opacity .6s ease, transform .6s ease; }
-      [data-reveal].is-in{ opacity:1; transform:none; }
-      @media (prefers-reduced-motion: reduce){ [data-reveal]{ opacity:1; transform:none; transition:none; } html{ scroll-behavior:auto; } }
+      .counter{ font-variant-numeric:tabular-nums; font-weight:700; font-size:.85rem; color:#262626; white-space:nowrap; }
+      .counter .sep{ color:#a3a3a3; }
 
-      #lightbox{ position:fixed; inset:0; z-index:2000; display:none; align-items:center; justify-content:center; background:rgb(255 255 255 / 85%); padding:5vw; }
+      .progress{ position:fixed; top:var(--deck-top); left:0; height:3px; z-index:950; background:#ffda08; width:0; transition:width .6s cubic-bezier(.7,0,.2,1); }
+      .deck-title{ font-size:.9rem; font-weight:600; color:#6e6e6e; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+      .kbd{ display:inline-flex; align-items:center; gap:.35rem; font-size:.75rem; color:#6e6e6e; }
+      .key{ display:inline-block; min-width:1.5rem; padding:.15rem .4rem; text-align:center; font-size:.7rem; font-weight:700; border:1px solid #e7e7e7; border-bottom-width:2px; border-radius:.4rem; background:#fff; color:#262626; }
+
+      #lightbox{ position:fixed; inset:0; z-index:2000; display:none; align-items:center; justify-content:center; background:rgb(255 255 255 / 90%); padding:5vw; }
       #lightbox.open{ display:flex; }
-      #lightbox img{ max-width:100%; max-height:90vh; border-radius:.75rem; }
+      #lightbox img{ max-width:100%; max-height:90vh; border-radius:.75rem; box-shadow:0 24px 60px -20px rgba(0,0,0,.35); }
+
+      @media (prefers-reduced-motion: reduce){
+        .deck-track{ transition:none; } .progress{ transition:none; }
+        .slide [data-anim]{ opacity:1 !important; transform:none !important; transition:none !important; }
+        .csat-arc{ stroke-dashoffset:0 !important; transition:none !important; }
+      }
 
       /* ===== Password gate (secure entry) ===== */
       #olxGate{ display:none; }
@@ -123,9 +268,7 @@
       .pw-btn:hover{ filter:brightness(1.05); transform:translateY(-1px); }
     </style>
 
-    <!-- Runs before render: hide the page until unlocked (no content flash).
-         Always re-prompts on EXTERNAL entry (typed URL, bookmark, link from another
-         site). Only skips the prompt for in-site navigation, reloads, and back/forward. -->
+    <!-- Runs before render: hide the page until unlocked (no content flash). -->
     <script>
       (function(){
         var KEY = "olxAccessGranted";
@@ -143,8 +286,8 @@
         var external = (t !== "reload" && t !== "back_forward") && !internal;
         var allow = false;
         try {
-          if (external) sessionStorage.removeItem(KEY);      // external entry -> force a fresh prompt
-          else allow = sessionStorage.getItem(KEY) === "1";  // in-site / reload / back -> honour session
+          if (external) sessionStorage.removeItem(KEY);
+          else allow = sessionStorage.getItem(KEY) === "1";
         } catch(_){}
         window.__gateAllow = allow;
         if (!allow) document.documentElement.classList.add("olx-locked");
@@ -171,366 +314,482 @@
   </div>
 </div>
 
-<!-- SECTION: Sticky Navigation (shared shell — see css/shell.css) -->
-<header class="shell-header">
-  <div class="shell-inner shell-bar">
+<!-- Slim deck header -->
+<header class="shell-header" style="height:var(--deck-top);">
+  <div class="shell-inner shell-bar" style="height:var(--deck-top);">
     <a href="index.html" class="shell-brand">Home</a>
-    <nav class="shell-nav" aria-label="Sections" data-scrollspy>
-      <a href="#overview" class="shell-link">Overview</a>
-      <a href="#problem"  class="shell-link">Problem</a>
-      <a href="#process"  class="shell-link">Process</a>
-      <a href="#solution" class="shell-link">Solution</a>
-      <a href="#impact"   class="shell-link">Impact</a>
-    </nav>
+    <p class="deck-title" id="deckTitle">OLX Ad Package</p>
     <div class="shell-actions">
-      <button type="button" class="shell-burger" data-nav-toggle aria-expanded="false" aria-controls="shell-menu" aria-label="Menu">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      <button type="button" class="nav-btn" data-fullscreen aria-label="Toggle fullscreen" title="Fullscreen">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3m13-5v3a2 2 0 0 1-2 2h-3"/></svg>
       </button>
     </div>
   </div>
-  <div class="shell-menu" id="shell-menu" data-nav-menu>
-    <nav aria-label="Sections">
-      <a href="#overview" class="shell-link">Overview</a>
-      <a href="#problem"  class="shell-link">Problem</a>
-      <a href="#process"  class="shell-link">Process</a>
-      <a href="#solution" class="shell-link">Solution</a>
-      <a href="#impact"   class="shell-link">Impact</a>
-    </nav>
-  </div>
 </header>
 
-<main class="pt-16">
+<!-- Progress bar -->
+<div class="progress" id="progress" aria-hidden="true"></div>
 
-  <!-- SECTION: Hero -->
-  <section class="mx-auto max-w-content px-5 md:px-8 pt-16 md:pt-24 pb-10">
-    <p class="text-mute text-xs md:text-sm font-bold uppercase tracking-[0.2em] mb-6" data-reveal>OLX Group · Case study · 2023</p>
-    <h1 class="font-extrabold tracking-tight leading-[1.06] text-5xl md:text-7xl lg:text-[5.25rem] max-w-[18ch]" data-reveal>
-      Reimagining the OLX Ad Package purchase flow
-    </h1>
-    <p class="mt-8 text-xl md:text-2xl text-mute max-w-[48ch] leading-snug" data-reveal>
-      I found the biggest leak in OLX's monetisation funnel — one screen where <span class="hl">80–90% of Sellers gave up</span> — and led the redesign that's now in an A/B test.
-    </p>
+<main class="deck" aria-label="OLX slideshow">
+  <div class="deck-track" id="track">
 
-    <div class="mt-9 flex flex-wrap gap-x-10 gap-y-6" data-reveal>
-      <div><p class="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-mute mb-1.5">Role</p><p class="font-semibold">Lead Product Designer</p></div>
-      <div><p class="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-mute mb-1.5">Timeline</p><p class="font-semibold">16 weeks · 2023</p></div>
-      <div><p class="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-mute mb-1.5">Platforms</p><p class="font-semibold">Desktop &amp; Mobile web</p></div>
-      <div><p class="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-mute mb-1.5">Status</p><p class="font-semibold">In A/B test — Poland</p></div>
-    </div>
+    <!-- ===================== CHAPTER 1 · HIGHLIGHTS ===================== -->
 
-    <figure class="mt-12 md:mt-16" data-reveal>
-      <img loading="lazy" decoding="async" src="images/olx_cover.png" alt="OLX 'buy an Ad package' category-selection screen" data-lightbox class="w-full rounded-2xl border border-line shadow-xl shadow-ink/5">
-      <figcaption class="mt-4 text-sm text-mute">The redesigned category-selection step at the heart of the buy-package flow.</figcaption>
-    </figure>
-
-    <div class="mt-12 grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5" data-reveal>
-      <div class="rounded-2xl border border-line bg-card p-6 shadow-sm hover:-translate-y-1 hover:border-accent hover:shadow-md transition duration-200"><div class="text-4xl md:text-5xl font-extrabold tracking-tight text-ink leading-none">20.55%</div><div class="mt-3 text-sm text-mute leading-snug">Single-step drop diagnosed and pinpointed</div></div>
-      <div class="rounded-2xl border border-line bg-card p-6 shadow-sm hover:-translate-y-1 hover:border-accent hover:shadow-md transition duration-200"><div class="text-4xl md:text-5xl font-extrabold tracking-tight text-ink leading-none">7/8</div><div class="mt-3 text-sm text-mute leading-snug">Users satisfied with the chosen flow</div></div>
-      <div class="rounded-2xl border border-line bg-card p-6 shadow-sm hover:-translate-y-1 hover:border-accent hover:shadow-md transition duration-200"><div class="text-4xl md:text-5xl font-extrabold tracking-tight text-ink leading-none">13.12</div><div class="mt-3 text-sm text-mute leading-snug">Top Opportunity Score of 24 problems</div></div>
-      <div class="rounded-2xl border border-line bg-card p-6 shadow-sm hover:-translate-y-1 hover:border-accent hover:shadow-md transition duration-200"><div class="text-4xl md:text-5xl font-extrabold tracking-tight text-ink leading-none">$110–160k</div><div class="mt-3 text-sm text-mute leading-snug">Monthly value of each +1% paying Sellers</div></div>
-    </div>
-  </section>
-
-  <!-- SECTION: Overview -->
-  <section id="overview" class="scroll-mt-24 border-t border-line bg-elev">
-    <div class="mx-auto max-w-content px-5 md:px-8 py-20 md:py-28">
-      <p class="text-mute text-xs font-bold uppercase tracking-[0.18em] mb-5" data-reveal>Overview</p>
-      <div class="grid lg:grid-cols-[1.6fr_1fr] gap-10 lg:gap-20 items-start">
-        <p class="text-2xl md:text-3xl font-medium leading-snug max-w-[30ch]" data-reveal>
-          OLX makes money when Sellers buy Ad packages. The hardest part of that flow was never paying — it was choosing the right category. I led the redesign of that step, end to end.
-        </p>
-        <div class="grid gap-6" data-reveal>
-          <div><p class="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-mute mb-2">My contribution</p><p>Research · Interaction · Prototype</p></div>
-          <div><p class="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-mute mb-2">Platforms</p><p>Desktop web · Mobile web</p></div>
-          <div><p class="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-mute mb-2">Status</p><p>In A/B test — Poland</p></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SECTION: Context & Problem Statement -->
-  <section id="problem" class="scroll-mt-24">
-    <div class="mx-auto max-w-content px-5 md:px-8 py-20 md:py-28">
-      <p class="text-mute text-xs font-bold uppercase tracking-[0.18em] mb-5" data-reveal>Problem</p>
-
-      <div class="grid md:grid-cols-2 gap-6 md:gap-8">
-        <div class="rounded-2xl border border-line bg-card p-8 md:p-10 shadow-sm" data-reveal>
-          <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-4">The challenge</h2>
-          <p class="text-mute text-lg leading-relaxed">Almost <strong class="text-ink font-semibold">80% of B2C and 90% of C2C Sellers</strong> dropped at category selection — the single largest leak in the monetisation funnel. This wasn't a polish problem; it was where revenue was bleeding.</p>
-        </div>
-        <div class="rounded-2xl border border-line bg-card p-8 md:p-10 shadow-sm" data-reveal>
-          <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-4">The goal</h2>
-          <p class="text-mute text-lg leading-relaxed">Grow the share of monthly paying Sellers by fixing the flow, while contributing to a CSAT goal of <strong class="text-ink font-semibold">+8.0</strong>.</p>
-        </div>
-      </div>
-
-      <blockquote class="mt-8 rounded-2xl border-l-4 border-accent bg-elev p-8 md:p-10" data-reveal>
-        <p class="text-2xl md:text-4xl font-bold tracking-tight leading-snug max-w-[26ch]">
-          The funnel's biggest cliff sat on one screen — a <span class="hl">20.55% fall</span> on a single step.
-        </p>
-      </blockquote>
-
-      <!-- Three reasons Sellers got stuck -->
-      <h3 class="mt-16 mb-6 text-xl font-bold tracking-tight" data-reveal>Three reasons Sellers got stuck</h3>
-      <div class="grid md:grid-cols-3 gap-6" data-reveal>
-        <article class="rounded-2xl border border-line bg-card p-8 shadow-sm">
-          <div class="inline-block bg-accent text-accink text-lg font-extrabold px-2.5 py-0.5 rounded mb-4">01</div>
-          <h4 class="text-xl font-bold mb-2">Buried</h4>
-          <p class="text-mute leading-relaxed">Category lists ran deep with no hierarchy. Users even tapped bullet points that did nothing.</p>
-        </article>
-        <article class="rounded-2xl border border-line bg-card p-8 shadow-sm">
-          <div class="inline-block bg-accent text-accink text-lg font-extrabold px-2.5 py-0.5 rounded mb-4">02</div>
-          <h4 class="text-xl font-bold mb-2">Opaque</h4>
-          <p class="text-mute leading-relaxed">Sub-categories decided the package price, but nothing on screen revealed that link.</p>
-        </article>
-        <article class="rounded-2xl border border-line bg-card p-8 shadow-sm">
-          <div class="inline-block bg-accent text-accink text-lg font-extrabold px-2.5 py-0.5 rounded mb-4">03</div>
-          <h4 class="text-xl font-bold mb-2">Dead-ends</h4>
-          <p class="text-mute leading-relaxed">Search only surfaced categories already inside a package, so Sellers hit walls.</p>
-        </article>
-      </div>
-
-      <figure class="mt-12" data-reveal>
-        <img loading="lazy" decoding="async" src="images/olx_funnel.png" alt="Funnel analysis showing a 20.55% drop at category selection" data-lightbox class="w-full rounded-2xl border border-line">
-        <figcaption class="mt-4 text-sm text-mute">Funnel analysis pinned the drop to a single step — category selection.</figcaption>
-      </figure>
-
-      <blockquote class="mt-12 max-w-[32ch]" data-reveal>
-        <p class="text-2xl md:text-3xl font-semibold tracking-tight leading-snug">“It gets tricky to find the same category in which I post multiple ads.”</p>
-        <cite class="block not-italic text-sm font-semibold text-mute mt-4">— Seller, research interview</cite>
-      </blockquote>
-    </div>
-  </section>
-
-  <!-- Giant statement band -->
-  <section class="mx-auto max-w-content px-5 md:px-8">
-    <div class="border-y-2 border-ink py-14 md:py-24" data-reveal>
-      <p class="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.12] max-w-[20ch]">
-        How might we make choosing a category <span class="hl">effortless</span> — so Sellers actually finish buying?
-      </p>
-    </div>
-  </section>
-
-  <!-- SECTION: Deep Dive & Process -->
-  <section id="process" class="scroll-mt-24 bg-elev border-t border-line">
-    <div class="mx-auto max-w-content px-5 md:px-8 py-20 md:py-28">
-      <p class="text-mute text-xs font-bold uppercase tracking-[0.18em] mb-5" data-reveal>Process</p>
-      <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4 max-w-[22ch]" data-reveal>Understand the job, quantify the problem, let a test decide</h2>
-      <p class="text-lg text-mute max-w-[60ch] mb-12" data-reveal>I ran this end to end — from framing to the A/B spec. Four moves did the heavy lifting.</p>
-
-      <!-- Process timeline -->
-      <ol class="relative grid sm:grid-cols-2 lg:grid-cols-4 gap-8" data-reveal>
-        <div class="hidden lg:block absolute top-5 left-0 right-0 h-px bg-line"></div>
-        <li class="relative">
-          <div class="w-10 h-10 rounded-full bg-accent text-accink font-extrabold flex items-center justify-center relative z-10">1</div>
-          <h3 class="mt-4 font-bold text-lg">Framed the job</h3>
-          <p class="mt-2 text-mute">12 B2C &amp; C2C interviews, framed as a Job-to-be-Done — what Sellers were trying to achieve, not the screens they used.</p>
-        </li>
-        <li class="relative">
-          <div class="w-10 h-10 rounded-full bg-accent text-accink font-extrabold flex items-center justify-center relative z-10">2</div>
-          <h3 class="mt-4 font-bold text-lg">Scored it</h3>
-          <p class="mt-2 text-mute">Research surfaced 24 limitations. Opportunity Scoring settled the call on evidence, not opinion.</p>
-        </li>
-        <li class="relative">
-          <div class="w-10 h-10 rounded-full bg-accent text-accink font-extrabold flex items-center justify-center relative z-10">3</div>
-          <h3 class="mt-4 font-bold text-lg">Designed two bets</h3>
-          <p class="mt-2 text-mute">Desktop-first (60%+ of packages sell on web), I took two genuinely different concepts into testing.</p>
-        </li>
-        <li class="relative">
-          <div class="w-10 h-10 rounded-full bg-accent text-accink font-extrabold flex items-center justify-center relative z-10">4</div>
-          <h3 class="mt-4 font-bold text-lg">Tested with 10</h3>
-          <p class="mt-2 text-mute">Variant B satisfied 7 of 8; 5 of 8 spontaneously linked tags to price. Variant A only <em>felt</em> faster.</p>
-        </li>
-      </ol>
-
-      <!-- Opportunity Scoring formula -->
-      <div class="mt-14" data-reveal>
-        <p class="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-mute mb-3">Opportunity Scoring</p>
-        <span class="cs-formula">OpScore = Importance + max(Importance − Satisfaction, 0)</span>
-        <p class="mt-4 text-mute max-w-[60ch]">Category selection topped all 24 problems at <strong class="text-ink font-semibold">13.12</strong>.</p>
-      </div>
-
-      <!-- Before / After comparison slider -->
-      <h3 class="mt-20 mb-6 text-xl md:text-2xl font-bold tracking-tight" data-reveal>Before &amp; after</h3>
-      <div class="compare aspect-video ring-1 ring-line" data-compare data-reveal>
-        <img src="images/olx_cover.png" alt="Redesigned category selection" class="absolute inset-0 w-full h-full object-cover object-top">
-        <span class="tag right-3">After</span>
-        <div class="after-layer">
-          <img src="images/olx_audit_desktop.png" alt="The live desktop flow under audit" class="absolute inset-0 w-full h-full object-cover object-top">
-          <span class="tag left-3">Before</span>
-        </div>
-        <div class="handle" aria-hidden="true">⟺</div>
-      </div>
-      <p class="mt-3 text-sm text-mute">Drag the handle — the audited live flow on the left, the redesign on the right.</p>
-
-      <!-- Exploration carousel -->
-      <h3 class="mt-20 mb-6 text-xl md:text-2xl font-bold tracking-tight" data-reveal>Research &amp; exploration</h3>
-      <div data-carousel data-reveal>
-        <div class="overflow-hidden rounded-2xl ring-1 ring-line">
-          <div class="carousel-track" data-carousel-track>
-            <figure><div class="aspect-video flex items-center justify-center bg-elev"><img src="images/olx_jtbd.png" alt="Jobs to be Done map" data-lightbox class="max-w-full max-h-full object-contain"></div><figcaption class="p-4 text-sm text-mute">Jobs-to-be-Done: Sellers want to attract Buyers and price goods to hit ROI per item.</figcaption></figure>
-            <figure><div class="aspect-video flex items-center justify-center bg-elev"><img src="images/olx_interviews.png" alt="Interview participants grid" data-lightbox class="max-w-full max-h-full object-contain"></div><figcaption class="p-4 text-sm text-mute">12 remote interviews across B2C and C2C Sellers.</figcaption></figure>
-            <figure><div class="aspect-video flex items-center justify-center bg-elev"><img src="images/olx_opscore_chart.png" alt="Importance versus satisfaction chart" data-lightbox class="max-w-full max-h-full object-contain"></div><figcaption class="p-4 text-sm text-mute">Importance vs. satisfaction — plotting where the opportunity sat.</figcaption></figure>
-            <figure><div class="aspect-video flex items-center justify-center bg-elev"><img src="images/olx_opscore_cards.png" alt="Survey and OpScore cards" data-lightbox class="max-w-full max-h-full object-contain"></div><figcaption class="p-4 text-sm text-mute">Category selection topped all 24 problems at 13.12.</figcaption></figure>
-            <figure><div class="aspect-video flex items-center justify-center bg-elev"><img src="images/olx_variant_a.png" alt="Variant A — real-time offer view" data-lightbox class="max-w-full max-h-full object-contain"></div><figcaption class="p-4 text-sm text-mute">Variant A — real-time offer view.</figcaption></figure>
-            <figure><div class="aspect-video flex items-center justify-center bg-elev"><img src="images/olx_variant_b.png" alt="Variant B — multi-level menu" data-lightbox class="max-w-full max-h-full object-contain"></div><figcaption class="p-4 text-sm text-mute">Variant B — the multi-level menu.</figcaption></figure>
-            <figure><div class="aspect-video flex items-center justify-center bg-elev"><img src="images/olx_test_a.png" alt="Usability session Variant A" data-lightbox class="max-w-full max-h-full object-contain"></div><figcaption class="p-4 text-sm text-mute">Moderated session — Variant A.</figcaption></figure>
-            <figure><div class="aspect-video flex items-center justify-center bg-elev"><img src="images/olx_test_b.png" alt="Usability session Variant B" data-lightbox class="max-w-full max-h-full object-contain"></div><figcaption class="p-4 text-sm text-mute">Moderated session — the winning Variant B.</figcaption></figure>
+    <!-- HIGHLIGHT 01 · What is OLX? -->
+    <section class="slide is-active" data-chapter="case-study" data-title="What is OLX?" data-home-slide>
+      <div class="slide-inner top !py-0 !px-0 !max-w-none">
+        <div class="grid md:grid-cols-[1.35fr_1fr] md:h-full">
+          <div class="order-2 md:order-1 flex flex-col justify-center px-[clamp(1.25rem,5vw,4rem)] py-[clamp(1.5rem,4vw,3rem)]">
+            <p class="text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Quick Highlights</p>
+            <h2 class="mt-5 text-navy font-extrabold tracking-tight leading-[1.05] text-4xl md:text-5xl lg:text-6xl" data-anim style="--i:1">What is OLX?</h2>
+            <p class="mt-5 text-lg md:text-xl text-navy/80 leading-snug max-w-[42ch]" data-anim style="--i:2">
+              OLX is a leading marketplace ecosystem serving more than <span class="font-bold text-navy">317&nbsp;million</span> C2C and B2C users to buy and sell new / used products globally.
+            </p>
+            <div class="mt-6 text-2xl md:text-[1.7rem] leading-none tracking-wide" data-anim style="--i:3" role="img" aria-label="17 country flags">🇺🇦 🇧🇷 🇮🇳 🇮🇩 🇵🇹 🇷🇴 🇵🇱 🇿🇦 🇦🇷 🇧🇬 🇰🇿 🇮🇹 🇹🇷 🇺🇿 🇨🇱 🇨🇴 🇵🇪</div>
+            <p class="mt-5 text-sm md:text-base text-mute leading-relaxed max-w-[54ch]" data-anim style="--i:4">
+              Our users across 17 countries don't just find good deals — they help the environment too, leaning on a circular consumption cycle rather than a linear one.
+            </p>
+            <div class="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-6" data-anim style="--i:5">
+              <div>
+                <div class="text-3xl md:text-4xl font-extrabold text-navy leading-none">5.2M</div>
+                <div class="mt-3 text-navy"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19a4.5 4.5 0 0 0 0-9 6 6 0 0 0-11.6-1.6A4 4 0 0 0 6 18.5"/><path d="M6 18.5h11.5"/></svg></div>
+                <div class="mt-2 text-xs text-mute leading-tight max-w-[15ch]">Tonnes of CO₂-eq emissions</div>
+              </div>
+              <div>
+                <div class="text-3xl md:text-4xl font-extrabold text-navy leading-none">3.6M</div>
+                <div class="mt-3 text-navy"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 9 5-9 5-9-5 9-5Z"/><path d="m3 12 9 5 9-5"/><path d="m3 17 9 5 9-5"/></svg></div>
+                <div class="mt-2 text-xs text-mute leading-tight max-w-[15ch]">Tonnes of materials</div>
+              </div>
+              <div>
+                <div class="text-3xl md:text-4xl font-extrabold text-navy leading-none">645M</div>
+                <div class="mt-3 text-navy"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5S12.5 4 12 2c-.5 2-1.5 3.9-3.5 5.5S5 13 5 15a7 7 0 0 0 7 7Z"/></svg></div>
+                <div class="mt-2 text-xs text-mute leading-tight max-w-[15ch]">M³ of water</div>
+              </div>
+              <div>
+                <div class="text-3xl md:text-4xl font-extrabold text-navy leading-none">122M</div>
+                <div class="mt-3 text-navy"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8Z"/></svg></div>
+                <div class="mt-2 text-xs text-mute leading-tight max-w-[15ch]">GJ-eq of energy</div>
+              </div>
+            </div>
+            <div class="mt-8 flex flex-wrap items-center gap-4" data-anim style="--i:6">
+              <button type="button" class="shell-btn" data-next>Start →</button>
+              <span class="kbd">or Use <span class="key">←</span> <span class="key">→</span> · <span class="key">Space</span></span>
+            </div>
           </div>
-        </div>
-        <div class="mt-4 flex items-center justify-between">
-          <div class="flex items-center gap-2" data-carousel-dots aria-hidden="true"></div>
-          <div class="flex items-center gap-2">
-            <button data-carousel-prev class="w-10 h-10 rounded-full border border-line bg-card hover:border-accent hover:text-ink transition" aria-label="Previous slide">←</button>
-            <button data-carousel-next class="w-10 h-10 rounded-full border border-line bg-card hover:border-accent hover:text-ink transition" aria-label="Next slide">→</button>
+          <div class="order-1 md:order-2 relative h-56 md:h-auto" data-anim style="--i:1">
+            <img loading="lazy" decoding="async" src="assets/olx/olx_planet.png" alt="Aerial view of a forest with a lake shaped like the OLX logo" class="absolute inset-0 w-full h-full object-cover">
           </div>
         </div>
       </div>
+    </section>
 
-      <!-- The bet / goals band -->
-      <div class="mt-20 rounded-2xl bg-ink text-white p-8 md:p-12" data-reveal>
-        <p class="text-[0.7rem] font-bold uppercase tracking-[0.16em] text-white/50 mb-3">The bet</p>
-        <h3 class="text-2xl md:text-4xl font-extrabold tracking-tight max-w-[24ch]">Grow paying Sellers, lift satisfaction.</h3>
-        <p class="mt-5 text-4xl md:text-6xl font-extrabold tracking-tight text-accent">$110–160k <span class="text-lg md:text-xl align-middle text-white/60 font-semibold">/ month</span></p>
-        <p class="mt-2 text-white/60">The value of each 1% more paying Sellers.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- SECTION: Decisions -->
-  <section class="mx-auto max-w-content px-5 md:px-8 py-20 md:py-28">
-    <p class="text-mute text-xs font-bold uppercase tracking-[0.18em] mb-5" data-reveal>The calls that mattered</p>
-    <div class="grid md:grid-cols-2 gap-6" data-reveal>
-      <div class="rounded-2xl border border-line bg-card p-8 shadow-sm">
-        <p class="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-mute mb-3">Decision 01</p>
-        <p class="text-xl md:text-2xl font-extrabold tracking-tight mb-3 leading-snug">I bet everything on one step — not 24 fixes.</p>
-        <p class="text-mute leading-relaxed">Opportunity scoring and the funnel both pointed at category selection. One defensible focus beat 24 half-fixes.</p>
-      </div>
-      <div class="rounded-2xl border border-line bg-card p-8 shadow-sm">
-        <p class="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-mute mb-3">Decision 02</p>
-        <p class="text-xl md:text-2xl font-extrabold tracking-tight mb-3 leading-snug">I designed desktop-first, against our instinct.</p>
-        <p class="text-mute leading-relaxed">60%+ of packages are bought on the web. The leak was worst exactly where the money was — so we fixed that surface first, then ported it to mobile.</p>
-      </div>
-      <div class="rounded-2xl border border-line bg-card p-8 shadow-sm">
-        <p class="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-mute mb-3">Decision 03</p>
-        <p class="text-xl md:text-2xl font-extrabold tracking-tight mb-3 leading-snug">I sent two rival concepts to testing — and my favourite lost.</p>
-        <p class="text-mute leading-relaxed">The real-time offer view was seductive but risked conflating categories with filters. Better to learn that in a lab than in production.</p>
-      </div>
-      <div class="rounded-2xl border border-line bg-card p-8 shadow-sm">
-        <p class="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-mute mb-3">Decision 04</p>
-        <p class="text-xl md:text-2xl font-extrabold tracking-tight mb-3 leading-snug">I chose comprehension over raw speed.</p>
-        <p class="text-mute leading-relaxed">Variant A was 15% faster, but only because users gave up comparing. Variant B was slower and clearer — clarity won.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- SECTION: Solution -->
-  <section id="solution" class="scroll-mt-24 border-t border-line">
-    <div class="mx-auto max-w-content px-5 md:px-8 py-20 md:py-28">
-      <p class="text-mute text-xs font-bold uppercase tracking-[0.18em] mb-5" data-reveal>Solution</p>
-      <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-12 max-w-[22ch]" data-reveal>The winning flow — Variant B</h2>
-
-      <!-- Tabs: Desktop / Mobile -->
-      <div data-tabs data-reveal>
-        <div role="tablist" class="inline-flex p-1 rounded-full border border-line bg-elev mb-6">
-          <button role="tab" data-tab="0" aria-selected="true"  class="px-5 py-2 rounded-full text-sm font-semibold transition">Desktop</button>
-          <button role="tab" data-tab="1" aria-selected="false" class="px-5 py-2 rounded-full text-sm font-semibold transition">Mobile</button>
-        </div>
-        <div data-panel="0">
-          <img src="images/olx_variant_b.png" alt="Variant B multi-level category menu on desktop" data-lightbox class="w-full rounded-2xl border border-line">
-        </div>
-        <div data-panel="1" hidden>
-          <img src="images/olx_mobile.png" alt="Multi-level category selection on mobile" data-lightbox class="w-full max-w-[360px] mx-auto rounded-2xl border border-line">
+    <!-- HIGHLIGHT 02 · What I do at OLX? -->
+    <section class="slide" data-chapter="case-study" data-title="What I do at OLX?" data-home-slide>
+      <div class="slide-inner top">
+        <p class="text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Quick Highlights</p>
+        <h2 class="mt-5 text-navy font-extrabold tracking-tight leading-[1.05] text-4xl md:text-5xl" data-anim style="--i:1">What I do at OLX?</h2>
+        <nav class="crumb mt-4" aria-label="Team placement" data-anim style="--i:2">
+          <span>OLX Group</span><span class="sep">›</span>
+          <span>Horizontal</span><span class="sep">›</span>
+          <span>Pay &amp; Ship</span><span class="sep">›</span>
+          <span class="now">Engagement &amp; Monetisation</span>
+        </nav>
+        <div class="mt-6 md:mt-2 grid md:grid-cols-[0.55fr_2.1fr] gap-6 md:gap-10 items-end">
+          <p class="text-lg md:text-xl text-mute leading-relaxed max-w-[36ch] md:order-1 order-2 md:pb-12" data-anim style="--i:3">
+            I'm responsible for all things design within the <span class="text-ink font-semibold">Engagement &amp; Monetisation</span> packs, under the <span class="text-ink font-semibold">Pay &amp; Ship</span> pillar.
+          </p>
+          <figure class="md:order-2 order-1" data-anim style="--i:2">
+            <img loading="lazy" decoding="async" src="assets/olx/olx_org_map.png" alt="Org map: Opportunities, Offering and Pricing feed Engagement & Monetisation, which sits under Pay & Ship inside OLX Horizontal and the wider OLX Group" data-lightbox class="w-full max-h-[68vh] object-contain cursor-zoom-in">
+          </figure>
         </div>
       </div>
+    </section>
 
-      <!-- Feature highlights — zig-zag -->
-      <div class="mt-20 space-y-16">
-        <div class="grid md:grid-cols-2 gap-8 md:gap-14 items-center" data-reveal>
-          <img src="images/olx_shortcut.png" alt="Repeat-purchase shortcut banner" data-lightbox class="w-full rounded-2xl border border-line">
+    <!-- ===================== CHAPTER 2 · CASE STUDY ===================== -->
+
+    <!-- CS 01 · COVER — OLX Ad Package -->
+    <section class="slide" data-chapter="case-study" data-title="OLX Ad Package">
+      <div class="slide-inner top !py-0 !px-0 !max-w-none">
+        <div class="grid md:grid-cols-[1.15fr_1fr] md:h-full">
+          <div class="order-2 md:order-1 flex flex-col justify-center px-[clamp(1.25rem,5vw,4rem)] py-[clamp(1.5rem,4vw,3rem)]">
+            <p class="text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Case study · OLX Group</p>
+            <h1 class="mt-4 font-extrabold tracking-tight leading-[1.04] text-4xl md:text-6xl" data-anim style="--i:1">OLX Ad Package</h1>
+            <span class="time-pill mt-5 self-start" data-anim style="--i:2">16 weeks of design timeline · In development</span>
+            <p class="mt-6 text-lg text-mute leading-relaxed max-w-[52ch]" data-anim style="--i:3">
+              OLX is monetised through Ad Limits, and one of the primary ways Sellers keep posting more ads is by <span class="text-ink font-semibold">buying Ad packages</span>.
+            </p>
+            <p class="mt-4 text-lg text-mute leading-relaxed max-w-[52ch]" data-anim style="--i:4">
+              The updated Ad-package purchasing UX streamlines category selection and provides clearer guidance when buying Ad packages.
+            </p>
+            <div class="mt-8" data-anim style="--i:5">
+              <p class="text-[0.7rem] font-bold uppercase tracking-[0.16em] text-mute mb-2">Shoutouts</p>
+              <p class="text-sm text-mute leading-relaxed max-w-[56ch]">Lorena (UX Writer), Małgorzata (Researcher), Claude (PM), Oana (CPO), Kuba (EM), Monica &amp; Arsen (Jr. PD) — along with the Engineering &amp; BI teams.</p>
+            </div>
+          </div>
+          <div class="order-1 md:order-2 relative flex items-center justify-center p-6 md:p-10 min-h-[240px] cover-tex" data-anim style="--i:2">
+            <img loading="lazy" decoding="async" src="assets/olx/olx_cover.png" alt="OLX 'Select a category' screen from the redesigned buy-package flow" data-lightbox class="w-full rounded-xl border border-line shadow-xl shadow-ink/10">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CS 02 · BUSINESS OBJECTIVE -->
+    <section class="slide" data-chapter="case-study" data-title="Business Objective">
+      <div class="slide-inner top !py-0 !px-0 !max-w-none">
+        <div class="grid md:grid-cols-[1.2fr_1fr] md:h-full">
+          <div class="order-2 md:order-1 flex flex-col justify-center px-[clamp(1.25rem,5vw,4rem)] py-[clamp(1.5rem,4vw,3rem)]">
+            <p class="text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Business</p>
+            <h2 class="mt-4 font-extrabold tracking-tight leading-[1.05] text-3xl md:text-5xl" data-anim style="--i:1">Business Objective</h2>
+            <p class="mt-6 text-xl md:text-2xl font-medium leading-snug max-w-[34ch]" data-anim style="--i:2">
+              Grow the share of monthly paying Sellers through improvements to existing monetisation flows — while contributing to a CSAT goal of <span class="hl">+8.0</span>.
+            </p>
+            <p class="mt-8 text-[0.7rem] font-bold uppercase tracking-[0.16em] text-mute" data-anim style="--i:3">Revenue projection</p>
+            <p class="mt-2 text-lg text-mute leading-relaxed max-w-[46ch]" data-anim style="--i:4">
+              Even a <strong class="text-ink font-semibold">1% increase</strong> in paying Sellers can amount to an additional <strong class="text-ink font-semibold">$110k–$160k</strong> in monthly revenue.
+            </p>
+            <div class="mini-card mt-6 p-5 inline-flex items-center gap-4 self-start" data-anim style="--i:5">
+              <svg viewBox="0 0 120 72" width="132" height="80" aria-hidden="true">
+                <path d="M10 62 A50 50 0 0 1 110 62" fill="none" stroke="#e7e7e7" stroke-width="10" stroke-linecap="round"/>
+                <path class="csat-arc" d="M10 62 A50 50 0 0 1 93 24" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100" fill="none" stroke="#1a9e5a" stroke-width="10" stroke-linecap="round"/>
+                <text x="60" y="58" text-anchor="middle" font-size="20" font-weight="800" fill="#123b4d">7.3</text>
+              </svg>
+              <div>
+                <p class="font-bold text-ink text-sm">Customer Satisfaction</p>
+                <p class="text-mute text-xs mt-1 max-w-[22ch]">Baseline CSAT the redesign aims to lift toward +8.0.</p>
+              </div>
+            </div>
+          </div>
+          <div class="order-1 md:order-2 panel-green flex items-center px-[clamp(1.5rem,4vw,3.5rem)] py-[clamp(2rem,5vw,4rem)] min-h-[240px]" data-anim style="--i:2">
+            <p class="relative z-10 text-3xl md:text-5xl font-extrabold tracking-tight leading-[1.1] max-w-[14ch]">Build a profitable transactional business ensuring high retention and improving CSAT</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CS 03 · BACKGROUND — the monetisation ecosystem -->
+    <section class="slide bg-elev" data-chapter="case-study" data-title="Background">
+      <div class="slide-inner top">
+        <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-3" data-anim style="--i:0">Background</p>
+        <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4" data-anim style="--i:1">Background</h2>
+        <div class="flex flex-wrap items-center justify-between gap-4 mb-6" data-anim style="--i:2">
+          <p class="text-lg text-mute leading-relaxed max-w-[62ch]">
+            As a Seller on OLX you get a few free ads until you're required to pay — with the option to promote Ads to potential Buyers on a <strong class="text-ink font-semibold">30-day Ad life-cycle</strong>.
+          </p>
+          <div class="seg shrink-0" id="bgSeg" role="tablist" aria-label="Background view">
+            <button type="button" class="seg-btn" data-bg="1" role="tab" aria-selected="true">Ad lifecycle</button>
+            <button type="button" class="seg-btn" data-bg="2" role="tab" aria-selected="false">Personas</button>
+          </div>
+        </div>
+        <figure class="rounded-2xl border border-line bg-white p-4 md:p-6" data-anim style="--i:3">
+          <img loading="lazy" class="bgview-shot active w-full" data-bg-shot="1" data-lightbox src="assets/olx/case_background.png" alt="OLX monetisation ecosystem — Sellers create ads, hit the paywall and promotion, run a 30-day lifecycle via the Marketplace, then OLX Delivery to Buyers">
+          <img loading="lazy" class="bgview-shot w-full" data-bg-shot="2" data-lightbox src="assets/olx/case_background-2.png" alt="Seller and Buyer personas — C2C Sellers (Chatterbox, Low-effort Lover, Steady Seller, Fast Earner, Busy Trader), B2C Sellers (Pro, Casual, Grey) and Buyer types (Speedy Saver, Careful Comparer, Patient Shopper, Local Speedster)">
+        </figure>
+      </div>
+    </section>
+
+    <!-- CS 04 · INITIATE RESEARCH · JTBD -->
+    <section class="slide" data-chapter="case-study" data-title="Initiate Research · JTBD">
+      <div class="slide-inner top">
+        <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-3" data-anim style="--i:0">Research</p>
+        <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-4 max-w-[24ch]" data-anim style="--i:1">Initiate research — Jobs to be Done</h2>
+        <p class="text-lg text-mute leading-relaxed max-w-[70ch] mb-10" data-anim style="--i:2">
+          To begin, I ran <strong class="text-ink font-semibold">12 B2C &amp; C2C Seller interviews</strong> to understand their <strong class="text-ink font-semibold">Desires, Limitations and Catalysts</strong> when selling on OLX — with emphasis on the monetisation flows.
+        </p>
+        <div class="grid md:grid-cols-[1.15fr_0.85fr] gap-8 md:gap-12 items-center">
+          <div data-anim style="--i:3">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div>
+                <p class="text-sm font-bold text-ink mb-3">When</p>
+                <div class="note note-y">Sellers (B2C/C2C) choose OLX to sell one or multiple goods and list their Ads.</div>
+                <p class="text-xs text-mute mt-2 text-center">User</p>
+              </div>
+              <div>
+                <p class="text-sm font-bold text-ink mb-3">They would like to</p>
+                <div class="note note-y mb-3">Determine &amp; act on how to attract Buyers to their goods.</div>
+                <div class="note note-y">Optimise the pricing of under-performing goods against the money they invest.</div>
+                <p class="text-xs text-mute mt-2 text-center">Job step</p>
+              </div>
+              <div>
+                <p class="text-sm font-bold text-ink mb-3">So that</p>
+                <div class="note note-t mb-3"><b>B2C/C2C</b> — they reach their desired ROI per item.</div>
+                <div class="note note-t"><b>C2C</b> — they feel they're contributing to sustainability and getting rid of unwanted goods.</div>
+                <p class="text-xs text-mute mt-2 text-center">Catalysts</p>
+              </div>
+            </div>
+          </div>
+          <figure data-anim style="--i:4">
+            <div class="research-users rounded-2xl overflow-hidden border border-line p-4 md:p-6">
+              <img loading="lazy" src="assets/olx/olx_interviews.png" alt="Grid of 12 remote interview participants across B2C and C2C Sellers" data-lightbox class="w-full cursor-zoom-in">
+            </div>
+            <figcaption class="mt-3 text-sm text-mute">12 remote interviews across B2C and C2C Sellers.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- CS 05 · 24 LIMITATIONS -->
+    <section class="slide bg-elev" data-chapter="case-study" data-title="24 limitations">
+      <div class="lim-bg" aria-hidden="true"></div>
+      <div class="slide-inner top relative z-10">
+        <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-3" data-anim style="--i:0">Synthesis</p>
+        <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-3 max-w-[26ch]" data-anim style="--i:1">We analysed the 24 identified limitations</h2>
+        <p class="text-base text-mute leading-relaxed max-w-[72ch] mb-2" data-anim style="--i:2">Post qualitative research, findings were clustered into 24 limitations. A sample of the sharpest:</p>
+        <p class="text-sm text-mute mb-8" data-anim style="--i:3">With: Research Lead, Lead PM, HOD, myself &amp; 2 Jr. Designers.</p>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4" data-anim style="--i:4">
+          <div class="prob"><b>Sellers can't relate to what personalisation does to their Ads</b><span>The personalised-page option wasn't transparent or attractive enough to users.</span></div>
+          <div class="prob"><b>Statistics feel like a free feature — why pay for it?</b><span>Sellers assume Ad statistics are always free, so the benefit of paying is unclear.</span></div>
+          <div class="prob"><b>No freedom to decide when to use Pay-if-you-sell</b><span>You first have to use up the pool of free ads to use STR — and Sellers often don't know this.</span></div>
+          <div class="prob win"><b>Hard to find the exact category when buying Ad packages</b><span>Sellers don't find the category-selection process user-friendly. <strong class="text-ink">OpScore 13.12 — the bet.</strong></span></div>
+          <div class="prob"><b>Sellers don't see the direct results of paying for promotions</b><span>Promotion lifts views, but that didn't clearly translate into sales versus re-posting.</span></div>
+          <div class="prob"><b>Package price is often inadequate to item price</b><span>For cheap items the package price is close to the item's value — the sale is no longer profitable.</span></div>
+          <div class="prob"><b>STR is only available for OLX Delivery listings</b><span>Users may not know STR exists, especially if their inventory doesn't match OLX Delivery.</span></div>
+          <div class="prob" style="background:#f0f0f0;border-style:dashed"><b>…and 17 more</b><span>All 24 limitations were mapped, then quantified and scored next.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CS 06 · QUANTIFICATION → PRIORITISATION -->
+    <section class="slide" data-chapter="case-study" data-title="Quantification &amp; OpScore">
+      <div class="slide-inner top !py-0 !px-0 !max-w-none">
+        <div class="grid md:grid-cols-[1.25fr_0.75fr] md:h-full">
+          <div class="order-2 md:order-1 flex flex-col justify-center px-[clamp(1.25rem,5vw,4rem)] py-[clamp(1.5rem,4vw,3rem)]">
+            <p class="text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Prioritisation</p>
+            <h2 class="mt-3 text-2xl md:text-4xl font-extrabold tracking-tight max-w-[24ch]" data-anim style="--i:1">Quantification to prioritisation</h2>
+            <p class="mt-4 text-base md:text-lg text-mute leading-relaxed max-w-[62ch]" data-anim style="--i:2">
+              I surveyed Sellers on the <strong class="text-ink font-semibold">importance</strong> &amp; <strong class="text-ink font-semibold">satisfaction</strong> of each problem area, then used <strong class="text-ink font-semibold">Opportunity Scoring</strong> to generate an OpScore.
+            </p>
+            <span class="cs-formula mt-5 self-start" data-anim style="--i:3">OpScore = Importance + max(Importance − Satisfaction, 0)</span>
+            <figure class="mt-5" data-anim style="--i:4">
+              <img loading="lazy" src="assets/olx/olx_opscore_cards.png" alt="Opportunity landscape plotting each feature by importance against satisfaction, split into Additional advantages, Strengthen, Ignore and Improve quadrants" data-lightbox class="w-full max-h-[42vh] object-contain rounded-2xl border border-line bg-white cursor-zoom-in">
+              <figcaption class="mt-2 text-xs text-mute max-w-[70ch]">Opportunity landscape — <span class="hl">category selection</span> was a top opportunity (OpScore <strong class="text-ink font-semibold">13.12</strong>), the bet we chose.</figcaption>
+            </figure>
+          </div>
+          <div class="order-1 md:order-2 panel-bg5 flex items-center justify-center p-8 md:p-12 min-h-[260px]" data-anim style="--i:2">
+            <img loading="lazy" src="assets/olx/survey.png" alt="SurveyMonkey questionnaire asking Sellers to rate importance and satisfaction for each problem area" data-lightbox class="w-[78%] max-w-[360px] rounded-xl shadow-2xl shadow-ink/25 ring-1 ring-black/5 cursor-zoom-in">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CS 07 · USER PROBLEM -->
+    <section class="slide bg-elev" data-chapter="case-study" data-title="User Problem">
+      <div class="slide-inner top">
+        <div class="grid md:grid-cols-2 gap-8 md:gap-14 items-center">
           <div>
-            <p class="text-mute text-xs font-bold uppercase tracking-[0.16em] mb-3">Repeat-purchase shortcut</p>
-            <h3 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-4">The last package, one tap away</h3>
-            <p class="text-mute text-lg leading-relaxed">Sparked by a tester's comment and backed by the ~31% repeat-buyer data, the flow surfaces the last purchased package so returning Sellers skip the choosing entirely.</p>
+            <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-3" data-anim style="--i:0">Problem</p>
+            <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-5" data-anim style="--i:1">User Problem</h2>
+            <p class="text-xl md:text-2xl font-medium leading-snug max-w-[30ch] mb-8" data-anim style="--i:2">
+              Almost <span class="hl">80% of B2C and 90% of C2C Sellers</span> drop at the category-selection page of the buy-package flow.
+            </p>
+            <div class="flex items-start gap-4" data-anim style="--i:3">
+              <span class="shrink-0 w-11 h-11 rounded-full bg-navy text-white flex items-center justify-center font-extrabold">”</span>
+              <blockquote class="rounded-2xl bg-card border border-line p-5 text-lg leading-relaxed text-ink">
+                “I like the option to buy an Ad package in advance, but it gets tricky to find the same category in which I post multiple ads.”
+                <cite class="block not-italic text-sm font-semibold text-mute mt-3">— Seller, research interview</cite>
+              </blockquote>
+            </div>
+          </div>
+          <figure data-anim style="--i:4">
+            <img loading="lazy" src="assets/olx/olx_funnel.png" alt="Users funnel showing a 20.55% drop at category selection, with a 13.12 OpScore callout" data-lightbox class="w-full rounded-2xl border border-line">
+            <figcaption class="mt-3 text-sm text-mute">The funnel's biggest cliff — a <strong class="text-ink font-semibold">20.55%</strong> fall on a single step (OpScore 13.12).</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- CS 08 · UX AUDIT -->
+    <section class="slide" data-chapter="case-study" data-title="UX Audit">
+      <div class="slide-inner top">
+        <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-3" data-anim style="--i:0">Audit</p>
+        <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-8 max-w-[26ch]" data-anim style="--i:1">Ran a UX audit on the buy-package flow</h2>
+        <div class="grid md:grid-cols-[1.35fr_1fr] gap-8 md:gap-12 items-center">
+          <figure data-anim style="--i:2">
+            <div class="audit-stage" id="auditStage">
+              <img loading="lazy" class="audit-shot active" data-audit-shot="1" data-lightbox src="assets/olx/olx_audit_1.png" alt="Audit — seller account overview: 'Your ads' on web and mobile">
+              <img loading="lazy" class="audit-shot" data-audit-shot="2" data-lightbox src="assets/olx/olx_audit_2.png" alt="Audit — category grid with click heatmap next to the mobile category list">
+              <img loading="lazy" class="audit-shot" data-audit-shot="3" data-lightbox src="assets/olx/olx_audit_3.png" alt="Audit — long L2 sub-category list with click heatmap">
+              <img loading="lazy" class="audit-shot" data-audit-shot="4" data-lightbox src="assets/olx/olx_audit_4.png" alt="Audit — package selection: Standard, Premium, Mega and mobile 'Pay to post'">
+              <img loading="lazy" class="audit-shot" data-audit-shot="5" data-lightbox src="assets/olx/olx_audit_5.png" alt="Audit — 'In which categories can I post these ads?' modal">
+            </div>
+            <figcaption class="mt-3 inline-flex items-center gap-2 text-xs font-semibold text-mute"><span class="tag-pill" style="background:#e7e7e7;color:#262626">Hover ☝️</span> hover a finding to see the screen · click to zoom</figcaption>
+          </figure>
+          <ul class="space-y-2" id="auditList" data-anim style="--i:3">
+            <li><button type="button" class="audit-item active" data-audit="1"><span class="audit-num">1</span><span>Category lists at <strong class="text-ink">L2 and beyond are long and lack hierarchy</strong>.</span></button></li>
+            <li><button type="button" class="audit-item" data-audit="2"><span class="audit-num">2</span><span>Hotjar recordings show users <strong class="text-ink">trying to click sub-category bullet-points</strong> that do nothing.</span></button></li>
+            <li><button type="button" class="audit-item" data-audit="3"><span class="audit-num">3</span><span>Sub-categories drive package price, but that link <strong class="text-ink">lacks upfront discovery</strong>.</span></button></li>
+            <li><button type="button" class="audit-item" data-audit="4"><span class="audit-num">4</span><span>It's <strong class="text-ink">difficult to co-relate</strong> the presented category to the precise one users want to post in.</span></button></li>
+            <li><button type="button" class="audit-item" data-audit="5"><span class="audit-num">5</span><span>Search <strong class="text-ink">only surfaces categories already included</strong> in packages.</span></button></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- CS 09 · DESKTOP-FIRST · HYPOTHESIS -->
+    <section class="slide bg-elev" data-chapter="case-study" data-title="Desktop-first · Hypothesis">
+      <div class="slide-inner top">
+        <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-3" data-anim style="--i:0">Explore</p>
+        <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-3 max-w-[26ch]" data-anim style="--i:1">Designed 3 possible directions for desktop</h2>
+        <p class="text-lg text-mute leading-relaxed max-w-[70ch] mb-8" data-anim style="--i:2">
+          Why desktop first? More than <strong class="text-ink font-semibold">60% of Ad packages</strong> are purchased via the OLX website.
+        </p>
+        <div class="grid md:grid-cols-[1.3fr_1fr] gap-8 md:gap-12 items-center">
+          <figure data-anim style="--i:3">
+            <img loading="lazy" src="assets/olx/olx_variant_a.png" alt="Desktop buy-an-ad-package direction with package cards and prices" data-lightbox class="w-full rounded-2xl border border-line">
+          </figure>
+          <div class="rounded-2xl border border-line bg-card p-7 shadow-sm" data-anim style="--i:4">
+            <p class="text-[0.7rem] font-bold uppercase tracking-[0.16em] text-mute mb-2">#1 Hypothesis</p>
+            <h3 class="text-2xl font-extrabold tracking-tight mb-3">Real-time offer view</h3>
+            <p class="text-mute leading-relaxed mb-4">Users would appreciate being able to <strong class="text-ink">simultaneously browse Ad packages while choosing the category</strong> they'd like to post in — making the overall process dynamic.</p>
+            <p class="text-sm text-mute leading-relaxed">Offers are shown based on availability. Categories are seen upfront on the offer view.</p>
           </div>
         </div>
-        <div class="grid md:grid-cols-2 gap-8 md:gap-14 items-center" data-reveal>
-          <img src="images/olx_mobile.png" alt="Multi-level category selection on mobile" data-lightbox class="md:order-2 w-full max-w-[360px] mx-auto rounded-2xl border border-line">
-          <div class="md:order-1">
-            <p class="text-mute text-xs font-bold uppercase tracking-[0.16em] mb-3">Ported to mobile</p>
-            <h3 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-4">The multi-level logic, everywhere</h3>
-            <p class="text-mute text-lg leading-relaxed">The guided, multi-level category selection was already adopted on mobile — carrying the same transparency between category and price across surfaces.</p>
+      </div>
+    </section>
+
+    <!-- CS 10 · VARIANT A vs VARIANT B -->
+    <section class="slide" data-chapter="case-study" data-title="Variant A vs B">
+      <div class="slide-inner top">
+        <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-3" data-anim style="--i:0">Two concepts</p>
+        <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-8 max-w-[24ch]" data-anim style="--i:1">Two directions, head to head</h2>
+        <div class="grid md:grid-cols-2 gap-6 md:gap-8">
+          <figure data-anim style="--i:2">
+            <span class="vlabel vlabel-a">Variant A · Real-time offer view</span>
+            <img loading="lazy" src="assets/olx/olx_variant_a.png" alt="Variant A — real-time offer view" data-lightbox class="w-full rounded-b-2xl border border-t-0 border-line">
+          </figure>
+          <figure data-anim style="--i:3">
+            <span class="vlabel vlabel-b">Variant B · Multi-level menu</span>
+            <img loading="lazy" src="assets/olx/olx_variant_b.png" alt="Variant B — multi-level category menu" data-lightbox class="w-full rounded-b-2xl border border-t-0 border-line">
+          </figure>
+        </div>
+        <div class="mt-8 rounded-2xl bg-ink text-white p-6 md:p-8" data-anim style="--i:4">
+          <p class="text-xl md:text-2xl font-extrabold tracking-tight">Design critique to narrow it down to 2 ideas.</p>
+          <p class="mt-2 text-white/60">9 P&amp;S designers, 4 PMs across pillars, the Engineering team, the P&amp;S HOD and the Data team.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CS 11 · USABILITY TEST -->
+    <section class="slide bg-elev" data-chapter="case-study" data-title="Usability test">
+      <div class="slide-inner top">
+        <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-3" data-anim style="--i:0">Test</p>
+        <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-8 max-w-[28ch]" data-anim style="--i:1">We tested 2 concepts for usability with 10 users</h2>
+        <div class="grid md:grid-cols-2 gap-8 md:gap-12">
+          <div data-anim style="--i:2">
+            <p class="text-sm font-bold uppercase tracking-[0.14em] text-mute mb-4">Insights</p>
+            <ul class="space-y-4">
+              <li class="flex gap-3"><span class="abadge a-a">A</span><span class="text-mute leading-relaxed"><strong class="text-ink">4/8 struggled</strong> to associate dropdown categories with the dynamic offer. Task time was <strong class="text-ink">15% lower</strong> than Production.</span></li>
+              <li class="flex gap-3"><span class="abadge a-b">B</span><span class="text-mute leading-relaxed">👑 <strong class="text-ink">7/8 were satisfied</strong> with the multi-level menu and appreciated the summary view. Task time was 28% higher than Production.</span></li>
+              <li class="flex gap-3"><span class="abadge a-a">A</span><span class="text-mute leading-relaxed">Only <strong class="text-ink">2/8</strong> found the filter view easier to compare — and they ignored the 'see-more' CTA while comparing packages.</span></li>
+              <li class="flex gap-3"><span class="abadge a-b">B</span><span class="text-mute leading-relaxed">👑 With <strong class="text-ink">upfront category tags</strong>, 5/8 intuitively named categories as a variable for why price differs per package.</span></li>
+            </ul>
+          </div>
+          <div data-anim style="--i:3">
+            <p class="text-sm font-bold uppercase tracking-[0.14em] text-mute mb-4">Takeaway</p>
+            <ul class="space-y-4">
+              <li class="flex gap-3"><span class="text-accent font-black">→</span><span class="text-mute leading-relaxed">Primary/secondary/tertiary categories got associated with filters — adding <strong class="text-ink">cognitive load</strong> and failing the hypothesis.</span></li>
+              <li class="flex gap-3"><span class="text-accent font-black">→</span><span class="text-mute leading-relaxed">Users found categories with <strong class="text-ink">ease</strong>; one suggested a <strong class="text-ink">shortcut to repeat</strong> the selection.</span></li>
+              <li class="flex gap-3"><span class="text-accent font-black">→</span><span class="text-mute leading-relaxed">Most users expect offers to carry as much <strong class="text-ink">upfront information</strong> as possible.</span></li>
+              <li class="flex gap-3"><span class="text-accent font-black">→</span><span class="text-mute leading-relaxed">Users don't always tap see-more — a long list of category tags can also add cognitive load.</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4 md:gap-6 mt-8" data-anim style="--i:4">
+          <figure class="relative"><span class="abadge a-a absolute top-3 left-3 z-10">A</span><img loading="lazy" src="assets/olx/olx_test_a.png" alt="Moderated session — Variant A" data-lightbox class="w-full rounded-2xl border border-line"></figure>
+          <figure class="relative"><span class="abadge a-b absolute top-3 left-3 z-10">B</span><img loading="lazy" src="assets/olx/olx_test_b.png" alt="Moderated session — the winning Variant B" data-lightbox class="w-full rounded-2xl border border-line"></figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- CS 12 · WORK IN PROGRESS -->
+    <section class="slide" data-chapter="case-study" data-title="Work in progress">
+      <div class="slide-inner top !py-0 !px-0 !max-w-none">
+        <div class="grid md:grid-cols-[1.1fr_1fr] md:h-full">
+          <div class="order-2 md:order-1 flex flex-col justify-center px-[clamp(1.25rem,5vw,4rem)] py-[clamp(1.5rem,4vw,3rem)]">
+            <p class="text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Outcome</p>
+            <h2 class="mt-4 text-3xl md:text-5xl font-extrabold tracking-tight" data-anim style="--i:1">Work in progress</h2>
+            <p class="mt-5 text-xl md:text-2xl font-medium leading-snug max-w-[34ch]" data-anim style="--i:2">
+              Variant B is in development for an <span class="hl">A (Production) / B (Multi-level menu)</span> test on production — Poland first.
+            </p>
+            <p class="mt-6 text-lg text-mute leading-relaxed max-w-[52ch]" data-anim style="--i:3">
+              During testing, a user suggested a shortcut to repeat the selection. Data showed <strong class="text-ink font-semibold">~31% of B2C users</strong> make a repeat purchase — so we added a shortcut banner surfacing the last purchased Ad package.
+            </p>
+            <p class="mt-4 text-lg text-mute leading-relaxed max-w-[52ch]" data-anim style="--i:4">
+              A package-recommendation feature is under moderation and rolling out across the Polish market. The same category-selection logic was adopted for mobile.
+            </p>
+          </div>
+          <div class="order-1 md:order-2 panel-wheat flex items-center justify-center gap-4 md:gap-6 px-[clamp(1.25rem,4vw,3rem)] py-[clamp(1.5rem,4vw,3rem)] min-h-[260px]" data-anim style="--i:2">
+            <img loading="lazy" src="assets/olx/olx_shortcut.png" alt="Repeat-purchase shortcut banner showing the last purchased Ad package" data-lightbox class="relative z-10 w-[58%] max-w-[300px] rounded-xl border border-line shadow-lg bg-white">
+            <img loading="lazy" src="assets/olx/olx_mobile.png" alt="Multi-level category selection adopted on mobile" data-lightbox class="relative z-10 w-[36%] max-w-[190px] rounded-xl border border-line shadow-lg bg-white">
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- SECTION: Reflection & Impact -->
-  <section id="impact" class="scroll-mt-24 bg-elev border-t border-line">
-    <div class="mx-auto max-w-content px-5 md:px-8 py-20 md:py-28">
-      <p class="text-mute text-xs font-bold uppercase tracking-[0.18em] mb-5" data-reveal>Impact</p>
-      <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4 max-w-[22ch]" data-reveal>Validated and directional — honestly labelled</h2>
-      <p class="text-lg text-mute max-w-[60ch] mb-12" data-reveal>The work is in development, so these are a diagnosis and test evidence, not a post-launch dashboard.</p>
+    <!-- ===================== CHAPTER · HIGHLIGHTS (after the case study) ===================== -->
 
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8" data-reveal>
-        <div><div class="text-5xl md:text-7xl font-extrabold tracking-tight leading-none">7/8</div><div class="mt-3 text-mute max-w-[18ch]">Users satisfied with the chosen flow</div></div>
-        <div><div class="text-5xl md:text-7xl font-extrabold tracking-tight leading-none">20.55%</div><div class="mt-3 text-mute max-w-[18ch]">Single-step drop diagnosed</div></div>
-        <div><div class="text-5xl md:text-7xl font-extrabold tracking-tight leading-none">13.12</div><div class="mt-3 text-mute max-w-[18ch]">Top Opportunity Score of 24 problems</div></div>
-        <div><div class="text-5xl md:text-7xl font-extrabold tracking-tight leading-none">~31%</div><div class="mt-3 text-mute max-w-[18ch]">Repeat buyers — the shortcut's audience</div></div>
-      </div>
-
-      <p class="mt-14 text-lg text-mute max-w-[70ch]" data-reveal>
-        Variant B is now in an <strong class="text-ink font-semibold">A/B test in Poland</strong>, the category-selection logic is already adopted on mobile, and a repeat-purchase shortcut surfaces the last purchased package.
-      </p>
-
-      <!-- Reflection -->
-      <h3 class="mt-20 mb-6 text-xl md:text-2xl font-bold tracking-tight" data-reveal>What I'd do differently</h3>
-      <div class="grid md:grid-cols-3 gap-6" data-reveal>
-        <div class="rounded-2xl border border-line bg-card p-8 shadow-sm hover:border-accent transition">
-          <div class="inline-block bg-accent text-accink text-lg font-extrabold px-2.5 py-0.5 rounded mb-4">01</div>
-          <p class="font-bold text-lg mb-2">Test the seductive idea — don't defend it.</p>
-          <p class="text-mute leading-relaxed">My favourite concept died in the lab. I'm glad it didn't die in production.</p>
-        </div>
-        <div class="rounded-2xl border border-line bg-card p-8 shadow-sm hover:border-accent transition">
-          <div class="inline-block bg-accent text-accink text-lg font-extrabold px-2.5 py-0.5 rounded mb-4">02</div>
-          <p class="font-bold text-lg mb-2">Wire design to revenue earlier.</p>
-          <p class="text-mute leading-relaxed">I'd instrument the funnel to attribute the fix to money from day one, rather than leaning on projections.</p>
-        </div>
-        <div class="rounded-2xl border border-line bg-card p-8 shadow-sm hover:border-accent transition">
-          <div class="inline-block bg-accent text-accink text-lg font-extrabold px-2.5 py-0.5 rounded mb-4">03</div>
-          <p class="font-bold text-lg mb-2">Don't assume the port transfers.</p>
-          <p class="text-mute leading-relaxed">The desktop winner went to mobile on logic alone — I'd give the mobile flow its own validation.</p>
+    <!-- HIGHLIGHT 01 · Workshop — cross-pillar design sprint (auto-extend) -->
+    <section class="slide bg-elev" data-chapter="highlights" data-title="Highlight · Auto-extend sprint">
+      <div class="slide-inner !py-0 !px-0 !max-w-none">
+        <div class="flex-1 min-h-0 flex items-center justify-center p-4 md:p-8">
+          <img loading="lazy" decoding="async" src="assets/olx/highlight-workshop-2-brainstorm.png" alt="Workshop highlight — led a cross-pillar design sprint that shipped the AutoExtend ‘Pay if you sell’ feature: 300K additional Ads per month now on auto, and reactivation up from 67% to 77% over four months of moderation" data-lightbox class="max-w-full max-h-full object-contain rounded-xl border border-line shadow-xl shadow-ink/10 cursor-zoom-in">
         </div>
       </div>
+    </section>
 
-      <!-- Credits -->
-      <h3 class="mt-16 mb-4 text-xl md:text-2xl font-bold tracking-tight" data-reveal>Made with a great team</h3>
-      <p class="text-lg text-mute max-w-[70ch]" data-reveal>Lorena (UX Writer), Małgorzata (Researcher), Claude (PM), Oana (CPO), Kuba (EM), Monica &amp; Arsen (Jr. Product Designers), along with the Engineering and BI teams. Thanks for reading 🙌</p>
-    </div>
-  </section>
-
-  <!-- SECTION: Footer (shared shell — see css/shell.css) -->
-  <footer class="shell-footer" id="contact">
-    <div class="shell-inner">
-      <div class="shell-prevnext">
-        <a href="raisin.html" class="shell-card"><p class="k">← Previous</p><p class="t">Raisin — Brand evolution</p></a>
-        <a href="n26.html" class="shell-card next"><p class="k">Next →</p><p class="t">N26 — Multi-activity Feed</p></a>
-      </div>
-      <div class="shell-footer-lead">
-        <div>
-          <p class="shell-footer-title">Let’s build something.</p>
-          <p class="shell-footer-copy">Please use the <a href="https://docs.google.com/forms/d/e/1FAIpQLScKV7IVg-JeodOmY5m7eDIK_qctNltq-QddtYnLrRneSqCIwA/viewform" target="_blank" rel="noopener">💌 contact form</a> to say Hi 👋 or request any inquiry. You can also <a href="https://twitter.com/intent/tweet?screen_name=vipulsaxena_fc" target="_blank" rel="noopener">tweet me</a>, or send me an old fashioned <a href="mailto:vipul.saxena01@gmail.com">email</a>.</p>
+    <!-- HIGHLIGHT 02 · Workshop — align ways of working (Figma master pages) -->
+    <section class="slide" data-chapter="highlights" data-title="Highlight · Ways of working">
+      <div class="slide-inner !py-0 !px-0 !max-w-none">
+        <div class="flex-1 min-h-0 flex items-center justify-center p-4 md:p-8">
+          <img loading="lazy" decoding="async" src="assets/olx/highlight-ways-of-working.png" alt="Workshop highlight — led a designer group of 12 across Pay&amp;Ship, Engagement and Core to align ways of working and create &amp; maintain Figma master pages, with Figma Master Page Guidelines" data-lightbox class="max-w-full max-h-full object-contain rounded-xl border border-line shadow-xl shadow-ink/10 cursor-zoom-in">
         </div>
       </div>
-      <div class="shell-footer-base">
-        <p>© 2023 · Vipul Saxena · OLX Ad Package</p>
-        <p>Product Design Portfolio</p>
-      </div>
-    </div>
-  </footer>
+    </section>
 
+    <!-- HIGHLIGHT 03 · Workshop — co-led design principles -->
+    <section class="slide bg-elev" data-chapter="highlights" data-title="Highlight · Design principles">
+      <div class="slide-inner !py-0 !px-0 !max-w-none">
+        <div class="flex-1 min-h-0 flex items-center justify-center p-4 md:p-8">
+          <img loading="lazy" decoding="async" src="assets/olx/highlight-design-principles.png" alt="Workshop highlight — co-led the design-principles workshop with 2 Heads of Design, 4 Design leads and 4 Sr. Product Designers, defining five principles: increase confidence through clarity, keep it simple, harmonious integration, takes care of you, and empower everyone through progressive discoverability" data-lightbox class="max-w-full max-h-full object-contain rounded-xl border border-line shadow-xl shadow-ink/10 cursor-zoom-in">
+        </div>
+      </div>
+    </section>
+
+    <!-- CS 13 · CLOSING / CTA -->
+    <section class="slide bg-ink text-white" data-chapter="highlights" data-title="Thanks">
+      <div class="slide-inner items-center text-center">
+        <p class="text-white/60 text-xs font-bold uppercase tracking-[0.2em] mb-8" data-anim style="--i:0">Fin</p>
+        <h2 class="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.12] max-w-[18ch]" data-anim style="--i:1">
+          Thanks for <span class="hl">reading</span> 🙌
+        </h2>
+        <p class="mt-8 text-lg md:text-xl text-white/70 max-w-[52ch]" data-anim style="--i:2">
+          Let's build something together — say hi via the <a class="underline decoration-accent decoration-2 underline-offset-2 hover:text-white" href="https://docs.google.com/forms/d/e/1FAIpQLScKV7IVg-JeodOmY5m7eDIK_qctNltq-QddtYnLrRneSqCIwA/viewform" target="_blank" rel="noopener">contact form</a>, <a class="underline decoration-accent decoration-2 underline-offset-2 hover:text-white" href="https://twitter.com/intent/tweet?screen_name=vipulsaxena_fc" target="_blank" rel="noopener">tweet me</a>, or send an old-fashioned <a class="underline decoration-accent decoration-2 underline-offset-2 hover:text-white" href="mailto:vipul.saxena01@gmail.com">email</a>.
+        </p>
+        <div class="mt-10 flex flex-wrap items-center justify-center gap-4" data-anim style="--i:3">
+          <a class="nav-btn !w-auto !px-5 !text-white !bg-white/10 !border-white/20 hover:!bg-white/20 hover:!border-white/40" href="raisin.html">← Raisin</a>
+          <a class="nav-btn !w-auto !px-5 !text-white !bg-white/10 !border-white/20 hover:!bg-white/20 hover:!border-white/40" href="index.html">Back to home</a>
+          <a class="nav-btn !w-auto !px-5 !text-white !bg-white/10 !border-white/20 hover:!bg-white/20 hover:!border-white/40" href="n26.html">N26 →</a>
+        </div>
+        <p class="mt-14 text-white/40 text-sm" data-anim style="--i:4">© 2023 · Vipul Saxena · OLX Ad Package · Product Design Portfolio</p>
+      </div>
+    </section>
+
+  </div>
 </main>
+
+<!-- Bottom control bar -->
+<div class="ctrl" role="group" aria-label="Slideshow controls">
+  <button type="button" class="nav-btn nav-home" data-home aria-label="Back to first slide" title="Back to first slide">
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>
+    <span class="home-count" data-home-count aria-hidden="true"></span>
+  </button>
+  <div class="chapter-tabs" id="chapters" aria-label="Chapters"></div>
+  <div class="ctrl-dots hidden lg:flex" id="dots" aria-label="Slides"></div>
+  <div class="ml-auto flex items-center gap-3">
+    <span class="counter"><span id="curNum">01</span> <span class="sep">/</span> <span id="totNum">00</span></span>
+    <button type="button" class="nav-btn" data-prev aria-label="Previous slide">←</button>
+    <button type="button" class="nav-btn" data-next aria-label="Next slide">→</button>
+  </div>
+</div>
 
 <!-- Lightbox overlay -->
 <div id="lightbox" aria-hidden="true"><img alt="Expanded view"></div>
@@ -545,8 +804,6 @@
     var error = document.getElementById("olxGateError");
     if (!gate || !form) return;
 
-    // window.__gateAllow is decided by the pre-render script in <head>: true only
-    // for in-site navigation / reload / back-forward with a valid session.
     if (window.__gateAllow) {
       document.documentElement.classList.remove("olx-locked");
       gate.remove();
@@ -567,6 +824,185 @@
   })();
 </script>
 
-<script src="template.js" defer></script>
+<!-- Deck engine — chapters (Highlights / Case study), grouped dots, skip, lightbox -->
+<script>
+(function () {
+  "use strict";
+  const track    = document.getElementById("track");
+  const slides   = Array.from(track.children).filter((el) => el.classList.contains("slide"));
+  const dotsWrap = document.getElementById("dots");
+  const chapWrap = document.getElementById("chapters");
+  const progress = document.getElementById("progress");
+  const curNum   = document.getElementById("curNum");
+  const totNum   = document.getElementById("totNum");
+  const deckTitle= document.getElementById("deckTitle");
+  const prevBtns = Array.from(document.querySelectorAll("[data-prev]"));
+  const nextBtns = Array.from(document.querySelectorAll("[data-next]"));
+  const homeBtns = Array.from(document.querySelectorAll("[data-home]"));
+  const N = slides.length;
+  const homeIndices = slides.map((s, idx) => (s.hasAttribute("data-home-slide") ? idx : -1)).filter((x) => x >= 0);
+  const pad = (n) => String(n).padStart(2, "0");
+  const CHAP_LABELS = { "highlights": "Highlights", "case-study": "Case study" };
+  let i = 0;
+
+  /* ---------- build chapters from data-chapter ---------- */
+  const chapters = [];
+  slides.forEach((s, idx) => {
+    const id = s.dataset.chapter || "main";
+    let ch = chapters.find((c) => c.id === id);
+    if (!ch) { ch = { id, label: CHAP_LABELS[id] || id, start: idx, end: idx, slides: [] }; chapters.push(ch); }
+    ch.end = idx; ch.slides.push(idx);
+  });
+  const chapterOf = (idx) => chapters.find((c) => idx >= c.start && idx <= c.end);
+
+  /* ---------- chapter tabs (also the skip control) ---------- */
+  const chapterTabs = chapters.map((ch) => {
+    const b = document.createElement("button");
+    b.className = "chapter-tab";
+    b.type = "button";
+    b.innerHTML = ch.label + '<span class="ct-count">' + ch.slides.length + "</span>";
+    b.setAttribute("aria-label", "Jump to " + ch.label);
+    b.addEventListener("click", () => go(ch.start));
+    chapWrap.appendChild(b);
+    return b;
+  });
+
+  /* ---------- grouped dots ---------- */
+  const dots = [];
+  chapters.forEach((ch) => {
+    const group = document.createElement("div");
+    group.className = "dot-group";
+    ch.slides.forEach((idx) => {
+      const b = document.createElement("button");
+      b.className = "dot";
+      b.type = "button";
+      b.setAttribute("aria-label", ("Go to slide " + (idx + 1) + ": " + (slides[idx].dataset.title || "")).trim());
+      b.dataset.tip = pad(idx + 1) + " · " + (slides[idx].dataset.title || ("Slide " + (idx + 1)));
+      b.addEventListener("click", () => go(idx));
+      group.appendChild(b);
+      dots[idx] = b;
+    });
+    dotsWrap.appendChild(group);
+  });
+  totNum.textContent = pad(N);
+
+  /* ---------- render ---------- */
+  function render() {
+    track.style.transform = "translateX(-" + i * 100 + "%)";
+    slides.forEach((s, idx) => {
+      const active = idx === i;
+      s.classList.toggle("is-active", active);
+      if (active) s.scrollTop = 0;
+    });
+    dots.forEach((d, idx) => d.setAttribute("aria-current", String(idx === i)));
+    const homePos = homeIndices.indexOf(i);
+    const onHome = homePos >= 0;
+    const ch = chapterOf(i);
+    chapterTabs.forEach((t, ci) => t.setAttribute("aria-current", String(!onHome && chapters[ci] === ch)));
+    curNum.textContent = pad(i + 1);
+    progress.style.width = ((i + 1) / N) * 100 + "%";
+    deckTitle.textContent = (ch ? ch.label + " · " : "") + (slides[i].dataset.title || "OLX Ad Package");
+    prevBtns.forEach((b) => (b.disabled = i === 0));
+    nextBtns.forEach((b) => (b.disabled = i === N - 1));
+    homeBtns.forEach((b) => {
+      b.classList.toggle("is-active", onHome);
+      b.setAttribute("aria-current", onHome ? "true" : "false");
+      const badge = b.querySelector("[data-home-count]");
+      if (badge) badge.textContent = onHome ? (homePos + 1) + "/" + homeIndices.length : "";
+    });
+    if (history.replaceState) history.replaceState(null, "", "#" + (i + 1));
+  }
+  function go(n) { i = Math.max(0, Math.min(N - 1, n)); render(); }
+  const next = () => go(i + 1);
+  const prev = () => go(i - 1);
+
+  prevBtns.forEach((b) => b.addEventListener("click", prev));
+  nextBtns.forEach((b) => b.addEventListener("click", next));
+  document.querySelectorAll("[data-home]").forEach((b) => b.addEventListener("click", () => go(0)));
+
+  /* ---------- lightbox ---------- */
+  const lb = document.getElementById("lightbox");
+  const lbImg = lb ? lb.querySelector("img") : null;
+  const lbOpen = () => lb && lb.classList.contains("open");
+  const closeLb = () => { if (lb) { lb.classList.remove("open"); lb.setAttribute("aria-hidden", "true"); } };
+  if (lb && lbImg) {
+    document.addEventListener("click", (e) => {
+      const t = e.target.closest("[data-lightbox]");
+      if (t && t.tagName === "IMG") { lbImg.src = t.currentSrc || t.src; lbImg.alt = t.alt || ""; lb.classList.add("open"); lb.setAttribute("aria-hidden", "false"); }
+      else if (e.target === lb || e.target === lbImg) { closeLb(); }
+    });
+  }
+
+  /* ---------- keyboard ---------- */
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && lbOpen()) { e.preventDefault(); closeLb(); return; }
+    if (lbOpen()) return;
+    if (e.target.closest("input, textarea, iframe, [contenteditable]")) return;
+    switch (e.key) {
+      case "ArrowRight": case "PageDown": e.preventDefault(); next(); break;
+      case " ": e.preventDefault(); e.shiftKey ? prev() : next(); break;
+      case "ArrowLeft": case "PageUp": e.preventDefault(); prev(); break;
+      case "Home": e.preventDefault(); go(0); break;
+      case "End":  e.preventDefault(); go(N - 1); break;
+    }
+  });
+
+  /* ---------- touch swipe ---------- */
+  let x0 = null, y0 = null;
+  track.addEventListener("touchstart", (e) => { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
+  track.addEventListener("touchend", (e) => {
+    if (x0 === null) return;
+    const dx = e.changedTouches[0].clientX - x0;
+    const dy = e.changedTouches[0].clientY - y0;
+    x0 = y0 = null;
+    if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy) * 1.4) (dx < 0 ? next() : prev());
+  }, { passive: true });
+
+  /* ---------- fullscreen ---------- */
+  const fsBtn = document.querySelector("[data-fullscreen]");
+  fsBtn && fsBtn.addEventListener("click", () => {
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
+    else document.exitFullscreen?.();
+  });
+
+  /* ---------- Background view toggle (lifecycle ↔ personas) ---------- */
+  (function () {
+    const seg = document.getElementById("bgSeg");
+    if (!seg) return;
+    const btns = Array.from(seg.querySelectorAll("[data-bg]"));
+    const shots = Array.from(document.querySelectorAll("[data-bg-shot]"));
+    function activate(n) {
+      btns.forEach((b) => b.setAttribute("aria-selected", String(b.dataset.bg === n)));
+      shots.forEach((s) => s.classList.toggle("active", s.dataset.bgShot === n));
+    }
+    btns.forEach((b) => b.addEventListener("click", () => activate(b.dataset.bg)));
+  })();
+
+  /* ---------- interactive UX-audit bullets ↔ screenshot ---------- */
+  (function () {
+    const list = document.getElementById("auditList");
+    const stage = document.getElementById("auditStage");
+    if (!list || !stage) return;
+    const items = Array.from(list.querySelectorAll("[data-audit]"));
+    const shots = Array.from(stage.querySelectorAll("[data-audit-shot]"));
+    function activate(n) {
+      items.forEach((it) => it.classList.toggle("active", it.dataset.audit === n));
+      shots.forEach((sh) => sh.classList.toggle("active", sh.dataset.auditShot === n));
+    }
+    items.forEach((it) => {
+      const n = it.dataset.audit;
+      it.addEventListener("mouseenter", () => activate(n));
+      it.addEventListener("focus", () => activate(n));
+      it.addEventListener("click", () => activate(n));
+    });
+  })();
+
+  /* ---------- init from hash ---------- */
+  const start = parseInt((location.hash || "").replace("#", ""), 10);
+  if (!isNaN(start) && start >= 1 && start <= N) i = start - 1;
+  render();
+})();
+</script>
+
 </body>
 </html>

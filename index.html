@@ -209,6 +209,7 @@
                                 <p class="title">Instant Grocery on Gojek<span class="status-icon status-icon-lock"></span></p>
 
                                 <p class="description">Built seamless grocery delivery journeys across GoMart (B2C), GoFresh (B2B), and operational tools for shoppers and drivers — enabling fast, reliable fulfillment at scale.</p>
+                                <button type="button" class="card-cta" disabled aria-disabled="true">🔓 Enter password →</button>
                             </li>
                         </ul>
                     </a>
@@ -561,6 +562,8 @@
         transition:filter .15s ease, transform .15s ease; }
       .card-cta:hover{ filter:brightness(1.05); transform:translateY(-1px); }
       .card-cta:focus-visible{ outline:none; box-shadow:0 0 0 3px rgba(255,218,8,.55); }
+      .card-cta:disabled{ background:#e5e5e5; color:#a3a3a3; cursor:not-allowed; opacity:.7; }
+      .card-cta:disabled:hover{ filter:none; transform:none; }
     </style>
 
     <div class="pw-modal" id="olxPwModal" role="dialog" aria-modal="true" aria-labelledby="pwTitle" aria-hidden="true">
