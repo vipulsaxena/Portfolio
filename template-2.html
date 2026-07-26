@@ -122,6 +122,8 @@
       .chapter-tab:focus-visible{ outline:none; box-shadow:0 0 0 3px rgba(255,218,8,.55); }
       .chapter-tab .ct-count{ color:#a3a3a3; font-weight:600; margin-left:.35rem; }
       .chapter-tab[aria-current="true"] .ct-count{ color:#8a7a00; }
+      .chapter-tab{ display:inline-flex; align-items:center; justify-content:center; gap:.35rem; }
+      .chapter-tab .ct-icon{ display:none; align-items:center; justify-content:center; line-height:0; }
 
       .ctrl-dots{ display:flex; align-items:center; gap:1rem; flex-wrap:wrap; }
       .dot-group{ display:flex; align-items:center; gap:.4rem; }
@@ -159,8 +161,13 @@
       @media (max-width: 640px){
         .ctrl{ gap:.5rem; padding-left:.85rem; padding-right:.85rem; }
         .counter{ display:none; }
-        .chapter-tabs{ flex:1 1 auto; min-width:0; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
-        .chapter-tabs::-webkit-scrollbar{ display:none; }
+        .home-count{ display:none !important; }
+        .nav-home.is-active{ width:2.4rem; padding:0; }
+        .chapter-tab .ct-count,
+        .chapter-tab .ct-label{ display:none; }
+        .chapter-tab .ct-icon{ display:inline-flex; }
+        .chapter-tab{ width:2.4rem; height:2.4rem; padding:0; flex-shrink:0; border-color:#e7e7e7; background:#fff; }
+        .chapter-tabs{ flex:0 1 auto; min-width:0; gap:.35rem; overflow:visible; }
         .ml-auto{ flex:0 0 auto; }
       }
 
@@ -454,6 +461,10 @@
 
   const chapWrap = document.getElementById("chapters");
   const CHAP_LABELS = { "highlights": "Highlights", "case-study": "Case study" };
+  const CHAP_ICONS = {
+    "case-study": '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 13H8"/></svg>',
+    "highlights": '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>'
+  };
 
   let i = 0;
 
@@ -473,7 +484,10 @@
     const b = document.createElement("button");
     b.className = "chapter-tab";
     b.type = "button";
-    b.innerHTML = ch.label + '<span class="ct-count">' + ch.countSlides.length + "</span>";
+    b.innerHTML =
+      '<span class="ct-label">' + ch.label + "</span>" +
+      '<span class="ct-icon" aria-hidden="true">' + (CHAP_ICONS[ch.id] || "") + "</span>" +
+      '<span class="ct-count">' + ch.countSlides.length + "</span>";
     b.setAttribute("aria-label", "Jump to " + ch.label);
     b.addEventListener("click", () => go(ch.start));
     chapWrap && chapWrap.appendChild(b);
