@@ -132,6 +132,15 @@
       .counter{ font-variant-numeric:tabular-nums; font-weight:700; font-size:.9rem; color:#262626; white-space:nowrap; }
       .counter .sep{ color:#a3a3a3; }
 
+      /* ---------- Mobile control bar: keep ← / → visible, hide counter, let chapter tabs scroll ---------- */
+      @media (max-width: 640px){
+        .ctrl{ gap:.5rem; padding-left:.85rem; padding-right:.85rem; }
+        .counter{ display:none; }
+        .chapter-tabs{ flex:1 1 auto; min-width:0; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
+        .chapter-tabs::-webkit-scrollbar{ display:none; }
+        .ml-auto{ flex:0 0 auto; }
+      }
+
       .progress{ position:fixed; top:var(--deck-top); left:0; height:3px; z-index:950; background:#ffda08; width:0; transition:width .6s cubic-bezier(.7,0,.2,1); }
 
       .deck-title{ font-size:.9rem; font-weight:600; color:#6e6e6e; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
@@ -485,13 +494,14 @@
     ch.end = idx; ch.slides.push(idx);
   });
   const chapterOf = (idx) => chapters.find((c) => idx >= c.start && idx <= c.end);
+  chapters.forEach((c) => { c.countSlides = c.slides.filter((idx) => !slides[idx].hasAttribute("data-home-slide")); });
 
   /* ---------- chapter tabs (hidden when there is only one chapter) ---------- */
   const chapterTabs = (chapters.length > 1 ? chapters : []).map((ch) => {
     const b = document.createElement("button");
     b.className = "chapter-tab";
     b.type = "button";
-    b.innerHTML = ch.label + '<span class="ct-count">' + ch.slides.length + "</span>";
+    b.innerHTML = ch.label + '<span class="ct-count">' + ch.countSlides.length + "</span>";
     b.setAttribute("aria-label", "Jump to " + ch.label);
     b.addEventListener("click", () => go(ch.start));
     chapWrap && chapWrap.appendChild(b);
@@ -529,11 +539,16 @@
     const homePos = homeIndices.indexOf(i);
     const onHome = homePos >= 0;
     const ch = chapterOf(i);
-    chapterTabs.forEach((t, ci) => t.setAttribute("aria-current", String(!onHome && chapters[ci] === ch)));
+    chapterTabs.forEach((t, ci) => {
+      const cur = !onHome && chapters[ci] === ch;
+      t.setAttribute("aria-current", String(cur));
+      const cnt = t.querySelector(".ct-count");
+      if (cnt) cnt.textContent = cur ? (chapters[ci].countSlides.indexOf(i) + 1) + "/" + chapters[ci].countSlides.length : String(chapters[ci].countSlides.length);
+    });
     curNum.textContent = pad(i + 1);
     progress.style.width = ((i + 1) / N) * 100 + "%";
     const t = slides[i].dataset.title;
-    deckTitle.textContent = t ? `${pad(i + 1)} · ${t}` : "Brand evolution at Raisin";
+    deckTitle.textContent = t || "Brand evolution at Raisin";
     prevBtns.forEach((b) => (b.disabled = i === 0));
     nextBtns.forEach((b) => (b.disabled = i === N - 1));
     homeBtns.forEach((b) => {
@@ -568,17 +583,24 @@
     }
   });
 
-  let x0 = null, y0 = null;
+  /* ---------- touch swipe (works over vertically scrollable slides too) ---------- */
+  let x0 = null, y0 = null, sdx = 0, sdy = 0, axis = null;
   track.addEventListener("touchstart", (e) => {
-    x0 = e.touches[0].clientX; y0 = e.touches[0].clientY;
+    if (e.touches.length !== 1) { x0 = null; return; }
+    x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; sdx = sdy = 0; axis = null;
   }, { passive: true });
-  track.addEventListener("touchend", (e) => {
+  track.addEventListener("touchmove", (e) => {
     if (x0 === null) return;
-    const dx = e.changedTouches[0].clientX - x0;
-    const dy = e.changedTouches[0].clientY - y0;
-    x0 = y0 = null;
-    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) (dx < 0 ? next() : prev());
+    sdx = e.touches[0].clientX - x0; sdy = e.touches[0].clientY - y0;
+    if (!axis && (Math.abs(sdx) > 8 || Math.abs(sdy) > 8)) axis = Math.abs(sdx) > Math.abs(sdy) ? "x" : "y";
+    if (axis === "x" && e.cancelable) e.preventDefault();
+  }, { passive: false });
+  track.addEventListener("touchend", () => {
+    if (x0 === null) return;
+    if (axis === "x" && Math.abs(sdx) > 45) (sdx < 0 ? next() : prev());
+    x0 = y0 = null; axis = null;
   }, { passive: true });
+  track.addEventListener("touchcancel", () => { x0 = y0 = null; axis = null; }, { passive: true });
 
   const fsBtn = document.querySelector("[data-fullscreen]");
   fsBtn && fsBtn.addEventListener("click", () => {
