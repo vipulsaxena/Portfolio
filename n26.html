@@ -910,7 +910,7 @@
       '<span class="ct-icon" aria-hidden="true">' + (CHAP_ICONS[ch.id] || "") + "</span>" +
       '<span class="ct-count">' + ch.countSlides.length + "</span>";
     b.setAttribute("aria-label", "Jump to " + ch.label);
-    b.addEventListener("click", () => go(ch.start));
+    b.addEventListener("click", () => go(ch.countSlides.length ? ch.countSlides[0] : ch.start));
     chapWrap && chapWrap.appendChild(b);
     return b;
   });
