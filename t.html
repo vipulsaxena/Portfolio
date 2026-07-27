@@ -115,52 +115,8 @@
 
       .time-pill{ display:inline-flex; align-items:center; gap:.5rem; font-size:.85rem; font-weight:600; color:#262626; background:#f7f7f7; border:1px solid #e7e7e7; border-radius:999px; padding:.4rem .95rem; }
 
-      .slide-bg-sage{ background-color:#CDE3C4; }
-
       /* Cross-hatch texture behind the cover UI frame */
-      .cover-tex{
-        background-color:#CDE3C4; background-image:url("assets/olx/bg2.png"); background-repeat:repeat;
-        background-size:200px auto; background-position:center;
-      }
-      .slide-cover{ overflow-x:visible; overflow-y:auto; }
-      .slide-cover .slide-inner,
-      .slide-cover .slide-inner > .grid{ overflow:visible; }
-      .slide-cover .cover-copy{ position:relative; z-index:2; color:#121212; }
-      .slide-cover .cover-copy h1{ color:#121212; }
-      .slide-cover .cover-copy .text-mute{ color:#1a1a1a; }
-      .slide-cover .cover-copy .text-ink{ color:#121212; }
-      .slide-cover .cover-panel{
-        position:relative; overflow:visible;
-        display:flex; align-items:center; justify-content:center;
-        min-height:240px;
-      }
-      .slide-cover .cover-panel__tex{
-        position:absolute; inset:0; z-index:0; overflow:hidden;
-        pointer-events:none;
-      }
-      @media (min-width:768px){
-        .slide-cover .cover-panel{ justify-content:flex-end; }
-      }
-      .phone-mock{
-        position:relative; width:100%; max-width:min(100%,17.5rem); margin-inline:auto;
-        padding:6px; background:#1c1c1e; border-radius:2rem;
-        box-shadow:0 20px 44px -20px rgba(0,0,0,.42), 0 0 0 1px rgba(0,0,0,.08);
-      }
-      .phone-mock--cover{
-        position:relative; z-index:1;
-        width:min(48rem, 92vw);
-        max-width:48rem;
-        margin:0;
-        flex-shrink:0;
-      }
-      .phone-mock::before{
-        content:""; position:absolute; top:10px; left:50%; z-index:2; width:28%; max-width:5.5rem; height:5px;
-        transform:translateX(-50%); border-radius:999px; background:#0a0a0a; box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);
-        pointer-events:none;
-      }
-      .phone-mock video, .phone-mock img{
-        display:block; width:100%; height:auto; border-radius:1.55rem; background:#000;
-      }
+      .cover-tex{ background-color:#fff; background-image:url("assets/olx/bg2.png"); background-repeat:repeat; background-size:200px auto; background-position:center; }
       .time-pill::before{ content:""; width:.5rem; height:.5rem; border-radius:999px; background:#ffda08; }
 
       .dotgrid{ display:grid; grid-template-columns:repeat(3, 2.4rem); gap:.5rem; }
@@ -171,38 +127,16 @@
       .stage p{ color:#6e6e6e; font-size:.78rem; line-height:1.35; margin:0; }
       .flow-arrow{ color:#c4c4c4; font-size:1.3rem; flex:0 0 auto; }
 
-      .note{ position:relative; padding:0.9rem 1rem; font-size:.88rem; line-height:1.42; border-radius:3px;
-        border:1px solid transparent;
-        box-shadow:2px 4px 11px rgba(38,38,38,.11), inset 0 1px 0 rgba(255,255,255,.45); }
+      .note{ border-radius:14px; padding:1rem 1.05rem; font-size:.92rem; line-height:1.4; }
+      .note-y{ background:#fff3b0; border:1px solid #ffe27a; color:#262626; }
+      .note-t{ background:#d5f3ee; border:1px solid #b3e7df; color:#0f3b34; }
       .note b{ font-weight:800; }
-      /* JTBD sticky notes — slide 06 */
-      .note-when{
-        background:linear-gradient(168deg, #fffef5 0%, #fff6c8 48%, #ffef9e 100%);
-        border-color:rgba(255,210,80,.45);
-        color:#262626;
-        transform:rotate(-0.6deg);
-        transform-origin:left top;
-      }
-      .note-job{
-        background:linear-gradient(168deg, #ffe566 0%, #f5d03a 52%, #e6bc1a 100%);
-        border-color:rgba(180,140,0,.28);
-        color:#262626;
-      }
-      .jtbd-job-stack{ display:flex; flex-direction:column; gap:.65rem; padding:.35rem 0 .15rem; }
-      .jtbd-job-stack .note-job:nth-child(1){ transform:rotate(-0.85deg); transform-origin:left center; }
-      .jtbd-job-stack .note-job:nth-child(2){ transform:rotate(0.65deg); transform-origin:right center; }
-      .note-catalyst{
-        background:linear-gradient(168deg, #ecfbf7 0%, #c9ebe4 55%, #a8dfd4 100%);
-        border-color:rgba(23,120,100,.22);
-        color:#0f3b34;
-      }
-      .jtbd-catalyst-stack{ display:flex; flex-direction:column; gap:.65rem; padding:.35rem 0 .15rem; }
-      .jtbd-catalyst-stack .note-catalyst:nth-child(1){ transform:rotate(0.5deg); transform-origin:left center; }
-      .jtbd-catalyst-stack .note-catalyst:nth-child(2){ transform:rotate(-0.55deg); transform-origin:right center; }
 
-      /* Slide 07 — research-findings spreadsheet backdrop */
+      /* Slide 07 — research-findings spreadsheet as faded backdrop */
       .lim-bg{ position:absolute; inset:0; pointer-events:none; z-index:0;
-        background:url("assets/olx/limitation-bg.png") center top / cover no-repeat; }
+        background:
+          linear-gradient(rgba(247,247,247,.80), rgba(247,247,247,.90)),
+          url("assets/olx/limitation-bg.png") center top / cover no-repeat; }
 
       .prob{ background:#fff; border:1px solid #e7e7e7; border-radius:16px; padding:1.05rem 1.15rem; box-shadow:0 10px 26px -16px rgba(0,0,0,.28); }
       .prob b{ display:block; font-weight:800; color:#262626; margin-bottom:.5rem; line-height:1.3; font-size:.95rem; }
@@ -211,39 +145,10 @@
 
       .abadge{ flex:0 0 auto; width:1.6rem; height:1.6rem; border-radius:999px; display:inline-flex; align-items:center; justify-content:center; font-size:.78rem; font-weight:800; color:#fff; }
       .a-a{ background:#ef6b7d; } .a-b{ background:#2f8fe0; }
-      .abadge-stack{
-        position:relative; display:inline-flex; flex-direction:column; align-items:center;
-        vertical-align:middle; flex-shrink:0;
-      }
-      .abadge-stack .abadge{ margin:0; }
-      .abadge-crown{
-        display:block; width:1.15rem; height:auto; margin-bottom:-.35rem; z-index:1;
-        filter:drop-shadow(0 1px 2px rgba(0,0,0,.18)); object-fit:contain;
-      }
-      .photo-variant-badge .abadge-crown{ width:1.5rem; margin-bottom:-.5rem; }
-      .photo-variant-badge{
-        position:absolute; top:1rem; left:1rem; z-index:10;
-        display:flex; flex-direction:column; align-items:center; pointer-events:none;
-      }
-      .photo-variant-badge__letter{
-        width:2.75rem; height:2.75rem; border-radius:999px;
-        display:flex; align-items:center; justify-content:center;
-        font-size:1.15rem; font-weight:800; color:#fff;
-        box-shadow:0 2px 8px rgba(0,0,0,.18);
-      }
-      .photo-variant-badge--a .photo-variant-badge__letter{ background:#ef6b7d; }
-      .photo-variant-badge--b .photo-variant-badge__letter{ background:#2f8fe0; }
-      .photo-variant-badge--crown .photo-variant-badge__letter{
-        box-shadow:0 0 0 3px #fff, 0 0 0 6px #ffda08, 0 4px 12px rgba(0,0,0,.2);
-      }
-      .test-photo-fig--winner img{ border-color:#ffda08; box-shadow:0 0 0 2px rgba(255,218,8,.35); }
 
       .panel-green{ background:#e3f0e4 url("assets/olx/bg3.png") center bottom / cover no-repeat; color:#123b2a; position:relative; overflow:hidden; }
       /* Research interviews — full-height teal radial panel */
       .panel-bg4{ background:#8fe6f2 url("assets/olx/bg4.png") center / cover no-repeat; }
-
-      /* User problem — analytics dashboard + funnel overlay */
-      .panel-problem-stat{ background:#b8e8ec url("assets/olx/Problem_stat.png") center / cover no-repeat; }
 
       /* Survey panel — SurveyMonkey card over the pink cross-hatch backdrop */
       .panel-bg5{ background:#ece0dc url("assets/olx/bg5.png") center / cover no-repeat; position:relative; overflow:hidden; }
@@ -255,165 +160,15 @@
       .vlabel-a{ background:#ef6b7d; } .vlabel-b{ background:#2f8fe0; }
 
       .mini-card{ background:#fff; border:1px solid #e7e7e7; border-radius:14px; box-shadow:0 6px 20px -12px rgba(0,0,0,.2); }
-      .csat-outcome-card{ max-width:min(100%, 26rem); width:100%; }
-      .csat-outcome-card .csat-outcome-q{ font-size:.72rem; line-height:1.5; color:#6e6e6e; font-style:italic; margin-top:.5rem; }
-      .csat-outcome-card svg{ display:block; width:100%; max-width:11rem; margin:.85rem auto 0; }
-
-      /* Desktop directions — 3 hypothesis cards (slide 11), full-width stack + scroll */
-      .slide-hypo .slide-inner{ justify-content:flex-start; padding-bottom:calc(5rem + env(safe-area-inset-bottom, 0px)); }
-      .slide-hypo .hypo-intro{ color:#262626; font-size:1rem; line-height:1.55; margin:0 0 1.25rem; max-width:72ch; position:relative; z-index:2; }
-      .slide-hypo .hypo-intro strong{ color:#262626; }
-      .hypo-grid{ display:flex; flex-direction:column; gap:1.5rem; width:100%; max-width:100%; }
-      .hypo-card{ display:flex; flex-direction:column; width:100%; max-width:100%; height:auto; background:#fff; border:1px solid #e7e7e7; border-radius:16px; overflow:hidden;
-        box-shadow:0 8px 24px -14px rgba(0,0,0,.18); }
-      .hypo-card__media{ flex:0 0 auto; background:linear-gradient(180deg, #fafafa 0%, #f2f2f2 100%); border-bottom:1px solid #e7e7e7; padding:1rem 1.25rem; }
-      .hypo-card__media img{ display:block; width:100%; max-width:100%; height:auto; border-radius:12px; border:1px solid rgba(0,0,0,.06); cursor:zoom-in; }
-      .hypo-card__body{ flex:1 1 auto; display:flex; flex-direction:column; gap:.5rem; justify-content:center; padding:1rem 1.25rem 1.25rem; min-width:0; }
-      @media (min-width:640px){
-        .hypo-card{ flex-direction:row; align-items:stretch; }
-        .hypo-card__media{
-          flex:0 0 52%; max-width:52%; border-bottom:0; border-right:1px solid #e7e7e7;
-          padding:1rem 1.15rem; display:flex; align-items:center; justify-content:center;
-        }
-        .hypo-card__body{ padding:1.15rem 1.35rem 1.25rem; }
-      }
-      @media (min-width:1024px){
-        .hypo-card__media{ flex:0 0 56%; max-width:56%; padding:1.1rem 1.25rem; }
-      }
-      .hypo-card__eyebrow{ font-size:.7rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#6e6e6e; }
-      .hypo-card__title{ font-size:1.15rem; font-weight:800; letter-spacing:-.02em; color:#262626; line-height:1.25; }
-      .hypo-card__p{ font-size:.9rem; line-height:1.5; color:#6e6e6e; margin:0; }
-      .hypo-card__p + .hypo-card__p{ margin-top:.2rem; }
-
-      /* Slide 12 — full-slide directions canvas (Variant A vs B) */
-      .slide-directions{ position:relative; background:#e8eaed; }
-      .slide-directions .directions-bg{
-        position:absolute; inset:0; z-index:0; pointer-events:none;
-        background:url("assets/olx/directions.png") center center / cover no-repeat;
-      }
-      .slide-directions .directions-content{
-        position:relative; z-index:1; min-height:100%; display:flex; flex-direction:column;
-        max-width:min(96rem, 100%); width:100%;
-        padding-top:max(0.5rem, calc(clamp(1.5rem, 4vw, 4rem) - 1rem));
-        padding-left:clamp(0.75rem, 2.5vw, 2rem); padding-right:clamp(0.75rem, 2.5vw, 2rem);
-        padding-bottom:calc(4.5rem + env(safe-area-inset-bottom, 0px));
-      }
-      .slide-directions .directions-head{ text-shadow:0 0 20px rgba(255,255,255,.95), 0 1px 2px rgba(255,255,255,.8); }
-      .slide-directions .proto-hint{ margin-top:.75rem; }
-      .slide-directions .directions-foot{ margin-top:auto; width:100%; }
-
-      .proto-grid{ display:grid; grid-template-columns:1fr; gap:1.5rem; width:100%; margin-top:.75rem; flex:1 1 auto; }
-      @media (min-width:768px){ .proto-grid{ grid-template-columns:1fr 1fr; gap:1.25rem; } }
-      @media (min-width:1200px){ .proto-grid{ gap:1.5rem; } }
-      .proto-col{ display:flex; flex-direction:column; min-width:0; height:100%; overflow:visible; }
-      .proto-col .vlabel{
-        display:flex; align-items:center; justify-content:space-between; gap:.75rem;
-        border-radius:14px 14px 0 0; font-size:.92rem; padding:.65rem .85rem; text-align:left;
-      }
-      .proto-col .vlabel-title{ flex:1 1 auto; min-width:0; line-height:1.3; }
-      .vlabel-actions{ display:flex; align-items:center; gap:.35rem; flex-shrink:0; flex-wrap:wrap; justify-content:flex-end; }
-      .vlabel .proto-reset{
-        flex:0 0 auto; font-size:.72rem; font-weight:700; letter-spacing:.02em;
-        color:#262626; background:rgba(255,255,255,.92); border:1px solid rgba(255,255,255,.55);
-        border-radius:999px; padding:.35rem .75rem; cursor:pointer;
-        transition:background .15s ease, border-color .15s ease, box-shadow .15s ease;
-      }
-      .vlabel .proto-mag-toggle{
-        flex:0 0 auto; display:inline-flex; align-items:center; gap:.45rem;
-        margin:0; padding:0; border:0; background:transparent; cursor:pointer;
-        font-size:.72rem; font-weight:600; letter-spacing:.01em; color:#262626;
-        -webkit-tap-highlight-color:transparent;
-      }
-      .proto-mag-toggle__text{ line-height:1; user-select:none; }
-      .proto-mag-switch{
-        position:relative; flex-shrink:0;
-        width:2.75rem; height:1.625rem; border-radius:999px;
-        background:#e9e9ea;
-        box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);
-        transition:background .22s ease;
-      }
-      .proto-mag-switch__thumb{
-        position:absolute; top:2px; left:2px;
-        width:1.375rem; height:1.375rem; border-radius:50%;
-        background:#fff;
-        box-shadow:0 2px 5px rgba(0,0,0,.22), 0 0 0 .5px rgba(0,0,0,.05);
-        transition:transform .22s cubic-bezier(.4,0,.2,1);
-        will-change:transform;
-      }
-      .proto-mag-toggle[aria-pressed="true"] .proto-mag-switch{ background:#34c759; }
-      .proto-mag-toggle[aria-pressed="true"] .proto-mag-switch__thumb{ transform:translateX(1.125rem); }
-      .vlabel .proto-reset:hover{ background:#fff; border-color:#fff; box-shadow:0 1px 4px rgba(0,0,0,.12); }
-      .proto-mag-toggle:hover .proto-mag-switch{ filter:brightness(.97); }
-      .proto-mag-toggle[aria-pressed="true"]:hover .proto-mag-switch{ filter:brightness(1.03); }
-      .vlabel .proto-reset:focus-visible,
-      .proto-mag-toggle:focus-visible{ outline:none; border-radius:999px; box-shadow:0 0 0 3px rgba(255,255,255,.85), 0 0 0 5px rgba(255,218,8,.55); }
-      @media (hover:none), (pointer:coarse){
-        .vlabel .proto-mag-toggle{ display:none; }
-      }
-      .proto-stage{
-        position:relative;
-        display:flex; align-items:flex-start; justify-content:center; width:100%; margin:0; padding:0;
-        border:1px solid #e7e7e7; border-top:0; border-radius:0 0 14px 14px; background:#fff;
-        overflow:visible; cursor:pointer; min-height:min(52vh, 28rem);
-        transition:box-shadow .15s ease, border-color .15s ease;
-      }
-      .proto-stage.is-magnifying{ z-index:40; }
-      .proto-stage__inner{
-        position:relative; width:100%; display:flex; justify-content:center; align-items:flex-start;
-        overflow:hidden; border-radius:0 0 13px 13px;
-      }
-      .proto-lens{
-        position:absolute; z-index:50; width:26.25rem; height:26.25rem; border-radius:50%;
-        border:5px solid #fff; box-shadow:0 8px 32px rgba(0,0,0,.24), 0 0 0 1px rgba(0,0,0,.06);
-        background-color:#fff; background-repeat:no-repeat; pointer-events:none;
-        opacity:0; visibility:hidden; transition:opacity .12s ease, visibility 0s linear .12s;
-      }
-      .proto-lens::after{
-        content:""; position:absolute; left:50%; top:50%; width:8px; height:8px; margin:-4px 0 0 -4px;
-        border-radius:50%; background:#ffda08; box-shadow:0 0 0 1px rgba(38,38,38,.35);
-      }
-      .proto-stage.is-magnifying{ cursor:none; }
-      .proto-stage.is-magnifying .proto-lens{ opacity:1; visibility:visible; transition-delay:0s; }
-      @media (hover:none), (pointer:coarse){
-        .proto-lens{ display:none !important; }
-        .proto-stage.is-magnifying{ cursor:pointer; }
-      }
-      .proto-stage:hover{ border-color:#ffda08; box-shadow:0 0 0 3px rgba(255,218,8,.22); }
-      .proto-stage:focus-visible{ outline:none; border-color:#ffda08; box-shadow:0 0 0 3px rgba(255,218,8,.55); }
-      .proto-stage img{ display:block; width:100%; height:auto; max-height:min(52vh, 28rem); object-fit:contain; object-position:center top; background:transparent; pointer-events:none; }
-      .proto-meta{ margin-top:.5rem; padding:0 .1rem; }
-      .proto-frame{ font-size:.8rem; font-weight:700; font-variant-numeric:tabular-nums; color:#6e6e6e; }
 
       /* CSAT gauge — fill the meter when slide 4 activates */
       .csat-arc{ stroke-dashoffset:100; }
       .slide.is-active .csat-arc{ stroke-dashoffset:0; transition:stroke-dashoffset 1.2s cubic-bezier(.65,0,.35,1) .25s; }
 
       /* Interactive UX-audit bullets ↔ screenshot */
-      .audit-stage{
-        position:relative; border-radius:16px; overflow:hidden; border:1px solid #e7e7e7; background:#fff;
-        width:100%;
-      }
-      .slide-audit > .slide-inner{
-        flex:1 1 auto; display:flex; flex-direction:column; min-height:0;
-        padding-bottom:calc(4.5rem + env(safe-area-inset-bottom, 0px));
-      }
-      .slide-audit .audit-layout{
-        flex:1 1 auto; min-height:0; align-items:stretch;
-      }
-      .slide-audit .audit-figure{
-        display:grid; grid-template-rows:minmax(0,1fr) auto; min-height:0; height:100%;
-      }
-      .slide-audit .audit-stage{
-        width:100%; height:100%; min-height:12rem; max-height:none;
-      }
-      @media (max-width:767px){
-        .slide-audit .audit-figure{ height:auto; grid-template-rows:auto auto; }
-        .slide-audit .audit-stage{
-          height:auto; aspect-ratio:1024/548; max-height:min(48vh, calc(100dvh - var(--deck-top) - 14rem));
-        }
-      }
-      .audit-shot{ position:absolute; inset:0; width:100%; height:100%; object-fit:contain; background:transparent; opacity:0; visibility:hidden; transform:scale(1.01); pointer-events:none; transition:opacity .35s ease, transform .35s ease, visibility 0s linear .35s; cursor:zoom-in; }
-      .audit-shot.active{ opacity:1; visibility:visible; transform:none; pointer-events:auto; transition-delay:0s; }
+      .audit-stage{ position:relative; border-radius:16px; overflow:hidden; border:1px solid #e7e7e7; background:#f7f7f7; aspect-ratio:1024/548; }
+      .audit-shot{ position:absolute; inset:0; width:100%; height:100%; object-fit:contain; opacity:0; transform:scale(1.01); pointer-events:none; transition:opacity .35s ease, transform .35s ease; cursor:zoom-in; }
+      .audit-shot.active{ opacity:1; transform:none; pointer-events:auto; }
       .audit-item{ display:flex; gap:.85rem; align-items:flex-start; width:100%; text-align:left; padding:.65rem .8rem; border-radius:12px; border:1px solid transparent; background:transparent; cursor:pointer; transition:background .15s ease, border-color .15s ease, box-shadow .15s ease; }
       .audit-item:hover{ background:#fff; border-color:#e7e7e7; box-shadow:0 1px 2px rgba(0,0,0,.05); }
       .audit-item.active{ background:#fff; border-color:#ffda08; box-shadow:0 0 0 3px rgba(255,218,8,.22); }
@@ -421,156 +176,6 @@
       .audit-num{ flex:0 0 auto; width:1.65rem; height:1.65rem; border-radius:999px; background:#efefef; color:#6e6e6e; font-weight:800; font-size:.78rem; display:inline-flex; align-items:center; justify-content:center; margin-top:.05rem; transition:background .15s ease, color .15s ease; }
       .audit-item:hover .audit-num, .audit-item.active .audit-num{ background:#ffda08; color:#262626; }
       .audit-item span{ color:#6e6e6e; line-height:1.45; }
-      .slide-audit #auditList{ min-width:0; font-size:.92rem; align-self:start; }
-      @media (min-width:768px){
-        .slide-audit #auditList .audit-item{ padding:.55rem .65rem; gap:.7rem; }
-        .slide-audit #auditList .audit-item span{ font-size:.88rem; line-height:1.4; }
-      }
-
-      /* Highlights — full-bleed workshop boards + sage overlay (n26 workshop pattern) */
-      .hl-slide{ position:relative; overflow:hidden; }
-      .hl-slide__bg{
-        position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
-        object-position:center; cursor:default; pointer-events:none;
-      }
-      .hl-slide .slide-inner{
-        position:relative; z-index:10; justify-content:flex-start;
-        max-width:80rem; margin-inline:auto; width:100%; box-sizing:border-box;
-        padding-inline:clamp(1.25rem,5vw,4rem);
-        padding-top:clamp(1.25rem,3vh,2rem);
-        padding-bottom:calc(4.75rem + env(safe-area-inset-bottom, 0px));
-      }
-      .hl-overlay{
-        width:100%; max-width:40rem;
-        background:#CDE3C4; color:#262626;
-        border-radius:1rem; border:1px solid rgba(38,38,38,.08);
-        padding:clamp(1.25rem,3vw,2rem) clamp(1.35rem,3.5vw,2.25rem);
-        box-shadow:0 22px 48px -22px rgba(0,0,0,.32);
-      }
-      .hl-slide .hl-overlay--dock{
-        max-width:100%;
-        box-sizing:border-box;
-      }
-      .hl-slide--wide .hl-overlay{ max-width:min(52rem, 100%); }
-      .hl-overlay__title{
-        font-size:clamp(1.75rem,4vw,2.75rem); font-weight:800; letter-spacing:-.03em;
-        line-height:1.08; margin:0 0 .85rem;
-      }
-      .hl-overlay__lead{ font-size:1.05rem; line-height:1.5; margin:0; font-weight:600; }
-      .hl-overlay__sub{ font-size:.88rem; line-height:1.45; color:#6e6e6e; margin:.65rem 0 0; }
-      .hl-overlay__media{
-        margin-top:1rem; display:flex; justify-content:flex-end;
-      }
-      .hl-overlay__media img{
-        max-width:min(100%,11rem); height:auto; border-radius:.65rem;
-        border:1px solid rgba(38,38,38,.1); box-shadow:0 8px 24px -12px rgba(0,0,0,.25);
-      }
-      .hl-principles{
-        margin-top:1.15rem; display:flex; flex-direction:column; gap:.65rem;
-        max-height:min(42vh, 22rem); overflow-y:auto; padding-right:.15rem;
-      }
-      .hl-slide--3 .hl-principles-row{
-        flex:1 1 auto; display:flex; align-items:center; justify-content:center;
-        min-height:0; width:100%; z-index:11; padding:.35rem 0;
-        pointer-events:none;
-      }
-      .hl-slide--3 .hl-principles-track{
-        display:flex; flex-direction:row; align-items:stretch; justify-content:center;
-        flex-wrap:nowrap;
-        gap:clamp(.75rem,1.4vw,1.15rem); width:100%; max-width:min(80rem,100%);
-        overflow-x:auto; padding:.5rem clamp(.65rem,2.5vw,1.35rem);
-        scroll-snap-type:x proximity; pointer-events:auto;
-        -webkit-overflow-scrolling:touch;
-      }
-      .hl-slide--3 .hl-principle{
-        flex:0 0 min(16.25rem,78vw); scroll-snap-align:center;
-        max-height:min(44vh,18rem); overflow-y:auto;
-        padding:1rem 1.15rem; border-radius:.9rem;
-      }
-      .hl-slide--3 .hl-principle h3{
-        margin:0 0 .55rem; font-size:1.05rem; line-height:1.38;
-      }
-      .hl-slide--3 .hl-principle p{ font-size:.9rem; line-height:1.52; }
-      @media (min-width:1100px){
-        .hl-slide--3 .hl-principles-track{ overflow-x:visible; gap:1rem; }
-        .hl-slide--3 .hl-principle{
-          flex:1 1 0; min-width:0; max-width:none;
-          max-height:min(46vh,19.5rem);
-          padding:1.05rem 1.2rem;
-        }
-        .hl-slide--3 .hl-principle h3{ font-size:1.08rem; }
-        .hl-slide--3 .hl-principle p{ font-size:.92rem; }
-      }
-      .hl-principle{
-        background:rgba(255,255,255,.88); border:1px solid rgba(38,38,38,.08);
-        border-radius:.75rem; padding:.75rem .9rem;
-      }
-      .hl-principle h3{
-        margin:0 0 .35rem; font-size:.92rem; font-weight:800; line-height:1.35; color:#262626;
-      }
-      .hl-principle p{ margin:0; font-size:.78rem; line-height:1.45; color:#6e6e6e; }
-
-      /* Highlight slides 16–18 — title top, copy docked above nav; slide 18 + horizontal principles */
-      .hl-slide--1 .slide-inner,
-      .hl-slide--2 .slide-inner,
-      .hl-slide--3 .slide-inner{
-        display:flex; flex-direction:column; min-height:calc(100dvh - var(--deck-top));
-        padding-top:clamp(2.25rem,6vh,3.5rem);
-        padding-bottom:calc(10vh + 4.5rem + env(safe-area-inset-bottom, 0px));
-        justify-content:flex-start;
-      }
-      .hl-slide--1 .hl-slide__sticker,
-      .hl-slide--2 .hl-slide__sticker{
-        position:absolute;
-        z-index:15; margin:0; pointer-events:none;
-        height:auto; object-fit:contain; object-position:top right;
-        filter:drop-shadow(0 10px 28px rgba(0,0,0,.18));
-      }
-      .hl-slide--1 .hl-slide__sticker{
-        top:20%;
-        right:20%;
-        width:min(72vw,46rem); max-height:min(56vh,36rem);
-      }
-      .hl-slide--2 .hl-slide__sticker{
-        top:8%;
-        right:10%;
-        width:min(66.34vw,43.64rem); max-height:min(52.4vh,34.92rem);
-      }
-      .hl-slide--1 .hl-slide__headline,
-      .hl-slide--2 .hl-slide__headline,
-      .hl-slide--3 .hl-slide__headline{
-        margin:0; font-weight:800; letter-spacing:-.03em;
-        line-height:1.05; color:#fff;
-        text-shadow:0 2px 12px rgba(0,0,0,.45), 0 0 32px rgba(0,0,0,.25);
-        pointer-events:auto; flex-shrink:0; position:relative; z-index:12;
-        white-space:nowrap; width:max-content; max-width:100%;
-      }
-      .hl-slide--1 .hl-slide__headline{
-        font-size:clamp(1.75rem,5vw,3.25rem);
-      }
-      .hl-slide--2 .hl-slide__headline{
-        font-size:clamp(1.15rem,3.4vw,3rem);
-      }
-      .hl-slide--3 .hl-slide__headline{
-        font-size:clamp(0.95rem,2.55vw,2.75rem);
-      }
-      .hl-slide--1 .hl-overlay--dock,
-      .hl-slide--2 .hl-overlay--dock,
-      .hl-slide--3 .hl-overlay--dock{
-        margin-top:auto; margin-bottom:0;
-        align-self:stretch; width:100%; max-width:100%;
-        padding:clamp(1.45rem,3.2vw,2.15rem) clamp(1.5rem,3.6vw,2.5rem);
-      }
-      .hl-slide--1 .hl-overlay--dock .hl-overlay__lead,
-      .hl-slide--2 .hl-overlay--dock .hl-overlay__lead,
-      .hl-slide--3 .hl-overlay--dock .hl-overlay__lead{
-        font-size:clamp(1.2rem,2.35vw,1.4rem); line-height:1.48;
-      }
-      .hl-slide--1 .hl-overlay--dock .hl-overlay__sub,
-      .hl-slide--2 .hl-overlay--dock .hl-overlay__sub,
-      .hl-slide--3 .hl-overlay--dock .hl-overlay__sub{
-        font-size:clamp(1rem,1.85vw,1.08rem); line-height:1.5; margin-top:.75rem;
-      }
 
       /* Segmented toggle (Background views) */
       .seg{ display:inline-flex; padding:4px; background:#efefef; border:1px solid #e7e7e7; border-radius:999px; gap:2px; }
@@ -651,13 +256,12 @@
 
       #lightbox{ position:fixed; inset:0; z-index:2000; display:none; align-items:center; justify-content:center; background:rgb(255 255 255 / 90%); padding:5vw; }
       #lightbox.open{ display:flex; }
-      #lightbox img{ max-width:100%; max-height:90vh; border-radius:.75rem; box-shadow:0 24px 60px -20px rgba(0,0,0,.35); background:transparent; }
+      #lightbox img{ max-width:100%; max-height:90vh; border-radius:.75rem; box-shadow:0 24px 60px -20px rgba(0,0,0,.35); }
 
       @media (prefers-reduced-motion: reduce){
         .deck-track{ transition:none; } .progress{ transition:none; }
         .slide [data-anim]{ opacity:1 !important; transform:none !important; transition:none !important; }
         .csat-arc{ stroke-dashoffset:0 !important; transition:none !important; }
-        .note-when, .note-job, .note-catalyst{ transform:none !important; }
       }
 
       /* ===== Password gate (secure entry) ===== */
@@ -701,8 +305,7 @@
           if (external) sessionStorage.removeItem(KEY);
           else allow = sessionStorage.getItem(KEY) === "1";
         } catch(_){}
-        window.__gateAllow = allow;
-        if (!allow) document.documentElement.classList.add("olx-locked");
+        window.__gateAllow = true;
       })();
     </script>
 </head>
@@ -820,10 +423,10 @@
     <!-- ===================== CHAPTER 2 · CASE STUDY ===================== -->
 
     <!-- CS 01 · COVER — OLX Ad Package -->
-    <section class="slide slide-cover slide-bg-sage" data-chapter="case-study" data-title="OLX Ad Package">
+    <section class="slide" data-chapter="case-study" data-title="OLX Ad Package">
       <div class="slide-inner top !py-0 !px-0 !max-w-none">
         <div class="grid md:grid-cols-[1.15fr_1fr] md:h-full">
-          <div class="order-2 md:order-1 cover-copy flex flex-col justify-center px-[clamp(1.25rem,5vw,4rem)] py-[clamp(1.5rem,4vw,3rem)]">
+          <div class="order-2 md:order-1 flex flex-col justify-center px-[clamp(1.25rem,5vw,4rem)] py-[clamp(1.5rem,4vw,3rem)]">
             <p class="text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Case study · OLX Group</p>
             <h1 class="mt-4 font-extrabold tracking-tight leading-[1.04] text-4xl md:text-6xl" data-anim style="--i:1">OLX Ad Package</h1>
             <span class="time-pill mt-5 self-start" data-anim style="--i:2">16 weeks of design timeline · In development</span>
@@ -838,14 +441,8 @@
               <p class="text-sm text-mute leading-relaxed max-w-[56ch]">Lorena (UX Writer), Małgorzata (Researcher), Claude (PM), Oana (CPO), Kuba (EM), Monica &amp; Arsen (Jr. PD) — along with the Engineering &amp; BI teams.</p>
             </div>
           </div>
-          <div class="order-1 md:order-2 cover-panel p-6 md:p-10 min-h-[240px]" data-anim style="--i:2">
-            <div class="cover-panel__tex cover-tex" aria-hidden="true"></div>
-            <div class="phone-mock phone-mock--cover">
-              <video data-autoplay muted playsinline loop preload="metadata" poster="assets/olx/olx_cover.png" aria-label="Screen recording of the redesigned OLX buy-package category selection flow">
-                <source src="assets/olx/OLX_vid.mov" type="video/quicktime">
-                <source src="assets/olx/OLX_vid.mov" type="video/mp4">
-              </video>
-            </div>
+          <div class="order-1 md:order-2 relative flex items-center justify-center p-6 md:p-10 min-h-[240px] cover-tex" data-anim style="--i:2">
+            <img loading="lazy" decoding="async" src="assets/olx/olx_cover.png" alt="OLX 'Select a category' screen from the redesigned buy-package flow" data-lightbox class="w-full rounded-xl border border-line shadow-xl shadow-ink/10">
           </div>
         </div>
       </div>
@@ -919,23 +516,19 @@
               <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
                   <p class="text-sm font-bold text-ink mb-3">When</p>
-                  <div class="note note-when">Sellers (B2C/C2C) choose OLX to sell one or multiple goods and list their Ads.</div>
+                  <div class="note note-y">Sellers (B2C/C2C) choose OLX to sell one or multiple goods and list their Ads.</div>
                   <p class="text-xs text-mute mt-2 text-center">User</p>
                 </div>
                 <div>
                   <p class="text-sm font-bold text-ink mb-3">They would like to</p>
-                  <div class="jtbd-job-stack">
-                    <div class="note note-job">Determine &amp; act on how to attract Buyers to their goods.</div>
-                    <div class="note note-job">Optimise the pricing of under-performing goods against the money they invest.</div>
-                  </div>
+                  <div class="note note-y mb-3">Determine &amp; act on how to attract Buyers to their goods.</div>
+                  <div class="note note-y">Optimise the pricing of under-performing goods against the money they invest.</div>
                   <p class="text-xs text-mute mt-2 text-center">Job step</p>
                 </div>
                 <div>
                   <p class="text-sm font-bold text-ink mb-3">So that</p>
-                  <div class="jtbd-catalyst-stack">
-                    <div class="note note-catalyst"><b>B2C/C2C</b> — they reach their desired ROI per item.</div>
-                    <div class="note note-catalyst"><b>C2C</b> — they feel they're contributing to sustainability and getting rid of unwanted goods.</div>
-                  </div>
+                  <div class="note note-t mb-3"><b>B2C/C2C</b> — they reach their desired ROI per item.</div>
+                  <div class="note note-t"><b>C2C</b> — they feel they're contributing to sustainability and getting rid of unwanted goods.</div>
                   <p class="text-xs text-mute mt-2 text-center">Catalysts</p>
                 </div>
               </div>
@@ -995,158 +588,96 @@
     </section>
 
     <!-- CS 07 · USER PROBLEM -->
-    <section class="slide bg-base" data-chapter="case-study" data-title="User Problem">
-      <div class="slide-inner top !py-0 !px-0 !max-w-none !h-full">
-        <div class="grid md:grid-cols-[1.05fr_0.95fr] h-full min-h-0">
-          <div class="order-2 md:order-1 flex flex-col justify-center px-[clamp(1.25rem,5vw,4rem)] py-[clamp(1.5rem,4vw,3rem)]">
-            <p class="text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Problem</p>
-            <h2 class="mt-3 text-3xl md:text-5xl font-extrabold tracking-tight" data-anim style="--i:1">User Problem</h2>
-            <p class="mt-5 text-xl md:text-2xl font-medium leading-snug max-w-[32ch]" data-anim style="--i:2">
+    <section class="slide bg-elev" data-chapter="case-study" data-title="User Problem">
+      <div class="slide-inner top">
+        <div class="grid md:grid-cols-2 gap-8 md:gap-14 items-center">
+          <div>
+            <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-3" data-anim style="--i:0">Problem</p>
+            <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-5" data-anim style="--i:1">User Problem</h2>
+            <p class="text-xl md:text-2xl font-medium leading-snug max-w-[30ch] mb-8" data-anim style="--i:2">
               Almost <span class="hl">80% of B2C and 90% of C2C Sellers</span> drop at the category-selection page of the buy-package flow.
             </p>
-            <div class="flex items-start gap-4 mt-8 max-w-[40ch]" data-anim style="--i:3">
-              <span class="shrink-0 w-11 h-11 rounded-full bg-navy text-white flex items-center justify-center font-extrabold text-lg leading-none" aria-hidden="true">”</span>
-              <blockquote class="rounded-2xl bg-elev border border-line p-5 text-base md:text-lg leading-relaxed text-ink">
+            <div class="flex items-start gap-4" data-anim style="--i:3">
+              <span class="shrink-0 w-11 h-11 rounded-full bg-navy text-white flex items-center justify-center font-extrabold">”</span>
+              <blockquote class="rounded-2xl bg-card border border-line p-5 text-lg leading-relaxed text-ink">
                 “I like the option to buy an Ad package in advance, but it gets tricky to find the same category in which I post multiple ads.”
+                <cite class="block not-italic text-sm font-semibold text-mute mt-3">— Seller, research interview</cite>
               </blockquote>
             </div>
           </div>
-          <figure class="order-1 md:order-2 panel-problem-stat relative flex items-center justify-center p-5 md:p-8 min-h-[300px] h-full m-0" data-anim style="--i:4">
-            <img loading="lazy" src="assets/olx/graph_prob.png" alt="Users funnel from the buy-package flow: 20.55% at package selected, with category-selection called out at OpScore 13.12" data-lightbox class="relative z-10 w-full max-w-[min(100%,26rem)] drop-shadow-2xl shadow-ink/20 cursor-zoom-in">
+          <figure data-anim style="--i:4">
+            <img loading="lazy" src="assets/olx/olx_funnel.png" alt="Users funnel showing a 20.55% drop at category selection, with a 13.12 OpScore callout" data-lightbox class="w-full rounded-2xl border border-line">
+            <figcaption class="mt-3 text-sm text-mute">The funnel's biggest cliff — a <strong class="text-ink font-semibold">20.55%</strong> fall on a single step (OpScore 13.12).</figcaption>
           </figure>
         </div>
       </div>
     </section>
 
     <!-- CS 08 · UX AUDIT -->
-    <section class="slide slide-audit" data-chapter="case-study" data-title="UX Audit">
-      <div class="slide-inner top slide-audit-inner">
+    <section class="slide" data-chapter="case-study" data-title="UX Audit">
+      <div class="slide-inner top">
         <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-3" data-anim style="--i:0">Audit</p>
-        <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-6 md:mb-7 max-w-[26ch]" data-anim style="--i:1">Ran a UX audit on the buy-package flow</h2>
-        <div class="grid md:grid-cols-[1.72fr_0.62fr] gap-6 md:gap-8 items-stretch audit-layout">
-          <figure class="audit-figure m-0 min-w-0" data-anim style="--i:2">
+        <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-8 max-w-[26ch]" data-anim style="--i:1">Ran a UX audit on the buy-package flow</h2>
+        <div class="grid md:grid-cols-[1.35fr_1fr] gap-8 md:gap-12 items-center">
+          <figure data-anim style="--i:2">
             <div class="audit-stage" id="auditStage">
               <img loading="lazy" class="audit-shot active" data-audit-shot="1" data-lightbox src="assets/olx/olx_audit_1.png" alt="Audit — seller account overview: 'Your ads' on web and mobile">
               <img loading="lazy" class="audit-shot" data-audit-shot="2" data-lightbox src="assets/olx/olx_audit_2.png" alt="Audit — category grid with click heatmap next to the mobile category list">
               <img loading="lazy" class="audit-shot" data-audit-shot="3" data-lightbox src="assets/olx/olx_audit_3.png" alt="Audit — long L2 sub-category list with click heatmap">
               <img loading="lazy" class="audit-shot" data-audit-shot="4" data-lightbox src="assets/olx/olx_audit_4.png" alt="Audit — package selection: Standard, Premium, Mega and mobile 'Pay to post'">
-              <img loading="lazy" class="audit-shot" data-audit-shot="5" data-lightbox src="assets/olx/olx_audit_5.png" alt="Audit — mega-package details: what's included in the package">
+              <img loading="lazy" class="audit-shot" data-audit-shot="5" data-lightbox src="assets/olx/olx_audit_5.png" alt="Audit — 'In which categories can I post these ads?' modal">
             </div>
             <figcaption class="mt-3 inline-flex items-center gap-2 text-xs font-semibold text-mute"><span class="tag-pill" style="background:#e7e7e7;color:#262626">Hover ☝️</span> hover a finding to see the screen · click to zoom</figcaption>
           </figure>
-          <ul class="space-y-2 min-w-0" id="auditList" data-anim style="--i:3">
-            <li><button type="button" class="audit-item active" data-audit="1"><span class="audit-num">1</span><span>Beyond paywall, users already know where to buy ad-package from? ie; from <strong class="text-ink">Account</strong>.</span></button></li>
+          <ul class="space-y-2" id="auditList" data-anim style="--i:3">
+            <li><button type="button" class="audit-item active" data-audit="1"><span class="audit-num">1</span><span>Category lists at <strong class="text-ink">L2 and beyond are long and lack hierarchy</strong>.</span></button></li>
             <li><button type="button" class="audit-item" data-audit="2"><span class="audit-num">2</span><span>Hotjar recordings show users <strong class="text-ink">trying to click sub-category bullet-points</strong> that do nothing.</span></button></li>
-            <li><button type="button" class="audit-item" data-audit="3"><span class="audit-num">3</span><span>Category lists at <strong class="text-ink">L2 and beyond are long and lack hierarchy</strong>.</span></button></li>
-            <li><button type="button" class="audit-item" data-audit="4"><span class="audit-num">4</span><span>Sub-categories drive package price, but that link <strong class="text-ink">lacks upfront discovery</strong>.</span></button></li>
-            <li><button type="button" class="audit-item" data-audit="5"><span class="audit-num">5</span><span>To see the exact categories included, user has to tap <strong class="text-ink">“What’s included in mega-package”</strong>.</span></button></li>
+            <li><button type="button" class="audit-item" data-audit="3"><span class="audit-num">3</span><span>Sub-categories drive package price, but that link <strong class="text-ink">lacks upfront discovery</strong>.</span></button></li>
+            <li><button type="button" class="audit-item" data-audit="4"><span class="audit-num">4</span><span>It's <strong class="text-ink">difficult to co-relate</strong> the presented category to the precise one users want to post in.</span></button></li>
+            <li><button type="button" class="audit-item" data-audit="5"><span class="audit-num">5</span><span>Search <strong class="text-ink">only surfaces categories already included</strong> in packages.</span></button></li>
           </ul>
         </div>
       </div>
     </section>
 
-    <!-- CS 09 · DESKTOP-FIRST · 3 HYPOTHESES -->
-    <section class="slide slide-hypo bg-elev" data-chapter="case-study" data-title="Desktop-first · Hypothesis">
+    <!-- CS 09 · DESKTOP-FIRST · HYPOTHESIS -->
+    <section class="slide bg-elev" data-chapter="case-study" data-title="Desktop-first · Hypothesis">
       <div class="slide-inner top">
-        <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-2" data-anim style="--i:0">Explore</p>
-        <h2 class="text-xl md:text-3xl font-extrabold tracking-tight mb-3 text-ink max-w-[28ch]" data-anim style="--i:1">Designed 3 possible directions for desktop</h2>
-        <p class="hypo-intro">
-          Why desktop first? More than <strong>60% of Ad packages</strong> are purchased via the OLX website.
+        <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-3" data-anim style="--i:0">Explore</p>
+        <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-3 max-w-[26ch]" data-anim style="--i:1">Designed 3 possible directions for desktop</h2>
+        <p class="text-lg text-mute leading-relaxed max-w-[70ch] mb-8" data-anim style="--i:2">
+          Why desktop first? More than <strong class="text-ink font-semibold">60% of Ad packages</strong> are purchased via the OLX website.
         </p>
-        <div class="hypo-grid" data-anim style="--i:2">
-          <article class="hypo-card">
-            <div class="hypo-card__media">
-              <img loading="lazy" src="assets/olx/olx_direction1.png" alt="Direction 1 — real-time offer view with categories and package offers side by side" data-lightbox>
-            </div>
-            <div class="hypo-card__body">
-              <p class="hypo-card__eyebrow">#1 Hypothesis</p>
-              <h3 class="hypo-card__title">Real-time offer view</h3>
-              <p class="hypo-card__p">Users would appreciate if they can simultaneously browse Ad packages while choosing the category in which they’d like to post ads, making the overall process dynamic.</p>
-              <p class="hypo-card__p">Offers are shown based on availability. Categories are seen upfront on the offer view.</p>
-            </div>
-          </article>
-          <article class="hypo-card">
-            <div class="hypo-card__media">
-              <img loading="lazy" src="assets/olx/olx_direction2.png" alt="Direction 2 — multi-level category menu with linear selection" data-lightbox>
-            </div>
-            <div class="hypo-card__body">
-              <p class="hypo-card__eyebrow">#2 Hypothesis</p>
-              <h3 class="hypo-card__title">Multi-level menu</h3>
-              <p class="hypo-card__p">A linear selection process should reduce cognitive load, along with the multi-level menu that should ease the selection process.</p>
-              <p class="hypo-card__p">Minimum selection to see offers would be L2 selection. Selected category is marked with a ‘✔’ at summary &amp; offer page.</p>
-            </div>
-          </article>
-          <article class="hypo-card">
-            <div class="hypo-card__media">
-              <img loading="lazy" src="assets/olx/olx_direction3.png" alt="Direction 3 — multi-selection view across category bundles" data-lightbox>
-            </div>
-            <div class="hypo-card__body">
-              <p class="hypo-card__eyebrow">#3 Hypothesis</p>
-              <h3 class="hypo-card__title">Multi-selection view</h3>
-              <p class="hypo-card__p">OLX only offers packages in pre-set bundled categories; letting users multi-select category bundles could enable advance planning.</p>
-              <p class="hypo-card__p">Letting users multi-select categories across various L1 would require change in business logic (high effort), and so in the current state only multiple bundles can be selected.</p>
-            </div>
-          </article>
+        <div class="grid md:grid-cols-[1.3fr_1fr] gap-8 md:gap-12 items-center">
+          <figure data-anim style="--i:3">
+            <img loading="lazy" src="assets/olx/olx_variant_a.png" alt="Desktop buy-an-ad-package direction with package cards and prices" data-lightbox class="w-full rounded-2xl border border-line">
+          </figure>
+          <div class="rounded-2xl border border-line bg-card p-7 shadow-sm" data-anim style="--i:4">
+            <p class="text-[0.7rem] font-bold uppercase tracking-[0.16em] text-mute mb-2">#1 Hypothesis</p>
+            <h3 class="text-2xl font-extrabold tracking-tight mb-3">Real-time offer view</h3>
+            <p class="text-mute leading-relaxed mb-4">Users would appreciate being able to <strong class="text-ink">simultaneously browse Ad packages while choosing the category</strong> they'd like to post in — making the overall process dynamic.</p>
+            <p class="text-sm text-mute leading-relaxed">Offers are shown based on availability. Categories are seen upfront on the offer view.</p>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- CS 10 · VARIANT A vs VARIANT B (interactive prototypes) -->
-    <section class="slide slide-directions" data-chapter="case-study" data-title="Variant A vs B">
-      <div class="directions-bg" aria-hidden="true"></div>
-      <div class="slide-inner top directions-content">
-        <div class="directions-head" data-anim style="--i:0">
-          <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-3">Two concepts</p>
-          <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight max-w-[28ch] text-ink">Two directions, head to head</h2>
-          <p class="proto-hint">
-            <span class="tag-pill" style="background:#e7e7e7;color:#262626">Interactive ☝️ — tap a prototype to advance</span>
-          </p>
+    <!-- CS 10 · VARIANT A vs VARIANT B -->
+    <section class="slide" data-chapter="case-study" data-title="Variant A vs B">
+      <div class="slide-inner top">
+        <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-3" data-anim style="--i:0">Two concepts</p>
+        <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-8 max-w-[24ch]" data-anim style="--i:1">Two directions, head to head</h2>
+        <div class="grid md:grid-cols-2 gap-6 md:gap-8">
+          <figure data-anim style="--i:2">
+            <span class="vlabel vlabel-a">Variant A · Real-time offer view</span>
+            <img loading="lazy" src="assets/olx/olx_variant_a.png" alt="Variant A — real-time offer view" data-lightbox class="w-full rounded-b-2xl border border-t-0 border-line">
+          </figure>
+          <figure data-anim style="--i:3">
+            <span class="vlabel vlabel-b">Variant B · Multi-level menu</span>
+            <img loading="lazy" src="assets/olx/olx_variant_b.png" alt="Variant B — multi-level category menu" data-lightbox class="w-full rounded-b-2xl border border-t-0 border-line">
+          </figure>
         </div>
-        <div class="proto-grid" data-anim style="--i:1">
-          <div class="proto-col">
-            <div class="vlabel vlabel-a">
-              <span class="vlabel-title">Variant A · Real-time offer view</span>
-              <span class="vlabel-actions">
-                <button type="button" class="proto-mag-toggle" data-proto-magnify="a" aria-pressed="true" aria-label="Magnifier on, click to turn off">
-                  <span class="proto-mag-toggle__text">Magnify</span>
-                  <span class="proto-mag-switch" aria-hidden="true"><span class="proto-mag-switch__thumb"></span></span>
-                </button>
-                <button type="button" class="proto-reset" data-proto-reset="a">Reset</button>
-              </span>
-            </div>
-            <button type="button" class="proto-stage" data-proto-cycle="a" aria-label="Variant A prototype — tap to show next screen in sequence">
-              <span class="proto-stage__inner">
-                <img data-proto-img="a" src="assets/olx/va-1.png" alt="Variant A prototype, frame 1 of 5">
-              </span>
-              <span class="proto-lens" aria-hidden="true"></span>
-            </button>
-            <div class="proto-meta">
-              <span class="proto-frame">Frame <span data-proto-step="a">1</span> / 5</span>
-            </div>
-          </div>
-          <div class="proto-col">
-            <div class="vlabel vlabel-b">
-              <span class="vlabel-title">Variant B · Multi-level menu</span>
-              <span class="vlabel-actions">
-                <button type="button" class="proto-mag-toggle" data-proto-magnify="b" aria-pressed="true" aria-label="Magnifier on, click to turn off">
-                  <span class="proto-mag-toggle__text">Magnify</span>
-                  <span class="proto-mag-switch" aria-hidden="true"><span class="proto-mag-switch__thumb"></span></span>
-                </button>
-                <button type="button" class="proto-reset" data-proto-reset="b">Reset</button>
-              </span>
-            </div>
-            <button type="button" class="proto-stage" data-proto-cycle="b" aria-label="Variant B prototype — tap to show next screen in sequence">
-              <span class="proto-stage__inner">
-                <img data-proto-img="b" src="assets/olx/oob-1.png" alt="Variant B prototype, frame 1 of 5">
-              </span>
-              <span class="proto-lens" aria-hidden="true"></span>
-            </button>
-            <div class="proto-meta">
-              <span class="proto-frame">Frame <span data-proto-step="b">1</span> / 5</span>
-            </div>
-          </div>
-        </div>
-        <div class="directions-foot rounded-2xl bg-ink text-white p-6 md:p-8 mt-5" data-anim style="--i:2">
+        <div class="mt-8 rounded-2xl bg-ink text-white p-6 md:p-8" data-anim style="--i:4">
           <p class="text-xl md:text-2xl font-extrabold tracking-tight">Design critique to narrow it down to 2 ideas.</p>
           <p class="mt-2 text-white/60">9 P&amp;S designers, 4 PMs across pillars, the Engineering team, the P&amp;S HOD and the Data team.</p>
         </div>
@@ -1154,169 +685,87 @@
     </section>
 
     <!-- CS 11 · USABILITY TEST -->
-    <section class="slide" data-chapter="case-study" data-title="Usability test">
-      <div class="slide-inner" style="justify-content:flex-start">
-        <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Test</p>
-        <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-8 max-w-[28ch]" data-anim style="--i:1">We tested 2 concepts for usability with <span class="hl">10 users</span></h2>
-        <!-- Each insight paired with the takeaway it drove -->
-        <div class="hidden md:grid md:grid-cols-[1fr_2.5rem_1fr] gap-4 mb-3" data-anim style="--i:2">
-          <p class="text-xs font-bold uppercase tracking-[0.18em] text-mute">Insight</p>
-          <span></span>
-          <p class="text-xs font-bold uppercase tracking-[0.18em] text-accink/70">Takeaway</p>
-        </div>
-        <div class="space-y-4">
-          <div class="grid md:grid-cols-[1fr_2.5rem_1fr] gap-3 md:gap-4 items-stretch" data-anim style="--i:3">
-            <div class="bg-elev rounded-2xl p-5 flex items-center"><p class="m-0 text-mute leading-relaxed"><span class="abadge a-a inline-flex align-middle mr-2">A</span><strong class="text-ink">4/8 struggled</strong> to associate dropdown categories with the dynamic offer. Task time was <strong class="text-ink">15% lower</strong> than Production.</p></div>
-            <div class="hidden md:flex items-center justify-center text-ink/30 text-2xl" aria-hidden="true">→</div>
-            <div class="bg-accent text-accink rounded-2xl p-5 flex items-center"><p class="m-0 leading-relaxed">Primary/secondary/tertiary categories got associated with filters — adding <strong>cognitive load</strong> and failing the hypothesis.</p></div>
+    <section class="slide bg-elev" data-chapter="case-study" data-title="Usability test">
+      <div class="slide-inner top">
+        <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-3" data-anim style="--i:0">Test</p>
+        <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-8 max-w-[28ch]" data-anim style="--i:1">We tested 2 concepts for usability with 10 users</h2>
+        <div class="grid md:grid-cols-2 gap-8 md:gap-12">
+          <div data-anim style="--i:2">
+            <p class="text-sm font-bold uppercase tracking-[0.14em] text-mute mb-4">Insights</p>
+            <ul class="space-y-4">
+              <li class="flex gap-3"><span class="abadge a-a">A</span><span class="text-mute leading-relaxed"><strong class="text-ink">4/8 struggled</strong> to associate dropdown categories with the dynamic offer. Task time was <strong class="text-ink">15% lower</strong> than Production.</span></li>
+              <li class="flex gap-3"><span class="abadge a-b">B</span><span class="text-mute leading-relaxed">👑 <strong class="text-ink">7/8 were satisfied</strong> with the multi-level menu and appreciated the summary view. Task time was 28% higher than Production.</span></li>
+              <li class="flex gap-3"><span class="abadge a-a">A</span><span class="text-mute leading-relaxed">Only <strong class="text-ink">2/8</strong> found the filter view easier to compare — and they ignored the 'see-more' CTA while comparing packages.</span></li>
+              <li class="flex gap-3"><span class="abadge a-b">B</span><span class="text-mute leading-relaxed">👑 With <strong class="text-ink">upfront category tags</strong>, 5/8 intuitively named categories as a variable for why price differs per package.</span></li>
+            </ul>
           </div>
-          <div class="grid md:grid-cols-[1fr_2.5rem_1fr] gap-3 md:gap-4 items-stretch" data-anim style="--i:4">
-            <div class="bg-elev rounded-2xl p-5 flex items-center"><p class="m-0 text-mute leading-relaxed"><span class="abadge-stack mr-2" title="Variant B — usability test winner"><img class="abadge-crown" src="assets/olx/crown.png" alt="" width="22" height="22" decoding="async" aria-hidden="true"><span class="abadge a-b">B</span></span><strong class="text-ink">7/8 were satisfied</strong> with the multi-level menu and appreciated the summary view. Task time was <strong class="text-ink">28% higher</strong> than Production.</p></div>
-            <div class="hidden md:flex items-center justify-center text-ink/30 text-2xl" aria-hidden="true">→</div>
-            <div class="bg-accent text-accink rounded-2xl p-5 flex items-center"><p class="m-0 leading-relaxed">Users found categories with <strong>ease</strong>; one suggested a <strong>shortcut to repeat</strong> the selection.</p></div>
-          </div>
-          <div class="grid md:grid-cols-[1fr_2.5rem_1fr] gap-3 md:gap-4 items-stretch" data-anim style="--i:5">
-            <div class="bg-elev rounded-2xl p-5 flex items-center"><p class="m-0 text-mute leading-relaxed"><span class="abadge a-a inline-flex align-middle mr-2">A</span>Only <strong class="text-ink">2/8</strong> found the filter view easier to compare — and they ignored the &lsquo;see-more&rsquo; CTA while comparing packages.</p></div>
-            <div class="hidden md:flex items-center justify-center text-ink/30 text-2xl" aria-hidden="true">→</div>
-            <div class="bg-accent text-accink rounded-2xl p-5 flex items-center"><p class="m-0 leading-relaxed">Most users expect offers to carry as much <strong>upfront information</strong> as possible.</p></div>
-          </div>
-          <div class="grid md:grid-cols-[1fr_2.5rem_1fr] gap-3 md:gap-4 items-stretch" data-anim style="--i:6">
-            <div class="bg-elev rounded-2xl p-5 flex items-center"><p class="m-0 text-mute leading-relaxed"><span class="abadge-stack mr-2" title="Variant B — usability test winner"><img class="abadge-crown" src="assets/olx/crown.png" alt="" width="22" height="22" decoding="async" aria-hidden="true"><span class="abadge a-b">B</span></span>With <strong class="text-ink">upfront category tags</strong>, 5/8 intuitively named categories as a variable for why price differs per package.</p></div>
-            <div class="hidden md:flex items-center justify-center text-ink/30 text-2xl" aria-hidden="true">→</div>
-            <div class="bg-accent text-accink rounded-2xl p-5 flex items-center"><p class="m-0 leading-relaxed">Users don&rsquo;t always tap see-more — a long list of category tags can also add cognitive load.</p></div>
+          <div data-anim style="--i:3">
+            <p class="text-sm font-bold uppercase tracking-[0.14em] text-mute mb-4">Takeaway</p>
+            <ul class="space-y-4">
+              <li class="flex gap-3"><span class="text-accent font-black">→</span><span class="text-mute leading-relaxed">Primary/secondary/tertiary categories got associated with filters — adding <strong class="text-ink">cognitive load</strong> and failing the hypothesis.</span></li>
+              <li class="flex gap-3"><span class="text-accent font-black">→</span><span class="text-mute leading-relaxed">Users found categories with <strong class="text-ink">ease</strong>; one suggested a <strong class="text-ink">shortcut to repeat</strong> the selection.</span></li>
+              <li class="flex gap-3"><span class="text-accent font-black">→</span><span class="text-mute leading-relaxed">Most users expect offers to carry as much <strong class="text-ink">upfront information</strong> as possible.</span></li>
+              <li class="flex gap-3"><span class="text-accent font-black">→</span><span class="text-mute leading-relaxed">Users don't always tap see-more — a long list of category tags can also add cognitive load.</span></li>
+            </ul>
           </div>
         </div>
-        <div class="grid grid-cols-2 gap-4 md:gap-6 mt-8" data-anim style="--i:7">
-          <figure class="relative m-0 test-photo-fig">
-            <span class="photo-variant-badge photo-variant-badge--a" aria-hidden="true"><span class="photo-variant-badge__letter">A</span></span>
-            <img loading="lazy" src="assets/olx/olx_test_a.png" alt="Moderated session — Variant A" data-lightbox class="w-full rounded-2xl border border-line cursor-zoom-in">
-          </figure>
-          <figure class="relative m-0 test-photo-fig test-photo-fig--winner">
-            <span class="photo-variant-badge photo-variant-badge--b photo-variant-badge--crown" title="Variant B — usability test winner">
-              <img class="abadge-crown" src="assets/olx/crown.png" alt="" width="28" height="28" decoding="async" aria-hidden="true">
-              <span class="photo-variant-badge__letter">B</span>
-            </span>
-            <img loading="lazy" src="assets/olx/olx_test_b.png" alt="Moderated session — Variant B, usability test winner" data-lightbox class="w-full rounded-2xl border border-line cursor-zoom-in">
-          </figure>
+        <div class="grid grid-cols-2 gap-4 md:gap-6 mt-8" data-anim style="--i:4">
+          <figure class="relative"><span class="abadge a-a absolute top-3 left-3 z-10">A</span><img loading="lazy" src="assets/olx/olx_test_a.png" alt="Moderated session — Variant A" data-lightbox class="w-full rounded-2xl border border-line"></figure>
+          <figure class="relative"><span class="abadge a-b absolute top-3 left-3 z-10">B</span><img loading="lazy" src="assets/olx/olx_test_b.png" alt="Moderated session — the winning Variant B" data-lightbox class="w-full rounded-2xl border border-line"></figure>
         </div>
       </div>
     </section>
 
-    <!-- CS 12 · PRODUCTION OUTCOME -->
-    <section class="slide" data-chapter="case-study" data-title="Production outcome">
-      <div class="slide-inner top !py-0 !px-0 !max-w-none !h-full">
-        <div class="grid md:grid-cols-[1.05fr_0.95fr] h-full min-h-0 md:h-full">
+    <!-- CS 12 · WORK IN PROGRESS -->
+    <section class="slide" data-chapter="case-study" data-title="Work in progress">
+      <div class="slide-inner top !py-0 !px-0 !max-w-none">
+        <div class="grid md:grid-cols-[1.1fr_1fr] md:h-full">
           <div class="order-2 md:order-1 flex flex-col justify-center px-[clamp(1.25rem,5vw,4rem)] py-[clamp(1.5rem,4vw,3rem)]">
             <p class="text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Outcome</p>
-            <h2 class="mt-4 text-3xl md:text-5xl font-extrabold tracking-tight max-w-[22ch]" data-anim style="--i:1">Validated on production</h2>
-            <p class="mt-5 text-xl md:text-2xl font-medium leading-snug max-w-[40ch]" data-anim style="--i:2">
-              Variant B went into an <span class="hl">A (Production) / B (Multi-level menu)</span> test in the Polish market — where we saw a <strong class="text-ink font-semibold">+12% upward trend</strong> in purchase conversion of Ad packages.
+            <h2 class="mt-4 text-3xl md:text-5xl font-extrabold tracking-tight" data-anim style="--i:1">Work in progress</h2>
+            <p class="mt-5 text-xl md:text-2xl font-medium leading-snug max-w-[34ch]" data-anim style="--i:2">
+              Variant B is in development for an <span class="hl">A (Production) / B (Multi-level menu)</span> test on production — Poland first.
             </p>
             <p class="mt-6 text-lg text-mute leading-relaxed max-w-[52ch]" data-anim style="--i:3">
-              Uplift in package conversion lifts Ads posted on the platform and translated into an <strong class="text-ink font-semibold">8% increase in paying Sellers</strong> 🍾
+              During testing, a user suggested a shortcut to repeat the selection. Data showed <strong class="text-ink font-semibold">~31% of B2C users</strong> make a repeat purchase — so we added a shortcut banner surfacing the last purchased Ad package.
             </p>
             <p class="mt-4 text-lg text-mute leading-relaxed max-w-[52ch]" data-anim style="--i:4">
-              Seller CSAT rose <strong class="text-ink font-semibold">0.6 points</strong> as well 🎉 The winning version is gradually rolling out across all other markets.
+              A package-recommendation feature is under moderation and rolling out across the Polish market. The same category-selection logic was adopted for mobile.
             </p>
-            <div class="mini-card csat-outcome-card mt-8 p-5 self-start" data-anim style="--i:5">
-              <p class="font-bold text-ink text-sm leading-tight">Customer Satisfaction</p>
-              <p class="csat-outcome-q">When you think about your most recent experience with our platform, how would you rate your overall satisfaction with it? On a scale of 0 to 10</p>
-              <svg viewBox="0 0 120 72" role="img" aria-label="Customer Satisfaction score 7.9 out of 10">
-                <path d="M10 62 A50 50 0 0 1 110 62" fill="none" stroke="#e7e7e7" stroke-width="10" stroke-linecap="round"/>
-                <path class="csat-arc" d="M10 62 A50 50 0 0 1 99 28" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100" fill="none" stroke="#1a9e5a" stroke-width="10" stroke-linecap="round"/>
-                <text x="60" y="58" text-anchor="middle" font-size="20" font-weight="800" fill="#123b4d">7.9</text>
-              </svg>
-            </div>
           </div>
-          <figure class="order-1 md:order-2 panel-problem-stat relative flex items-center justify-center p-5 md:p-8 min-h-[300px] h-full m-0" data-anim style="--i:2">
-            <img loading="lazy" src="assets/olx/graph_solv.png" alt="Conversion uplift in the buy-package flow after Variant B — +12% trend in Ad package purchase conversion" data-lightbox class="relative z-10 w-full max-w-[min(100%,26rem)] drop-shadow-2xl shadow-ink/20 cursor-zoom-in">
-          </figure>
-        </div>
-      </div>
-    </section>
-
-    <!-- CS 13 · CASE-STUDY WRAP-UP -->
-    <section class="slide slide-bg-sage text-ink" data-chapter="case-study" data-title="Wrap-up">
-      <div class="slide-inner text-center items-center" style="padding-bottom:calc(4.5rem + env(safe-area-inset-bottom, 0px))">
-        <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">OLX · Pay &amp; Ship</p>
-        <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4 max-w-[24ch] mx-auto text-ink" data-anim style="--i:1">
-          From category drop-off to production uplift
-        </h2>
-        <p class="text-lg text-ink/85 leading-relaxed max-w-[62ch] mx-auto mb-10" data-anim style="--i:2">
-          We reframed how Sellers pick categories when buying Ad packages — desktop-first exploration, moderated usability, and an in-market A/B that lifted package conversion and CSAT. The same interaction patterns are rolling out on web and mobile across OLX markets.
-        </p>
-
-        <div class="flex flex-wrap items-center justify-center gap-3 md:gap-4" data-anim style="--i:3">
-          <button type="button" data-goto="Workshop!" class="inline-flex items-center gap-2 text-base font-bold px-6 py-3.5 md:px-7 rounded-full bg-accent !text-ink hover:brightness-105 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink/20 focus-visible:ring-offset-2 focus-visible:ring-offset-[#CDE3C4] transition-all">
-            See highlights <span class="!text-ink" aria-hidden="true">→</span>
-          </button>
-          <button type="button" data-goto="Thanks" class="inline-flex items-center gap-2 text-base font-semibold px-6 py-3.5 md:px-7 rounded-full border border-ink/25 !text-ink hover:border-accent hover:bg-[#fff3b0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink/20 focus-visible:ring-offset-2 focus-visible:ring-offset-[#CDE3C4] transition-colors">
-            Skip to end
-          </button>
+          <div class="order-1 md:order-2 panel-wheat flex items-center justify-center gap-4 md:gap-6 px-[clamp(1.25rem,4vw,3rem)] py-[clamp(1.5rem,4vw,3rem)] min-h-[260px]" data-anim style="--i:2">
+            <img loading="lazy" src="assets/olx/olx_shortcut.png" alt="Repeat-purchase shortcut banner showing the last purchased Ad package" data-lightbox class="relative z-10 w-[58%] max-w-[300px] rounded-xl border border-line shadow-lg bg-white">
+            <img loading="lazy" src="assets/olx/olx_mobile.png" alt="Multi-level category selection adopted on mobile" data-lightbox class="relative z-10 w-[36%] max-w-[190px] rounded-xl border border-line shadow-lg bg-white">
+          </div>
         </div>
       </div>
     </section>
 
     <!-- ===================== CHAPTER · HIGHLIGHTS (after the case study) ===================== -->
 
-    <!-- HIGHLIGHT 01 · Workshop — auto-extend sprint -->
-    <section class="slide hl-slide hl-slide--1" data-chapter="highlights" data-title="Workshop!">
-      <img class="hl-slide__bg" src="assets/olx/OLX%20Highlights%20-%204.png" alt="Workshop board — cross-pillar design sprint for auto-extend and Pay if you sell" loading="lazy" decoding="async">
-      <img class="hl-slide__sticker" src="assets/olx/workshop-1.png" alt="" width="184" height="184" decoding="async" aria-hidden="true">
-      <div class="slide-inner">
-        <h2 class="hl-slide__headline" data-anim style="--i:0">Workshop!</h2>
-        <div class="hl-overlay hl-overlay--dock" data-anim style="--i:1">
-          <p class="hl-overlay__lead">Lead a cross-pillar design-sprint resulting in auto-extend feature for &lsquo;Pay if you sell&rsquo; model.</p>
-          <p class="hl-overlay__sub">Monetisation packs · Sellers success domain</p>
+    <!-- HIGHLIGHT 01 · Workshop — cross-pillar design sprint (auto-extend) -->
+    <section class="slide bg-elev" data-chapter="highlights" data-title="Highlight · Auto-extend sprint">
+      <div class="slide-inner !py-0 !px-0 !max-w-none">
+        <div class="flex-1 min-h-0 flex items-center justify-center p-4 md:p-8">
+          <img loading="lazy" decoding="async" src="assets/olx/highlight-workshop-2-brainstorm.png" alt="Workshop highlight — led a cross-pillar design sprint that shipped the AutoExtend ‘Pay if you sell’ feature: 300K additional Ads per month now on auto, and reactivation up from 67% to 77% over four months of moderation" data-lightbox class="max-w-full max-h-full object-contain rounded-xl border border-line shadow-xl shadow-ink/10 cursor-zoom-in">
         </div>
       </div>
     </section>
 
-    <!-- HIGHLIGHT 02 · Workshop — Figma master pages -->
-    <section class="slide hl-slide hl-slide--2" data-chapter="highlights" data-title="Workshop! Workshop!">
-      <img class="hl-slide__bg" src="assets/olx/OLX%20Highlights%20-%205.png" alt="Workshop — aligning ways of working and Figma master pages across pillars" loading="lazy" decoding="async">
-      <img class="hl-slide__sticker" src="assets/olx/nexus.png" alt="Nexus — cross-pillar design collaboration" loading="lazy" decoding="async">
-      <div class="slide-inner">
-        <h2 class="hl-slide__headline" data-anim style="--i:0">Workshop! Workshop!</h2>
-        <div class="hl-overlay hl-overlay--dock" data-anim style="--i:1">
-          <p class="hl-overlay__lead">Lead a designer group to align ways of working to create &amp; maintain master pages on Figma</p>
-          <p class="hl-overlay__sub">12 Product designers across Pay&amp;Ship, Engagment and Core</p>
+    <!-- HIGHLIGHT 02 · Workshop — align ways of working (Figma master pages) -->
+    <section class="slide" data-chapter="highlights" data-title="Highlight · Ways of working">
+      <div class="slide-inner !py-0 !px-0 !max-w-none">
+        <div class="flex-1 min-h-0 flex items-center justify-center p-4 md:p-8">
+          <img loading="lazy" decoding="async" src="assets/olx/highlight-ways-of-working.png" alt="Workshop highlight — led a designer group of 12 across Pay&amp;Ship, Engagement and Core to align ways of working and create &amp; maintain Figma master pages, with Figma Master Page Guidelines" data-lightbox class="max-w-full max-h-full object-contain rounded-xl border border-line shadow-xl shadow-ink/10 cursor-zoom-in">
         </div>
       </div>
     </section>
 
-    <!-- HIGHLIGHT 03 · Workshop — design principles -->
-    <section class="slide hl-slide hl-slide--3" data-chapter="highlights" data-title="Workshop! Workshop! Workshop!">
-      <img class="hl-slide__bg" src="assets/olx/OLX%20Highlights%20-%206.png" alt="Design principles workshop — clarity, simplicity, integration, care, and progressive discoverability" loading="lazy" decoding="async">
-      <div class="slide-inner">
-        <h2 class="hl-slide__headline" data-anim style="--i:0">Workshop! Workshop! Workshop!</h2>
-        <div class="hl-principles-row" data-anim style="--i:1">
-          <div class="hl-principles-track">
-            <article class="hl-principle">
-              <h3><span style="color:#0073CE">Increase confidence</span> through clarity.</h3>
-              <p>At OLX, we prioritize clarity at every level – within our ecosystem and across teams. It&rsquo;s essential that everyone understands what&rsquo;s happening and why.</p>
-            </article>
-            <article class="hl-principle">
-              <h3><span style="color:#00A624">Keep it simple</span></h3>
-              <p>We embrace simplicity as the foundation of our design philosophy. When something is intuitively designed, it just feels right. This simplicity leads to a genuine and timeless user experience.</p>
-            </article>
-            <article class="hl-principle">
-              <h3><span style="color:#FE2626">Harmonious</span> Integration</h3>
-              <p>Each component is a part of a larger whole, and it should seamlessly contribute to the overall system. There are no isolated features or exceptions; everything works together cohesively.</p>
-            </article>
-            <article class="hl-principle">
-              <h3><span style="color:#E960FF">Takes care</span> of you</h3>
-              <p>OLX champions its users — their security, privacy, and empower trust in trade. It makes sensible decisions for you that respect your time, data, and attention.</p>
-            </article>
-            <article class="hl-principle">
-              <h3><span style="color:#B7BA28">Empower everyone through progressive discoverability</span>.</h3>
-              <p>Everyone at all levels of experience with OLX should feel like they know how to use the product, regardless of how many features they use.</p>
-            </article>
-          </div>
-        </div>
-        <div class="hl-overlay hl-overlay--dock" data-anim style="--i:2">
-          <p class="hl-overlay__lead">Co-lead design principal workshop</p>
-          <p class="hl-overlay__sub">2 Heads of Design, 4 Design leads and 4 Sr. Product Designers</p>
+    <!-- HIGHLIGHT 03 · Workshop — co-led design principles -->
+    <section class="slide bg-elev" data-chapter="highlights" data-title="Highlight · Design principles">
+      <div class="slide-inner !py-0 !px-0 !max-w-none">
+        <div class="flex-1 min-h-0 flex items-center justify-center p-4 md:p-8">
+          <img loading="lazy" decoding="async" src="assets/olx/highlight-design-principles.png" alt="Workshop highlight — co-led the design-principles workshop with 2 Heads of Design, 4 Design leads and 4 Sr. Product Designers, defining five principles: increase confidence through clarity, keep it simple, harmonious integration, takes care of you, and empower everyone through progressive discoverability" data-lightbox class="max-w-full max-h-full object-contain rounded-xl border border-line shadow-xl shadow-ink/10 cursor-zoom-in">
         </div>
       </div>
     </section>
@@ -1444,27 +893,20 @@
 
   /* ---------- grouped dots ---------- */
   const dots = [];
-  const dotSegmentsForChapter = (ch) => {
-    const homeInCh = ch.slides.filter((idx) => slides[idx].hasAttribute("data-home-slide"));
-    const restInCh = ch.slides.filter((idx) => !slides[idx].hasAttribute("data-home-slide"));
-    return homeInCh.length && restInCh.length ? [homeInCh, restInCh] : [ch.slides];
-  };
   chapters.forEach((ch) => {
-    dotSegmentsForChapter(ch).forEach((indices) => {
-      const group = document.createElement("div");
-      group.className = "dot-group";
-      indices.forEach((idx) => {
-        const b = document.createElement("button");
-        b.className = "dot";
-        b.type = "button";
-        b.setAttribute("aria-label", ("Go to slide " + (idx + 1) + ": " + (slides[idx].dataset.title || "")).trim());
-        b.dataset.tip = pad(idx + 1) + " · " + (slides[idx].dataset.title || ("Slide " + (idx + 1)));
-        b.addEventListener("click", () => go(idx));
-        group.appendChild(b);
-        dots[idx] = b;
-      });
-      dotsWrap.appendChild(group);
+    const group = document.createElement("div");
+    group.className = "dot-group";
+    ch.slides.forEach((idx) => {
+      const b = document.createElement("button");
+      b.className = "dot";
+      b.type = "button";
+      b.setAttribute("aria-label", ("Go to slide " + (idx + 1) + ": " + (slides[idx].dataset.title || "")).trim());
+      b.dataset.tip = pad(idx + 1) + " · " + (slides[idx].dataset.title || ("Slide " + (idx + 1)));
+      b.addEventListener("click", () => go(idx));
+      group.appendChild(b);
+      dots[idx] = b;
     });
+    dotsWrap.appendChild(group);
   });
   totNum.textContent = pad(N);
 
@@ -1498,27 +940,10 @@
       if (badge) badge.textContent = onHome ? (homePos + 1) + "/" + homeIndices.length : "";
     });
     if (history.replaceState) history.replaceState(null, "", "#" + (i + 1));
-    document.querySelectorAll("video[data-autoplay]").forEach((v) => {
-      const onActive = v.closest(".slide")?.classList.contains("is-active");
-      if (onActive) {
-        const p = v.play();
-        if (p && p.catch) p.catch(() => {});
-      } else {
-        v.pause();
-      }
-    });
   }
   function go(n) { i = Math.max(0, Math.min(N - 1, n)); render(); }
   const next = () => go(i + 1);
   const prev = () => go(i - 1);
-
-  document.querySelectorAll("[data-goto]").forEach((el) => {
-    el.addEventListener("click", () => {
-      const title = el.getAttribute("data-goto");
-      const idx = slides.findIndex((s) => s.dataset.title === title);
-      if (idx >= 0) go(idx);
-    });
-  });
 
   prevBtns.forEach((b) => b.addEventListener("click", prev));
   nextBtns.forEach((b) => b.addEventListener("click", next));
@@ -1606,141 +1031,6 @@
       it.addEventListener("mouseenter", () => activate(n));
       it.addEventListener("focus", () => activate(n));
       it.addEventListener("click", () => activate(n));
-    });
-  })();
-
-  /* ---------- Variant A/B prototype frame cycling (slide 12) ---------- */
-  (function () {
-    const FRAMES = {
-      a: [1, 2, 3, 4, 5].map((n) => "assets/olx/va-" + n + ".png"),
-      b: [1, 2, 3, 4, 5].map((n) => "assets/olx/oob-" + n + ".png"),
-    };
-    const idx = { a: 0, b: 0 };
-    function render(key) {
-      const img = document.querySelector('[data-proto-img="' + key + '"]');
-      const step = document.querySelector('[data-proto-step="' + key + '"]');
-      if (!img || !FRAMES[key]) return;
-      img.src = FRAMES[key][idx[key]];
-      img.alt =
-        "Variant " + (key === "a" ? "A" : "B") + " prototype, frame " + (idx[key] + 1) + " of 5";
-      if (step) step.textContent = String(idx[key] + 1);
-      const stage = img.closest(".proto-stage");
-      if (stage && typeof stage._protoRefreshLens === "function") {
-        stage._protoRefreshLens();
-      }
-    }
-    function next(key) {
-      idx[key] = (idx[key] + 1) % FRAMES[key].length;
-      render(key);
-    }
-    function reset(key) {
-      idx[key] = 0;
-      render(key);
-    }
-    document.querySelectorAll("[data-proto-cycle]").forEach((btn) => {
-      btn.addEventListener("click", () => next(btn.dataset.protoCycle));
-    });
-    document.querySelectorAll("[data-proto-reset]").forEach((btn) => {
-      btn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        reset(btn.dataset.protoReset);
-      });
-    });
-
-    const ZOOM = 2.35;
-    const canMagnify = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-    function protoImageBox(img, root) {
-      const rr = root.getBoundingClientRect();
-      const ir = img.getBoundingClientRect();
-      if (!ir.width || !ir.height) return null;
-      return {
-        left: ir.left - rr.left,
-        top: ir.top - rr.top,
-        width: ir.width,
-        height: ir.height,
-      };
-    }
-    function clearLens(stage) {
-      stage.classList.remove("is-magnifying");
-    }
-    if (canMagnify) {
-      document.querySelectorAll(".proto-stage").forEach((stage) => {
-        const inner = stage.querySelector(".proto-stage__inner");
-        const img = stage.querySelector("[data-proto-img]");
-        const lens = stage.querySelector(".proto-lens");
-        if (!inner || !img || !lens) return;
-        stage._protoMagnifyEnabled = true;
-        const lensSize = () => lens.offsetWidth || 420;
-        let lastPointer = null;
-        function updateLens(e) {
-          if (!e || !stage._protoMagnifyEnabled) {
-            clearLens(stage);
-            return;
-          }
-          const sr = stage.getBoundingClientRect();
-          const ir = inner.getBoundingClientRect();
-          const x = e.clientX - ir.left;
-          const y = e.clientY - ir.top;
-          const box = protoImageBox(img, inner);
-          if (!box) {
-            clearLens(stage);
-            return;
-          }
-          const ix = x - box.left;
-          const iy = y - box.top;
-          if (ix < 0 || iy < 0 || ix > box.width || iy > box.height) {
-            clearLens(stage);
-            return;
-          }
-          const size = lensSize();
-          const half = size / 2;
-          const lensX = e.clientX - sr.left;
-          const lensY = e.clientY - sr.top;
-          stage.classList.add("is-magnifying");
-          lens.style.left = lensX - half + "px";
-          lens.style.top = lensY - half + "px";
-          lens.style.backgroundImage = 'url("' + (img.currentSrc || img.src) + '")';
-          lens.style.backgroundSize = box.width * ZOOM + "px " + box.height * ZOOM + "px";
-          lens.style.backgroundPosition =
-            -(ix * ZOOM - half) + "px " + -(iy * ZOOM - half) + "px";
-        }
-        function move(e) {
-          lastPointer = { clientX: e.clientX, clientY: e.clientY };
-          updateLens(e);
-        }
-        stage._protoRefreshLens = function () {
-          if (lastPointer && stage.matches(":hover") && stage._protoMagnifyEnabled) {
-            updateLens(lastPointer);
-          } else if (!stage._protoMagnifyEnabled) {
-            clearLens(stage);
-          }
-        };
-        stage.addEventListener("mouseenter", move);
-        stage.addEventListener("mousemove", move);
-        stage.addEventListener("mouseleave", () => {
-          lastPointer = null;
-          clearLens(stage);
-        });
-        img.addEventListener("load", () => stage._protoRefreshLens());
-      });
-    }
-
-    document.querySelectorAll("[data-proto-magnify]").forEach((btn) => {
-      btn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        const key = btn.dataset.protoMagnify;
-        const stage = document.querySelector('[data-proto-cycle="' + key + '"]');
-        const on = btn.getAttribute("aria-pressed") !== "true";
-        btn.setAttribute("aria-pressed", on ? "true" : "false");
-        btn.setAttribute(
-          "aria-label",
-          on ? "Magnifier on, click to turn off" : "Magnifier off, click to turn on"
-        );
-        if (stage) {
-          stage._protoMagnifyEnabled = on;
-          if (!on) clearLens(stage);
-        }
-      });
     });
   })();
 

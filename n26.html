@@ -355,7 +355,7 @@
     <!-- ===== SLIDE 04 · Case study cover · Multi-activity Feed (CS-1) ===== -->
     <section class="slide bg-[#F1E0CA] text-accink" data-chapter="case-study" data-title="Case study · Multi-activity Feed">
       <div class="slide-inner">
-        <div class="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
+        <div class="grid md:grid-cols-2 gap-8 md:gap-16 items-end">
           <div>
             <h2 class="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.08] max-w-[16ch]" data-anim style="--i:0">Multi-activity Feed</h2>
             <p class="mt-6 text-xl md:text-2xl font-semibold max-w-[40ch]" data-anim style="--i:2">Evolving the Main Account Feed into an All-Activity Feed.</p>
@@ -370,8 +370,13 @@
               <p class="text-accink/80 leading-relaxed">Rubin (Illustrator), Katie (UX Writer), Mireia (Researcher), Lea (PM), Dan (CPO), Engineering (FE & QE — most collaborated with) and the Data Science team.</p>
             </div>
           </div>
-          <div class="mx-auto w-full max-w-[440px]" data-anim style="--i:3">
-            <img src="assets/n26/N26-Infocard.png" alt="Illustration of an N26 customer checking their multi-activity feed notifications on their phone" data-lightbox class="w-full h-auto max-h-[70vh] object-contain cursor-zoom-in" loading="lazy">
+          <div class="relative mx-auto w-full max-w-[620px] min-h-[340px] md:min-h-[400px]" data-anim style="--i:3">
+            <img src="assets/n26/N26-Infocard.png" alt="Illustration of an N26 customer checking their multi-activity feed notifications on their phone" data-lightbox class="absolute bottom-0 z-0 h-auto w-full object-contain object-bottom cursor-zoom-in" style="left:50%;max-width:310px" loading="lazy">
+            <div class="phone-mock absolute z-20 bottom-0 !max-w-[285px] !mx-0 pointer-events-none" style="left:20%">
+              <video loop data-autoplay muted playsinline preload="metadata" tabindex="-1" aria-hidden="true" class="pointer-events-none">
+                <source src="assets/n26/final.mov" type="video/mp4">
+              </video>
+            </div>
           </div>
         </div>
       </div>
@@ -694,16 +699,16 @@
 
     <!-- ===== SLIDE 16 · Case-study wrap-up ===== -->
     <section class="slide bg-[#F1E0CA] text-accink" data-chapter="case-study" data-title="Wrap-up">
-      <div class="slide-inner">
+      <div class="slide-inner text-center items-center">
         <p class="text-accink/60 text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Case study · wrap-up</p>
-        <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4 max-w-[22ch]" data-anim style="--i:1">
+        <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4 max-w-[22ch] mx-auto" data-anim style="--i:1">
           Researched, shipped, and measured
         </h2>
-        <p class="text-accink/80 text-lg leading-relaxed max-w-[60ch] mb-10" data-anim style="--i:2">
+        <p class="text-accink/80 text-lg leading-relaxed max-w-[60ch] mx-auto mb-10" data-anim style="--i:2">
           The Multi-activity Feed launched into production and rolled out across Europe — grounded in research, validated in testing, and shaped with the whole team.
         </p>
 
-        <div class="flex flex-wrap items-center gap-4" data-anim style="--i:3">
+        <div class="flex flex-wrap items-center justify-center gap-4" data-anim style="--i:3">
           <button type="button" data-goto="Highlight · MoneyBeam Reactions" class="inline-flex items-center gap-2 text-base font-bold px-7 py-3.5 rounded-full bg-accent !text-[#262626] hover:brightness-105 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accink/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#F1E0CA] transition-all">See highlights <span aria-hidden="true">→</span></button>
           <button type="button" data-goto="Thanks" class="inline-flex items-center gap-2 text-base font-semibold px-7 py-3.5 rounded-full border border-accink/25 !text-[#262626] hover:border-accent hover:bg-[#fff3b0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accink/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#F1E0CA] transition-colors">Skip to end</button>
         </div>
@@ -917,21 +922,28 @@
 
   /* ---------- grouped dots (hover shows the slide title) ---------- */
   const dots = [];
+  const dotSegmentsForChapter = (ch) => {
+    const homeInCh = ch.slides.filter((idx) => slides[idx].hasAttribute("data-home-slide"));
+    const restInCh = ch.slides.filter((idx) => !slides[idx].hasAttribute("data-home-slide"));
+    return homeInCh.length && restInCh.length ? [homeInCh, restInCh] : [ch.slides];
+  };
   chapters.forEach((ch) => {
-    const group = document.createElement("div");
-    group.className = "dot-group";
-    ch.slides.forEach((idx) => {
-      const b = document.createElement("button");
-      b.className = "dot";
-      b.type = "button";
-      const label = slides[idx].dataset.title || ("Slide " + (idx + 1));
-      b.setAttribute("aria-label", "Go to slide " + (idx + 1) + ": " + label);
-      b.dataset.tip = pad(idx + 1) + " · " + label;
-      b.addEventListener("click", () => go(idx));
-      group.appendChild(b);
-      dots[idx] = b;
+    dotSegmentsForChapter(ch).forEach((indices) => {
+      const group = document.createElement("div");
+      group.className = "dot-group";
+      indices.forEach((idx) => {
+        const b = document.createElement("button");
+        b.className = "dot";
+        b.type = "button";
+        const label = slides[idx].dataset.title || ("Slide " + (idx + 1));
+        b.setAttribute("aria-label", "Go to slide " + (idx + 1) + ": " + label);
+        b.dataset.tip = pad(idx + 1) + " · " + label;
+        b.addEventListener("click", () => go(idx));
+        group.appendChild(b);
+        dots[idx] = b;
+      });
+      dotsWrap.appendChild(group);
     });
-    dotsWrap.appendChild(group);
   });
   totNum.textContent = pad(N);
 

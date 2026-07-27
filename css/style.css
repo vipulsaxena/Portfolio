@@ -1417,6 +1417,25 @@
     .liquid .lg-ripple { display: none; }
 }
 
+/* ADPList mentoring reviews embed (About) — full content width, no max-width cap */
+.mentoring-reviews-embed {
+    box-shadow: rgba(142, 151, 158, 0.15) 0 4px 19px 0;
+    border-radius: 16px;
+    overflow: hidden;
+    width: 100%;
+    max-width: 100%;
+    height: 49.6rem;
+    padding: 1.6rem;
+    box-sizing: border-box;
+}
+.mentoring-reviews-embed iframe {
+    border: 0;
+    display: block;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 100%;
+}
+
 /* ============================================================
    HERO META  —  code-adjacent signature strings
    ============================================================ */

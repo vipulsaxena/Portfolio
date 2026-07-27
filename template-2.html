@@ -496,21 +496,28 @@
 
   /* ---------- grouped dots (hover shows the slide title) ---------- */
   const dots = [];
+  const dotSegmentsForChapter = (ch) => {
+    const homeInCh = ch.slides.filter((idx) => slides[idx].hasAttribute("data-home-slide"));
+    const restInCh = ch.slides.filter((idx) => !slides[idx].hasAttribute("data-home-slide"));
+    return homeInCh.length && restInCh.length ? [homeInCh, restInCh] : [ch.slides];
+  };
   chapters.forEach((ch) => {
-    const group = document.createElement("div");
-    group.className = "dot-group";
-    ch.slides.forEach((idx) => {
-      const b = document.createElement("button");
-      b.className = "dot";
-      b.type = "button";
-      const label = slides[idx].dataset.title || ("Slide " + (idx + 1));
-      b.setAttribute("aria-label", "Go to slide " + (idx + 1) + ": " + label);
-      b.dataset.tip = pad(idx + 1) + " · " + label;
-      b.addEventListener("click", () => go(idx));
-      group.appendChild(b);
-      dots[idx] = b;
+    dotSegmentsForChapter(ch).forEach((indices) => {
+      const group = document.createElement("div");
+      group.className = "dot-group";
+      indices.forEach((idx) => {
+        const b = document.createElement("button");
+        b.className = "dot";
+        b.type = "button";
+        const label = slides[idx].dataset.title || ("Slide " + (idx + 1));
+        b.setAttribute("aria-label", "Go to slide " + (idx + 1) + ": " + label);
+        b.dataset.tip = pad(idx + 1) + " · " + label;
+        b.addEventListener("click", () => go(idx));
+        group.appendChild(b);
+        dots[idx] = b;
+      });
+      dotsWrap.appendChild(group);
     });
-    dotsWrap.appendChild(group);
   });
   totNum.textContent = pad(N);
 
