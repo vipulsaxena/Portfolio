@@ -515,8 +515,9 @@
      background: radial-gradient(circle at center, #000 1px, transparent 1.4px);
      transform: scale(1);
      transform-origin: center;
-     transition: transform 0.2s cubic-bezier(0.22, 0.61, 0.36, 1);
-     will-change: transform;
+     transition: transform 0.2s cubic-bezier(0.22, 0.61, 0.36, 1),
+         background 0.18s ease;
+     will-change: transform, background;
 }
  /* Intro: dots fade in row after row on first load */
  .patterns--dots.dots-intro .d {

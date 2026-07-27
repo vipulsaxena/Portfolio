@@ -408,12 +408,23 @@ if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
 }
 
 // Keep the "ai colors" button badge in sync with the orb's active primary color
+function publishOrbPalette() {
+  window.OrbPalette = {
+    base: colorPalette.baseColor,
+    colors: colorPalette.colorChoices.slice()
+  };
+  window.dispatchEvent(
+    new CustomEvent("orb-palette-change", { detail: window.OrbPalette })
+  );
+}
+
 function updateColorBadge() {
   document.querySelectorAll(".orb-cta .dot").forEach((dot) => {
     dot.style.background = colorPalette.baseColor;
   });
 }
 updateColorBadge();
+publishOrbPalette();
 
 const colorsBtns = document.querySelectorAll(".overlay__btn--colors");
 colorsBtns.forEach((colorsBtn) => {
@@ -426,5 +437,6 @@ colorsBtns.forEach((colorsBtn) => {
     });
 
     updateColorBadge();
+    publishOrbPalette();
   });
 });
