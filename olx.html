@@ -259,6 +259,21 @@
       .csat-outcome-card .csat-outcome-q{ font-size:.72rem; line-height:1.5; color:#6e6e6e; font-style:italic; margin-top:.5rem; }
       .csat-outcome-card svg{ display:block; width:100%; max-width:11rem; margin:.85rem auto 0; }
 
+      /* Next steps — bg9 panel + desktop/mobile composite flush left */
+      .panel-next-steps{
+        background:#e8ecef url("assets/olx/bg9.png") center / cover no-repeat;
+        overflow:hidden;
+      }
+      .panel-next-steps .next-steps-combo{
+        position:relative; z-index:10; display:block;
+        align-self:center; margin:0;
+        width:auto; max-width:90%; height:auto;
+        max-height:min(calc(100dvh - var(--deck-top) - 5rem), 100%);
+        object-fit:contain; object-position:left center;
+        filter:drop-shadow(0 18px 40px rgba(0,0,0,.14));
+        cursor:zoom-in;
+      }
+
       /* Desktop directions — 3 hypothesis cards (slide 11), full-width stack + scroll */
       .slide-hypo .slide-inner{ justify-content:flex-start; padding-bottom:calc(5rem + env(safe-area-inset-bottom, 0px)); }
       .slide-hypo .hypo-intro{ color:#262626; font-size:1rem; line-height:1.55; margin:0 0 1.25rem; max-width:72ch; position:relative; z-index:2; }
@@ -913,7 +928,7 @@
             <p class="text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Research</p>
             <h2 class="mt-3 text-2xl md:text-4xl font-extrabold tracking-tight max-w-[24ch]" data-anim style="--i:1">Initiate research — Jobs to be Done</h2>
             <p class="mt-4 text-base md:text-lg text-mute leading-relaxed max-w-[70ch]" data-anim style="--i:2">
-              To begin, I ran <strong class="text-ink font-semibold">12 B2C &amp; C2C Seller interviews</strong> to understand their <strong class="text-ink font-semibold">Desires, Limitations and Catalysts</strong> when selling on OLX — with emphasis on the monetisation flows.
+              To begin, we ran <strong class="text-ink font-semibold">12 B2C &amp; C2C Seller interviews</strong> to understand their <strong class="text-ink font-semibold">Desires, Limitations and Catalysts</strong> when selling on OLX — with emphasis on the monetisation flows.
             </p>
             <div class="mt-8" data-anim style="--i:3">
               <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -1157,7 +1172,7 @@
     <section class="slide" data-chapter="case-study" data-title="Usability test">
       <div class="slide-inner" style="justify-content:flex-start">
         <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Test</p>
-        <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-8 max-w-[28ch]" data-anim style="--i:1">We tested 2 concepts for usability with <span class="hl">10 users</span></h2>
+        <h2 class="w-full max-w-none text-2xl md:text-4xl font-extrabold tracking-tight mb-8" data-anim style="--i:1">We tested 2 concepts for usability with <span class="hl">10 users</span></h2>
         <!-- Each insight paired with the takeaway it drove -->
         <div class="hidden md:grid md:grid-cols-[1fr_2.5rem_1fr] gap-4 mb-3" data-anim style="--i:2">
           <p class="text-xs font-bold uppercase tracking-[0.18em] text-mute">Insight</p>
@@ -1230,6 +1245,30 @@
           </div>
           <figure class="order-1 md:order-2 panel-problem-stat relative flex items-center justify-center p-5 md:p-8 min-h-[300px] h-full m-0" data-anim style="--i:2">
             <img loading="lazy" src="assets/olx/graph_solv.png" alt="Conversion uplift in the buy-package flow after Variant B — +12% trend in Ad package purchase conversion" data-lightbox class="relative z-10 w-full max-w-[min(100%,26rem)] drop-shadow-2xl shadow-ink/20 cursor-zoom-in">
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- CS 12b · NEXT STEPS — repeat purchase & recommendations -->
+    <section class="slide slide-next-steps" data-chapter="case-study" data-title="Next steps">
+      <div class="slide-inner top !py-0 !px-0 !max-w-none !h-full">
+        <div class="grid md:grid-cols-[1.05fr_0.95fr] h-full min-h-0 md:h-full">
+          <div class="order-2 md:order-1 flex flex-col justify-center px-[clamp(1.25rem,5vw,4rem)] py-[clamp(1.5rem,4vw,3rem)]">
+            <p class="text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">After launch</p>
+            <h2 class="mt-4 text-3xl md:text-5xl font-extrabold tracking-tight max-w-[22ch]" data-anim style="--i:1">Next steps</h2>
+            <p class="mt-5 text-xl md:text-2xl font-medium leading-snug max-w-[40ch]" data-anim style="--i:2">
+              A usability participant flagged <strong class="text-ink font-semibold">repeat Ad package purchases</strong> — and data showed ~<strong class="text-ink font-semibold">31% of B2C Sellers</strong> were buying again.
+            </p>
+            <p class="mt-6 text-lg text-mute leading-relaxed max-w-[52ch]" data-anim style="--i:3">
+              We shipped a <strong class="text-ink font-semibold">shortcut banner</strong> for their last package — the first step toward <strong class="text-ink font-semibold">recommendations</strong> from Ad posting history.
+            </p>
+            <p class="mt-4 text-lg text-mute leading-relaxed max-w-[52ch]" data-anim style="--i:4">
+              Package recommendations are <strong class="text-ink font-semibold">in moderation</strong> and live in <strong class="text-ink font-semibold">Poland</strong>. The winning category-selection pattern is on <strong class="text-ink font-semibold">mobile</strong> too.
+            </p>
+          </div>
+          <figure class="order-1 md:order-2 panel-next-steps relative flex items-center justify-start min-h-[300px] h-full m-0" data-anim style="--i:2">
+            <img loading="lazy" decoding="async" src="assets/olx/comb_mob_desk.png" alt="Desktop and mobile buy-package flows — shortcut banner and aligned category selection" data-lightbox class="next-steps-combo">
           </figure>
         </div>
       </div>
