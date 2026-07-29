@@ -1327,6 +1327,118 @@
     cursor: pointer;
 }
 
+/* Lab & open work — compact 3-column grid */
+.more-work-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.6rem;
+    margin-top: 2.4rem;
+    list-style: none;
+    align-items: stretch;
+}
+@media screen and (max-width: 64rem) {
+    .more-work-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+@media screen and (max-width: 39rem) {
+    .more-work-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 1.2rem;
+    }
+}
+.post-item.more-work-card {
+    padding: 1.2rem;
+    height: 100%;
+}
+@media screen and (max-width: 39rem) {
+    .post-item.more-work-card {
+        padding: 1.2rem;
+    }
+}
+.more-work-card {
+    margin: 0;
+    border-radius: 8px;
+}
+.more-work-card__link {
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(0, 7fr);
+    gap: 1.2rem;
+    align-items: start;
+    height: 100%;
+    padding: 0;
+    text-decoration: none;
+    color: inherit;
+    background: transparent;
+}
+.more-work-card__body {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+.more-work-card__link:focus-visible {
+    outline: 2px solid #262626;
+    outline-offset: 3px;
+    border-radius: 0.6rem;
+}
+.more-work-card .ski-pill {
+    align-self: flex-start;
+    margin: 0.5rem 0 0.6rem;
+    padding: 0 8px;
+    line-height: 20px;
+    font-size: 12px;
+}
+.post-item.more-work-card figure.more-work-card__media {
+    position: relative;
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    aspect-ratio: 753 / 506;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    border-radius: 4px;
+    overflow: hidden;
+    background: transparent;
+    align-self: start;
+    justify-self: stretch;
+    line-height: 0;
+    -webkit-transition: none;
+    transition: none;
+}
+.post-item.more-work-card figure.more-work-card__media img {
+    position: static;
+    top: auto;
+    left: auto;
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    transform: none;
+    vertical-align: top;
+    border-radius: 0;
+}
+.more-work-card__title {
+    font-family: "Inter", sans-serif;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #262626;
+    margin: 0;
+    line-height: 1.25;
+}
+.more-work-card__desc {
+    font-family: "Inter", sans-serif;
+    font-size: 1.3rem;
+    line-height: 1.45;
+    color: #414141;
+    margin: 0;
+}
+.liquid.more-work-card::before,
+.liquid.post-item.more-work-card::before {
+    display: none !important;
+}
+
 /* ============================================================
    LIQUID GLASS  —  premium CSS glass (lightweight, no WebGL)
    ============================================================ */
