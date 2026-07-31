@@ -170,7 +170,7 @@
                             <li class="infos">
                                 <p class="title">Growing OLX's paying sellers<span class="status-icon status-icon-lock"></span></p>
                                 <p class="description">Led Engagement & Monetisation design in Pay & Ship across OLX’s 17-country marketplace — Ad Package drop-off work via research and A/B tests, Seller-take-rate AutoExtend, and DesignOps workshops, with winning patterns rolling out to more markets.</p>
-                                <button type="button" class="card-cta" id="olx-gate-trigger" aria-haspopup="dialog" aria-controls="olxPwModal">🔓 Enter password →</button>
+                                <button type="button" class="card-cta" id="olx-gate-trigger" aria-haspopup="dialog" aria-controls="olxPwModal"><span class="status-icon status-icon-lock card-cta__lock" aria-hidden="true"></span> Enter case study</button>
                             </li>
                         </ul>
                     </a>
@@ -188,7 +188,7 @@
                             <li class="infos">
                                 <p class="title">Home-feed evolution at N26<span class="status-icon status-icon-lock"></span></p>
                                 <p class="description">Evolved N26’s home feed for 25 European markets — surfacing activity across spaces, IBANs, and cards from Germany outward — alongside MoneyBeam, crypto activity, and transaction search improvements.</p>
-                                <button type="button" class="card-cta" id="n26-gate-trigger" aria-haspopup="dialog" aria-controls="n26PwModal">🔓 Enter password →</button>
+                                <button type="button" class="card-cta" id="n26-gate-trigger" aria-haspopup="dialog" aria-controls="n26PwModal"><span class="status-icon status-icon-lock card-cta__lock" aria-hidden="true"></span> Enter case study</button>
                             </li>
                         </ul>
                     </a>
@@ -381,13 +381,21 @@
       .pw-modal{ position:fixed; inset:0; z-index:10000; display:none; align-items:center; justify-content:center; padding:5vw; font-family:"Inter", sans-serif; }
       .pw-modal.open{ display:flex; }
       .pw-backdrop{ position:absolute; inset:0; background:rgba(38,38,38,.55); -webkit-backdrop-filter:blur(4px); backdrop-filter:blur(4px); }
-      .pw-card{ position:relative; z-index:1; width:100%; max-width:520px; background:#fff; border:1px solid #e7e7e7; border-radius:24px; padding:40px; box-shadow:0 30px 60px -20px rgba(0,0,0,.35); }
+      .pw-card{ position:relative; z-index:1; width:100%; max-width:520px; background:#fff; border:1px solid #e7e7e7; border-radius:8px; padding:40px; box-shadow:0 30px 60px -20px rgba(0,0,0,.35); }
+      .pw-card--preview{ max-width:min(920px, 94vw); padding:48px 56px 56px; }
+      .pw-card--preview .pw-preview{ position:relative; margin:0 -56px 36px 0; width:calc(100% + 56px); overflow:hidden; -webkit-mask-image:linear-gradient(to right, #000 0%, #000 72%, rgba(0,0,0,.5) 88%, transparent 100%); mask-image:linear-gradient(to right, #000 0%, #000 72%, rgba(0,0,0,.5) 88%, transparent 100%); }
+      .pw-preview__track{ display:flex; align-items:flex-start; gap:10px; width:100%; padding:0; box-sizing:border-box; }
+      .pw-preview__slide{ flex:0 0 calc((100% - 20px) / 2.75); width:calc((100% - 20px) / 2.75); height:auto; border-radius:4px; overflow:hidden; border:1px solid #e7e7e7; background:#fff; box-shadow:0 8px 22px -10px rgba(0,0,0,.16); }
+      .pw-preview__slide:nth-child(1){ opacity:1; }
+      .pw-preview__slide:nth-child(2){ opacity:.82; }
+      .pw-preview__slide:nth-child(3){ opacity:.58; }
+      .pw-preview__slide img{ display:block; width:100%; height:auto; border-radius:4px; }
       .pw-close{ position:absolute; top:16px; right:18px; width:38px; height:38px; background:none; border:0; font-size:26px; line-height:1; color:#6e6e6e; cursor:pointer; border-radius:8px; }
       .pw-close:hover{ background:#f7f7f7; color:#262626; }
       .pw-eyebrow{ font-size:.8rem; letter-spacing:.16em; text-transform:uppercase; font-weight:700; color:#6e6e6e; margin:0 0 10px; }
-      .pw-title{ font-size:2rem; font-weight:800; letter-spacing:-.02em; color:#262626; margin:0 0 8px; }
-      .pw-desc{ font-size:1.08rem; line-height:1.5; color:#6e6e6e; margin:0 0 20px; }
-      .pw-input{ box-sizing:border-box; width:100%; padding:16px 18px; border:1px solid #e7e7e7; border-radius:14px; font-size:1.05rem; color:#262626; outline:none; transition:border-color .15s, box-shadow .15s; }
+      .pw-title{ font-size:2.2rem; font-weight:800; letter-spacing:-.02em; color:#262626; margin:0 0 8px; }
+      .pw-desc{ font-size:1.12rem; line-height:1.5; color:#6e6e6e; margin:0 0 22px; }
+      .pw-input{ box-sizing:border-box; width:100%; padding:16px 18px; border:1px solid #e7e7e7; border-radius:8px; font-size:1.05rem; color:#262626; outline:none; transition:border-color .15s, box-shadow .15s; }
       .pw-input:focus-visible{ border-color:#ffda08; box-shadow:0 0 0 3px rgba(255,218,8,.35); }
       .pw-error{ color:#e0362f; font-size:.9rem; font-weight:600; margin:10px 0 0; }
       .pw-actions{ display:flex; gap:10px; justify-content:flex-end; margin-top:20px; }
@@ -403,12 +411,20 @@
       .card-cta:focus-visible{ outline:none; box-shadow:0 0 0 3px rgba(255,218,8,.55); }
       .card-cta:disabled{ background:#e5e5e5; color:#a3a3a3; cursor:not-allowed; opacity:.7; }
       .card-cta:disabled:hover{ filter:none; transform:none; }
+      .card-cta__lock{ width:14px; height:14px; padding:0; flex-shrink:0; background-size:contain; }
     </style>
 
     <div class="pw-modal" id="olxPwModal" role="dialog" aria-modal="true" aria-labelledby="pwTitle" aria-hidden="true">
       <div class="pw-backdrop" data-pw-close></div>
-      <div class="pw-card" role="document">
+      <div class="pw-card pw-card--preview" role="document">
         <button type="button" class="pw-close" aria-label="Close" data-pw-close>&times;</button>
+        <div class="pw-preview" aria-hidden="true">
+          <div class="pw-preview__track">
+            <div class="pw-preview__slide"><img src="images/OLX01.png" alt="" width="640" height="360" loading="lazy" decoding="async"></div>
+            <div class="pw-preview__slide"><img src="images/OLX02.png" alt="" width="640" height="360" loading="lazy" decoding="async"></div>
+            <div class="pw-preview__slide"><img src="images/OLX03.png" alt="" width="640" height="360" loading="lazy" decoding="async"></div>
+          </div>
+        </div>
         <p class="pw-eyebrow">🔒 Protected case study</p>
         <h2 class="pw-title" id="pwTitle">Enter password to view</h2>
         <p class="pw-desc">The OLX Ad Package case study is password-protected. Enter the password to continue.</p>
@@ -416,7 +432,7 @@
           <input type="password" id="olxPwInput" class="pw-input" placeholder="Password" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Password">
           <p class="pw-error" id="olxPwError" role="alert" hidden>Incorrect password. Please try again.</p>
           <div class="pw-actions">
-            <button type="button" class="pw-btn pw-btn--ghost" data-pw-close>Cancel</button>
+            <button type="button" class="pw-btn pw-btn--ghost" data-pw-request>Request password</button>
             <button type="submit" class="pw-btn">Unlock &rarr;</button>
           </div>
         </form>
@@ -435,7 +451,7 @@
           <input type="password" id="raisinPwInput" class="pw-input" placeholder="Password" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Password">
           <p class="pw-error" id="raisinPwError" role="alert" hidden>Incorrect password. Please try again.</p>
           <div class="pw-actions">
-            <button type="button" class="pw-btn pw-btn--ghost" data-pw-close>Cancel</button>
+            <button type="button" class="pw-btn pw-btn--ghost" data-pw-request>Request password</button>
             <button type="submit" class="pw-btn">Unlock &rarr;</button>
           </div>
         </form>
@@ -445,8 +461,15 @@
     <!-- ===================== N26 password gate modal ===================== -->
     <div class="pw-modal" id="n26PwModal" role="dialog" aria-modal="true" aria-labelledby="n26PwTitle" aria-hidden="true">
       <div class="pw-backdrop" data-pw-close></div>
-      <div class="pw-card" role="document">
+      <div class="pw-card pw-card--preview" role="document">
         <button type="button" class="pw-close" aria-label="Close" data-pw-close>&times;</button>
+        <div class="pw-preview" aria-hidden="true">
+          <div class="pw-preview__track">
+            <div class="pw-preview__slide"><img src="images/N2601.png" alt="" width="640" height="360" loading="lazy" decoding="async"></div>
+            <div class="pw-preview__slide"><img src="images/N2602.png" alt="" width="640" height="360" loading="lazy" decoding="async"></div>
+            <div class="pw-preview__slide"><img src="images/N2603.png" alt="" width="640" height="360" loading="lazy" decoding="async"></div>
+          </div>
+        </div>
         <p class="pw-eyebrow">🔒 Protected case study</p>
         <h2 class="pw-title" id="n26PwTitle">Enter password to view</h2>
         <p class="pw-desc">The N26 Premium multi-activity feed case study is password-protected. Enter the password to continue.</p>
@@ -454,7 +477,7 @@
           <input type="password" id="n26PwInput" class="pw-input" placeholder="Password" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Password">
           <p class="pw-error" id="n26PwError" role="alert" hidden>Incorrect password. Please try again.</p>
           <div class="pw-actions">
-            <button type="button" class="pw-btn pw-btn--ghost" data-pw-close>Cancel</button>
+            <button type="button" class="pw-btn pw-btn--ghost" data-pw-request>Request password</button>
             <button type="submit" class="pw-btn">Unlock &rarr;</button>
           </div>
         </form>
@@ -614,6 +637,9 @@
             $('#footer-contact-trigger').on('click', function(e) {
                 e.preventDefault();
                 $('.gfq-panel').toggleClass('panel-active');
+            });
+            $('[data-pw-request]').on('click', function() {
+                $('.gfq-panel').addClass('panel-active');
             });
             // Keyboard activation for gated project cards (role=button)
             $('.trg_cnt[role="button"]').on('keydown', function(e) {
