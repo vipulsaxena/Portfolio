@@ -389,7 +389,9 @@
       .pw-preview__slide:nth-child(1){ opacity:1; }
       .pw-preview__slide:nth-child(2){ opacity:.82; }
       .pw-preview__slide:nth-child(3){ opacity:.58; }
-      .pw-preview__slide img{ display:block; width:100%; height:auto; border-radius:4px; }
+      .pw-preview__slide picture{ display:block; width:100%; background:#f7f7f7; }
+      .pw-preview__slide img{ display:block; width:100%; height:auto; border-radius:4px; opacity:0; transition:opacity .45s ease; background:#f7f7f7; }
+      .pw-preview__slide img.is-loaded{ opacity:1; }
       .pw-close{ position:absolute; top:16px; right:18px; width:38px; height:38px; background:none; border:0; font-size:26px; line-height:1; color:#6e6e6e; cursor:pointer; border-radius:8px; }
       .pw-close:hover{ background:#f7f7f7; color:#262626; }
       .pw-eyebrow{ font-size:.8rem; letter-spacing:.16em; text-transform:uppercase; font-weight:700; color:#6e6e6e; margin:0 0 10px; }
@@ -420,9 +422,24 @@
         <button type="button" class="pw-close" aria-label="Close" data-pw-close>&times;</button>
         <div class="pw-preview" aria-hidden="true">
           <div class="pw-preview__track">
-            <div class="pw-preview__slide"><img src="images/OLX01.png" alt="" width="640" height="360" loading="lazy" decoding="async"></div>
-            <div class="pw-preview__slide"><img src="images/OLX02.png" alt="" width="640" height="360" loading="lazy" decoding="async"></div>
-            <div class="pw-preview__slide"><img src="images/OLX03.png" alt="" width="640" height="360" loading="lazy" decoding="async"></div>
+            <div class="pw-preview__slide">
+              <picture>
+                <source type="image/webp" data-srcset="images/previews/OLX01.webp">
+                <img data-preview-img data-src="images/previews/OLX01.jpg" alt="" width="640" height="360" decoding="async">
+              </picture>
+            </div>
+            <div class="pw-preview__slide">
+              <picture>
+                <source type="image/webp" data-srcset="images/previews/OLX02.webp">
+                <img data-preview-img data-src="images/previews/OLX02.jpg" alt="" width="640" height="360" decoding="async">
+              </picture>
+            </div>
+            <div class="pw-preview__slide">
+              <picture>
+                <source type="image/webp" data-srcset="images/previews/OLX03.webp">
+                <img data-preview-img data-src="images/previews/OLX03.jpg" alt="" width="640" height="360" decoding="async">
+              </picture>
+            </div>
           </div>
         </div>
         <p class="pw-eyebrow">🔒 Protected case study</p>
@@ -465,9 +482,24 @@
         <button type="button" class="pw-close" aria-label="Close" data-pw-close>&times;</button>
         <div class="pw-preview" aria-hidden="true">
           <div class="pw-preview__track">
-            <div class="pw-preview__slide"><img src="images/N2601.png" alt="" width="640" height="360" loading="lazy" decoding="async"></div>
-            <div class="pw-preview__slide"><img src="images/N2602.png" alt="" width="640" height="360" loading="lazy" decoding="async"></div>
-            <div class="pw-preview__slide"><img src="images/N2603.png" alt="" width="640" height="360" loading="lazy" decoding="async"></div>
+            <div class="pw-preview__slide">
+              <picture>
+                <source type="image/webp" data-srcset="images/previews/N2601.webp">
+                <img data-preview-img data-src="images/previews/N2601.jpg" alt="" width="640" height="360" decoding="async">
+              </picture>
+            </div>
+            <div class="pw-preview__slide">
+              <picture>
+                <source type="image/webp" data-srcset="images/previews/N2602.webp">
+                <img data-preview-img data-src="images/previews/N2602.jpg" alt="" width="640" height="360" decoding="async">
+              </picture>
+            </div>
+            <div class="pw-preview__slide">
+              <picture>
+                <source type="image/webp" data-srcset="images/previews/N2603.webp">
+                <img data-preview-img data-src="images/previews/N2603.jpg" alt="" width="640" height="360" decoding="async">
+              </picture>
+            </div>
           </div>
         </div>
         <p class="pw-eyebrow">🔒 Protected case study</p>
@@ -483,6 +515,50 @@
         </form>
       </div>
     </div>
+
+    <script>
+      (function(){
+        var previewsBooted = false;
+
+        function markPreviewLoaded(img){
+          function reveal(){ img.classList.add("is-loaded"); }
+          if (img.complete && img.naturalWidth > 0) reveal();
+          else img.addEventListener("load", reveal, { once: true });
+        }
+
+        function loadCaseStudyPreviews(){
+          if (previewsBooted) return;
+          previewsBooted = true;
+          document.querySelectorAll(".pw-preview picture").forEach(function(picture){
+            if (picture.dataset.loaded === "1") return;
+            picture.querySelectorAll("source[data-srcset]").forEach(function(source){
+              source.srcset = source.dataset.srcset;
+            });
+            var img = picture.querySelector("[data-preview-img]");
+            if (img && img.dataset.src && !img.getAttribute("src")) {
+              img.src = img.dataset.src;
+              markPreviewLoaded(img);
+            }
+            picture.dataset.loaded = "1";
+          });
+        }
+
+        ["olx-gate-trigger", "n26-gate-trigger"].forEach(function(id){
+          var trigger = document.getElementById(id);
+          if (!trigger) return;
+          trigger.addEventListener("mouseenter", loadCaseStudyPreviews, { once: true });
+          trigger.addEventListener("focus", loadCaseStudyPreviews, { once: true });
+        });
+
+        if ("requestIdleCallback" in window) {
+          requestIdleCallback(loadCaseStudyPreviews, { timeout: 2500 });
+        } else {
+          setTimeout(loadCaseStudyPreviews, 2000);
+        }
+
+        window.loadCaseStudyPreviews = loadCaseStudyPreviews;
+      })();
+    </script>
 
     <script>
       (function(){
@@ -537,6 +613,7 @@
         if (!trigger || !modal) return;
 
         function open(){
+          if (window.loadCaseStudyPreviews) window.loadCaseStudyPreviews();
           modal.classList.add("open");
           modal.setAttribute("aria-hidden", "false");
           error.hidden = true; input.value = "";
@@ -579,6 +656,7 @@
         if (!trigger || !modal) return;
 
         function open(){
+          if (window.loadCaseStudyPreviews) window.loadCaseStudyPreviews();
           modal.classList.add("open");
           modal.setAttribute("aria-hidden", "false");
           error.hidden = true; input.value = "";
