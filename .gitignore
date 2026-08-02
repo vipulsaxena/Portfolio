@@ -7,3 +7,7 @@ olx_preview_tmp.html
 
 # Local dev server log
 .serverlog
+
+# Dependencies and OS metadata
+node_modules/
+.DS_Store
