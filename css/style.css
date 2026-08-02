@@ -1285,6 +1285,8 @@
     margin: 0 auto;
     border-radius: 16px;
     background-repeat: no-repeat;
+    position: relative;
+    overflow: visible;
 }
  @media screen and (max-width: 39rem) {
      .outter_box {
@@ -1299,16 +1301,74 @@
 }
 
 .outter_box .inner_box {
-    background-image: url("../images/me_rb.png");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
     border-radius: 16px;
-    position: relative;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
     width: 100%;
     height: 120%;
-    transform: translateZ(100px) translateX(0%) translateY(0%);
+    transform: translateZ(100px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
 /*    box-shadow: 0 0 50px 0 rgba(51, 51, 51, 0.3);*/
+}
+
+.avatar-morph {
+    position: relative;
+    width: min(26rem, 70%);
+    aspect-ratio: 1348 / 1264;
+    transform: scale(2.25) translateY(-5%);
+    transform-origin: center center;
+}
+
+.avatar-morph__img {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    object-position: center center;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.56s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity;
+}
+
+.avatar-morph__img.is-active {
+    opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .avatar-morph__img {
+        transition-duration: 0.01ms;
+    }
+}
+
+.about-bio { margin-top: 0.4rem; }
+.about-bio p { margin: 0 0 1.6rem; }
+.about-bio .about-bio__hit {
+    cursor: default;
+    border-radius: 3px;
+    padding: 0.06em 0.24em;
+    margin: 0 -0.05em;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    background-color: rgba(255, 218, 8, 0.5);
+    box-shadow: inset 0 -2px 0 rgba(255, 196, 0, 0.75);
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+.about-bio .about-bio__hit:hover,
+.about-bio .about-bio__hit:focus-visible,
+.about-bio .about-bio__hit.is-active {
+    background-color: #ffda08;
+    box-shadow: inset 0 -3px 0 #e6c200;
+    outline: none;
 }
 
 
@@ -1321,6 +1381,7 @@
     top: 0;
     height: 100%;
     width: 100%;
+    z-index: 1;
 }
 
 .trg_cnt {
