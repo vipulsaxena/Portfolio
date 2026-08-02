@@ -105,10 +105,12 @@
     default: 1,
     study: 1,
     artist: 1,
+    designer: 1,
     coder: 1,
     seller: 1,
     storyteller: 1,
     gamer: 1,
+    devil: 1,
     researcher: 1
   }).forEach(preload);
 
