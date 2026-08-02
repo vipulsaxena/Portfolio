@@ -75,7 +75,7 @@
       var incoming = layers[nextLayer];
       var outgoing = layers[activeLayer];
 
-      if (!incoming.src.endsWith(key + ".png")) {
+      if (incoming.src !== src) {
         incoming.src = src;
       }
 
@@ -95,8 +95,6 @@
       currentKey = key;
 
       return waitForFade(incoming, token);
-    }).then(function () {
-      if (token !== morphToken) return;
     }).catch(function () {
       if (token !== morphToken) return;
       currentKey = key;

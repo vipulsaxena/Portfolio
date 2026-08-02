@@ -1325,6 +1325,12 @@
     transform-origin: center center;
 }
 
+@media screen and (max-width: 39rem) {
+    .avatar-morph {
+        transform: scale(1.125) translateY(-5%);
+    }
+}
+
 .avatar-morph__img {
     position: absolute;
     left: 50%;
