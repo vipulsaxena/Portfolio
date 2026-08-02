@@ -1,83 +1,78 @@
-Portfolio
-=========
+# Portfolio
 
-Pure CSS3 -Material Design
+Personal portfolio website for showcasing product design work, case studies, and background. The site is a static front-end project deployed via GitHub Pages.
 
-Tech used:
+## Tech stack
 
-	nginx
-Usage Statistics · Websites using nginx
-nginx [engine x] is a HTTP server and mail proxy server written by Igor Sysoev.
+| Layer | Technologies |
+| --- | --- |
+| **Markup & content** | HTML5, semantic structure, Open Graph / Twitter meta tags |
+| **Styling** | CSS3 (custom stylesheets), [Inter](https://fonts.google.com/specimen/Inter) via Google Fonts |
+| **Layout (case studies)** | [Tailwind CSS](https://tailwindcss.com/) (CDN) on selected project pages |
+| **3D & motion** | [Spline](https://spline.design/) viewer, [PixiJS](https://pixijs.com/) (animated background), [Vanilla Tilt](https://mickuuh.com/VanillaTilt.js/) |
+| **Scripts** | Vanilla JavaScript (ES modules + classic scripts), jQuery (legacy helpers on index) |
+| **Local dev** | [http-server](https://www.npmjs.com/package/http-server) |
+| **Hosting** | GitHub Pages (`gh-pages` branch) |
 
-	nginx 1.4
-Usage Statistics · Websites using nginx 1.4
-Analytics and Tracking
+## Codebase overview
 
-	Google Analytics
-Usage Statistics · Websites using Google Analytics
-Google Analytics offers a host of compelling features and benefits for everyone from senior executives and advertising and marketing professionals to site owners and content developers.
-Mobile
+```
+Portfolio/
+├── index.html          # Home — work grid, password-gated case study modals
+├── about.html          # About — bio, interactive avatar, Spline scene
+├── *.html              # Case study pages (e.g. raisin, olx, n26, goplay)
+├── template.html       # Reusable case study layout reference
+├── css/
+│   ├── style.css       # Global styles, layout, components
+│   ├── shell.css       # Shared header, footer, navigation shell
+│   ├── zoom.css        # Image lightbox / zoom
+│   └── tiny-slider.css # Carousel styles
+├── js/
+│   ├── custom.js       # AI Colors background (PixiJS orbs + dot grid)
+│   ├── dot-grid.js     # Interactive dot grid
+│   ├── liquid-glass.js # Glass card hover effects
+│   ├── sonic.js        # UI sound feedback
+│   ├── about-avatar.js # About page avatar morph on bio hover
+│   ├── zoom.js         # Image zoom behavior
+│   └── transition.js   # Page transitions
+├── images/             # Logos, previews, avatars, media assets
+├── assets/             # Case study media (screenshots, video, exports)
+├── template.js         # Shared shell interactions (nav, mobile menu)
+└── package.json        # Local dev server script
+```
 
-	Viewport Meta
-Usage Statistics · Websites using Viewport Meta
-This page uses the viewport meta tag which means the content may be optimized for mobile content.
-Document Standards
+### Main pages
 
-	HTML5 DocType
-Usage Statistics · Websites using HTML5 DocType
-The DOCTYPE is a required preamble for HTML5 websites.
+- **Home (`index.html`)** — Project list with modal previews for selected case studies.
+- **About (`about.html`)** — Profile copy with hover-triggered avatar transitions over a Spline 3D board.
+- **Case studies** — Long-form project pages built with Tailwind and shared shell components.
 
-	Meta Keywords
-Usage Statistics · Websites using Meta Keywords
-Meta tag containing keywords related to the page.
+### Notable interactions
 
-	Meta Description
-Usage Statistics · Websites using Meta Description
-The description attribute provides a concise explanation of the page content.
+- **AI Colors** — Procedural background palette randomization (`js/custom.js`).
+- **Liquid glass** — Frosted card hover states (`js/liquid-glass.js`).
+- **Sonic feedback** — Optional UI sounds (`js/sonic.js`).
+- **Avatar morph** — Crossfades between PNG avatars when hovering highlighted bio phrases (`js/about-avatar.js`).
 
-	Meta Robot
-Usage Statistics · Websites using Meta Robot
-This page contains a meta robots tag which tells search engines and robots to index or not index the page.
-	Open Graph Protocol
-Usage Statistics · Websites using Open Graph Protocol
-The Open Graph protocol enables any web page to become a rich object in a social graph, a open protocol supported by Facebook
+## Local development
 
-	Twitter Cards
-Usage Statistics · Websites using Twitter Cards
-Twitter cards make it possible for you to attach media experiences to Tweets that link to your content.
+```bash
+npm install
+npm start
+```
 
-	Cascading Style Sheets
-Usage Statistics · Websites using Cascading Style Sheets
-Cascading Style Sheets (CSS) is a stylesheet language used to describe the presentation of a document written in a markup language. Its most common application is to style web pages written in HTML
+This runs `http-server` and serves the site at `http://localhost:8080` (default port). Open `index.html` or `about.html` in the browser.
 
-	HTML 5 Specific Tags
-Usage Statistics · Websites using HTML 5 Specific Tags
-This page contains tags that are specific to an HTML 5 implementation.
+> **Note:** Some features (ES modules, WASM, Spline) require serving over HTTP — opening files directly via `file://` may not work reliably.
 
-	Javascript
-Usage Statistics · Websites using Javascript
-JavaScript is a scripting language most often used for client-side web development. Its proper name is ECMAScript, though "JavaScript" is much more commonly used. The website uses JavaScript.
-Document Encoding
+## Deployment
 
-	UTF-8
-Usage Statistics · Websites using UTF-8
-UTF-8 (8-bit UCS/Unicode Transformation Format) is a variable-length character encoding for Unicode. It is the preferred encoding for web pages.
-Web Master Registration
+The live site is published from the **`gh-pages`** branch to GitHub Pages. Push to that branch to update production.
 
-	Google Webmaster
-Usage Statistics · Websites using Google Webmaster
-Webmaster tools provide you with a free and easy way to make your site more Google-friendly.
+## Browser support
 
-	Majestic Site Verification
-Usage Statistics · Websites using Majestic Site Verification
-Site verification for Majestic SEO.
-Content Delivery Network
+Modern evergreen browsers (Chrome, Firefox, Safari, Edge). CSS uses `rem` units, flexbox, and progressive enhancement; reduced-motion preferences are respected where implemented.
 
-	Content Delivery Network
-Usage Statistics · Websites using Content Delivery Network
-This page contains links that give the impression that some of the site contents are stored on a content delivery network.
-Operating Systems and Servers
+## License
 
-	Ubuntu
-Usage Statistics · Websites using Ubuntu
-Ubuntu is a free, Debian derived Linux-based operating system, available with both community and professional support.
+ISC — see `package.json`.
