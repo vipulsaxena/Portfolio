@@ -1,0 +1,1651 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge; chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+    <title>Vipul Saxena | GoMart — Instant Grocery on Gojek</title>
+    <meta name="description" content="GoMart case study by Vipul Saxena — Studio Accelerator sprint from funnel research to bottom navigation IA, concept testing, and production at Indonesia scale.">
+    <meta name="robots" content="noindex, nofollow">
+
+    <link rel="icon" href="fav.png" sizes="32x32" type="image/png">
+
+    <!-- Fonts (match Portfolio: Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap">
+    <link rel="stylesheet" href="css/shell.css">
+
+    <!-- Tailwind (Play CDN) + theme config (identical to template-2.html) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              base:  '#ffffff',   /* page background            */
+              elev:  '#f7f7f7',   /* elevated section bg        */
+              card:  '#ffffff',   /* card surface               */
+              line:  '#e7e7e7',   /* hairline borders           */
+              ink:   '#262626',   /* primary text               */
+              mute:  '#6e6e6e',   /* secondary text             */
+              accent:'#ffda08',   /* portfolio yellow highlight   */
+              accink:'#262626',   /* text on accent             */
+              gomart:'var(--gomart)', /* GoMart brand blush         */
+            },
+            fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+            borderRadius: { '2xl': '1.25rem', '3xl': '1.75rem' },
+            maxWidth: { content: '80rem' },
+          }
+        }
+      }
+    </script>
+
+    <!-- Deck styles Tailwind can't express cleanly (fixed viewport, track, transitions) -->
+    <style type="text/css">
+      :root{ --deck-top:3.5rem; --ink:#262626; --muted:#6e6e6e; --line:#e7e7e7; --accent:#ffda08; --gomart:#FFDCDE; }
+      html,body{ height:100%; }
+      body{ background:#ffffff; font-family:"Inter", system-ui, sans-serif; overflow:hidden; }
+      ::selection{ background:#ffda08; color:#262626; }
+
+      /* Brand yellow highlight (matches Portfolio) */
+      .hl{ background:#ffda08; color:#262626; padding:0 .1em; border-radius:.08em;
+           -webkit-box-decoration-break:clone; box-decoration-break:clone; }
+
+      /* Breadcrumb (consistent with olx.html) */
+      .crumb{ display:inline-flex; flex-wrap:wrap; align-items:center; gap:.5rem; font-size:.95rem; color:#6e6e6e; font-weight:600; }
+      .crumb .sep{ color:#c4c4c4; }
+      .crumb .now{ color:#262626; text-decoration:underline; text-decoration-color:#ffda08; text-decoration-thickness:3px; text-underline-offset:3px; }
+
+      .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+
+      /* ---------- Deck viewport ---------- */
+      .deck{ position:fixed; inset:0; top:var(--deck-top); overflow:hidden; }
+      .deck-track{
+        display:flex; height:100%; width:100%;
+        transition:transform .6s cubic-bezier(.7,0,.2,1);
+        will-change:transform;
+      }
+      .slide{
+        flex:0 0 100%; height:100%; width:100%; overflow-y:auto;
+        display:flex; flex-direction:column; position:relative;
+      }
+      .slide-inner{
+        margin:0 auto; width:100%; max-width:80rem;
+        padding:clamp(1.5rem,4vw,4rem) clamp(1.25rem,5vw,4rem);
+        flex:1 1 auto; display:flex; flex-direction:column; justify-content:center;
+      }
+
+      /* Per-slide reveal: children fade-up only while the slide is active */
+      .slide [data-anim]{ opacity:0; transform:translateY(26px); transition:opacity .6s ease, transform .6s ease; }
+      .slide.is-active [data-anim]{ opacity:1; transform:none; }
+      .slide.is-active [data-anim]{ transition-delay:calc(var(--i,0) * 90ms); }
+
+      /* Minimal iPhone mock for recorded prototypes */
+      .phone-mock{ position:relative; width:100%; max-width:260px; margin-inline:auto; padding:5px; background:#1c1c1e; border-radius:2rem; box-shadow:0 16px 38px -22px rgba(0,0,0,.45); }
+      .phone-mock video, .phone-mock img{ display:block; width:100%; height:auto; border-radius:1.6rem; background:#000; }
+
+      /* GoMart brand blush (matches OLX sage / N26 beige pattern) */
+      .slide-bg-gomart{ background-color:var(--gomart); }
+      .gomart-panel{ background-color:var(--gomart); color:#262626; }
+      .panel-gomart-pattern{ background:#fff6f6 url("assets/gomart/pattern.png") center / cover no-repeat; position:relative; overflow:hidden; }
+      .panel-gomart-pattern2{ background:#0b5d34 url("assets/gomart/Hypothisis/pattern2.png") center / cover no-repeat; position:relative; overflow:hidden; }
+      .panel-gomart-pattern3{ background:#f0a0b0 url("assets/gomart/Hypothisis/pattern3.png") center / cover no-repeat; position:relative; overflow:hidden; }
+
+      /* Eyebrow chip (design timeline / sprint labels from Figma) */
+      .chip{ display:inline-flex; align-items:center; gap:.4rem; font-size:.75rem; font-weight:700;
+        padding:.35rem .75rem; border-radius:999px; background:#fff3b0; color:#262626; border:1px solid #f4d000; }
+
+      /* Interactive persona tabs (Brand Key slide) */
+      .persona-tab{ cursor:pointer; font-family:inherit; transition:box-shadow .15s ease, transform .1s ease; }
+      .persona-tab:hover{ transform:translateY(-1px); }
+      .persona-tab[aria-selected="true"]{ box-shadow:0 0 0 2px #262626 inset; }
+      .persona-tab:focus-visible{ outline:none; box-shadow:0 0 0 3px rgba(255,218,8,.55); }
+
+      /* ---------- Bottom control bar ---------- */
+      .ctrl{
+        position:fixed; left:0; right:0; bottom:0; z-index:900;
+        display:flex; align-items:center; gap:1rem;
+        padding:.75rem clamp(1.25rem,5vw,2.5rem);
+        padding-bottom:calc(.75rem + env(safe-area-inset-bottom,0px));
+        background:rgba(255,255,255,.85); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+        border-top:1px solid #e7e7e7;
+      }
+      .chapter-tabs{ display:flex; align-items:center; gap:.35rem; }
+      .chapter-tab{
+        display:inline-flex; align-items:center; justify-content:center; gap:.35rem;
+        font-size:.75rem; font-weight:700; letter-spacing:.01em; padding:.4rem .8rem; border-radius:999px;
+        color:#6e6e6e; background:transparent; border:1px solid transparent; cursor:pointer; white-space:nowrap;
+        transition:color .15s ease, background .15s ease, border-color .15s ease;
+      }
+      .chapter-tab:hover{ color:#262626; background:#f2f2f2; }
+      .chapter-tab[aria-current="true"]{ color:#262626; background:#fff3b0; border-color:#ffda08; }
+      .chapter-tab:focus-visible{ outline:none; box-shadow:0 0 0 3px rgba(255,218,8,.55); }
+      .chapter-tab .ct-count{ color:#a3a3a3; font-weight:600; margin-left:.35rem; }
+      .chapter-tab[aria-current="true"] .ct-count{ color:#8a7a00; }
+      .chapter-tab .ct-icon{ display:none; align-items:center; justify-content:center; line-height:0; }
+
+      .ctrl-dots{ display:flex; align-items:center; gap:1rem; flex-wrap:wrap; }
+      .dot-group{ display:flex; align-items:center; gap:.4rem; }
+      .dot{
+        position:relative; width:9px; height:9px; border-radius:999px; background:#d4d4d4;
+        transition:all .2s ease; cursor:pointer; border:0; padding:0;
+      }
+      .dot[aria-current="true"]{ background:#ffda08; width:26px; }
+      .dot::after{ content:attr(data-tip); position:absolute; left:50%; bottom:calc(100% + 12px);
+        transform:translateX(-50%) translateY(4px); background:#262626; color:#fff; font-size:.72rem; font-weight:600;
+        padding:.34rem .6rem; border-radius:.45rem; white-space:nowrap; box-shadow:0 10px 24px -10px rgba(0,0,0,.45);
+        opacity:0; pointer-events:none; transition:opacity .14s ease, transform .14s ease; z-index:40; }
+      .dot::before{ content:""; position:absolute; left:50%; bottom:calc(100% + 7px); transform:translateX(-50%) translateY(4px);
+        border:5px solid transparent; border-top-color:#262626; opacity:0; pointer-events:none;
+        transition:opacity .14s ease, transform .14s ease; z-index:40; }
+      .dot:hover::after, .dot:focus-visible::after,
+      .dot:hover::before, .dot:focus-visible::before{ opacity:1; transform:translateX(-50%) translateY(0); }
+      .dot:focus-visible{ outline:none; box-shadow:0 0 0 3px rgba(255,218,8,.55); }
+
+      .nav-btn{ display:inline-flex; align-items:center; justify-content:center; width:2.5rem; height:2.5rem;
+        border:1px solid #e7e7e7; border-radius:999px; background:#fff; color:#262626; cursor:pointer;
+        transition:border-color .15s ease, transform .15s ease, background .15s ease; }
+      .nav-btn:hover{ border-color:#ffda08; background:#fff3b0; }
+      .nav-btn:focus-visible{ outline:none; box-shadow:0 0 0 3px rgba(255,218,8,.55); }
+      .nav-btn:disabled{ opacity:.35; cursor:default; }
+      .nav-btn:disabled:hover{ border-color:#e7e7e7; background:#fff; }
+      .nav-btn.is-active{ border-color:#ffda08; background:#fff3b0; }
+      .nav-home{ gap:.3rem; }
+      .nav-home .home-count{ display:none; font-size:.72rem; font-weight:700; font-variant-numeric:tabular-nums; }
+      .nav-home.is-active{ width:auto; padding:0 .7rem; }
+      .nav-home.is-active .home-count{ display:inline; }
+
+      .counter{ font-variant-numeric:tabular-nums; font-weight:700; font-size:.9rem; color:#262626; white-space:nowrap; }
+      .counter .sep{ color:#a3a3a3; }
+
+      @media (max-width: 640px){
+        .ctrl{ gap:.5rem; padding-left:.85rem; padding-right:.85rem; }
+        .counter{ display:none; }
+        .home-count{ display:none !important; }
+        .nav-home.is-active{ width:2.5rem; padding:0; }
+        .chapter-tab .ct-count,
+        .chapter-tab .ct-label{ display:none; }
+        .chapter-tab .ct-icon{ display:inline-flex; }
+        .chapter-tab{ width:2.5rem; height:2.5rem; padding:0; flex-shrink:0; border-color:#e7e7e7; background:#fff; }
+        .chapter-tabs{ flex:0 1 auto; min-width:0; gap:.35rem; overflow:visible; }
+        .ml-auto{ flex:0 0 auto; }
+      }
+
+      /* Scroll progress bar (top of viewport, under header) */
+      .progress{ position:fixed; top:var(--deck-top); left:0; height:3px; z-index:950;
+        background:#ffda08; width:0; transition:width .6s cubic-bezier(.7,0,.2,1); }
+
+      /* Deck title in header */
+      .deck-title{ font-size:.9rem; font-weight:600; color:#6e6e6e; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+
+      /* Keyboard hint pill */
+      .kbd{ display:inline-flex; align-items:center; gap:.35rem; font-size:.75rem; color:#6e6e6e; }
+      .key{ display:inline-block; min-width:1.5rem; padding:.15rem .4rem; text-align:center; font-size:.7rem; font-weight:700;
+        border:1px solid #e7e7e7; border-bottom-width:2px; border-radius:.4rem; background:#fff; color:#262626; }
+
+      /* Lightbox (expand imagery — same as olx.html) */
+      #lightbox{ position:fixed; inset:0; z-index:2000; display:none; align-items:center; justify-content:center; background:rgb(255 255 255 / 90%); padding:5vw; }
+      #lightbox.open{ display:flex; }
+      #lightbox img{ max-width:100%; max-height:90vh; border-radius:.75rem; box-shadow:0 24px 60px -20px rgba(0,0,0,.35); }
+
+      @media (prefers-reduced-motion: reduce){
+        .deck-track{ transition:none; }
+        .progress{ transition:none; }
+        .slide [data-anim]{ opacity:1 !important; transform:none !important; transition:none !important; }
+      }
+
+      /* ===== Password gate (secure entry) ===== */
+      #gomartGate{ display:none; }
+      html.gomart-locked{ overflow:hidden; }
+      html.gomart-locked body > *:not(#gomartGate){ display:none !important; }
+      html.gomart-locked #gomartGate{ display:flex; }
+      #gomartGate{ position:fixed; inset:0; z-index:10000; align-items:center; justify-content:center; padding:5vw; background:#fff; }
+      .pw-card{ position:relative; width:100%; max-width:520px; background:#fff; border:1px solid var(--line); border-radius:24px; padding:40px; box-shadow:0 30px 60px -20px rgba(0,0,0,.25); }
+      .pw-eyebrow{ font-size:.8rem; letter-spacing:.16em; text-transform:uppercase; font-weight:700; color:var(--muted); margin:0 0 10px; }
+      .pw-title{ font-size:2rem; font-weight:800; letter-spacing:-.02em; color:var(--ink); margin:0 0 8px; }
+      .pw-desc{ font-size:1.08rem; line-height:1.5; color:var(--muted); margin:0 0 20px; }
+      .pw-input{ box-sizing:border-box; width:100%; padding:16px 18px; border:1px solid var(--line); border-radius:14px; font-size:1.05rem; color:var(--ink); outline:none; transition:border-color .15s, box-shadow .15s; }
+      .pw-input:focus-visible{ border-color:var(--accent); box-shadow:0 0 0 3px rgba(255,218,8,.35); }
+      .pw-error{ color:#e0362f; font-size:.9rem; font-weight:600; margin:10px 0 0; }
+      .pw-actions{ display:flex; gap:10px; justify-content:flex-end; align-items:center; margin-top:20px; }
+      .pw-back{ margin-right:auto; font-size:.9rem; font-weight:600; color:var(--muted); text-decoration:none; }
+      .pw-back:hover{ color:var(--ink); }
+      .pw-btn{ border:0; border-radius:999px; padding:14px 28px; font-size:1.02rem; font-weight:700; cursor:pointer; background:var(--accent); color:var(--ink); transition:filter .15s, transform .15s; }
+      .pw-btn:hover{ filter:brightness(1.05); transform:translateY(-1px); }
+
+      /* Slide layout helpers (olx.html patterns) */
+      .slide-inner.top{ justify-content:flex-start; padding-top:clamp(1rem,3vh,2rem); }
+      .slide-scroll > .slide-inner{ justify-content:flex-start; padding-bottom:calc(5rem + env(safe-area-inset-bottom,0px)); }
+
+      /* Segmented toggle */
+      .seg{ display:inline-flex; padding:4px; background:#efefef; border:1px solid #e7e7e7; border-radius:999px; gap:2px; }
+      .seg-btn{ font-size:.8rem; font-weight:700; padding:.4rem .95rem; border-radius:999px; color:#6e6e6e; background:transparent; border:0; cursor:pointer; white-space:nowrap; transition:color .15s ease, background .15s ease, box-shadow .15s ease; }
+      .seg-btn:hover{ color:#262626; }
+      .seg-btn[aria-selected="true"]{ color:#262626; background:#fff; box-shadow:0 1px 2px rgba(0,0,0,.1); }
+      .seg-btn:focus-visible{ outline:none; box-shadow:0 0 0 3px rgba(255,218,8,.55); }
+
+      /* Research board magnify stage */
+      .research-board-wrap{ width:100%; }
+      .research-board-head{ display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:1rem; margin-bottom:1rem; }
+      .research-board-toolbar{ display:flex; align-items:center; gap:.5rem; flex-wrap:wrap; }
+      .proto-mag-toggle{ display:inline-flex; align-items:center; gap:.45rem; margin:0; padding:0; border:0; background:transparent; cursor:pointer; font-size:.75rem; font-weight:600; color:#6e6e6e; }
+      .proto-mag-switch{ position:relative; flex-shrink:0; width:2.75rem; height:1.625rem; border-radius:999px; background:#e9e9ea; box-shadow:inset 0 0 0 1px rgba(0,0,0,.06); transition:background .22s ease; }
+      .proto-mag-switch__thumb{ position:absolute; top:2px; left:2px; width:1.375rem; height:1.375rem; border-radius:50%; background:#fff; box-shadow:0 2px 5px rgba(0,0,0,.22); transition:transform .22s cubic-bezier(.4,0,.2,1); }
+      .proto-mag-toggle[aria-pressed="true"] .proto-mag-switch{ background:#34c759; }
+      .proto-mag-toggle[aria-pressed="true"] .proto-mag-switch__thumb{ transform:translateX(1.125rem); }
+      .proto-stage{
+        position:relative; display:flex; align-items:flex-start; justify-content:center; width:100%;
+        border:1px solid #e7e7e7; border-radius:1rem; background:#fff; overflow:visible;
+        cursor:pointer; min-height:min(55vh, 32rem); transition:box-shadow .15s ease, border-color .15s ease;
+      }
+      .proto-stage.is-magnifying{ z-index:40; cursor:none; }
+      .proto-stage__inner{ position:relative; width:100%; display:flex; justify-content:center; align-items:flex-start; overflow:hidden; border-radius:.95rem; }
+      .proto-stage img{ display:block; width:100%; height:auto; object-fit:contain; object-position:center top; pointer-events:none; }
+      .proto-lens{
+        position:absolute; z-index:50; width:26.25rem; height:26.25rem; border-radius:50%;
+        border:5px solid #fff; box-shadow:0 8px 32px rgba(0,0,0,.24); background-color:#fff; background-repeat:no-repeat;
+        pointer-events:none; opacity:0; visibility:hidden; transition:opacity .12s ease, visibility 0s linear .12s;
+      }
+      .proto-stage.is-magnifying .proto-lens{ opacity:1; visibility:visible; transition-delay:0s; }
+      @media (hover:none), (pointer:coarse){ .proto-lens{ display:none !important; } .proto-mag-toggle{ display:none; } }
+      .proto-stage:hover{ border-color:#ffda08; box-shadow:0 0 0 3px rgba(255,218,8,.22); }
+
+      /* Studio vote cards */
+      .vote-card{ border:1px solid #e7e7e7; border-radius:.75rem; padding:.75rem 1rem; background:#fff; }
+      .vote-card.is-winner{ border-color:#f0a8ad; background:#fff6f6; box-shadow:0 0 0 3px rgba(255,220,222,.65); }
+      .solution-index-card{ border:1px solid #e7e7e7; border-radius:.75rem; padding:.85rem 1rem; background:#fff; }
+      .solution-index-card.is-key{ border-color:#f0a8ad; background:#fffbfb; }
+
+      /* Solution hypotheses — OLX slide-hypo pattern */
+      .slide-hypo .slide-inner{ justify-content:flex-start; padding-bottom:calc(5rem + env(safe-area-inset-bottom, 0px)); }
+      .slide-hypo .hypo-intro{ color:#262626; font-size:1rem; line-height:1.55; margin:0 0 1.25rem; max-width:80ch; position:relative; z-index:2; }
+      .slide-hypo .hypo-intro strong{ color:#262626; }
+      .hypo-grid{ display:flex; flex-direction:column; gap:1.5rem; width:100%; max-width:100%; }
+      .hypo-card{ display:flex; flex-direction:column; width:100%; max-width:100%; height:auto; background:#fff; border:1px solid #e7e7e7; border-radius:16px; overflow:hidden;
+        box-shadow:0 8px 24px -14px rgba(0,0,0,.18); }
+      .hypo-card.is-key{ border-color:#f0a8ad; background:#fffbfb; box-shadow:0 8px 24px -14px rgba(240,168,173,.35); }
+      .hypo-card__media{ flex:0 0 auto; background:linear-gradient(180deg, #fafafa 0%, #f2f2f2 100%); border-bottom:1px solid #e7e7e7; padding:1rem 1.25rem; }
+      .hypo-card__media img{ display:block; width:100%; max-width:100%; height:auto; border-radius:12px; border:1px solid rgba(0,0,0,.06); cursor:zoom-in; }
+      .hypo-card__body{ flex:1 1 auto; display:flex; flex-direction:column; gap:.5rem; justify-content:center; padding:1rem 1.25rem 1.25rem; min-width:0; }
+      @media (min-width:640px){
+        .hypo-card{ flex-direction:row; align-items:stretch; }
+        .hypo-card__media{
+          flex:0 0 52%; max-width:52%; border-bottom:0; border-right:1px solid #e7e7e7;
+          padding:1rem 1.15rem; display:flex; align-items:center; justify-content:center;
+        }
+        .hypo-card__body{ padding:1.15rem 1.35rem 1.25rem; }
+      }
+      @media (min-width:1024px){
+        .hypo-card__media{ flex:0 0 56%; max-width:56%; padding:1.1rem 1.25rem; }
+      }
+      .hypo-card__eyebrow{ font-size:.7rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#6e6e6e; }
+      .hypo-card__title{ font-size:1.15rem; font-weight:800; letter-spacing:-.02em; color:#262626; line-height:1.25; }
+      .hypo-card__p{ font-size:.9rem; line-height:1.5; color:#6e6e6e; margin:0; }
+      .hypo-card__p + .hypo-card__p{ margin-top:.2rem; }
+      .hypo-card__note{ font-size:.7rem; font-weight:700; color:#262626; border-top:1px solid #e7e7e7; padding-top:.5rem; margin-top:.35rem; }
+
+      .vote-count{ font-size:1.25rem; font-weight:800; color:#262626; line-height:1; }
+
+      /* Navbar concept-test carousel */
+      .nav-carousel{ width:100%; }
+      .nav-carousel__viewport{ overflow:hidden; border-radius:1rem; border:1px solid #e7e7e7; background:#fff; }
+      .nav-carousel__track{ display:flex; transition:transform .45s cubic-bezier(.22,.61,.36,1); }
+      .nav-carousel__slide{ flex:0 0 100%; margin:0; }
+      .nav-carousel__slide img{ display:block; width:100%; height:auto; max-height:min(58vh,520px); object-fit:contain; cursor:zoom-in; }
+      .nav-carousel__caption{ margin-top:.75rem; min-height:2.75rem; text-align:center; font-size:.875rem; font-weight:600; color:#262626; }
+      .nav-carousel__meta{ text-align:center; font-size:.75rem; color:#6e6e6e; font-variant-numeric:tabular-nums; }
+      .nav-carousel__controls{ display:flex; align-items:center; justify-content:center; gap:.75rem; margin-top:.75rem; }
+      .nav-carousel__dot{ width:9px; height:9px; border-radius:999px; background:#d4d4d4; border:0; padding:0; cursor:pointer; transition:all .2s ease; }
+      .nav-carousel__dot[aria-current="true"]{ background:#ffda08; width:26px; }
+      .nav-carousel__btn{ display:inline-flex; align-items:center; justify-content:center; width:2.5rem; height:2.5rem; border:1px solid #e7e7e7; border-radius:999px; background:#fff; color:#262626; cursor:pointer; transition:border-color .15s ease, background .15s ease; }
+      .nav-carousel__btn:hover{ border-color:#ffda08; background:#fff3b0; }
+      .nav-carousel__btn:focus-visible{ outline:none; box-shadow:0 0 0 3px rgba(255,218,8,.55); }
+
+      /* Before / After compare slider (template-2 pattern) */
+      .compare{
+        position:relative; overflow:hidden; border-radius:1rem; border:1px solid #e7e7e7;
+        cursor:ew-resize; user-select:none; touch-action:none;
+        width:100%; max-height:min(62vh,680px); aspect-ratio:2275/1265; background:#fff;
+      }
+      .compare__layer{
+        position:absolute; inset:0; display:flex; flex-direction:column;
+        background:#fff; padding-top:2.75rem;
+      }
+      .compare .after-layer{
+        position:absolute; inset:0; overflow:hidden; clip-path:inset(0 50% 0 0); background:#fff;
+      }
+      .compare .after-layer .compare__layer{ position:absolute; inset:0; }
+      .compare__media{
+        flex:1; min-height:0; display:flex; align-items:center; justify-content:center;
+        padding:0 .75rem .75rem; background:#fff;
+      }
+      .compare__img{
+        display:block; max-width:100%; max-height:100%; width:auto; height:auto;
+        object-fit:contain; object-position:center; pointer-events:none; user-select:none;
+        -webkit-user-drag:none; user-drag:none;
+      }
+      .compare .handle{
+        position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); z-index:5;
+        width:44px; height:44px; border-radius:999px; background:#ffda08; color:#262626;
+        display:flex; align-items:center; justify-content:center; font-weight:800; box-shadow:0 6px 18px rgba(38,38,38,.28);
+        pointer-events:none;
+      }
+      .compare .handle::before{
+        content:""; position:absolute; left:50%; top:-100vh; height:200vh; width:2px;
+        background:#ffda08; transform:translateX(-50%); z-index:-1;
+      }
+      .compare__tag{
+        position:absolute; top:12px; z-index:4; font-size:.7rem; letter-spacing:.12em;
+        text-transform:uppercase; font-weight:700; padding:4px 10px; border-radius:999px;
+        background:#fff; color:#262626; border:1px solid #e7e7e7; pointer-events:none;
+      }
+      .compare__tag--before{ left:12px; }
+      .compare__tag--after{ right:12px; }
+
+      /* Wireframe compare — fill remaining viewport */
+      .slide-compare > .slide-inner{
+        justify-content:flex-start;
+        padding-top:clamp(.85rem,2vh,1.35rem);
+        padding-bottom:calc(4.5rem + env(safe-area-inset-bottom,0px));
+        flex:1 1 auto;
+        min-height:0;
+      }
+      .slide-compare .compare-stage{
+        flex:1 1 auto;
+        min-height:0;
+        display:flex;
+        flex-direction:column;
+        gap:.65rem;
+        width:100%;
+      }
+      .slide-compare .compare{
+        flex:1 1 auto;
+        min-height:min(28vh,240px);
+        max-height:calc(100dvh - var(--deck-top) - 11rem);
+        height:auto;
+        width:100%;
+        aspect-ratio:2275/1265;
+      }
+      .slide-compare .compare-copy{ color:var(--ink); }
+      .slide-compare .compare-hint{ color:var(--muted); }
+    </style>
+
+    <!-- Runs before render: hide the page until unlocked (no content flash).
+         Always re-prompts on EXTERNAL entry (typed URL, bookmark, link from another
+         site). Only skips the prompt for in-site navigation, reloads, and back/forward. -->
+    <script>
+      (function(){
+        var KEY = "gomartAccessGranted";
+        function navType(){
+          try {
+            var e = performance.getEntriesByType && performance.getEntriesByType("navigation");
+            if (e && e.length) return e[0].type;
+            if (performance.navigation) return ["navigate","reload","back_forward"][performance.navigation.type] || "navigate";
+          } catch(_){}
+          return "navigate";
+        }
+        var internal = false;
+        try { internal = !!document.referrer && new URL(document.referrer).origin === location.origin; } catch(_){}
+        var t = navType();
+        var external = (t !== "reload" && t !== "back_forward") && !internal;
+        var allow = false;
+        try {
+          if (external) sessionStorage.removeItem(KEY);      // external entry -> force a fresh prompt
+          else allow = sessionStorage.getItem(KEY) === "1";  // in-site / reload / back -> honour session
+        } catch(_){}
+        window.__gateAllow = allow;
+        if (!allow) document.documentElement.classList.add("gomart-locked");
+      })();
+    </script>
+</head>
+
+<body class="bg-base text-ink font-sans antialiased">
+
+<!-- ===================== Password gate (secure entry) ===================== -->
+<div id="gomartGate" role="dialog" aria-modal="true" aria-labelledby="gomartGateTitle">
+  <div class="pw-card" role="document">
+    <p class="pw-eyebrow">🔒 Protected case study</p>
+    <h2 class="pw-title" id="gomartGateTitle">Enter password to view</h2>
+    <p class="pw-desc">This GoMart instant grocery case study is password-protected. Enter the password to continue.</p>
+    <form id="gomartGateForm" novalidate>
+      <input type="password" id="gomartGateInput" class="pw-input" placeholder="Password" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Password">
+      <p class="pw-error" id="gomartGateError" role="alert" hidden>Incorrect password. Please try again.</p>
+      <div class="pw-actions">
+        <a class="pw-back" href="index.html">&larr; Back home</a>
+        <button type="submit" class="pw-btn">Unlock &rarr;</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ============================================================= -->
+<!-- Slim header (shared shell shell.css, adapted for the deck)     -->
+<!-- ============================================================= -->
+<header class="shell-header" style="height:var(--deck-top);">
+  <div class="shell-inner shell-bar" style="height:var(--deck-top);">
+    <a href="index.html" class="shell-brand">Home</a>
+    <p class="deck-title" id="deckTitle">GoMart — Instant Grocery</p>
+    <div class="shell-actions">
+      <button type="button" class="nav-btn" data-fullscreen aria-label="Toggle fullscreen" title="Fullscreen">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3m13-5v3a2 2 0 0 1-2 2h-3"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Progress bar -->
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<!-- ============================================================= -->
+<!-- DECK — each .slide is one full page.                          -->
+<!-- ============================================================= -->
+<main class="deck" aria-label="GoMart case study slideshow">
+  <div class="deck-track" id="track">
+
+    <!-- ===== HOME 01 · What is GoMart? ===== -->
+    <section class="slide is-active bg-elev" data-chapter="case-study" data-title="What is GoMart?" data-home-slide>
+      <div class="slide-inner top !py-0 !px-0 !max-w-none" style="padding-bottom:calc(4rem + env(safe-area-inset-bottom, 0px))">
+        <div class="grid md:grid-cols-[1.35fr_1fr] md:h-full">
+          <div class="order-2 md:order-1 flex flex-col justify-center px-[clamp(1.25rem,5vw,4rem)] py-[clamp(1.5rem,4vw,3rem)]">
+            <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Gojek · GoMart · H1 2021</p>
+            <h1 class="text-3xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6 max-w-[14ch]" data-anim style="--i:1">What is <span class="hl">GoMart</span>?</h1>
+            <p class="text-ink text-lg md:text-xl leading-relaxed max-w-[46ch] mb-6" data-anim style="--i:2">
+              GoMart is Gojek's <strong>instant grocery</strong> service — order from supermarkets and local stores across Indonesian cities and get hand-picked groceries delivered to your door.
+            </p>
+            <p class="text-mute text-base md:text-lg leading-relaxed max-w-[50ch] mb-8" data-anim style="--i:3">
+              Alfamart, Lotte Mart, Sayurbox, Watsons and more — with dedicated shoppers preparing orders in-store and drivers fulfilling last-mile delivery inside the Gojek super-app.
+            </p>
+            <div class="flex flex-wrap items-center gap-4" data-anim style="--i:4">
+              <button type="button" class="shell-btn" data-next>Start →</button>
+              <span class="kbd">or Use <span class="key">←</span> <span class="key">→</span> · <span class="key">Space</span></span>
+            </div>
+          </div>
+          <div class="order-1 md:order-2 relative h-56 md:h-auto" data-anim style="--i:2">
+            <img src="assets/gomart/aboutGomart.png" alt="GoMart instant grocery inside the Gojek super-app" data-lightbox class="absolute inset-0 w-full h-full object-cover cursor-zoom-in" loading="lazy" decoding="async">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== HOME 02 · What I did at GoMart ===== -->
+    <section class="slide" data-chapter="case-study" data-title="What I did at GoMart" data-home-slide>
+      <div class="slide-inner top !py-0 !px-0 !max-w-none">
+        <div class="grid md:grid-cols-[1.35fr_1fr] md:h-full">
+          <div class="order-2 md:order-1 flex flex-col justify-center px-[clamp(1.25rem,5vw,4rem)] py-[clamp(1.5rem,4vw,3rem)]">
+            <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">GoMart · Consumer Journey</p>
+            <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-6 max-w-[18ch]" data-anim style="--i:1">What I did at GoMart</h2>
+            <nav class="crumb mb-8" aria-label="Team placement" data-anim style="--i:2">
+              <span>Gojek</span><span class="sep" aria-hidden="true">›</span>
+              <span>GoMart</span><span class="sep" aria-hidden="true">›</span>
+              <span class="now">👨‍💻 Consumer Journey Pod</span>
+            </nav>
+            <p class="text-mute text-lg leading-relaxed max-w-[48ch]" data-anim style="--i:3">
+              As a Product Designer lead, I led discovery and conversion design — facilitating Studio Accelerator sprints, desk-research synthesis, and cross-functional alignment between Search &amp; Reco, Reliability, and Brand.
+            </p>
+          </div>
+          <div class="order-1 md:order-2 relative h-56 md:h-auto" data-anim style="--i:2">
+            <img src="assets/gomart/what-i-did.png" alt="GoMart team structure and Consumer Journey pod placement" data-lightbox class="absolute inset-0 w-full h-full object-cover cursor-zoom-in" loading="lazy" decoding="async">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CS COVER · Routine Grocery Discovery ===== -->
+    <section class="slide slide-bg-gomart text-accink" data-chapter="case-study" data-title="Routine Grocery Discovery">
+      <div class="slide-inner">
+        <div class="grid md:grid-cols-2 gap-8 md:gap-16 items-end">
+          <div>
+            <p class="text-accink/60 text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Case study · GoMart</p>
+            <h2 class="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.08] max-w-[16ch]" data-anim style="--i:1">Routine Grocery Discovery</h2>
+            <p class="mt-6 text-xl md:text-2xl font-semibold max-w-[40ch]" data-anim style="--i:2">How might we help competent shoppers discover, trust, and routinely use GoMart?</p>
+            <p class="mt-6 text-accink/80 text-lg leading-relaxed max-w-[60ch]" data-anim style="--i:3">
+              Anchored on KR 2.5 — moving visit-to-book from <strong>14% to 25%</strong> — through a <strong>Studio Accelerator</strong> sprint that turned funnel data and brand strategy into a portfolio of bets: bottom navigation as the structural unlock, plus order-tracking &amp; chat and onboarding stories alongside.
+            </p>
+            <div class="mt-8 flex flex-wrap items-center gap-3" data-anim style="--i:4">
+              <span class="px-3 py-1.5 rounded-full bg-ink text-white text-sm font-semibold">H1 2021 · Studio Accelerator · On Production</span>
+            </div>
+          </div>
+          <div class="relative mx-auto w-full max-w-[620px] min-h-[280px] sm:min-h-[340px] md:min-h-[400px]" data-anim style="--i:3">
+            <img src="assets/gomart/char.png" alt="GoMart character illustration" data-lightbox class="absolute bottom-0 left-1/2 z-0 h-auto w-[min(72vw,200px)] sm:w-[min(68vw,260px)] md:w-full max-w-[310px] -translate-x-[42%] sm:-translate-x-[40%] md:translate-x-0 md:left-[50%] object-contain object-bottom cursor-zoom-in" loading="lazy">
+            <div class="phone-mock absolute z-20 bottom-0 left-1/2 !mx-0 pointer-events-none !max-w-[min(58vw,220px)] sm:!max-w-[255px] md:!max-w-[285px] -translate-x-1/2 md:translate-x-0 md:left-[20%]">
+              <video loop data-autoplay muted playsinline preload="metadata" tabindex="-1" aria-hidden="true" class="pointer-events-none">
+                <source src="assets/gomart/final-product.mp4" type="video/mp4">
+                <track kind="captions" src="assets/gomart/final-product-desc.vtt" srclang="en" label="English descriptions" default>
+              </video>
+            </div>
+            <p class="sr-only">Decorative recording of the shipped GoMart app showing bottom navigation and browse flows.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CS 04 · The Studio program ===== -->
+    <section class="slide relative overflow-hidden" data-chapter="case-study" data-title="The Studio">
+      <img src="assets/gomart/studio-background.png" alt="Live Miro board from Studio Accelerator — team note-taking on keywords, challenges, and solutions during lightning talks" data-lightbox class="absolute inset-0 w-full h-full object-cover object-center cursor-zoom-in" loading="lazy">
+      <div class="slide-inner relative z-10">
+        <div class="rounded-2xl p-6 md:p-8 shadow-2xl shadow-black/20 bg-gomart" data-anim style="--i:0">
+          <div class="grid md:grid-cols-2 gap-6 md:gap-10 items-start">
+            <div>
+              <p class="text-mute text-xs font-bold uppercase tracking-[0.2em]">Way of working</p>
+              <h2 class="mt-3 text-3xl md:text-5xl font-extrabold tracking-tight max-w-[18ch]">The <span class="hl">Studio</span> Accelerator</h2>
+              <p class="mt-4 text-ink text-lg leading-relaxed">
+                This case study runs inside Gojek's <strong>Studio Accelerator</strong> — a <strong>4-week</strong>, cross-functional sprint format for tactical product bets. GoMart discovery was sponsored by C-level Deciders and run by design, research, engineering, and marketing working as one dream team.
+              </p>
+              <p class="mt-4 text-mute leading-relaxed">
+                My role: facilitate problem framing, synthesise desk research into session inputs, and run persona brainstorms that turned Brand Key pillars into testable bets — not one solution, but a set of parallel tracks we could ship at different speeds.
+              </p>
+              <div class="mt-6 flex flex-wrap gap-2">
+                <span class="chip">Session 1 · Understand</span>
+                <span class="chip">Session 2 · Define</span>
+                <span class="chip">Session 3 · Experiment</span>
+              </div>
+            </div>
+            <div class="space-y-3">
+              <p class="text-xs font-bold uppercase tracking-[0.14em] text-mute">Engagement plan · 4 weeks</p>
+              <div class="rounded-xl bg-white/80 border border-line p-4">
+                <p class="text-xs font-bold uppercase tracking-[0.14em] text-mute mb-1">Session 1 · Understand the problem</p>
+                <p class="text-sm text-ink font-semibold">Lightning talks + live Miro note-taking</p>
+                <p class="text-xs text-mute mt-1">North star, funnel data, Aug 2020 sprint learnings, Nation research, GoFood precedent</p>
+              </div>
+              <div class="rounded-xl bg-white/80 border border-line p-4">
+                <p class="text-xs font-bold uppercase tracking-[0.14em] text-mute mb-1">Session 2 · Define the questions</p>
+                <p class="text-sm text-ink font-semibold">Team brainstorm by persona × pillar</p>
+                <p class="text-xs text-mute mt-1">6 teams, 3 HMW challenges, dot-voted ideas</p>
+              </div>
+              <div class="rounded-xl bg-white/80 border border-line p-4">
+                <p class="text-xs font-bold uppercase tracking-[0.14em] text-mute mb-1">Session 3 · Design experiments</p>
+                <p class="text-sm text-ink font-semibold">Roadmap for validation</p>
+                <p class="text-xs text-mute mt-1">Turn prioritised bets into a phased build &amp; validation plan</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CS 01 · Business bet ===== -->
+    <section class="slide" data-chapter="case-study" data-title="Business bet">
+      <div class="slide-inner">
+        <div class="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
+          <div>
+            <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Context · Business</p>
+            <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-6 max-w-[18ch]" data-anim style="--i:1">The <span class="hl">bet</span> we had to win</h2>
+            <p class="text-ink text-lg leading-relaxed max-w-[48ch] mb-6" data-anim style="--i:2">
+              H1 2021 north star: <strong>2M monthly transactions</strong> by June. Within that, Consumer Journey owned one critical reliability KR — visit-to-book conversion from <strong>14% → 25%</strong>.
+            </p>
+            <p class="text-mute leading-relaxed max-w-[52ch] mb-8" data-anim style="--i:3">
+              GoMart had to shift from ad-hoc efficiency shopping to <strong>routine competent grocery</strong> — planners who buy weekly essentials, not one-off emergency orders. Discovery was the leak; the Studio produced multiple bets to close it.
+            </p>
+            <div class="inline-flex flex-col gap-2 p-5 rounded-2xl border-2 border-ink/15 bg-white" data-anim style="--i:4">
+              <p class="text-xs font-bold uppercase tracking-[0.14em] text-mute">Primary metric</p>
+              <p class="text-3xl font-extrabold">14% → 25%</p>
+              <p class="text-sm text-mute">Visit-to-book conversion (KR 2.5)</p>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-4" data-anim style="--i:2">
+            <div class="bg-elev border border-line rounded-2xl p-5">
+              <p class="text-xs font-bold uppercase tracking-[0.14em] text-mute mb-2">BCR target</p>
+              <p class="text-2xl font-extrabold">&gt;88%</p>
+              <p class="text-sm text-mute mt-1">Booking completion rate</p>
+            </div>
+            <div class="bg-elev border border-line rounded-2xl p-5">
+              <p class="text-xs font-bold uppercase tracking-[0.14em] text-mute mb-2">Supermarket COs</p>
+              <p class="text-2xl font-extrabold">10%→40%</p>
+              <p class="text-sm text-mute mt-1">Routine-buy acquisition</p>
+            </div>
+            <div class="bg-elev border border-line rounded-2xl p-5">
+              <p class="text-xs font-bold uppercase tracking-[0.14em] text-mute mb-2">Fill rate</p>
+              <p class="text-2xl font-extrabold">&gt;95%</p>
+              <p class="text-sm text-mute mt-1">Order reliability</p>
+            </div>
+            <div class="bg-elev border border-line rounded-2xl p-5">
+              <p class="text-xs font-bold uppercase tracking-[0.14em] text-mute mb-2">CSAT baseline</p>
+              <p class="text-2xl font-extrabold">92%</p>
+              <p class="text-sm text-mute mt-1">Post-order T2B, Feb 2021</p>
+            </div>
+          </div>
+        </div>
+        <p class="mt-8 text-xs text-mute max-w-[80ch]" data-anim style="--i:5">BCR, Supermarket COs, and Fill rate were guardrail KRs owned by sibling pods (Reliability, Merchant Ops) running in parallel — this case study follows KR 2.5, the discovery &amp; conversion bet Consumer Journey owned directly.</p>
+      </div>
+    </section>
+
+    <!-- ===== CS 03 · Brand Key ===== -->
+    <section class="slide relative overflow-hidden" data-chapter="case-study" data-title="Who we design for">
+      <img src="assets/gomart/brand-key.png" alt="GoMart Brand Key — Competent Consumers, effortless grocery shopping" data-lightbox class="absolute inset-0 w-full h-full object-cover object-center cursor-zoom-in" loading="lazy">
+      <div class="slide-inner relative z-10">
+        <div class="bg-white/95 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-line shadow-lg w-full max-w-full" data-anim style="--i:0">
+          <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4">Strategy · Nation brand workshop, March 2021</p>
+          <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-5 max-w-[20ch]" data-anim style="--i:1">Who we <span class="hl">design for</span></h2>
+          <div class="grid md:grid-cols-[1.6fr_1fr] gap-8 md:gap-10 items-start">
+            <div>
+              <p class="text-ink text-lg leading-relaxed mb-4" data-anim style="--i:2">
+                Nation, our brand research partner, distilled three shopper personas from a 2-day workshop — each chasing "competence" in groceries a different way. Click a persona to explore:
+              </p>
+              <div class="flex flex-wrap gap-2 mb-4" id="personaTabs" role="tablist" aria-label="Shopper personas" data-anim style="--i:3">
+                <button type="button" class="chip persona-tab !bg-elev !border-line !text-mute" data-persona="reliable" role="tab" aria-selected="true">Reliable · Kimmy</button>
+                <button type="button" class="chip persona-tab !bg-elev !border-line !text-mute" data-persona="advanced" role="tab" aria-selected="false">Advanced · Matahari</button>
+                <button type="button" class="chip persona-tab !bg-elev !border-line !text-mute" data-persona="effective" role="tab" aria-selected="false">Effective · Greg</button>
+              </div>
+              <div class="rounded-xl border border-line bg-elev/60 p-4 md:p-5" id="personaPanel" role="tabpanel" aria-live="polite" data-anim style="--i:4"></div>
+            </div>
+            <div data-anim style="--i:3">
+              <p class="text-xs font-bold uppercase tracking-[0.14em] text-mute mb-2">Where GoMart plays</p>
+              <div class="grid grid-cols-2 gap-1.5 rounded-xl overflow-hidden border border-accink/15 text-[11px] font-semibold leading-tight">
+                <div class="bg-elev p-3">Leisure<br><span class="text-mute font-normal">30% of occasions</span></div>
+                <div class="bg-elev p-3 ring-2 ring-inset ring-ink/70">Competence<br><span class="text-mute font-normal">47% · the goal</span></div>
+                <div class="bg-elev p-3">Indulgence<br><span class="text-mute font-normal">13% of occasions</span></div>
+                <div class="bg-elev/60 p-3">Efficiency<br><span class="text-mute font-normal">10% · heartland today</span></div>
+              </div>
+              <p class="text-[11px] text-mute mt-2 leading-relaxed">GoMart's heartland was ad-hoc <strong class="text-ink">Efficiency</strong>. The brand bet was to expand into routine <strong class="text-ink">Competence</strong> — the space these three personas represent.</p>
+              <div class="mt-4 pt-4 border-t border-line">
+                <p class="text-xs font-bold uppercase tracking-[0.14em] text-mute mb-2">Nation's synthesis: the Brand Key</p>
+                <p class="text-[11px] text-mute leading-relaxed"><strong class="text-ink">Competent Consumers</strong> (expert planners, 25–40, SEC AB) — brand essence <strong class="text-ink">"Effortless grocery shopping,"</strong> delivered through 3 pillars that shaped every later Studio HMW: Autonomous platform, Effective communication, Maximized value.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CS 02 · The leak (research boards) ===== -->
+    <section class="slide slide-scroll bg-elev" data-chapter="case-study" data-title="The leak">
+      <div class="slide-inner top !max-w-none" style="padding-left:clamp(1rem,4vw,3rem); padding-right:clamp(1rem,4vw,3rem);">
+        <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-2" data-anim style="--i:0">Discovery · Solo desk research, ahead of Session 1</p>
+        <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-2 max-w-[32ch]" data-anim style="--i:1">The funnel was <span class="hl">leaking</span> before booking</h2>
+        <p class="text-mute leading-relaxed max-w-[72ch] mb-4" data-anim style="--i:2">
+          I independently mapped the funnel end-to-end — Gojek home → GoMart home → search → merchant → cart — to give Session 1 a shared starting point: ~41% dropped before GoMart home, ~52% from search to add, and merchant pages lost ~50%.
+        </p>
+        <div class="research-board-wrap" data-anim style="--i:3">
+          <div class="research-board-head">
+            <div class="seg shrink-0" id="researchSeg" role="tablist" aria-label="Research board view">
+              <button type="button" class="seg-btn" data-research-view="flow" role="tab" aria-selected="true">Flow analysis</button>
+              <button type="button" class="seg-btn" data-research-view="funnel" role="tab" aria-selected="false">Funnel board</button>
+            </div>
+            <div class="research-board-toolbar">
+              <button type="button" class="proto-mag-toggle" id="researchMagToggle" aria-pressed="true" aria-label="Magnifier on, click to turn off">
+                <span class="proto-mag-toggle__text">Magnify</span>
+                <span class="proto-mag-switch" aria-hidden="true"><span class="proto-mag-switch__thumb"></span></span>
+              </button>
+              <span class="text-xs text-mute font-semibold hidden sm:inline">Hover to magnify · click image to expand</span>
+            </div>
+          </div>
+          <div class="proto-stage" id="researchStage" role="button" tabindex="0" aria-label="Research board — click to expand in lightbox">
+            <span class="proto-stage__inner">
+              <img id="researchBoardImg" src="assets/gomart/research-flow.png" alt="Desk-research flow analysis — Discovery to Consideration journey across Gojek home, GoMart home, search, merchant, and cart" data-lightbox>
+            </span>
+            <span class="proto-lens" aria-hidden="true"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CS 06 · Session 2 ===== -->
+    <section class="slide slide-scroll relative overflow-hidden" data-chapter="case-study" data-title="Session 2 · Brainstorm to bets">
+      <div class="slide-inner top !py-0 !px-0 !max-w-none">
+        <div class="grid md:grid-cols-[1.15fr_0.85fr] md:h-full">
+          <div class="order-2 md:order-1 flex flex-col justify-center px-[clamp(1.25rem,5vw,4rem)] py-[clamp(1.5rem,4vw,3rem)]">
+            <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-3" data-anim style="--i:0">Studio Accelerator · Session 2</p>
+            <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-3 max-w-[28ch]" data-anim style="--i:1">Brainstorm to <span class="hl">prioritised bets</span></h2>
+            <p class="text-mute leading-relaxed max-w-[62ch] mb-4" data-anim style="--i:2">
+              Dot-voting surfaced dozens of ideas across <strong class="text-ink">3 HMW challenges</strong> and 6 persona teams. We committed to <strong class="text-ink">three parallel tracks</strong> — each mapped to a different beat of the HMW: discover, trust, and routinely use.
+            </p>
+            <div class="flex flex-wrap gap-2 mb-5" data-anim style="--i:2">
+              <span class="chip !bg-elev !border-line !text-mute !text-[11px]">Discover · bottom nav</span>
+              <span class="chip !bg-elev !border-line !text-mute !text-[11px]">Trust · order-tracking &amp; chat</span>
+              <span class="chip !bg-elev !border-line !text-mute !text-[11px]">Discover + trust · onboarding stories</span>
+            </div>
+            <p class="text-xs font-bold uppercase tracking-[0.14em] text-mute mb-2" data-anim style="--i:3">Session 2 dot-votes</p>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-3" data-anim style="--i:3">
+              <div class="vote-card"><div class="vote-count">7</div><p class="text-sm font-semibold mt-1">Bulk shopping-list from search</p></div>
+              <div class="vote-card"><div class="vote-count">6</div><p class="text-sm font-semibold mt-1">Quality / reviews</p></div>
+              <div class="vote-card"><div class="vote-count">6</div><p class="text-sm font-semibold mt-1">First-order hooks</p></div>
+              <div class="vote-card"><div class="vote-count">5</div><p class="text-sm font-semibold mt-1">Gojek-data personalisation</p></div>
+              <div class="vote-card"><div class="vote-count text-base">Pick</div><p class="text-sm font-semibold mt-1">Intro UX &amp; onboarding stories</p></div>
+            </div>
+            <p class="text-xs text-mute leading-relaxed max-w-[58ch] mb-1" data-anim style="--i:4">
+              Top votes (7–5★) folded into <strong class="text-ink">Solution 1</strong> as dedicated bottom-nav tabs. Intro UX became <strong class="text-ink">Solution 3</strong> (team pick, not dot-voted). Order-tracking &amp; chat ran in parallel from service blueprint gaps — not a Session 2 vote.
+            </p>
+            <p class="text-xs text-mute leading-relaxed max-w-[58ch]" data-anim style="--i:5">
+              <strong class="text-ink">Session 3</strong> turned these bets into a phased design-and-validate roadmap — the next slides follow bottom navigation from research through ship.
+            </p>
+          </div>
+          <div class="order-1 md:order-2 panel-gomart-pattern flex flex-col items-center justify-center gap-3 p-5 md:p-8 min-h-[280px] overflow-y-auto" data-anim style="--i:2">
+            <p class="w-full max-w-[340px] text-xs font-bold uppercase tracking-[0.14em] text-white" style="text-shadow:0 1px 4px rgba(0,0,0,.45)">What we committed to</p>
+            <div class="w-full max-w-[340px] bg-white/92 backdrop-blur-sm rounded-2xl p-5 md:p-6 shadow-2xl shadow-black/20 border border-white/80">
+              <div class="space-y-2.5">
+              <div class="solution-index-card is-key shadow-sm">
+                <p class="text-[10px] font-bold uppercase tracking-wide text-mute mb-1">Solution 1 · Key</p>
+                <p class="text-sm font-bold text-ink mb-2">Bottom nav → New UI Architecture</p>
+                <ul class="text-[11px] text-mute leading-relaxed space-y-1 mb-2">
+                  <li class="flex gap-1.5"><span class="text-accent font-bold shrink-0">→</span><span><strong class="text-ink">Bottom nav</strong> — redesigned home, search, merchant spotlight, phased tab rollout</span></li>
+                </ul>
+                <p class="text-[10px] text-mute border-t border-line pt-2">Lowest vote (1★). Highest structural leverage — the only idea that could house the top-voted features as tabs.</p>
+              </div>
+              <div class="solution-index-card shadow-sm">
+                <p class="text-[10px] font-bold uppercase tracking-wide text-mute mb-1">Solution 2 · Secondary</p>
+                <p class="text-sm font-bold text-ink mb-2">Order-tracking widget &amp; chat</p>
+                <ul class="text-[11px] text-mute leading-relaxed space-y-1">
+                  <li class="flex gap-1.5"><span class="text-accent font-bold shrink-0">→</span><span><strong class="text-ink">Order-tracking &amp; chat</strong> — shopper/driver comms from homepage widget and in-flow modal</span></li>
+                </ul>
+              </div>
+              <div class="solution-index-card shadow-sm">
+                <p class="text-[10px] font-bold uppercase tracking-wide text-mute mb-1">Solution 3 · Quick execution</p>
+                <p class="text-sm font-bold text-ink mb-2">Onboarding stories</p>
+                <ul class="text-[11px] text-mute leading-relaxed space-y-1">
+                  <li class="flex gap-1.5"><span class="text-accent font-bold shrink-0">→</span><span><strong class="text-ink">Onboarding stories</strong> — full-screen value prop before the cluttered home</span></li>
+                </ul>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CS 07a · Bottom Navigation · Research (v2) ===== -->
+    <section class="slide relative overflow-hidden" data-chapter="case-study" data-title="Bottom Navigation · Research">
+      <div class="slide-inner top !py-0 !px-0 !max-w-none">
+        <div class="grid md:grid-cols-[1.15fr_0.85fr] md:h-full">
+          <div class="order-2 md:order-1 flex flex-col justify-center px-[clamp(1.25rem,5vw,4rem)] py-[clamp(1.5rem,4vw,3rem)]">
+            <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-3" data-anim style="--i:0">Solution 1 · Key · Design &amp; Validate</p>
+            <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-3 max-w-[22ch]" data-anim style="--i:1">Bottom navigation <span class="hl">IA redesign</span></h2>
+            <p class="text-xs text-mute mb-4 max-w-[58ch]" data-anim style="--i:1">Navbar Needs Exploration · R&amp;I · June 2021</p>
+            <p class="mb-4" data-anim style="--i:2"><span class="chip">Autonomous Platform</span></p>
+            <p class="text-mute leading-relaxed max-w-[58ch] mb-5" data-anim style="--i:2">
+              Not an experiment — a proven pattern. GoFood had already shipped this exact move: <strong class="text-ink">−3.7% time-to-book, +23% clicks, 2× reorder-page traffic</strong>, and 70% of new GoMart shoppers already knew it.
+            </p>
+
+            <div class="rounded-2xl border-2 border-ink/15 bg-white p-5 mb-5 max-w-[58ch]" data-anim style="--i:3">
+              <p class="text-xs font-bold uppercase tracking-[0.14em] text-mute mb-2">Why a navbar, once hygiene is fixed</p>
+              <p class="text-sm text-mute leading-relaxed mb-3">Poor search relevance was persistent across studies (Mar–Jun 2021) — fix content discovery first, then let the navbar be the silver bullet for everything else.</p>
+              <ul class="space-y-1.5 text-sm text-mute">
+                <li class="flex gap-2"><span class="text-accent font-bold">→</span><span>Adds visible structure to overcrowded content</span></li>
+                <li class="flex gap-2"><span class="text-accent font-bold">→</span><span>Opens space to showcase existing <em>and</em> new features</span></li>
+                <li class="flex gap-2"><span class="text-accent font-bold">→</span><span>Simplifies the ineffective back-and-forth navigation in-app</span></li>
+              </ul>
+            </div>
+
+            <p class="flex items-start gap-2 text-sm text-mute max-w-[58ch]" data-anim style="--i:4">
+              <span class="text-accent font-bold">→</span>
+              <span>That confidence became a dedicated navbar-needs study — three phased releases, one taken into testing next.</span>
+            </p>
+          </div>
+          <div class="order-1 md:order-2 panel-gomart-pattern2 flex flex-col items-center justify-center gap-3 p-5 md:p-8 min-h-[280px] overflow-y-auto" data-anim style="--i:2">
+            <p class="w-full max-w-[340px] text-xs font-bold uppercase tracking-[0.14em] text-white" style="text-shadow:0 1px 4px rgba(0,0,0,.45)">What shoppers told us</p>
+            <div class="w-full max-w-[340px] bg-white rounded-2xl p-5 md:p-6 shadow-2xl shadow-black/20 border border-line">
+              <blockquote>
+                <p class="text-base text-ink leading-relaxed">"I can roam more freely in the app, like e-commerce. Right now it's very much choose merchant → choose items → checkout only."</p>
+                <footer class="mt-3 text-xs text-mute font-semibold">— Athalia, Mature user · earlier research, Dovetail repository</footer>
+              </blockquote>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CS 07a2 · Bottom Navigation · Solution hypotheses ===== -->
+    <section class="slide slide-hypo slide-scroll bg-elev" data-chapter="case-study" data-title="Bottom Navigation · Solution hypotheses">
+      <div class="slide-inner top">
+        <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-2" data-anim style="--i:0">Solution 1 · Key · Three phased releases, one tested</p>
+        <h2 class="text-xl md:text-3xl font-extrabold tracking-tight mb-3 text-ink max-w-[30ch]" data-anim style="--i:1">From MVP to the <span class="hl">concept we tested</span></h2>
+        <p class="hypo-intro" data-anim style="--i:2">
+          I designed three progressively richer releases before this went to research — each one a hypothesis about what the navbar needed to solve. Only the most complete release went into the <strong>June 2021 concept-testing study</strong> with 6 IDIs.
+        </p>
+
+        <div class="hypo-grid" data-anim style="--i:3">
+          <article class="hypo-card">
+            <div class="hypo-card__media">
+              <img src="assets/gomart/Hypothisis/Solution%201.png" alt="Release 1 wireframe — Explore, Search, My Orders tabs with reorder-from-history flow" data-lightbox loading="lazy">
+            </div>
+            <div class="hypo-card__body">
+              <p class="hypo-card__eyebrow">Release 1 · MVP</p>
+              <h3 class="hypo-card__title">Explore · Search · My Orders</h3>
+              <p class="hypo-card__p"><strong>Hypothesis:</strong> promoting order history to its own tab — with a one-tap "Order again" that rebuilds the cart — will lift reorder rate for routine shoppers.</p>
+              <p class="hypo-card__p">Desk research had flagged low visibility for the reorder widget and past-purchase section.</p>
+            </div>
+          </article>
+          <article class="hypo-card">
+            <div class="hypo-card__media">
+              <img src="assets/gomart/Hypothisis/Solution%202.png" alt="Release 2 wireframe — adds a dedicated Merchant tab to Explore, Search, My Orders" data-lightbox loading="lazy">
+            </div>
+            <div class="hypo-card__body">
+              <p class="hypo-card__eyebrow">Release 2 · +Merchant</p>
+              <h3 class="hypo-card__title">Explore · Merchant · Search · My Orders</h3>
+              <p class="hypo-card__p"><strong>Hypothesis:</strong> giving Merchant its own destination — store grouping, branches, categories — will cut the back-and-forth between stores.</p>
+              <p class="hypo-card__p">Targets the ~50% merchant-page drop-off flagged in desk research.</p>
+            </div>
+          </article>
+          <article class="hypo-card is-key">
+            <div class="hypo-card__media">
+              <img src="assets/gomart/Hypothisis/Solution%203.png" alt="Release 3 wireframe — full 5-tab concept: Explore, Merchant, Search, Promo, My Orders — the version taken into concept testing" data-lightbox loading="lazy">
+            </div>
+            <div class="hypo-card__body">
+              <p class="hypo-card__eyebrow">Release 3 · +Promo</p>
+              <h3 class="hypo-card__title">Explore · Merchant · Search · Promo · My Orders</h3>
+              <p class="hypo-card__p"><strong>Hypothesis:</strong> consolidating deal content into one destination will lift engagement for deal-driven shoppers — addressing the "inefficient deal browsing" and low "Deals of the Day" visibility research flagged.</p>
+              <p class="hypo-card__note">→ Taken into concept testing · 6 IDIs, June 2021</p>
+            </div>
+          </article>
+        </div>
+
+        <p class="text-sm text-mute max-w-[78ch] mt-5" data-anim style="--i:4">
+          One hypothesis from this release didn't hold up: a dedicated <strong class="text-ink">Search</strong> tab. Testing disproved it — refinements on the next slide.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===== CS 07b · Bottom Navigation · Concept testing ===== -->
+    <section class="slide slide-scroll" data-chapter="case-study" data-title="Bottom Navigation · Concept testing">
+      <div class="slide-inner top">
+        <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-2" data-anim style="--i:0">Solution 1 · Key · Design &amp; Validate · Concept testing · June 2021 · 6 IDIs</p>
+        <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-2 max-w-[32ch]" data-anim style="--i:1">What 6 IDIs told us about <span class="hl">Release 3</span></h2>
+        <p class="text-mute leading-relaxed max-w-[78ch] mb-4" data-anim style="--i:2">
+          We walked participants through the full 5-tab wireframe from the previous slide — Explore, Merchant, Search, Promo, and My Orders — and tagged expectations, delights, and pains per menu.
+        </p>
+
+        <div class="grid lg:grid-cols-[1.15fr_0.85fr] gap-6 items-start" data-anim style="--i:3">
+          <div class="nav-carousel" data-nav-carousel aria-roledescription="carousel" aria-label="Release 3 concept testing screens">
+            <div class="nav-carousel__viewport">
+              <div class="nav-carousel__track" data-nav-carousel-track>
+                <figure class="nav-carousel__slide">
+                  <img src="assets/gomart/navigation/research.png" alt="Navbar needs exploration research board — shopping modes, tab priorities, and IA rationale from 6 IDIs" data-lightbox loading="lazy">
+                </figure>
+                <figure class="nav-carousel__slide">
+                  <img src="assets/gomart/Hypothisis/Solution%203.png" alt="Release 3 wireframe — the 5-tab stimulus tested in June 2021: Explore, Merchant, Search, Promo, My Orders" data-lightbox loading="lazy">
+                </figure>
+                <figure class="nav-carousel__slide">
+                  <img src="assets/gomart/navigation/06.png" alt="Explore tab concept testing — homepage structure, search bar, merchant categories, reorder widget" data-lightbox loading="lazy">
+                </figure>
+                <figure class="nav-carousel__slide">
+                  <img src="assets/gomart/navigation/05.png" alt="Merchant tab concept testing — store grouping, favourites, branch selection" data-lightbox loading="lazy">
+                </figure>
+                <figure class="nav-carousel__slide">
+                  <img src="assets/gomart/navigation/03.png" alt="Promo tab concept testing — deal browsing, strike prices, loyalty content" data-lightbox loading="lazy">
+                </figure>
+                <figure class="nav-carousel__slide">
+                  <img src="assets/gomart/navigation/02.png" alt="Order tab concept testing — ongoing vs history tabs, reorder shortcuts" data-lightbox loading="lazy">
+                </figure>
+                <figure class="nav-carousel__slide">
+                  <img src="assets/gomart/navigation/01.png" alt="Search tab — the Release 3 hypothesis that did not hold up in testing" data-lightbox loading="lazy">
+                </figure>
+              </div>
+            </div>
+            <p class="nav-carousel__caption" data-nav-carousel-caption aria-live="polite">Navbar needs exploration — shopping modes &amp; tab priorities</p>
+            <div class="nav-carousel__controls">
+              <button type="button" class="nav-carousel__btn" data-nav-carousel-prev aria-label="Previous screen">←</button>
+              <div class="flex items-center gap-2" data-nav-carousel-dots role="tablist" aria-label="Concept screens"></div>
+              <span class="nav-carousel__meta" data-nav-carousel-count aria-live="polite">1 / 7</span>
+              <button type="button" class="nav-carousel__btn" data-nav-carousel-next aria-label="Next screen">→</button>
+            </div>
+          </div>
+
+          <div class="space-y-4">
+            <div class="rounded-xl border border-line bg-card p-4 md:p-5">
+              <p class="text-xs font-bold uppercase tracking-[0.14em] text-mute mb-2">What held up</p>
+              <ul class="space-y-2 text-sm text-mute">
+                <li class="flex gap-2"><span class="text-accent font-bold">→</span><span><strong class="text-ink">Merchant</strong> — add branch selection, ratings, delivery fee upfront</span></li>
+                <li class="flex gap-2"><span class="text-accent font-bold">→</span><span><strong class="text-ink">Promo</strong> — customers want membership &amp; loyalty content, not just discounts</span></li>
+                <li class="flex gap-2"><span class="text-accent font-bold">→</span><span><strong class="text-ink">Order</strong> — merge ongoing/past into one page instead of tabs</span></li>
+              </ul>
+              <p class="text-xs text-mute mt-3 pt-3 border-t border-line">Explore kept its name (GoFood precedent); search bar + recs added to the homepage.</p>
+            </div>
+            <div class="solution-index-card is-key shadow-sm p-4 md:p-5">
+              <p class="text-xs font-bold uppercase tracking-[0.14em] text-mute mb-2">Before build · Discoverability</p>
+              <p class="text-sm text-ink leading-relaxed mb-2"><strong class="text-ink">Coachmark/tutorial became mandatory</strong> — no participant recognised the bottom nav without prompting.</p>
+              <p class="text-sm text-mute leading-relaxed">Search stayed on Explore, not as a tab — matching GoFood behaviour and what participants already expected from the homepage.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CS 07c · Bottom Navigation · Wireframe to visual design ===== -->
+    <section class="slide slide-compare" data-chapter="case-study" data-title="Wireframe to visual design">
+      <div class="slide-inner top">
+        <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-2" data-anim style="--i:0">Solution 1 · Key · From research to visual design</p>
+        <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-3 w-full text-ink" data-anim style="--i:1">The structure held in research — <span class="hl">so I designed for it</span></h2>
+        <p class="compare-copy text-sm md:text-base leading-relaxed w-full mb-2" data-anim style="--i:2">Bottom navigation wasn't a leap of faith. GoFood had proven the pattern, 6 IDIs validated Release 3, and the same five-tab IA carried straight into visual design.</p>
+        <p class="compare-copy text-sm md:text-base leading-relaxed w-full mb-4" data-anim style="--i:2">Visually: wireframe placeholders became GoMart's brand system — green accents, photography, real merchant storefronts, and product-led promo cards. Structure unchanged; fidelity upgraded.</p>
+        <div class="compare-stage" data-anim style="--i:3">
+          <div class="compare w-full" data-compare role="img" aria-label="Before and after comparison of Release 3 bottom navigation — wireframe versus visual design">
+            <div class="compare__layer">
+              <span class="compare__tag compare__tag--after">After · Visual design</span>
+              <div class="compare__media">
+                <img src="assets/gomart/Hypothisis/Solution%203_%20visual-design.png" alt="" class="compare__img" draggable="false" loading="lazy">
+              </div>
+            </div>
+            <div class="after-layer">
+              <div class="compare__layer">
+                <span class="compare__tag compare__tag--before">Before · Wireframe</span>
+                <div class="compare__media">
+                  <img src="assets/gomart/Hypothisis/Solution%203.png" alt="" class="compare__img" draggable="false" loading="lazy">
+                </div>
+              </div>
+            </div>
+            <div class="handle" aria-hidden="true">⟺</div>
+          </div>
+          <p class="compare-hint text-xs md:text-sm text-center shrink-0" data-anim style="--i:4">Drag to compare wireframe and visual design</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CS 09 · Shipped · Impact ===== -->
+    <section class="slide relative overflow-hidden" data-chapter="case-study" data-title="Shipped · Impact">
+      <div class="slide-inner top !py-0 !px-0 !max-w-none">
+        <div class="grid md:grid-cols-[1.15fr_0.85fr] md:h-full">
+          <div class="order-2 md:order-1 flex flex-col justify-center px-[clamp(1.25rem,5vw,4rem)] py-[clamp(1.5rem,4vw,3rem)]">
+            <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Shipped · Impact</p>
+            <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-6 max-w-[22ch]" data-anim style="--i:1">From Studio bets to <span class="hl">production</span></h2>
+            <p class="text-mute leading-relaxed max-w-[58ch] mb-4" data-anim style="--i:2">
+              Bottom navigation shipped across Indonesian cities on the H1 Consumer Journey roadmap — the structural bet from Session 2. Order-tracking &amp; chat and onboarding stories followed as parallel quick wins.
+            </p>
+            <p class="text-xs text-mute max-w-[58ch] mb-6" data-anim style="--i:3">Directional leading indicators from the rollout window; KR 2.5 close-out wasn't part of the record referenced here.</p>
+            <div class="flex flex-wrap items-center gap-3" data-anim style="--i:4">
+              <button type="button" data-goto="Highlight · Order-tracking widget &amp; chat" class="inline-flex items-center gap-2 text-base font-bold px-6 py-3.5 md:px-7 rounded-full bg-accent !text-ink hover:brightness-105 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink/20 focus-visible:ring-offset-2 focus-visible:ring-offset-white transition-all">See highlights <span aria-hidden="true">→</span></button>
+              <button type="button" data-goto="Thanks" class="inline-flex items-center gap-2 text-base font-semibold px-6 py-3.5 md:px-7 rounded-full border border-ink/25 !text-ink hover:border-accent hover:bg-[#fff3b0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink/20 focus-visible:ring-offset-2 focus-visible:ring-offset-white transition-colors">Skip to end</button>
+            </div>
+          </div>
+          <div class="order-1 md:order-2 panel-gomart-pattern3 flex flex-col items-center justify-center gap-3 p-5 md:p-8 min-h-[280px] overflow-y-auto" data-anim style="--i:2">
+            <p class="w-full max-w-[340px] text-xs font-bold uppercase tracking-[0.14em] text-white" style="text-shadow:0 1px 4px rgba(0,0,0,.45)">Business context at sprint start · April 2021</p>
+            <div class="w-full max-w-[340px] bg-white rounded-2xl p-5 md:p-6 shadow-2xl shadow-black/20 border border-line" data-anim style="--i:3">
+              <p class="text-xs font-bold uppercase tracking-[0.14em] text-mute mb-2">Target · KR 2.5</p>
+              <div class="text-3xl md:text-5xl font-extrabold tracking-tight leading-none text-ink">14→25%</div>
+              <p class="mt-3 text-sm text-mute leading-relaxed">Visit-to-book conversion — the north star Consumer Journey owned for H1 2021</p>
+            </div>
+            <div class="w-full max-w-[340px] bg-white rounded-2xl p-5 md:p-6 shadow-2xl shadow-black/20 border border-line" data-anim style="--i:4">
+              <div class="text-3xl md:text-5xl font-extrabold tracking-tight leading-none text-ink">905k</div>
+              <p class="mt-3 text-sm text-mute leading-relaxed">Monthly checkout orders when the Studio sprint kicked off · internal growth decks</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== CHAPTER · HIGHLIGHTS (after the case study) ===================== -->
+
+    <!-- HIGHLIGHT · Order-tracking widget & chat -->
+    <section class="slide bg-elev" data-chapter="highlights" data-title="Highlight · Order-tracking widget &amp; chat">
+      <div class="slide-inner">
+        <div class="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
+          <div>
+            <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Highlight · Solution 2 · Trust · Effective Communication</p>
+            <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-4 max-w-[16ch]" data-anim style="--i:1">Order-tracking widget &amp; chat</h2>
+            <p class="mb-6" data-anim style="--i:2"><span class="chip">Trust · mid-order</span></p>
+            <p class="text-ink text-lg leading-relaxed max-w-[46ch]" data-anim style="--i:3">
+              A parallel Studio bet on <strong>trust after booking</strong>. During an active order, consumers chat with both shopper and driver — from the Gojek homepage track widget, Chat tab, or an in-flow modal. Born from service blueprint gaps: no customer–shopper chat, verbal consent only.
+            </p>
+          </div>
+          <div class="mx-auto w-full max-w-[640px]" data-anim style="--i:3">
+            <img src="assets/gomart/widget-project.png" alt="GoMart order-tracking widget and shopper/driver chat flow" data-lightbox class="w-full h-auto max-h-[72vh] object-contain cursor-zoom-in" loading="lazy">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HIGHLIGHT · Onboarding stories -->
+    <section class="slide" data-chapter="highlights" data-title="Highlight · Onboarding stories">
+      <div class="slide-inner">
+        <div class="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
+          <div>
+            <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Highlight · Solution 3 · Discover · Maximized Value</p>
+            <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-4 max-w-[16ch]" data-anim style="--i:1">Onboarding <span class="hl">stories</span></h2>
+            <p class="mb-6" data-anim style="--i:2"><span class="chip">Discover · first visit</span></p>
+            <p class="text-ink text-lg leading-relaxed max-w-[46ch]" data-anim style="--i:3">
+              The fastest bet to ship from the same brainstorm — full-screen story cards that explain value before a cluttered home: choose your store, search across stores, hand-picked by shoppers, instant delivery.
+            </p>
+          </div>
+          <div data-anim style="--i:3">
+            <div class="phone-mock !max-w-[285px] mx-auto">
+              <video loop data-autoplay muted playsinline preload="metadata" aria-label="GoMart onboarding story entry and exit transition recording" aria-describedby="onboarding-video-desc">
+                <source src="assets/gomart/onboarding-transition.mp4" type="video/mp4">
+                <track kind="captions" src="assets/gomart/onboarding-desc.vtt" srclang="en" label="English captions" default>
+              </video>
+            </div>
+            <p id="onboarding-video-desc" class="sr-only">Full-screen story cards with animated entry and exit transitions for first-time GoMart users.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Thanks ===== -->
+    <section class="slide bg-ink text-white" data-chapter="highlights" data-title="Thanks">
+      <div class="slide-inner items-center text-center">
+        <p class="text-white/60 text-xs font-bold uppercase tracking-[0.2em] mb-8" data-anim style="--i:0">Fin</p>
+        <h2 class="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.12] max-w-[18ch]" data-anim style="--i:1">
+          Thanks for <span class="hl">watching</span>.
+        </h2>
+        <p class="mt-8 text-lg md:text-xl text-white/70 max-w-[46ch]" data-anim style="--i:2">
+          Thanks for your time — whether you explored this on your own or we went through it together. I'd love to connect.
+        </p>
+        <div class="mt-10 flex flex-wrap items-center justify-center gap-4" data-anim style="--i:3">
+          <a class="nav-btn !w-auto !px-5 !text-white !bg-white/10 !border-white/20 hover:!bg-white/20 hover:!border-white/40" href="n26.html">← N26 — Home Feed</a>
+          <a class="nav-btn !w-auto !px-5 !text-white !bg-white/10 !border-white/20 hover:!bg-white/20 hover:!border-white/40" href="index.html">Back to home</a>
+          <a class="nav-btn !w-auto !px-5 !text-white !bg-white/10 !border-white/20 hover:!bg-white/20 hover:!border-white/40" href="goplay.html">GoPlay — OTT Platform →</a>
+        </div>
+        <p class="mt-14 text-white/40 text-sm" data-anim style="--i:4">© 2026 · Vipul Saxena · GoMart · Product Design Portfolio</p>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<!-- ============================================================= -->
+<!-- Bottom control bar — dots / prev-next / counter               -->
+<!-- ============================================================= -->
+<div class="ctrl" role="group" aria-label="Slideshow controls">
+  <button type="button" class="nav-btn nav-home" data-home aria-label="Back to first slide" title="Back to first slide">
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>
+    <span class="home-count" data-home-count aria-hidden="true"></span>
+  </button>
+  <div class="chapter-tabs" id="chapters" aria-label="Chapters"></div>
+  <div class="ctrl-dots hidden lg:flex" id="dots" aria-label="Slides"></div>
+  <div class="ml-auto flex items-center gap-3">
+    <span class="counter"><span id="curNum">01</span> <span class="sep">/</span> <span id="totNum">--</span></span>
+    <button type="button" class="nav-btn" data-prev aria-label="Previous slide">←</button>
+    <button type="button" class="nav-btn" data-next aria-label="Next slide">→</button>
+  </div>
+</div>
+
+<!-- Lightbox overlay -->
+<div id="lightbox" aria-hidden="true"><img alt="Expanded view"></div>
+
+<!-- ===================== Password gate validation ===================== -->
+<script src="js/portfolio-gate.js"></script>
+<script>
+  (function(){
+    var gate  = document.getElementById("gomartGate");
+    var form  = document.getElementById("gomartGateForm");
+    var input = document.getElementById("gomartGateInput");
+    var error = document.getElementById("gomartGateError");
+    var btn   = form && form.querySelector(".pw-btn");
+    if (!gate || !form) return;
+
+    if (window.__gateAllow) {
+      document.documentElement.classList.remove("gomart-locked");
+      gate.remove();
+    } else {
+      setTimeout(function(){ if (input) input.focus(); }, 80);
+    }
+
+    form.addEventListener("submit", function(e){
+      e.preventDefault();
+      error.hidden = true;
+      if (btn) btn.disabled = true;
+
+      var verify = window.PortfolioGate && window.PortfolioGate.verify;
+      if (!verify) {
+        if (btn) btn.disabled = false;
+        error.hidden = false;
+        return;
+      }
+
+      verify(input.value).then(function(ok){
+        if (btn) btn.disabled = false;
+        if (ok) {
+          window.PortfolioGate.grant("gomartAccessGranted");
+          document.documentElement.classList.remove("gomart-locked");
+          gate.remove();
+          window.dispatchEvent(new Event("resize"));
+        } else {
+          error.hidden = false;
+          input.focus();
+          input.select();
+        }
+      }).catch(function(){
+        if (btn) btn.disabled = false;
+        error.hidden = false;
+        input.focus();
+      });
+    });
+  })();
+</script>
+
+<!-- ===================== Full-page slideshow (vanilla JS) ===================== -->
+<script>
+(function () {
+  "use strict";
+  const track    = document.getElementById("track");
+  const slides   = Array.from(track.children);
+  const dotsWrap = document.getElementById("dots");
+  const progress = document.getElementById("progress");
+  const curNum   = document.getElementById("curNum");
+  const totNum   = document.getElementById("totNum");
+  const deckTitle= document.getElementById("deckTitle");
+  const prevBtns = Array.from(document.querySelectorAll("[data-prev]"));
+  const nextBtns = Array.from(document.querySelectorAll("[data-next]"));
+  const homeBtns = Array.from(document.querySelectorAll("[data-home]"));
+  const N = slides.length;
+  const homeIndices = slides.map((s, idx) => (s.hasAttribute("data-home-slide") ? idx : -1)).filter((x) => x >= 0);
+  const pad = (n) => String(n).padStart(2, "0");
+
+  const chapWrap = document.getElementById("chapters");
+  const CHAP_LABELS = { "highlights": "Highlights", "case-study": "Case study" };
+  const CHAP_ICONS = {
+    "case-study": '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 13H8"/></svg>',
+    "highlights": '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>'
+  };
+
+  let i = 0;
+
+  /* ---------- build chapters from data-chapter ---------- */
+  const chapters = [];
+  slides.forEach((s, idx) => {
+    const id = s.dataset.chapter || "main";
+    let ch = chapters.find((c) => c.id === id);
+    if (!ch) { ch = { id, label: CHAP_LABELS[id] || id, start: idx, end: idx, slides: [] }; chapters.push(ch); }
+    ch.end = idx; ch.slides.push(idx);
+  });
+  const chapterOf = (idx) => chapters.find((c) => idx >= c.start && idx <= c.end);
+  chapters.forEach((c) => { c.countSlides = c.slides.filter((idx) => !slides[idx].hasAttribute("data-home-slide")); });
+
+  /* ---------- chapter tabs (hidden when there is only one chapter) ---------- */
+  const chapterTabs = (chapters.length > 1 ? chapters : []).map((ch) => {
+    const b = document.createElement("button");
+    b.className = "chapter-tab";
+    b.type = "button";
+    b.innerHTML =
+      '<span class="ct-label">' + ch.label + "</span>" +
+      '<span class="ct-icon" aria-hidden="true">' + (CHAP_ICONS[ch.id] || "") + "</span>" +
+      '<span class="ct-count">' + ch.countSlides.length + "</span>";
+    b.setAttribute("aria-label", "Jump to " + ch.label);
+    b.addEventListener("click", () => go(ch.countSlides.length ? ch.countSlides[0] : ch.start));
+    chapWrap && chapWrap.appendChild(b);
+    return b;
+  });
+
+  /* ---------- grouped dots (hover shows the slide title) ---------- */
+  const dots = [];
+  const dotSegmentsForChapter = (ch) => {
+    const homeInCh = ch.slides.filter((idx) => slides[idx].hasAttribute("data-home-slide"));
+    const restInCh = ch.slides.filter((idx) => !slides[idx].hasAttribute("data-home-slide"));
+    return homeInCh.length && restInCh.length ? [homeInCh, restInCh] : [ch.slides];
+  };
+  chapters.forEach((ch) => {
+    dotSegmentsForChapter(ch).forEach((indices) => {
+      const group = document.createElement("div");
+      group.className = "dot-group";
+      indices.forEach((idx) => {
+        const b = document.createElement("button");
+        b.className = "dot";
+        b.type = "button";
+        const label = slides[idx].dataset.title || ("Slide " + (idx + 1));
+        b.setAttribute("aria-label", "Go to slide " + (idx + 1) + ": " + label);
+        b.dataset.tip = pad(idx + 1) + " · " + label;
+        b.addEventListener("click", () => go(idx));
+        group.appendChild(b);
+        dots[idx] = b;
+      });
+      dotsWrap.appendChild(group);
+    });
+  });
+  totNum.textContent = pad(N);
+
+  /* ---------- render current state ---------- */
+  function render() {
+    track.style.transform = `translateX(-${i * 100}%)`;
+    slides.forEach((s, idx) => {
+      const active = idx === i;
+      s.classList.toggle("is-active", active);
+      if (active) s.scrollTop = 0;
+    });
+    dots.forEach((d, idx) => d.setAttribute("aria-current", String(idx === i)));
+    const homePos = homeIndices.indexOf(i);
+    const onHome = homePos >= 0;
+    const ch = chapterOf(i);
+    chapterTabs.forEach((t, ci) => {
+      const cur = !onHome && chapters[ci] === ch;
+      t.setAttribute("aria-current", String(cur));
+      const cnt = t.querySelector(".ct-count");
+      if (cnt) cnt.textContent = cur ? (chapters[ci].countSlides.indexOf(i) + 1) + "/" + chapters[ci].countSlides.length : String(chapters[ci].countSlides.length);
+    });
+    curNum.textContent = pad(i + 1);
+    progress.style.width = ((i + 1) / N) * 100 + "%";
+    const t = slides[i].dataset.title;
+    deckTitle.textContent = t || "GoMart — Instant Grocery";
+    prevBtns.forEach((b) => (b.disabled = i === 0));
+    nextBtns.forEach((b) => (b.disabled = i === N - 1));
+    homeBtns.forEach((b) => {
+      b.classList.toggle("is-active", onHome);
+      b.setAttribute("aria-current", onHome ? "true" : "false");
+      const badge = b.querySelector("[data-home-count]");
+      if (badge) badge.textContent = onHome ? (homePos + 1) + "/" + homeIndices.length : "";
+    });
+    if (history.replaceState) history.replaceState(null, "", "#" + (i + 1));
+  }
+
+  function go(n) {
+    i = Math.max(0, Math.min(N - 1, n));
+    render();
+  }
+  const next = () => go(i + 1);
+  const prev = () => go(i - 1);
+
+  prevBtns.forEach((b) => b.addEventListener("click", prev));
+  nextBtns.forEach((b) => b.addEventListener("click", next));
+  document.querySelectorAll("[data-home]").forEach((b) => b.addEventListener("click", () => go(0)));
+
+  /* ---------- lightbox (click any [data-lightbox] image to expand) ---------- */
+  const lb = document.getElementById("lightbox");
+  const lbImg = lb ? lb.querySelector("img") : null;
+  const lbOpen = () => lb && lb.classList.contains("open");
+  const closeLb = () => { if (lb) { lb.classList.remove("open"); lb.setAttribute("aria-hidden", "true"); } };
+  if (lb && lbImg) {
+    document.addEventListener("click", (e) => {
+      const t = e.target.closest("[data-lightbox]");
+      if (t && t.tagName === "IMG") { lbImg.src = t.currentSrc || t.src; lbImg.alt = t.alt || ""; lb.classList.add("open"); lb.setAttribute("aria-hidden", "false"); }
+      else if (e.target === lb || e.target === lbImg) { closeLb(); }
+    });
+  }
+
+  /* ---------- keyboard ---------- */
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && lbOpen()) { e.preventDefault(); closeLb(); return; }
+    if (lbOpen()) return;
+    if (e.target.closest("input, textarea, iframe, [contenteditable]")) return;
+    switch (e.key) {
+      case "ArrowRight": case "PageDown":
+        e.preventDefault(); next(); break;
+      case " ":
+        e.preventDefault(); e.shiftKey ? prev() : next(); break;
+      case "ArrowLeft": case "PageUp":
+        e.preventDefault(); prev(); break;
+      /* ArrowUp / ArrowDown are intentionally left to scroll the active slide */
+      case "Home": e.preventDefault(); go(0); break;
+      case "End":  e.preventDefault(); go(N - 1); break;
+    }
+  });
+
+  /* ---------- touch swipe (works over vertically scrollable slides too) ---------- */
+  let x0 = null, y0 = null, sdx = 0, sdy = 0, axis = null;
+  track.addEventListener("touchstart", (e) => {
+    if (e.touches.length !== 1) { x0 = null; return; }
+    x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; sdx = sdy = 0; axis = null;
+  }, { passive: true });
+  track.addEventListener("touchmove", (e) => {
+    if (x0 === null) return;
+    sdx = e.touches[0].clientX - x0; sdy = e.touches[0].clientY - y0;
+    if (!axis && (Math.abs(sdx) > 8 || Math.abs(sdy) > 8)) axis = Math.abs(sdx) > Math.abs(sdy) ? "x" : "y";
+    if (axis === "x" && e.cancelable) e.preventDefault();
+  }, { passive: false });
+  track.addEventListener("touchend", () => {
+    if (x0 === null) return;
+    if (axis === "x" && Math.abs(sdx) > 45) (sdx < 0 ? next() : prev());
+    x0 = y0 = null; axis = null;
+  }, { passive: true });
+  track.addEventListener("touchcancel", () => { x0 = y0 = null; axis = null; }, { passive: true });
+
+  /* ---------- fullscreen ---------- */
+  const fsBtn = document.querySelector("[data-fullscreen]");
+  fsBtn && fsBtn.addEventListener("click", () => {
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
+    else document.exitFullscreen?.();
+  });
+
+  /* ---------- init from hash ---------- */
+  const start = parseInt((location.hash || "").replace("#", ""), 10);
+  if (!isNaN(start) && start >= 1 && start <= N) i = start - 1;
+  render();
+})();
+</script>
+<script>
+/* Navbar concept-test carousel */
+(function () {
+  "use strict";
+  const CAPTIONS = [
+    "Navbar needs exploration — shopping modes & tab priorities",
+    "Release 3 · stimulus tested · June 2021",
+    "Explore — homepage structure, search bar, categories, reorder widget",
+    "Merchant — store grouping, favourites, branch selection",
+    "Promo — deal browsing, strike prices, loyalty content",
+    "Order — ongoing vs history tabs, reorder shortcuts",
+    "Search — the Release 3 hypothesis that didn't hold"
+  ];
+
+  document.querySelectorAll("[data-nav-carousel]").forEach((root) => {
+    const viewport = root.querySelector(".nav-carousel__viewport");
+    const track = root.querySelector("[data-nav-carousel-track]");
+    const slides = track ? Array.from(track.children) : [];
+    const dotsWrap = root.querySelector("[data-nav-carousel-dots]");
+    const prev = root.querySelector("[data-nav-carousel-prev]");
+    const next = root.querySelector("[data-nav-carousel-next]");
+    const caption = root.querySelector("[data-nav-carousel-caption]");
+    const count = root.querySelector("[data-nav-carousel-count]");
+    if (!track || !slides.length) return;
+
+    let i = 0;
+    const dots = slides.map((_, idx) => {
+      const d = document.createElement("button");
+      d.type = "button";
+      d.className = "nav-carousel__dot";
+      d.setAttribute("role", "tab");
+      d.setAttribute("aria-label", "Screen " + (idx + 1) + ": " + (CAPTIONS[idx] || ""));
+      d.addEventListener("click", () => go(idx));
+      dotsWrap && dotsWrap.appendChild(d);
+      return d;
+    });
+
+    const openLightbox = (idx) => {
+      const img = slides[idx].querySelector("img[data-lightbox]");
+      if (!img) return;
+      const lb = document.getElementById("lightbox");
+      const lbImg = lb && lb.querySelector("img");
+      if (!lb || !lbImg) return;
+      lbImg.src = img.currentSrc || img.src;
+      lbImg.alt = img.alt || "";
+      lb.classList.add("open");
+      lb.setAttribute("aria-hidden", "false");
+    };
+
+    const go = (n) => {
+      i = (n + slides.length) % slides.length;
+      track.style.transform = "translateX(-" + (i * 100) + "%)";
+      dots.forEach((d, idx) => {
+        const on = idx === i;
+        d.setAttribute("aria-current", String(on));
+        d.setAttribute("aria-selected", String(on));
+      });
+      if (caption) caption.textContent = CAPTIONS[i] || "";
+      if (count) count.textContent = (i + 1) + " / " + slides.length;
+    };
+
+    prev && prev.addEventListener("click", () => go(i - 1));
+    next && next.addEventListener("click", () => go(i + 1));
+
+    let x0 = null;
+    const SWIPE = 40;
+    if (viewport) {
+      viewport.addEventListener("pointerdown", (e) => {
+        x0 = e.clientX;
+        viewport.setPointerCapture(e.pointerId);
+      });
+      viewport.addEventListener("pointerup", (e) => {
+        if (x0 === null) return;
+        const dx = e.clientX - x0;
+        x0 = null;
+        if (Math.abs(dx) > SWIPE) go(dx < 0 ? i + 1 : i - 1);
+        else openLightbox(i);
+      });
+      viewport.addEventListener("pointercancel", () => { x0 = null; });
+    }
+
+    go(0);
+  });
+})();
+</script>
+<script>
+/* Before / After compare slider */
+(function () {
+  "use strict";
+  document.querySelectorAll("[data-compare]").forEach((root) => {
+    const after = root.querySelector(".after-layer");
+    const handle = root.querySelector(".handle");
+    if (!after || !handle) return;
+    let dragging = false;
+
+    const set = (clientX) => {
+      const r = root.getBoundingClientRect();
+      let p = ((clientX - r.left) / r.width) * 100;
+      p = Math.max(0, Math.min(100, p));
+      after.style.clipPath = "inset(0 " + (100 - p) + "% 0 0)";
+      handle.style.left = p + "%";
+    };
+
+    root.addEventListener("pointerdown", (e) => {
+      e.preventDefault();
+      dragging = true;
+      set(e.clientX);
+      root.setPointerCapture(e.pointerId);
+    });
+    root.addEventListener("pointermove", (e) => { if (dragging) { e.preventDefault(); set(e.clientX); } });
+    const end = () => { dragging = false; };
+    root.addEventListener("pointerup", end);
+    root.addEventListener("pointercancel", end);
+    root.addEventListener("dragstart", (e) => e.preventDefault());
+    root.querySelectorAll("img").forEach((img) => {
+      img.addEventListener("dragstart", (e) => e.preventDefault());
+    });
+
+    requestAnimationFrame(() => {
+      const r = root.getBoundingClientRect();
+      set(r.left + r.width / 2);
+    });
+  });
+})();
+</script>
+<script>
+/* Autoplay prototype recordings when in viewport + "Play again" CTA */
+(function(){
+  var vids = Array.prototype.slice.call(document.querySelectorAll('video[data-autoplay]'));
+  if(!vids.length) return;
+
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        var v = e.target;
+        if(e.isIntersecting && e.intersectionRatio >= 0.5){
+          var p = v.play();
+          if(p && p.catch) p.catch(function(){});
+        } else {
+          v.pause();
+        }
+      });
+    }, { threshold: [0, 0.5, 1] });
+    vids.forEach(function(v){ io.observe(v); });
+  }
+
+  document.querySelectorAll('[data-replay]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var card = btn.closest('.grid');
+      var v = card && card.querySelector('video');
+      if(!v) return;
+      v.currentTime = 0;
+      var p = v.play();
+      if(p && p.catch) p.catch(function(){});
+    });
+  });
+
+  /* Highlights-preview cards jump to the matching slide via its dot control */
+  var allSlides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  document.querySelectorAll('[data-goto]').forEach(function(el){
+    el.addEventListener('click', function(){
+      var title = el.getAttribute('data-goto');
+      var idx = -1;
+      allSlides.forEach(function(s, k){ if(s.dataset.title === title) idx = k; });
+      if(idx < 0) return;
+      var dot = document.querySelector('.dot[aria-label^="Go to slide ' + (idx + 1) + ':"]');
+      if(dot) dot.click();
+    });
+  });
+})();
+</script>
+<script>
+/* Research board view toggle + magnify lens */
+(function(){
+  var BOARDS = {
+    flow: {
+      src: "assets/gomart/research-flow.png",
+      alt: "Desk-research flow analysis — Discovery to Consideration journey across Gojek home, GoMart home, search, merchant, and cart"
+    },
+    funnel: {
+      src: "assets/gomart/research-funnel-board.png",
+      alt: "GoMart funnel analysis — 41% drop from Gojek home to GoMart home, search and merchant page drop-offs"
+    }
+  };
+  var seg = document.getElementById("researchSeg");
+  var img = document.getElementById("researchBoardImg");
+  var stage = document.getElementById("researchStage");
+  var magBtn = document.getElementById("researchMagToggle");
+  if (!seg || !img || !stage) return;
+
+  var current = "flow";
+  function setView(key) {
+    if (!BOARDS[key]) return;
+    current = key;
+    img.src = BOARDS[key].src;
+    img.alt = BOARDS[key].alt;
+    seg.querySelectorAll("[data-research-view]").forEach(function(b) {
+      b.setAttribute("aria-selected", String(b.dataset.researchView === key));
+    });
+    if (stage._protoRefreshLens) stage._protoRefreshLens();
+  }
+  seg.querySelectorAll("[data-research-view]").forEach(function(b) {
+    b.addEventListener("click", function() { setView(b.dataset.researchView); });
+  });
+
+  var ZOOM = 2.35;
+  var canMagnify = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  var inner = stage.querySelector(".proto-stage__inner");
+  var lens = stage.querySelector(".proto-lens");
+
+  function clearLens() { stage.classList.remove("is-magnifying"); }
+
+  if (canMagnify && inner && lens) {
+    stage._protoMagnifyEnabled = true;
+    var lastPointer = null;
+    function protoImageBox(imageEl, root) {
+      var rr = root.getBoundingClientRect();
+      var ir = imageEl.getBoundingClientRect();
+      if (!ir.width || !ir.height) return null;
+      return { left: ir.left - rr.left, top: ir.top - rr.top, width: ir.width, height: ir.height };
+    }
+    function updateLens(e) {
+      if (!e || !stage._protoMagnifyEnabled) { clearLens(); return; }
+      var sr = stage.getBoundingClientRect();
+      var ir = inner.getBoundingClientRect();
+      var x = e.clientX - ir.left;
+      var y = e.clientY - ir.top;
+      var box = protoImageBox(img, inner);
+      if (!box) { clearLens(); return; }
+      var ix = x - box.left;
+      var iy = y - box.top;
+      if (ix < 0 || iy < 0 || ix > box.width || iy > box.height) { clearLens(); return; }
+      var size = lens.offsetWidth || 420;
+      var half = size / 2;
+      stage.classList.add("is-magnifying");
+      lens.style.left = (e.clientX - sr.left - half) + "px";
+      lens.style.top = (e.clientY - sr.top - half) + "px";
+      lens.style.backgroundImage = 'url("' + (img.currentSrc || img.src) + '")';
+      lens.style.backgroundSize = (box.width * ZOOM) + "px " + (box.height * ZOOM) + "px";
+      lens.style.backgroundPosition = (-(ix * ZOOM - half)) + "px " + (-(iy * ZOOM - half)) + "px";
+    }
+    stage.addEventListener("mouseenter", function(e) { lastPointer = { clientX: e.clientX, clientY: e.clientY }; updateLens(e); });
+    stage.addEventListener("mousemove", function(e) { lastPointer = { clientX: e.clientX, clientY: e.clientY }; updateLens(e); });
+    stage.addEventListener("mouseleave", function() { lastPointer = null; clearLens(); });
+    img.addEventListener("load", function() {
+      if (lastPointer && stage.matches(":hover") && stage._protoMagnifyEnabled) updateLens(lastPointer);
+    });
+    stage._protoRefreshLens = function() {
+      if (lastPointer && stage.matches(":hover") && stage._protoMagnifyEnabled) updateLens(lastPointer);
+      else if (!stage._protoMagnifyEnabled) clearLens();
+    };
+  }
+
+  if (magBtn) {
+    magBtn.addEventListener("click", function(e) {
+      e.stopPropagation();
+      var on = magBtn.getAttribute("aria-pressed") !== "true";
+      magBtn.setAttribute("aria-pressed", on ? "true" : "false");
+      magBtn.setAttribute("aria-label", on ? "Magnifier on, click to turn off" : "Magnifier off, click to turn on");
+      stage._protoMagnifyEnabled = on;
+      if (!on) clearLens();
+    });
+  }
+
+  stage.addEventListener("click", function() {
+    var lb = document.getElementById("lightbox");
+    var lbImg = lb && lb.querySelector("img");
+    if (!lb || !lbImg) return;
+    lbImg.src = img.currentSrc || img.src;
+    lbImg.alt = img.alt || "";
+    lb.classList.add("open");
+    lb.setAttribute("aria-hidden", "false");
+  });
+  stage.addEventListener("keydown", function(e) {
+    if (e.key === "Enter" || e.key === " ") { e.preventDefault(); stage.click(); }
+  });
+})();
+</script>
+<script>
+/* Brand Key slide: interactive persona tabs */
+(function(){
+  var PERSONAS = {
+    reliable: {
+      label: "Reliable",
+      person: "Kimmy",
+      role: "A mum with high standards for groceries",
+      analogy: "The Stradivarius of groceries",
+      quote: "I'm in an all-mums WhatsApp group where we share knowledge on parenting, especially food & nutrition — including the best apps to get groceries.",
+      insight: "Needs tools she can rely on to plan & execute perfectly — but every platform has its own shortcomings, so she stitches several together to get the best of each.",
+      proposition: "GoMart, nailing your groceries",
+      benefit: "Using data and impeccable service to perfectly execute your groceries plan.",
+      pillars: ["Rigorous processes that reduce errors & incidents", "Highest quality & freshness guarantee on all products", "Transparency on costs, promos & offers"]
+    },
+    advanced: {
+      label: "Advanced",
+      person: "Matahari",
+      role: "A particular, expert consumer",
+      analogy: "The Android of groceries",
+      quote: "For chicken, I like going to the wet market — I can choose the size, maturity, and request how it's cleaned and cut. I can even bargain directly with the seller.",
+      insight: "Very particular about getting the exact product at the right price — but shopping platforms aren't as advanced as she is.",
+      proposition: "GoMart, groceries done exactly my way",
+      benefit: "Using advanced tools & data to tailor your shopping to your specific needs.",
+      pillars: ["Enhanced comparison & evaluation tools for stores, brands, products", "Best-in-class service that tailors orders to specific needs", "Curation of the most relevant offers & promos"]
+    },
+    effective: {
+      label: "Effective",
+      person: "Greg",
+      role: "A diligent, efficient grocery planner",
+      analogy: "The iPhone of groceries",
+      quote: "I organize my shopping list in an excel sheet by category, product, brand of choice, substitution options, and store alternatives — it helps me ensure I get everything I need.",
+      insight: "Plans perfectly so he doesn't waste time & effort in-store. But platforms are messy and unintuitive — they don't streamline the process.",
+      proposition: "GoMart, helping you shop in a breeze",
+      benefit: "Using data and the most intuitive product experience to streamline grocery shopping.",
+      pillars: ["An autonomous platform that requires minimum steps to order", "Quick & efficient shoppers & drivers who don't need guidance", "Curation of the most relevant offers & promos"]
+    }
+  };
+
+  var tabs = document.getElementById("personaTabs");
+  var panel = document.getElementById("personaPanel");
+  if (!tabs || !panel) return;
+
+  function renderPanel(key) {
+    var p = PERSONAS[key];
+    if (!p) return;
+    var pillarsHtml = p.pillars.map(function(pill){
+      return '<li class="flex gap-2"><span class="text-mute">→</span><span>' + pill + '</span></li>';
+    }).join("");
+    panel.innerHTML =
+      '<div class="flex items-start justify-between gap-3 mb-2">' +
+        '<div>' +
+          '<p class="text-sm font-extrabold text-ink">' + p.person + ' · ' + p.label + '</p>' +
+          '<p class="text-xs text-mute">' + p.role + '</p>' +
+        '</div>' +
+        '<span class="shrink-0 text-[10px] font-bold uppercase tracking-wide text-mute text-right max-w-[9ch]">' + p.analogy + '</span>' +
+      '</div>' +
+      '<blockquote class="text-sm text-ink italic leading-relaxed mb-3 border-l-2 border-line pl-3">"' + p.quote + '"</blockquote>' +
+      '<p class="text-xs text-mute leading-relaxed mb-3"><strong class="text-ink">Insight:</strong> ' + p.insight + '</p>' +
+      '<p class="text-sm text-ink font-bold mb-1">' + p.proposition + '</p>' +
+      '<p class="text-xs text-mute leading-relaxed mb-3">' + p.benefit + '</p>' +
+      '<ul class="text-xs text-mute space-y-1.5">' + pillarsHtml + '</ul>';
+  }
+
+  function setPersona(key) {
+    if (!PERSONAS[key]) return;
+    tabs.querySelectorAll("[data-persona]").forEach(function(b){
+      b.setAttribute("aria-selected", String(b.dataset.persona === key));
+    });
+    renderPanel(key);
+  }
+
+  tabs.querySelectorAll("[data-persona]").forEach(function(b){
+    b.addEventListener("click", function(){ setPersona(b.dataset.persona); });
+  });
+
+  setPersona("reliable");
+})();
+</script>
+</body>
+</html>

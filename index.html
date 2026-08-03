@@ -207,7 +207,7 @@
                                 <p class="title">Instant Grocery on Gojek<span class="status-icon status-icon-lock"></span></p>
 
                                 <p class="description">Led enhancements with Studio Accelerator design sprints on Indonesia-scale grocery — GoMart (B2C) and GoFresh (B2B) journeys, plus shopper and driver tools — enabling fast, reliable fulfillment across cities nationwide.</p>
-                                <button type="button" class="card-cta" disabled aria-disabled="true">Work in progress</button>
+                                <button type="button" class="card-cta" id="gomart-gate-trigger" aria-haspopup="dialog" aria-controls="gomartPwModal"><span class="status-icon status-icon-lock card-cta__lock" aria-hidden="true"></span> Enter case study</button>
                             </li>
                         </ul>
                     </a>
@@ -390,7 +390,10 @@
       .pw-preview__slide:nth-child(2){ opacity:.82; }
       .pw-preview__slide:nth-child(3){ opacity:.58; }
       .pw-preview__slide picture{ display:block; width:100%; background:#f7f7f7; }
-      .pw-preview__slide img{ display:block; width:100%; height:auto; border-radius:4px; opacity:0; transition:opacity .45s ease; background:#f7f7f7; }
+      .pw-preview__slide img{
+        display:block; width:100%; height:auto; border-radius:4px; opacity:0; transition:opacity .45s ease; background:#f7f7f7;
+        pointer-events:none; user-select:none; -webkit-user-select:none; -webkit-user-drag:none; user-drag:none;
+      }
       .pw-preview__slide img.is-loaded{ opacity:1; }
       .pw-close{ position:absolute; top:16px; right:18px; width:38px; height:38px; background:none; border:0; font-size:26px; line-height:1; color:#6e6e6e; cursor:pointer; border-radius:8px; }
       .pw-close:hover{ background:#f7f7f7; color:#262626; }
@@ -425,19 +428,19 @@
             <div class="pw-preview__slide">
               <picture>
                 <source type="image/webp" data-srcset="images/previews/OLX01.webp">
-                <img data-preview-img data-src="images/previews/OLX01.jpg" alt="" width="640" height="360" decoding="async">
+                <img data-preview-img data-src="images/previews/OLX01.jpg" alt="" width="640" height="360" decoding="async" draggable="false">
               </picture>
             </div>
             <div class="pw-preview__slide">
               <picture>
                 <source type="image/webp" data-srcset="images/previews/OLX02.webp">
-                <img data-preview-img data-src="images/previews/OLX02.jpg" alt="" width="640" height="360" decoding="async">
+                <img data-preview-img data-src="images/previews/OLX02.jpg" alt="" width="640" height="360" decoding="async" draggable="false">
               </picture>
             </div>
             <div class="pw-preview__slide">
               <picture>
                 <source type="image/webp" data-srcset="images/previews/OLX03.webp">
-                <img data-preview-img data-src="images/previews/OLX03.jpg" alt="" width="640" height="360" decoding="async">
+                <img data-preview-img data-src="images/previews/OLX03.jpg" alt="" width="640" height="360" decoding="async" draggable="false">
               </picture>
             </div>
           </div>
@@ -485,19 +488,19 @@
             <div class="pw-preview__slide">
               <picture>
                 <source type="image/webp" data-srcset="images/previews/N2601.webp">
-                <img data-preview-img data-src="images/previews/N2601.jpg" alt="" width="640" height="360" decoding="async">
+                <img data-preview-img data-src="images/previews/N2601.jpg" alt="" width="640" height="360" decoding="async" draggable="false">
               </picture>
             </div>
             <div class="pw-preview__slide">
               <picture>
                 <source type="image/webp" data-srcset="images/previews/N2602.webp">
-                <img data-preview-img data-src="images/previews/N2602.jpg" alt="" width="640" height="360" decoding="async">
+                <img data-preview-img data-src="images/previews/N2602.jpg" alt="" width="640" height="360" decoding="async" draggable="false">
               </picture>
             </div>
             <div class="pw-preview__slide">
               <picture>
                 <source type="image/webp" data-srcset="images/previews/N2603.webp">
-                <img data-preview-img data-src="images/previews/N2603.jpg" alt="" width="640" height="360" decoding="async">
+                <img data-preview-img data-src="images/previews/N2603.jpg" alt="" width="640" height="360" decoding="async" draggable="false">
               </picture>
             </div>
           </div>
@@ -516,6 +519,47 @@
       </div>
     </div>
 
+    <!-- ===================== GoMart password gate modal ===================== -->
+    <div class="pw-modal" id="gomartPwModal" role="dialog" aria-modal="true" aria-labelledby="gomartPwTitle" aria-hidden="true">
+      <div class="pw-backdrop" data-pw-close></div>
+      <div class="pw-card pw-card--preview" role="document">
+        <button type="button" class="pw-close" aria-label="Close" data-pw-close>&times;</button>
+        <div class="pw-preview" aria-hidden="true">
+          <div class="pw-preview__track">
+            <div class="pw-preview__slide">
+              <picture>
+                <source type="image/webp" data-srcset="images/previews/gomart01.webp">
+                <img data-preview-img data-src="images/previews/gomart01.jpg" alt="" width="640" height="357" decoding="async" draggable="false">
+              </picture>
+            </div>
+            <div class="pw-preview__slide">
+              <picture>
+                <source type="image/webp" data-srcset="images/previews/gomart02.webp">
+                <img data-preview-img data-src="images/previews/gomart02.jpg" alt="" width="640" height="356" decoding="async" draggable="false">
+              </picture>
+            </div>
+            <div class="pw-preview__slide">
+              <picture>
+                <source type="image/webp" data-srcset="images/previews/gomart03.webp">
+                <img data-preview-img data-src="images/previews/gomart03.jpg" alt="" width="640" height="357" decoding="async" draggable="false">
+              </picture>
+            </div>
+          </div>
+        </div>
+        <p class="pw-eyebrow">🔒 Protected case study</p>
+        <h2 class="pw-title" id="gomartPwTitle">Enter password to view</h2>
+        <p class="pw-desc">The GoMart instant grocery case study is password-protected. Enter the password to continue.</p>
+        <form id="gomartPwForm" novalidate>
+          <input type="password" id="gomartPwInput" class="pw-input" placeholder="Password" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Password">
+          <p class="pw-error" id="gomartPwError" role="alert" hidden>Incorrect password. Please try again.</p>
+          <div class="pw-actions">
+            <button type="button" class="pw-btn pw-btn--ghost" data-pw-request>Request password</button>
+            <button type="submit" class="pw-btn">Unlock &rarr;</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
     <script>
       (function(){
         var previewsBooted = false;
@@ -525,6 +569,10 @@
           if (img.complete && img.naturalWidth > 0) reveal();
           else img.addEventListener("load", reveal, { once: true });
         }
+
+        document.querySelectorAll("[data-preview-img]").forEach(function(img){
+          img.addEventListener("dragstart", function(e){ e.preventDefault(); });
+        });
 
         function loadCaseStudyPreviews(){
           if (previewsBooted) return;
@@ -543,7 +591,7 @@
           });
         }
 
-        ["olx-gate-trigger", "n26-gate-trigger"].forEach(function(id){
+        ["olx-gate-trigger", "n26-gate-trigger", "gomart-gate-trigger"].forEach(function(id){
           var trigger = document.getElementById(id);
           if (!trigger) return;
           trigger.addEventListener("mouseenter", loadCaseStudyPreviews, { once: true });
@@ -684,6 +732,69 @@
           } else {
             error.hidden = false; input.focus(); input.select();
           }
+        });
+      })();
+    </script>
+
+    <script src="js/portfolio-gate.js"></script>
+    <script>
+      (function(){
+        var trigger = document.getElementById("gomart-gate-trigger");
+        var modal   = document.getElementById("gomartPwModal");
+        var form    = document.getElementById("gomartPwForm");
+        var input   = document.getElementById("gomartPwInput");
+        var error   = document.getElementById("gomartPwError");
+        var btn     = form && form.querySelector(".pw-btn");
+        if (!trigger || !modal) return;
+
+        function open(){
+          if (window.loadCaseStudyPreviews) window.loadCaseStudyPreviews();
+          modal.classList.add("open");
+          modal.setAttribute("aria-hidden", "false");
+          error.hidden = true; input.value = "";
+          setTimeout(function(){ input.focus(); }, 60);
+        }
+        function close(){
+          modal.classList.remove("open");
+          modal.setAttribute("aria-hidden", "true");
+        }
+
+        trigger.addEventListener("click", function(e){ e.preventDefault(); e.stopPropagation(); open(); });
+        trigger.addEventListener("keydown", function(e){
+          if (e.key === "Enter" || e.key === " ") { e.preventDefault(); e.stopPropagation(); open(); }
+        });
+        modal.querySelectorAll("[data-pw-close]").forEach(function(el){ el.addEventListener("click", close); });
+        document.addEventListener("keydown", function(e){
+          if (e.key === "Escape" && modal.classList.contains("open")) close();
+        });
+
+        form.addEventListener("submit", function(e){
+          e.preventDefault();
+          error.hidden = true;
+          if (btn) btn.disabled = true;
+
+          var verify = window.PortfolioGate && window.PortfolioGate.verify;
+          if (!verify) {
+            if (btn) btn.disabled = false;
+            error.hidden = false;
+            return;
+          }
+
+          verify(input.value).then(function(ok){
+            if (btn) btn.disabled = false;
+            if (ok) {
+              window.PortfolioGate.grant("gomartAccessGranted");
+              window.location.href = "gomart.html";
+            } else {
+              error.hidden = false;
+              input.focus();
+              input.select();
+            }
+          }).catch(function(){
+            if (btn) btn.disabled = false;
+            error.hidden = false;
+            input.focus();
+          });
         });
       })();
     </script>
