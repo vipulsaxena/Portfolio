@@ -199,6 +199,39 @@
       #lightbox.open{ display:flex; }
       #lightbox img{ max-width:100%; max-height:90vh; border-radius:.75rem; box-shadow:0 24px 60px -20px rgba(0,0,0,.35); }
 
+      .slide-inner.top{ justify-content:flex-start; padding-top:clamp(1rem,3vh,2rem); }
+      .slide-scroll > .slide-inner{ justify-content:flex-start; padding-bottom:calc(5rem + env(safe-area-inset-bottom, 0px)); }
+
+      /* Mobile + tablet — desktop (1024px+) unchanged */
+      @media (max-width: 1023px) {
+        .slide > .slide-inner { justify-content: flex-start; }
+        .slide-scroll > .slide-inner,
+        .slide-inner.top { padding-bottom: calc(5rem + env(safe-area-inset-bottom, 0px)); }
+        .slide-bleed { overflow-x: hidden; overflow-y: auto; }
+        .slide-workshop { overflow-x: hidden; overflow-y: auto; }
+        .slide-workshop > img[data-lightbox] { pointer-events: auto; }
+        .deck-split-grid { height: auto !important; min-height: 0 !important; }
+        .n26-cover-stack {
+          min-height: 300px; display: flex; flex-direction: column; align-items: center;
+          justify-content: flex-end; gap: .75rem; padding-bottom: .5rem;
+        }
+        .n26-cover-stack .n26-cover-char,
+        .n26-cover-stack .phone-mock {
+          position: relative !important; left: auto !important; transform: none !important; margin-inline: auto;
+        }
+        .n26-cover-stack .n26-cover-char { max-width: 200px; width: min(72vw, 200px); }
+        .n26-cover-stack .phone-mock { max-width: 255px; }
+        .n26-launch-phones {
+          position: relative !important; min-height: 0 !important; display: flex; flex-direction: column;
+          align-items: center; gap: 1rem; padding: 1rem 0;
+        }
+        .n26-launch-phones .phone-mock {
+          position: relative !important; left: auto !important; right: auto !important; top: auto !important;
+          transform: none !important; margin: 0 auto; max-width: 260px !important;
+        }
+        .n26-hero-img { max-width: min(100%, 28rem) !important; width: 100% !important; }
+      }
+
       @media (prefers-reduced-motion: reduce){
         .deck-track{ transition:none; }
         .progress{ transition:none; }
@@ -298,9 +331,9 @@
   <div class="deck-track" id="track">
 
     <!-- ===== SLIDE 01 · What is N26? (Cover + Highlights-1) ===== -->
-    <section class="slide is-active bg-elev" data-chapter="case-study" data-title="What is N26?" data-home-slide>
+    <section class="slide slide-scroll is-active bg-elev" data-chapter="case-study" data-title="What is N26?" data-home-slide>
       <div class="slide-inner" style="padding-bottom:calc(4rem + env(safe-area-inset-bottom, 0px))">
-        <div class="grid md:grid-cols-2 gap-8 md:gap-16 items-stretch md:h-full">
+        <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-stretch lg:h-full deck-split-grid">
           <div class="flex flex-col justify-center">
             <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Fintech · N26 · March 2022</p>
             <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-6 max-w-[14ch]" data-anim style="--i:1">What is <span class="hl">N26</span>?</h1>
@@ -316,16 +349,16 @@
             </div>
           </div>
           <div class="flex items-end justify-center" data-anim style="--i:2">
-            <img src="assets/n26/overview.png" alt="N26 mobile app — Home feed with balance and recent transactions" data-lightbox class="w-full md:w-[42rem] max-w-[42rem] h-auto object-contain object-bottom cursor-zoom-in" loading="lazy">
+            <img src="assets/n26/overview.png" alt="N26 mobile app — Home feed with balance and recent transactions" data-lightbox class="n26-hero-img w-full lg:w-[42rem] max-w-[42rem] h-auto object-contain object-bottom cursor-zoom-in" loading="lazy">
           </div>
         </div>
       </div>
     </section>
 
     <!-- ===== SLIDE 02 · What I did at N26? (Highlights-2) ===== -->
-    <section class="slide" data-chapter="case-study" data-title="What I did at N26" data-home-slide>
+    <section class="slide slide-scroll" data-chapter="case-study" data-title="What I did at N26" data-home-slide>
       <div class="slide-inner">
-        <div class="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
+        <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center deck-split-grid">
           <div>
             <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">N26 Highlights</p>
             <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-6 max-w-[18ch]" data-anim style="--i:1">What I did at N26</h2>
@@ -353,9 +386,9 @@
     </section>
 
     <!-- ===== SLIDE 04 · Case study cover · Multi-activity Feed (CS-1) ===== -->
-    <section class="slide bg-[#F1E0CA] text-accink" data-chapter="case-study" data-title="Case study · Multi-activity Feed">
+    <section class="slide slide-scroll bg-[#F1E0CA] text-accink" data-chapter="case-study" data-title="Case study · Multi-activity Feed">
       <div class="slide-inner">
-        <div class="grid md:grid-cols-2 gap-8 md:gap-16 items-end">
+        <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-end deck-split-grid">
           <div>
             <h2 class="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.08] max-w-[16ch]" data-anim style="--i:0">Multi-activity Feed</h2>
             <p class="mt-6 text-xl md:text-2xl font-semibold max-w-[40ch]" data-anim style="--i:2">Evolving the Main Account Feed into an All-Activity Feed.</p>
@@ -370,8 +403,8 @@
               <p class="text-accink/80 leading-relaxed">Rubin (Illustrator), Katie (UX Writer), Mireia (Researcher), Lea (PM), Dan (CPO), Engineering (FE & QE — most collaborated with) and the Data Science team.</p>
             </div>
           </div>
-          <div class="relative mx-auto w-full max-w-[620px] min-h-[340px] md:min-h-[400px]" data-anim style="--i:3">
-            <img src="assets/n26/N26-Infocard.png" alt="Illustration of an N26 customer checking their multi-activity feed notifications on their phone" data-lightbox class="absolute bottom-0 z-0 h-auto w-full object-contain object-bottom cursor-zoom-in" style="left:50%;max-width:310px" loading="lazy">
+          <div class="relative mx-auto w-full max-w-[620px] min-h-[280px] sm:min-h-[340px] md:min-h-[400px] n26-cover-stack" data-anim style="--i:3">
+            <img src="assets/n26/N26-Infocard.png" alt="Illustration of an N26 customer checking their multi-activity feed notifications on their phone" data-lightbox class="n26-cover-char absolute bottom-0 z-0 h-auto w-full object-contain object-bottom cursor-zoom-in" style="left:50%;max-width:310px" loading="lazy">
             <div class="phone-mock absolute z-20 bottom-0 !max-w-[285px] !mx-0 pointer-events-none" style="left:20%">
               <video loop data-autoplay muted playsinline preload="metadata" tabindex="-1" aria-hidden="true" class="pointer-events-none">
                 <source src="assets/n26/final.mov" type="video/mp4">
@@ -383,9 +416,9 @@
     </section>
 
     <!-- ===== SLIDE 07 · The Problem (CS-2) ===== -->
-    <section class="slide" data-chapter="case-study" data-title="The Problem">
+    <section class="slide slide-scroll" data-chapter="case-study" data-title="The Problem">
       <div class="slide-inner">
-        <div class="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
+        <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center deck-split-grid">
           <div>
             <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">The Problem</p>
             <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-6 max-w-[18ch] leading-[1.1]" data-anim style="--i:1">
@@ -406,13 +439,13 @@
     </section>
 
     <!-- ===== SLIDE 08 · How Might We (CS-3) ===== -->
-    <section class="slide" data-chapter="case-study" data-title="How Might We">
+    <section class="slide slide-scroll" data-chapter="case-study" data-title="How Might We">
       <div class="slide-inner">
         <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">How Might We?</p>
         <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight leading-[1.15] max-w-[26ch] mb-8" data-anim style="--i:1">
           How might we help users who have a Space with IBAN <span class="hl">view the activity on their home-feed, at a glance</span>?
         </h2>
-        <div class="grid md:grid-cols-[1fr_1.2fr] gap-8 md:gap-16 items-start">
+        <div class="grid lg:grid-cols-[1fr_1.2fr] gap-8 lg:gap-16 items-start deck-split-grid">
           <div>
             <div class="inline-block bg-accent text-accink font-bold rounded-xl px-4 py-2 mb-6 -rotate-2 shadow-md" data-anim style="--i:2">🍋 Prioritised bet</div>
             <p class="text-ink text-lg md:text-xl font-semibold leading-snug max-w-[42ch] mb-8" data-anim style="--i:3">
@@ -436,7 +469,7 @@
     </section>
 
     <!-- ===== SLIDE 09 · Six customer interviews (CS-4) ===== -->
-    <section class="slide bg-elev" data-chapter="case-study" data-title="Six customer interviews">
+    <section class="slide slide-scroll bg-elev" data-chapter="case-study" data-title="Six customer interviews">
       <div class="slide-inner" style="justify-content:flex-start; padding-top:clamp(0.75rem,2vh,1.5rem); padding-bottom:calc(4.75rem + env(safe-area-inset-bottom,0px))">
         <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-2" data-anim style="--i:0">Discovery · Research</p>
         <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-2 max-w-[32ch]" data-anim style="--i:1">
@@ -447,7 +480,7 @@
         </p>
 
         <!-- Learnings (quote ↔ meaning) + interviews visual -->
-        <div class="grid md:grid-cols-2 gap-6 md:gap-10 items-start mb-6">
+        <div class="grid lg:grid-cols-2 gap-6 lg:gap-10 items-start mb-6">
           <div data-anim style="--i:3">
             <p class="text-xs font-bold uppercase tracking-[0.18em] text-mute mb-3">Our learnings</p>
             <div class="space-y-3">
@@ -480,7 +513,7 @@
         </div>
 
         <!-- Research-insight cards (descriptions always visible — no layout shift on hover) -->
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 items-stretch" data-anim style="--i:5">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 items-stretch" data-anim style="--i:5">
           <div class="bg-card border border-line rounded-xl p-4 transition-all duration-200 hover:-translate-y-1 hover:border-accent hover:shadow-lg focus-within:border-accent focus-within:shadow-lg" tabindex="0">
             <div class="text-xl mb-2" aria-hidden="true">🔔</div>
             <p class="font-bold text-sm mb-1">Stay updated</p>
@@ -506,11 +539,11 @@
     </section>
 
     <!-- ===== SLIDE 07 · Cross-functional workshop (CS-6) ===== -->
-    <section class="slide relative overflow-hidden" data-chapter="case-study" data-title="Cross-functional workshop">
+    <section class="slide slide-workshop slide-bleed relative" data-chapter="case-study" data-title="Cross-functional workshop">
       <!-- Full-bleed workshop board as background (click to expand) -->
       <img src="assets/n26/slide11.png" alt="Cross-functional workshop board — use cases, considerations, competitor benchmark, brainstorming and next steps" data-lightbox class="absolute inset-0 w-full h-full object-cover cursor-zoom-in" loading="lazy">
       <!-- Text content in a solid container -->
-      <div class="slide-inner relative z-10">
+      <div class="slide-inner relative z-10" style="justify-content:flex-start;padding-bottom:calc(5rem + env(safe-area-inset-bottom, 0px))">
         <div class="bg-[#C29E62] text-white rounded-2xl p-8 md:p-12 w-full max-w-full shadow-2xl shadow-black/25" data-anim style="--i:0">
           <p class="text-white/75 text-xs font-bold uppercase tracking-[0.2em] mb-4">Ideation</p>
           <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight leading-[1.12] max-w-[24ch]">
@@ -524,12 +557,12 @@
     </section>
 
     <!-- ===== SLIDE 12 · Three hypotheses (CS-7) ===== -->
-    <section class="slide bg-elev" data-chapter="case-study" data-title="Three hypotheses">
-      <div class="slide-inner" style="justify-content:flex-start">
+    <section class="slide slide-scroll bg-elev" data-chapter="case-study" data-title="Three hypotheses">
+      <div class="slide-inner" style="justify-content:flex-start;padding-bottom:calc(5rem + env(safe-area-inset-bottom, 0px))">
         <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Concepts</p>
         <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-8 w-full" data-anim style="--i:1">Designed three possible hypotheses</h2>
         <div class="space-y-6">
-          <div class="bg-card border border-line rounded-2xl p-6 md:p-8 grid md:grid-cols-[260px_1fr] gap-6 md:gap-10 items-center" data-anim style="--i:2">
+          <div class="bg-card border border-line rounded-2xl p-6 md:p-8 grid lg:grid-cols-[260px_1fr] gap-6 lg:gap-10 items-center" data-anim style="--i:2">
             <div class="phone-mock">
               <video data-autoplay muted playsinline preload="metadata" poster="assets/n26/hyp-1.png" aria-label="Concept A — All Accounts view prototype recording">
                 <source src="assets/n26/hyp1.mov" type="video/mp4">
@@ -542,7 +575,7 @@
               <button type="button" data-replay class="inline-flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-full bg-elev border border-line text-ink hover:border-accent hover:bg-[#fff3b0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors"><span aria-hidden="true">↻</span> Play again</button>
             </div>
           </div>
-          <div class="bg-card border border-line rounded-2xl p-6 md:p-8 grid md:grid-cols-[260px_1fr] gap-6 md:gap-10 items-center" data-anim style="--i:3">
+          <div class="bg-card border border-line rounded-2xl p-6 md:p-8 grid lg:grid-cols-[260px_1fr] gap-6 lg:gap-10 items-center" data-anim style="--i:3">
             <div class="phone-mock">
               <video data-autoplay muted playsinline preload="metadata" poster="assets/n26/hyp3.png" aria-label="Concept B — Multi-select Accounts prototype recording">
                 <source src="assets/n26/hyp2.mov" type="video/mp4">
@@ -555,7 +588,7 @@
               <button type="button" data-replay class="inline-flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-full bg-elev border border-line text-ink hover:border-accent hover:bg-[#fff3b0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors"><span aria-hidden="true">↻</span> Play again</button>
             </div>
           </div>
-          <div class="bg-card border border-line rounded-2xl p-6 md:p-8 grid md:grid-cols-[260px_1fr] gap-6 md:gap-10 items-center" data-anim style="--i:4">
+          <div class="bg-card border border-line rounded-2xl p-6 md:p-8 grid lg:grid-cols-[260px_1fr] gap-6 lg:gap-10 items-center" data-anim style="--i:4">
             <div class="phone-mock">
               <video data-autoplay muted playsinline preload="metadata" poster="assets/n26/hyp-3.png" aria-label="Concept C — Switch between accounts prototype recording">
                 <source src="assets/n26/hyp3.mov" type="video/mp4">
@@ -573,41 +606,41 @@
     </section>
 
     <!-- ===== SLIDE 13 · Usability test · 8 customers (CS-8) ===== -->
-    <section class="slide" data-chapter="case-study" data-title="Usability test · 8 customers">
-      <div class="slide-inner" style="justify-content:flex-start">
+    <section class="slide slide-scroll" data-chapter="case-study" data-title="Usability test · 8 customers">
+      <div class="slide-inner" style="justify-content:flex-start;padding-bottom:calc(5rem + env(safe-area-inset-bottom, 0px))">
         <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Validation</p>
         <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-8 max-w-[26ch]" data-anim style="--i:1">
           Tested the concepts for usability with <span class="hl">8 customers</span>
         </h2>
         <!-- Each insight paired with the takeaway it drove -->
-        <div class="hidden md:grid md:grid-cols-[1fr_2.5rem_1fr] gap-4 mb-3" data-anim style="--i:2">
+        <div class="hidden lg:grid lg:grid-cols-[1fr_2.5rem_1fr] gap-4 mb-3" data-anim style="--i:2">
           <p class="text-xs font-bold uppercase tracking-[0.18em] text-mute">Insight</p>
           <span></span>
           <p class="text-xs font-bold uppercase tracking-[0.18em] text-accink/70">Takeaway</p>
         </div>
         <div class="space-y-4">
-          <div class="grid md:grid-cols-[1fr_2.5rem_1fr] gap-3 md:gap-4 items-stretch" data-anim style="--i:3">
+          <div class="grid lg:grid-cols-[1fr_2.5rem_1fr] gap-3 lg:gap-4 items-stretch" data-anim style="--i:3">
             <div class="bg-elev rounded-2xl p-5 flex items-center"><p class="m-0 text-mute leading-relaxed">Most users liked viewing all accounts at once, but the <strong class="text-ink">Main Account view still holds more importance</strong>.</p></div>
-            <div class="hidden md:flex items-center justify-center text-ink/30 text-2xl" aria-hidden="true">→</div>
+            <div class="hidden lg:flex items-center justify-center text-ink/30 text-2xl" aria-hidden="true">→</div>
             <div class="bg-accent text-accink rounded-2xl p-5 flex items-center"><p class="m-0 leading-relaxed">Keep <strong>Main Account</strong> view as the default, with an option to switch between feeds.</p></div>
           </div>
-          <div class="grid md:grid-cols-[1fr_2.5rem_1fr] gap-3 md:gap-4 items-stretch" data-anim style="--i:4">
+          <div class="grid lg:grid-cols-[1fr_2.5rem_1fr] gap-3 lg:gap-4 items-stretch" data-anim style="--i:4">
             <div class="bg-elev rounded-2xl p-5 flex items-center"><p class="m-0 text-mute leading-relaxed">The option to <strong class="text-ink">multi-select Spaces</strong> is useful to some users — they prefer choosing IBAN-enabled Spaces over normal ones.</p></div>
-            <div class="hidden md:flex items-center justify-center text-ink/30 text-2xl" aria-hidden="true">→</div>
+            <div class="hidden lg:flex items-center justify-center text-ink/30 text-2xl" aria-hidden="true">→</div>
             <div class="bg-accent text-accink rounded-2xl p-5 flex items-center"><p class="m-0 leading-relaxed">Letting users choose their preference is key — but we must balance the complexity and be sure of the feature’s usability.</p></div>
           </div>
-          <div class="grid md:grid-cols-[1fr_2.5rem_1fr] gap-3 md:gap-4 items-stretch" data-anim style="--i:5">
+          <div class="grid lg:grid-cols-[1fr_2.5rem_1fr] gap-3 lg:gap-4 items-stretch" data-anim style="--i:5">
             <div class="bg-elev rounded-2xl p-5 flex items-center"><p class="m-0 text-mute leading-relaxed">Users expect <strong class="text-ink">quick actions to change</strong> with account selection; in multi-select they were rather confused.</p></div>
-            <div class="hidden md:flex items-center justify-center text-ink/30 text-2xl" aria-hidden="true">→</div>
+            <div class="hidden lg:flex items-center justify-center text-ink/30 text-2xl" aria-hidden="true">→</div>
             <div class="bg-accent text-accink rounded-2xl p-5 flex items-center"><p class="m-0 leading-relaxed">For multi-select, we could explore letting users choose which account to action from — but this definitely adds complexity and tampers with the purpose of quick actions.</p></div>
           </div>
-          <div class="grid md:grid-cols-[1fr_2.5rem_1fr] gap-3 md:gap-4 items-stretch" data-anim style="--i:6">
+          <div class="grid lg:grid-cols-[1fr_2.5rem_1fr] gap-3 lg:gap-4 items-stretch" data-anim style="--i:6">
             <div class="bg-elev rounded-2xl p-5 flex items-center"><p class="m-0 text-mute leading-relaxed"><strong class="text-ink">Swiping accounts</strong> with top overviews felt like an easy and valuable experience.</p></div>
-            <div class="hidden md:flex items-center justify-center text-ink/30 text-2xl" aria-hidden="true">→</div>
+            <div class="hidden lg:flex items-center justify-center text-ink/30 text-2xl" aria-hidden="true">→</div>
             <div class="bg-accent text-accink rounded-2xl p-5 flex items-center"><p class="m-0 leading-relaxed">Explore a <strong>top-navigation scheme</strong> further and evolve it into something more obvious to users.</p></div>
           </div>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mt-8" data-anim style="--i:7">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 mt-8" data-anim style="--i:7">
           <figure class="m-0"><img src="assets/n26/usa-1.png" alt="Moderated remote usability session testing a concept prototype over video call" data-lightbox class="w-full h-56 md:h-72 object-cover object-center rounded-2xl border border-line cursor-zoom-in" loading="lazy"></figure>
           <figure class="m-0"><img src="assets/n26/usa-2.png" alt="Moderated remote usability session testing a concept prototype over video call" data-lightbox class="w-full h-56 md:h-72 object-cover object-center rounded-2xl border border-line cursor-zoom-in" loading="lazy"></figure>
         </div>
@@ -616,11 +649,11 @@
     </section>
 
     <!-- ===== SLIDE 14 · Design reviews (CS-9) ===== -->
-    <section class="slide relative overflow-hidden" data-chapter="case-study" data-title="Design reviews">
+    <section class="slide slide-workshop slide-bleed relative" data-chapter="case-study" data-title="Design reviews">
       <!-- Full-bleed design-review board as background (click to expand) -->
       <img src="assets/n26/slide14.png" alt="Design-review board — Visual Design Exploration of tab designs, feed designs and UX writing" data-lightbox class="absolute inset-0 w-full h-full object-cover cursor-zoom-in" loading="lazy">
       <!-- Text content in a solid container -->
-      <div class="slide-inner relative z-10">
+      <div class="slide-inner relative z-10" style="justify-content:flex-start;padding-bottom:calc(5rem + env(safe-area-inset-bottom, 0px))">
         <div class="bg-[#C29E62] text-white rounded-2xl p-8 md:p-12 w-full shadow-2xl shadow-black/25" data-anim style="--i:0">
           <p class="text-white/75 text-xs font-bold uppercase tracking-[0.2em] mb-4">Iteration</p>
           <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight leading-[1.12] max-w-[24ch]">
@@ -634,9 +667,9 @@
     </section>
 
     <!-- ===== SLIDE 15 · Launch to learn + Next Steps (merged CS-10 + CS-11) ===== -->
-    <section class="slide" data-chapter="case-study" data-title="Launch to learn 🚀">
+    <section class="slide slide-scroll" data-chapter="case-study" data-title="Launch to learn 🚀">
       <div class="slide-inner">
-        <div class="grid md:grid-cols-2 gap-8 md:gap-14 items-center">
+        <div class="grid lg:grid-cols-2 gap-8 lg:gap-14 items-center deck-split-grid">
 
           <!-- Content -->
           <div>
@@ -675,9 +708,9 @@
 
           <!-- Media: stacked devices — video in front (bigger), survey behind (smaller) -->
           <div data-anim style="--i:2">
-            <div class="relative w-full max-w-[440px] mx-auto">
+            <div class="relative w-full max-w-[440px] mx-auto n26-launch-phones">
               <!-- behind: in-app feedback survey — smaller, rotated, peeking out -->
-              <div class="phone-mock !max-w-[190px] absolute -right-4 md:-right-6 top-16 z-0 rotate-[6deg] shadow-2xl shadow-black/25">
+              <div class="phone-mock !max-w-[190px] absolute -right-4 lg:-right-6 top-16 z-0 rotate-[6deg] shadow-2xl shadow-black/25">
                 <img src="assets/n26/next-steps.png" alt="In-app survey asking which transactions to filter from the all-activity feed" data-lightbox class="cursor-zoom-in" loading="lazy">
               </div>
               <!-- front: final build video — larger, at the top -->
@@ -698,8 +731,8 @@
     </section>
 
     <!-- ===== SLIDE 16 · Case-study wrap-up ===== -->
-    <section class="slide bg-[#F1E0CA] text-accink" data-chapter="case-study" data-title="Wrap-up">
-      <div class="slide-inner text-center items-center">
+    <section class="slide slide-scroll bg-[#F1E0CA] text-accink" data-chapter="case-study" data-title="Wrap-up">
+      <div class="slide-inner text-center items-center" style="padding-bottom:calc(5rem + env(safe-area-inset-bottom, 0px))">
         <p class="text-accink/60 text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Case study · wrap-up</p>
         <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4 max-w-[22ch] mx-auto" data-anim style="--i:1">
           Researched, shipped, and measured
@@ -718,9 +751,9 @@
     <!-- ===================== CHAPTER · HIGHLIGHTS (after the case study) ===================== -->
 
     <!-- HIGHLIGHT · MoneyBeam Reactions -->
-    <section class="slide bg-elev" data-chapter="highlights" data-title="Highlight · MoneyBeam Reactions">
+    <section class="slide slide-scroll bg-elev" data-chapter="highlights" data-title="Highlight · MoneyBeam Reactions">
       <div class="slide-inner">
-        <div class="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
+        <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center deck-split-grid">
           <div>
             <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Highlight</p>
             <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4 max-w-[16ch]" data-anim style="--i:1">MoneyBeam Reactions</h2>
@@ -732,7 +765,7 @@
               A delightful interaction incentivizes users to send thanks to their peers; acknowledgement from the recipient helps the sender gain confidence. Time was limited, but to expand the idea we explored more expressions, notes, and gifs to make it more customisable.
             </p>
           </div>
-          <div class="grid grid-cols-2 gap-4 md:gap-6 items-start" data-anim style="--i:3">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 items-start" data-anim style="--i:3">
             <figure class="m-0"><img src="assets/n26/moneybeam-receiver.png" alt="MoneyBeam receiver screen — Myles sent thanks" data-lightbox class="w-full h-auto max-h-[56vh] object-contain drop-shadow-xl cursor-zoom-in"><figcaption class="mt-2 text-center text-xs font-semibold text-mute">Receiver side</figcaption></figure>
             <figure class="m-0"><img src="assets/n26/moneybeam-sender.png" alt="MoneyBeam sender screen — Send thanks action" data-lightbox class="w-full h-auto max-h-[56vh] object-contain drop-shadow-xl cursor-zoom-in"><figcaption class="mt-2 text-center text-xs font-semibold text-mute">Sender side</figcaption></figure>
           </div>
@@ -741,9 +774,9 @@
     </section>
 
     <!-- HIGHLIGHT · Feed ↔ Crypto -->
-    <section class="slide" data-chapter="highlights" data-title="Highlight · Feed ↔ Crypto">
+    <section class="slide slide-scroll" data-chapter="highlights" data-title="Highlight · Feed ↔ Crypto">
       <div class="slide-inner">
-        <div class="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
+        <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center deck-split-grid">
           <div>
             <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Highlight</p>
             <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4 max-w-[14ch]" data-anim style="--i:1">Feed <span class="hl">↔</span> Crypto</h2>
@@ -764,12 +797,12 @@
     </section>
 
     <!-- HIGHLIGHT · Search filters & suggestions -->
-    <section class="slide bg-elev" data-chapter="highlights" data-title="Highlight · Search filters">
+    <section class="slide slide-scroll bg-elev" data-chapter="highlights" data-title="Highlight · Search filters">
       <div class="slide-inner">
         <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Highlight</p>
         <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4 max-w-[20ch]" data-anim style="--i:1">Search filters & suggestions</h2>
         <p class="mb-8" data-anim style="--i:2"><span class="chip">🗓️ 4 week design sprint · On Production</span></p>
-        <div class="grid md:grid-cols-2 gap-8 md:gap-16 items-start">
+        <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-start deck-split-grid">
           <div>
             <p class="text-ink text-lg leading-relaxed max-w-[46ch] mb-8" data-anim style="--i:3">
               Improve the search experience to help users find relevant transactions with suggestions, filters, and tags — across both the mobile app and WebApp.
@@ -793,7 +826,7 @@
     </section>
 
     <!-- ===== SLIDE 17 · Closing / CTA ===== -->
-    <section class="slide bg-ink text-white" data-chapter="highlights" data-title="Thanks">
+    <section class="slide slide-scroll bg-ink text-white" data-chapter="highlights" data-title="Thanks">
       <div class="slide-inner items-center text-center">
         <p class="text-white/60 text-xs font-bold uppercase tracking-[0.2em] mb-8" data-anim style="--i:0">Fin</p>
         <h2 class="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.12] max-w-[18ch]" data-anim style="--i:1">

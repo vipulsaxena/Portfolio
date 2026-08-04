@@ -270,7 +270,7 @@
       .hypo-card__media{ flex:0 0 auto; background:linear-gradient(180deg, #fafafa 0%, #f2f2f2 100%); border-bottom:1px solid #e7e7e7; padding:1rem 1.25rem; }
       .hypo-card__media img{ display:block; width:100%; max-width:100%; height:auto; border-radius:12px; border:1px solid rgba(0,0,0,.06); cursor:zoom-in; }
       .hypo-card__body{ flex:1 1 auto; display:flex; flex-direction:column; gap:.5rem; justify-content:center; padding:1rem 1.25rem 1.25rem; min-width:0; }
-      @media (min-width:640px){
+      @media (min-width:1024px){
         .hypo-card{ flex-direction:row; align-items:stretch; }
         .hypo-card__media{
           flex:0 0 52%; max-width:52%; border-bottom:0; border-right:1px solid #e7e7e7;
@@ -278,7 +278,7 @@
         }
         .hypo-card__body{ padding:1.15rem 1.35rem 1.25rem; }
       }
-      @media (min-width:1024px){
+      @media (min-width:1280px){
         .hypo-card__media{ flex:0 0 56%; max-width:56%; padding:1.1rem 1.25rem; }
       }
       .hypo-card__eyebrow{ font-size:.7rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#6e6e6e; }
@@ -371,6 +371,32 @@
       }
       .slide-compare .compare-copy{ color:var(--ink); }
       .slide-compare .compare-hint{ color:var(--muted); }
+
+      /* Mobile + tablet — desktop (1024px+) unchanged */
+      @media (max-width: 1023px) {
+        .slide > .slide-inner { justify-content: flex-start; }
+        .slide-scroll > .slide-inner,
+        .slide-inner.top { padding-bottom: calc(5rem + env(safe-area-inset-bottom, 0px)); }
+        .slide-bleed { overflow-x: hidden; overflow-y: auto; }
+        .deck-split-grid { height: auto !important; min-height: 0 !important; }
+        .deck-split-inner { height: auto !important; }
+        .gomart-cover-hero {
+          min-height: 300px; display: flex; flex-direction: column; align-items: center;
+          justify-content: flex-end; gap: .75rem; padding-bottom: .5rem;
+        }
+        .gomart-cover-hero .gomart-cover-char,
+        .gomart-cover-hero .gomart-cover-phone {
+          position: relative !important; left: auto !important; transform: none !important; margin-inline: auto;
+        }
+        .gomart-cover-hero .gomart-cover-char { max-width: 200px; width: min(72vw, 200px); }
+        .gomart-cover-hero .gomart-cover-phone { max-width: 255px; }
+        .proto-stage { min-height: min(42vh, 22rem); }
+        .nav-carousel__slide img { max-height: min(50vh, 440px); }
+        .slide-compare .compare { max-height: min(52vh, 520px); }
+      }
+      @media (max-width: 767px) {
+        .proto-stage { min-height: min(36vh, 18rem); }
+      }
     </style>
 
     <!-- Runs before render: hide the page until unlocked (no content flash).
@@ -446,9 +472,9 @@
   <div class="deck-track" id="track">
 
     <!-- ===== HOME 01 · What is GoMart? ===== -->
-    <section class="slide is-active bg-elev" data-chapter="case-study" data-title="What is GoMart?" data-home-slide>
+    <section class="slide slide-scroll is-active bg-elev" data-chapter="case-study" data-title="What is GoMart?" data-home-slide>
       <div class="slide-inner top !py-0 !px-0 !max-w-none" style="padding-bottom:calc(4rem + env(safe-area-inset-bottom, 0px))">
-        <div class="grid md:grid-cols-[1.35fr_1fr] md:h-full">
+        <div class="grid lg:grid-cols-[1.35fr_1fr] lg:h-full deck-split-grid">
           <div class="order-2 md:order-1 flex flex-col justify-center px-[clamp(1.25rem,5vw,4rem)] py-[clamp(1.5rem,4vw,3rem)]">
             <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Gojek · GoMart · H1 2021</p>
             <h1 class="text-3xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6 max-w-[14ch]" data-anim style="--i:1">What is <span class="hl">GoMart</span>?</h1>
@@ -471,9 +497,9 @@
     </section>
 
     <!-- ===== HOME 02 · What I did at GoMart ===== -->
-    <section class="slide" data-chapter="case-study" data-title="What I did at GoMart" data-home-slide>
-      <div class="slide-inner top !py-0 !px-0 !max-w-none">
-        <div class="grid md:grid-cols-[1.35fr_1fr] md:h-full">
+    <section class="slide slide-scroll" data-chapter="case-study" data-title="What I did at GoMart" data-home-slide>
+      <div class="slide-inner top !py-0 !px-0 !max-w-none" style="padding-bottom:calc(4rem + env(safe-area-inset-bottom, 0px))">
+        <div class="grid lg:grid-cols-[1.35fr_1fr] lg:h-full deck-split-grid">
           <div class="order-2 md:order-1 flex flex-col justify-center px-[clamp(1.25rem,5vw,4rem)] py-[clamp(1.5rem,4vw,3rem)]">
             <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">GoMart · Consumer Journey</p>
             <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-6 max-w-[18ch]" data-anim style="--i:1">What I did at GoMart</h2>
@@ -494,9 +520,9 @@
     </section>
 
     <!-- ===== CS COVER · Routine Grocery Discovery ===== -->
-    <section class="slide slide-bg-gomart text-accink" data-chapter="case-study" data-title="Routine Grocery Discovery">
+    <section class="slide slide-scroll slide-bg-gomart text-accink" data-chapter="case-study" data-title="Routine Grocery Discovery">
       <div class="slide-inner">
-        <div class="grid md:grid-cols-2 gap-8 md:gap-16 items-end">
+        <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-end deck-split-grid">
           <div>
             <p class="text-accink/60 text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Case study · GoMart</p>
             <h2 class="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.08] max-w-[16ch]" data-anim style="--i:1">Routine Grocery Discovery</h2>
@@ -508,9 +534,9 @@
               <span class="px-3 py-1.5 rounded-full bg-ink text-white text-sm font-semibold">H1 2021 · 6 months · On Production</span>
             </div>
           </div>
-          <div class="relative mx-auto w-full max-w-[620px] min-h-[280px] sm:min-h-[340px] md:min-h-[400px]" data-anim style="--i:3">
-            <img src="assets/gomart/char.png" alt="GoMart character illustration" data-lightbox class="absolute bottom-0 left-1/2 z-0 h-auto w-[min(72vw,200px)] sm:w-[min(68vw,260px)] md:w-full max-w-[310px] -translate-x-[42%] sm:-translate-x-[40%] md:translate-x-0 md:left-[50%] object-contain object-bottom cursor-zoom-in" loading="lazy">
-            <div class="phone-mock absolute z-20 bottom-0 left-1/2 !mx-0 pointer-events-none !max-w-[min(58vw,220px)] sm:!max-w-[255px] md:!max-w-[285px] -translate-x-1/2 md:translate-x-0 md:left-[20%]">
+          <div class="relative mx-auto w-full max-w-[620px] min-h-[280px] sm:min-h-[340px] md:min-h-[400px] gomart-cover-hero" data-anim style="--i:3">
+            <img src="assets/gomart/char.png" alt="GoMart character illustration" data-lightbox class="gomart-cover-char absolute bottom-0 left-1/2 z-0 h-auto w-[min(72vw,200px)] sm:w-[min(68vw,260px)] md:w-full max-w-[310px] -translate-x-[42%] sm:-translate-x-[40%] md:translate-x-0 md:left-[50%] object-contain object-bottom cursor-zoom-in" loading="lazy">
+            <div class="phone-mock gomart-cover-phone absolute z-20 bottom-0 left-1/2 !mx-0 pointer-events-none !max-w-[min(58vw,220px)] sm:!max-w-[255px] md:!max-w-[285px] -translate-x-1/2 md:translate-x-0 md:left-[20%]">
               <video loop data-autoplay muted playsinline preload="metadata" tabindex="-1" aria-hidden="true" class="pointer-events-none">
                 <source src="assets/gomart/final-product.mp4" type="video/mp4">
                 <track kind="captions" src="assets/gomart/final-product-desc.vtt" srclang="en" label="English descriptions" default>
@@ -523,11 +549,11 @@
     </section>
 
     <!-- ===== CS 04 · The Studio program ===== -->
-    <section class="slide relative overflow-hidden" data-chapter="case-study" data-title="The Studio">
+    <section class="slide slide-scroll slide-bleed relative" data-chapter="case-study" data-title="The Studio">
       <img src="assets/gomart/studio-background.png" alt="Live Miro board from Studio Accelerator — team note-taking on keywords, challenges, and solutions during lightning talks" data-lightbox class="absolute inset-0 w-full h-full object-cover object-center cursor-zoom-in" loading="lazy">
       <div class="slide-inner relative z-10">
         <div class="rounded-2xl p-6 md:p-8 shadow-2xl shadow-black/20 bg-gomart" data-anim style="--i:0">
-          <div class="grid md:grid-cols-2 gap-6 md:gap-10 items-start">
+          <div class="grid lg:grid-cols-2 gap-6 lg:gap-10 items-start">
             <div>
               <p class="text-mute text-xs font-bold uppercase tracking-[0.2em]">Way of working</p>
               <h2 class="mt-3 text-3xl md:text-5xl font-extrabold tracking-tight max-w-[18ch]">The <span class="hl">Studio</span> Accelerator</h2>
@@ -562,9 +588,9 @@
     </section>
 
     <!-- ===== CS 01 · Business bet ===== -->
-    <section class="slide" data-chapter="case-study" data-title="Business bet">
+    <section class="slide slide-scroll" data-chapter="case-study" data-title="Business bet">
       <div class="slide-inner">
-        <div class="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
+        <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           <div>
             <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Context · Business</p>
             <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-6 max-w-[18ch]" data-anim style="--i:1">The <span class="hl">bet</span> we had to win</h2>
@@ -608,13 +634,13 @@
     </section>
 
     <!-- ===== CS 03 · Brand Key ===== -->
-    <section class="slide relative overflow-hidden" data-chapter="case-study" data-title="Who we design for">
+    <section class="slide slide-scroll slide-bleed relative" data-chapter="case-study" data-title="Who we design for">
       <img src="assets/gomart/brand-key.png" alt="GoMart Brand Key — Competent Consumers, effortless grocery shopping" data-lightbox class="absolute inset-0 w-full h-full object-cover object-center cursor-zoom-in" loading="lazy">
       <div class="slide-inner relative z-10">
         <div class="bg-white/95 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-line shadow-lg w-full max-w-full" data-anim style="--i:0">
           <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4">Strategy · Nation brand workshop, March 2021</p>
           <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-5 max-w-[20ch]" data-anim style="--i:1">Who we <span class="hl">design for</span></h2>
-          <div class="grid md:grid-cols-[1.85fr_0.95fr] lg:grid-cols-[2fr_1fr] gap-8 md:gap-10 items-start">
+          <div class="grid lg:grid-cols-[2fr_1fr] gap-8 lg:gap-10 items-start">
             <div class="min-w-0">
               <p class="text-ink text-lg leading-relaxed mb-4" data-anim style="--i:2">
                 Nation, our brand research partner, distilled three shopper personas from a 2-day workshop — each chasing "competence" in groceries a different way. Click a persona to explore:
@@ -678,9 +704,9 @@
     </section>
 
     <!-- ===== CS 06 · Session 2 ===== -->
-    <section class="slide slide-scroll relative overflow-hidden" data-chapter="case-study" data-title="Session 2 · Brainstorm to bets">
-      <div class="slide-inner top !py-0 !px-0 !max-w-none">
-        <div class="grid md:grid-cols-[1.15fr_0.85fr] md:h-full">
+    <section class="slide slide-scroll slide-bleed relative" data-chapter="case-study" data-title="Session 2 · Brainstorm to bets">
+      <div class="slide-inner top !py-0 !px-0 !max-w-none deck-split-inner">
+        <div class="grid lg:grid-cols-[1.15fr_0.85fr] lg:h-full deck-split-grid">
           <div class="order-2 md:order-1 flex flex-col justify-center px-[clamp(1.25rem,5vw,4rem)] py-[clamp(1.5rem,4vw,3rem)]">
             <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-3" data-anim style="--i:0">Studio Accelerator · Session 2</p>
             <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-3 max-w-[28ch]" data-anim style="--i:1">Brainstorm to <span class="hl">prioritised bets</span></h2>
@@ -693,7 +719,7 @@
               <span class="chip !bg-elev !border-line !text-mute !text-[11px]">Discover + trust · onboarding stories</span>
             </div>
             <p class="text-xs font-bold uppercase tracking-[0.14em] text-mute mb-2" data-anim style="--i:3">Session 2 dot-votes</p>
-            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-3" data-anim style="--i:3">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-3 mb-3" data-anim style="--i:3">
               <div class="vote-card"><div class="vote-count">7</div><p class="text-sm font-semibold mt-1">Bulk shopping-list from search</p></div>
               <div class="vote-card"><div class="vote-count">6</div><p class="text-sm font-semibold mt-1">Quality / reviews</p></div>
               <div class="vote-card"><div class="vote-count">6</div><p class="text-sm font-semibold mt-1">First-order hooks</p></div>
@@ -741,9 +767,9 @@
     </section>
 
     <!-- ===== CS 07a · Bottom Navigation · Research (v2) ===== -->
-    <section class="slide relative overflow-hidden" data-chapter="case-study" data-title="Bottom Navigation · Research">
-      <div class="slide-inner top !py-0 !px-0 !max-w-none">
-        <div class="grid md:grid-cols-[1.15fr_0.85fr] md:h-full">
+    <section class="slide slide-scroll slide-bleed relative" data-chapter="case-study" data-title="Bottom Navigation · Research">
+      <div class="slide-inner top !py-0 !px-0 !max-w-none deck-split-inner">
+        <div class="grid lg:grid-cols-[1.15fr_0.85fr] lg:h-full deck-split-grid">
           <div class="order-2 md:order-1 flex flex-col justify-center px-[clamp(1.25rem,5vw,4rem)] py-[clamp(1.5rem,4vw,3rem)]">
             <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-3" data-anim style="--i:0">Solution 1 · Key · Design &amp; Validate</p>
             <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-3 max-w-[22ch]" data-anim style="--i:1">Bottom navigation <span class="hl">IA redesign</span></h2>
@@ -927,9 +953,9 @@
     </section>
 
     <!-- ===== CS 09 · Shipped · Impact ===== -->
-    <section class="slide relative overflow-hidden" data-chapter="case-study" data-title="Shipped · Impact">
-      <div class="slide-inner top !py-0 !px-0 !max-w-none">
-        <div class="grid md:grid-cols-[1.15fr_0.85fr] md:h-full">
+    <section class="slide slide-scroll slide-bleed relative" data-chapter="case-study" data-title="Shipped · Impact">
+      <div class="slide-inner top !py-0 !px-0 !max-w-none deck-split-inner">
+        <div class="grid lg:grid-cols-[1.15fr_0.85fr] lg:h-full deck-split-grid">
           <div class="order-2 md:order-1 flex flex-col justify-center px-[clamp(1.25rem,5vw,4rem)] py-[clamp(1.5rem,4vw,3rem)]">
             <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Shipped · Impact</p>
             <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-6 max-w-[22ch]" data-anim style="--i:1">From Studio bets to <span class="hl">production</span></h2>
@@ -961,9 +987,9 @@
     <!-- ===================== CHAPTER · HIGHLIGHTS (after the case study) ===================== -->
 
     <!-- HIGHLIGHT · Order-tracking widget & chat -->
-    <section class="slide bg-elev" data-chapter="highlights" data-title="Highlight · Order-tracking widget &amp; chat">
+    <section class="slide slide-scroll bg-elev" data-chapter="highlights" data-title="Highlight · Order-tracking widget &amp; chat">
       <div class="slide-inner">
-        <div class="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
+        <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           <div>
             <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Highlight · Solution 2 · Trust · Effective Communication</p>
             <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-4 max-w-[16ch]" data-anim style="--i:1">Order-tracking widget &amp; chat</h2>
@@ -980,9 +1006,9 @@
     </section>
 
     <!-- HIGHLIGHT · Onboarding stories -->
-    <section class="slide" data-chapter="highlights" data-title="Highlight · Onboarding stories">
+    <section class="slide slide-scroll" data-chapter="highlights" data-title="Highlight · Onboarding stories">
       <div class="slide-inner">
-        <div class="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
+        <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           <div>
             <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Highlight · Solution 3 · Discover · Maximized Value</p>
             <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-4 max-w-[16ch]" data-anim style="--i:1">Onboarding <span class="hl">stories</span></h2>
@@ -1005,7 +1031,7 @@
     </section>
 
     <!-- ===== Thanks ===== -->
-    <section class="slide bg-ink text-white" data-chapter="highlights" data-title="Thanks">
+    <section class="slide slide-scroll bg-ink text-white" data-chapter="highlights" data-title="Thanks">
       <div class="slide-inner items-center text-center">
         <p class="text-white/60 text-xs font-bold uppercase tracking-[0.2em] mb-8" data-anim style="--i:0">Fin</p>
         <h2 class="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.12] max-w-[18ch]" data-anim style="--i:1">

@@ -138,7 +138,7 @@
         position:absolute; inset:0; z-index:0; overflow:hidden;
         pointer-events:none;
       }
-      @media (min-width:768px){
+      @media (min-width:1024px){
         .slide-cover .cover-panel{ justify-content:flex-end; }
       }
       .phone-mock{
@@ -284,7 +284,7 @@
       .hypo-card__media{ flex:0 0 auto; background:linear-gradient(180deg, #fafafa 0%, #f2f2f2 100%); border-bottom:1px solid #e7e7e7; padding:1rem 1.25rem; }
       .hypo-card__media img{ display:block; width:100%; max-width:100%; height:auto; border-radius:12px; border:1px solid rgba(0,0,0,.06); cursor:zoom-in; }
       .hypo-card__body{ flex:1 1 auto; display:flex; flex-direction:column; gap:.5rem; justify-content:center; padding:1rem 1.25rem 1.25rem; min-width:0; }
-      @media (min-width:640px){
+      @media (min-width:1024px){
         .hypo-card{ flex-direction:row; align-items:stretch; }
         .hypo-card__media{
           flex:0 0 52%; max-width:52%; border-bottom:0; border-right:1px solid #e7e7e7;
@@ -318,7 +318,7 @@
       .slide-directions .directions-foot{ margin-top:auto; width:100%; }
 
       .proto-grid{ display:grid; grid-template-columns:1fr; gap:1.5rem; width:100%; margin-top:.75rem; flex:1 1 auto; }
-      @media (min-width:768px){ .proto-grid{ grid-template-columns:1fr 1fr; gap:1.25rem; } }
+      @media (min-width:1024px){ .proto-grid{ grid-template-columns:1fr 1fr; gap:1.25rem; } }
       @media (min-width:1200px){ .proto-grid{ gap:1.5rem; } }
       .proto-col{ display:flex; flex-direction:column; min-width:0; height:100%; overflow:visible; }
       .proto-col .vlabel{
@@ -421,11 +421,12 @@
       .slide-audit .audit-stage{
         width:100%; height:100%; min-height:12rem; max-height:none;
       }
-      @media (max-width:767px){
+      @media (max-width:1023px){
         .slide-audit .audit-figure{ height:auto; grid-template-rows:auto auto; }
         .slide-audit .audit-stage{
           height:auto; aspect-ratio:1024/548; max-height:min(48vh, calc(100dvh - var(--deck-top) - 14rem));
         }
+        .slide-audit .audit-layout{ grid-template-columns:1fr; }
       }
       .audit-shot{ position:absolute; inset:0; width:100%; height:100%; object-fit:contain; background:transparent; opacity:0; visibility:hidden; transform:scale(1.01); pointer-events:none; transition:opacity .35s ease, transform .35s ease, visibility 0s linear .35s; cursor:zoom-in; }
       .audit-shot.active{ opacity:1; visibility:visible; transform:none; pointer-events:auto; transition-delay:0s; }
@@ -668,6 +669,40 @@
       #lightbox.open{ display:flex; }
       #lightbox img{ max-width:100%; max-height:90vh; border-radius:.75rem; box-shadow:0 24px 60px -20px rgba(0,0,0,.35); background:transparent; }
 
+      .slide-scroll > .slide-inner{ justify-content:flex-start; padding-bottom:calc(5rem + env(safe-area-inset-bottom, 0px)); }
+
+      /* Mobile + tablet — desktop (1024px+) unchanged */
+      @media (max-width: 1023px) {
+        .slide > .slide-inner { justify-content: flex-start; }
+        .slide-scroll > .slide-inner,
+        .slide-inner.top { padding-bottom: calc(5rem + env(safe-area-inset-bottom, 0px)); }
+        .slide-bleed,
+        .hl-slide { overflow-x: hidden; overflow-y: auto; }
+        .deck-split-grid { height: auto !important; min-height: 0 !important; }
+        .slide-split-panel { min-height: 0 !important; height: auto !important; }
+        .panel-next-steps .next-steps-combo {
+          max-width: 100%; max-height: none; align-self: center; margin-inline: auto;
+        }
+        .hl-slide--1 .hl-slide__headline,
+        .hl-slide--2 .hl-slide__headline,
+        .hl-slide--3 .hl-slide__headline {
+          white-space: normal; width: auto; max-width: 100%;
+        }
+        .hl-slide--1 .hl-slide__sticker,
+        .hl-slide--2 .hl-slide__sticker {
+          position: relative !important; top: auto !important; right: auto !important;
+          width: min(52vw, 11rem); max-height: none; margin: 0 auto 1rem; display: block;
+          filter: drop-shadow(0 6px 16px rgba(0,0,0,.15));
+        }
+        .hl-slide--1 .slide-inner,
+        .hl-slide--2 .slide-inner,
+        .hl-slide--3 .slide-inner {
+          min-height: auto;
+          padding-bottom: calc(5rem + env(safe-area-inset-bottom, 0px));
+        }
+        .phone-mock--cover { width: min(100%, 20rem); max-width: 20rem; }
+      }
+
       @media (prefers-reduced-motion: reduce){
         .deck-track{ transition:none; } .progress{ transition:none; }
         .slide [data-anim]{ opacity:1 !important; transform:none !important; transition:none !important; }
@@ -763,9 +798,9 @@
     <!-- ===================== CHAPTER 1 · HIGHLIGHTS ===================== -->
 
     <!-- HIGHLIGHT 01 · What is OLX? -->
-    <section class="slide is-active" data-chapter="case-study" data-title="What is OLX?" data-home-slide>
+    <section class="slide slide-scroll is-active" data-chapter="case-study" data-title="What is OLX?" data-home-slide>
       <div class="slide-inner top !py-0 !px-0 !max-w-none">
-        <div class="grid md:grid-cols-[1.35fr_1fr] md:h-full">
+        <div class="grid lg:grid-cols-[1.35fr_1fr] lg:h-full deck-split-grid">
           <div class="order-2 md:order-1 flex flex-col justify-center px-[clamp(1.25rem,5vw,4rem)] py-[clamp(1.5rem,4vw,3rem)]">
             <p class="text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Quick Highlights</p>
             <h2 class="mt-5 text-navy font-extrabold tracking-tight leading-[1.05] text-4xl md:text-5xl lg:text-6xl" data-anim style="--i:1">What is OLX?</h2>
@@ -811,7 +846,7 @@
     </section>
 
     <!-- HIGHLIGHT 02 · What I do at OLX? -->
-    <section class="slide" data-chapter="case-study" data-title="What I do at OLX?" data-home-slide>
+    <section class="slide slide-scroll" data-chapter="case-study" data-title="What I do at OLX?" data-home-slide>
       <div class="slide-inner top">
         <p class="text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Quick Highlights</p>
         <h2 class="mt-5 text-navy font-extrabold tracking-tight leading-[1.05] text-4xl md:text-5xl" data-anim style="--i:1">What I do at OLX?</h2>
@@ -821,7 +856,7 @@
           <span>Pay &amp; Ship</span><span class="sep">›</span>
           <span class="now">Engagement &amp; Monetisation</span>
         </nav>
-        <div class="mt-6 md:mt-2 grid md:grid-cols-[0.55fr_2.1fr] gap-6 md:gap-10 items-end">
+        <div class="mt-6 md:mt-2 grid lg:grid-cols-[0.55fr_2.1fr] gap-6 lg:gap-10 items-end deck-split-grid">
           <p class="text-lg md:text-xl text-mute leading-relaxed max-w-[36ch] md:order-1 order-2 md:pb-12" data-anim style="--i:3">
             I was responsible for all things design within the <span class="text-ink font-semibold">Engagement &amp; Monetisation</span> packs, under the <span class="text-ink font-semibold">Pay &amp; Ship</span> pillar.
           </p>
@@ -835,9 +870,9 @@
     <!-- ===================== CHAPTER 2 · CASE STUDY ===================== -->
 
     <!-- CS 01 · COVER — OLX Ad Package -->
-    <section class="slide slide-cover slide-bg-sage" data-chapter="case-study" data-title="OLX Ad Package">
+    <section class="slide slide-cover slide-scroll slide-bg-sage" data-chapter="case-study" data-title="OLX Ad Package">
       <div class="slide-inner top !py-0 !px-0 !max-w-none">
-        <div class="grid md:grid-cols-[1.15fr_1fr] md:h-full">
+        <div class="grid lg:grid-cols-[1.15fr_1fr] lg:h-full deck-split-grid">
           <div class="order-2 md:order-1 cover-copy flex flex-col justify-center px-[clamp(1.25rem,5vw,4rem)] py-[clamp(1.5rem,4vw,3rem)]">
             <p class="text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Case study · OLX Group</p>
             <h1 class="mt-4 font-extrabold tracking-tight leading-[1.04] text-4xl md:text-6xl" data-anim style="--i:1">OLX Ad Package</h1>
@@ -867,9 +902,9 @@
     </section>
 
     <!-- CS 02 · BUSINESS OBJECTIVE -->
-    <section class="slide" data-chapter="case-study" data-title="Business Objective">
+    <section class="slide slide-scroll" data-chapter="case-study" data-title="Business Objective">
       <div class="slide-inner top !py-0 !px-0 !max-w-none">
-        <div class="grid md:grid-cols-[1.2fr_1fr] md:h-full">
+        <div class="grid lg:grid-cols-[1.2fr_1fr] lg:h-full deck-split-grid">
           <div class="order-2 md:order-1 flex flex-col justify-center px-[clamp(1.25rem,5vw,4rem)] py-[clamp(1.5rem,4vw,3rem)]">
             <p class="text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Business</p>
             <h2 class="mt-4 font-extrabold tracking-tight leading-[1.05] text-3xl md:text-5xl" data-anim style="--i:1">Business Objective</h2>
@@ -900,7 +935,7 @@
     </section>
 
     <!-- CS 03 · BACKGROUND — the monetisation ecosystem -->
-    <section class="slide bg-elev" data-chapter="case-study" data-title="Background">
+    <section class="slide slide-scroll bg-elev" data-chapter="case-study" data-title="Background">
       <div class="slide-inner top">
         <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-3" data-anim style="--i:0">Background</p>
         <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4" data-anim style="--i:1">Background</h2>
@@ -921,9 +956,9 @@
     </section>
 
     <!-- CS 04 · INITIATE RESEARCH · JTBD -->
-    <section class="slide" data-chapter="case-study" data-title="Initiate Research · JTBD">
-      <div class="slide-inner top !py-0 !px-0 !max-w-none !h-full">
-        <div class="grid md:grid-cols-[1.15fr_0.85fr] h-full min-h-0">
+    <section class="slide slide-scroll" data-chapter="case-study" data-title="Initiate Research · JTBD">
+      <div class="slide-inner top !py-0 !px-0 !max-w-none">
+        <div class="grid lg:grid-cols-[1.15fr_0.85fr] lg:h-full deck-split-grid">
           <div class="order-2 md:order-1 flex flex-col justify-center px-[clamp(1.25rem,5vw,4rem)] py-[clamp(1.5rem,4vw,3rem)]">
             <p class="text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Research</p>
             <h2 class="mt-3 text-2xl md:text-4xl font-extrabold tracking-tight max-w-[24ch]" data-anim style="--i:1">Initiate research — Jobs to be Done</h2>
@@ -966,7 +1001,7 @@
     </section>
 
     <!-- CS 05 · 24 LIMITATIONS -->
-    <section class="slide bg-elev" data-chapter="case-study" data-title="24 limitations">
+    <section class="slide slide-scroll bg-elev" data-chapter="case-study" data-title="24 limitations">
       <div class="lim-bg" aria-hidden="true"></div>
       <div class="slide-inner top relative z-10">
         <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-3" data-anim style="--i:0">Synthesis</p>
@@ -987,9 +1022,9 @@
     </section>
 
     <!-- CS 06 · QUANTIFICATION → PRIORITISATION -->
-    <section class="slide" data-chapter="case-study" data-title="Quantification &amp; OpScore">
+    <section class="slide slide-scroll" data-chapter="case-study" data-title="Quantification &amp; OpScore">
       <div class="slide-inner top !py-0 !px-0 !max-w-none">
-        <div class="grid md:grid-cols-[1.25fr_0.75fr] md:h-full">
+        <div class="grid lg:grid-cols-[1.25fr_0.75fr] lg:h-full deck-split-grid">
           <div class="order-2 md:order-1 flex flex-col justify-center px-[clamp(1.25rem,5vw,4rem)] py-[clamp(1.5rem,4vw,3rem)]">
             <p class="text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Prioritisation</p>
             <h2 class="mt-3 text-2xl md:text-4xl font-extrabold tracking-tight max-w-[24ch]" data-anim style="--i:1">Quantification to prioritisation</h2>
@@ -1010,9 +1045,9 @@
     </section>
 
     <!-- CS 07 · USER PROBLEM -->
-    <section class="slide bg-base" data-chapter="case-study" data-title="User Problem">
-      <div class="slide-inner top !py-0 !px-0 !max-w-none !h-full">
-        <div class="grid md:grid-cols-[1.05fr_0.95fr] h-full min-h-0">
+    <section class="slide slide-scroll bg-base" data-chapter="case-study" data-title="User Problem">
+      <div class="slide-inner top !py-0 !px-0 !max-w-none">
+        <div class="grid lg:grid-cols-[1.05fr_0.95fr] lg:h-full deck-split-grid">
           <div class="order-2 md:order-1 flex flex-col justify-center px-[clamp(1.25rem,5vw,4rem)] py-[clamp(1.5rem,4vw,3rem)]">
             <p class="text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Problem</p>
             <h2 class="mt-3 text-3xl md:text-5xl font-extrabold tracking-tight" data-anim style="--i:1">User Problem</h2>
@@ -1034,11 +1069,11 @@
     </section>
 
     <!-- CS 08 · UX AUDIT -->
-    <section class="slide slide-audit" data-chapter="case-study" data-title="UX Audit">
+    <section class="slide slide-scroll slide-audit" data-chapter="case-study" data-title="UX Audit">
       <div class="slide-inner top slide-audit-inner">
         <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-3" data-anim style="--i:0">Audit</p>
         <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-6 md:mb-7 max-w-[26ch]" data-anim style="--i:1">Ran a UX audit on the buy-package flow</h2>
-        <div class="grid md:grid-cols-[1.72fr_0.62fr] gap-6 md:gap-8 items-stretch audit-layout">
+        <div class="grid lg:grid-cols-[1.72fr_0.62fr] gap-6 lg:gap-8 items-stretch audit-layout">
           <figure class="audit-figure m-0 min-w-0" data-anim style="--i:2">
             <div class="audit-stage" id="auditStage">
               <img loading="lazy" class="audit-shot active" data-audit-shot="1" data-lightbox src="assets/olx/olx_audit_1.png" alt="Audit — seller account overview: 'Your ads' on web and mobile">
@@ -1061,7 +1096,7 @@
     </section>
 
     <!-- CS 09 · DESKTOP-FIRST · 3 HYPOTHESES -->
-    <section class="slide slide-hypo bg-elev" data-chapter="case-study" data-title="Desktop-first · Hypothesis">
+    <section class="slide slide-scroll slide-hypo bg-elev" data-chapter="case-study" data-title="Desktop-first · Hypothesis">
       <div class="slide-inner top">
         <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-2" data-anim style="--i:0">Explore</p>
         <h2 class="text-xl md:text-3xl font-extrabold tracking-tight mb-3 text-ink max-w-[28ch]" data-anim style="--i:1">Designed 3 possible directions for desktop</h2>
@@ -1107,7 +1142,7 @@
     </section>
 
     <!-- CS 10 · VARIANT A vs VARIANT B (interactive prototypes) -->
-    <section class="slide slide-directions" data-chapter="case-study" data-title="Variant A vs B">
+    <section class="slide slide-scroll slide-directions" data-chapter="case-study" data-title="Variant A vs B">
       <div class="directions-bg" aria-hidden="true"></div>
       <div class="slide-inner top directions-content">
         <div class="directions-head" data-anim style="--i:0">
@@ -1169,39 +1204,39 @@
     </section>
 
     <!-- CS 11 · USABILITY TEST -->
-    <section class="slide" data-chapter="case-study" data-title="Usability test">
-      <div class="slide-inner" style="justify-content:flex-start">
+    <section class="slide slide-scroll" data-chapter="case-study" data-title="Usability test">
+      <div class="slide-inner" style="justify-content:flex-start;padding-bottom:calc(5rem + env(safe-area-inset-bottom, 0px))">
         <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Test</p>
         <h2 class="w-full max-w-none text-2xl md:text-4xl font-extrabold tracking-tight mb-8" data-anim style="--i:1">We tested 2 concepts for usability with <span class="hl">10 users</span></h2>
         <!-- Each insight paired with the takeaway it drove -->
-        <div class="hidden md:grid md:grid-cols-[1fr_2.5rem_1fr] gap-4 mb-3" data-anim style="--i:2">
+        <div class="hidden lg:grid lg:grid-cols-[1fr_2.5rem_1fr] gap-4 mb-3" data-anim style="--i:2">
           <p class="text-xs font-bold uppercase tracking-[0.18em] text-mute">Insight</p>
           <span></span>
           <p class="text-xs font-bold uppercase tracking-[0.18em] text-accink/70">Takeaway</p>
         </div>
         <div class="space-y-4">
-          <div class="grid md:grid-cols-[1fr_2.5rem_1fr] gap-3 md:gap-4 items-stretch" data-anim style="--i:3">
+          <div class="grid lg:grid-cols-[1fr_2.5rem_1fr] gap-3 lg:gap-4 items-stretch" data-anim style="--i:3">
             <div class="bg-elev rounded-2xl p-5 flex items-center"><p class="m-0 text-mute leading-relaxed"><span class="abadge a-a inline-flex align-middle mr-2">A</span><strong class="text-ink">4/8 struggled</strong> to associate dropdown categories with the dynamic offer. Task time was <strong class="text-ink">15% lower</strong> than Production.</p></div>
-            <div class="hidden md:flex items-center justify-center text-ink/30 text-2xl" aria-hidden="true">→</div>
+            <div class="hidden lg:flex items-center justify-center text-ink/30 text-2xl" aria-hidden="true">→</div>
             <div class="bg-accent text-accink rounded-2xl p-5 flex items-center"><p class="m-0 leading-relaxed">Primary/secondary/tertiary categories got associated with filters — adding <strong>cognitive load</strong> and failing the hypothesis.</p></div>
           </div>
-          <div class="grid md:grid-cols-[1fr_2.5rem_1fr] gap-3 md:gap-4 items-stretch" data-anim style="--i:4">
+          <div class="grid lg:grid-cols-[1fr_2.5rem_1fr] gap-3 lg:gap-4 items-stretch" data-anim style="--i:4">
             <div class="bg-elev rounded-2xl p-5 flex items-center"><p class="m-0 text-mute leading-relaxed"><span class="abadge-stack mr-2" title="Variant B — usability test winner"><img class="abadge-crown" src="assets/olx/crown.png" alt="" width="22" height="22" decoding="async" aria-hidden="true"><span class="abadge a-b">B</span></span><strong class="text-ink">7/8 were satisfied</strong> with the multi-level menu and appreciated the summary view. Task time was <strong class="text-ink">28% higher</strong> than Production.</p></div>
-            <div class="hidden md:flex items-center justify-center text-ink/30 text-2xl" aria-hidden="true">→</div>
+            <div class="hidden lg:flex items-center justify-center text-ink/30 text-2xl" aria-hidden="true">→</div>
             <div class="bg-accent text-accink rounded-2xl p-5 flex items-center"><p class="m-0 leading-relaxed">Users found categories with <strong>ease</strong>; one suggested a <strong>shortcut to repeat</strong> the selection.</p></div>
           </div>
-          <div class="grid md:grid-cols-[1fr_2.5rem_1fr] gap-3 md:gap-4 items-stretch" data-anim style="--i:5">
+          <div class="grid lg:grid-cols-[1fr_2.5rem_1fr] gap-3 lg:gap-4 items-stretch" data-anim style="--i:5">
             <div class="bg-elev rounded-2xl p-5 flex items-center"><p class="m-0 text-mute leading-relaxed"><span class="abadge a-a inline-flex align-middle mr-2">A</span>Only <strong class="text-ink">2/8</strong> found the filter view easier to compare — and they ignored the &lsquo;see-more&rsquo; CTA while comparing packages.</p></div>
-            <div class="hidden md:flex items-center justify-center text-ink/30 text-2xl" aria-hidden="true">→</div>
+            <div class="hidden lg:flex items-center justify-center text-ink/30 text-2xl" aria-hidden="true">→</div>
             <div class="bg-accent text-accink rounded-2xl p-5 flex items-center"><p class="m-0 leading-relaxed">Most users expect offers to carry as much <strong>upfront information</strong> as possible.</p></div>
           </div>
-          <div class="grid md:grid-cols-[1fr_2.5rem_1fr] gap-3 md:gap-4 items-stretch" data-anim style="--i:6">
+          <div class="grid lg:grid-cols-[1fr_2.5rem_1fr] gap-3 lg:gap-4 items-stretch" data-anim style="--i:6">
             <div class="bg-elev rounded-2xl p-5 flex items-center"><p class="m-0 text-mute leading-relaxed"><span class="abadge-stack mr-2" title="Variant B — usability test winner"><img class="abadge-crown" src="assets/olx/crown.png" alt="" width="22" height="22" decoding="async" aria-hidden="true"><span class="abadge a-b">B</span></span>With <strong class="text-ink">upfront category tags</strong>, 5/8 intuitively named categories as a variable for why price differs per package.</p></div>
-            <div class="hidden md:flex items-center justify-center text-ink/30 text-2xl" aria-hidden="true">→</div>
+            <div class="hidden lg:flex items-center justify-center text-ink/30 text-2xl" aria-hidden="true">→</div>
             <div class="bg-accent text-accink rounded-2xl p-5 flex items-center"><p class="m-0 leading-relaxed">Users don&rsquo;t always tap see-more — a long list of category tags can also add cognitive load.</p></div>
           </div>
         </div>
-        <div class="grid grid-cols-2 gap-4 md:gap-6 mt-8" data-anim style="--i:7">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 mt-8" data-anim style="--i:7">
           <figure class="relative m-0 test-photo-fig">
             <span class="photo-variant-badge photo-variant-badge--a" aria-hidden="true"><span class="photo-variant-badge__letter">A</span></span>
             <img loading="lazy" src="assets/olx/olx_test_a.png" alt="Moderated session — Variant A" data-lightbox class="w-full rounded-2xl border border-line cursor-zoom-in">
@@ -1218,9 +1253,9 @@
     </section>
 
     <!-- CS 12 · PRODUCTION OUTCOME -->
-    <section class="slide" data-chapter="case-study" data-title="Production outcome">
-      <div class="slide-inner top !py-0 !px-0 !max-w-none !h-full">
-        <div class="grid md:grid-cols-[1.05fr_0.95fr] h-full min-h-0 md:h-full">
+    <section class="slide slide-scroll" data-chapter="case-study" data-title="Production outcome">
+      <div class="slide-inner top !py-0 !px-0 !max-w-none">
+        <div class="grid lg:grid-cols-[1.05fr_0.95fr] lg:h-full deck-split-grid">
           <div class="order-2 md:order-1 flex flex-col justify-center px-[clamp(1.25rem,5vw,4rem)] py-[clamp(1.5rem,4vw,3rem)]">
             <p class="text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Outcome</p>
             <h2 class="mt-4 text-3xl md:text-5xl font-extrabold tracking-tight max-w-[22ch]" data-anim style="--i:1">Validated on production</h2>
@@ -1251,9 +1286,9 @@
     </section>
 
     <!-- CS 12b · NEXT STEPS — repeat purchase & recommendations -->
-    <section class="slide slide-next-steps" data-chapter="case-study" data-title="Next steps">
-      <div class="slide-inner top !py-0 !px-0 !max-w-none !h-full">
-        <div class="grid md:grid-cols-[1.05fr_0.95fr] h-full min-h-0 md:h-full">
+    <section class="slide slide-scroll slide-next-steps" data-chapter="case-study" data-title="Next steps">
+      <div class="slide-inner top !py-0 !px-0 !max-w-none">
+        <div class="grid lg:grid-cols-[1.05fr_0.95fr] lg:h-full deck-split-grid">
           <div class="order-2 md:order-1 flex flex-col justify-center px-[clamp(1.25rem,5vw,4rem)] py-[clamp(1.5rem,4vw,3rem)]">
             <p class="text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">After launch</p>
             <h2 class="mt-4 text-3xl md:text-5xl font-extrabold tracking-tight max-w-[22ch]" data-anim style="--i:1">Next steps</h2>
@@ -1275,7 +1310,7 @@
     </section>
 
     <!-- CS 13 · CASE-STUDY WRAP-UP -->
-    <section class="slide slide-bg-sage text-ink" data-chapter="case-study" data-title="Wrap-up">
+    <section class="slide slide-scroll slide-bg-sage text-ink" data-chapter="case-study" data-title="Wrap-up">
       <div class="slide-inner text-center items-center" style="padding-bottom:calc(4.5rem + env(safe-area-inset-bottom, 0px))">
         <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">OLX · Pay &amp; Ship</p>
         <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4 max-w-[24ch] mx-auto text-ink" data-anim style="--i:1">
