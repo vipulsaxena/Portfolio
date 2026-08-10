@@ -56,6 +56,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap">
     <link rel="stylesheet" href="css/shell.css">
+    <link rel="stylesheet" href="css/portfolio-gate-previews.css">
 
     <!-- Tailwind (Play CDN) + theme config -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -761,7 +762,29 @@
 
 <!-- ===================== Password gate (secure entry) ===================== -->
 <div id="olxGate" role="dialog" aria-modal="true" aria-labelledby="olxGateTitle">
-  <div class="pw-card" role="document">
+  <div class="pw-card pw-card--preview" role="document">
+    <div class="pw-preview" aria-hidden="true">
+      <div class="pw-preview__track">
+        <div class="pw-preview__slide">
+          <picture>
+            <source type="image/webp" data-srcset="images/previews/OLX01.webp">
+            <img data-preview-img data-src="images/previews/OLX01.jpg" alt="" width="640" height="360" decoding="async" draggable="false">
+          </picture>
+        </div>
+        <div class="pw-preview__slide">
+          <picture>
+            <source type="image/webp" data-srcset="images/previews/OLX02.webp">
+            <img data-preview-img data-src="images/previews/OLX02.jpg" alt="" width="640" height="360" decoding="async" draggable="false">
+          </picture>
+        </div>
+        <div class="pw-preview__slide">
+          <picture>
+            <source type="image/webp" data-srcset="images/previews/OLX03.webp">
+            <img data-preview-img data-src="images/previews/OLX03.jpg" alt="" width="640" height="360" decoding="async" draggable="false">
+          </picture>
+        </div>
+      </div>
+    </div>
     <p class="pw-eyebrow">🔒 Protected case study</p>
     <h2 class="pw-title" id="olxGateTitle">Enter password to view</h2>
     <p class="pw-desc">This OLX Ad Package case study is password-protected. Enter the password to continue.</p>
@@ -1436,6 +1459,7 @@
 <div id="lightbox" aria-hidden="true"><img alt="Expanded view"></div>
 
 <!-- Password gate validation -->
+<script src="js/portfolio-gate-previews.js"></script>
 <script>
   (function(){
     var PASSWORD = "portfolio26";

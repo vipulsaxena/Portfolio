@@ -35,6 +35,10 @@
   /* ---------------------- Reveal on scroll --------------------------- */
   var revealEls = document.querySelectorAll(".reveal, .reveal-stagger");
   if ("IntersectionObserver" in window && revealEls.length) {
+    var coarsePointer = window.matchMedia("(pointer: coarse)").matches;
+    var narrowViewport = window.matchMedia("(max-width: 900px)").matches;
+    var revealRootMargin = coarsePointer || narrowViewport ? "0px 0px 0px 0px" : "0px 0px -8% 0px";
+    var revealThreshold = coarsePointer || narrowViewport ? 0.05 : 0.15;
     var io = new IntersectionObserver(
       function (entries) {
         entries.forEach(function (entry) {
@@ -44,7 +48,7 @@
           }
         });
       },
-      { threshold: 0.15, rootMargin: "0px 0px -8% 0px" }
+      { threshold: revealThreshold, rootMargin: revealRootMargin }
     );
     revealEls.forEach(function (el) { io.observe(el); });
   } else {

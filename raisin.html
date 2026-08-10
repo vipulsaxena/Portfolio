@@ -23,6 +23,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap">
     <link rel="stylesheet" href="css/shell.css">
+    <link rel="stylesheet" href="css/portfolio-gate-previews.css">
     <link rel="stylesheet" href="raisin-assets/assets/css/tokens.css">
     <link rel="stylesheet" href="raisin-assets/assets/css/base.css">
     <link rel="stylesheet" href="raisin-assets/assets/css/components.css">
@@ -82,7 +83,29 @@
 <body class="summary-v2 has-shell">
 
 <div id="raisinGate" role="dialog" aria-modal="true" aria-labelledby="raisinGateTitle">
-  <div class="pw-card" role="document">
+  <div class="pw-card pw-card--preview" role="document">
+    <div class="pw-preview" aria-hidden="true">
+      <div class="pw-preview__track">
+        <div class="pw-preview__slide">
+          <picture>
+            <source type="image/webp" data-srcset="images/previews/R1.webp">
+            <img data-preview-img data-src="images/previews/R1.jpg" alt="" width="640" height="300" decoding="async" draggable="false">
+          </picture>
+        </div>
+        <div class="pw-preview__slide">
+          <picture>
+            <source type="image/webp" data-srcset="images/previews/R2.webp">
+            <img data-preview-img data-src="images/previews/R2.jpg" alt="" width="640" height="300" decoding="async" draggable="false">
+          </picture>
+        </div>
+        <div class="pw-preview__slide">
+          <picture>
+            <source type="image/webp" data-srcset="images/previews/R3.webp">
+            <img data-preview-img data-src="images/previews/R3.jpg" alt="" width="640" height="300" decoding="async" draggable="false">
+          </picture>
+        </div>
+      </div>
+    </div>
     <p class="pw-eyebrow">🔒 Protected case study</p>
     <h2 class="pw-title" id="raisinGateTitle">Enter password to view</h2>
     <p class="pw-desc">The Raisin brand evolution case study is password-protected. Enter the password to continue.</p>
@@ -117,8 +140,7 @@
     <div class="container hero-split hero-split--stage">
       <div class="hero-split__content">
         <div class="hero__kicker">
-          <span class="tag tag--on-dark">Two-year journey</span>
-          <span class="tag tag--on-dark">Senior Product Designer · B2C</span>
+          <span class="tag tag--on-dark">Brand evolution</span>
         </div>
         <div class="hero__brand-lockup">
           <img class="hero__title-logo" src="raisin-assets/assets/img/branding/raisin-logo-white.svg" alt="Raisin" width="908" height="211">
@@ -138,16 +160,16 @@
   <div class="container">
     <div class="hero-stat-strip">
       <div>
-        <div class="hero-stat-strip__value mono-stat"><span data-count="72">0</span>–87%</div>
-        <div class="hero-stat-strip__label">Agree they better understand &amp; manage their wealth — Brand Evolution survey, ~1,900 respondents</div>
+        <div class="hero-stat-strip__value mono-stat"><span data-count="12">0</span></div>
+        <div class="hero-stat-strip__label">~Respondents across 12 markets</div>
       </div>
       <div>
-        <div class="hero-stat-strip__value mono-stat"><span data-count="82.9">0</span>–97.7%</div>
-        <div class="hero-stat-strip__label">HNW customer loyalty held through the web dashboard migration</div>
+        <div class="hero-stat-strip__value mono-stat"><span data-count="97.7" data-suffix="%">0</span></div>
+        <div class="hero-stat-strip__label">Customer loyalty held through the web dashboard migration</div>
       </div>
       <div>
-        <div class="hero-stat-strip__value mono-stat"><span data-count="92.9" data-suffix="%">0</span></div>
-        <div class="hero-stat-strip__label">Mobile dashboard task-success rate — winning IA, Maze-validated</div>
+        <div class="hero-stat-strip__value mono-stat"><span data-count="80" data-suffix="%">0</span></div>
+        <div class="hero-stat-strip__label">Dashboard task-success rate — winning IA for web and mobile</div>
       </div>
       <div>
         <div class="hero-stat-strip__value mono-stat"><span data-count="30" data-suffix="%">0</span> faster</div>
@@ -165,8 +187,8 @@
     <h2 class="why-hero__statement">Raisin was rebranding and rebuilding its dashboard at the same time — without an operating model to hold it together.</h2>
     <p class="why-hero__body">The ambition was real: a new identity, a new product experience, growth across markets. But the work behind the scenes wasn't built to move as one system. Each gap was survivable alone. Together, they were a ceiling.</p>
 
-    <div class="why-proofs reveal-stagger">
-      <article class="why-proof why-proof--zoom">
+    <div class="why-proofs">
+      <article class="why-proof why-proof--zoom reveal">
         <div class="why-proof__content">
           <p class="why-proof__num">01</p>
           <h4 class="why-proof__title">A fragmented product experience</h4>
@@ -178,11 +200,11 @@
           <div class="why-proof__frame" style="--proof-ratio: 890 / 2159"><img src="raisin-assets/assets/img/proof/email.webp" alt="Transactional email — another surface, another visual language" loading="lazy"></div>
         </div>
       </article>
-      <article class="why-proof why-proof--zoom why-proof--zoom-full">
+      <article class="why-proof why-proof--zoom why-proof--zoom-full reveal">
         <div class="why-proof__content">
           <p class="why-proof__num">02</p>
           <h4 class="why-proof__title">A brand handed over, not built out</h4>
-          <p class="why-proof__text">Brand agency Koto delivered a static identity. After handoff, Raisin's design team had to scale it into registration, onboarding, email, and campaigns.</p>
+          <p class="why-proof__text">Brand agency Koto delivered a static identity. After handoff, Raisin's design team had to apply the new visual identity and evolve the entire product experience into a new cohesive brand.</p>
         </div>
         <div class="why-proof__media why-proof__media--trio">
           <div class="why-proof__frame" style="--proof-ratio: 1920 / 1080"><img src="raisin-assets/assets/img/branding/koto-41.webp" alt="Koto brand guidelines — static identity handoff" loading="lazy"></div>
@@ -190,11 +212,11 @@
           <div class="why-proof__frame" style="--proof-ratio: 1920 / 1080"><img src="raisin-assets/assets/img/branding/koto-54.webp" alt="Koto brand guidelines — product application gap" loading="lazy"></div>
         </div>
       </article>
-      <article class="why-proof why-proof--zoom">
+      <article class="why-proof why-proof--zoom reveal">
         <div class="why-proof__content">
           <p class="why-proof__num">03</p>
           <h4 class="why-proof__title">A design practice without shared conventions</h4>
-          <p class="why-proof__text">Every designer worked to their own Figma habits. User studies were rare — research wasn't how the team operated. Design critiques weren't happening. Every handoff paid a tax for it.</p>
+          <p class="why-proof__text">User studies were rare, static designs were default to showcase and design critiques weren't happening. Every handoff paid a tax for it.</p>
         </div>
         <div class="why-proof__media why-proof__media--trio">
           <div class="why-proof__frame" style="--proof-ratio: 1049 / 1044"><img src="raisin-assets/assets/img/proof/sketch-to-figma.webp" alt="Sketch to Figma — tools in transition, no shared foundation yet" loading="lazy"></div>
@@ -507,7 +529,10 @@
             </div>
             <div class="wow-beat__scrim" aria-hidden="true"></div>
             <div class="wow-beat__content">
-              <p class="beat__eyebrow">Ways of Working on Figma</p>
+              <p class="enablement-label beat__eyebrow">
+                <svg class="enablement-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                Enablement
+              </p>
               <h3 class="beat__title">Upgraded to Figma. File organisation hadn't caught up.</h3>
               <p class="beat__text">When the design team moved from Sketch to Figma, the tooling changed but shared files didn't — covers, page setup, and frames were still inconsistent. A few designers had already started working with a similar structure. I hosted a retro so we could name what wasn't working, then turned the answers into one duplicable file. It's since become how the team starts every project.</p>
               <p class="beat__stat">Team standard · confirmed in Q4 2024 retro</p>
@@ -805,18 +830,13 @@
             </div>
             <div class="wow-beat__scrim" aria-hidden="true"></div>
             <div class="wow-beat__content">
-              <p class="beat__eyebrow">Prototyping · craft</p>
+              <p class="enablement-label beat__eyebrow">
+                <svg class="enablement-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                Enablement
+              </p>
               <h3 class="beat__title">A shared bar for prototyping — then AI raised the ceiling.</h3>
-              <p class="beat__text">Principles of Prototyping set what “prototyped” means at each fidelity. Figma Make × AI — co-led with Product — added boilerplates, examples, and guidelines showcased across Design and Product sessions.</p>
-              <p class="beat__stat">12-slide workshop · cross-functional AI prototyping · ongoing coaching</p>
-              <aside class="enablement-callout enablement-surface enablement-callout--on-dark" aria-label="Enablement — prototyping and AI">
-                <p class="enablement-label">
-                  <svg class="enablement-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-                  Enablement
-                </p>
-                <p class="enablement-surface__title">Figma Make × AI + coaching on the gap that mattered.</p>
-                <p class="enablement-surface__text">Paired a senior designer on prototyping craft and discovery alongside the AI rollout — foundations first, then autonomy.</p>
-              </aside>
+              <p class="beat__text">Principles of Prototyping gave Design and Product a shared language for fidelity — what belongs in a wireframe, what earns a clickable flow, when to invest in realistic data. I co-led the Figma Make × AI rollout with Product: boilerplates, annotated examples, and guidelines showcased in cross-functional sessions. Alongside the tooling, I coached a senior designer on prototyping craft and discovery — foundations first, then autonomy.</p>
+              <p class="beat__stat">12-slide workshop · Figma Make × AI · ongoing 1:1 coaching</p>
             </div>
           </div>
         </article>
@@ -1320,28 +1340,28 @@
     <div class="proof-track proof-track--practice reveal">
       <div class="proof-track__head">
         <div class="proof-track__titles">
-          <p class="proof-label">What customers got</p>
-          <p class="proof-track__lede text-on-dark-muted">Migration measured across seven markets — comprehension, design NPS, HNW loyalty, and trust through the transition.</p>
+          <p class="proof-label">Practice</p>
+          <p class="proof-track__lede text-on-dark-muted">Direct discovery — research-led product decisions, shipped screens, measured outcomes.</p>
         </div>
         <span class="proof-track__badge proof-track__badge--practice">Practice</span>
       </div>
       <div class="metric-banner metric-banner--4 reveal-stagger">
         <div class="metric-banner__item">
-          <div class="metric-banner__value mono-stat"><span data-count="7">0</span> markets</div>
-          <div class="metric-banner__label">Measured in the legacy-brand → Raisin dashboard migration (DE, NL, UK, US, ES, PL, IE)</div>
+          <div class="metric-banner__value mono-stat"><span data-count="12">0</span></div>
+          <div class="metric-banner__label">~Respondents across 12 markets</div>
         </div>
         <div class="metric-banner__item">
-          <div class="metric-banner__value mono-stat"><span data-count="72">0</span>–87%</div>
-          <div class="metric-banner__label">Of ~1,900 surveyed customers agree they can now better understand and manage their wealth</div>
-          <div class="metric-banner__note">Brand Evolution survey, DE / NL / ES / PL</div>
+          <div class="metric-banner__value mono-stat"><span data-count="97.7" data-suffix="%">0</span></div>
+          <div class="metric-banner__label">Customer loyalty held through the web dashboard migration</div>
+        </div>
+        <div class="metric-banner__item">
+          <div class="metric-banner__value mono-stat"><span data-count="80" data-suffix="%">0</span></div>
+          <div class="metric-banner__label">Dashboard task-success rate — winning IA for web and mobile</div>
         </div>
         <div class="metric-banner__item">
           <div class="metric-banner__value mono-stat">+23 → +53</div>
-          <div class="metric-banner__label">Dashboard / design NPS shift across those same four markets</div>
-        </div>
-        <div class="metric-banner__item">
-          <div class="metric-banner__value mono-stat"><span data-count="82.9">0</span>–97.7%</div>
-          <div class="metric-banner__label">HNW customer loyalty held through the dashboard migration</div>
+          <div class="metric-banner__label">Dashboard / design NPS shift across DE, NL, ES, and PL</div>
+          <div class="metric-banner__note">Brand Evolution survey · ~1,900 respondents</div>
         </div>
       </div>
     </div>
@@ -1349,8 +1369,8 @@
     <div class="proof-track proof-track--enablement reveal">
       <div class="proof-track__head">
         <div class="proof-track__titles">
-          <p class="proof-label">What the team gained</p>
-          <p class="proof-track__lede text-on-dark-muted">Rituals, tooling, and playbooks still in daily use — not workshop output.</p>
+          <p class="proof-label">Enablement</p>
+          <p class="proof-track__lede text-on-dark-muted">What the team gained — rituals, research infrastructure, documentation, tooling, coaching.</p>
         </div>
         <span class="proof-track__badge proof-track__badge--enablement enablement-label">
           <svg class="enablement-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
@@ -1360,7 +1380,7 @@
       <div class="metric-banner reveal-stagger">
         <div class="metric-banner__item">
           <div class="metric-banner__value mono-stat"><span data-count="30" data-suffix="%">0</span> faster</div>
-          <div class="metric-banner__label">~30% faster closure on complex design tickets, across AI-adopted workflows</div>
+          <div class="metric-banner__label">Complex design tickets close faster — AI-accelerated workflows</div>
         </div>
         <div class="metric-banner__item">
           <div class="metric-banner__value mono-stat"><span data-count="4">0</span> tools</div>
@@ -1382,7 +1402,7 @@
   </div>
 </section>
 
-<div class="marquee quote-marquee marquee--reverse" aria-hidden="true">
+<div class="marquee quote-marquee" aria-hidden="true">
   <div class="marquee__track">
     <span class="marquee__item"><span class="who">VP of Design —</span>"Clear spikes of excellence in innovation, peer leadership, and technological adaptability — a pioneer in integrating AI into our design workflows."</span>
     <span class="marquee__item"><span class="who">Head of Product —</span>"Pragmatic yet aspirational — his domain depth across app, web, and markets helps us deliver faster and at higher quality."</span>
@@ -1411,6 +1431,10 @@
 
 <footer class="shell-footer" id="contact">
   <div class="shell-inner">
+    <div class="shell-prevnext">
+      <a href="index.html" class="shell-card"><p class="k">← Home</p><p class="t">Portfolio</p></a>
+      <a href="olx.html" class="shell-card next"><p class="k">Next →</p><p class="t">OLX — Ad Package</p></a>
+    </div>
     <div class="shell-footer-lead">
       <div>
         <p class="shell-footer-title">Let's build something.</p>
@@ -1437,6 +1461,7 @@
 
 <script src="raisin-assets/assets/js/main.js"></script>
 <script src="raisin-assets/assets/js/summary2.js"></script>
+<script src="js/portfolio-gate-previews.js"></script>
 <script>
   (function(){
     var PASSWORD = "portfolio26";

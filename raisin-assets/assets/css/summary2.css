@@ -633,12 +633,12 @@ body.summary-v2 .ops-card--spread {
   font-family: var(--font-display);
   font-size: clamp(1.75rem, 4vw, 3rem);
   line-height: 1.15;
-  max-width: 34ch;
+  max-width: none;
 }
 .why-hero__body {
   position: relative; z-index: 1;
   margin-top: var(--sp-lg);
-  max-width: 52ch;
+  max-width: none;
   color: var(--on-dark-muted);
   font-size: var(--fs-base);
 }
@@ -1681,11 +1681,17 @@ body.summary-v2.has-shell [data-period] {
 }
 .beat--wow-figma .wow-beat__scrim {
   background:
-    linear-gradient(to top, rgba(11, 14, 20, 0.97) 0%, rgba(11, 14, 20, 0.82) 42%, rgba(11, 14, 20, 0.45) 100%),
-    linear-gradient(120deg, rgba(11, 14, 20, 0.92) 0%, rgba(11, 14, 20, 0.62) 48%, rgba(11, 14, 20, 0.88) 100%);
+    linear-gradient(to top, rgba(11, 14, 20, 0.73) 0%, rgba(11, 14, 20, 0.62) 42%, rgba(11, 14, 20, 0.34) 100%),
+    linear-gradient(120deg, rgba(11, 14, 20, 0.69) 0%, rgba(11, 14, 20, 0.47) 48%, rgba(11, 14, 20, 0.66) 100%);
 }
 .beat--wow-figma .beat__eyebrow {
   color: #b8d9ff;
+}
+.beat--wow-figma .enablement-label {
+  color: var(--accent-dim);
+}
+.beat--wow-figma .enablement-icon {
+  color: var(--accent-dim);
 }
 .beat--wow-figma .beat__title {
   color: var(--on-dark);
@@ -1702,6 +1708,22 @@ body.summary-v2.has-shell [data-period] {
 }
 .beat--wow-figma .rejected strong {
   color: #ff9a8a;
+}
+.beat--wow.beat--craft .wow-beat__content {
+  max-width: none;
+  margin-inline: 0;
+}
+.beat--wow.beat--craft .enablement-label {
+  color: var(--accent-dim);
+}
+.beat--wow.beat--craft .enablement-icon {
+  color: var(--accent-dim);
+}
+.beat--wow.beat--craft .beat__title {
+  max-width: none;
+}
+.beat--wow.beat--craft .beat__text {
+  max-width: none;
 }
 .beat--wow .beat__stat {
   color: var(--on-dark-muted);

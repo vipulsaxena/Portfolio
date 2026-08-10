@@ -1,0 +1,63 @@
+/* Password gate preview strip — shared by index modals and case-study page gates */
+.pw-card.pw-card--preview {
+  max-width: min(920px, 94vw);
+  padding: 48px 56px 56px;
+}
+
+.pw-card--preview .pw-preview {
+  position: relative;
+  margin: 0 -56px 36px 0;
+  width: calc(100% + 56px);
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, #000 0%, #000 72%, rgba(0, 0, 0, 0.5) 88%, transparent 100%);
+  mask-image: linear-gradient(to right, #000 0%, #000 72%, rgba(0, 0, 0, 0.5) 88%, transparent 100%);
+}
+
+.pw-preview__track {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.pw-preview__slide {
+  flex: 0 0 calc((100% - 20px) / 2.75);
+  width: calc((100% - 20px) / 2.75);
+  height: auto;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid #e7e7e7;
+  background: #fff;
+  box-shadow: 0 8px 22px -10px rgba(0, 0, 0, 0.16);
+}
+
+.pw-preview__slide:nth-child(1) { opacity: 1; }
+.pw-preview__slide:nth-child(2) { opacity: 0.82; }
+.pw-preview__slide:nth-child(3) { opacity: 0.58; }
+
+.pw-preview__slide picture {
+  display: block;
+  width: 100%;
+  background: #f7f7f7;
+}
+
+.pw-preview__slide img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+  background: #f7f7f7;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+  user-drag: none;
+}
+
+.pw-preview__slide img.is-loaded {
+  opacity: 1;
+}

@@ -17,6 +17,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap">
     <link rel="stylesheet" href="css/shell.css">
+    <link rel="stylesheet" href="css/portfolio-gate-previews.css">
 
     <!-- Tailwind (Play CDN) + theme config (identical to template-2.html) -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -291,7 +292,29 @@
 
 <!-- ===================== Password gate (secure entry) ===================== -->
 <div id="n26Gate" role="dialog" aria-modal="true" aria-labelledby="n26GateTitle">
-  <div class="pw-card" role="document">
+  <div class="pw-card pw-card--preview" role="document">
+    <div class="pw-preview" aria-hidden="true">
+      <div class="pw-preview__track">
+        <div class="pw-preview__slide">
+          <picture>
+            <source type="image/webp" data-srcset="images/previews/N2601.webp">
+            <img data-preview-img data-src="images/previews/N2601.jpg" alt="" width="640" height="360" decoding="async" draggable="false">
+          </picture>
+        </div>
+        <div class="pw-preview__slide">
+          <picture>
+            <source type="image/webp" data-srcset="images/previews/N2602.webp">
+            <img data-preview-img data-src="images/previews/N2602.jpg" alt="" width="640" height="360" decoding="async" draggable="false">
+          </picture>
+        </div>
+        <div class="pw-preview__slide">
+          <picture>
+            <source type="image/webp" data-srcset="images/previews/N2603.webp">
+            <img data-preview-img data-src="images/previews/N2603.jpg" alt="" width="640" height="360" decoding="async" draggable="false">
+          </picture>
+        </div>
+      </div>
+    </div>
     <p class="pw-eyebrow">🔒 Protected case study</p>
     <h2 class="pw-title" id="n26GateTitle">Enter password to view</h2>
     <p class="pw-desc">This N26 Premium case study is password-protected. Enter the password to continue.</p>
@@ -838,7 +861,6 @@
         <div class="mt-10 flex flex-wrap items-center justify-center gap-4" data-anim style="--i:3">
           <a class="nav-btn !w-auto !px-5 !text-white !bg-white/10 !border-white/20 hover:!bg-white/20 hover:!border-white/40" href="olx.html">← OLX — Ad Package</a>
           <a class="nav-btn !w-auto !px-5 !text-white !bg-white/10 !border-white/20 hover:!bg-white/20 hover:!border-white/40" href="index.html">Back to home</a>
-          <a class="nav-btn !w-auto !px-5 !text-white !bg-white/10 !border-white/20 hover:!bg-white/20 hover:!border-white/40" href="raisin.html">Raisin — Brand evolution →</a>
           <a class="nav-btn !w-auto !px-5 !text-white !bg-white/10 !border-white/20 hover:!bg-white/20 hover:!border-white/40" href="gomart.html">GoMart →</a>
         </div>
         <p class="mt-14 text-white/40 text-sm" data-anim style="--i:4">© 2024 · Vipul Saxena · N26 · Product Design Portfolio</p>
@@ -869,6 +891,7 @@
 <div id="lightbox" aria-hidden="true"><img alt="Expanded view"></div>
 
 <!-- ===================== Password gate validation ===================== -->
+<script src="js/portfolio-gate-previews.js"></script>
 <script>
   (function(){
     var PASSWORD = "portfolio26";
