@@ -1,11 +1,8 @@
-import * as PIXI from "https://cdn.skypack.dev/pixi.js@5.x";
-import { KawaseBlurFilter } from "https://cdn.skypack.dev/@pixi/filter-kawase-blur@3.2.0";
+import * as PIXI from "https://cdn.jsdelivr.net/npm/pixi.js@5.3.12/+esm";
+import { KawaseBlurFilter } from "https://cdn.jsdelivr.net/npm/@pixi/filter-kawase-blur@3.2.0/+esm";
 
-// NOTE: simplex-noise / hsl-to-hex / debounce were previously imported from
-// skypack/esm.sh. The simplex-noise sub-resource intermittently fails CORS,
-// which made its `import` fail and aborted this whole module (no orbs, dead
-// "AI Colors" button). These three tiny helpers are inlined below so the
-// background works reliably with no CDN/CORS/version risk.
+// Pixi + Kawase blur load from jsDelivr (+esm). Skypack was intermittently
+// leaving module fetches pending, which kept the browser tab spinner running.
 
 // return a random number within a range
 function random(min, max) {

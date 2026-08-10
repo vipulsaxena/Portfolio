@@ -4,15 +4,8 @@
 <head>
     <!-- Priority tags. These must come first. -->
     <meta charset="utf-8">
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-35LE56GGGS"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-35LE56GGGS');
-      gtag('config', 'GT-5TN254F');
-    </script>
+    <!-- Google tag (gtag.js) — skipped on localhost; see js/gtag-init.js -->
+    <script src="js/gtag-init.js"></script>
     <meta http-equiv="x-ua-compatible" content="ie=edge; chrome=1">
     <!-- Render Chrome if available or using latest version of Internet Explorer (Recommended). -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -111,7 +104,7 @@
 </head>
 
 <body>
-<script type="module" src="https://unpkg.com/@splinetool/viewer@1.0.76/build/spline-viewer.js"></script>
+<script defer src="js/defer-spline.js"></script>
 <!-- Canvas -->
 <canvas class="orb-canvas"></canvas>
     <!-- SECTION: Sticky Navigation (shared shell — see css/shell.css) -->
@@ -379,7 +372,7 @@
                 <span class="date">Mentoring reviews</span>
                 <hr>
                 <div class="mentoring-reviews-embed">
-                    <iframe src="https://adplist.org/widgets/reviews?src=vipul-saxena" title="All Reviews" width="100%" height="100%" loading="lazy"></iframe>
+                    <iframe data-lazy-src="https://adplist.org/widgets/reviews?src=vipul-saxena" title="All Reviews" width="100%" height="100%" loading="lazy"></iframe>
                 </div>
                 <hr>
             </div>
@@ -475,7 +468,7 @@
         </div>
     <div class="gfq-wrap">
         <div class="gfq-panel">
-            <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScKV7IVg-JeodOmY5m7eDIK_qctNltq-QddtYnLrRneSqCIwA/viewform?embedded=true" width="100%" height="650" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+            <iframe data-lazy-src="https://docs.google.com/forms/d/e/1FAIpQLScKV7IVg-JeodOmY5m7eDIK_qctNltq-QddtYnLrRneSqCIwA/viewform?embedded=true" width="100%" height="650" frameborder="0" marginheight="0" marginwidth="0" title="Contact form">Loading…</iframe>
         </div>
         <button type="button" class="gfq-badge" aria-label="Open contact form">
             <img src="images/mail-1.svg" alt=""/>
@@ -510,6 +503,8 @@
     <!-- Shared shell interactions (mobile menu, etc.) -->
     <script defer src="template.js"></script>
     <script defer src="js/about-avatar.js"></script>
+
+    <script defer src="js/lazy-third-party.js"></script>
 
     <script>
         //Font observer loader

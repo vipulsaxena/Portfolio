@@ -202,10 +202,24 @@
 
       .slide-inner.top{ justify-content:flex-start; padding-top:clamp(1rem,3vh,2rem); }
       .slide-scroll > .slide-inner{ justify-content:flex-start; padding-bottom:calc(5rem + env(safe-area-inset-bottom, 0px)); }
+      /* Vertically center slide content (equal space above/below) */
+      .slide.is-vcenter > .slide-inner{
+        justify-content:center;
+        padding-top:clamp(1.5rem,4vw,4rem);
+        padding-bottom:calc(5rem + env(safe-area-inset-bottom, 0px));
+      }
+      /* Workshop overlays — pin card to bottom with equal spacing above control bar */
+      .slide.is-vbottom > .slide-inner{
+        justify-content:flex-end;
+        padding-top:clamp(1.5rem,4vw,4rem);
+        padding-bottom:calc(5rem + env(safe-area-inset-bottom, 0px));
+      }
 
       /* Mobile + tablet — desktop (1024px+) unchanged */
       @media (max-width: 1023px) {
         .slide > .slide-inner { justify-content: flex-start; }
+        .slide.is-vcenter > .slide-inner { justify-content: center; }
+        .slide.is-vbottom > .slide-inner { justify-content: flex-end; }
         .slide-scroll > .slide-inner,
         .slide-inner.top { padding-bottom: calc(5rem + env(safe-area-inset-bottom, 0px)); }
         .slide-bleed { overflow-x: hidden; overflow-y: auto; }
@@ -379,7 +393,7 @@
     </section>
 
     <!-- ===== SLIDE 02 · What I did at N26? (Highlights-2) ===== -->
-    <section class="slide slide-scroll" data-chapter="case-study" data-title="What I did at N26" data-home-slide>
+    <section class="slide slide-scroll is-vcenter" data-chapter="case-study" data-title="What I did at N26" data-home-slide>
       <div class="slide-inner">
         <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center deck-split-grid">
           <div>
@@ -409,7 +423,7 @@
     </section>
 
     <!-- ===== SLIDE 04 · Case study cover · Multi-activity Feed (CS-1) ===== -->
-    <section class="slide slide-scroll bg-[#F1E0CA] text-accink" data-chapter="case-study" data-title="Case study · Multi-activity Feed">
+    <section class="slide slide-scroll is-vcenter bg-[#F1E0CA] text-accink" data-chapter="case-study" data-title="Case study · Multi-activity Feed">
       <div class="slide-inner">
         <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-end deck-split-grid">
           <div>
@@ -439,7 +453,7 @@
     </section>
 
     <!-- ===== SLIDE 07 · The Problem (CS-2) ===== -->
-    <section class="slide slide-scroll" data-chapter="case-study" data-title="The Problem">
+    <section class="slide slide-scroll is-vcenter" data-chapter="case-study" data-title="The Problem">
       <div class="slide-inner">
         <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center deck-split-grid">
           <div>
@@ -562,11 +576,11 @@
     </section>
 
     <!-- ===== SLIDE 07 · Cross-functional workshop (CS-6) ===== -->
-    <section class="slide slide-workshop slide-bleed relative" data-chapter="case-study" data-title="Cross-functional workshop">
+    <section class="slide slide-workshop slide-bleed is-vbottom relative" data-chapter="case-study" data-title="Cross-functional workshop">
       <!-- Full-bleed workshop board as background (click to expand) -->
       <img src="assets/n26/slide11.png" alt="Cross-functional workshop board — use cases, considerations, competitor benchmark, brainstorming and next steps" data-lightbox class="absolute inset-0 w-full h-full object-cover cursor-zoom-in" loading="lazy">
       <!-- Text content in a solid container -->
-      <div class="slide-inner relative z-10" style="justify-content:flex-start;padding-bottom:calc(5rem + env(safe-area-inset-bottom, 0px))">
+      <div class="slide-inner relative z-10">
         <div class="bg-[#C29E62] text-white rounded-2xl p-8 md:p-12 w-full max-w-full shadow-2xl shadow-black/25" data-anim style="--i:0">
           <p class="text-white/75 text-xs font-bold uppercase tracking-[0.2em] mb-4">Ideation</p>
           <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight leading-[1.12] max-w-[24ch]">
@@ -672,11 +686,11 @@
     </section>
 
     <!-- ===== SLIDE 14 · Design reviews (CS-9) ===== -->
-    <section class="slide slide-workshop slide-bleed relative" data-chapter="case-study" data-title="Design reviews">
+    <section class="slide slide-workshop slide-bleed is-vbottom relative" data-chapter="case-study" data-title="Design reviews">
       <!-- Full-bleed design-review board as background (click to expand) -->
       <img src="assets/n26/slide14.png" alt="Design-review board — Visual Design Exploration of tab designs, feed designs and UX writing" data-lightbox class="absolute inset-0 w-full h-full object-cover cursor-zoom-in" loading="lazy">
       <!-- Text content in a solid container -->
-      <div class="slide-inner relative z-10" style="justify-content:flex-start;padding-bottom:calc(5rem + env(safe-area-inset-bottom, 0px))">
+      <div class="slide-inner relative z-10">
         <div class="bg-[#C29E62] text-white rounded-2xl p-8 md:p-12 w-full shadow-2xl shadow-black/25" data-anim style="--i:0">
           <p class="text-white/75 text-xs font-bold uppercase tracking-[0.2em] mb-4">Iteration</p>
           <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight leading-[1.12] max-w-[24ch]">
@@ -690,7 +704,7 @@
     </section>
 
     <!-- ===== SLIDE 15 · Launch to learn + Next Steps (merged CS-10 + CS-11) ===== -->
-    <section class="slide slide-scroll" data-chapter="case-study" data-title="Launch to learn 🚀">
+    <section class="slide slide-scroll is-vcenter" data-chapter="case-study" data-title="Launch to learn 🚀">
       <div class="slide-inner">
         <div class="grid lg:grid-cols-2 gap-8 lg:gap-14 items-center deck-split-grid">
 
@@ -754,8 +768,8 @@
     </section>
 
     <!-- ===== SLIDE 16 · Case-study wrap-up ===== -->
-    <section class="slide slide-scroll bg-[#F1E0CA] text-accink" data-chapter="case-study" data-title="Wrap-up">
-      <div class="slide-inner text-center items-center" style="padding-bottom:calc(5rem + env(safe-area-inset-bottom, 0px))">
+    <section class="slide slide-scroll is-vcenter bg-[#F1E0CA] text-accink" data-chapter="case-study" data-title="Wrap-up">
+      <div class="slide-inner text-center items-center">
         <p class="text-accink/60 text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Case study · wrap-up</p>
         <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4 max-w-[22ch] mx-auto" data-anim style="--i:1">
           Researched, shipped, and measured
@@ -774,7 +788,7 @@
     <!-- ===================== CHAPTER · HIGHLIGHTS (after the case study) ===================== -->
 
     <!-- HIGHLIGHT · MoneyBeam Reactions -->
-    <section class="slide slide-scroll bg-elev" data-chapter="highlights" data-title="Highlight · MoneyBeam Reactions">
+    <section class="slide slide-scroll is-vcenter bg-elev" data-chapter="highlights" data-title="Highlight · MoneyBeam Reactions">
       <div class="slide-inner">
         <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center deck-split-grid">
           <div>
@@ -797,7 +811,7 @@
     </section>
 
     <!-- HIGHLIGHT · Feed ↔ Crypto -->
-    <section class="slide slide-scroll" data-chapter="highlights" data-title="Highlight · Feed ↔ Crypto">
+    <section class="slide slide-scroll is-vcenter" data-chapter="highlights" data-title="Highlight · Feed ↔ Crypto">
       <div class="slide-inner">
         <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center deck-split-grid">
           <div>
@@ -849,7 +863,7 @@
     </section>
 
     <!-- ===== SLIDE 17 · Closing / CTA ===== -->
-    <section class="slide slide-scroll bg-ink text-white" data-chapter="highlights" data-title="Thanks">
+    <section class="slide slide-scroll is-vcenter bg-ink text-white" data-chapter="highlights" data-title="Thanks">
       <div class="slide-inner items-center text-center">
         <p class="text-white/60 text-xs font-bold uppercase tracking-[0.2em] mb-8" data-anim style="--i:0">Fin</p>
         <h2 class="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.12] max-w-[18ch]" data-anim style="--i:1">

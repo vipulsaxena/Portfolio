@@ -589,11 +589,15 @@ body.summary-v2 .ops-card--spread {
   inset: 0;
 }
 .brand-finale__media video,
+.brand-finale__media picture,
 .brand-finale__media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
+}
+.brand-finale__media picture {
+  display: block;
 }
 .brand-finale__scrim {
   position: absolute;
@@ -2846,6 +2850,12 @@ body.summary-v2.has-shell [data-period] {
     border-color var(--why-proof-hover-dur) var(--why-proof-hover-ease);
   will-change: transform;
 }
+.why-proof--zoom .why-proof__frame:nth-child(3) img {
+  left: auto;
+  right: 0;
+  object-position: right bottom;
+  transform-origin: right bottom;
+}
 @media (hover: hover) and (pointer: fine) {
   .why-proof--zoom .why-proof__frame {
     cursor: zoom-in;
@@ -2876,6 +2886,11 @@ body.summary-v2.has-shell [data-period] {
     );
     max-height: var(--proof-hover-height);
     background: rgba(11, 14, 20, 0.92);
+  }
+  .why-proof--zoom-full .why-proof__frame:nth-child(3):hover img {
+    object-position: right bottom;
+    left: auto;
+    right: 0;
   }
 }
 @media (hover: none), (pointer: coarse) {
@@ -3419,6 +3434,51 @@ body.summary-v2.has-shell [data-period] {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
 }
+
+/* Mobile — bg image alone is too short; copy + filmstrip were clipped */
+@media (max-width: 900px) {
+  .cura-beat {
+    --cura-slide-h: clamp(8.5rem, 26vw, 12.5rem);
+    min-height: min(88svh, 40rem);
+    display: flex;
+    flex-direction: column;
+  }
+  .cura-beat__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+  .cura-beat__bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+  .cura-beat__scrim {
+    z-index: 1;
+  }
+  .cura-beat__stage {
+    position: relative;
+    inset: auto;
+    z-index: 2;
+    flex: 1;
+    min-height: min(88svh, 40rem);
+    padding-top: clamp(1.25rem, 6vw, 2rem);
+    padding-bottom: clamp(0.75rem, 3vw, 1.25rem);
+    gap: var(--sp-md);
+    justify-content: space-between;
+  }
+  .cura-filmstrip {
+    flex-shrink: 0;
+    margin-top: auto;
+    min-height: var(--cura-slide-h);
+  }
+  .cura-filmstrip.reveal-stagger > .cura-filmstrip__track {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .cura-filmstrip__track--rtl {
     animation: none;

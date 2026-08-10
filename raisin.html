@@ -2,14 +2,7 @@
 <html lang="en" class="summary-v2">
 <head>
     <meta charset="utf-8">
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-35LE56GGGS"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-35LE56GGGS');
-      gtag('config', 'GT-5TN254F');
-    </script>
+    <script src="js/gtag-init.js"></script>
     <meta http-equiv="x-ua-compatible" content="ie=edge; chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Vipul Saxena — Evolving Raisin's Brand &amp; Design Practice</title>
@@ -1418,7 +1411,10 @@
 <!-- ============================== BRAND FINALE ============================== -->
 <section class="brand-finale" aria-label="Raisin brand in context">
   <div class="brand-finale__media" aria-hidden="true">
-    <img src="raisin-assets/assets/img/hero-bento/smartphone-terminal.webp" alt="" loading="lazy">
+    <picture>
+      <source type="image/webp" srcset="raisin-assets/assets/img/hero-bento/hero-06.webp">
+      <img src="raisin-assets/assets/img/hero-bento/hero-06.jpg" alt="" width="1200" height="800" loading="lazy" decoding="async">
+    </picture>
   </div>
   <div class="brand-finale__scrim" aria-hidden="true"></div>
   <div class="container brand-finale__content reveal">
@@ -1453,7 +1449,7 @@
   <button class="lightbox__prev" type="button" aria-label="Previous slide" hidden>←</button>
   <button class="lightbox__next" type="button" aria-label="Next slide" hidden>→</button>
   <div class="lightbox__stage">
-    <img class="lightbox__img" src="" alt="">
+    <img class="lightbox__img" alt="">
     <video class="lightbox__video" playsinline controls loop muted hidden></video>
   </div>
   <p class="lightbox__counter" aria-live="polite" hidden></p>

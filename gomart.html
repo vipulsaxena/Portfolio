@@ -220,6 +220,15 @@
       /* Slide layout helpers (olx.html patterns) */
       .slide-inner.top{ justify-content:flex-start; padding-top:clamp(1rem,3vh,2rem); }
       .slide-scroll > .slide-inner{ justify-content:flex-start; padding-bottom:calc(5rem + env(safe-area-inset-bottom,0px)); }
+      .slide-scroll.slide-center > .slide-inner,
+      .slide-overlay > .slide-inner{
+        justify-content:center;
+        padding-bottom:calc(5rem + env(safe-area-inset-bottom,0px));
+      }
+      .slide-overlay-bottom > .slide-inner{
+        justify-content:flex-end;
+        padding-bottom:calc(7.5rem + env(safe-area-inset-bottom,0px));
+      }
       .slide-highlight > .slide-inner{ justify-content:center; padding-bottom:calc(5rem + env(safe-area-inset-bottom,0px)); }
 
       /* Segmented toggle */
@@ -377,6 +386,7 @@
       /* Mobile + tablet — desktop (1024px+) unchanged */
       @media (max-width: 1023px) {
         .slide > .slide-inner { justify-content: flex-start; }
+        .slide-overlay-bottom > .slide-inner { justify-content: flex-end; }
         .slide-scroll > .slide-inner,
         .slide-inner.top { padding-bottom: calc(5rem + env(safe-area-inset-bottom, 0px)); }
         .slide-bleed { overflow-x: hidden; overflow-y: auto; }
@@ -384,7 +394,10 @@
         .deck-split-inner { height: auto !important; }
         .gomart-cover-hero {
           min-height: 300px; display: flex; flex-direction: column; align-items: center;
-          justify-content: flex-end; gap: .75rem; padding-bottom: .5rem;
+          justify-content: center; gap: .75rem; padding-bottom: .5rem;
+        }
+        .gomart-cover-stage {
+          position: relative; width: 100%; max-width: 310px; margin-inline: auto;
         }
         .gomart-cover-hero .gomart-cover-char,
         .gomart-cover-hero .gomart-cover-phone {
@@ -544,9 +557,9 @@
     </section>
 
     <!-- ===== CS COVER · Routine Grocery Discovery ===== -->
-    <section class="slide slide-scroll slide-bg-gomart text-accink" data-chapter="case-study" data-title="Routine Grocery Discovery">
+    <section class="slide slide-scroll slide-center slide-bg-gomart text-accink" data-chapter="case-study" data-title="Routine Grocery Discovery">
       <div class="slide-inner">
-        <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-end deck-split-grid">
+        <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center deck-split-grid">
           <div>
             <p class="text-accink/60 text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Case study · GoMart</p>
             <h2 class="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.08] max-w-[16ch]" data-anim style="--i:1">Routine Grocery Discovery</h2>
@@ -558,13 +571,15 @@
               <span class="px-3 py-1.5 rounded-full bg-ink text-white text-sm font-semibold">H1 2021 · 6 months · On Production</span>
             </div>
           </div>
-          <div class="relative mx-auto w-full max-w-[620px] min-h-[280px] sm:min-h-[340px] md:min-h-[400px] gomart-cover-hero" data-anim style="--i:3">
+          <div class="relative mx-auto w-full max-w-[620px] min-h-[280px] sm:min-h-[340px] md:min-h-[400px] gomart-cover-hero flex items-center justify-center" data-anim style="--i:3">
+            <div class="gomart-cover-stage relative w-full max-w-[310px] min-h-[240px] sm:min-h-[300px] md:min-h-[360px]">
             <img src="assets/gomart/char.png" alt="GoMart character illustration" data-lightbox class="gomart-cover-char absolute bottom-0 left-1/2 z-0 h-auto w-[min(72vw,200px)] sm:w-[min(68vw,260px)] md:w-full max-w-[310px] -translate-x-[42%] sm:-translate-x-[40%] md:translate-x-0 md:left-[50%] object-contain object-bottom cursor-zoom-in" loading="lazy">
             <div class="phone-mock gomart-cover-phone absolute z-20 bottom-0 left-1/2 !mx-0 pointer-events-none !max-w-[min(58vw,220px)] sm:!max-w-[255px] md:!max-w-[285px] -translate-x-1/2 md:translate-x-0 md:left-[20%]">
               <video loop data-autoplay muted playsinline preload="metadata" tabindex="-1" aria-hidden="true" class="pointer-events-none">
                 <source src="assets/gomart/final-product.mp4" type="video/mp4">
                 <track kind="captions" src="assets/gomart/final-product-desc.vtt" srclang="en" label="English descriptions" default>
               </video>
+            </div>
             </div>
             <p class="sr-only">Decorative recording of the shipped GoMart app showing bottom navigation and browse flows.</p>
           </div>
@@ -573,7 +588,7 @@
     </section>
 
     <!-- ===== CS 04 · The Studio program ===== -->
-    <section class="slide slide-scroll slide-bleed relative" data-chapter="case-study" data-title="The Studio">
+    <section class="slide slide-scroll slide-bleed slide-overlay-bottom relative" data-chapter="case-study" data-title="The Studio">
       <img src="assets/gomart/studio-background.png" alt="Live Miro board from Studio Accelerator — team note-taking on keywords, challenges, and solutions during lightning talks" data-lightbox class="absolute inset-0 w-full h-full object-cover object-center cursor-zoom-in" loading="lazy">
       <div class="slide-inner relative z-10">
         <div class="rounded-2xl p-6 md:p-8 shadow-2xl shadow-black/20 bg-gomart" data-anim style="--i:0">
@@ -612,7 +627,7 @@
     </section>
 
     <!-- ===== CS 01 · Business bet ===== -->
-    <section class="slide slide-scroll" data-chapter="case-study" data-title="Business bet">
+    <section class="slide slide-scroll slide-center" data-chapter="case-study" data-title="Business bet">
       <div class="slide-inner">
         <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           <div>
@@ -658,7 +673,7 @@
     </section>
 
     <!-- ===== CS 03 · Brand Key ===== -->
-    <section class="slide slide-scroll slide-bleed relative" data-chapter="case-study" data-title="Who we design for">
+    <section class="slide slide-scroll slide-bleed slide-overlay relative" data-chapter="case-study" data-title="Who we design for">
       <img src="assets/gomart/brand-key.png" alt="GoMart Brand Key — Competent Consumers, effortless grocery shopping" data-lightbox class="absolute inset-0 w-full h-full object-cover object-center cursor-zoom-in" loading="lazy">
       <div class="slide-inner relative z-10">
         <div class="bg-white/95 backdrop-blur-sm rounded-2xl p-8 md:p-12 border border-line shadow-lg w-full max-w-full" data-anim style="--i:0">
@@ -882,8 +897,8 @@
     </section>
 
     <!-- ===== CS 07b · Bottom Navigation · Concept testing ===== -->
-    <section class="slide slide-scroll" data-chapter="case-study" data-title="Bottom Navigation · Concept testing">
-      <div class="slide-inner top">
+    <section class="slide slide-scroll slide-center" data-chapter="case-study" data-title="Bottom Navigation · Concept testing">
+      <div class="slide-inner">
         <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-2" data-anim style="--i:0">Solution 1 · Key · Design &amp; Validate · Concept testing · June 2021 · 6 IDIs</p>
         <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-2 max-w-[32ch]" data-anim style="--i:1">What 6 IDIs told us about <span class="hl">Release 3</span></h2>
         <p class="text-mute leading-relaxed max-w-[78ch] mb-4" data-anim style="--i:2">
@@ -1055,7 +1070,7 @@
     </section>
 
     <!-- ===== Thanks ===== -->
-    <section class="slide slide-scroll bg-ink text-white" data-chapter="highlights" data-title="Thanks">
+    <section class="slide slide-scroll slide-center bg-ink text-white" data-chapter="highlights" data-title="Thanks">
       <div class="slide-inner items-center text-center">
         <p class="text-white/60 text-xs font-bold uppercase tracking-[0.2em] mb-8" data-anim style="--i:0">Fin</p>
         <h2 class="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.12] max-w-[18ch]" data-anim style="--i:1">

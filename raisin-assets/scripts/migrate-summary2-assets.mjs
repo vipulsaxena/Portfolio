@@ -57,6 +57,12 @@ const MAPPING = {
     maxEdge: 1920,
     quality: 85,
   },
+  "assets/img/hero-bento/hero-06.jpg": {
+    out: "assets/img/hero-bento/hero-06.webp",
+    action: "process",
+    maxEdge: 2400,
+    quality: 90,
+  },
 
   // ── Branding / Koto ───────────────────────────────────────────────────────
   "Resource/Branding journey/Branding(Koto)/32.png": {
