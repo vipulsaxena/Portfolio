@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GitLab sign-in</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        margin: 0;
+        padding: 2rem;
+        text-align: center;
+        color: #1a1a1a;
+        background: #f7f5f3;
+      }
+    </style>
+  </head>
+  <body>
+    <p id="msg">Completing sign-in…</p>
+    <script>
+      (function () {
+        var params = new URLSearchParams(window.location.search);
+        var payload = {
+          type: 'annotate-gitlab-oauth',
+          code: params.get('code'),
+          state: params.get('state'),
+          error: params.get('error'),
+          error_description: params.get('error_description'),
+          returnUrl: window.location.href,
+        };
+
+        if (window.opener && !window.opener.closed) {
+          try {
+            window.opener.postMessage(payload, window.opener.origin || '*');
+          } catch (e) {
+            document.getElementById('msg').textContent =
+              'Could not notify opener. Copy this URL or close and try again.';
+            return;
+          }
+          document.getElementById('msg').textContent =
+            'Signed in. You can close this window.';
+          setTimeout(function () {
+            window.close();
+          }, 600);
+          return;
+        }
+
+        try {
+          sessionStorage.setItem('annotate_gitlab_oauth_callback', JSON.stringify(payload));
+        } catch (e) {
+          document.getElementById('msg').textContent = 'Storage blocked; sign-in cannot complete.';
+          return;
+        }
+
+        var back = sessionStorage.getItem('annotate_return_url');
+        if (back) {
+          sessionStorage.removeItem('annotate_return_url');
+          window.location.replace(back);
+        } else {
+          document.getElementById('msg').textContent =
+            'Sign-in finished. Return to the prototype tab and press “c” again.';
+        }
+      })();
+    </script>
+  </body>
+</html>

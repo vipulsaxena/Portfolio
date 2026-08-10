@@ -1,0 +1,54 @@
+/* Portfolio embed — content only; outer site frame supplies the phone bezel */
+html.portfolio-embed-root,
+body.portfolio-embed {
+  margin: 0;
+  padding: 0 !important;
+  min-height: 0 !important;
+  height: 100%;
+  width: 100%;
+  display: block !important;
+  overflow: hidden;
+  background: transparent !important;
+}
+
+body.portfolio-embed .annotate-embed-banner,
+body.portfolio-embed .annotate-auth-shell {
+  display: none !important;
+}
+
+/* The persona switcher lives outside the mockup for the standalone dev
+   canvas; the embedded iframe IS the screen (the bezel is drawn by the
+   host page), so there's no "outside" to place it — hide it here. */
+body.portfolio-embed #persona-switcher-root {
+  display: none !important;
+}
+
+body.portfolio-embed .phone-mock {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  aspect-ratio: auto;
+  transform: none;
+  filter: none;
+  margin: 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* Outer summary2 frame is the bezel — hide duplicate SVG chrome */
+body.portfolio-embed .phone-mock__frame {
+  display: none;
+}
+
+body.portfolio-embed .phone-mock__screen {
+  position: absolute;
+  inset: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+}

@@ -152,7 +152,7 @@
                             <li class="infos">
                                 <p class="title">Brand evolution at Raisin<span class="status-icon status-icon-lock"></span></p>
                                 <p class="description">Led the evolution of Raisin’s brand across dashboard, mobile app, email, and marketing surfaces — translating a global brand refresh into cohesive, scalable experiences for savers across nine markets in Europe, the UK, and the US.</p>
-                                <button type="button" class="card-cta" disabled aria-disabled="true">Work in progress</button>
+                                <button type="button" class="card-cta" id="raisin-gate-trigger" aria-haspopup="dialog" aria-controls="raisinPwModal"><span class="status-icon status-icon-lock card-cta__lock" aria-hidden="true"></span> Enter case study</button>
                             </li>
                         </ul>
                     </a>
@@ -462,8 +462,27 @@
     <!-- ===================== Raisin password gate modal ===================== -->
     <div class="pw-modal" id="raisinPwModal" role="dialog" aria-modal="true" aria-labelledby="raisinPwTitle" aria-hidden="true">
       <div class="pw-backdrop" data-pw-close></div>
-      <div class="pw-card" role="document">
+      <div class="pw-card pw-card--preview" role="document">
         <button type="button" class="pw-close" aria-label="Close" data-pw-close>&times;</button>
+        <div class="pw-preview" aria-hidden="true">
+          <div class="pw-preview__track">
+            <div class="pw-preview__slide">
+              <picture>
+                <img data-preview-img data-src="assets/raisin/R1.png" alt="" width="1580" height="739" decoding="async" draggable="false">
+              </picture>
+            </div>
+            <div class="pw-preview__slide">
+              <picture>
+                <img data-preview-img data-src="assets/raisin/R2.png" alt="" width="1580" height="739" decoding="async" draggable="false">
+              </picture>
+            </div>
+            <div class="pw-preview__slide">
+              <picture>
+                <img data-preview-img data-src="assets/raisin/R3.png" alt="" width="1580" height="739" decoding="async" draggable="false">
+              </picture>
+            </div>
+          </div>
+        </div>
         <p class="pw-eyebrow">🔒 Protected case study</p>
         <h2 class="pw-title" id="raisinPwTitle">Enter password to view</h2>
         <p class="pw-desc">The Raisin brand evolution case study is password-protected. Enter the password to continue.</p>
@@ -591,7 +610,7 @@
           });
         }
 
-        ["olx-gate-trigger", "n26-gate-trigger", "gomart-gate-trigger"].forEach(function(id){
+        ["raisin-gate-trigger", "olx-gate-trigger", "n26-gate-trigger", "gomart-gate-trigger"].forEach(function(id){
           var trigger = document.getElementById(id);
           if (!trigger) return;
           trigger.addEventListener("mouseenter", loadCaseStudyPreviews, { once: true });
@@ -619,6 +638,7 @@
         if (!trigger || !modal) return;
 
         function open(){
+          if (window.loadCaseStudyPreviews) window.loadCaseStudyPreviews();
           modal.classList.add("open");
           modal.setAttribute("aria-hidden", "false");
           error.hidden = true; input.value = "";

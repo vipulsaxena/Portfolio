@@ -1,0 +1,366 @@
+{
+  "replacements": {
+    "Resource/Branding journey/Raisin_Logo_RGB/RGB/SVG/Raisin_Logo_White_RGB.svg": "assets/img/branding/raisin-logo-white.svg",
+    "Resource/Extracts/iPhone 17 Pro mockup on a pink round table (Mockuuups Studio).jpg": "assets/img/hero-bento/iphone-17-pink-table.webp",
+    "Resource/Extracts/Free MacBook Pro mockup on round table (Mockuuups Studio).jpg": "assets/img/hero-bento/macbook-round-table.webp",
+    "Resource/Extracts/Free Rock iPhone 15 Pro Mockup (Mockuuups Studio).png": "assets/img/hero-bento/rock-iphone-15.webp",
+    "Resource/Extracts/Free Clean desk with Dell display mockup (Mockuuups Studio).jpg": "assets/img/hero-bento/dell-desk.webp",
+    "Resource/Extracts/Free mockup of man pointing on iPad (Mockuuups Studio).jpg": "assets/img/hero-bento/ipad-pointing.webp",
+    "Resource/Extracts/Free Smartphone Mockup with Credit Card Terminal (Mockuuups Studio).jpg": "assets/img/hero-bento/smartphone-terminal.webp",
+    "Resource/Branding journey/Branding(Koto)/32.png": "assets/img/branding/koto-32.webp",
+    "Resource/Branding journey/Branding(Koto)/41.png": "assets/img/branding/koto-41.webp",
+    "Resource/Branding journey/Branding(Koto)/54.png": "assets/img/branding/koto-54.webp",
+    "Resource/proof-of-old-world/dashboard-mobile-email/old dashbaord.jpg": "assets/img/proof/old-dashboard.jpg.webp",
+    "Resource/proof-of-old-world/dashboard-mobile-email/Pull to refresh.png": "assets/img/proof/pull-to-refresh.webp",
+    "Resource/proof-of-old-world/dashboard-mobile-email/email.png": "assets/img/proof/email.webp",
+    "Resource/proof-of-old-world/sketch_tofigma.png": "assets/img/proof/sketch-to-figma.webp",
+    "Resource/proof-of-old-world/scramble.png": "assets/img/proof/scramble.webp",
+    "Resource/proof-of-old-world/solo.png": "assets/img/proof/solo.webp",
+    "Resource/proof-of-old-world/dash_new.png": "assets/img/proof/dash-new.webp",
+    "Resource/proof-of-old-world/dash_old.png": "assets/img/proof/dash-old.webp",
+    "Resource/proof-of-old-world/01HNW.png": "assets/img/proof/persona-hnw.webp",
+    "Resource/proof-of-old-world/02AF.png": "assets/img/proof/persona-affluent.webp",
+    "Resource/proof-of-old-world/03AY.png": "assets/img/proof/persona-affluent-young.webp",
+    "Resource/Dashboard/Web Dashboard/Color Map light.jpg": "assets/img/dashboard-web/color-map-light.webp",
+    "Resource/Dashboard/Mobile App/Research data/mobile_research.png": "assets/img/dashboard-mobile/mobile-research.webp",
+    "Resource/Dashboard/Mobile App/Research data/compare.png": "assets/img/dashboard-mobile/compare.webp",
+    "Resource/Dashboard/Mobile App/Research data/maze-report.png": "assets/img/dashboard-mobile/maze-report.webp",
+    "Resource/Extracts/Multi-mocks/new dashboard multiple mocks.png": "assets/img/dashboard-mobile/multi-mocks.webp",
+    "Resource/Extracts/Free Isometric Samsung Galaxy S26 Mockup (Mockuuups Studio).png": "assets/img/dashboard-mobile/samsung-earnings-mockup.webp",
+    "Resource/Extracts/4 tabs/d1.png": "assets/img/dashboard-mobile/tabs/d1.webp",
+    "Resource/Extracts/4 tabs/d2.png": "assets/img/dashboard-mobile/tabs/d2.webp",
+    "Resource/Extracts/4 tabs/d3.png": "assets/img/dashboard-mobile/tabs/d3.webp",
+    "Resource/Extracts/4 tabs/d4.png": "assets/img/dashboard-mobile/tabs/d4.webp",
+    "Resource/Extracts/4 tabs/l1.png": "assets/img/dashboard-mobile/tabs/l1.webp",
+    "Resource/Extracts/4 tabs/l2.png": "assets/img/dashboard-mobile/tabs/l2.webp",
+    "Resource/Extracts/4 tabs/l3.png": "assets/img/dashboard-mobile/tabs/l3.webp",
+    "Resource/Extracts/4 tabs/l4.png": "assets/img/dashboard-mobile/tabs/l4.webp",
+    "Resource/Ways of Working initiative/Cover Component.png": "assets/img/wow/cover-component.png",
+    "Resource/Ways of Working initiative/Discovery and collaboartion tools.png": "assets/img/wow/discovery-tools.png",
+    "Resource/Ways of Working initiative/Page setup.png": "assets/img/wow/page-setup.png",
+    "Resource/Ways of Working initiative/Tables and links.png": "assets/img/wow/tables-links.png",
+    "Resource/Ways of Working initiative/Status quo.png": "assets/img/wow/status-quo.png",
+    "Resource/Ways of Working initiative/Stickers.png": "assets/img/wow/stickers.png",
+    "Resource/Ways of Working initiative/Presentation/Ways of Working Figma02.jpg": "assets/img/wow/figma-02.webp",
+    "Resource/Ways of Working initiative/Presentation/Ways of Working Figma03.jpg": "assets/img/wow/figma-03.webp",
+    "Resource/Ways of Working initiative/Presentation/Ways of Working Figma04.jpg": "assets/img/wow/figma-04.webp",
+    "Resource/Ways of Working initiative/Presentation/Ways of Working Figma05.jpg": "assets/img/wow/figma-05.webp",
+    "Resource/Ways of Working initiative/Presentation/wow_Workshop.png": "assets/img/wow/workshop.webp",
+    "Resource/Ways of Working initiative/Presentation/wow_Workshop07.png": "assets/img/wow/workshop-07.webp",
+    "Resource/Principal of prototyping/Principal of Prototyping.jpg": "assets/img/prototyping/principal-of-prototyping.webp",
+    "Resource/Principal of prototyping/slide-2.jpg": "assets/img/prototyping/slide-2.webp",
+    "Resource/Principal of prototyping/slide-3.jpg": "assets/img/prototyping/slide-3.webp",
+    "Resource/Principal of prototyping/slide-4.jpg": "assets/img/prototyping/slide-4.webp",
+    "Resource/Principal of prototyping/slide-5.jpg": "assets/img/prototyping/slide-5.webp",
+    "Resource/Principal of prototyping/slide-6.jpg": "assets/img/prototyping/slide-6.webp",
+    "Resource/Principal of prototyping/slide-7.jpg": "assets/img/prototyping/slide-7.webp",
+    "Resource/Principal of prototyping/slide-8.jpg": "assets/img/prototyping/slide-8.webp",
+    "Resource/Principal of prototyping/slide-12.jpg": "assets/img/prototyping/slide-12.webp",
+    "Resource/Principal of prototyping/Figma-make/Slide 16_9 - 1.jpg": "assets/img/prototyping/figma-make-01.webp",
+    "Resource/Principal of prototyping/Figma-make/Slide 16_9 - 2.jpg": "assets/img/prototyping/figma-make-02.webp",
+    "Resource/Principal of prototyping/Figma-make/Slide 16_9 - 4.jpg": "assets/img/prototyping/figma-make-04.webp",
+    "Resource/Principal of prototyping/Figma-make/Slide 16_9 - 5.jpg": "assets/img/prototyping/figma-make-05.webp",
+    "Resource/Principal of prototyping/Figma-make/Slide 16_9 - 6.jpg": "assets/img/prototyping/figma-make-06.webp",
+    "Resource/Principal of prototyping/Figma-make/Slide 16_9 - 7.jpg": "assets/img/prototyping/figma-make-07.webp",
+    "Resource/Principal of prototyping/Figma-make/Slide 16_9 - 8.jpg": "assets/img/prototyping/figma-make-08.webp",
+    "Resource/Principal of prototyping/Figma-make/Slide 16_9 - 9.jpg": "assets/img/prototyping/figma-make-09.webp",
+    "Resource/Principal of prototyping/Figma-make/Slide 16_9 - 11.jpg": "assets/img/prototyping/figma-make-11.webp",
+    "Resource/Principal of prototyping/Figma-make/Slide 16_9 - 12.jpg": "assets/img/prototyping/figma-make-12.webp",
+    "Resource/Wrapped/IPP.png": "assets/img/brand/wrapped-ipp.webp",
+    "Resource/Wrapped/Top Banks.png": "assets/img/brand/wrapped-3-top-banks.png",
+    "Resource/all deposits/All Deposits.png": "assets/img/brand/all-deposits.webp",
+    "Resource/all deposits/Category.png": "assets/img/brand/deposits-category.webp",
+    "Resource/iso_dash.png": "assets/img/brand/iso-dash.webp",
+    "Resource/emails.png": "assets/img/emails/overview.webp",
+    "Resource/Raisin Vision/Slide@2x.png": "assets/img/vision/cura-bg.webp",
+    "Resource/AI Enablement/Adobe Express - file.png": "assets/img/ai-enablement/program-overview.webp",
+    "Resource/AI Enablement/4 tools /workflow.webp": "assets/img/ai-enablement/workflow.webp",
+    "Resource/AI Enablement/4 tools /tool-1.jpg": "assets/img/ai-enablement/tool-1.webp",
+    "Resource/AI Enablement/4 tools /tool-2.jpg": "assets/img/ai-enablement/tool-2.webp",
+    "Resource/AI Enablement/4 tools /tool-3.jpg": "assets/img/ai-enablement/tool-3.webp",
+    "Resource/AI Enablement/4 tools /tool-4.jpg": "assets/img/ai-enablement/tool-4.webp",
+    "Resource/proof-of-old-world/wireframe_solution.mov": "assets/video/proof/wireframe-solution.mp4"
+  },
+  "dimensions": {
+    "assets/img/hero-bento/iphone-17-pink-table.webp": {
+      "width": 2400,
+      "height": 1600
+    },
+    "assets/img/hero-bento/macbook-round-table.webp": {
+      "width": 2400,
+      "height": 1600
+    },
+    "assets/img/hero-bento/rock-iphone-15.webp": {
+      "width": 2400,
+      "height": 1800
+    },
+    "assets/img/hero-bento/dell-desk.webp": {
+      "width": 2400,
+      "height": 1800
+    },
+    "assets/img/hero-bento/ipad-pointing.webp": {
+      "width": 1800,
+      "height": 2400
+    },
+    "assets/img/hero-bento/smartphone-terminal.webp": {
+      "width": 1920,
+      "height": 1280
+    },
+    "assets/img/branding/koto-32.webp": {
+      "width": 1920,
+      "height": 1080
+    },
+    "assets/img/branding/koto-41.webp": {
+      "width": 1920,
+      "height": 1080
+    },
+    "assets/img/branding/koto-54.webp": {
+      "width": 1920,
+      "height": 1080
+    },
+    "assets/img/proof/old-dashboard.jpg.webp": {
+      "width": 884,
+      "height": 1014
+    },
+    "assets/img/proof/pull-to-refresh.webp": {
+      "width": 828,
+      "height": 1800
+    },
+    "assets/img/proof/email.webp": {
+      "width": 890,
+      "height": 2159
+    },
+    "assets/img/proof/sketch-to-figma.webp": {
+      "width": 1049,
+      "height": 1044
+    },
+    "assets/img/proof/scramble.webp": {
+      "width": 1600,
+      "height": 1600
+    },
+    "assets/img/proof/solo.webp": {
+      "width": 746,
+      "height": 743
+    },
+    "assets/img/proof/dash-new.webp": {
+      "width": 1320,
+      "height": 1448
+    },
+    "assets/img/proof/dash-old.webp": {
+      "width": 1320,
+      "height": 1448
+    },
+    "assets/img/proof/persona-hnw.webp": {
+      "width": 1048,
+      "height": 1852
+    },
+    "assets/img/proof/persona-affluent.webp": {
+      "width": 1050,
+      "height": 1858
+    },
+    "assets/img/proof/persona-affluent-young.webp": {
+      "width": 1048,
+      "height": 1852
+    },
+    "assets/img/dashboard-web/color-map-light.webp": {
+      "width": 2400,
+      "height": 2019
+    },
+    "assets/img/dashboard-mobile/mobile-research.webp": {
+      "width": 1587,
+      "height": 1328
+    },
+    "assets/img/dashboard-mobile/compare.webp": {
+      "width": 2400,
+      "height": 1627
+    },
+    "assets/img/dashboard-mobile/maze-report.webp": {
+      "width": 955,
+      "height": 657
+    },
+    "assets/img/dashboard-mobile/multi-mocks.webp": {
+      "width": 2400,
+      "height": 1504
+    },
+    "assets/img/dashboard-mobile/samsung-earnings-mockup.webp": {
+      "width": 800,
+      "height": 642
+    },
+    "assets/img/dashboard-mobile/tabs/d1.webp": {
+      "width": 552,
+      "height": 1140
+    },
+    "assets/img/dashboard-mobile/tabs/d2.webp": {
+      "width": 552,
+      "height": 1140
+    },
+    "assets/img/dashboard-mobile/tabs/d3.webp": {
+      "width": 552,
+      "height": 1140
+    },
+    "assets/img/dashboard-mobile/tabs/d4.webp": {
+      "width": 552,
+      "height": 1140
+    },
+    "assets/img/dashboard-mobile/tabs/l1.webp": {
+      "width": 552,
+      "height": 1140
+    },
+    "assets/img/dashboard-mobile/tabs/l2.webp": {
+      "width": 552,
+      "height": 1140
+    },
+    "assets/img/dashboard-mobile/tabs/l3.webp": {
+      "width": 552,
+      "height": 1140
+    },
+    "assets/img/dashboard-mobile/tabs/l4.webp": {
+      "width": 552,
+      "height": 1140
+    },
+    "assets/img/wow/figma-02.webp": {
+      "width": 1920,
+      "height": 1179
+    },
+    "assets/img/wow/figma-03.webp": {
+      "width": 1920,
+      "height": 1179
+    },
+    "assets/img/wow/figma-04.webp": {
+      "width": 1920,
+      "height": 1179
+    },
+    "assets/img/wow/figma-05.webp": {
+      "width": 1920,
+      "height": 1179
+    },
+    "assets/img/wow/workshop.webp": {
+      "width": 1919,
+      "height": 1041
+    },
+    "assets/img/wow/workshop-07.webp": {
+      "width": 1920,
+      "height": 1031
+    },
+    "assets/img/prototyping/principal-of-prototyping.webp": {
+      "width": 1920,
+      "height": 1179
+    },
+    "assets/img/prototyping/slide-2.webp": {
+      "width": 1920,
+      "height": 1179
+    },
+    "assets/img/prototyping/slide-3.webp": {
+      "width": 1920,
+      "height": 1179
+    },
+    "assets/img/prototyping/slide-4.webp": {
+      "width": 1920,
+      "height": 1179
+    },
+    "assets/img/prototyping/slide-5.webp": {
+      "width": 1920,
+      "height": 1179
+    },
+    "assets/img/prototyping/slide-6.webp": {
+      "width": 1920,
+      "height": 1179
+    },
+    "assets/img/prototyping/slide-7.webp": {
+      "width": 1920,
+      "height": 1179
+    },
+    "assets/img/prototyping/slide-8.webp": {
+      "width": 1920,
+      "height": 1179
+    },
+    "assets/img/prototyping/slide-12.webp": {
+      "width": 1920,
+      "height": 1179
+    },
+    "assets/img/prototyping/figma-make-01.webp": {
+      "width": 883,
+      "height": 942
+    },
+    "assets/img/prototyping/figma-make-02.webp": {
+      "width": 883,
+      "height": 942
+    },
+    "assets/img/prototyping/figma-make-04.webp": {
+      "width": 884,
+      "height": 942
+    },
+    "assets/img/prototyping/figma-make-05.webp": {
+      "width": 883,
+      "height": 942
+    },
+    "assets/img/prototyping/figma-make-06.webp": {
+      "width": 883,
+      "height": 942
+    },
+    "assets/img/prototyping/figma-make-07.webp": {
+      "width": 883,
+      "height": 942
+    },
+    "assets/img/prototyping/figma-make-08.webp": {
+      "width": 883,
+      "height": 942
+    },
+    "assets/img/prototyping/figma-make-09.webp": {
+      "width": 884,
+      "height": 942
+    },
+    "assets/img/prototyping/figma-make-11.webp": {
+      "width": 883,
+      "height": 942
+    },
+    "assets/img/prototyping/figma-make-12.webp": {
+      "width": 883,
+      "height": 942
+    },
+    "assets/img/brand/wrapped-ipp.webp": {
+      "width": 780,
+      "height": 1702
+    },
+    "assets/img/brand/all-deposits.webp": {
+      "width": 1320,
+      "height": 944
+    },
+    "assets/img/brand/deposits-category.webp": {
+      "width": 1320,
+      "height": 944
+    },
+    "assets/img/brand/iso-dash.webp": {
+      "width": 3111,
+      "height": 1827
+    },
+    "assets/img/emails/overview.webp": {
+      "width": 1791,
+      "height": 1920
+    },
+    "assets/img/vision/cura-bg.webp": {
+      "width": 1920,
+      "height": 1080
+    },
+    "assets/img/ai-enablement/program-overview.webp": {
+      "width": 1600,
+      "height": 1067
+    },
+    "assets/img/ai-enablement/tool-1.webp": {
+      "width": 678,
+      "height": 604
+    },
+    "assets/img/ai-enablement/tool-2.webp": {
+      "width": 687,
+      "height": 611
+    },
+    "assets/img/ai-enablement/tool-3.webp": {
+      "width": 687,
+      "height": 611
+    },
+    "assets/img/ai-enablement/tool-4.webp": {
+      "width": 687,
+      "height": 611
+    }
+  }
+}

@@ -1,0 +1,10 @@
+Annotate bundle (same-origin ./annotate.js)
+===========================================
+
+This file is copied from the Annotate tool build:
+
+  annotate-cursor-prorotoype/dist/annotate.js  →  public/annotate.js
+
+After updating Annotate, rebuild that repo and copy again, then commit.
+
+Optional: set VITE_ANNOTATE_SCRIPT_URL in .env.local or CI to use another URL.

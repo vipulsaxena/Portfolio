@@ -1,10 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" class="summary-v2">
 <head>
-    <!-- Priority tags. These must come first. -->
     <meta charset="utf-8">
-    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-35LE56GGGS"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -15,153 +12,30 @@
     </script>
     <meta http-equiv="x-ua-compatible" content="ie=edge; chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-
-    <title>Vipul Saxena | Brand Evolution at Raisin</title>
-    <meta name="description" content="A password-protected product design case study on the brand evolution at Raisin across dashboard, mobile app, email and marketing surfaces.">
+    <title>Vipul Saxena — Evolving Raisin's Brand &amp; Design Practice</title>
+    <meta name="description" content="A design leadership case study: two years at Raisin told as four chapters — Practice and Enablement in parallel, discovery and systems built together, measured honestly.">
     <meta name="robots" content="noindex, nofollow">
-
     <link rel="icon" href="fav.png" sizes="32x32" type="image/png">
     <link rel="shortcut icon" href="fav.png" type="image/png">
-    <meta name="theme-color" content="#ffffff">
+    <meta name="theme-color" content="#0b0e14">
     <link rel="canonical" href="https://vipulsaxena.com/raisin.html">
-
-    <!-- Fonts (match Portfolio: Inter) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap">
     <link rel="stylesheet" href="css/shell.css">
-
-    <!-- Tailwind (Play CDN) + theme config (identical to template-2.html) -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              base:  '#ffffff', elev:  '#f7f7f7', card:  '#ffffff', line:  '#e7e7e7',
-              ink:   '#262626', mute:  '#6e6e6e', accent:'#ffda08', accink:'#262626',
-            },
-            fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
-            borderRadius: { '2xl': '1.25rem', '3xl': '1.75rem' },
-            maxWidth: { content: '80rem' },
-          }
-        }
-      }
-    </script>
-
-    <!-- Deck styles (from template-2.html) + password gate -->
-    <style type="text/css">
-      :root{ --deck-top:3.5rem; }
-      html,body{ height:100%; }
-      body{ background:#ffffff; font-family:"Inter", system-ui, sans-serif; overflow:hidden; }
-      ::selection{ background:#ffda08; color:#262626; }
-
-      .hl{ background:#ffda08; color:#262626; padding:0 .1em; border-radius:.08em;
-           -webkit-box-decoration-break:clone; box-decoration-break:clone; }
-
-      /* ---------- Deck viewport ---------- */
-      .deck{ position:fixed; inset:0; top:var(--deck-top); overflow:hidden; }
-      .deck-track{ display:flex; height:100%; width:100%; transition:transform .6s cubic-bezier(.7,0,.2,1); will-change:transform; }
-      .slide{ flex:0 0 100%; height:100%; width:100%; overflow-y:auto; display:flex; flex-direction:column; position:relative; }
-      .slide-inner{ margin:0 auto; width:100%; max-width:80rem; padding:clamp(1.5rem,4vw,4rem) clamp(1.25rem,5vw,4rem); flex:1 1 auto; display:flex; flex-direction:column; justify-content:center; }
-
-      .slide [data-anim]{ opacity:0; transform:translateY(26px); transition:opacity .6s ease, transform .6s ease; }
-      .slide.is-active [data-anim]{ opacity:1; transform:none; }
-      .slide.is-active [data-anim]{ transition-delay:calc(var(--i,0) * 90ms); }
-
-      /* Wireframe / screen placeholder */
-      .wf{ position:relative; display:flex; align-items:center; justify-content:center;
-        color:#a3a3a3; font-size:.8rem; letter-spacing:.14em; text-transform:uppercase; font-weight:600;
-        background-color:#fafafa;
-        background-image:linear-gradient(#ededed 1px, transparent 1px), linear-gradient(90deg, #ededed 1px, transparent 1px);
-        background-size:26px 26px; border:1px dashed #dcdcdc; border-radius:1rem; overflow:hidden; }
-      .wf span{ position:relative; z-index:1; padding:.4em .8em; background:rgba(255,255,255,.7); border-radius:.5em; }
-
-      .device-phone{ border:8px solid #e7e7e7; border-radius:2rem; background:#fff; box-shadow:0 24px 50px -24px rgba(38,38,38,.25); }
-      .device-desktop{ border:10px solid #e7e7e7; border-bottom-width:26px; border-radius:1rem; background:#fff; box-shadow:0 24px 50px -24px rgba(38,38,38,.25); }
-
-      .compare{ position:relative; overflow:hidden; border-radius:1rem; cursor:ew-resize; user-select:none; touch-action:none; }
-      .compare .after-layer{ position:absolute; inset:0; overflow:hidden; clip-path:inset(0 50% 0 0); }
-      .compare .handle{ position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); z-index:5; width:44px; height:44px; border-radius:999px; background:#ffda08; color:#262626; display:flex; align-items:center; justify-content:center; font-weight:800; box-shadow:0 6px 18px rgba(38,38,38,.28); }
-      .compare .handle::before{ content:""; position:absolute; left:50%; top:-100vh; height:200vh; width:2px; background:#ffda08; transform:translateX(-50%); z-index:-1; }
-      .compare .tag{ position:absolute; top:12px; z-index:4; font-size:.7rem; letter-spacing:.12em; text-transform:uppercase; font-weight:700; padding:4px 10px; border-radius:999px; background:rgba(255,255,255,.9); color:#262626; border:1px solid #e7e7e7; }
-
-      /* ---------- Bottom control bar ---------- */
-      .ctrl{ position:fixed; left:0; right:0; bottom:0; z-index:900; display:flex; align-items:center; gap:1rem;
-        padding:.75rem clamp(1.25rem,5vw,2.5rem); padding-bottom:calc(.75rem + env(safe-area-inset-bottom,0px));
-        background:rgba(255,255,255,.85); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); border-top:1px solid #e7e7e7; }
-      .chapter-tabs{ display:flex; align-items:center; gap:.35rem; }
-      .chapter-tab{ font-size:.75rem; font-weight:700; letter-spacing:.01em; padding:.4rem .8rem; border-radius:999px;
-        color:#6e6e6e; background:transparent; border:1px solid transparent; cursor:pointer; white-space:nowrap;
-        transition:color .15s ease, background .15s ease, border-color .15s ease; }
-      .chapter-tab:hover{ color:#262626; background:#f2f2f2; }
-      .chapter-tab[aria-current="true"]{ color:#262626; background:#fff3b0; border-color:#ffda08; }
-      .chapter-tab:focus-visible{ outline:none; box-shadow:0 0 0 3px rgba(255,218,8,.55); }
-      .chapter-tab .ct-count{ color:#a3a3a3; font-weight:600; margin-left:.35rem; }
-      .chapter-tab[aria-current="true"] .ct-count{ color:#8a7a00; }
-      .chapter-tab{ display:inline-flex; align-items:center; justify-content:center; gap:.35rem; }
-      .chapter-tab .ct-icon{ display:none; align-items:center; justify-content:center; line-height:0; }
-
-      .ctrl-dots{ display:flex; align-items:center; gap:1rem; flex-wrap:wrap; }
-      .dot-group{ display:flex; align-items:center; gap:.4rem; }
-      .dot{ width:9px; height:9px; border-radius:999px; background:#d4d4d4; transition:all .2s ease; cursor:pointer; border:0; padding:0; }
-      .dot[aria-current="true"]{ background:#ffda08; width:26px; }
-      .dot{ position:relative; }
-      .dot::after{ content:attr(data-tip); position:absolute; left:50%; bottom:calc(100% + 12px);
-        transform:translateX(-50%) translateY(4px); background:#262626; color:#fff; font-size:.72rem; font-weight:600;
-        padding:.34rem .6rem; border-radius:.45rem; white-space:nowrap; box-shadow:0 10px 24px -10px rgba(0,0,0,.45);
-        opacity:0; pointer-events:none; transition:opacity .14s ease, transform .14s ease; z-index:40; }
-      .dot::before{ content:""; position:absolute; left:50%; bottom:calc(100% + 7px); transform:translateX(-50%) translateY(4px);
-        border:5px solid transparent; border-top-color:#262626; opacity:0; pointer-events:none;
-        transition:opacity .14s ease, transform .14s ease; z-index:40; }
-      .dot:hover::after, .dot:focus-visible::after,
-      .dot:hover::before, .dot:focus-visible::before{ opacity:1; transform:translateX(-50%) translateY(0); }
-      .dot:focus-visible{ outline:none; box-shadow:0 0 0 3px rgba(255,218,8,.55); }
-
-      .nav-btn{ display:inline-flex; align-items:center; justify-content:center; width:2.5rem; height:2.5rem;
-        border:1px solid #e7e7e7; border-radius:999px; background:#fff; color:#262626; cursor:pointer;
-        transition:border-color .15s ease, transform .15s ease, background .15s ease; }
-      .nav-btn:hover{ border-color:#ffda08; background:#fff3b0; }
-      .nav-btn:focus-visible{ outline:none; box-shadow:0 0 0 3px rgba(255,218,8,.55); }
-      .nav-btn:disabled{ opacity:.35; cursor:default; }
-      .nav-btn:disabled:hover{ border-color:#e7e7e7; background:#fff; }
-      .nav-btn.is-active{ border-color:#ffda08; background:#fff3b0; }
-      .nav-home{ gap:.3rem; }
-      .nav-home .home-count{ display:none; font-size:.72rem; font-weight:700; font-variant-numeric:tabular-nums; }
-      .nav-home.is-active{ width:auto; padding:0 .7rem; }
-      .nav-home.is-active .home-count{ display:inline; }
-
-      .counter{ font-variant-numeric:tabular-nums; font-weight:700; font-size:.9rem; color:#262626; white-space:nowrap; }
-      .counter .sep{ color:#a3a3a3; }
-
-      /* ---------- Mobile control bar: keep ← / → visible, hide counter, let chapter tabs scroll ---------- */
-      @media (max-width: 640px){
-        .ctrl{ gap:.5rem; padding-left:.85rem; padding-right:.85rem; }
-        .counter{ display:none; }
-        .home-count{ display:none !important; }
-        .nav-home.is-active{ width:2.4rem; padding:0; }
-        .chapter-tab .ct-count,
-        .chapter-tab .ct-label{ display:none; }
-        .chapter-tab .ct-icon{ display:inline-flex; }
-        .chapter-tab{ width:2.4rem; height:2.4rem; padding:0; flex-shrink:0; border-color:#e7e7e7; background:#fff; }
-        .chapter-tabs{ flex:0 1 auto; min-width:0; gap:.35rem; overflow:visible; }
-        .ml-auto{ flex:0 0 auto; }
-      }
-
-      .progress{ position:fixed; top:var(--deck-top); left:0; height:3px; z-index:950; background:#ffda08; width:0; transition:width .6s cubic-bezier(.7,0,.2,1); }
-
-      .deck-title{ font-size:.9rem; font-weight:600; color:#6e6e6e; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-
-      .kbd{ display:inline-flex; align-items:center; gap:.35rem; font-size:.75rem; color:#6e6e6e; }
-      .key{ display:inline-block; min-width:1.5rem; padding:.15rem .4rem; text-align:center; font-size:.7rem; font-weight:700; border:1px solid #e7e7e7; border-bottom-width:2px; border-radius:.4rem; background:#fff; color:#262626; }
-
-      @media (prefers-reduced-motion: reduce){
-        .deck-track{ transition:none; }
-        .progress{ transition:none; }
-        .slide [data-anim]{ opacity:1 !important; transform:none !important; transition:none !important; }
-      }
-
-      /* ===== Password gate (secure entry) ===== */
+    <link rel="stylesheet" href="raisin-assets/assets/css/tokens.css">
+    <link rel="stylesheet" href="raisin-assets/assets/css/base.css">
+    <link rel="stylesheet" href="raisin-assets/assets/css/components.css">
+    <link rel="stylesheet" href="raisin-assets/assets/css/summary.css">
+    <link rel="stylesheet" href="raisin-assets/assets/css/summary2.css">
+    <style>
+      :root { --deck-top: 3.5rem; }
+      .deck-title { font-size: .9rem; font-weight: 600; color: #6e6e6e; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .nav-btn { display: inline-flex; align-items: center; justify-content: center; width: 2.5rem; height: 2.5rem;
+        border: 1px solid #e7e7e7; border-radius: 8px; background: #fff; color: #262626; cursor: pointer;
+        transition: border-color .15s ease, background .15s ease; }
+      .nav-btn:hover { border-color: #ffda08; background: #fff3b0; }
+      .nav-btn:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(255,218,8,.55); }
       #raisinGate{ display:none; }
       html.raisin-locked{ overflow:hidden; }
       html.raisin-locked body > *:not(#raisinGate){ display:none !important; }
@@ -180,10 +54,6 @@
       .pw-btn{ border:0; border-radius:999px; padding:14px 28px; font-size:1.02rem; font-weight:700; cursor:pointer; background:#ffda08; color:#262626; transition:filter .15s, transform .15s; }
       .pw-btn:hover{ filter:brightness(1.05); transform:translateY(-1px); }
     </style>
-
-    <!-- Runs before render: hide the page until unlocked (no content flash).
-         Always re-prompts on EXTERNAL entry (typed URL, bookmark, link from another
-         site). Only skips the prompt for in-site navigation, reloads, and back/forward. -->
     <script>
       (function(){
         var KEY = "raisinAccessGranted";
@@ -201,23 +71,21 @@
         var external = (t !== "reload" && t !== "back_forward") && !internal;
         var allow = false;
         try {
-          if (external) sessionStorage.removeItem(KEY);      // external entry -> force a fresh prompt
-          else allow = sessionStorage.getItem(KEY) === "1";  // in-site / reload / back -> honour session
+          if (external) sessionStorage.removeItem(KEY);
+          else allow = sessionStorage.getItem(KEY) === "1";
         } catch(_){}
         window.__gateAllow = allow;
         if (!allow) document.documentElement.classList.add("raisin-locked");
       })();
     </script>
 </head>
+<body class="summary-v2 has-shell">
 
-<body class="bg-base text-ink font-sans antialiased">
-
-<!-- ===================== Password gate (secure entry) ===================== -->
 <div id="raisinGate" role="dialog" aria-modal="true" aria-labelledby="raisinGateTitle">
   <div class="pw-card" role="document">
     <p class="pw-eyebrow">🔒 Protected case study</p>
     <h2 class="pw-title" id="raisinGateTitle">Enter password to view</h2>
-    <p class="pw-desc">This Raisin brand evolution case study is password-protected. Enter the password to continue.</p>
+    <p class="pw-desc">The Raisin brand evolution case study is password-protected. Enter the password to continue.</p>
     <form id="raisinGateForm" novalidate>
       <input type="password" id="raisinGateInput" class="pw-input" placeholder="Password" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Password">
       <p class="pw-error" id="raisinGateError" role="alert" hidden>Incorrect password. Please try again.</p>
@@ -229,13 +97,10 @@
   </div>
 </div>
 
-<!-- ============================================================= -->
-<!-- Slim header (shared shell shell.css, adapted for the deck)     -->
-<!-- ============================================================= -->
 <header class="shell-header" style="height:var(--deck-top);">
   <div class="shell-inner shell-bar" style="height:var(--deck-top);">
     <a href="index.html" class="shell-brand">Home</a>
-    <p class="deck-title" id="deckTitle">Brand evolution at Raisin</p>
+    <p class="deck-title" id="deckTitle">Raisin — Brand Evolution</p>
     <div class="shell-actions">
       <button type="button" class="nav-btn" data-fullscreen aria-label="Toggle fullscreen" title="Fullscreen">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3m13-5v3a2 2 0 0 1-2 2h-3"/></svg>
@@ -244,196 +109,1334 @@
   </div>
 </header>
 
-<!-- Progress bar -->
-<div class="progress" id="progress" aria-hidden="true"></div>
-
-<!-- ============================================================= -->
-<!-- DECK — each .slide is one full page. Placeholder deck to fill. -->
-<!-- ============================================================= -->
-<main class="deck" aria-label="Slideshow">
-  <div class="deck-track" id="track">
-
-    <!-- SLIDE 01 · COVER -->
-    <section class="slide is-active" data-chapter="case-study" data-title="Cover" data-home-slide>
-      <div class="slide-inner">
-        <p class="text-mute text-xs md:text-sm font-bold uppercase tracking-[0.2em] mb-6" data-anim style="--i:0">Raisin · Brand Evolution · 2026</p>
-        <h1 class="font-extrabold tracking-tight leading-[1.06] text-5xl md:text-7xl lg:text-[6rem] max-w-[16ch]" data-anim style="--i:1">
-          Brand evolution at <span class="hl">Raisin</span>
-        </h1>
-        <p class="mt-8 text-xl md:text-2xl text-mute max-w-[52ch] leading-snug" data-anim style="--i:2">
-          Leading Raisin's brand across dashboard, mobile app, email and marketing surfaces — translating a global refresh into cohesive, scalable product experiences.
-        </p>
-        <div class="mt-10 flex flex-wrap items-center gap-4" data-anim style="--i:3">
-          <button type="button" class="shell-btn" data-next>Start →</button>
-          <span class="kbd">or Use <span class="key">←</span> <span class="key">→</span> · <span class="key">Space</span></span>
+<main>
+<!-- ============================== HERO ============================== -->
+<section class="why-hero why-hero--split" id="hero">
+  <div class="why-hero__glow"></div>
+  <div class="hero-stage">
+    <div class="container hero-split hero-split--stage">
+      <div class="hero-split__content">
+        <div class="hero__kicker">
+          <span class="tag tag--on-dark">Two-year journey</span>
+          <span class="tag tag--on-dark">Senior Product Designer · B2C</span>
         </div>
-      </div>
-      <div class="absolute bottom-6 left-1/2 -translate-x-1/2 text-mute text-2xl animate-bounce select-none" aria-hidden="true">↓</div>
-    </section>
-
-    <!-- SLIDE 02 · FULL-BLEED IMAGE — replace .wf with an <img> -->
-    <section class="slide" data-chapter="case-study" data-title="Full-bleed image">
-      <div class="slide-inner !py-0 !max-w-none !px-0">
-        <div class="relative flex-1 min-h-0">
-          <!-- Replace with: <img class="absolute inset-0 w-full h-full object-cover" src="..." alt="..."> -->
-          <div class="wf absolute inset-0 !rounded-none" data-anim style="--i:0" role="img" aria-label="Full-bleed image placeholder">
-            <span>Full-bleed image / screen</span>
-          </div>
-          <div class="absolute left-0 bottom-0 p-6 md:p-12 bg-gradient-to-t from-ink/70 to-transparent w-full" data-anim style="--i:1">
-            <p class="text-white/80 text-xs font-bold uppercase tracking-[0.18em] mb-2">Chapter one</p>
-            <h2 class="text-white text-2xl md:text-4xl font-extrabold tracking-tight max-w-[24ch]">Let a single image carry the whole screen.</h2>
-          </div>
+        <div class="hero__brand-lockup">
+          <img class="hero__title-logo" src="raisin-assets/assets/img/branding/raisin-logo-white.svg" alt="Raisin" width="908" height="211">
+          <h1 class="hero__title text-on-dark">Rebrand, rebuild, and a design practice that could keep up.</h1>
         </div>
+        <p class="hero__sub text-on-dark-muted">Two tracks run in parallel — Practice on the product, Enablement for the team. Measured honestly, not just shipped.</p>
       </div>
-    </section>
-
-    <!-- SLIDE 03 · BIG STATEMENT -->
-    <section class="slide bg-elev" data-chapter="case-study" data-title="Statement">
-      <div class="slide-inner items-center text-center">
-        <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-8" data-anim style="--i:0">The thesis</p>
-        <p class="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.12] max-w-[20ch]" data-anim style="--i:1">
-          Full case study <span class="hl">coming soon</span>.
-        </p>
-        <p class="mt-10 text-lg md:text-xl text-mute max-w-[54ch]" data-anim style="--i:2">
-          Swap this deck's placeholder slides for the real Raisin story — statements, metrics, prototypes and before/after comparisons.
-        </p>
+      <div class="hero-bento" aria-hidden="true">
+        <div class="hero-bento__item"><img src="raisin-assets/assets/img/hero-bento/iphone-17-pink-table.webp" alt="" width="2400" height="1600" decoding="async" fetchpriority="high"></div>
+        <div class="hero-bento__item"><img src="raisin-assets/assets/img/hero-bento/macbook-round-table.webp" alt="" width="2400" height="1600" decoding="async" fetchpriority="low"></div>
+        <div class="hero-bento__item"><img src="raisin-assets/assets/img/hero-bento/rock-iphone-15.webp" alt="" width="2400" height="1800" decoding="async" fetchpriority="low"></div>
+        <div class="hero-bento__item"><img src="raisin-assets/assets/img/hero-bento/dell-desk.webp" alt="" width="2400" height="1800" decoding="async" fetchpriority="low"></div>
+        <div class="hero-bento__item hero-bento__item--portrait"><img src="raisin-assets/assets/img/hero-bento/ipad-pointing.webp" alt="" width="1800" height="2400" decoding="async" fetchpriority="low"></div>
       </div>
-    </section>
-
-    <!-- SLIDE 04 · SPLIT — content + visual -->
-    <section class="slide" data-chapter="case-study" data-title="Split · content + visual">
-      <div class="slide-inner">
-        <div class="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
-          <div>
-            <p class="text-mute text-xs font-bold uppercase tracking-[0.16em] mb-4" data-anim style="--i:0">Feature</p>
-            <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-6 max-w-[16ch]" data-anim style="--i:1">Pair a headline with the visual it describes</h2>
-            <p class="text-mute text-lg leading-relaxed max-w-[46ch] mb-8" data-anim style="--i:2">
-              A two-column split keeps the narrative and the artifact side by side — ideal for explaining a single interaction or decision.
-            </p>
-            <ul class="space-y-3" data-anim style="--i:3">
-              <li class="flex gap-3"><span class="shrink-0 w-6 h-6 rounded-full bg-accent text-accink text-sm font-bold flex items-center justify-center">✓</span><span class="text-mute">A crisp supporting point</span></li>
-              <li class="flex gap-3"><span class="shrink-0 w-6 h-6 rounded-full bg-accent text-accink text-sm font-bold flex items-center justify-center">✓</span><span class="text-mute">Another benefit worth naming</span></li>
-              <li class="flex gap-3"><span class="shrink-0 w-6 h-6 rounded-full bg-accent text-accink text-sm font-bold flex items-center justify-center">✓</span><span class="text-mute">A third, if you have it</span></li>
-            </ul>
-          </div>
-          <div class="wf aspect-[4/3] shadow-xl shadow-ink/5" data-anim style="--i:2" role="img" aria-label="Feature visual placeholder"><span>Feature visual</span></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SLIDE 05 · METRICS -->
-    <section class="slide bg-elev" data-chapter="case-study" data-title="Metrics">
-      <div class="slide-inner">
-        <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-10" data-anim style="--i:0">By the numbers</p>
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10">
-          <div data-anim style="--i:1"><div class="text-5xl md:text-7xl font-extrabold tracking-tight leading-none">+35%</div><div class="mt-3 text-mute max-w-[18ch]">Primary outcome metric</div></div>
-          <div data-anim style="--i:2"><div class="text-5xl md:text-7xl font-extrabold tracking-tight leading-none">−40%</div><div class="mt-3 text-mute max-w-[18ch]">Secondary metric</div></div>
-          <div data-anim style="--i:3"><div class="text-5xl md:text-7xl font-extrabold tracking-tight leading-none">4×</div><div class="mt-3 text-mute max-w-[18ch]">A comparative gain</div></div>
-          <div data-anim style="--i:4"><div class="text-5xl md:text-7xl font-extrabold tracking-tight leading-none">4.8★</div><div class="mt-3 text-mute max-w-[18ch]">Qualitative signal</div></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SLIDE 06 · INTERACTIVE PROTOTYPE — Figma embed -->
-    <section class="slide" data-chapter="case-study" data-title="Interactive prototype">
-      <div class="slide-inner">
-        <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Try it live</p>
-        <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-6 max-w-[22ch]" data-anim style="--i:1">Drop in a clickable prototype</h2>
-        <div class="rounded-2xl ring-1 ring-line overflow-hidden bg-elev flex-1 min-h-0" data-anim style="--i:2">
-          <!-- Replace with your Figma iframe:
-               <iframe class="w-full h-full" src="https://www.figma.com/embed?embed_host=share&url=YOUR_PROTOTYPE_URL" allowfullscreen></iframe> -->
-          <div class="wf w-full h-full min-h-[40vh] !rounded-none"><span>Figma prototype embed</span></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- BEFORE / AFTER — drag-to-compare (case study) -->
-    <section class="slide" data-chapter="case-study" data-title="Before &amp; after">
-      <div class="slide-inner">
-        <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Transformation</p>
-        <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-8 max-w-[22ch]" data-anim style="--i:1">Drag to compare old and new</h2>
-        <div class="compare aspect-video ring-1 ring-line max-h-[62vh] w-full" data-compare data-anim style="--i:2">
-          <div class="wf absolute inset-0 !rounded-none"><span>New design</span></div>
-          <span class="tag right-3">After</span>
-          <div class="after-layer">
-            <div class="wf absolute inset-0 !rounded-none" style="background-color:#f0f0f0;"><span>Old design</span></div>
-            <span class="tag left-3">Before</span>
-          </div>
-          <div class="handle" aria-hidden="true">⟺</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- GALLERY (highlights) -->
-    <section class="slide bg-elev" data-chapter="highlights" data-title="Gallery">
-      <div class="slide-inner">
-        <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Exploration</p>
-        <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-8 max-w-[22ch]" data-anim style="--i:1">Show a set of frames at once</h2>
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
-          <div class="wf aspect-[3/4]" data-anim style="--i:2"><span>Frame 01</span></div>
-          <div class="wf aspect-[3/4]" data-anim style="--i:3"><span>Frame 02</span></div>
-          <div class="wf aspect-[3/4]" data-anim style="--i:4"><span>Frame 03</span></div>
-          <div class="wf aspect-[3/4] hidden md:flex" data-anim style="--i:5"><span>Frame 04</span></div>
-          <div class="wf aspect-[3/4] hidden md:flex" data-anim style="--i:6"><span>Frame 05</span></div>
-          <div class="wf aspect-[3/4] hidden md:flex" data-anim style="--i:7"><span>Frame 06</span></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SLIDE 08 · QUOTE -->
-    <section class="slide bg-accent text-accink" data-chapter="highlights" data-title="Quote">
-      <div class="slide-inner items-start">
-        <div class="text-7xl md:text-8xl font-black leading-none mb-4" data-anim style="--i:0" aria-hidden="true">“</div>
-        <blockquote class="text-3xl md:text-5xl font-extrabold tracking-tight leading-snug max-w-[22ch]" data-anim style="--i:1">
-          A short, memorable quote from a user, teammate, or stakeholder lands hard on its own screen.
-        </blockquote>
-        <figcaption class="mt-8 flex items-center gap-4" data-anim style="--i:2">
-          <div class="w-12 h-12 rounded-full bg-ink text-accent flex items-center justify-center font-extrabold">A</div>
-          <div>
-            <p class="font-bold">Name Surname</p>
-            <p class="text-ink/70 text-sm">Role · Company</p>
-          </div>
-        </figcaption>
-      </div>
-    </section>
-
-    <!-- SLIDE 10 · CLOSING / CTA -->
-    <section class="slide bg-ink text-white" data-chapter="highlights" data-title="Thanks">
-      <div class="slide-inner items-center text-center">
-        <p class="text-white/60 text-xs font-bold uppercase tracking-[0.2em] mb-8" data-anim style="--i:0">Fin</p>
-        <h2 class="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.12] max-w-[18ch]" data-anim style="--i:1">
-          More on <span class="hl">Raisin</span> soon.
-        </h2>
-        <p class="mt-8 text-lg md:text-xl text-white/70 max-w-[48ch]" data-anim style="--i:2">
-          Let's build something together — say hi, request work, or send an old-fashioned email.
-        </p>
-        <div class="mt-10 flex flex-wrap items-center justify-center gap-4" data-anim style="--i:3">
-          <a class="nav-btn !w-auto !px-5 !text-white !bg-white/10 !border-white/20 hover:!bg-white/20 hover:!border-white/40" href="index.html">Back to home</a>
-          <a class="nav-btn !w-auto !px-5 !text-ink !bg-[#ffda08] !border-[#ffda08] hover:!brightness-110" href="olx.html">Next: OLX →</a>
-        </div>
-        <p class="mt-14 text-white/40 text-sm" data-anim style="--i:4">© 2026 · Vipul Saxena · Product Design Portfolio</p>
-      </div>
-    </section>
-
+    </div>
   </div>
-</main>
+  <div class="container">
+    <div class="hero-stat-strip">
+      <div>
+        <div class="hero-stat-strip__value mono-stat"><span data-count="72">0</span>–87%</div>
+        <div class="hero-stat-strip__label">Agree they better understand &amp; manage their wealth — Brand Evolution survey, ~1,900 respondents</div>
+      </div>
+      <div>
+        <div class="hero-stat-strip__value mono-stat"><span data-count="82.9">0</span>–97.7%</div>
+        <div class="hero-stat-strip__label">HNW customer loyalty held through the web dashboard migration</div>
+      </div>
+      <div>
+        <div class="hero-stat-strip__value mono-stat"><span data-count="92.9" data-suffix="%">0</span></div>
+        <div class="hero-stat-strip__label">Mobile dashboard task-success rate — winning IA, Maze-validated</div>
+      </div>
+      <div>
+        <div class="hero-stat-strip__value mono-stat"><span data-count="30" data-suffix="%">0</span> faster</div>
+        <div class="hero-stat-strip__label">Complex design tickets close faster — AI-accelerated workflows</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-<!-- Bottom control bar — dots / prev-next / counter -->
-<div class="ctrl" role="group" aria-label="Slideshow controls">
-  <button type="button" class="nav-btn nav-home" data-home aria-label="Back to first slide" title="Back to first slide">
-    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>
-    <span class="home-count" data-home-count aria-hidden="true"></span>
-  </button>
-  <div class="chapter-tabs" id="chapters" aria-label="Chapters"></div>
-  <div class="ctrl-dots hidden lg:flex" id="dots" aria-label="Slides"></div>
-  <div class="ml-auto flex items-center gap-3">
-    <span class="counter"><span id="curNum">01</span> <span class="sep">/</span> <span id="totNum">10</span></span>
-    <button type="button" class="nav-btn" data-prev aria-label="Previous slide">←</button>
-    <button type="button" class="nav-btn" data-next aria-label="Next slide">→</button>
+<!-- ============================== THE WHY ============================== -->
+<section class="why-hero" id="why" style="padding-block:var(--sp-2xl);">
+  <div class="why-hero__glow"></div>
+  <div class="container" style="position:relative; z-index:1;">
+    <p class="eyebrow" style="color:var(--on-dark-muted);">The why</p>
+    <h2 class="why-hero__statement">Raisin was rebranding and rebuilding its dashboard at the same time — without an operating model to hold it together.</h2>
+    <p class="why-hero__body">The ambition was real: a new identity, a new product experience, growth across markets. But the work behind the scenes wasn't built to move as one system. Each gap was survivable alone. Together, they were a ceiling.</p>
+
+    <div class="why-proofs reveal-stagger">
+      <article class="why-proof why-proof--zoom">
+        <div class="why-proof__content">
+          <p class="why-proof__num">01</p>
+          <h4 class="why-proof__title">A fragmented product experience</h4>
+          <p class="why-proof__text">Customers experienced Raisin differently depending on where they landed: a legacy web dashboard, a mobile app that didn't mirror it, and emails that looked like a different brand entirely.</p>
+        </div>
+        <div class="why-proof__media why-proof__media--trio">
+          <div class="why-proof__frame" style="--proof-ratio: 884 / 1014"><img src="raisin-assets/assets/img/proof/old-dashboard.jpg.webp" alt="Legacy web dashboard — separate savings cockpit" loading="lazy"></div>
+          <div class="why-proof__frame" style="--proof-ratio: 828 / 1800"><img src="raisin-assets/assets/img/proof/pull-to-refresh.webp" alt="Legacy mobile app — disconnected from web" loading="lazy"></div>
+          <div class="why-proof__frame" style="--proof-ratio: 890 / 2159"><img src="raisin-assets/assets/img/proof/email.webp" alt="Transactional email — another surface, another visual language" loading="lazy"></div>
+        </div>
+      </article>
+      <article class="why-proof why-proof--zoom why-proof--zoom-full">
+        <div class="why-proof__content">
+          <p class="why-proof__num">02</p>
+          <h4 class="why-proof__title">A brand handed over, not built out</h4>
+          <p class="why-proof__text">Brand agency Koto delivered a static identity. After handoff, Raisin's design team had to scale it into registration, onboarding, email, and campaigns.</p>
+        </div>
+        <div class="why-proof__media why-proof__media--trio">
+          <div class="why-proof__frame" style="--proof-ratio: 1920 / 1080"><img src="raisin-assets/assets/img/branding/koto-41.webp" alt="Koto brand guidelines — static identity handoff" loading="lazy"></div>
+          <div class="why-proof__frame" style="--proof-ratio: 1920 / 1080"><img src="raisin-assets/assets/img/branding/koto-32.webp" alt="Koto brand assets — not yet scaled into live product" loading="lazy"></div>
+          <div class="why-proof__frame" style="--proof-ratio: 1920 / 1080"><img src="raisin-assets/assets/img/branding/koto-54.webp" alt="Koto brand guidelines — product application gap" loading="lazy"></div>
+        </div>
+      </article>
+      <article class="why-proof why-proof--zoom">
+        <div class="why-proof__content">
+          <p class="why-proof__num">03</p>
+          <h4 class="why-proof__title">A design practice without shared conventions</h4>
+          <p class="why-proof__text">Every designer worked to their own Figma habits. User studies were rare — research wasn't how the team operated. Design critiques weren't happening. Every handoff paid a tax for it.</p>
+        </div>
+        <div class="why-proof__media why-proof__media--trio">
+          <div class="why-proof__frame" style="--proof-ratio: 1049 / 1044"><img src="raisin-assets/assets/img/proof/sketch-to-figma.webp" alt="Sketch to Figma — tools in transition, no shared foundation yet" loading="lazy"></div>
+          <div class="why-proof__frame" style="--proof-ratio: 1600 / 1600"><img src="raisin-assets/assets/img/proof/scramble.webp" alt="Chaotic Figma files — every designer's own structure" loading="lazy"></div>
+          <div class="why-proof__frame" style="--proof-ratio: 746 / 743"><img src="raisin-assets/assets/img/proof/solo.webp" alt="Designers wearing every hat alone — no shared rituals or critique" loading="lazy"></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== JOURNEY NAV ============================== -->
+<nav class="journey-nav" aria-label="Journey chapters">
+  <button class="journey-nav__btn" data-period-link="journey-intro">Journey</button>
+  <span class="journey-nav__sep">·</span>
+  <button class="journey-nav__btn" data-period-link="period-1"><span class="journey-nav__n">01</span> A home for their wealth</button>
+  <span class="journey-nav__sep">·</span>
+  <button class="journey-nav__btn" data-period-link="period-2"><span class="journey-nav__n">02</span> Better product, better process</button>
+  <span class="journey-nav__sep">·</span>
+  <button class="journey-nav__btn" data-period-link="period-3"><span class="journey-nav__n">03</span> Mobile and the horizon</button>
+  <span class="journey-nav__sep">·</span>
+  <button class="journey-nav__btn" data-period-link="period-4"><span class="journey-nav__n">04</span> Design × AI</button>
+  <span class="journey-nav__sep">·</span>
+  <button class="journey-nav__btn" data-period-link="proof">Proof</button>
+</nav>
+
+<!-- ============================== JOURNEY INTRO ============================== -->
+<section class="section section--tight" id="journey-intro" data-period="journey-intro">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">The journey</p>
+      <h2 class="h-display h-2">Two programmes, run in parallel — not one tidy sequence.</h2>
+      <p class="lede">I diagnosed problems in the product experience and in how the team worked, then built discovery and enablement in parallel — and measured both honestly. Each chapter follows the work chronologically; where a project also built lasting team capability, it's called out as <strong>Enablement</strong>.</p>
+    </div>
+    <div class="track-key reveal-stagger">
+      <div class="track-key__item track-key__item--practice">
+        <p class="track-key__label">Practice</p>
+        <p class="track-key__text">Direct discovery — research-led product decisions, shipped screens, measured outcomes.</p>
+      </div>
+      <div class="track-key__item track-key__item--enablement enablement-surface">
+        <p class="track-key__label enablement-label">
+          <svg class="enablement-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Enablement
+        </p>
+        <p class="track-key__text">What the team gained — rituals, research infrastructure, documentation, tooling, coaching.</p>
+      </div>
+    </div>
+    <hr class="rule rule--thick" aria-hidden="true">
+  </div>
+</section>
+
+<!-- ============================== PERIOD 01 ============================== -->
+<section class="section period" id="period-1" data-period="period-1">
+  <div class="container">
+    <header class="period__head period__head--split period__head--thick-rule reveal">
+      <div class="period__head-copy">
+        <div class="period__meta">
+          <span class="period__num">01</span>
+          <div class="chip-row">
+            <span class="chip">B2C</span>
+            <span class="chip">Growth tribe</span>
+          </div>
+        </div>
+        <h2 class="h-display h-2 period__title">A home for their wealth</h2>
+        <p class="lede period__thesis">Joined mid-rebrand, with the dashboard still reading as Weltsparen — the legacy brand name — in customers' heads. Settled the hierarchy question with two rounds of research, shipped the Wealth Hub MVP across 12 markets — and systemized it with a product colour map and the team's first evidence rituals.</p>
+      </div>
+
+      <div class="period-compare" aria-label="Legacy Weltsparen dashboard compared with Wealth Hub">
+        <div class="period-compare__labels" aria-hidden="true">
+          <span class="compare__label compare__label--before">Before</span>
+          <span class="compare__label compare__label--after">After</span>
+        </div>
+        <div class="compare compare--dashboard">
+          <div class="compare__after">
+            <img src="raisin-assets/assets/img/proof/dash-new.webp" alt="Wealth Hub — after, structured hierarchy across savings, investments, and retirement" loading="lazy">
+          </div>
+          <div class="compare__before">
+            <img src="raisin-assets/assets/img/proof/dash-old.webp" alt="Legacy Weltsparen dashboard — before" loading="lazy">
+          </div>
+          <div class="compare__handle" aria-hidden="true"></div>
+        </div>
+      </div>
+    </header>
+    <hr class="rule rule--thick" aria-hidden="true">
+
+    <div class="period__story">
+
+        <article class="beat beat--koto reveal">
+          <div class="koto-beat">
+            <div class="koto-beat__media" aria-hidden="true">
+              <video data-src="raisin-assets/assets/video/brand/brand-motion-summary.mp4" muted loop playsinline data-autoplay-inview preload="none" title="Raisin brand motion"></video>
+            </div>
+            <div class="koto-beat__scrim" aria-hidden="true"></div>
+            <div class="koto-beat__content">
+              <p class="beat__eyebrow">Agency rebrand · Koto</p>
+              <h3 class="beat__title">Absorbing an agency rebrand, then scaling it.</h3>
+              <p class="beat__text">I joined as the product was still known as Weltsparen in customers' minds, and the first brief wasn't a dashboard — it was absorbing agency Koto's static identity and working out what it would take to carry it into a live, multi-market product.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="beat beat--wealth-hub reveal">
+          <div class="wealth-hub-layout" aria-label="Wealth Hub research and hierarchy">
+            <div class="wealth-hub-layout__main">
+              <h3 class="beat__title">Wealth Hub</h3>
+              <p class="beat__subtitle">Finding signals in the noise:</p>
+              <p class="beat__text">Flat product list or asset-class hierarchy? Two research rounds and workshops turned evidence into organizing principles — the validated structure shipped as the Wealth Hub MVP with the brand evolution.</p>
+              <p class="beat__stat">Savings, Investments, Retirement — one structured hierarchy, live across 12 markets</p>
+              <p class="rejected"><strong>Rejected:</strong> a flat, single-list dashboard — faster to ship, and favoured internally early on.</p>
+              <div class="findings-quotes findings-quotes--mosaic">
+                <blockquote class="findings-card findings-card--quote findings-card--accent">
+                  <p>“Too much Raisin, too little me — I expect to see my product upfront.”</p>
+                </blockquote>
+                <blockquote class="findings-card findings-card--quote">
+                  <p>“Treemap is difficult to understand for me, not intuitive — a doughnut or a bar chart would be more understandable for me.”</p>
+                </blockquote>
+                <blockquote class="findings-card findings-card--quote">
+                  <p>“Would like to see positive news like ‘Since the last login you earned xxx €…’ or ‘10k are available again — you can invest now.’”</p>
+                </blockquote>
+                <blockquote class="findings-card findings-card--quote">
+                  <p>“Country rating is important to me; Raisin should ask me about my preference.”</p>
+                </blockquote>
+              </div>
+              <p class="findings-block__scale">38 participants · 2 rounds · 🇩🇪 🇳🇱 🇬🇧 🇪🇸 🇫🇷</p>
+
+              <div class="wealth-hub-segments" aria-label="Customer segments tested across research rounds">
+                <figure class="wealth-hub-segments__item">
+                  <img src="raisin-assets/assets/img/proof/persona-hnw.webp" alt="HNW Core — high-net-worth participant segment" loading="lazy" data-lightbox>
+                </figure>
+                <figure class="wealth-hub-segments__item">
+                  <img src="raisin-assets/assets/img/proof/persona-affluent.webp" alt="Affluent Core — established saver participant segment" loading="lazy" data-lightbox>
+                </figure>
+                <figure class="wealth-hub-segments__item">
+                  <img src="raisin-assets/assets/img/proof/persona-affluent-young.webp" alt="Affluent Young — early-wealth participant segment" loading="lazy" data-lightbox>
+                </figure>
+              </div>
+
+              <div class="wealth-hub-impact" aria-label="Wealth Hub impact after MVP launch — Brand Evolution survey">
+                <p class="wealth-hub-impact__label">After MVP launch</p>
+                <p class="wealth-hub-impact__meta">Brand Evolution survey · ~1,900 respondents · DE / NL / ES / PL</p>
+                <p class="wealth-hub-impact__bridge">Tested across three segments pre-launch; confirmed at scale post-launch.</p>
+                <div class="wealth-hub-impact__metrics">
+                  <div class="wealth-hub-impact__item">
+                    <div class="wealth-hub-impact__value mono-stat">Strong majority</div>
+                    <p class="wealth-hub-impact__desc">Report they can better understand and manage their wealth — full breakdown in Proof</p>
+                  </div>
+                  <div class="wealth-hub-impact__item">
+                    <div class="wealth-hub-impact__value mono-stat">Strong positive shift</div>
+                    <p class="wealth-hub-impact__desc">Dashboard / design NPS moved clearly positive across DE, NL, ES, and PL</p>
+                  </div>
+                </div>
+                <div class="wealth-hub-impact__quotes">
+                  <blockquote class="wealth-hub-impact__quote">
+                    <p>“Everything works great. I especially like the drill-down graphics — Overview → Fixed deposit → individual bank. That’s how every website should work.”</p>
+                    <footer class="wealth-hub-impact__quote-source">🇩🇪 Germany · Brand Evolution survey</footer>
+                  </blockquote>
+                  <blockquote class="wealth-hub-impact__quote">
+                    <p>“At first glance it’s excellent: everything you need is right there, and it’s very intuitive.”</p>
+                    <footer class="wealth-hub-impact__quote-source">🇪🇸 Spain · Brand Evolution survey</footer>
+                  </blockquote>
+                </div>
+              </div>
+
+              <aside class="enablement-callout enablement-surface" aria-label="Enablement — first multi-market user research">
+                <p class="enablement-label">
+                  <svg class="enablement-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                  Enablement
+                </p>
+                <p class="enablement-surface__title">Raisin's first user research beyond Germany — part of the Wealth Hub programme.</p>
+                <p class="enablement-surface__text">Until this point, user studies were rare and German-only. The Wealth Hub work pushed to recruit across five markets; I ran sessions, notes, and synthesis end-to-end on Miro, using Miro AI to accelerate clustering. It set the precedent that a European product gets tested by European customers, not just the home market.</p>
+                <p class="enablement-surface__stat">First multi-market study · manual synthesis, AI-assisted clustering</p>
+              </aside>
+
+              <aside class="enablement-callout enablement-surface" aria-label="Enablement — first structured design critique">
+                <p class="enablement-label">
+                  <svg class="enablement-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                  Enablement
+                </p>
+                <p class="enablement-surface__title">Raisin's first structured design critique — part of the Wealth Hub programme.</p>
+                <p class="enablement-surface__text">Critiques weren't happening. I ran the first one on the dashboard work — research rounds, workshop outputs, and the hierarchy decision — to show the team what evidence-led critique looks like in 30 minutes.</p>
+                <p class="enablement-surface__stat">Two critiques in the first three months · now a recurring ritual</p>
+                <p class="enablement-surface__rejected"><strong>Rejected:</strong> ad-hoc feedback scattered across DMs instead of a shared, repeatable format.</p>
+              </aside>
+            </div>
+            <figure class="wealth-hub-layout__visual">
+              <div class="wealth-hub-layout__stack">
+                <div class="wealth-hub-layout__media-frame wealth-hub-layout__media-frame--video">
+                  <video data-src="raisin-assets/assets/video/proof/wireframe-solution.mp4" muted loop playsinline data-autoplay-inview preload="none" title="Wireframe solution"></video>
+                </div>
+                <div class="wealth-hub-layout__media-frame wealth-hub-layout__media-frame--image">
+                  <img src="raisin-assets/assets/img/dashboard-web/journey.png" alt="Research journey — two rounds, stakeholder workshops, and organizing principles" loading="lazy" data-lightbox>
+                </div>
+              </div>
+            </figure>
+          </div>
+
+          <div class="wealth-hub-systemized period-split period-split--50-50 reveal" aria-label="Product colour map">
+            <div class="period-split__main">
+              <p class="beat__eyebrow">Wealth Hub · systems</p>
+              <h3 class="beat__title">A colour map for light, dark, and twelve markets.</h3>
+              <p class="beat__text">The hierarchy needed more than layout — each asset class needed a distinct, accessible colour identity that held up across markets and themes. Savings in blue, investments in amber, retirement in green — mapped token-by-token, with rules for savings-only markets where the same hues remap to product types. Documented in Confluence so engineering, markets, and design shipped from one source.</p>
+              <p class="beat__stat">12 markets · 3 market-type rules · light + dark token specs</p>
+              <div class="semantic-strip" aria-label="Product colour map — market types">
+                <div class="semantic-strip__tier">
+                  <p class="semantic-strip__label">All products</p>
+                  <div class="semantic-strip__items"><span>Savings</span><span>Investment</span><span>Retirement</span></div>
+                </div>
+                <div class="semantic-strip__tier">
+                  <p class="semantic-strip__label">Savings + investment</p>
+                  <div class="semantic-strip__items"><span>Blue</span><span>Yellow</span></div>
+                </div>
+                <div class="semantic-strip__tier">
+                  <p class="semantic-strip__label">Savings-only</p>
+                  <div class="semantic-strip__items"><span>Fix term</span><span>Overnight</span><span>Notice</span></div>
+                </div>
+              </div>
+              <aside class="enablement-callout enablement-surface beat__enablement" aria-label="Enablement — product colour map">
+                <p class="enablement-label">
+                  <svg class="enablement-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                  Enablement
+                </p>
+                <p class="enablement-surface__title">Turned a brand debate into a decision record.</p>
+                <p class="enablement-surface__text">Product, markets, and engineering each had their own interpretation of what a hue meant. As part of the Wealth Hub programme, I led iterations, held a design point of view, and documented the rules in Confluence — which categories get which hues, how savings-only markets remap them, how child items inherit shades in donuts. Anyone shipping product UI could reference the doc instead of reopening the conversation.</p>
+                <p class="enablement-surface__stat">Confluence · Figma colour maps · reused across tribes</p>
+              </aside>
+            </div>
+            <figure class="period-split__visual">
+              <img src="raisin-assets/assets/img/dashboard-web/color-map-light.webp" alt="Product colour map — market types, hierarchy, and landing-page application (light theme)" loading="lazy" data-lightbox>
+            </figure>
+          </div>
+        </article>
+
+        <article class="beat beat--email reveal">
+          <div class="email-layout" aria-label="Email as a product">
+            <figure class="email-layout__visual">
+              <img src="raisin-assets/assets/img/emails/overview.webp" alt="Governed email system — marketing and transactional templates across use cases" loading="lazy" data-lightbox>
+            </figure>
+            <div class="email-layout__main">
+              <p class="beat__eyebrow">Email as a product</p>
+              <h3 class="beat__title">From one-off reskins to a governed email system.</h3>
+              <p class="beat__text">Email was a pile of one-off reskins with no shared point of view. I mapped how competitors and adjacent fintechs handled transactional vs. marketing email, then rebuilt the surface as a governed, atomic system — collecting the distinct use cases first and designing for each, so nothing had to be compromised on content. Through implementation I bridged the gap between the target state and what Bloomreach could actually render, and carried the same system into the Weblayer templates.</p>
+              <p class="beat__stat">Master-template concept · spans every marketing &amp; transactional use case</p>
+              <p class="rejected"><strong>Rejected:</strong> one more one-off template instead of a system.</p>
+              <aside class="enablement-callout enablement-surface" aria-label="Enablement — Dev QA template from email">
+                <p class="enablement-label">
+                  <svg class="enablement-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                  Enablement
+                </p>
+                <p class="enablement-surface__title">Email QA sparked the team's Dev QA template.</p>
+                <p class="enablement-surface__text">QAing templates in Bloomreach surfaced the same gaps every round — rendering, spacing, links, variants. I turned that checklist into a reusable template other designers could run with engineering.</p>
+                <p class="enablement-surface__stat">Born from email · reused across product surfaces</p>
+              </aside>
+            </div>
+          </div>
+        </article>
+
+        <article class="beat beat--wow beat--wow-figma reveal">
+          <div class="wow-beat">
+            <div class="wow-beat__carousel" aria-hidden="true">
+              <div class="wow-beat__rows">
+                <div class="wow-beat__row">
+                  <div class="wow-beat__marquee-track wow-beat__marquee-track--rtl">
+                    <div class="wow-beat__marquee-set">
+                      <div class="wow-beat__slide" style="--slide-ar: 4352 / 2672">
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/wow/figma-02.webp" alt="" width="1920" height="1179"></div>
+                      </div>
+                      <div class="wow-beat__slide" style="--slide-ar: 4352 / 2672">
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/wow/figma-03.webp" alt="" width="1920" height="1179"></div>
+                      </div>
+                      <div class="wow-beat__slide" style="--slide-ar: 4352 / 2672">
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/wow/figma-04.webp" alt="" width="1920" height="1179"></div>
+                      </div>
+                      <div class="wow-beat__slide" style="--slide-ar: 4352 / 2672">
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/wow/figma-05.webp" alt="" width="1920" height="1179"></div>
+                      </div>
+                      <div class="wow-beat__slide" style="--slide-ar: 1919 / 1041">
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/wow/workshop.webp" alt="" width="1919" height="1041"></div>
+                      </div>
+                      <div class="wow-beat__slide" style="--slide-ar: 3526 / 3356">
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/wow/cover-component.png" alt="" width="1800" height="1713"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="wow-beat__row">
+                  <div class="wow-beat__marquee-track wow-beat__marquee-track--ltr">
+                    <div class="wow-beat__marquee-set">
+                      <div class="wow-beat__slide" style="--slide-ar: 1688 / 3356">
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/wow/page-setup.png" alt="" width="1688" height="3356"></div>
+                      </div>
+                      <div class="wow-beat__slide" style="--slide-ar: 2367 / 3356">
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/wow/tables-links.png" alt="" width="2367" height="3356"></div>
+                      </div>
+                      <div class="wow-beat__slide" style="--slide-ar: 2906 / 3356">
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/wow/status-quo.png" alt="" width="2906" height="3356"></div>
+                      </div>
+                      <div class="wow-beat__slide" style="--slide-ar: 2906 / 3356">
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/wow/stickers.png" alt="" width="2906" height="3356"></div>
+                      </div>
+                      <div class="wow-beat__slide" style="--slide-ar: 3915 / 3356">
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/wow/discovery-tools.png" alt="" width="3915" height="3356"></div>
+                      </div>
+                      <div class="wow-beat__slide" style="--slide-ar: 3200 / 1718">
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/wow/workshop-07.webp" alt="" width="1920" height="1031"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="wow-beat__scrim" aria-hidden="true"></div>
+            <div class="wow-beat__content">
+              <p class="beat__eyebrow">Ways of Working on Figma</p>
+              <h3 class="beat__title">Upgraded to Figma. File organisation hadn't caught up.</h3>
+              <p class="beat__text">When the design team moved from Sketch to Figma, the tooling changed but shared files didn't — covers, page setup, and frames were still inconsistent. A few designers had already started working with a similar structure. I hosted a retro so we could name what wasn't working, then turned the answers into one duplicable file. It's since become how the team starts every project.</p>
+              <p class="beat__stat">Team standard · confirmed in Q4 2024 retro</p>
+              <p class="rejected"><strong>Rejected:</strong> a guidelines doc for a problem the team hadn't agreed on yet.</p>
+            </div>
+          </div>
+        </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================== PERIOD 02 ============================== -->
+<section class="section period period--alt" id="period-2" data-period="period-2">
+  <div class="container">
+    <header class="period__head period__head--split period__head--thick-rule reveal">
+      <div class="period__head-copy">
+        <div class="period__meta">
+          <span class="period__num">02</span>
+          <div class="chip-row">
+            <span class="chip">B2C</span>
+            <span class="chip">Growth tribe</span>
+          </div>
+        </div>
+        <h2 class="h-display h-2 period__title">Better product, better process</h2>
+        <p class="lede period__thesis">The dashboard needed the controls customers were actually asking for, and the team needed to stop relying on intuition. I shipped post-MVP features, ran Raisin's first controlled design experiment — and wrote the ways of working and research playbooks the org still runs on.</p>
+      </div>
+      <figure class="period__head-visual">
+        <img src="raisin-assets/assets/img/brand/iso-dash.webp" alt="Dashboard — isometric view" loading="lazy" data-lightbox>
+      </figure>
+    </header>
+    <hr class="rule rule--thick" aria-hidden="true">
+
+    <div class="period__story">
+
+        <article class="beat beat--post-mvp reveal">
+          <div class="post-mvp-intro">
+            <div class="beat__head post-mvp-intro__copy">
+              <p class="beat__eyebrow">Web dashboard · post-MVP</p>
+              <h3 class="beat__title">MVP shipped the hierarchy. Customers still had different questions.</h3>
+              <p class="beat__text">After Wealth Hub went live across 12 markets, the MVP launch survey showed customers still needed more — ways to sort deposits, see holdings by bank, monitor country-level exposure, and track maturities on a timeline. I mapped those signals to a post-MVP plan, then shipped in sequence: filtering first, a zero-state experiment second, Raisin Wrapped third.</p>
+              <p class="beat__stat">3 post-MVP releases · each measured against the framework</p>
+              <aside class="enablement-callout enablement-surface post-mvp-measurement" aria-label="Enablement — UX measurement framework">
+                <p class="enablement-label">
+                  <svg class="enablement-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                  Enablement
+                </p>
+                <p class="enablement-surface__title">Wrote how we'd know if the dashboard was working.</p>
+                <p class="enablement-surface__text">Business KPIs → product metrics → experience metrics — the frame Brand Evolution and design NPS were read against.</p>
+                <div class="pyramid pyramid--compact pyramid--post-mvp">
+                  <div class="pyramid__tier pyramid__tier--business">
+                    <p class="pyramid__label">Business KPIs</p>
+                    <div class="pyramid__items"><span>AuM (assets under management)</span><span>NPS</span><span>Retention</span></div>
+                  </div>
+                  <div class="pyramid__tier pyramid__tier--product">
+                    <p class="pyramid__label">Product</p>
+                    <div class="pyramid__items"><span>Design NPS</span><span>Adoption</span><span>Task completion</span></div>
+                  </div>
+                  <div class="pyramid__tier pyramid__tier--experience">
+                    <p class="pyramid__label">Experience</p>
+                    <div class="pyramid__items"><span>Task success</span><span>Time-on-task</span><span>Error rate</span></div>
+                  </div>
+                </div>
+              </aside>
+            </div>
+
+            <div class="post-mvp-survey" aria-label="MVP launch survey feedback">
+              <p class="post-mvp-survey__label">MVP launch survey · top customer signals</p>
+              <div class="post-mvp-grid post-mvp-grid--signals">
+                <article class="post-mvp-feedback">
+                  <h4 class="post-mvp-feedback__title">Country-level overview</h4>
+                  <p class="post-mvp-feedback__quote">“Show utilization per country so customers can monitor deposit-insurance limits.” <span class="post-mvp-feedback__source">Germany</span></p>
+                </article>
+                <article class="post-mvp-feedback">
+                  <h4 class="post-mvp-feedback__title">Summary by bank</h4>
+                  <p class="post-mvp-feedback__quote">“A summary of totals showing how much I have invested per bank.” <span class="post-mvp-feedback__source">Germany</span></p>
+                </article>
+                <article class="post-mvp-feedback">
+                  <h4 class="post-mvp-feedback__title">Sorting &amp; maturity</h4>
+                  <p class="post-mvp-feedback__quote">“The dashboard should show the next maturing deposit first, not in random order.” <span class="post-mvp-feedback__source">Netherlands</span></p>
+                </article>
+                <article class="post-mvp-feedback">
+                  <h4 class="post-mvp-feedback__title">Year in review</h4>
+                  <p class="post-mvp-feedback__quote">“A calendar view showing when the next interest payments are due.” <span class="post-mvp-feedback__source">Germany</span></p>
+                </article>
+              </div>
+            </div>
+
+            <p class="post-mvp-bridge">Shipped in response — in chronological order:</p>
+          </div>
+
+          <div class="post-mvp-grid post-mvp-grid--releases reveal-stagger" aria-label="Post-MVP feature releases">
+            <article class="post-mvp-card">
+              <p class="post-mvp-card__label">Filtering</p>
+              <p class="post-mvp-card__need">Customers didn't all read their money the same way — by category, all deposits, or country, with availability layered in.</p>
+              <p class="post-mvp-card__text">Product ship — category, deposits, or country, plus availability, spec'd to production.</p>
+              <aside class="post-mvp-outcome" aria-label="Filtering — success measure and impact">
+                <div class="post-mvp-outcome__block">
+                  <p class="post-mvp-outcome__label">Success measure</p>
+                  <p class="post-mvp-outcome__value">View switching · availability</p>
+                </div>
+                <div class="post-mvp-outcome__block post-mvp-outcome__block--impact">
+                  <p class="post-mvp-outcome__label">Impact</p>
+                  <p class="post-mvp-outcome__value">All deposits led adoption</p>
+                  <p class="post-mvp-outcome__desc">The most demanded switch — users took to the per-bank view quickly across category, deposits, and country lenses.</p>
+                </div>
+              </aside>
+              <figure class="post-mvp-card__visual post-mvp-card__visual--duo">
+                <img src="raisin-assets/assets/img/brand/all-deposits.webp" alt="Dashboard filtering — all deposits view" loading="lazy" data-lightbox>
+                <img src="raisin-assets/assets/img/brand/deposits-category.webp" alt="Dashboard filtering — category view" loading="lazy" data-lightbox>
+              </figure>
+            </article>
+            <article class="post-mvp-card">
+              <p class="post-mvp-card__label">Zero-state</p>
+              <p class="post-mvp-card__need">New sign-ups landed on a blank screen with nothing to orient them before their first deposit.</p>
+              <p class="post-mvp-card__text">Feature-flag A/B test — donut-carousel vs. empty dashboard in ES &amp; NL.</p>
+              <aside class="post-mvp-outcome" aria-label="Zero-state — success measure and impact">
+                <div class="post-mvp-outcome__block">
+                  <p class="post-mvp-outcome__label">Success measure</p>
+                  <p class="post-mvp-outcome__value">First-deposit conversion · ES &amp; NL</p>
+                </div>
+                <div class="post-mvp-outcome__block post-mvp-outcome__block--impact">
+                  <p class="post-mvp-outcome__label">Impact</p>
+                  <p class="post-mvp-outcome__value">Significant uplift · variant shipped</p>
+                  <p class="post-mvp-outcome__desc">Controlled A/B at scale — the animated carousel won; rolled out as the default empty state.</p>
+                </div>
+              </aside>
+              <figure class="post-mvp-card__visual post-mvp-card__visual--video">
+                <video data-src="raisin-assets/assets/video/dashboard-web/zero-state-demo.mp4" muted loop playsinline data-autoplay-inview data-lightbox preload="none" title="Zero-state donut carousel"></video>
+              </figure>
+            </article>
+            <article class="post-mvp-card">
+              <p class="post-mvp-card__label">Raisin Wrapped</p>
+              <p class="post-mvp-card__need">A moment that reflected their year of saving — not the brand talking about itself.</p>
+              <p class="post-mvp-card__text">Design initiative — six-screen year-in-review from concept to launch.</p>
+              <aside class="post-mvp-outcome" aria-label="Raisin Wrapped — success measure and impact">
+                <div class="post-mvp-outcome__block">
+                  <p class="post-mvp-outcome__label">Success measure</p>
+                  <p class="post-mvp-outcome__value">Reach · completion · awareness</p>
+                </div>
+                <div class="post-mvp-outcome__block post-mvp-outcome__block--impact">
+                  <p class="post-mvp-outcome__label">Impact</p>
+                  <p class="post-mvp-outcome__value">Positive reception · soft AuM lift</p>
+                  <p class="post-mvp-outcome__desc">Six-screen year-in-review at scale — strong engagement, directional growth signal, design-owned end-to-end.</p>
+                </div>
+              </aside>
+              <figure class="post-mvp-card__visual post-mvp-card__visual--wrapped">
+                <img src="raisin-assets/assets/img/brand/wrapped-1-welcome.png" alt="Raisin Wrapped — welcome screen" loading="lazy" data-lightbox>
+                <img src="raisin-assets/assets/img/brand/wrapped-2-deposit.png" alt="Raisin Wrapped — deposits over the year" loading="lazy" data-lightbox>
+                <img src="raisin-assets/assets/img/brand/wrapped-ipp.webp" alt="Raisin Wrapped — IPP screen" loading="lazy" data-lightbox>
+                <img src="raisin-assets/assets/img/brand/wrapped-3-top-banks.png" alt="Raisin Wrapped — top banks screen" loading="lazy" data-lightbox>
+                <img src="raisin-assets/assets/img/brand/wrapped-6-outro.png" alt="Raisin Wrapped — closing screen" loading="lazy" data-lightbox>
+              </figure>
+            </article>
+          </div>
+
+          <p class="rejected"><strong>Rejected:</strong> shipping each release as a one-off, without a shared view of what customers still needed.</p>
+        </article>
+
+        <article class="beat beat--wow beat--craft reveal">
+          <div class="wow-beat">
+            <div class="wow-beat__carousel" aria-hidden="true">
+              <div class="wow-beat__rows">
+                <div class="wow-beat__row">
+                  <div class="wow-beat__marquee-track wow-beat__marquee-track--ltr">
+                    <div class="wow-beat__marquee-set">
+                      <div class="wow-beat__slide" style="--slide-ar: 16 / 9">
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/prototyping/principal-of-prototyping.webp" alt="" width="1920" height="1179"></div>
+                      </div>
+                      <div class="wow-beat__slide" style="--slide-ar: 16 / 9">
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/prototyping/slide-2.webp" alt="" width="1920" height="1179"></div>
+                      </div>
+                      <div class="wow-beat__slide" style="--slide-ar: 16 / 9">
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/prototyping/slide-3.webp" alt="" width="1920" height="1179"></div>
+                      </div>
+                      <div class="wow-beat__slide" style="--slide-ar: 16 / 9">
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/prototyping/slide-4.webp" alt="" width="1920" height="1179"></div>
+                      </div>
+                      <div class="wow-beat__slide" style="--slide-ar: 16 / 9">
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/prototyping/slide-5.webp" alt="" width="1920" height="1179"></div>
+                      </div>
+                      <div class="wow-beat__slide" style="--slide-ar: 16 / 9">
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/prototyping/slide-6.webp" alt="" width="1920" height="1179"></div>
+                      </div>
+                      <div class="wow-beat__slide" style="--slide-ar: 16 / 9">
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/prototyping/slide-7.webp" alt="" width="1920" height="1179"></div>
+                      </div>
+                      <div class="wow-beat__slide" style="--slide-ar: 16 / 9">
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/prototyping/slide-8.webp" alt="" width="1920" height="1179"></div>
+                      </div>
+                      <div class="wow-beat__slide" style="--slide-ar: 16 / 9">
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/prototyping/slide-12.webp" alt="" width="1920" height="1179"></div>
+                      </div>
+                    </div>
+                    <div class="wow-beat__marquee-set" aria-hidden="true">
+                      <div class="wow-beat__slide" style="--slide-ar: 16 / 9">
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/prototyping/principal-of-prototyping.webp" alt="" width="1920" height="1179"></div>
+                      </div>
+                      <div class="wow-beat__slide" style="--slide-ar: 16 / 9">
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/prototyping/slide-2.webp" alt="" width="1920" height="1179"></div>
+                      </div>
+                      <div class="wow-beat__slide" style="--slide-ar: 16 / 9">
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/prototyping/slide-3.webp" alt="" width="1920" height="1179"></div>
+                      </div>
+                      <div class="wow-beat__slide" style="--slide-ar: 16 / 9">
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/prototyping/slide-4.webp" alt="" width="1920" height="1179"></div>
+                      </div>
+                      <div class="wow-beat__slide" style="--slide-ar: 16 / 9">
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/prototyping/slide-5.webp" alt="" width="1920" height="1179"></div>
+                      </div>
+                      <div class="wow-beat__slide" style="--slide-ar: 16 / 9">
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/prototyping/slide-6.webp" alt="" width="1920" height="1179"></div>
+                      </div>
+                      <div class="wow-beat__slide" style="--slide-ar: 16 / 9">
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/prototyping/slide-7.webp" alt="" width="1920" height="1179"></div>
+                      </div>
+                      <div class="wow-beat__slide" style="--slide-ar: 16 / 9">
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/prototyping/slide-8.webp" alt="" width="1920" height="1179"></div>
+                      </div>
+                      <div class="wow-beat__slide" style="--slide-ar: 16 / 9">
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/prototyping/slide-12.webp" alt="" width="1920" height="1179"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="wow-beat__row">
+                  <div class="wow-beat__marquee-track wow-beat__marquee-track--rtl">
+                    <div class="wow-beat__marquee-set">
+                      <div class="wow-beat__slide" style="--slide-ar: 16 / 9">
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/prototyping/figma-make-01.webp" alt="" width="883" height="942"></div>
+                      </div>
+                      <div class="wow-beat__slide" style="--slide-ar: 16 / 9">
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/prototyping/figma-make-02.webp" alt="" width="883" height="942"></div>
+                      </div>
+                      <div class="wow-beat__slide" style="--slide-ar: 16 / 9">
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/prototyping/figma-make-04.webp" alt="" width="884" height="942"></div>
+                      </div>
+                      <div class="wow-beat__slide" style="--slide-ar: 16 / 9">
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/prototyping/figma-make-05.webp" alt="" width="883" height="942"></div>
+                      </div>
+                      <div class="wow-beat__slide" style="--slide-ar: 16 / 9">
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/prototyping/figma-make-06.webp" alt="" width="883" height="942"></div>
+                      </div>
+                      <div class="wow-beat__slide" style="--slide-ar: 16 / 9">
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/prototyping/figma-make-07.webp" alt="" width="883" height="942"></div>
+                      </div>
+                      <div class="wow-beat__slide" style="--slide-ar: 16 / 9">
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/prototyping/figma-make-08.webp" alt="" width="883" height="942"></div>
+                      </div>
+                      <div class="wow-beat__slide" style="--slide-ar: 16 / 9">
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/prototyping/figma-make-09.webp" alt="" width="884" height="942"></div>
+                      </div>
+                      <div class="wow-beat__slide" style="--slide-ar: 16 / 9">
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/prototyping/figma-make-11.webp" alt="" width="883" height="942"></div>
+                      </div>
+                      <div class="wow-beat__slide" style="--slide-ar: 16 / 9">
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/prototyping/figma-make-12.webp" alt="" width="883" height="942"></div>
+                      </div>
+                    </div>
+                    <div class="wow-beat__marquee-set" aria-hidden="true">
+                      <div class="wow-beat__slide" style="--slide-ar: 16 / 9">
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/prototyping/figma-make-01.webp" alt="" width="883" height="942"></div>
+                      </div>
+                      <div class="wow-beat__slide" style="--slide-ar: 16 / 9">
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/prototyping/figma-make-02.webp" alt="" width="883" height="942"></div>
+                      </div>
+                      <div class="wow-beat__slide" style="--slide-ar: 16 / 9">
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/prototyping/figma-make-04.webp" alt="" width="884" height="942"></div>
+                      </div>
+                      <div class="wow-beat__slide" style="--slide-ar: 16 / 9">
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/prototyping/figma-make-05.webp" alt="" width="883" height="942"></div>
+                      </div>
+                      <div class="wow-beat__slide" style="--slide-ar: 16 / 9">
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/prototyping/figma-make-06.webp" alt="" width="883" height="942"></div>
+                      </div>
+                      <div class="wow-beat__slide" style="--slide-ar: 16 / 9">
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/prototyping/figma-make-07.webp" alt="" width="883" height="942"></div>
+                      </div>
+                      <div class="wow-beat__slide" style="--slide-ar: 16 / 9">
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/prototyping/figma-make-08.webp" alt="" width="883" height="942"></div>
+                      </div>
+                      <div class="wow-beat__slide" style="--slide-ar: 16 / 9">
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/prototyping/figma-make-09.webp" alt="" width="884" height="942"></div>
+                      </div>
+                      <div class="wow-beat__slide" style="--slide-ar: 16 / 9">
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/prototyping/figma-make-11.webp" alt="" width="883" height="942"></div>
+                      </div>
+                      <div class="wow-beat__slide" style="--slide-ar: 16 / 9">
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/prototyping/figma-make-12.webp" alt="" width="883" height="942"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="wow-beat__scrim" aria-hidden="true"></div>
+            <div class="wow-beat__content">
+              <p class="beat__eyebrow">Prototyping · craft</p>
+              <h3 class="beat__title">A shared bar for prototyping — then AI raised the ceiling.</h3>
+              <p class="beat__text">Principles of Prototyping set what “prototyped” means at each fidelity. Figma Make × AI — co-led with Product — added boilerplates, examples, and guidelines showcased across Design and Product sessions.</p>
+              <p class="beat__stat">12-slide workshop · cross-functional AI prototyping · ongoing coaching</p>
+              <aside class="enablement-callout enablement-surface enablement-callout--on-dark" aria-label="Enablement — prototyping and AI">
+                <p class="enablement-label">
+                  <svg class="enablement-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                  Enablement
+                </p>
+                <p class="enablement-surface__title">Figma Make × AI + coaching on the gap that mattered.</p>
+                <p class="enablement-surface__text">Paired a senior designer on prototyping craft and discovery alongside the AI rollout — foundations first, then autonomy.</p>
+              </aside>
+            </div>
+          </div>
+        </article>
+
+        <article class="beat beat--research-model reveal" hidden>
+          <div class="period-split period-split--50-50" aria-label="Research operating model">
+            <div class="period-split__main">
+              <p class="beat__eyebrow">Research · operating model</p>
+              <h3 class="beat__title">Wealth Hub proved the value. The team still needed a way to run the next study.</h3>
+              <p class="beat__text">User studies had been rare and German-only. Wealth Hub changed that — multi-market interviews, synthesis, stakeholder alignment. The MVP launch survey showed structured feedback at scale. I authored the research operating model: when to use interviews vs surveys, how participants are recruited through Bloomreach, hypothesis-first briefs, synthesis in Miro, and the compliance layer so legal and markets could sign off once, not per study.</p>
+              <p class="beat__stat">6-step workflow · Bloomreach recruitment · Confluence playbook</p>
+              <div class="workflow-strip" aria-label="Research operating workflow">
+                <span class="workflow-strip__step">Brief</span>
+                <span class="workflow-strip__step">Hypotheses</span>
+                <span class="workflow-strip__step">Recruit</span>
+                <span class="workflow-strip__step">Interview</span>
+                <span class="workflow-strip__step">Incentivise</span>
+                <span class="workflow-strip__step">Synthesize</span>
+              </div>
+              <aside class="enablement-callout enablement-surface beat__enablement" aria-label="Enablement — research operating model">
+                <p class="enablement-label">
+                  <svg class="enablement-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                  Enablement
+                </p>
+                <p class="enablement-surface__title">Made research commissionable outside design.</p>
+                <p class="enablement-surface__text">Before this, running a study meant asking a designer who'd already done one. I documented sourcing, incentives, consent templates, and roles — research lead, stakeholders, decider — so product and growth could initiate validation without reinventing process. Maze was piloted next and became the default for unmoderated testing; the mobile dashboard study ran on that stack.</p>
+                <p class="enablement-surface__stat">Maze piloted → default · templates + registry · GDPR-compliant workflow</p>
+              </aside>
+            </div>
+            <figure class="period-split__visual">
+              <div class="placeholder-frame placeholder-frame--split" aria-hidden="true">
+                <p class="placeholder-frame__label">Visual pending</p>
+                <p class="placeholder-frame__text">Research operating model — workflow and toolkit excerpts</p>
+              </div>
+            </figure>
+          </div>
+        </article>
+
+        <article class="beat beat--coaching reveal" hidden>
+          <aside class="enablement-callout enablement-surface enablement-callout--flush" aria-label="Enablement — coaching">
+            <p class="enablement-label">
+              <svg class="enablement-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+              Enablement
+            </p>
+            <p class="enablement-surface__title">From sharing methods to coaching a person.</p>
+            <p class="enablement-surface__text">The ways of working made my methods visible; the playbooks made them repeatable; coaching made them transferable. First sustained 1:1 track — six months on stakeholder-facing craft, design system contribution, and defending decisions with argumentation, not deferral.</p>
+            <p class="enablement-surface__stat">6 months · mid-level designer · stakeholder-facing craft</p>
+          </aside>
+        </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================== PERIOD 03 ============================== -->
+<section class="section period" id="period-3" data-period="period-3">
+  <div class="container">
+    <header class="period__head period__head--split period__head--thick-rule reveal">
+      <div class="period__head-copy">
+        <div class="period__meta">
+          <span class="period__num">03</span>
+          <div class="chip-row">
+            <span class="chip">B2C</span>
+            <span class="chip">Growth tribe</span>
+            <span class="chip">Customer Engagement tribe</span>
+            <span class="chip chip--muted">Tribe split</span>
+          </div>
+        </div>
+        <h2 class="h-display h-2 period__title">Mobile and the horizon</h2>
+        <p class="lede period__thesis">The tribe split in two, the mobile redesign had stalled for months, and nobody had written down where the product was going. I took mobile end-to-end through a Maze study, authored the vision that gave design a horizon, and moved the team's craft bar on prototyping.</p>
+      </div>
+      <figure class="period__head-visual period__head-visual--mobile-mocks">
+        <img src="raisin-assets/assets/img/dashboard-mobile/multi-mocks.webp" alt="The redesigned mobile dashboard across nine core screens" loading="lazy" data-lightbox>
+      </figure>
+    </header>
+    <hr class="rule rule--thick" aria-hidden="true">
+
+    <div class="period__story">
+
+        <article class="beat beat--mobile-journey reveal">
+          <div class="device-story mobile-journey" aria-label="Mobile dashboard redesign journey">
+            <div class="device-story__row mobile-journey__row">
+              <div class="device-story__copy">
+                <p class="device-story__eyebrow">Desk research</p>
+                <h4 class="device-story__title">Read the stall before redesigning.</h4>
+                <p class="device-story__text">Interaction data challenged the default plan: 25% donut, 42% portfolio-card, 33% tabs — evidence to push back on mobile-web replication before ideation started.</p>
+              </div>
+              <figure class="mobile-journey__visual mobile-journey__visual--research">
+                <img src="raisin-assets/assets/img/dashboard-mobile/mobile-research.webp" alt="Mobile dashboard desk research — interaction data" loading="lazy" data-lightbox>
+              </figure>
+            </div>
+
+            <div class="device-story__row device-story__row--reverse mobile-journey__row">
+              <div class="device-story__copy">
+                <p class="device-story__eyebrow">Web ↔ mobile parity</p>
+                <h4 class="device-story__title">Re-ground, don't restart.</h4>
+                <p class="device-story__text">Took over a stalled programme and drove stakeholders toward mobile-first ideation — using what existed, not throwing it away.</p>
+              </div>
+              <figure class="mobile-journey__visual mobile-journey__visual--compare">
+                <img src="raisin-assets/assets/img/dashboard-mobile/compare.webp" alt="Web and mobile dashboard parity comparison" loading="lazy" data-lightbox>
+              </figure>
+            </div>
+
+            <div class="device-story__row mobile-journey__row">
+              <div class="device-story__copy">
+                <p class="device-story__eyebrow">IA + concept</p>
+                <h4 class="device-story__title">Four tabs, one visual idea.</h4>
+                <p class="device-story__text">Delivered Overview, Portfolio, Wallet, and Needs Attention end-to-end — plus entry cards, lists, and the app shell. Light and dark were designed in parallel, using colour tokens from the Wealth Hub system so the concept scaled across themes without a second pass. The allocation-rings visual landed through multiple stakeholder rounds, design critique, and aesthetic iteration in prototype — not a single static frame.</p>
+                <aside class="enablement-callout enablement-surface beat__enablement" aria-label="Enablement — One Data program">
+                  <p class="enablement-label">
+                    <svg class="enablement-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                    Enablement
+                  </p>
+                  <p class="enablement-surface__title">One Data — consistent numbers for stakeholder demos.</p>
+                  <p class="enablement-surface__text">Started for mobile stakeholder demos — shared portfolio simulation with Figma variable modes so prototype figures held across tabs, personas, and themes. Later published org-wide as the standard prototyping dataset.</p>
+                  <p class="enablement-surface__stat">4 persona modes · Figma variable JSON</p>
+                </aside>
+              </div>
+              <div class="tabs-compare mobile-journey__visual mobile-journey__visual--tabs" data-tabs-compare aria-label="Four-tab mobile IA — light and dark compare">
+                <div class="tabs-compare__nav" role="tablist" aria-label="Dashboard tabs">
+                  <button type="button" class="tabs-compare__tab is-active" role="tab" id="tabs-compare-tab-0" aria-selected="true" aria-controls="tabs-compare-panel-0" data-tab="0">Overview</button>
+                  <button type="button" class="tabs-compare__tab" role="tab" id="tabs-compare-tab-1" aria-selected="false" aria-controls="tabs-compare-panel-1" data-tab="1" tabindex="-1">Portfolio</button>
+                  <button type="button" class="tabs-compare__tab" role="tab" id="tabs-compare-tab-2" aria-selected="false" aria-controls="tabs-compare-panel-2" data-tab="2" tabindex="-1">Needs Attention</button>
+                  <button type="button" class="tabs-compare__tab" role="tab" id="tabs-compare-tab-3" aria-selected="false" aria-controls="tabs-compare-panel-3" data-tab="3" tabindex="-1">Wallet</button>
+                </div>
+                <div class="tabs-compare__panels">
+                  <div class="tabs-compare__panel" role="tabpanel" id="tabs-compare-panel-0" aria-labelledby="tabs-compare-tab-0" data-tab-panel="0">
+                    <div class="compare compare--tabs">
+                      <div class="compare__after">
+                        <img src="raisin-assets/assets/img/dashboard-mobile/tabs/d1.webp" alt="Overview — dark mode" loading="lazy">
+                      </div>
+                      <div class="compare__before">
+                        <img src="raisin-assets/assets/img/dashboard-mobile/tabs/l1.webp" alt="Overview — light mode" loading="lazy">
+                      </div>
+                      <div class="compare__handle" aria-hidden="true"></div>
+                    </div>
+                  </div>
+                  <div class="tabs-compare__panel" role="tabpanel" id="tabs-compare-panel-1" aria-labelledby="tabs-compare-tab-1" data-tab-panel="1" hidden>
+                    <div class="compare compare--tabs">
+                      <div class="compare__after">
+                        <img src="raisin-assets/assets/img/dashboard-mobile/tabs/d2.webp" alt="Portfolio — dark mode" loading="lazy">
+                      </div>
+                      <div class="compare__before">
+                        <img src="raisin-assets/assets/img/dashboard-mobile/tabs/l2.webp" alt="Portfolio — light mode" loading="lazy">
+                      </div>
+                      <div class="compare__handle" aria-hidden="true"></div>
+                    </div>
+                  </div>
+                  <div class="tabs-compare__panel" role="tabpanel" id="tabs-compare-panel-2" aria-labelledby="tabs-compare-tab-2" data-tab-panel="2" hidden>
+                    <div class="compare compare--tabs">
+                      <div class="compare__after">
+                        <img src="raisin-assets/assets/img/dashboard-mobile/tabs/d3.webp" alt="Needs Attention — dark mode" loading="lazy">
+                      </div>
+                      <div class="compare__before">
+                        <img src="raisin-assets/assets/img/dashboard-mobile/tabs/l3.webp" alt="Needs Attention — light mode" loading="lazy">
+                      </div>
+                      <div class="compare__handle" aria-hidden="true"></div>
+                    </div>
+                  </div>
+                  <div class="tabs-compare__panel" role="tabpanel" id="tabs-compare-panel-3" aria-labelledby="tabs-compare-tab-3" data-tab-panel="3" hidden>
+                    <div class="compare compare--tabs">
+                      <div class="compare__after">
+                        <img src="raisin-assets/assets/img/dashboard-mobile/tabs/d4.webp" alt="Wallet — dark mode" loading="lazy">
+                      </div>
+                      <div class="compare__before">
+                        <img src="raisin-assets/assets/img/dashboard-mobile/tabs/l4.webp" alt="Wallet — light mode" loading="lazy">
+                      </div>
+                      <div class="compare__handle" aria-hidden="true"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="device-story__row device-story__row--reverse mobile-journey__row">
+              <div class="device-story__copy">
+                <p class="device-story__eyebrow">Maze validation</p>
+                <h4 class="device-story__title">Pressure-test, don't defend.</h4>
+                <p class="device-story__text">Ran a three-week Maze usability study end-to-end — compliance integration, execution, synthesis, retro. The integrated portfolio-card pattern reached <strong>92.9% task success</strong> vs <strong>71.4%</strong> on the tabbed alternative — enough confidence to iterate and ship. Flagged one open risk honestly: locating pending products split <strong>42.9% / 57.1%</strong> between patterns.</p>
+                <p class="beat__stat">92.9% vs 71.4% task success · validated before build</p>
+                <aside class="enablement-callout enablement-surface beat__enablement" aria-label="Enablement — research operating model">
+                  <p class="enablement-label">
+                    <svg class="enablement-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                    Enablement
+                  </p>
+                  <p class="enablement-surface__title">Research operating model — in practice on mobile.</p>
+                  <p class="enablement-surface__text">Hypothesis-first brief, Maze execution, synthesis in Miro — the playbook applied where the team needed it most.</p>
+                </aside>
+              </div>
+              <figure class="mobile-journey__visual mobile-journey__visual--maze">
+                <img src="raisin-assets/assets/img/dashboard-mobile/maze-report.webp" alt="Maze usability study — validation report" loading="lazy" data-lightbox>
+              </figure>
+            </div>
+
+            <div class="device-story__row mobile-journey__row">
+              <div class="device-story__copy">
+                <p class="device-story__eyebrow">Lifetime earnings</p>
+                <h4 class="device-story__title">Making “I'm winning” visible.</h4>
+                <p class="device-story__text">Customers couldn't see cumulative earnings across everything in one place. I initiated the direction — adding the earnings widget to the dashboard — then built it out in collaboration with the Deposits domain. Multilingual verbatims confirmed the framing: lead with one cumulative number before any per-product breakdown.</p>
+                <aside class="enablement-callout enablement-surface beat__enablement" aria-label="Enablement — Cursor coaching and feedback-loop plugin">
+                  <p class="enablement-label">
+                    <svg class="enablement-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                    Enablement
+                  </p>
+                  <p class="enablement-surface__title">Coached a co-designer on Cursor — with a feedback loop built in.</p>
+                  <p class="enablement-surface__text">Paired on vibe-coded prototyping and integrated the feedback-loop plugin: Figma-style comments on live prototypes (press c), synced as GitLab issues with file and line metadata — so PM feedback jumps straight to the exact line of code in Cursor.</p>
+                  <p class="enablement-surface__stat">Cursor coaching · feedback-loop plugin · PI-505</p>
+                </aside>
+              </div>
+              <figure class="mobile-journey__mockup mobile-journey__mockup--solo">
+                <img src="raisin-assets/assets/img/dashboard-mobile/samsung-earnings-mockup.webp" alt="Total earnings overview — lifetime earnings on mobile" loading="lazy" width="800" height="642">
+              </figure>
+            </div>
+          </div>
+        </article>
+
+        <article class="beat beat--cura reveal">
+          <div class="cura-beat">
+            <figure class="cura-beat__bg" aria-hidden="true">
+              <img src="raisin-assets/assets/img/vision/cura-bg.webp" alt="" width="1920" height="1080" loading="lazy" decoding="async">
+            </figure>
+            <div class="cura-beat__scrim" aria-hidden="true"></div>
+            <div class="cura-beat__stage">
+            <div class="cura-beat__inner">
+              <div class="cura-beat__copy reveal">
+                <p class="beat__eyebrow">Design vision · co-led with VP of Design</p>
+                <h3 class="beat__title">Design vision for where Raisin must evolve.</h3>
+                <p class="beat__text">A shift from reporting what happened to helping customers decide what to do next. Cura — our internal vision codename — makes that future tangible: personalised, contextual, and grounded in everything Raisin already knows about a saver's money.</p>
+                <p class="beat__stat">Gather → Envision → Plan workshop series · 8-slide narrative authored solo</p>
+              </div>
+            </div>
+            <div class="cura-filmstrip reveal-stagger" aria-label="Cura concept narrative — 8 slides">
+            <div class="cura-filmstrip__track cura-filmstrip__track--rtl">
+              <div class="cura-filmstrip__set">
+                <div class="cura-filmstrip__slide">
+                  <div class="cura-filmstrip__frame"><img src="raisin-assets/assets/img/vision/cura-slide-1.jpg" alt="Cura narrative slide 1" width="1800" height="1012" loading="lazy"></div>
+                </div>
+                <div class="cura-filmstrip__slide">
+                  <div class="cura-filmstrip__frame"><img src="raisin-assets/assets/img/vision/cura-slide-2.jpg" alt="Cura narrative slide 2" width="1800" height="1012" loading="lazy"></div>
+                </div>
+                <div class="cura-filmstrip__slide">
+                  <div class="cura-filmstrip__frame"><img src="raisin-assets/assets/img/vision/cura-slide-3.jpg" alt="Cura narrative slide 3" width="1800" height="1012" loading="lazy"></div>
+                </div>
+                <div class="cura-filmstrip__slide">
+                  <div class="cura-filmstrip__frame"><img src="raisin-assets/assets/img/vision/cura-slide-4.jpg" alt="Cura narrative slide 4" width="1800" height="1012" loading="lazy"></div>
+                </div>
+                <div class="cura-filmstrip__slide">
+                  <div class="cura-filmstrip__frame"><img src="raisin-assets/assets/img/vision/cura-slide-5.jpg" alt="Cura narrative slide 5" width="1800" height="1012" loading="lazy"></div>
+                </div>
+                <div class="cura-filmstrip__slide">
+                  <div class="cura-filmstrip__frame"><img src="raisin-assets/assets/img/vision/cura-slide-6.jpg" alt="Cura narrative slide 6" width="1800" height="1012" loading="lazy"></div>
+                </div>
+                <div class="cura-filmstrip__slide">
+                  <div class="cura-filmstrip__frame"><img src="raisin-assets/assets/img/vision/cura-slide-7.jpg" alt="Cura narrative slide 7" width="1800" height="1012" loading="lazy"></div>
+                </div>
+                <div class="cura-filmstrip__slide">
+                  <div class="cura-filmstrip__frame"><img src="raisin-assets/assets/img/vision/cura-slide-8.jpg" alt="Cura narrative slide 8" width="1800" height="1012" loading="lazy"></div>
+                </div>
+              </div>
+              <div class="cura-filmstrip__set" aria-hidden="true">
+                <div class="cura-filmstrip__slide">
+                  <div class="cura-filmstrip__frame"><img src="raisin-assets/assets/img/vision/cura-slide-1.jpg" alt="" width="1800" height="1012" loading="lazy"></div>
+                </div>
+                <div class="cura-filmstrip__slide">
+                  <div class="cura-filmstrip__frame"><img src="raisin-assets/assets/img/vision/cura-slide-2.jpg" alt="" width="1800" height="1012" loading="lazy"></div>
+                </div>
+                <div class="cura-filmstrip__slide">
+                  <div class="cura-filmstrip__frame"><img src="raisin-assets/assets/img/vision/cura-slide-3.jpg" alt="" width="1800" height="1012" loading="lazy"></div>
+                </div>
+                <div class="cura-filmstrip__slide">
+                  <div class="cura-filmstrip__frame"><img src="raisin-assets/assets/img/vision/cura-slide-4.jpg" alt="" width="1800" height="1012" loading="lazy"></div>
+                </div>
+                <div class="cura-filmstrip__slide">
+                  <div class="cura-filmstrip__frame"><img src="raisin-assets/assets/img/vision/cura-slide-5.jpg" alt="" width="1800" height="1012" loading="lazy"></div>
+                </div>
+                <div class="cura-filmstrip__slide">
+                  <div class="cura-filmstrip__frame"><img src="raisin-assets/assets/img/vision/cura-slide-6.jpg" alt="" width="1800" height="1012" loading="lazy"></div>
+                </div>
+                <div class="cura-filmstrip__slide">
+                  <div class="cura-filmstrip__frame"><img src="raisin-assets/assets/img/vision/cura-slide-7.jpg" alt="" width="1800" height="1012" loading="lazy"></div>
+                </div>
+                <div class="cura-filmstrip__slide">
+                  <div class="cura-filmstrip__frame"><img src="raisin-assets/assets/img/vision/cura-slide-8.jpg" alt="" width="1800" height="1012" loading="lazy"></div>
+                </div>
+              </div>
+            </div>
+            </div>
+            </div>
+          </div>
+        </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================== PERIOD 04 ============================== -->
+<section class="section period period--alt" id="period-4" data-period="period-4">
+  <div class="container">
+    <header class="period__head period__head--split period__head--split-start period__head--thick-rule reveal">
+      <div class="period__head-copy">
+        <div class="period__meta">
+          <span class="period__num">04</span>
+          <div class="chip-row">
+            <span class="chip">Design org</span>
+            <span class="chip">1 of 4 AI Champions</span>
+            <span class="chip chip--muted">Enablement</span>
+          </div>
+        </div>
+        <h2 class="h-display h-2 period__title">Design × AI</h2>
+        <p class="lede period__thesis">What started as a prototyping workshop became design's 180-day operating plan. As one of four org-wide AI Champions, I built the toolkit, shipped four tools into daily use, and coached designers until the workflows stuck.</p>
+      </div>
+      <figure class="period__head-visual period__head-visual--ai">
+        <img src="raisin-assets/assets/img/ai-enablement/program-overview.webp" alt="Design × AI programme overview" width="1600" height="1067" loading="lazy" data-lightbox>
+      </figure>
+    </header>
+    <hr class="rule rule--thick" aria-hidden="true">
+
+    <div class="period__story">
+
+        <article class="beat beat--ai-journey reveal">
+          <div class="device-story ai-journey" aria-label="Design × AI enablement journey">
+
+            <div class="device-story__row ai-journey__row">
+              <div class="device-story__copy">
+                <p class="device-story__eyebrow">Origin</p>
+                <h4 class="device-story__title">Figma Make × AI raised the ceiling. We needed realistic figures to step into the user's shoes.</h4>
+                <p class="device-story__text">Figma Make × AI proved AI belonged on the fidelity spectrum — but it was still limiting. In fintech, placeholder figures break the illusion. I built a live prototype with global search, real data, and One Data persona modes so the team could visualize flows as users would see them. One Data was published to Confluence and adopted org-wide.</p>
+                <p class="beat__stat">Live prototype → Confluence → 180-day operating plan</p>
+                <aside class="enablement-callout enablement-surface beat__enablement" aria-label="Enablement — One Data program">
+                  <p class="enablement-label">
+                    <svg class="enablement-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                    Enablement
+                  </p>
+                  <p class="enablement-surface__title">One Data — realistic figures for fintech prototyping.</p>
+                  <p class="enablement-surface__text">Built on the mobile programme's One Data work — persona-based portfolio data, consistent across tabs and themes. Published to Confluence, used org-wide.</p>
+                  <p class="enablement-surface__stat">4 persona modes · Confluence</p>
+                </aside>
+              </div>
+              <figure class="ai-journey__prototype" data-prototype-shell>
+                <div class="prototype-persona-switcher" data-prototype-personas role="tablist" aria-label="Switch One Data persona">
+                  <button type="button" class="prototype-persona-tab" role="tab" aria-selected="false" data-persona-id="retail-young">Retail Young</button>
+                  <button type="button" class="prototype-persona-tab" role="tab" aria-selected="false" data-persona-id="affluent-core">Affluent</button>
+                  <button type="button" class="prototype-persona-tab" role="tab" aria-selected="false" data-persona-id="hnw-core">HNW</button>
+                  <button type="button" class="prototype-persona-tab prototype-persona-tab--active" role="tab" aria-selected="true" data-persona-id="uhnw-core">UHNW</button>
+                </div>
+                <div class="ai-journey__visual ai-journey__visual--prototype">
+                  <iframe
+                    data-prototype-frame
+                    data-src="raisin-assets/prototypes/mobile-dashboard-ideation/index.html?embed=portfolio"
+                    title="Mobile dashboard ideation — interactive prototype"
+                    loading="lazy"
+                    tabindex="-1"
+                  ></iframe>
+                </div>
+                <figcaption class="ai-journey__prototype-caption">Working prototype — global search, realistic data, One Data personas</figcaption>
+              </figure>
+            </div>
+
+            <div class="device-story__row device-story__row--reverse ai-journey__row">
+              <div class="device-story__copy">
+                <p class="device-story__eyebrow">Programme</p>
+                <h4 class="device-story__title">A 180-day programme to match engineering velocity.</h4>
+                <p class="device-story__text">The VP of Design introduced a 180-day AI enablement programme so design could match engineering velocity. I championed design's operating plan from a design-engineering background — four Lab days a week to kick-start, then Showcase and Clinic sessions I led to make the workflows stick.</p>
+                <p class="beat__stat">Kick-start Lab → Showcase + Clinic · 180 days</p>
+                <aside class="enablement-callout enablement-surface beat__enablement" aria-label="Enablement — 180-day operating plan">
+                  <p class="enablement-label">
+                    <svg class="enablement-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                    Enablement
+                  </p>
+                  <p class="enablement-surface__title">Turned a VP mandate into design's operating plan.</p>
+                  <p class="enablement-surface__text">Documented the programme in Confluence — Lab to kick-start, Showcase to spread what worked, Clinic so no one stayed stuck. Fluency became team practice, not a personal habit.</p>
+                  <p class="enablement-surface__stat">Confluence · 180-day plan · Showcase + Clinic</p>
+                </aside>
+              </div>
+              <div class="ai-journey__visual ai-journey__visual--image">
+                <img src="raisin-assets/assets/img/ai-enablement/workflow.webp" alt="180-day AI enablement programme workflow" width="1400" height="875" loading="lazy" data-lightbox>
+              </div>
+            </div>
+
+            <div class="ai-journey__toolkit reveal" aria-label="Design × Cursor toolkit">
+              <p class="ai-section-label">Design × Cursor toolkit</p>
+              <p class="ai-toolkit-intro">The programme was mostly coaching — the toolkit supported it.</p>
+              <div class="ai-toolkit-grid reveal-stagger">
+                <div class="ai-toolkit-card">
+                  <span class="ai-toolkit-card__icon-wrap" aria-hidden="true">
+                    <svg class="ai-toolkit-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+                  </span>
+                  <p class="ai-toolkit-card__index">Setup</p>
+                  <p class="ai-toolkit-card__text">Install Cursor, connect Figma MCP, and Git basics to get a repo running.</p>
+                </div>
+                <div class="ai-toolkit-card">
+                  <span class="ai-toolkit-card__icon-wrap" aria-hidden="true">
+                    <svg class="ai-toolkit-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
+                  </span>
+                  <p class="ai-toolkit-card__index">Rules</p>
+                  <p class="ai-toolkit-card__text">Shared <code>.cursorrules</code> — tokens, typography, accessibility, and One Data on every prompt.</p>
+                </div>
+                <div class="ai-toolkit-card">
+                  <span class="ai-toolkit-card__icon-wrap" aria-hidden="true">
+                    <svg class="ai-toolkit-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .962 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/></svg>
+                  </span>
+                  <p class="ai-toolkit-card__index">Skills</p>
+                  <p class="ai-toolkit-card__text">Repeatable pipelines — design QA, annotate, and variant workflows.</p>
+                </div>
+                <div class="ai-toolkit-card">
+                  <span class="ai-toolkit-card__icon-wrap" aria-hidden="true">
+                    <svg class="ai-toolkit-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>
+                  </span>
+                  <p class="ai-toolkit-card__index">Subagents</p>
+                  <p class="ai-toolkit-card__text">Specialist modes — component architect, design systems, state and theme sync.</p>
+                </div>
+                <div class="ai-toolkit-card">
+                  <span class="ai-toolkit-card__icon-wrap" aria-hidden="true">
+                    <svg class="ai-toolkit-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" x2="20" y1="19" y2="19"/></svg>
+                  </span>
+                  <p class="ai-toolkit-card__index">Commands</p>
+                  <p class="ai-toolkit-card__text">One-shot shortcuts — clean, polish, build, sync, responsive, a11y.</p>
+                </div>
+                <div class="ai-toolkit-card">
+                  <span class="ai-toolkit-card__icon-wrap" aria-hidden="true">
+                    <svg class="ai-toolkit-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
+                  </span>
+                  <p class="ai-toolkit-card__index">Workflow</p>
+                  <p class="ai-toolkit-card__text">Iterate until clean — draft → polish → micro-fix → responsive → motion.</p>
+                </div>
+              </div>
+              <p class="ai-toolkit-grid__note">Project Registry · Examples · Confluence</p>
+            </div>
+
+            <div class="ai-journey__tools">
+              <div class="device-story__copy ai-journey__tools-head">
+                <p class="device-story__eyebrow">Lab · 4-week sprint</p>
+                <h4 class="device-story__title">Four tools the team uses every day.</h4>
+                <p class="device-story__text">A structured build sprint — Design QA, copywriting, typography, and prototype annotation — all in production use.</p>
+              </div>
+              <div class="ai-tools-grid reveal-stagger" aria-label="Shipped AI tools">
+                <figure class="ai-tools-grid__item">
+                  <div class="ai-tools-grid__frame">
+                    <img src="raisin-assets/assets/img/ai-enablement/tool-1.webp" alt="Design QA tool — compare Figma and developed screens for visual drift" width="678" height="604" loading="lazy" data-lightbox>
+                  </div>
+                  <figcaption class="ai-tools-grid__caption">Design QA — Figma link + developed screen to catch visual drift</figcaption>
+                </figure>
+                <figure class="ai-tools-grid__item">
+                  <div class="ai-tools-grid__frame">
+                    <img src="raisin-assets/assets/img/ai-enablement/tool-2.webp" alt="Copywriting tool — Raisin writing principles applied from a Figma link" width="687" height="611" loading="lazy" data-lightbox>
+                  </div>
+                  <figcaption class="ai-tools-grid__caption">Copywriting — Raisin voice from a Figma link; suggests copy and replaces it in place</figcaption>
+                </figure>
+                <figure class="ai-tools-grid__item">
+                  <div class="ai-tools-grid__frame">
+                    <img src="raisin-assets/assets/img/ai-enablement/tool-3.webp" alt="Raisin typography system for safe prototyping with premium fonts" width="687" height="611" loading="lazy" data-lightbox>
+                  </div>
+                  <figcaption class="ai-tools-grid__caption">Typography system — prototype safely with Raisin premium fonts</figcaption>
+                </figure>
+                <figure class="ai-tools-grid__item">
+                  <div class="ai-tools-grid__frame">
+                    <img src="raisin-assets/assets/img/ai-enablement/tool-4.webp" alt="Annotation tool — stakeholder comments on prototypes synced to GitLab issues" width="687" height="611" loading="lazy" data-lightbox>
+                  </div>
+                  <figcaption class="ai-tools-grid__caption">Annotation — stakeholder comments on prototypes, synced as GitLab issues</figcaption>
+                </figure>
+              </div>
+            </div>
+
+            <div class="ai-cadence reveal">
+              <p class="ai-cadence__label">Cadence</p>
+              <ol class="ai-cadence-grid reveal-stagger" aria-label="Programme cadence">
+                <li class="ai-cadence-card">
+                  <span class="ai-cadence-card__phase">Coaching</span>
+                  <h4 class="ai-cadence-card__title">Not just tooling.</h4>
+                  <p class="ai-cadence-card__text">Three designers coached on AI workflows — foundations first, then autonomy on live work. Still running regularly.</p>
+                </li>
+                <li class="ai-cadence-card">
+                  <span class="ai-cadence-card__phase">Showcase</span>
+                  <h4 class="ai-cadence-card__title">Demo sessions</h4>
+                  <p class="ai-cadence-card__text">Weekly sessions I led — what we'd built, what was working, and how to adopt it on live work.</p>
+                </li>
+                <li class="ai-cadence-card">
+                  <span class="ai-cadence-card__phase">Clinic</span>
+                  <h4 class="ai-cadence-card__title">Office hours</h4>
+                  <p class="ai-cadence-card__text">Open troubleshooting for Cursor setup, prompts, and workflow questions.</p>
+                </li>
+              </ol>
+            </div>
+
+          </div>
+        </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================== PROOF ============================== -->
+<section class="section dark-surface grain" id="proof" data-period="proof">
+  <div class="container">
+    <div class="proof-intro reveal">
+      <p class="eyebrow proof-intro__eyebrow">Proof</p>
+      <h2 class="h-display h-2 text-on-dark proof-intro__title">What it produced — measured honestly, market by market.</h2>
+      <p class="lede text-on-dark-muted proof-intro__lede">Some of this moved the numbers. Some of it didn't, and that's reported plainly too — the same standard applied everywhere else in this review.</p>
+    </div>
+
+    <div class="proof-track proof-track--practice reveal">
+      <div class="proof-track__head">
+        <div class="proof-track__titles">
+          <p class="proof-label">What customers got</p>
+          <p class="proof-track__lede text-on-dark-muted">Migration measured across seven markets — comprehension, design NPS, HNW loyalty, and trust through the transition.</p>
+        </div>
+        <span class="proof-track__badge proof-track__badge--practice">Practice</span>
+      </div>
+      <div class="metric-banner metric-banner--4 reveal-stagger">
+        <div class="metric-banner__item">
+          <div class="metric-banner__value mono-stat"><span data-count="7">0</span> markets</div>
+          <div class="metric-banner__label">Measured in the legacy-brand → Raisin dashboard migration (DE, NL, UK, US, ES, PL, IE)</div>
+        </div>
+        <div class="metric-banner__item">
+          <div class="metric-banner__value mono-stat"><span data-count="72">0</span>–87%</div>
+          <div class="metric-banner__label">Of ~1,900 surveyed customers agree they can now better understand and manage their wealth</div>
+          <div class="metric-banner__note">Brand Evolution survey, DE / NL / ES / PL</div>
+        </div>
+        <div class="metric-banner__item">
+          <div class="metric-banner__value mono-stat">+23 → +53</div>
+          <div class="metric-banner__label">Dashboard / design NPS shift across those same four markets</div>
+        </div>
+        <div class="metric-banner__item">
+          <div class="metric-banner__value mono-stat"><span data-count="82.9">0</span>–97.7%</div>
+          <div class="metric-banner__label">HNW customer loyalty held through the dashboard migration</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proof-track proof-track--enablement reveal">
+      <div class="proof-track__head">
+        <div class="proof-track__titles">
+          <p class="proof-label">What the team gained</p>
+          <p class="proof-track__lede text-on-dark-muted">Rituals, tooling, and playbooks still in daily use — not workshop output.</p>
+        </div>
+        <span class="proof-track__badge proof-track__badge--enablement enablement-label">
+          <svg class="enablement-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Enablement
+        </span>
+      </div>
+      <div class="metric-banner reveal-stagger">
+        <div class="metric-banner__item">
+          <div class="metric-banner__value mono-stat"><span data-count="30" data-suffix="%">0</span> faster</div>
+          <div class="metric-banner__label">~30% faster closure on complex design tickets, across AI-adopted workflows</div>
+        </div>
+        <div class="metric-banner__item">
+          <div class="metric-banner__value mono-stat"><span data-count="4">0</span> tools</div>
+          <div class="metric-banner__label">Built and shipped into the design team's daily production use</div>
+          <div class="metric-banner__note">180-day programme · design org</div>
+        </div>
+        <div class="metric-banner__item">
+          <div class="metric-banner__value mono-stat"><span data-count="4">0</span> playbooks</div>
+          <div class="metric-banner__label">Design critique, ways of working, product semantics, and the research operating model — all still in use</div>
+        </div>
+      </div>
+      <div class="proof-track__chips chip-row reveal" aria-label="Playbooks still in use">
+        <span class="chip chip--on-dark">Design critique</span>
+        <span class="chip chip--on-dark">Ways of working</span>
+        <span class="chip chip--on-dark">Product semantics</span>
+        <span class="chip chip--on-dark">Research operating model</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="marquee quote-marquee marquee--reverse" aria-hidden="true">
+  <div class="marquee__track">
+    <span class="marquee__item"><span class="who">VP of Design —</span>"Clear spikes of excellence in innovation, peer leadership, and technological adaptability — a pioneer in integrating AI into our design workflows."</span>
+    <span class="marquee__item"><span class="who">Head of Product —</span>"Pragmatic yet aspirational — his domain depth across app, web, and markets helps us deliver faster and at higher quality."</span>
+    <span class="marquee__item"><span class="who">Director of Product —</span>"He grabbed the complete requirement and came up with his own idea and research — widely accepted, green light on the spot."</span>
+    <span class="marquee__item"><span class="who">Chief of AI —</span>"Got into AI early and pulled the design team into Cursor with him — proactively generates ideas and confidently articulates design rationale."</span>
+    <span class="marquee__item"><span class="who">VP of Design —</span>"Clear spikes of excellence in innovation, peer leadership, and technological adaptability — a pioneer in integrating AI into our design workflows."</span>
+    <span class="marquee__item"><span class="who">Head of Product —</span>"Pragmatic yet aspirational — his domain depth across app, web, and markets helps us deliver faster and at higher quality."</span>
+    <span class="marquee__item"><span class="who">Director of Product —</span>"He grabbed the complete requirement and came up with his own idea and research — widely accepted, green light on the spot."</span>
+    <span class="marquee__item"><span class="who">Chief of AI —</span>"Got into AI early and pulled the design team into Cursor with him — proactively generates ideas and confidently articulates design rationale."</span>
   </div>
 </div>
 
-<!-- Password gate validation -->
+<!-- ============================== BRAND FINALE ============================== -->
+<section class="brand-finale" aria-label="Raisin brand in context">
+  <div class="brand-finale__media" aria-hidden="true">
+    <img src="raisin-assets/assets/img/hero-bento/smartphone-terminal.webp" alt="" loading="lazy">
+  </div>
+  <div class="brand-finale__scrim" aria-hidden="true"></div>
+  <div class="container brand-finale__content reveal">
+    <img class="brand-finale__logo" src="raisin-assets/assets/img/branding/raisin-logo-white.svg" alt="Raisin" width="908" height="211" loading="lazy">
+    <p class="eyebrow brand-finale__eyebrow">The brand, built out</p>
+    <p class="brand-finale__line text-on-dark">From static guidelines to a living system — across every touchpoint customers actually use.</p>
+  </div>
+</section>
+</main>
+
+<footer class="shell-footer" id="contact">
+  <div class="shell-inner">
+    <div class="shell-footer-lead">
+      <div>
+        <p class="shell-footer-title">Let's build something.</p>
+        <p class="shell-footer-copy">Please use the <a href="https://docs.google.com/forms/d/e/1FAIpQLScKV7IVg-JeodOmY5m7eDIK_qctNltq-QddtYnLrRneSqCIwA/viewform" target="_blank" rel="noopener">💌 contact form</a> to say Hi 👋 or request any inquiry. You can also <a href="https://twitter.com/intent/tweet?screen_name=vipulsaxena_fc" target="_blank" rel="noopener">tweet me</a>, or send me an old fashioned <a href="mailto:vipul.saxena01@gmail.com">email</a>.</p>
+      </div>
+    </div>
+    <div class="shell-footer-base">
+      <p>© 2026 · Vipul Saxena · Product Design Portfolio</p>
+      <p>Names anonymized by role</p>
+    </div>
+  </div>
+</footer>
+
+<div class="lightbox lightbox--gallery" role="dialog" aria-modal="true" aria-label="Media viewer">
+  <button class="lightbox__close" type="button" aria-label="Close">✕</button>
+  <button class="lightbox__prev" type="button" aria-label="Previous slide" hidden>←</button>
+  <button class="lightbox__next" type="button" aria-label="Next slide" hidden>→</button>
+  <div class="lightbox__stage">
+    <img class="lightbox__img" src="" alt="">
+    <video class="lightbox__video" playsinline controls loop muted hidden></video>
+  </div>
+  <p class="lightbox__counter" aria-live="polite" hidden></p>
+</div>
+
+<script src="raisin-assets/assets/js/main.js"></script>
+<script src="raisin-assets/assets/js/summary2.js"></script>
 <script>
   (function(){
     var PASSWORD = "portfolio26";
@@ -443,15 +1446,13 @@
     var error = document.getElementById("raisinGateError");
     if (!gate || !form) return;
 
-    // window.__gateAllow is decided by the pre-render script in <head>: true only
-    // for in-site navigation / reload / back-forward with a valid session.
     if (window.__gateAllow) {
       document.documentElement.classList.remove("raisin-locked");
       gate.remove();
-      return;
+    } else {
+      setTimeout(function(){ if (input) input.focus(); }, 80);
     }
 
-    setTimeout(function(){ input && input.focus(); }, 80);
     form.addEventListener("submit", function(e){
       e.preventDefault();
       if (input.value === PASSWORD) {
@@ -464,196 +1465,16 @@
     });
   })();
 </script>
-
+<script defer src="template.js"></script>
 <script>
-/* =====================================================================
-   Full-page slideshow — vanilla JS, no dependencies (from template-2.html).
-   ===================================================================== */
-(function () {
-  "use strict";
-  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  const track   = document.getElementById("track");
-  const slides   = Array.from(track.children);
-  const dotsWrap = document.getElementById("dots");
-  const progress = document.getElementById("progress");
-  const curNum   = document.getElementById("curNum");
-  const totNum   = document.getElementById("totNum");
-  const deckTitle= document.getElementById("deckTitle");
-  const prevBtns = Array.from(document.querySelectorAll("[data-prev]"));
-  const nextBtns = Array.from(document.querySelectorAll("[data-next]"));
-  const homeBtns = Array.from(document.querySelectorAll("[data-home]"));
-  const N = slides.length;
-  const homeIndices = slides.map((s, idx) => (s.hasAttribute("data-home-slide") ? idx : -1)).filter((x) => x >= 0);
-  const pad = (n) => String(n).padStart(2, "0");
-
-  const chapWrap = document.getElementById("chapters");
-  const CHAP_LABELS = { "highlights": "Highlights", "case-study": "Case study" };
-  const CHAP_ICONS = {
-    "case-study": '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 13H8"/></svg>',
-    "highlights": '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>'
-  };
-
-  let i = 0;
-
-  /* ---------- build chapters from data-chapter ---------- */
-  const chapters = [];
-  slides.forEach((s, idx) => {
-    const id = s.dataset.chapter || "main";
-    let ch = chapters.find((c) => c.id === id);
-    if (!ch) { ch = { id, label: CHAP_LABELS[id] || id, start: idx, end: idx, slides: [] }; chapters.push(ch); }
-    ch.end = idx; ch.slides.push(idx);
-  });
-  const chapterOf = (idx) => chapters.find((c) => idx >= c.start && idx <= c.end);
-  chapters.forEach((c) => { c.countSlides = c.slides.filter((idx) => !slides[idx].hasAttribute("data-home-slide")); });
-
-  /* ---------- chapter tabs (hidden when there is only one chapter) ---------- */
-  const chapterTabs = (chapters.length > 1 ? chapters : []).map((ch) => {
-    const b = document.createElement("button");
-    b.className = "chapter-tab";
-    b.type = "button";
-    b.innerHTML =
-      '<span class="ct-label">' + ch.label + "</span>" +
-      '<span class="ct-icon" aria-hidden="true">' + (CHAP_ICONS[ch.id] || "") + "</span>" +
-      '<span class="ct-count">' + ch.countSlides.length + "</span>";
-    b.setAttribute("aria-label", "Jump to " + ch.label);
-    b.addEventListener("click", () => go(ch.countSlides.length ? ch.countSlides[0] : ch.start));
-    chapWrap && chapWrap.appendChild(b);
-    return b;
-  });
-
-  /* ---------- grouped dots (hover shows the slide title) ---------- */
-  const dots = [];
-  const dotSegmentsForChapter = (ch) => {
-    const homeInCh = ch.slides.filter((idx) => slides[idx].hasAttribute("data-home-slide"));
-    const restInCh = ch.slides.filter((idx) => !slides[idx].hasAttribute("data-home-slide"));
-    return homeInCh.length && restInCh.length ? [homeInCh, restInCh] : [ch.slides];
-  };
-  chapters.forEach((ch) => {
-    dotSegmentsForChapter(ch).forEach((indices) => {
-      const group = document.createElement("div");
-      group.className = "dot-group";
-      indices.forEach((idx) => {
-        const b = document.createElement("button");
-        b.className = "dot";
-        b.type = "button";
-        const label = slides[idx].dataset.title || ("Slide " + (idx + 1));
-        b.setAttribute("aria-label", "Go to slide " + (idx + 1) + ": " + label);
-        b.dataset.tip = pad(idx + 1) + " · " + label;
-        b.addEventListener("click", () => go(idx));
-        group.appendChild(b);
-        dots[idx] = b;
-      });
-      dotsWrap.appendChild(group);
+  (function () {
+    var fsBtn = document.querySelector("[data-fullscreen]");
+    if (!fsBtn) return;
+    fsBtn.addEventListener("click", function () {
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
+      else document.exitFullscreen?.();
     });
-  });
-  totNum.textContent = pad(N);
-
-  function render() {
-    track.style.transform = `translateX(-${i * 100}%)`;
-    slides.forEach((s, idx) => {
-      const active = idx === i;
-      s.classList.toggle("is-active", active);
-      if (active) s.scrollTop = 0;
-    });
-    dots.forEach((d, idx) => d.setAttribute("aria-current", String(idx === i)));
-    const homePos = homeIndices.indexOf(i);
-    const onHome = homePos >= 0;
-    const ch = chapterOf(i);
-    chapterTabs.forEach((t, ci) => {
-      const cur = !onHome && chapters[ci] === ch;
-      t.setAttribute("aria-current", String(cur));
-      const cnt = t.querySelector(".ct-count");
-      if (cnt) cnt.textContent = cur ? (chapters[ci].countSlides.indexOf(i) + 1) + "/" + chapters[ci].countSlides.length : String(chapters[ci].countSlides.length);
-    });
-    curNum.textContent = pad(i + 1);
-    progress.style.width = ((i + 1) / N) * 100 + "%";
-    const t = slides[i].dataset.title;
-    deckTitle.textContent = t || "Brand evolution at Raisin";
-    prevBtns.forEach((b) => (b.disabled = i === 0));
-    nextBtns.forEach((b) => (b.disabled = i === N - 1));
-    homeBtns.forEach((b) => {
-      b.classList.toggle("is-active", onHome);
-      b.setAttribute("aria-current", onHome ? "true" : "false");
-      const badge = b.querySelector("[data-home-count]");
-      if (badge) badge.textContent = onHome ? (homePos + 1) + "/" + homeIndices.length : "";
-    });
-    if (history.replaceState) history.replaceState(null, "", "#" + (i + 1));
-  }
-
-  function go(n) { i = Math.max(0, Math.min(N - 1, n)); render(); }
-  const next = () => go(i + 1);
-  const prev = () => go(i - 1);
-
-  prevBtns.forEach((b) => b.addEventListener("click", prev));
-  nextBtns.forEach((b) => b.addEventListener("click", next));
-  document.querySelectorAll("[data-home]").forEach((b) => b.addEventListener("click", () => go(0)));
-
-  document.addEventListener("keydown", (e) => {
-    if (e.target.closest("input, textarea, iframe, [contenteditable]")) return;
-    switch (e.key) {
-      case "ArrowRight": case "PageDown":
-        e.preventDefault(); next(); break;
-      case " ":
-        e.preventDefault(); e.shiftKey ? prev() : next(); break;
-      case "ArrowLeft": case "PageUp":
-        e.preventDefault(); prev(); break;
-      /* ArrowUp / ArrowDown are intentionally left to scroll the active slide */
-      case "Home": e.preventDefault(); go(0); break;
-      case "End":  e.preventDefault(); go(N - 1); break;
-    }
-  });
-
-  /* ---------- touch swipe (works over vertically scrollable slides too) ---------- */
-  let x0 = null, y0 = null, sdx = 0, sdy = 0, axis = null;
-  track.addEventListener("touchstart", (e) => {
-    if (e.touches.length !== 1) { x0 = null; return; }
-    x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; sdx = sdy = 0; axis = null;
-  }, { passive: true });
-  track.addEventListener("touchmove", (e) => {
-    if (x0 === null) return;
-    sdx = e.touches[0].clientX - x0; sdy = e.touches[0].clientY - y0;
-    if (!axis && (Math.abs(sdx) > 8 || Math.abs(sdy) > 8)) axis = Math.abs(sdx) > Math.abs(sdy) ? "x" : "y";
-    if (axis === "x" && e.cancelable) e.preventDefault();
-  }, { passive: false });
-  track.addEventListener("touchend", () => {
-    if (x0 === null) return;
-    if (axis === "x" && Math.abs(sdx) > 45) (sdx < 0 ? next() : prev());
-    x0 = y0 = null; axis = null;
-  }, { passive: true });
-  track.addEventListener("touchcancel", () => { x0 = y0 = null; axis = null; }, { passive: true });
-
-  const fsBtn = document.querySelector("[data-fullscreen]");
-  fsBtn && fsBtn.addEventListener("click", () => {
-    if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
-    else document.exitFullscreen?.();
-  });
-
-  document.querySelectorAll("[data-compare]").forEach((root) => {
-    const after = root.querySelector(".after-layer");
-    const handle = root.querySelector(".handle");
-    if (!after || !handle) return;
-    let dragging = false;
-    const set = (clientX) => {
-      const r = root.getBoundingClientRect();
-      if (r.width === 0) return;
-      let p = ((clientX - r.left) / r.width) * 100;
-      p = Math.max(0, Math.min(100, p));
-      after.style.clipPath = `inset(0 ${100 - p}% 0 0)`;
-      handle.style.left = p + "%";
-    };
-    root.addEventListener("pointerdown", (e) => { dragging = true; set(e.clientX); root.setPointerCapture(e.pointerId); });
-    root.addEventListener("pointermove", (e) => { if (dragging) set(e.clientX); });
-    const end = () => (dragging = false);
-    root.addEventListener("pointerup", end);
-    root.addEventListener("pointercancel", end);
-    requestAnimationFrame(() => { const r = root.getBoundingClientRect(); set(r.left + r.width / 2); });
-  });
-
-  const start = parseInt((location.hash || "").replace("#", ""), 10);
-  if (!isNaN(start) && start >= 1 && start <= N) i = start - 1;
-  render();
-})();
+  })();
 </script>
 </body>
 </html>

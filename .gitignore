@@ -11,3 +11,7 @@ olx_preview_tmp.html
 # Dependencies and OS metadata
 node_modules/
 .DS_Store
+**/.DS_Store
+
+# Raisin case study — dev-only migration tooling
+raisin-assets/scripts/node_modules/
