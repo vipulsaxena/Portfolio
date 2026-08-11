@@ -1,8 +1,10 @@
 /**
  * Magnetic dot grid — hero background (index.html).
  *
- * Dots pull toward the cursor with soft easing (no spring). Ripple waves on
- * fast movement. Colors sync with AI palette (window.OrbPalette).
+ * Dots react to the cursor with soft easing (no spring) plus ripple waves on
+ * fast movement. Clicking the hero swaps to a random field mode — each mode
+ * changes the force direction, the shape of the impact zone, or its intensity.
+ * Colors sync with AI palette (window.OrbPalette).
  */
 (function () {
   "use strict";
@@ -14,9 +16,6 @@
   var reduce = mm && mm("(prefers-reduced-motion: reduce)").matches;
 
   var SPACING = 22;
-  var RADIUS  = 220;
-  var MAX     = 3.2;
-  var PULL    = 0.78;
   var FOLLOW_MIN = 0.07;
   var FOLLOW_MAX = 0.22;
   var FOLLOW_REST = 0.1;
@@ -31,6 +30,65 @@
   var dots = [];
   var palette = ["#3096FF", "#ffda08", "#603cba"];
   var ripples = [];
+
+  // Force functions write here instead of allocating a vector each dot/frame.
+  var outX = 0;
+  var outY = 0;
+
+  /* ---- Field modes ------------------------------------------------------
+     radius : size of the impact zone
+     max    : peak dot scale at the cursor
+     force  : displacement for a dot, given the vector toward the cursor
+     -------------------------------------------------------------------- */
+  var MODES = [
+    {
+      id: "attract",
+      radius: 220,
+      max: 3.2,
+      force: function (dx, dy, dist, f) {
+        var p = f * 0.88;
+        outX = dx * p;
+        outY = dy * p;
+      }
+    },
+    {
+      id: "repel",
+      radius: 220,
+      max: 2.5,
+      force: function (dx, dy, dist, f) {
+        var p = f * 0.62;
+        outX = -dx * p;
+        outY = -dy * p;
+      }
+    },
+    {
+      id: "vortex",
+      radius: 260,
+      max: 3.4,
+      force: function (dx, dy, dist, f) {
+        var p = f * 0.95;
+        outX = -dy * p;
+        outY = dx * p;
+      }
+    },
+    {
+      // Each dot is placed on its own orbit around the cursor: pulled inward
+      // and revolved over time, faster the closer it sits, so the dots wind
+      // around the pointer instead of the whole grid shearing.
+      id: "spiral",
+      radius: 160,
+      max: 2.4,
+      force: function (dx, dy, dist, f, dot, now) {
+        var ease = f * f;
+        var ang = Math.atan2(-dy, -dx) + ease * 0.75 + now * 0.0005 * ease;
+        var orbit = dist * (1 - ease * 0.3);
+        outX = dx + Math.cos(ang) * orbit;
+        outY = dy + Math.sin(ang) * orbit;
+      }
+    }
+  ];
+
+  var mode = MODES[0];
 
   function syncPalette() {
     var p = window.OrbPalette;
@@ -122,6 +180,11 @@
     );
   }
 
+  function influence(dist) {
+    var t = 1 - dist / mode.radius;
+    return t > 0 ? t : 0;
+  }
+
   function build(intro) {
     var w = field.clientWidth;
     var h = field.clientHeight;
@@ -184,7 +247,7 @@
       rdx = dot.cx - rip.x;
       rdy = dot.cy - rip.y;
       rd = Math.sqrt(rdx * rdx + rdy * rdy) || 0.001;
-      falloff = Math.max(0, 1 - rd / (RADIUS * 1.2));
+      falloff = Math.max(0, 1 - rd / (mode.radius * 1.2));
       wave =
         Math.sin(rd * 0.07 - age * 0.009) *
         rip.amp *
@@ -203,8 +266,22 @@
   var plx = 0;
   var ply = 0;
   var active = false;
-  var reversed = false;
   var raf = 0;
+
+  function setMode(next) {
+    mode = next;
+    field.setAttribute("data-dot-mode", mode.id);
+  }
+
+  function cycleMode() {
+    var next = mode;
+    if (MODES.length > 1) {
+      while (next === mode) {
+        next = MODES[Math.floor(Math.random() * MODES.length)];
+      }
+    }
+    setMode(next);
+  }
 
   function update() {
     raf = 0;
@@ -224,7 +301,6 @@
     var dy;
     var dist;
     var f;
-    var pull;
     var follow;
     var rip;
 
@@ -243,14 +319,14 @@
         dx = lx - dot.cx;
         dy = ly - dot.cy;
         dist = Math.sqrt(dx * dx + dy * dy);
+        f = influence(dist);
 
-        if (dist < RADIUS) {
-          f = 1 - dist / RADIUS;
-          targetS = 1 + f * (MAX - 1);
-          pull = f * PULL;
-          if (reversed) pull = -pull;
-          targetX = dx * pull;
-          targetY = dy * pull;
+        if (f > 0) {
+          targetS = 1 + f * (mode.max - 1);
+
+          mode.force(dx, dy, dist, f, dot, now);
+          targetX = outX;
+          targetY = outY;
           follow = FOLLOW_MIN + f * (FOLLOW_MAX - FOLLOW_MIN);
 
           if (f > 0.08) {
@@ -299,6 +375,19 @@
     if (!raf) raf = requestAnimationFrame(update);
   }
 
+  function onClick(e) {
+    if (e.target.closest && e.target.closest("a, button, .tooltip")) return;
+    cycleMode();
+    if (!reduce) {
+      var rect = field.getBoundingClientRect();
+      pushRipple(e.clientX - rect.left, e.clientY - rect.top, 20);
+      schedule();
+    } else {
+      update();
+    }
+  }
+
+  setMode(MODES[0]);
   build(true);
 
   if (!reduce) {
@@ -330,13 +419,6 @@
       ply = 0;
       schedule();
     });
-
-    hero.addEventListener("click", function (e) {
-      if (e.target.closest("a, button, .tooltip")) return;
-      reversed = !reversed;
-      field.classList.toggle("dots-repel", reversed);
-      schedule();
-    });
   } else {
     hero.addEventListener("pointermove", function (e) {
       mx = e.clientX;
@@ -348,14 +430,9 @@
       active = false;
       update();
     });
-
-    hero.addEventListener("click", function (e) {
-      if (e.target.closest("a, button, .tooltip")) return;
-      reversed = !reversed;
-      field.classList.toggle("dots-repel", reversed);
-      update();
-    });
   }
+
+  hero.addEventListener("click", onClick);
 
   var rt;
   window.addEventListener("resize", function () {
