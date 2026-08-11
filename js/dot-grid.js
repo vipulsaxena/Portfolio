@@ -2,8 +2,7 @@
  * Magnetic dot grid — hero background (index.html).
  *
  * Dots react to the cursor with soft easing (no spring) plus ripple waves on
- * fast movement. Clicking the hero swaps to a random field mode — each mode
- * changes the force direction, the shape of the impact zone, or its intensity.
+ * fast movement. Clicking the hero flips the field between attract and repel.
  * Colors sync with AI palette (window.OrbPalette).
  */
 (function () {
@@ -59,31 +58,6 @@
         var p = f * 0.62;
         outX = -dx * p;
         outY = -dy * p;
-      }
-    },
-    {
-      id: "vortex",
-      radius: 260,
-      max: 3.4,
-      force: function (dx, dy, dist, f) {
-        var p = f * 0.95;
-        outX = -dy * p;
-        outY = dx * p;
-      }
-    },
-    {
-      // Each dot is placed on its own orbit around the cursor: pulled inward
-      // and revolved over time, faster the closer it sits, so the dots wind
-      // around the pointer instead of the whole grid shearing.
-      id: "spiral",
-      radius: 160,
-      max: 2.4,
-      force: function (dx, dy, dist, f, dot, now) {
-        var ease = f * f;
-        var ang = Math.atan2(-dy, -dx) + ease * 0.75 + now * 0.0005 * ease;
-        var orbit = dist * (1 - ease * 0.3);
-        outX = dx + Math.cos(ang) * orbit;
-        outY = dy + Math.sin(ang) * orbit;
       }
     }
   ];
