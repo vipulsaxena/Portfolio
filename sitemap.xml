@@ -4,11 +4,58 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-<!-- One Page app -->
 	<url>
-	    <loc>http://www.vipulsaxena.com/</loc>
-	    <lastmod>2019-07-01</lastmod>
+	    <loc>https://vipulsaxena.com/</loc>
+	    <lastmod>2026-08-11</lastmod>
 	    <changefreq>monthly</changefreq>
+	    <priority>1.0</priority>
+	</url>
+	<url>
+	    <loc>https://vipulsaxena.com/about.html</loc>
+	    <lastmod>2026-08-11</lastmod>
+	    <changefreq>monthly</changefreq>
+	    <priority>0.9</priority>
+	</url>
+	<url>
+	    <loc>https://vipulsaxena.com/raisin.html</loc>
+	    <lastmod>2026-08-11</lastmod>
+	    <changefreq>yearly</changefreq>
 	    <priority>0.8</priority>
-	</url> 
+	</url>
+	<url>
+	    <loc>https://vipulsaxena.com/olx.html</loc>
+	    <lastmod>2026-08-11</lastmod>
+	    <changefreq>yearly</changefreq>
+	    <priority>0.8</priority>
+	</url>
+	<url>
+	    <loc>https://vipulsaxena.com/n26.html</loc>
+	    <lastmod>2026-08-11</lastmod>
+	    <changefreq>yearly</changefreq>
+	    <priority>0.8</priority>
+	</url>
+	<url>
+	    <loc>https://vipulsaxena.com/gomart.html</loc>
+	    <lastmod>2026-08-11</lastmod>
+	    <changefreq>yearly</changefreq>
+	    <priority>0.8</priority>
+	</url>
+	<url>
+	    <loc>https://vipulsaxena.com/goplay.html</loc>
+	    <lastmod>2026-08-11</lastmod>
+	    <changefreq>yearly</changefreq>
+	    <priority>0.7</priority>
+	</url>
+	<url>
+	    <loc>https://vipulsaxena.com/instalively.html</loc>
+	    <lastmod>2026-08-11</lastmod>
+	    <changefreq>yearly</changefreq>
+	    <priority>0.7</priority>
+	</url>
+	<url>
+	    <loc>https://vipulsaxena.com/silent-ninja-redesign.html</loc>
+	    <lastmod>2026-08-11</lastmod>
+	    <changefreq>yearly</changefreq>
+	    <priority>0.6</priority>
+	</url>
 </urlset>
