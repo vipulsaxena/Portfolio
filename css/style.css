@@ -278,6 +278,9 @@
      color: #FFF;
      background: #FF433E;
 }
+ .hero h1 b.tooltip, .hero h1 strong.tooltip {
+     padding: 0 4px;
+ }
  b.tooltip, strong.tooltip {
      position: relative;
      display: inline-block;
@@ -291,21 +294,33 @@
  b.tooltip span, strong.tooltip span {
      visibility: hidden;
      position: absolute;
-     z-index: 1;
-     bottom: 125%;
-     left: 0;
-     min-width: 6rem;
-     min-width: 18rem;
-     font-size: 1.2rem;
+     z-index: 2;
+     bottom: calc(100% + 1rem);
+     left: 50%;
+     width: 28rem;
+     max-width: min(28rem, calc(100vw - 4rem));
+     font-size: 1.4rem;
      font-family: "Inter", sans-serif;
      font-optical-sizing: auto;
-     color: #FFF;
-     background: #262626;
-     padding: 1rem 1.5rem;
-     border-radius: 0.2rem;
+     font-weight: 500;
+     line-height: 1.55;
+     letter-spacing: 0.01em;
+     text-align: left;
+     white-space: normal;
+     color: rgba(255, 255, 255, 0.94);
+     background: rgba(22, 22, 22, 0.62);
+     -webkit-backdrop-filter: blur(16px) saturate(160%);
+     backdrop-filter: blur(16px) saturate(160%);
+     border: 1px solid rgba(255, 255, 255, 0.14);
+     box-shadow:
+         0 10px 28px rgba(0, 0, 0, 0.22),
+         inset 0 1px 0 rgba(255, 255, 255, 0.08);
+     padding: 1.15rem 1.4rem;
+     border-radius: 0.6rem;
      opacity: 0;
-     -webkit-transition: opacity 0.3s ease-out;
-     transition: opacity 0.3s ease-out;
+     transform: translateX(-50%) translateY(0.35rem);
+     -webkit-transition: opacity 0.2s ease-out, transform 0.2s ease-out, visibility 0.2s ease-out;
+     transition: opacity 0.2s ease-out, transform 0.2s ease-out, visibility 0.2s ease-out;
 }
  @media screen and (max-width: 39rem) {
      b.tooltip span, strong.tooltip span {
@@ -315,8 +330,9 @@
  b.tooltip:hover span, strong.tooltip:hover span {
      visibility: visible;
      opacity: 1;
-     -webkit-transition: opacity 0.3s ease-out;
-     transition: opacity 0.3s ease-out;
+     transform: translateX(-50%) translateY(0);
+     -webkit-transition: opacity 0.2s ease-out, transform 0.2s ease-out, visibility 0.2s ease-out;
+     transition: opacity 0.2s ease-out, transform 0.2s ease-out, visibility 0.2s ease-out;
 }
  a#top-nav {
      position: fixed;
@@ -1012,11 +1028,52 @@
     margin-right: 6px;
     margin-bottom: 12px;
     border-radius: 12px;
-    color: #404040;
+    color: #262626;
     font-size: 14px;
     display: inline-block;
     font-weight: 500;
     border-radius: 24px;
+}
+.ski-pill-group {
+    display: inline-flex;
+    align-items: stretch;
+    flex-wrap: nowrap;
+    vertical-align: top;
+    margin-right: 6px;
+    margin-bottom: 12px;
+    border-radius: 24px;
+    overflow: hidden;
+}
+.ski-pill-group__seg {
+    position: relative;
+    display: block;
+    flex-shrink: 0;
+    padding: 0 16px;
+    line-height: 30px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #262626;
+    border-radius: 0;
+    white-space: nowrap;
+}
+.ski-pill-group__seg:first-child {
+    padding-left: 14px;
+    background-color: #ffda08;
+}
+.ski-pill-group__seg:nth-child(2) {
+    background-color: #efca00;
+}
+.ski-pill-group__seg:nth-child(3) {
+    background-color: #d9b600;
+}
+.ski-pill-group__seg:nth-child(4) {
+    background-color: #c4a300;
+}
+.ski-pill-group__seg:last-child {
+    padding-right: 14px;
+}
+.post-list.no-decoration .post-item.liquid {
+    overflow: visible;
 }
 .post-img {
   text-align: center;
@@ -1568,7 +1625,10 @@
 .liquid.lg-active::after { opacity: 1; }
 
 /* Press ripple — one cheap, GPU-friendly keyframe. */
-.liquid .lg-ripple {
+a, button, [role="button"], .liquid, .archive__item, .schematic__cell {
+    position: relative;
+}
+.lg-ripple {
     position: absolute;
     z-index: 0;
     width: 6rem;
@@ -1576,9 +1636,9 @@
     margin: -3rem 0 0 -3rem;
     border-radius: 50%;
     pointer-events: none;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0) 70%);
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0) 60%);
     transform: scale(0);
-    opacity: 0.7;
+    opacity: 0.9;
     will-change: transform, opacity;
     -webkit-animation: lg-ripple 0.6s ease-out forwards;
     animation: lg-ripple 0.6s ease-out forwards;
@@ -1598,7 +1658,7 @@
 @media (prefers-reduced-motion: reduce) {
     .liquid,
     .liquid::after { -webkit-transition: none; transition: none; }
-    .liquid .lg-ripple { display: none; }
+    .lg-ripple { display: none; }
 }
 
 /* ADPList mentoring reviews embed (About) — full content width, no max-width cap */

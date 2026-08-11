@@ -168,7 +168,6 @@
       if (col !== lastCol || row !== lastRow) {
         lastCol = col;
         lastRow = row;
-        if (window.Sonic && window.Sonic.gridTick) window.Sonic.gridTick(col + row);
       }
     } else {
       lastCol = lastRow = -1;

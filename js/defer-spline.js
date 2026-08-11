@@ -1,20 +1,10 @@
 /**
- * Load Spline viewer after idle (production) or skip on localhost — the
- * runtime + scene fetch can keep the browser tab spinner going indefinitely.
+ * Load Spline viewer after idle so the scene does not compete with first paint.
  */
 (function () {
   "use strict";
 
   if (!document.querySelector("spline-viewer")) return;
-
-  var host = location.hostname;
-  var isLocal =
-    host === "localhost" ||
-    host === "127.0.0.1" ||
-    host === "[::1]" ||
-    host.endsWith(".local");
-
-  if (isLocal) return;
 
   function load() {
     var s = document.createElement("script");

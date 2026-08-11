@@ -1,11 +1,11 @@
 /**
  * Sonic — a muted, native Web Audio feedback layer.
  *
- * Subtle, quiet micro-tones on hover (cards + clickable elements), press, and
- * Spline canvas interaction. No external libraries or audio files — everything
- * is synthesised. Lazy AudioContext (created on first user gesture per browser
- * autoplay policy). Mute toggle in the header + Ctrl+M, persisted in
- * localStorage. Respects prefers-reduced-motion (starts muted).
+ * Subtle, quiet micro-tones on hover and press for .liquid interactive cards
+ * only. No external libraries or audio files — everything is synthesised.
+ * Lazy AudioContext (created on first user gesture per browser autoplay policy).
+ * Mute toggle in the header + Ctrl+M, persisted in localStorage. Respects
+ * prefers-reduced-motion (starts muted).
  */
 (function () {
   "use strict";
@@ -180,39 +180,22 @@
   function init() {
     toggleEl = buildToggle();
 
-    // Hover feedback — cards + every clickable element on the page. Delegated so
-    // nested markup and dynamically-added nodes are covered without stacking the
-    // sound (only fires when the pointer enters a *new* matching element).
-    var hoverSel = 'a, button, [role="button"], .liquid, .archive__item, .schematic__cell';
+    // Hover + click feedback — .liquid interactive cards only. Delegated so
+    // nested markup and dynamically-added nodes are covered.
+    var cardSel = ".liquid";
     var lastHoverEl = null;
     document.addEventListener("pointerover", function (e) {
-      var match = e.target && e.target.closest ? e.target.closest(hoverSel) : null;
+      var match = e.target && e.target.closest ? e.target.closest(cardSel) : null;
       if (!match) { lastHoverEl = null; return; }
       if (match !== lastHoverEl) { lastHoverEl = match; hover(); }
     });
 
-    // Click feedback — mirrors the hover coverage so every element that plays a
-    // hover tone also plays a matching click tone. Delegated so nested markup
-    // and dynamically-added nodes are covered too.
     document.addEventListener("pointerdown", function (e) {
-      var match = e.target && e.target.closest ? e.target.closest(hoverSel) : null;
+      var match = e.target && e.target.closest ? e.target.closest(cardSel) : null;
       if (match) click();
     });
 
-    // Spline 3D canvas (about page)
-    var spline = document.querySelector("spline-viewer, .spline-3d, .outter_box");
-    if (spline) {
-      spline.addEventListener("pointerdown", splineTone, { passive: true });
-    }
-
-    // Futuristic hover tone — only while the pointer is over the .post-cover
-    // component (about page). Fires once on entry, and again on re-entry.
-    var lastCover = null;
-    document.addEventListener("pointerover", function (e) {
-      var match = e.target && e.target.closest ? e.target.closest(".post-cover") : null;
-      if (!match) { lastCover = null; return; }
-      if (match !== lastCover) { lastCover = match; spaceTone(); }
-    });
+    // Spline 3D canvas (about page) — visual only; no click tone.
 
     // Ctrl+M / Cmd+M toggle
     document.addEventListener("keydown", function (e) {
