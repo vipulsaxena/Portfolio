@@ -4,6 +4,10 @@
  * Dots react to the cursor with soft easing (no spring) plus ripple waves on
  * fast movement. Clicking the hero flips the field between attract and repel.
  * Colors sync with AI palette (window.OrbPalette).
+ *
+ * There are several hundred dots, so the hot loop avoids per-dot allocation,
+ * quantises colors into a lookup table, and skips DOM writes that would not
+ * change what is already on screen.
  */
 (function () {
   "use strict";
@@ -19,8 +23,16 @@
   var FOLLOW_MAX = 0.22;
   var FOLLOW_REST = 0.1;
   var RIPPLE_DECAY = 0.002;
+  var RIPPLE_LIFE = 2800;
   var MAX_RIPPLES = 8;
   var SETTLE = 0.04;
+
+  // Color buckets. Tinting depends only on angle and influence, so the gradient
+  // strings can be built once and reused instead of per dot, per frame.
+  var ANG_STEPS = 48;
+  var F_STEPS = 24;
+  var ANG_SCALE = ANG_STEPS / (Math.PI * 2);
+  var IDLE_INDEX = -1;
 
   var DOT_IDLE =
     "radial-gradient(circle at center, #000 1px, transparent 1.4px)";
@@ -28,11 +40,18 @@
   var hero = field.closest(".hero") || field.parentElement;
   var dots = [];
   var palette = ["#3096FF", "#ffda08", "#603cba"];
+  var paletteRgb = [];
+  var coreRgb = [48, 150, 255];
+  var edgeTable = [];
+  var bgCache = [];
   var ripples = [];
 
-  // Force functions write here instead of allocating a vector each dot/frame.
+  // Scratch outputs — force and ripple math writes here rather than returning
+  // a fresh vector for every dot on every frame.
   var outX = 0;
   var outY = 0;
+  var ripX = 0;
+  var ripY = 0;
 
   /* ---- Field modes ------------------------------------------------------
      radius : size of the impact zone
@@ -64,14 +83,6 @@
 
   var mode = MODES[0];
 
-  function syncPalette() {
-    var p = window.OrbPalette;
-    if (p && p.colors && p.colors.length) palette = p.colors.slice();
-  }
-
-  syncPalette();
-  window.addEventListener("orb-palette-change", syncPalette);
-
   function hexChannels(hex) {
     var h = String(hex).replace("#", "");
     if (h.length === 3) {
@@ -97,17 +108,17 @@
   }
 
   function paletteSmooth(ang) {
-    var n = palette.length;
+    var n = paletteRgb.length;
     if (n === 0) return [48, 150, 255];
-    if (n === 1) return hexChannels(palette[0]);
+    if (n === 1) return paletteRgb[0].slice();
     var t = (ang + Math.PI) / (Math.PI * 2);
     t = t - Math.floor(t);
     var f = t * n;
     var i = Math.floor(f) % n;
     var j = (i + 1) % n;
     var u = smoothstep(f - Math.floor(f));
-    var a = hexChannels(palette[i]);
-    var b = hexChannels(palette[j]);
+    var a = paletteRgb[i];
+    var b = paletteRgb[j];
     return [
       lerpChannel(a[0], b[0], u),
       lerpChannel(a[1], b[1], u),
@@ -115,48 +126,79 @@
     ];
   }
 
-  function coreBlend() {
-    var n = palette.length;
-    if (n === 0) return [48, 150, 255];
+  // Rebuilt only when the AI palette changes, never inside the render loop.
+  function rebuildColors() {
+    var i;
     var r = 0;
     var g = 0;
     var b = 0;
-    for (var k = 0; k < n; k++) {
-      var c = hexChannels(palette[k]);
-      r += c[0];
-      g += c[1];
-      b += c[2];
+
+    paletteRgb = [];
+    for (i = 0; i < palette.length; i++) {
+      paletteRgb.push(hexChannels(palette[i]));
+      r += paletteRgb[i][0];
+      g += paletteRgb[i][1];
+      b += paletteRgb[i][2];
     }
-    return [r / n, g / n, b / n];
+
+    if (paletteRgb.length) {
+      coreRgb = [r / paletteRgb.length, g / paletteRgb.length, b / paletteRgb.length];
+    }
+
+    edgeTable = [];
+    for (i = 0; i < ANG_STEPS; i++) {
+      edgeTable.push(paletteSmooth(((i + 0.5) / ANG_STEPS) * Math.PI * 2 - Math.PI));
+    }
+
+    bgCache = [];
   }
 
-  function pickRgb(dx, dy, f) {
-    var ang = Math.atan2(dy, dx);
-    var edge = paletteSmooth(ang);
-    var core = coreBlend();
-    var coh = smoothstep(Math.min(1, f * 1.05));
+  function syncPalette() {
+    var p = window.OrbPalette;
+    if (!p || !p.colors || !p.colors.length) return;
+    palette = p.colors.slice();
+    rebuildColors();
+  }
+
+  rebuildColors();
+  syncPalette();
+  window.addEventListener("orb-palette-change", syncPalette);
+
+  function buildGradient(angIndex, fIndex) {
+    var fv = (fIndex + 0.5) / F_STEPS;
+    var edge = edgeTable[angIndex];
+    var coh = smoothstep(Math.min(1, fv * 1.05));
     coh = coh * coh;
-    return [
-      lerpChannel(edge[0], core[0], coh),
-      lerpChannel(edge[1], core[1], coh),
-      lerpChannel(edge[2], core[2], coh)
-    ];
-  }
-
-  function dotColor(rgb, lift) {
+    var lift = 0.25 + 0.75 * fv;
     var rim = 1 - lift;
-    var r = Math.round(rgb[0] * lift + 12 * rim);
-    var g = Math.round(rgb[1] * lift + 12 * rim);
-    var b = Math.round(rgb[2] * lift + 12 * rim);
+    var r = Math.round(lerpChannel(edge[0], coreRgb[0], coh) * lift + 12 * rim);
+    var g = Math.round(lerpChannel(edge[1], coreRgb[1], coh) * lift + 12 * rim);
+    var b = Math.round(lerpChannel(edge[2], coreRgb[2], coh) * lift + 12 * rim);
     return (
       "radial-gradient(circle at center, rgb(" +
       r + "," + g + "," + b + ") 1.1px, transparent 1.55px)"
     );
   }
 
-  function influence(dist) {
-    var t = 1 - dist / mode.radius;
-    return t > 0 ? t : 0;
+  function colorIndex(dx, dy, f) {
+    var a = ((Math.atan2(dy, dx) + Math.PI) * ANG_SCALE) | 0;
+    if (a < 0) a = 0;
+    else if (a >= ANG_STEPS) a = ANG_STEPS - 1;
+
+    var fi = (f * F_STEPS) | 0;
+    if (fi < 0) fi = 0;
+    else if (fi >= F_STEPS) fi = F_STEPS - 1;
+
+    return a * F_STEPS + fi;
+  }
+
+  function gradientAt(index) {
+    var s = bgCache[index];
+    if (s === undefined) {
+      s = buildGradient((index / F_STEPS) | 0, index % F_STEPS);
+      bgCache[index] = s;
+    }
+    return s;
   }
 
   function build(intro) {
@@ -184,7 +226,8 @@
           x: 0,
           y: 0,
           s: 1,
-          bg: DOT_IDLE
+          ci: IDLE_INDEX,
+          tf: ""
         });
       }
     }
@@ -201,38 +244,39 @@
     if (ripples.length > MAX_RIPPLES) ripples.shift();
   }
 
-  function rippleOffset(dot, now) {
-    var wx = 0;
-    var wy = 0;
+  function rippleOffset(dot, now, reach) {
     var i;
     var rip;
     var age;
     var rdx;
     var rdy;
     var rd;
-    var falloff;
     var wave;
+
+    ripX = 0;
+    ripY = 0;
 
     for (i = 0; i < ripples.length; i++) {
       rip = ripples[i];
-      age = now - rip.t;
-      if (age > 2600) continue;
-
       rdx = dot.cx - rip.x;
+      if (rdx > reach || rdx < -reach) continue;
       rdy = dot.cy - rip.y;
-      rd = Math.sqrt(rdx * rdx + rdy * rdy) || 0.001;
-      falloff = Math.max(0, 1 - rd / (mode.radius * 1.2));
+      if (rdy > reach || rdy < -reach) continue;
+
+      rd = Math.sqrt(rdx * rdx + rdy * rdy);
+      if (rd > reach) continue;
+      if (rd < 0.001) rd = 0.001;
+
+      age = now - rip.t;
       wave =
         Math.sin(rd * 0.07 - age * 0.009) *
         rip.amp *
         Math.exp(-age * RIPPLE_DECAY) *
-        falloff;
+        (1 - rd / reach);
 
-      wx += (rdx / rd) * wave * 0.55;
-      wy += (rdy / rd) * wave * 0.55;
+      ripX += (rdx / rd) * wave * 0.55;
+      ripY += (rdy / rd) * wave * 0.55;
     }
-
-    return { x: wx, y: wy };
   }
 
   var mx = 0;
@@ -259,60 +303,71 @@
 
   function update() {
     raf = 0;
-    syncPalette();
+
     var now = performance.now();
     var rect = field.getBoundingClientRect();
     var lx = mx - rect.left;
     var ly = my - rect.top;
+    var radius = mode.radius;
+    var reach = radius * 1.2;
+    var maxScale = mode.max;
     var moving = false;
+    var live = 0;
     var i;
     var dot;
     var targetX;
     var targetY;
     var targetS;
-    var bg;
+    var ci;
     var dx;
     var dy;
     var dist;
     var f;
     var follow;
-    var rip;
+    var tf;
 
-    ripples = ripples.filter(function (r) { return now - r.t < 2800; });
-    if (ripples.length) moving = true;
+    // Drop expired ripples in place — filter() would allocate every frame.
+    for (i = ripples.length - 1; i >= 0; i--) {
+      if (now - ripples[i].t >= RIPPLE_LIFE) ripples.splice(i, 1);
+    }
+    live = ripples.length;
+    if (live) moving = true;
 
     for (i = 0; i < dots.length; i++) {
       dot = dots[i];
       targetX = 0;
       targetY = 0;
       targetS = 1;
-      bg = DOT_IDLE;
+      ci = IDLE_INDEX;
       follow = FOLLOW_REST;
 
+      // Box test first: most dots sit outside the zone, so they never reach
+      // the square root or the force call.
       if (active) {
         dx = lx - dot.cx;
-        dy = ly - dot.cy;
-        dist = Math.sqrt(dx * dx + dy * dy);
-        f = influence(dist);
+        if (dx < radius && dx > -radius) {
+          dy = ly - dot.cy;
+          if (dy < radius && dy > -radius) {
+            dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < radius) {
+              f = 1 - dist / radius;
+              targetS = 1 + f * (maxScale - 1);
 
-        if (f > 0) {
-          targetS = 1 + f * (mode.max - 1);
+              mode.force(dx, dy, dist, f);
+              targetX = outX;
+              targetY = outY;
+              follow = FOLLOW_MIN + f * (FOLLOW_MAX - FOLLOW_MIN);
 
-          mode.force(dx, dy, dist, f, dot, now);
-          targetX = outX;
-          targetY = outY;
-          follow = FOLLOW_MIN + f * (FOLLOW_MAX - FOLLOW_MIN);
-
-          if (f > 0.08) {
-            bg = dotColor(pickRgb(dx, dy, f), 0.25 + 0.75 * f);
+              if (f > 0.08) ci = colorIndex(dx, dy, f);
+            }
           }
         }
       }
 
-      if (!reduce && ripples.length) {
-        rip = rippleOffset(dot, now);
-        targetX += rip.x;
-        targetY += rip.y;
+      if (live && !reduce) {
+        rippleOffset(dot, now, reach);
+        targetX += ripX;
+        targetY += ripY;
       }
 
       if (reduce) {
@@ -333,12 +388,17 @@
         }
       }
 
-      dot.el.style.transform =
-        "translate3d(" + dot.x.toFixed(2) + "px," + dot.y.toFixed(2) + "px,0) scale(" + dot.s.toFixed(3) + ")";
+      tf =
+        "translate3d(" + dot.x.toFixed(1) + "px," + dot.y.toFixed(1) + "px,0) scale(" +
+        dot.s.toFixed(2) + ")";
+      if (tf !== dot.tf) {
+        dot.tf = tf;
+        dot.el.style.transform = tf;
+      }
 
-      if (bg !== dot.bg) {
-        dot.bg = bg;
-        dot.el.style.background = bg;
+      if (ci !== dot.ci) {
+        dot.ci = ci;
+        dot.el.style.background = ci === IDLE_INDEX ? DOT_IDLE : gradientAt(ci);
       }
     }
 
@@ -385,25 +445,25 @@
       my = e.clientY;
       active = true;
       schedule();
-    });
+    }, { passive: true });
 
     hero.addEventListener("pointerleave", function () {
       active = false;
       plx = 0;
       ply = 0;
       schedule();
-    });
+    }, { passive: true });
   } else {
     hero.addEventListener("pointermove", function (e) {
       mx = e.clientX;
       my = e.clientY;
       active = true;
       update();
-    });
+    }, { passive: true });
     hero.addEventListener("pointerleave", function () {
       active = false;
       update();
-    });
+    }, { passive: true });
   }
 
   hero.addEventListener("click", onClick);

@@ -525,14 +525,15 @@
      grid-auto-rows: 2.2rem;
      align-content: start;
 }
+ /* No will-change / transition here on purpose: there are several hundred dots,
+    so layer promotion and background interpolation cost far more than they save
+    — js/dot-grid.js already eases every frame. */
  .patterns--dots.dots-live .d {
      width: 2.2rem;
      height: 2.2rem;
      background: radial-gradient(circle at center, #000 1px, transparent 1.4px);
      transform: scale(1);
      transform-origin: center;
-     transition: background 0.22s ease;
-     will-change: transform, background;
 }
  /* Intro: dots fade in row after row on first load */
  .patterns--dots.dots-intro .d {
