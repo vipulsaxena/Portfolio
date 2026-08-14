@@ -22,8 +22,8 @@
   var FOLLOW_MIN = 0.07;
   var FOLLOW_MAX = 0.22;
   var FOLLOW_REST = 0.1;
-  var RIPPLE_DECAY = 0.002;
-  var RIPPLE_LIFE = 2800;
+  var RIPPLE_DECAY = 0.0013;
+  var RIPPLE_LIFE = 3400;
   var MAX_RIPPLES = 8;
   var SETTLE = 0.04;
 
@@ -269,13 +269,14 @@
 
       age = now - rip.t;
       wave =
-        Math.sin(rd * 0.07 - age * 0.009) *
+        (Math.sin(rd * 0.065 - age * 0.008) * 0.72 +
+          Math.sin(rd * 0.11 - age * 0.012) * 0.28) *
         rip.amp *
         Math.exp(-age * RIPPLE_DECAY) *
         (1 - rd / reach);
 
-      ripX += (rdx / rd) * wave * 0.55;
-      ripY += (rdy / rd) * wave * 0.55;
+      ripX += (rdx / rd) * wave * 0.82;
+      ripY += (rdy / rd) * wave * 0.82;
     }
   }
 
@@ -289,6 +290,13 @@
   function setMode(next) {
     mode = next;
     field.setAttribute("data-dot-mode", mode.id);
+    if (window.FieldMode) {
+      if (window.FieldMode.id !== mode.id) window.FieldMode.setMode(mode.id);
+    } else {
+      window.dispatchEvent(
+        new CustomEvent("field-mode-change", { detail: { mode: mode.id } })
+      );
+    }
   }
 
   function cycleMode() {
@@ -365,7 +373,7 @@
       }
 
       if (live && !reduce) {
-        rippleOffset(dot, now, reach);
+        rippleOffset(dot, now, Math.max(reach, radius * 3.4));
         targetX += ripX;
         targetY += ripY;
       }
@@ -412,17 +420,33 @@
   function onClick(e) {
     if (e.target.closest && e.target.closest("a, button, .tooltip")) return;
     cycleMode();
-    if (!reduce) {
-      var rect = field.getBoundingClientRect();
-      pushRipple(e.clientX - rect.left, e.clientY - rect.top, 20);
-      schedule();
-    } else {
-      update();
+  }
+
+  var initialMode = MODES[0];
+  if (window.FieldMode && window.FieldMode.id) {
+    for (var mi = 0; mi < MODES.length; mi++) {
+      if (MODES[mi].id === window.FieldMode.id) {
+        initialMode = MODES[mi];
+        break;
+      }
     }
   }
 
-  setMode(MODES[0]);
+  setMode(initialMode);
   build(true);
+
+  window.addEventListener("field-mode-change", function (e) {
+    var id = e.detail && e.detail.mode;
+    var i;
+    if (!id || mode.id === id) return;
+    for (i = 0; i < MODES.length; i++) {
+      if (MODES[i].id === id) {
+        mode = MODES[i];
+        field.setAttribute("data-dot-mode", mode.id);
+        break;
+      }
+    }
+  });
 
   if (!reduce) {
     hero.addEventListener("pointermove", function (e) {

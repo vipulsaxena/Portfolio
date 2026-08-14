@@ -1297,8 +1297,14 @@
   width: 100%;
   height: 100%;
   pointer-events: none;
-  z-index: -1;
-  opacity: 0.3;
+  z-index: -2;
+  opacity: 0.34;
+  transition: opacity 0.35s ease;
+}
+
+/* Magnetic field layer disabled — Fascination mode syncs to dot grid and orbs. */
+.field-surface {
+  display: none !important;
 }
 :root {
   --dark-color: hsl(var(--hue), 100%, 9%);
@@ -1857,6 +1863,27 @@ a, button, [role="button"], .liquid, .archive__item, .schematic__cell {
     vertical-align: middle;
     -webkit-transition: background 0.3s ease;
     transition: background 0.3s ease;
+}
+.orb-cta .hud-value {
+    color: #262626;
+    font-weight: 400;
+}
+#sonic-toggle[aria-pressed="true"] {
+    color: #b0b0b0;
+}
+#sonic-toggle[aria-pressed="true"] .dot {
+    background: #cfcfcf;
+}
+#sonic-toggle[aria-pressed="true"] .hud-value {
+    color: #b0b0b0;
+}
+.orb-cta--field .field-dot {
+    background: #3096FF;
+    box-shadow: 0 0 0 0.12rem rgba(48, 150, 255, 0.35);
+}
+.orb-cta--field[data-mode="repel"] .field-dot {
+    background: #ff8a2a;
+    box-shadow: 0 0 0 0.12rem rgba(255, 138, 42, 0.35);
 }
 @media screen and (max-width: 39rem) {
     #cta-cluster { gap: 0.45rem; }

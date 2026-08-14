@@ -108,6 +108,19 @@ function map(n, start1, end1, start2, end2) {
 // Create a new simplex noise instance
 const noise2D = makeNoise2D();
 
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+function lerp(a, b, t) {
+  return a + (b - a) * t;
+}
+
+let fieldModeId = document.documentElement.dataset.fieldMode || "attract";
+if (fieldModeId !== "attract" && fieldModeId !== "repel") fieldModeId = "attract";
+
+let pointerX = 0;
+let pointerY = 0;
+let pointerActive = false;
+
 // ColorPalette class
 class ColorPalette {
   constructor() {
@@ -217,6 +230,10 @@ class Orb {
     // how quickly the noise/self similar random values step through time
     this.inc = 0.002;
 
+    this.magX = 0;
+    this.magY = 0;
+    this.influence = 0;
+
     // PIXI.Graphics is used to draw 2d primitives (in this case a circle) to the canvas
     this.graphics = new PIXI.Graphics();
     this.graphics.alpha = 0.825;
@@ -318,27 +335,67 @@ class Orb {
     };
   }
 
-  update() {
-    // self similar "psuedo-random" or noise values at a given point in "time"
+  applyMagnetism(cx, cy, modeId, active) {
+    const radius = Math.hypot(window.innerWidth, window.innerHeight) * 0.72;
+    const attractStrength = 92;
+    const repelStrength = 68;
+
+    if (!active) {
+      this.magX = lerp(this.magX, 0, 0.08);
+      this.magY = lerp(this.magY, 0, 0.08);
+      this.influence = lerp(this.influence, 0, 0.09);
+      return;
+    }
+
+    const dx = cx - this.x;
+    const dy = cy - this.y;
+    const dist = Math.hypot(dx, dy);
+    if (dist > radius || dist < 1) {
+      this.magX = lerp(this.magX, 0, 0.06);
+      this.magY = lerp(this.magY, 0, 0.06);
+      this.influence = lerp(this.influence, 0, 0.1);
+      return;
+    }
+
+    const f = 1 - dist / radius;
+    const smooth = f * f * (3 - 2 * f);
+    this.influence = lerp(this.influence, smooth, 0.12);
+    const sign = modeId === "repel" ? -1 : 1;
+    const strength = modeId === "repel" ? repelStrength : attractStrength;
+    const tx = sign * (dx / dist) * smooth * strength;
+    const ty = sign * (dy / dist) * smooth * strength;
+    const follow = 0.038 + smooth * 0.055;
+
+    this.magX = lerp(this.magX, tx, follow);
+    this.magY = lerp(this.magY, ty, follow);
+  }
+
+  update(cx, cy, modeId, active) {
+    this.xOff += this.inc;
+    this.yOff += this.inc;
+
     const xNoise = noise2D(this.xOff, this.xOff);
     const yNoise = noise2D(this.yOff, this.yOff);
     const scaleNoise = noise2D(this.xOff, this.yOff);
 
-    // map the xNoise/yNoise values (between -1 and 1) to a point within the orb's bounds
     this.x = map(xNoise, -1, 1, this.bounds["x"].min, this.bounds["x"].max);
     this.y = map(yNoise, -1, 1, this.bounds["y"].min, this.bounds["y"].max);
-    // map scaleNoise (between -1 and 1) to a scale value somewhere between half of the orb's original size, and 100% of it's original size
     this.scale = map(scaleNoise, -1, 1, 0.5, 1);
 
-    // step through "time"
-    this.xOff += this.inc;
-    this.yOff += this.inc;
+    if (!reduceMotion) {
+      this.applyMagnetism(cx, cy, modeId, active);
+    } else {
+      this.magX = 0;
+      this.magY = 0;
+      this.influence = 0;
+    }
   }
 
   render() {
-    // update the PIXI.Graphics position and scale values
-    this.graphics.x = this.x;
-    this.graphics.y = this.y;
+    const infl = this.influence;
+    this.graphics.alpha = Math.min(1, 0.825 + infl * 0.72);
+    this.graphics.x = this.x + this.magX;
+    this.graphics.y = this.y + this.magY;
     this.graphics.scale.set(this.scale);
 
     // clear anything currently drawn to graphics
@@ -373,7 +430,14 @@ const app = new PIXI.Application({
 // and left the "AI Colors" button dead.)
 // Kawase blur gives the wide, even, soft spread used on the live site
 // (a Gaussian PIXI.filters.BlurFilter falls off too fast and looks sharp).
-app.stage.filters = [new KawaseBlurFilter(30, 10, true)];
+const kawaseBlur = new KawaseBlurFilter(30, 10, true);
+app.stage.filters = [kawaseBlur];
+const orbCanvas = app.view;
+const BLUR_REST = 30;
+const BLUR_FOCUS = 8;
+const CANVAS_OPACITY_REST = 0.34;
+const CANVAS_OPACITY_FOCUS = 0.88;
+let canvasOpacity = CANVAS_OPACITY_REST;
 
 // Create colour palette
 const colorPalette = new ColorPalette();
@@ -390,21 +454,82 @@ for (let i = 0; i < 10; i++) {
 }
 
 // Animate!
-if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-  app.ticker.add(() => {
-    orbs.forEach((orb) => {
-      orb.update();
-      orb.render();
-    });
+function tickOrbs() {
+  let maxInfluence = 0;
+
+  orbs.forEach((orb) => {
+    orb.update(pointerX, pointerY, fieldModeId, pointerActive);
+    maxInfluence = Math.max(maxInfluence, orb.influence);
+    orb.render();
   });
+
+  const focus = pointerActive ? maxInfluence : 0;
+  kawaseBlur.strength = lerp(BLUR_REST, BLUR_FOCUS, focus);
+  const targetOpacity = lerp(CANVAS_OPACITY_REST, CANVAS_OPACITY_FOCUS, focus);
+  canvasOpacity = lerp(canvasOpacity, targetOpacity, 0.1);
+  orbCanvas.style.opacity = String(canvasOpacity);
+}
+
+if (!reduceMotion) {
+  document.addEventListener(
+    "pointermove",
+    (e) => {
+      pointerX = e.clientX;
+      pointerY = e.clientY;
+      pointerActive = true;
+    },
+    { passive: true }
+  );
+  document.addEventListener(
+    "pointerleave",
+    () => {
+      pointerActive = false;
+    },
+    { passive: true }
+  );
+  window.addEventListener("blur", () => {
+    pointerActive = false;
+  });
+  window.addEventListener("field-mode-change", (e) => {
+    fieldModeId = e.detail.mode;
+  });
+  document.addEventListener("DOMContentLoaded", () => {
+    if (window.FieldMode) fieldModeId = window.FieldMode.id;
+  });
+
+  app.ticker.add(tickOrbs);
 } else {
   orbs.forEach((orb) => {
-    orb.update();
+    orb.update(0, 0, fieldModeId, false);
     orb.render();
   });
 }
 
-// Keep the "ai colors" button badge in sync with the orb's active primary color
+function colorNameFromHue(hue) {
+  const h = ((hue % 360) + 360) % 360;
+  if (h < 20 || h >= 340) return "Rose";
+  if (h < 45) return "Amber";
+  if (h < 70) return "Gold";
+  if (h < 150) return "Verdant";
+  if (h < 200) return "Cyan";
+  if (h < 250) return "Azure";
+  if (h < 290) return "Violet";
+  if (h < 320) return "Magenta";
+  return "Crimson";
+}
+
+// Keep the luminescence button in sync with the orb's active primary color.
+function updateColorBadge() {
+  const name = colorNameFromHue(colorPalette.hue);
+  document.querySelectorAll(".overlay__btn--colors").forEach((btn) => {
+    const dot = btn.querySelector(".dot");
+    const nameEl = btn.querySelector(".color-name");
+    if (dot) dot.style.background = colorPalette.baseColor;
+    if (nameEl) nameEl.textContent = name;
+    btn.setAttribute("aria-label", `Luminescence: ${name}. Click to randomize colors.`);
+  });
+}
+
 function publishOrbPalette() {
   window.OrbPalette = {
     base: colorPalette.baseColor,
@@ -415,11 +540,6 @@ function publishOrbPalette() {
   );
 }
 
-function updateColorBadge() {
-  document.querySelectorAll(".orb-cta .dot").forEach((dot) => {
-    dot.style.background = colorPalette.baseColor;
-  });
-}
 updateColorBadge();
 publishOrbPalette();
 

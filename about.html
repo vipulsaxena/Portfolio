@@ -103,30 +103,30 @@
     <link rel="stylesheet" href="css/style.css">
     <link href="css/zoom.css" rel="stylesheet">
     <link rel="stylesheet" href="css/shell.css">
-
-    <!-- AI Colors -->
-    <script type="module" src="js/custom.js"></script>
 </head>
 
 <body>
+
 <script defer src="js/defer-spline.js"></script>
+
+<!-- SECTION: Sticky Navigation (shared shell — see css/shell.css) -->
+<header class="shell-header">
+  <div class="shell-inner shell-bar">
+    <nav class="shell-pagenav" aria-label="Primary">
+      <a href="index.html" class="shell-link">Home</a>
+      <a href="about.html" class="shell-link is-active" aria-current="page">About</a>
+    </nav>
+    <div class="shell-actions">
+      <!-- HUD cluster: Luminescence, Fascination, SFX (latter two injected by JS) -->
+      <div id="cta-cluster">
+        <button type="button" class="orb-cta overlay__btn--colors" aria-label="Luminescence: Azure. Click to randomize colors."><span class="dot" aria-hidden="true"></span><span class="hud-label">Luminescence: <span class="hud-value color-name">Azure</span></span></button>
+      </div>
+    </div>
+  </div>
+</header>
+
 <!-- Canvas -->
 <canvas class="orb-canvas"></canvas>
-    <!-- SECTION: Sticky Navigation (shared shell — see css/shell.css) -->
-    <header class="shell-header">
-      <div class="shell-inner shell-bar">
-        <nav class="shell-pagenav" aria-label="Primary">
-          <a href="index.html" class="shell-link">Home</a>
-          <a href="about.html" class="shell-link is-active" aria-current="page">About</a>
-        </nav>
-        <div class="shell-actions">
-          <!-- HUD cluster: AI Colors + Sound (sonic toggle is injected here) -->
-          <div id="cta-cluster">
-            <button type="button" class="orb-cta overlay__btn--colors" aria-label="Randomize background colors"><span class="dot"></span>ai colors</button>
-          </div>
-        </div>
-      </div>
-    </header>
 
     <main style="padding-top:var(--shell-h)">
         <h1 class="visually-hidden">About Vipul Saxena</h1>
@@ -538,13 +538,13 @@
     <script src="js/transition.js"></script>
     <script src="js/fontfaceobserver.js"></script>
     <script type="text/javascript" src="js/vanilla-tilt.min.js"></script>
-    <!-- Liquid Glass + Sonic feedback -->
+    <script type="module" src="js/custom.js"></script>
+    <script defer src="js/field-surface.js"></script>
     <script defer src="js/liquid-glass.js"></script>
     <script defer src="js/sonic.js"></script>
-    <!-- Shared shell interactions (mobile menu, etc.) -->
-    <script defer src="template.js"></script>
+    <script defer src="js/dot-grid.js"></script>
     <script defer src="js/about-avatar.js"></script>
-
+    <script defer src="template.js"></script>
     <script defer src="js/lazy-third-party.js"></script>
 
     <script>

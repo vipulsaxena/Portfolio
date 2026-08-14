@@ -109,9 +109,9 @@
       <a href="about.html" class="shell-link">About</a>
     </nav>
     <div class="shell-actions">
-      <!-- HUD cluster: AI Colors + Sound (sonic toggle is injected here) -->
+      <!-- HUD cluster: Luminescence, Fascination, SFX (latter two injected by JS) -->
       <div id="cta-cluster">
-        <button type="button" class="orb-cta overlay__btn--colors" aria-label="Randomize background colors"><span class="dot"></span>ai colors</button>
+        <button type="button" class="orb-cta overlay__btn--colors" aria-label="Luminescence: Azure. Click to randomize colors."><span class="dot" aria-hidden="true"></span><span class="hud-label">Luminescence: <span class="hud-value color-name">Azure</span></span></button>
       </div>
     </div>
   </div>
@@ -747,12 +747,11 @@
     <script src="js/zoom.js"></script>
     <script src="js/transition.js"></script>
     <script src="js/fontfaceobserver.js"></script>
-    <!-- AI Colors -->
+    <!-- Luminescence (orbs), Fascination (field mode), liquid glass, SFX -->
     <script type="module" src="js/custom.js"></script>
-    <!-- Liquid Glass + Sonic feedback -->
+    <script defer src="js/field-surface.js"></script>
     <script defer src="js/liquid-glass.js"></script>
     <script defer src="js/sonic.js"></script>
-    <!-- Interactive magnetic dot grid (hero background) -->
     <script defer src="js/dot-grid.js"></script>
     <!-- Shared shell header interactions (mobile menu, scrollspy, share) -->
     <script defer src="template.js"></script>

@@ -155,8 +155,9 @@
     var btn = document.createElement("button");
     btn.type = "button";
     btn.id = "sonic-toggle";
+    btn.className = "orb-cta orb-cta--sfx";
     btn.setAttribute("aria-pressed", muted ? "true" : "false");
-    btn.setAttribute("aria-label", "Toggle interface sound");
+    btn.setAttribute("aria-label", "SFX: " + (muted ? "Off" : "On") + ". Click to toggle.");
     render(btn);
     btn.addEventListener("click", function () { setMuted(!muted); if (!muted) click(); });
     var host = document.getElementById("cta-cluster") || document.body;
@@ -165,8 +166,13 @@
   }
 
   function render(btn) {
-    btn.innerHTML = '<span class="dot"></span>' + (muted ? "sound: off" : "sound: on");
+    var state = muted ? "Off" : "On";
+    btn.innerHTML =
+      '<span class="dot" aria-hidden="true"></span><span class="hud-label">SFX: <span class="hud-value">' +
+      state +
+      "</span></span>";
     btn.setAttribute("aria-pressed", muted ? "true" : "false");
+    btn.setAttribute("aria-label", "SFX: " + state + ". Click to toggle.");
   }
 
   var toggleEl = null;
