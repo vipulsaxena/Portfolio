@@ -6,12 +6,9 @@
  * script only adds cheap touches:
  *   - a cursor-follow sheen by updating --mx/--my CSS variables (rAF-batched)
  *   - a cursor-position 3D tilt on .liquid and .lg-tilt cards (4deg max)
- *   - a press/touch ripple element (single CSS keyframe, auto-removed)
+ *   - a press/touch ripple on any click (full-page surface layer, luminescence-tinted)
  *
- * Ripples on all interactive elements site-wide (links, buttons, cards, etc.)
- * but skip the sound toggle. Card sheen stays on .liquid only. Sound is handled
- * separately by sonic.js (.liquid cards only).
- *
+ * Card sheen stays on .liquid only. Sound is handled by sonic.js.
  * Respects prefers-reduced-motion (no sheen, no ripple).
  */
 (function () {
@@ -21,7 +18,10 @@
   var reduce = mm && mm("(prefers-reduced-motion: reduce)").matches;
   var coarse = mm && mm("(pointer: coarse)").matches;
 
-  var RIPPLE_SEL = 'a, button, [role="button"], .liquid, .archive__item, .schematic__cell';
+  var RIPPLE_EXCLUDE = "input, textarea, select, [contenteditable='true']";
+  var RIPPLE_MS = 720;
+  var LUMINANCE_INFLUENCE = 1;
+  var rippleCore = "255,255,255";
   var TILT_SEL = ".liquid, .lg-tilt";
   var MAX_TILT = 4;
   var TILT_PERSPECTIVE = 1000;
@@ -54,23 +54,82 @@
     );
   }
 
-  function rippleAt(el, clientX, clientY) {
-    if (reduce) return;
-    var r = el.getBoundingClientRect();
-    var px = clientX - r.left;
-    var py = clientY - r.top;
-    var s = document.createElement("span");
-    s.className = "lg-ripple";
-    s.style.left = px + "px";
-    s.style.top = py + "px";
-    el.appendChild(s);
-    setTimeout(function () { if (s.parentNode) s.parentNode.removeChild(s); }, 650);
+  function parseHexColor(hex) {
+    if (!hex) return [255, 255, 255];
+    var h = String(hex).replace("#", "").trim();
+    if (h.length === 3) {
+      h = h[0] + h[0] + h[1] + h[1] + h[2] + h[2];
+    }
+    if (h.length !== 6 || /[^0-9a-f]/i.test(h)) return [255, 255, 255];
+    return [
+      parseInt(h.slice(0, 2), 16),
+      parseInt(h.slice(2, 4), 16),
+      parseInt(h.slice(4, 6), 16)
+    ];
   }
 
-  function rippleTarget(e) {
-    var el = e.target && e.target.closest ? e.target.closest(RIPPLE_SEL) : null;
-    if (!el || el.id === "sonic-toggle" || el.closest("#sonic-toggle")) return null;
-    return el;
+  function syncRippleTint() {
+    var lum = window.OrbPalette && window.OrbPalette.base;
+    var rgb = parseHexColor(lum);
+    var t = LUMINANCE_INFLUENCE;
+    var r = Math.round(255 * (1 - t) + rgb[0] * t);
+    var g = Math.round(255 * (1 - t) + rgb[1] * t);
+    var b = Math.round(255 * (1 - t) + rgb[2] * t);
+    rippleCore = r + "," + g + "," + b;
+    document.documentElement.style.setProperty("--lg-ripple-core", rippleCore);
+  }
+
+  function rippleGradient() {
+    return (
+      "radial-gradient(circle, rgba(" + rippleCore + ",0.28), rgba(" +
+      rippleCore + ",0) 62%)"
+    );
+  }
+
+  function removeRipple(node, delay) {
+    setTimeout(function () {
+      if (node.parentNode) node.parentNode.removeChild(node);
+    }, delay);
+  }
+
+  function ensureSurfaceLayer() {
+    var layer = document.getElementById("lg-click-surface");
+    if (layer) return layer;
+    layer = document.createElement("div");
+    layer.id = "lg-click-surface";
+    layer.setAttribute("aria-hidden", "true");
+    document.body.appendChild(layer);
+    return layer;
+  }
+
+  function rippleOnSurface(clientX, clientY) {
+    if (reduce) return;
+    var layer = ensureSurfaceLayer();
+    var s = document.createElement("span");
+    s.className = "lg-ripple lg-ripple--surface";
+    s.style.left = clientX + "px";
+    s.style.top = clientY + "px";
+    s.style.background = rippleGradient();
+    layer.appendChild(s);
+    removeRipple(s, RIPPLE_MS);
+  }
+
+  function rippleBlocked(e) {
+    var t = e.target;
+    if (!t || !t.closest) return true;
+    if (t.closest("#sonic-toggle")) return true;
+    if (t.closest(RIPPLE_EXCLUDE)) return true;
+    return false;
+  }
+
+  function initRipple() {
+    syncRippleTint();
+    window.addEventListener("orb-palette-change", syncRippleTint);
+
+    document.addEventListener("pointerdown", function (e) {
+      if (rippleBlocked(e)) return;
+      rippleOnSurface(e.clientX, e.clientY);
+    });
   }
 
   function setTilt(card, rotateX, rotateY) {
@@ -240,14 +299,6 @@
     window.addEventListener("blur", releaseAll);
     document.addEventListener("pointerout", function (e) {
       if (!e.relatedTarget) releaseAll();
-    });
-  }
-
-  function initRipple() {
-    document.addEventListener("pointerdown", function (e) {
-      var el = rippleTarget(e);
-      if (!el) return;
-      rippleAt(el, e.clientX, e.clientY);
     });
   }
 

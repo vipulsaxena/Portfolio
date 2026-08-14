@@ -664,10 +664,16 @@
       #lightbox img{ max-width:100%; max-height:90vh; border-radius:.75rem; box-shadow:0 24px 60px -20px rgba(0,0,0,.35); background:transparent; }
 
       .slide-scroll > .slide-inner{ justify-content:flex-start; padding-bottom:calc(5rem + env(safe-area-inset-bottom, 0px)); }
+      .slide.is-vcenter > .slide-inner{
+        justify-content:center;
+        padding-top:clamp(1.5rem,4vw,4rem);
+        padding-bottom:calc(5rem + env(safe-area-inset-bottom, 0px));
+      }
 
       /* Mobile + tablet — desktop (1024px+) unchanged */
       @media (max-width: 1023px) {
         .slide > .slide-inner { justify-content: flex-start; }
+        .slide.is-vcenter > .slide-inner { justify-content: center; }
         .slide-scroll > .slide-inner,
         .slide-inner.top { padding-bottom: calc(5rem + env(safe-area-inset-bottom, 0px)); }
         .slide-bleed,
@@ -1326,8 +1332,8 @@
     </section>
 
     <!-- CS 13 · CASE-STUDY WRAP-UP -->
-    <section class="slide slide-scroll slide-bg-sage text-ink" data-chapter="case-study" data-title="Wrap-up">
-      <div class="slide-inner text-center items-center" style="padding-bottom:calc(4.5rem + env(safe-area-inset-bottom, 0px))">
+    <section class="slide slide-scroll is-vcenter slide-bg-sage text-ink" data-chapter="case-study" data-title="Wrap-up">
+      <div class="slide-inner text-center items-center">
         <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">OLX · Pay &amp; Ship</p>
         <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4 max-w-[24ch] mx-auto text-ink" data-anim style="--i:1">
           From category drop-off to production uplift
