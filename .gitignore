@@ -12,6 +12,7 @@ olx_preview_tmp.html
 node_modules/
 .DS_Store
 **/.DS_Store
+worker/.wrangler/
 
 # Raisin case study — dev-only migration tooling
 raisin-assets/scripts/node_modules/

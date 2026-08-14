@@ -13,6 +13,29 @@ Personal portfolio website for showcasing product design work, case studies, and
 | **Scripts** | Vanilla JavaScript (ES modules + classic scripts), jQuery (legacy helpers on index) |
 | **Local dev** | [http-server](https://www.npmjs.com/package/http-server) |
 | **Hosting** | GitHub Pages (`gh-pages` branch) |
+| **Chat API** | Cloudflare Workers + D1 (free tier) |
+
+## Portfolio chat
+
+Visitors chat via the floating widget (replaces the Google Form). Conversations are stored in Cloudflare D1. Admin inbox: `/admin/` (password via `ADMIN_PASSWORD` secret).
+
+### Setup
+
+1. Follow [worker/README.md](worker/README.md) to create Cloudflare account, D1 database, and deploy the API.
+2. Set `API_BASE_URL` in [js/vipul-chat-config.js](js/vipul-chat-config.js) and [admin/admin-config.js](admin/admin-config.js) to your Worker URL.
+3. Push static site to `gh-pages` as usual.
+
+### Local chat development
+
+```bash
+# Terminal 1 — static site
+npm start
+
+# Terminal 2 — API
+cd worker && npm install && npm run db:migrate:local && npm run dev
+```
+
+Chat works offline without API (UI + answers); messages persist once API is running.
 
 ## Codebase overview
 
@@ -28,7 +51,11 @@ Portfolio/
 │   ├── zoom.css        # Image lightbox / zoom
 │   └── tiny-slider.css # Carousel styles
 ├── js/
-│   ├── custom.js       # AI Colors background (PixiJS orbs + dot grid)
+│   ├── vipul-chat.js           # Chat widget UI + state machine
+│   ├── vipul-chat-knowledge.js # Answer knowledge base
+│   ├── vipul-chat-config.js    # API URL config
+│   ├── portfolio-gate.js       # Case study password verify
+│   ├── custom.js               # AI Colors background (PixiJS orbs + dot grid)
 │   ├── dot-grid.js     # Interactive dot grid
 │   ├── liquid-glass.js # Glass card hover effects
 │   ├── sonic.js        # UI sound feedback
@@ -37,7 +64,8 @@ Portfolio/
 │   └── transition.js   # Page transitions
 ├── images/             # Logos, previews, avatars, media assets
 ├── assets/             # Case study media (screenshots, video, exports)
-├── template.js         # Shared shell interactions (nav, mobile menu)
+├── admin/              # Chat conversation admin panel
+├── worker/             # Cloudflare Worker API + D1 schema
 └── package.json        # Local dev server script
 ```
 
