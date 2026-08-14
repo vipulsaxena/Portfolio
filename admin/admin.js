@@ -184,6 +184,39 @@
       });
   }
 
+  function formatThreadMessage(m) {
+    if (m.role === "system") {
+      if (m.content === "Portfolio unlocked") {
+        return {
+          role: "note",
+          label: "Session",
+          content: "Portfolio unlocked",
+          highlight: true,
+        };
+      }
+      if (m.content.indexOf("Contact captured:") === 0) {
+        return {
+          role: "note",
+          label: "Lead",
+          content: m.content.replace("Contact captured:", "Contact saved:"),
+          highlight: true,
+        };
+      }
+      return {
+        role: "note",
+        label: "System",
+        content: m.content,
+        highlight: false,
+      };
+    }
+    return {
+      role: m.role,
+      label: m.role,
+      content: m.content,
+      highlight: m.role === "user" && (m.tags || []).length > 0,
+    };
+  }
+
   function openThread(id) {
     history.pushState({}, "", "index.html?session=" + encodeURIComponent(id));
     api("/api/admin/sessions/" + encodeURIComponent(id))
@@ -208,13 +241,15 @@
           "</dl>";
         threadMessages.innerHTML = "";
         (data.messages || []).forEach(function (m) {
+          var formatted = formatThreadMessage(m);
+          if (!formatted) return;
           var div = document.createElement("div");
-          var tags = m.tags || [];
-          var highlight = m.role === "user" && tags.length > 0;
           div.className =
-            "admin-msg admin-msg--" + m.role + (highlight ? " admin-msg--highlight" : "");
+            "admin-msg admin-msg--" + formatted.role +
+            (formatted.highlight ? " admin-msg--highlight" : "");
           div.innerHTML =
-            '<div class="admin-msg__role">' + m.role + "</div>" + escapeHtml(m.content);
+            '<div class="admin-msg__role">' + escapeHtml(formatted.label) + "</div>" +
+            escapeHtml(formatted.content);
           threadMessages.appendChild(div);
         });
       });

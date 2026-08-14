@@ -254,6 +254,20 @@ async function handlePatchSession(
       .run();
   }
 
+  if (body.unlocked_at) {
+    await env.DB.prepare(
+      `INSERT INTO messages (session_id, role, content, tags, created_at)
+       VALUES (?, 'system', ?, ?, ?)`
+    )
+      .bind(
+        body.sessionId,
+        "Portfolio unlocked",
+        JSON.stringify(["unlocked"]),
+        ts
+      )
+      .run();
+  }
+
   return json({ ok: true }, 200, request, env);
 }
 

@@ -9,6 +9,36 @@
     "Do you mentor on ADPList?",
   ];
 
+  var COMPANIES = ["raisin", "olx", "n26", "gomart"];
+
+  var DEPTH_PATTERNS = [
+    /\b(case stud(y|ies)|deep dive|full story|more detail|go deeper|in depth)\b/i,
+    /\b(process|approach|how did you|walk me through|methodology)\b/i,
+    /\b(password.?gated|locked|full portfolio)\b/i,
+    /\bgo deeper on\b/i,
+  ];
+
+  var IMPACT_PATTERNS = [
+    /\bimpact\b/i,
+    /\bresults?\b/i,
+    /\boutcomes?\b/i,
+    /\bmetrics?\b/i,
+    /\bmeasurable\b/i,
+    /\broi\b/i,
+    /\bconversion\b/i,
+    /\blift\b/i,
+    /\bimprov(e|ed|ement)\b/i,
+    /\bwhat (did you|was) (achieve|deliver|ship)\b/i,
+  ];
+
+  var OVERVIEW_PATTERNS = [
+    /\bwhat (are you|do you) (working on|do)\b/i,
+    /\btell me about\b/i,
+    /\boverview\b/i,
+    /\bhigh[- ]?level\b/i,
+    /\bcurrently\b/i,
+  ];
+
   var INTENTS = [
     {
       id: "greeting",
@@ -67,6 +97,11 @@
       id: "salary",
       patterns: [/\bsalary\b/i, /\bcompensation\b/i, /\brate\b/i, /\bnotice period\b/i, /\bvisa\b/i, /\bwork authorization\b/i, /\bactively looking\b/i],
       action: "deflect_private",
+    },
+    {
+      id: "work_impact",
+      patterns: IMPACT_PATTERNS,
+      action: "impact_answer",
     },
     {
       id: "raisin",
@@ -146,24 +181,67 @@
     instalively:
       "I was the first hire at InstaLively — live video for low-bandwidth India, 50k+ users, acquired by Hike. Also built Pulse (hyperlocal social for students) before that pivot.",
     raisin_public:
-      "At Raisin I'm simplifying wealth management across EU, UK, and US — brand evolution across dashboard, mobile, email, and marketing for savers in nine markets.",
+      "At Raisin I'm simplifying wealth management across EU, UK, and US — leading brand evolution across dashboard, mobile, email, and marketing for savers in nine markets. Right now I'm balancing shipping the Wealth Hub with building design enablement for the team.",
     raisin:
       "I led Raisin's brand evolution across dashboard, mobile app, email, and marketing — translating a global brand refresh into cohesive experiences. I ran two parallel tracks: shipping the Wealth Hub MVP across 12 markets, and building design enablement — research practice, AI workflows, governed email system, mobile alignment, and team rituals. Customers had faced fragmented surfaces; we turned static Koto guidelines into a living product system.",
+    raisin_impact:
+      "At Raisin the measurable wins sit in two tracks: shipping the Wealth Hub MVP across 12 markets with a coherent dashboard, mobile, and email experience — and standing up design enablement so the team could ship the rebrand without one-off reskins. Research practice, a governed email system, and mobile alignment reduced fragmentation customers felt across touchpoints. I can walk through specifics in a conversation.",
+    olx_public:
+      "At OLX I led Engagement & Monetisation design in Pay & Ship — payments, seller monetisation, and checkout across 17 countries on a platform used by 317M+ people.",
     olx:
       "At OLX I led Engagement & Monetisation design in Pay & Ship across 17 countries — Ad Package drop-off via research and A/B tests, Seller Take Rate AutoExtend, payment gateway, and DesignOps workshops. Platform serves 317M+ C2C and B2C users. Winning patterns rolled out to more markets.",
+    olx_impact:
+      "At OLX, impact came from tightening monetisation flows at scale: reducing Ad Package drop-off through research and A/B tests, shipping Seller Take Rate AutoExtend, and improving the payment gateway experience — then rolling winning patterns across more of the 17-country footprint.",
+    n26_public:
+      "At N26 I evolved the home feed and transaction experience across 25 European markets — making multi-account activity easier to scan and act on.",
     n26:
       "At N26 I evolved the home feed into a multi-activity view across 25 European markets — surfacing activity across Spaces, IBANs, and cards. Research-led: six customer interviews, cross-functional workshops, usability tests, launch-to-learn. Also shipped MoneyBeam reactions, feed↔crypto connections, and transaction search improvements.",
+    n26_impact:
+      "At N26 the home feed work made multi-activity banking legible across 25 markets — fewer dead ends between Spaces, IBANs, and cards. Research, workshops, and launch-to-learn cycles informed MoneyBeam reactions, feed↔crypto connections, and transaction search improvements.",
+    gomart_public:
+      "On Gojek I led grocery design at Indonesia scale — GoMart, GoFresh, and the operational tools behind reliable nationwide fulfillment.",
     gomart:
       "On Gojek I led grocery design at Indonesia scale — GoMart (B2C), GoFresh (B2B), plus shopper and driver tools. Studio Accelerator design sprints for fast, reliable fulfillment nationwide. Part of a broader on-demand and entertainment portfolio where I led a team of six.",
+    gomart_impact:
+      "GoMart impact was about reliable fulfillment at Indonesia scale — Studio Accelerator sprints across GoMart, GoFresh, and shopper/driver tools so discovery, trust, and operations held up under real-world load.",
   };
 
   var LOCKED_CHUNK_IDS = ["raisin", "olx", "n26", "gomart"];
+
+  function wantsCaseStudyDepth(query) {
+    return DEPTH_PATTERNS.some(function (p) { return p.test(query); });
+  }
+
+  function wantsImpactMetrics(query) {
+    return IMPACT_PATTERNS.some(function (p) { return p.test(query); });
+  }
+
+  function isOverviewQuestion(query) {
+    return OVERVIEW_PATTERNS.some(function (p) { return p.test(query); });
+  }
+
+  function getCompanyFromQuery(query) {
+    var q = query.toLowerCase();
+    for (var i = 0; i < COMPANIES.length; i++) {
+      if (q.indexOf(COMPANIES[i]) !== -1) return COMPANIES[i];
+    }
+    return null;
+  }
+
+  function getPublicChunkId(companyId) {
+    return companyId + "_public";
+  }
+
+  function getImpactChunkId(companyId) {
+    return companyId + "_impact";
+  }
 
   function searchChunks(query, unlocked, excludeId) {
     var q = query.toLowerCase();
     var results = [];
     Object.keys(CHUNKS).forEach(function (id) {
       if (excludeId && id === excludeId) return;
+      if (/_impact$/.test(id) && !unlocked) return;
       var isLocked = LOCKED_CHUNK_IDS.indexOf(id) !== -1;
       if (isLocked && !unlocked) return;
       var text = CHUNKS[id].toLowerCase();
@@ -192,7 +270,14 @@
     INTENTS: INTENTS,
     CHUNKS: CHUNKS,
     LOCKED_CHUNK_IDS: LOCKED_CHUNK_IDS,
+    COMPANIES: COMPANIES,
     searchChunks: searchChunks,
     matchIntent: matchIntent,
+    wantsCaseStudyDepth: wantsCaseStudyDepth,
+    wantsImpactMetrics: wantsImpactMetrics,
+    isOverviewQuestion: isOverviewQuestion,
+    getCompanyFromQuery: getCompanyFromQuery,
+    getPublicChunkId: getPublicChunkId,
+    getImpactChunkId: getImpactChunkId,
   };
 })(window);

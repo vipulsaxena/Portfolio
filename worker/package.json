@@ -6,7 +6,8 @@
     "dev": "wrangler dev",
     "deploy": "wrangler deploy",
     "db:migrate": "wrangler d1 execute portfolio-chat --remote --file=schema.sql",
-    "db:migrate:local": "wrangler d1 execute portfolio-chat --local --file=schema.sql"
+    "db:migrate:local": "wrangler d1 execute portfolio-chat --local --file=schema.sql",
+    "test:sync": "node scripts/test-chat-sync.mjs"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20250204.0",

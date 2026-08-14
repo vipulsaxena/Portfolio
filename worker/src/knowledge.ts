@@ -17,6 +17,8 @@ Why Berlin: moved for global scale — N26 across 25 markets, OLX 17 countries, 
 Public case studies: GoPlay (Gojek OTT Indonesia), InstaLively, Hike Camera UX article.
 Locked case studies (password): Raisin brand evolution, OLX monetisation, N26 home feed, GoMart grocery.
 
+Impact highlights (when unlocked): Raisin — Wealth Hub across 12 markets + design enablement reducing fragmented surfaces; OLX — monetisation flow improvements across 17 countries at 317M+ user scale; N26 — multi-activity home feed across 25 markets; GoMart — reliable fulfillment at Indonesia scale via Studio Accelerator sprints.
+
 Skills: product strategy, research, design systems, DesignOps, Figma, Cursor, AI-native prototyping.
 Mentoring: ADPList — portfolio reviews, career advice.
 `;
