@@ -1072,7 +1072,9 @@
 .ski-pill-group__seg:last-child {
     padding-right: 14px;
 }
-.post-list.no-decoration .post-item.liquid {
+.post-list.no-decoration .post-item.liquid,
+.post-item.liquid,
+.post-item.lg-tilt {
     overflow: visible;
 }
 .post-img {
@@ -1570,7 +1572,7 @@
 }
 .liquid.more-work-card::before,
 .liquid.post-item.more-work-card::before {
-    display: none !important;
+    display: block !important;
 }
 
 /* ============================================================
@@ -1579,6 +1581,17 @@
 
 /* Glossy translucent glass: frosted backdrop + specular highlights.
    Static look reads as glass; an optional cursor sheen adds interactivity. */
+.liquid,
+.lg-tilt {
+    transform-style: preserve-3d;
+}
+
+.lg-tilt {
+    position: relative;
+    -webkit-transition: box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 .liquid {
     position: relative;
     --mx: 50%;
@@ -1594,25 +1607,62 @@
         inset 0 -1px 1px rgba(255, 255, 255, 0.25),
         inset 0 0 0 1px rgba(255, 255, 255, 0.18);
     isolation: isolate;
-    -webkit-transition: background 0.25s ease, box-shadow 0.25s ease;
-    transition: background 0.25s ease, box-shadow 0.25s ease;
+    -webkit-transition: box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Hover / pressed state: solid 100% white container. */
-.liquid:hover,
+/* White hover fill — opacity layer so enter/leave can ease smoothly.
+   !important guards win unconditionally over the legacy .post-item::before
+   "growing white box" rules (incl. .post-list.no-decoration .post-item::before
+   { display: none }), which target the same pseudo-element on these cards. */
+.liquid::before,
+.lg-tilt::before {
+    content: "" !important;
+    position: absolute !important;
+    inset: 0 !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
+    display: block !important;
+    border-radius: inherit !important;
+    background: rgba(255, 255, 255, 0.7) !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    z-index: 0;
+    -webkit-transition: opacity 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: opacity 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.liquid.lg-active::before,
+.liquid:active::before,
+.lg-tilt.lg-active::before {
+    opacity: 1 !important;
+}
+
 .liquid.lg-active,
-.liquid:active {
-    background: rgba(255, 255, 255, 0.9);
+.lg-tilt.lg-active {
+    -webkit-transition: box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Hover / pressed state: elevated shadow only (fill handled by ::before).
+   Driven by .lg-active only — not :hover — so edge flicker stays in sync with JS. */
+.liquid.lg-active,
+.liquid:active,
+.lg-tilt.lg-active {
     box-shadow:
         0 14px 40px rgba(0, 0, 0, 0.10),
         inset 0 0 0 1px rgba(0, 0, 0, 0.04);
 }
 
 /* Keep card content above the glass sheen layers. */
-.liquid > * { position: relative; z-index: 1; }
-
-/* The legacy white hover background would hide the glass — disable it. */
-.liquid.post-item::before { display: none !important; }
+.liquid > *,
+.lg-tilt > * {
+    position: relative;
+    z-index: 1;
+}
 
 /* Cursor-follow specular sheen — cheap (single radial-gradient repaint). */
 .liquid::after {
@@ -1625,8 +1675,8 @@
     background: radial-gradient(16rem 16rem at var(--mx) var(--my),
         rgba(255, 255, 255, 0.30), rgba(255, 255, 255, 0) 60%);
     opacity: 0;
-    -webkit-transition: opacity 0.3s ease;
-    transition: opacity 0.3s ease;
+    -webkit-transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .liquid.lg-active::after { opacity: 1; }
 
@@ -1663,6 +1713,9 @@ a, button, [role="button"], .liquid, .archive__item, .schematic__cell {
 
 @media (prefers-reduced-motion: reduce) {
     .liquid,
+    .lg-tilt,
+    .liquid::before,
+    .lg-tilt::before,
     .liquid::after { -webkit-transition: none; transition: none; }
     .lg-ripple { display: none; }
 }
