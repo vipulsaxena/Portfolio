@@ -24,9 +24,30 @@ export interface Env {
   ALLOWED_ORIGINS: string;
 }
 
-const RATE_LIMIT = 30;
+// IP-based abuse guard only — do not cap per-session message count (long chats must persist).
+const IP_RATE_LIMIT = 500;
 const RATE_WINDOW_MS = 60 * 60 * 1000;
 const rateBuckets = new Map<string, { count: number; resetAt: number }>();
+let schemaReady: Promise<void> | null = null;
+
+async function ensureSchema(env: Env): Promise<void> {
+  if (!schemaReady) {
+    schemaReady = (async () => {
+      try {
+        await env.DB.prepare(
+          "ALTER TABLE sessions ADD COLUMN read_at TEXT"
+        ).run();
+      } catch {
+        // Column already exists on migrated databases.
+      }
+    })();
+  }
+  return schemaReady;
+}
+
+function getClientIp(request: Request): string {
+  return request.headers.get("CF-Connecting-IP") || "unknown";
+}
 
 function nowIso(): string {
   return new Date().toISOString();
@@ -53,7 +74,7 @@ function corsHeaders(request: Request, env: Env): Record<string, string> {
   const origin = request.headers.get("Origin") || "";
   const allowed = getAllowedOrigins(env);
   const headers: Record<string, string> = {
-    "Access-Control-Allow-Methods": "GET, POST, PATCH, OPTIONS",
+    "Access-Control-Allow-Methods": "GET, POST, PATCH, DELETE, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type, Authorization",
     "Access-Control-Max-Age": "86400",
   };
@@ -81,14 +102,15 @@ function json(
   });
 }
 
-function checkRateLimit(sessionId: string): boolean {
-  const bucket = rateBuckets.get(sessionId);
+function checkIpRateLimit(request: Request): boolean {
+  const key = `ip:${getClientIp(request)}`;
+  const bucket = rateBuckets.get(key);
   const now = Date.now();
   if (!bucket || now > bucket.resetAt) {
-    rateBuckets.set(sessionId, { count: 1, resetAt: now + RATE_WINDOW_MS });
+    rateBuckets.set(key, { count: 1, resetAt: now + RATE_WINDOW_MS });
     return true;
   }
-  if (bucket.count >= RATE_LIMIT) return false;
+  if (bucket.count >= IP_RATE_LIMIT) return false;
   bucket.count += 1;
   return true;
 }
@@ -163,7 +185,7 @@ async function handleChatMessage(
     return json({ error: "sessionId, role, content required" }, 400, request, env);
   }
 
-  if (!checkRateLimit(body.sessionId)) {
+  if (!checkIpRateLimit(request)) {
     return json({ error: "Rate limit exceeded" }, 429, request, env);
   }
 
@@ -340,15 +362,23 @@ async function handleAdminSessions(
   sessions = sessions.map((s) => ({
     ...s,
     highlights: parseJsonArray(s.highlights as string, []),
+    read: Boolean(s.read_at),
   }));
 
-  if (filterTag) {
+  if (filter === "unread") {
+    sessions = sessions.filter((s) => !s.read);
+  } else if (filter === "read") {
+    sessions = sessions.filter((s) => s.read);
+  } else if (filterTag) {
     sessions = sessions.filter((s) =>
       (s.highlights as HighlightTag[]).includes(filterTag)
     );
   }
 
   sessions.sort((a, b) => {
+    const aRead = a.read ? 1 : 0;
+    const bRead = b.read ? 1 : 0;
+    if (aRead !== bRead) return aRead - bRead;
     const aH = (a.highlights as HighlightTag[]).length;
     const bH = (b.highlights as HighlightTag[]).length;
     if (aH !== bH) return bH - aH;
@@ -394,6 +424,7 @@ async function handleAdminSessionDetail(
           (session as Record<string, string>).highlights,
           []
         ),
+        read: Boolean((session as Record<string, unknown>).read_at),
       },
       messages: parsedMessages,
     },
@@ -401,6 +432,109 @@ async function handleAdminSessionDetail(
     request,
     env
   );
+}
+
+async function handleAdminPatchSession(
+  request: Request,
+  env: Env,
+  sessionId: string
+): Promise<Response> {
+  if (!requireAdmin(request)) {
+    return json({ error: "Unauthorized" }, 401, request, env);
+  }
+
+  const body = (await request.json()) as { read?: boolean };
+
+  if (typeof body.read !== "boolean") {
+    return json({ error: "read boolean required" }, 400, request, env);
+  }
+
+  const session = await env.DB.prepare("SELECT id FROM sessions WHERE id = ?")
+    .bind(sessionId)
+    .first();
+
+  if (!session) {
+    return json({ error: "Not found" }, 404, request, env);
+  }
+
+  const readAt = body.read ? nowIso() : null;
+  await env.DB.prepare("UPDATE sessions SET read_at = ? WHERE id = ?")
+    .bind(readAt, sessionId)
+    .run();
+
+  return json({ ok: true, read: body.read, read_at: readAt }, 200, request, env);
+}
+
+async function handleAdminDeleteSession(
+  request: Request,
+  env: Env,
+  sessionId: string
+): Promise<Response> {
+  if (!requireAdmin(request)) {
+    return json({ error: "Unauthorized" }, 401, request, env);
+  }
+
+  const session = await env.DB.prepare("SELECT id FROM sessions WHERE id = ?")
+    .bind(sessionId)
+    .first();
+
+  if (!session) {
+    return json({ error: "Not found" }, 404, request, env);
+  }
+
+  await env.DB.batch([
+    env.DB.prepare("DELETE FROM messages WHERE session_id = ?").bind(sessionId),
+    env.DB.prepare("DELETE FROM sessions WHERE id = ?").bind(sessionId),
+  ]);
+
+  return json({ ok: true }, 200, request, env);
+}
+
+function extractAiReply(result: unknown): string {
+  if (!result) return "";
+  if (typeof result === "string") return result.trim();
+  if (typeof result !== "object") return "";
+
+  const r = result as Record<string, unknown>;
+  if (typeof r.response === "string") return r.response.trim();
+  if (typeof r.result === "string") return r.result.trim();
+
+  if (Array.isArray(r.choices) && r.choices[0]) {
+    const choice = r.choices[0] as {
+      message?: { content?: string };
+      text?: string;
+    };
+    if (choice.message?.content) return choice.message.content.trim();
+    if (choice.text) return choice.text.trim();
+  }
+
+  return "";
+}
+
+async function runCompletion(
+  env: Env,
+  messages: { role: "system" | "user" | "assistant"; content: string }[]
+): Promise<string> {
+  const models = [
+    "@cf/meta/llama-3.1-8b-instruct",
+    "@cf/meta/llama-3-8b-instruct",
+  ];
+
+  for (const model of models) {
+    try {
+      const result = await env.AI.run(model, {
+        messages,
+        max_tokens: 280,
+        temperature: 0.4,
+      });
+      const reply = extractAiReply(result);
+      if (reply) return reply;
+    } catch (err) {
+      console.error("AI model error", model, err);
+    }
+  }
+
+  return "";
 }
 
 async function handleChatComplete(
@@ -411,6 +545,7 @@ async function handleChatComplete(
     message?: string;
     unlocked?: boolean;
     history?: { role: string; content: string }[];
+    topicCompany?: string;
   };
 
   if (!body.message?.trim()) {
@@ -418,6 +553,10 @@ async function handleChatComplete(
   }
 
   const history = (body.history || []).slice(-6);
+  const topicNote = body.topicCompany
+    ? `\nCurrent conversation topic company: ${body.topicCompany}.`
+    : "";
+
   const messages: { role: "system" | "user" | "assistant"; content: string }[] = [
     {
       role: "system",
@@ -425,7 +564,8 @@ async function handleChatComplete(
         SYSTEM_PROMPT +
         (body.unlocked
           ? "\nUser has unlocked password-gated case studies."
-          : "\nUser has NOT unlocked password-gated case studies yet."),
+          : "\nUser has NOT unlocked password-gated case studies yet.") +
+        topicNote,
     },
   ];
 
@@ -441,19 +581,14 @@ async function handleChatComplete(
   messages.push({ role: "user", content: body.message.trim() });
 
   try {
-    const result = await env.AI.run("@cf/meta/llama-3.1-8b-instruct", {
-      messages,
-      max_tokens: 280,
-      temperature: 0.4,
-    });
+    const reply = await runCompletion(env, messages);
 
-    const reply =
-      typeof result === "object" && result && "response" in result
-        ? String((result as { response?: string }).response || "").trim()
-        : "";
+    if (reply) {
+      return json({ reply }, 200, request, env);
+    }
 
     return json(
-      { reply: reply || "I'm not sure about that — want to leave your email and I'll follow up?" },
+      { reply: null, fallback: true },
       200,
       request,
       env
@@ -491,6 +626,8 @@ export default {
     }
 
     try {
+      await ensureSchema(env);
+
       if (url.pathname === "/api/chat/session" && request.method === "POST") {
         return handleChatSession(request, env);
       }
@@ -520,6 +657,12 @@ export default {
       );
       if (detailMatch && request.method === "GET") {
         return handleAdminSessionDetail(request, env, detailMatch[1]);
+      }
+      if (detailMatch && request.method === "PATCH") {
+        return handleAdminPatchSession(request, env, detailMatch[1]);
+      }
+      if (detailMatch && request.method === "DELETE") {
+        return handleAdminDeleteSession(request, env, detailMatch[1]);
       }
 
       return json({ error: "Not found" }, 404, request, env);

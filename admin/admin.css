@@ -144,6 +144,28 @@ a {
   background: #fff3b0;
 }
 
+.admin-btn--danger {
+  background: #fff;
+  border: 1px solid #e7e7e7;
+  color: #e0362f;
+}
+
+.admin-btn--danger:hover {
+  filter: none;
+  background: #fdecea;
+  border-color: #e0362f;
+}
+
+.admin-btn--danger:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(224, 54, 47, 0.28);
+}
+
+.admin-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
 .admin-error {
   color: #e0362f;
   font-size: 13px;
@@ -184,19 +206,79 @@ a {
 }
 
 .admin-session-card {
-  display: block;
-  text-decoration: none;
-  color: inherit;
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
   background: #fff;
   border: 1px solid #e7e7e7;
   border-radius: 14px;
-  padding: 16px 18px;
-  transition: border-color 0.15s, box-shadow 0.15s;
+  padding: 12px 12px 12px 18px;
+  transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
 }
 
 .admin-session-card:hover {
   border-color: #ffda08;
   box-shadow: 0 8px 24px -12px rgba(0, 0, 0, 0.15);
+}
+
+.admin-session-card--unread {
+  background: #fffdf2;
+  border-color: #f0e0a0;
+}
+
+.admin-session-card__body {
+  flex: 1;
+  min-width: 0;
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  padding: 4px 0;
+}
+
+.admin-session-card__actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.admin-icon-btn {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: #6e6e6e;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-icon-btn:hover {
+  background: #f3f3f3;
+  color: #262626;
+}
+
+.admin-icon-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 218, 8, 0.55);
+}
+
+.admin-icon-btn--danger:hover {
+  background: #fdecea;
+  color: #e0362f;
+}
+
+.admin-icon-btn--danger:focus-visible {
+  box-shadow: 0 0 0 3px rgba(224, 54, 47, 0.28);
+}
+
+.admin-icon-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
 }
 
 .admin-session-card__top {
@@ -210,6 +292,22 @@ a {
 .admin-session-card__email {
   font-weight: 700;
   font-size: 15px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.admin-session-card--unread .admin-session-card__email {
+  font-weight: 800;
+}
+
+.admin-unread-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #ffda08;
+  box-shadow: 0 0 0 3px rgba(255, 218, 8, 0.28);
+  flex-shrink: 0;
 }
 
 .admin-session-card__time {
@@ -324,6 +422,22 @@ a {
   padding: 48px 24px;
 }
 
+.admin-thread-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.admin-thread-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
 .admin-back {
   display: inline-flex;
   align-items: center;
@@ -332,7 +446,6 @@ a {
   font-weight: 600;
   color: #6e6e6e;
   text-decoration: none;
-  margin-bottom: 20px;
 }
 
 .admin-back:hover {

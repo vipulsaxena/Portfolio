@@ -24,6 +24,27 @@
   var threadSummary = document.getElementById("thread-summary");
   var threadMessages = document.getElementById("thread-messages");
   var backLink = document.getElementById("back-link");
+  var deleteThreadBtn = document.getElementById("delete-thread-btn");
+  var toggleReadBtn = document.getElementById("toggle-read-btn");
+  var currentSessionId = "";
+  var currentSessionRead = false;
+
+  var TRASH_ICON =
+    '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">' +
+    '<path d="M3.5 4.5h9M6.5 4.5V3.2A.7.7 0 0 1 7.2 2.5h1.6a.7.7 0 0 1 .7.7v1.3M5 4.5l.4 8.2a1 1 0 0 0 1 .8h3.2a1 1 0 0 0 1-.8L11 4.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>' +
+    "</svg>";
+
+  var MAIL_CLOSED_ICON =
+    '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">' +
+    '<rect x="2.5" y="3.5" width="11" height="9" rx="1.2" stroke="currentColor" stroke-width="1.4"/>' +
+    '<path d="M3 4.5 8 8.2 13 4.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>' +
+    "</svg>";
+
+  var MAIL_OPEN_ICON =
+    '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">' +
+    '<path d="M2.5 6.2 8 2.8l5.5 3.4V12a1 1 0 0 1-1 1h-9a1 1 0 0 1-1-1V6.2Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>' +
+    '<path d="M2.5 6.2 8 9.6l5.5-3.4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>' +
+    "</svg>";
 
   function apiUrl(path) {
     return (CONFIG.API_BASE_URL || "").replace(/\/$/, "") + path;
@@ -124,8 +145,28 @@
 
   backLink.addEventListener("click", function (e) {
     e.preventDefault();
+    currentSessionId = "";
     history.pushState({}, "", "index.html");
     showInbox();
+  });
+
+  deleteThreadBtn.addEventListener("click", function () {
+    if (!currentSessionId) return;
+    deleteConversation(currentSessionId, deleteThreadBtn).then(function (ok) {
+      if (!ok) return;
+      currentSessionId = "";
+      history.pushState({}, "", "index.html");
+      showInbox();
+    });
+  });
+
+  toggleReadBtn.addEventListener("click", function () {
+    if (!currentSessionId) return;
+    setReadState(currentSessionId, !currentSessionRead, toggleReadBtn).then(function (ok) {
+      if (!ok) return;
+      currentSessionRead = !currentSessionRead;
+      updateThreadReadButton();
+    });
   });
 
   document.getElementById("filters").addEventListener("click", function (e) {
@@ -158,12 +199,17 @@
         }
         hide(inboxEmpty);
         sessions.forEach(function (s) {
-          var card = document.createElement("a");
-          card.className = "admin-session-card";
-          card.href = "index.html?session=" + encodeURIComponent(s.id);
-          card.innerHTML =
+          var isUnread = !s.read;
+          var card = document.createElement("div");
+          card.className = "admin-session-card" + (isUnread ? " admin-session-card--unread" : "");
+
+          var body = document.createElement("a");
+          body.className = "admin-session-card__body";
+          body.href = "index.html?session=" + encodeURIComponent(s.id);
+          body.innerHTML =
             '<div class="admin-session-card__top">' +
             '<span class="admin-session-card__email">' +
+            (isUnread ? '<span class="admin-unread-dot" aria-hidden="true"></span>' : "") +
             (s.email || "Anonymous") +
             "</span>" +
             '<span class="admin-session-card__time">' +
@@ -175,10 +221,46 @@
             '<div class="admin-badges">' +
             renderBadges(s.highlights) +
             "</div>";
-          card.addEventListener("click", function (e) {
+          body.addEventListener("click", function (e) {
             e.preventDefault();
             openThread(s.id);
           });
+
+          var actions = document.createElement("div");
+          actions.className = "admin-session-card__actions";
+
+          var readBtn = document.createElement("button");
+          readBtn.type = "button";
+          readBtn.className = "admin-icon-btn";
+          readBtn.setAttribute("aria-label", isUnread ? "Mark as read" : "Mark as unread");
+          readBtn.title = isUnread ? "Mark as read" : "Mark as unread";
+          readBtn.innerHTML = isUnread ? MAIL_CLOSED_ICON : MAIL_OPEN_ICON;
+          readBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            setReadState(s.id, isUnread, readBtn).then(function (ok) {
+              if (ok) loadSessions();
+            });
+          });
+
+          var delBtn = document.createElement("button");
+          delBtn.type = "button";
+          delBtn.className = "admin-icon-btn admin-icon-btn--danger";
+          delBtn.setAttribute("aria-label", "Delete conversation");
+          delBtn.title = "Delete conversation";
+          delBtn.innerHTML = TRASH_ICON;
+          delBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            deleteConversation(s.id, delBtn).then(function (ok) {
+              if (ok) loadSessions();
+            });
+          });
+
+          actions.appendChild(readBtn);
+          actions.appendChild(delBtn);
+          card.appendChild(body);
+          card.appendChild(actions);
           sessionList.appendChild(card);
         });
       });
@@ -217,7 +299,61 @@
     };
   }
 
+  function deleteConversation(id, btn) {
+    if (!window.confirm("Delete this conversation? Messages cannot be recovered.")) {
+      return Promise.resolve(false);
+    }
+    if (btn) btn.disabled = true;
+    return api("/api/admin/sessions/" + encodeURIComponent(id), { method: "DELETE" })
+      .then(function (res) {
+        if (res.status === 401) {
+          showLogin();
+          return false;
+        }
+        if (!res.ok) throw new Error("Delete failed");
+        return true;
+      })
+      .catch(function () {
+        window.alert("Could not delete this conversation. Try again.");
+        return false;
+      })
+      .finally(function () {
+        if (btn) btn.disabled = false;
+      });
+  }
+
+  function setReadState(id, read, btn) {
+    if (btn) btn.disabled = true;
+    return api("/api/admin/sessions/" + encodeURIComponent(id), {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ read: read }),
+    })
+      .then(function (res) {
+        if (res.status === 401) {
+          showLogin();
+          return false;
+        }
+        if (!res.ok) throw new Error("Update failed");
+        return true;
+      })
+      .catch(function () {
+        window.alert("Could not update read state. Try again.");
+        return false;
+      })
+      .finally(function () {
+        if (btn) btn.disabled = false;
+      });
+  }
+
+  function updateThreadReadButton() {
+    toggleReadBtn.textContent = currentSessionRead ? "Mark as unread" : "Mark as read";
+    var statusEl = document.getElementById("thread-read-status");
+    if (statusEl) statusEl.textContent = currentSessionRead ? "Read" : "Unread";
+  }
+
   function openThread(id) {
+    currentSessionId = id;
     history.pushState({}, "", "index.html?session=" + encodeURIComponent(id));
     api("/api/admin/sessions/" + encodeURIComponent(id))
       .then(function (res) {
@@ -231,9 +367,12 @@
         if (!data) return;
         showThread();
         var s = data.session;
+        currentSessionRead = !!s.read;
+        updateThreadReadButton();
         threadSummary.innerHTML =
           "<dl>" +
           "<dt>Email</dt><dd>" + (s.email || "—") + "</dd>" +
+          "<dt>Status</dt><dd id=\"thread-read-status\">" + (currentSessionRead ? "Read" : "Unread") + "</dd>" +
           "<dt>Intent</dt><dd>" + (s.intent || "—") + "</dd>" +
           "<dt>Page</dt><dd>" + (s.page_first_seen || "—") + "</dd>" +
           "<dt>Unlocked</dt><dd>" + (s.unlocked_at ? "Yes" : "No") + "</dd>" +

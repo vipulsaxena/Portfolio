@@ -64,6 +64,25 @@ async function main() {
   }
   console.log(`Posted ${thread.length} messages`);
 
+  // Long-thread test: session rate limit must not block full conversations
+  for (let i = 0; i < 40; i++) {
+    try {
+      await request("/api/chat/message", {
+        method: "POST",
+        body: JSON.stringify({
+          sessionId,
+          role: i % 2 === 0 ? "user" : "bot",
+          content: `Long thread message ${i + 1}`,
+          page: "test-chat-sync.html",
+        }),
+      });
+    } catch (err) {
+      throw new Error(`long-thread failed at ${i + 1} (total ${thread.length + i + 1}): ${err.message}`);
+    }
+  }
+  const expectedTotal = thread.length + 40;
+  console.log(`Posted ${expectedTotal} messages total (including long-thread test)`);
+
   await request("/api/chat/session", {
     method: "PATCH",
     body: JSON.stringify({
@@ -97,8 +116,8 @@ async function main() {
   console.log("  Bot messages:", botCount);
   console.log("  Session email:", email);
 
-  if (messages.length < 10) {
-    throw new Error(`Expected >= 10 messages, got ${messages.length}`);
+  if (messages.length < expectedTotal) {
+    throw new Error(`Expected >= ${expectedTotal} messages, got ${messages.length}`);
   }
   if (userCount < 4) {
     throw new Error(`Expected >= 4 user messages, got ${userCount}`);

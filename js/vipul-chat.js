@@ -12,45 +12,143 @@
     UNLOCKED: "unlocked",
   };
 
+  var GREETED_KEY = "vipulChatGreeted";
+  var TRANSCRIPT_KEY = "vipulChatTranscript";
+  var TOPIC_KEY = "vipulChatTopicCompany";
+  var LAST_CHUNK_KEY = "vipulChatLastChunk";
+  var CAPTURED_EMAIL_KEY = "vipulChatCapturedEmail";
+  var LAST_USER_QUESTION_KEY = "vipulChatLastQuestion";
+
   var currentState = STATE.IDLE;
   var sessionId = null;
   var pendingEmail = "";
   var isOpen = false;
   var isResponding = false;
   var lastBotChunkId = null;
+  var topicCompany = null;
   var recentHistory = [];
   var wrapEl = null;
   var els = {};
+  var restoringTranscript = false;
+
+  function storageGet(key, useLocal) {
+    try {
+      return (useLocal ? localStorage : sessionStorage).getItem(key);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function storageSet(key, value, useLocal) {
+    try {
+      (useLocal ? localStorage : sessionStorage).setItem(key, value);
+    } catch (e) {}
+  }
 
   function getSessionId() {
-    try {
-      var stored = localStorage.getItem(CONFIG.SESSION_KEY);
-      if (stored) return stored;
-    } catch (e) {}
-    return null;
+    return storageGet(CONFIG.SESSION_KEY, true);
   }
 
   function setSessionId(id) {
     sessionId = id;
-    try { localStorage.setItem(CONFIG.SESSION_KEY, id); } catch (e) {}
+    storageSet(CONFIG.SESSION_KEY, id, true);
   }
 
   function isUnlocked() {
-    try {
-      if (sessionStorage.getItem(CONFIG.UNLOCK_KEY) === "1") return true;
-    } catch (e) {}
-    return false;
+    return (
+      storageGet(CONFIG.UNLOCK_KEY, false) === "1" ||
+      storageGet(CONFIG.UNLOCK_KEY, true) === "1"
+    );
   }
 
   function grantUnlock() {
-    try {
-      sessionStorage.setItem(CONFIG.UNLOCK_KEY, "1");
-      (CONFIG.GATE_KEYS || []).forEach(function (key) {
-        sessionStorage.setItem(key, "1");
-      });
-    } catch (e) {}
+    storageSet(CONFIG.UNLOCK_KEY, "1", false);
+    storageSet(CONFIG.UNLOCK_KEY, "1", true);
+    (CONFIG.GATE_KEYS || []).forEach(function (key) {
+      storageSet(key, "1", false);
+    });
     currentState = STATE.UNLOCKED;
     syncPatchSession({ unlocked_at: new Date().toISOString() });
+  }
+
+  function getCapturedEmail() {
+    return storageGet(CAPTURED_EMAIL_KEY, false);
+  }
+
+  function setCapturedEmail(email) {
+    storageSet(CAPTURED_EMAIL_KEY, email, false);
+  }
+
+  function loadTopicState() {
+    topicCompany = storageGet(TOPIC_KEY, false);
+    lastBotChunkId = storageGet(LAST_CHUNK_KEY, false);
+  }
+
+  function setTopicFromChunkId(chunkId) {
+    if (!chunkId) return;
+    lastBotChunkId = chunkId;
+    storageSet(LAST_CHUNK_KEY, chunkId, false);
+    var company = KNOWLEDGE.getCompanyFromChunkId(chunkId);
+    if (company) {
+      topicCompany = company;
+      storageSet(TOPIC_KEY, company, false);
+    }
+  }
+
+  function saveTranscript() {
+    if (!els.messages || restoringTranscript) return;
+    var items = [];
+    els.messages.querySelectorAll(".vipul-chat-msg").forEach(function (node) {
+      var role = "bot";
+      if (node.classList.contains("vipul-chat-msg--user")) role = "user";
+      items.push({ role: role, text: node.textContent || "" });
+    });
+    try {
+      sessionStorage.setItem(TRANSCRIPT_KEY, JSON.stringify(items));
+    } catch (e) {}
+  }
+
+  function restoreTranscript() {
+    if (!els.messages) return;
+    var raw;
+    try {
+      raw = sessionStorage.getItem(TRANSCRIPT_KEY);
+    } catch (e) {
+      return;
+    }
+    if (!raw) return;
+
+    var items;
+    try {
+      items = JSON.parse(raw);
+    } catch (e) {
+      return;
+    }
+    if (!items.length) return;
+
+    restoringTranscript = true;
+    els.messages.innerHTML = "";
+    recentHistory = [];
+    items.forEach(function (item) {
+      if (item.role === "user") {
+        var userDiv = document.createElement("div");
+        userDiv.className = "vipul-chat-msg vipul-chat-msg--user";
+        userDiv.textContent = item.text;
+        els.messages.appendChild(userDiv);
+        pushHistory("user", item.text, true);
+      } else {
+        var turn = document.createElement("div");
+        turn.className = "vipul-chat-turn";
+        var msg = document.createElement("div");
+        msg.className = "vipul-chat-msg vipul-chat-msg--bot";
+        msg.textContent = item.text;
+        turn.appendChild(msg);
+        els.messages.appendChild(turn);
+        pushHistory("bot", item.text, true);
+      }
+    });
+    restoringTranscript = false;
+    scrollMessages();
   }
 
   function apiUrl(path) {
@@ -107,7 +205,19 @@
     return sessionEnsurePromise;
   }
 
-  function syncMessage(role, content, tags) {
+  function delay(ms) {
+    return new Promise(function (resolve) { setTimeout(resolve, ms); });
+  }
+
+  function isRetryableSyncResponse(res) {
+    if (!res) return true;
+    var status = res.status;
+    return status === 429 || status >= 500;
+  }
+
+  function syncMessage(role, content, tags, attempt) {
+    if (restoringTranscript) return Promise.resolve(true);
+    attempt = attempt || 0;
     return ensureSession().then(function () {
       return apiFetch("/api/chat/message", {
         method: "POST",
@@ -121,15 +231,19 @@
         }),
       });
     }).then(function (res) {
-      if (!res || !res.ok) {
-        console.warn("[vipul-chat] message sync failed:", role, res && res.status);
-        return false;
+      if (res && res.ok) return true;
+      if (isRetryableSyncResponse(res) && attempt < 4) {
+        return delay(Math.min(1000 * Math.pow(2, attempt), 8000)).then(function () {
+          return syncMessage(role, content, tags, attempt + 1);
+        });
       }
-      return true;
+      console.warn("[vipul-chat] message sync failed:", role, res && res.status);
+      return false;
     });
   }
 
-  function syncPatchSession(patch) {
+  function syncPatchSession(patch, attempt) {
+    attempt = attempt || 0;
     return ensureSession().then(function () {
       return apiFetch("/api/chat/session", {
         method: "PATCH",
@@ -137,11 +251,14 @@
         body: JSON.stringify(Object.assign({ sessionId: sessionId, page: getPageName() }, patch)),
       });
     }).then(function (res) {
-      if (!res || !res.ok) {
-        console.warn("[vipul-chat] session patch failed:", res && res.status);
-        return false;
+      if (res && res.ok) return true;
+      if (isRetryableSyncResponse(res) && attempt < 4) {
+        return delay(Math.min(1000 * Math.pow(2, attempt), 8000)).then(function () {
+          return syncPatchSession(patch, attempt + 1);
+        });
       }
-      return true;
+      console.warn("[vipul-chat] session patch failed:", res && res.status);
+      return false;
     });
   }
 
@@ -154,9 +271,16 @@
     if (els.messages) els.messages.scrollTop = els.messages.scrollHeight;
   }
 
-  function pushHistory(role, content) {
+  function pushHistory(role, content, skipStore) {
     recentHistory.push({ role: role, content: content });
     if (recentHistory.length > 12) recentHistory = recentHistory.slice(-12);
+    if (role === "user" && !skipStore) {
+      storageSet(LAST_USER_QUESTION_KEY, content, false);
+    }
+  }
+
+  function getLastUserQuestion() {
+    return storageGet(LAST_USER_QUESTION_KEY, false) || "";
   }
 
   function addMessage(role, text) {
@@ -170,6 +294,7 @@
       pushHistory(role, text);
       syncMessage(role, text);
     }
+    saveTranscript();
   }
 
   function clearActiveChips() {
@@ -181,7 +306,7 @@
     if (chips) chips.remove();
   }
 
-  function addBotTurn(text, chips) {
+  function addBotTurn(text, chips, chunkId) {
     if (!els.messages) return;
     var turn = document.createElement("div");
     turn.className = "vipul-chat-turn";
@@ -209,30 +334,9 @@
     els.messages.appendChild(turn);
     scrollMessages();
     pushHistory("bot", text);
+    if (chunkId) setTopicFromChunkId(chunkId);
     syncMessage("bot", text);
-  }
-
-  function setChips(chips) {
-    clearActiveChips();
-    if (!els.messages || !chips || !chips.length) return;
-    var turns = els.messages.querySelectorAll(".vipul-chat-turn");
-    var turn = turns.length ? turns[turns.length - 1] : null;
-    if (!turn) return;
-
-    var row = document.createElement("div");
-    row.className = "vipul-chat-chips";
-    chips.forEach(function (label) {
-      var btn = document.createElement("button");
-      btn.type = "button";
-      btn.className = "vipul-chat-chip";
-      btn.textContent = label;
-      btn.addEventListener("click", function () {
-        handleUserInput(label);
-      });
-      row.appendChild(btn);
-    });
-    turn.appendChild(row);
-    scrollMessages();
+    saveTranscript();
   }
 
   function hideChips() {
@@ -286,8 +390,11 @@
       .then(function (payload) {
         hideTyping();
         if (!payload || !payload.text) return;
-        if (payload.chunkId) lastBotChunkId = payload.chunkId;
-        addBotTurn(payload.text, payload.chips && payload.chips.length ? payload.chips : null);
+        addBotTurn(
+          payload.text,
+          payload.chips && payload.chips.length ? payload.chips : null,
+          payload.chunkId || null
+        );
       })
       .finally(function () {
         isResponding = false;
@@ -310,6 +417,7 @@
         message: query,
         unlocked: isUnlocked() || currentState === STATE.UNLOCKED,
         history: recentHistory.slice(-6),
+        topicCompany: topicCompany,
       }),
     }).then(function (res) {
       if (!res || !res.ok) return null;
@@ -321,11 +429,27 @@
   }
 
   function startContactFlow(prefill) {
+    if (isUnlocked() && getCapturedEmail()) {
+      botSay(
+        "I already have your email (" + getCapturedEmail() + "). Tell me what you'd like to discuss and I'll follow up.",
+        null
+      );
+      currentState = STATE.COLLECT_INTENT;
+      pendingEmail = getCapturedEmail();
+      return;
+    }
     currentState = STATE.COLLECT_EMAIL;
     botSay(prefill || "Happy to connect — what's your email?", []);
   }
 
   function startPasswordFlow() {
+    if (isUnlocked()) {
+      botSay(
+        "You're already unlocked — ask me anything about Raisin, OLX, N26, or GoMart.",
+        ["Tell me about Raisin", "OLX monetisation work"]
+      );
+      return;
+    }
     currentState = STATE.AWAIT_PASSWORD;
     botSay(
       "Enter the portfolio password here to unlock recent case studies and deeper answers. Don't have it? Say \"request access\" and I'll take your details.",
@@ -338,8 +462,61 @@
     return KNOWLEDGE.CHUNKS[publicId] || KNOWLEDGE.CHUNKS.raisin_public;
   }
 
+  function resolveCompany(query) {
+    return KNOWLEDGE.getCompanyFromQuery(query) || topicCompany;
+  }
+
+  function answerFollowUp(unlocked) {
+    var company = topicCompany;
+    if (!company) {
+      botSay(
+        "Happy to go deeper — which should we focus on: Raisin, OLX, N26, or GoMart?",
+        ["Tell me about Raisin", "OLX monetisation work"]
+      );
+      return;
+    }
+
+    if (unlocked) {
+      var impactId = KNOWLEDGE.getImpactChunkId(company);
+      var fullId = company;
+      var lastWasImpact = lastBotChunkId && lastBotChunkId.indexOf("_impact") !== -1;
+      var lastWasPublic = lastBotChunkId && lastBotChunkId.indexOf("_public") !== -1;
+
+      if (lastWasPublic || lastWasImpact) {
+        botSay(KNOWLEDGE.CHUNKS[fullId], null, fullId);
+        return;
+      }
+      if (KNOWLEDGE.CHUNKS[impactId]) {
+        botSay(KNOWLEDGE.CHUNKS[impactId], null, impactId);
+        return;
+      }
+      botSay(KNOWLEDGE.CHUNKS[fullId], null, fullId);
+      return;
+    }
+
+    botSay(
+      getPublicTeaser(company) +
+        " I can share more in the full case study — enter the portfolio password or request access.",
+      ["Enter password", "Request access"],
+      KNOWLEDGE.getPublicChunkId(company)
+    );
+  }
+
+  function handleFrustration() {
+    var prior = getLastUserQuestion();
+    if (!prior) {
+      botSay(
+        "Sorry that missed the mark — try rephrasing, or ask about my work at Raisin, OLX, N26, Gojek, mentoring, or getting in touch.",
+        KNOWLEDGE.SUGGESTED_CHIPS.slice(0, 3)
+      );
+      return;
+    }
+    botSay("Sorry about that — let me try again on your question.", null);
+    processQuery(prior, true);
+  }
+
   function answerImpact(query, unlocked) {
-    var company = KNOWLEDGE.getCompanyFromQuery(query);
+    var company = resolveCompany(query);
     if (company) {
       var impactId = KNOWLEDGE.getImpactChunkId(company);
       if (unlocked && KNOWLEDGE.CHUNKS[impactId]) {
@@ -362,8 +539,8 @@
         if (aiReply) return { text: aiReply };
         return {
           text:
-            "Impact varied by project — at Raisin it was coherence across 12 markets and enablement; at OLX monetisation lift at 317M+ user scale; at N26 clarity across 25 markets. Happy to go deeper on any of these.",
-          chips: ["Tell me about Raisin", "OLX monetisation work"],
+            "Impact varied by project — at Raisin it was coherence across 12 markets and enablement; at OLX monetisation lift at 317M+ user scale; at N26 clarity across 25 markets. Which would you like to go deeper on?",
+          chips: ["Raisin impact", "OLX monetisation work"],
         };
       });
     });
@@ -372,6 +549,7 @@
   function completeContactFlow(intentText) {
     var email = pendingEmail;
     syncPatchSession({ email: email, intent: intentText });
+    setCapturedEmail(email);
     pendingEmail = "";
     currentState = isUnlocked() ? STATE.UNLOCKED : STATE.IDLE;
 
@@ -387,11 +565,12 @@
         "Thanks — I'll follow up at " + email + ". You can also book a session on ADPList from my homepage.";
     } else if (/\b(password|access|case stud)/i.test(intentText)) {
       reply = "Thanks — I'll follow up at " + email + " with portfolio access details.";
+      if (!isUnlocked()) chips = ["Enter password"];
     } else {
       reply = "Thanks — I'll reply at " + email + " soon.";
     }
 
-    if (!isUnlocked()) {
+    if (!isUnlocked() && !chips) {
       reply += " If you'd like case study access before we connect, you can enter the portfolio password anytime.";
       chips = ["Enter password"];
     }
@@ -409,12 +588,20 @@
   function answerFromIntent(intent, query) {
     var unlocked = isUnlocked() || currentState === STATE.UNLOCKED;
 
-    if (intent.action === "request_access" || intent.action === "collect_contact") {
-      startContactFlow(
-        intent.action === "request_access"
-          ? "I can share portfolio access — what's your email?"
-          : undefined
-      );
+    if (intent.action === "request_access") {
+      if (unlocked) {
+        botSay(
+          "You already have portfolio access in this session — ask me about Raisin, OLX, N26, or GoMart anytime.",
+          ["Tell me about Raisin"]
+        );
+        return;
+      }
+      startContactFlow("I can share portfolio access — what's your email?");
+      return;
+    }
+
+    if (intent.action === "collect_contact") {
+      startContactFlow();
       return;
     }
 
@@ -439,6 +626,11 @@
         return;
       }
 
+      if (unlocked && wantsDepth) {
+        botSay(KNOWLEDGE.CHUNKS[companyId], null, companyId);
+        return;
+      }
+
       if (!unlocked && (isOverview || !wantsDepth)) {
         var chips = ["Go deeper on " + companyId.charAt(0).toUpperCase() + companyId.slice(1)];
         if (!isOverview) chips.push("Enter password");
@@ -455,6 +647,9 @@
         );
         return;
       }
+
+      botSay(KNOWLEDGE.CHUNKS[companyId], null, companyId);
+      return;
     }
 
     if (intent.answer) {
@@ -464,9 +659,9 @@
 
     if (intent.chunkId && KNOWLEDGE.CHUNKS[intent.chunkId]) {
       if (unlocked && KNOWLEDGE.wantsImpactMetrics(query)) {
-        var impactId = KNOWLEDGE.getImpactChunkId(intent.chunkId);
-        if (KNOWLEDGE.CHUNKS[impactId]) {
-          botSay(KNOWLEDGE.CHUNKS[impactId], null, impactId);
+        var impactChunk = KNOWLEDGE.getImpactChunkId(intent.chunkId);
+        if (KNOWLEDGE.CHUNKS[impactChunk]) {
+          botSay(KNOWLEDGE.CHUNKS[impactChunk], null, impactChunk);
           return;
         }
       }
@@ -485,36 +680,19 @@
       return;
     }
 
-    var results = KNOWLEDGE.searchChunks(query, unlocked, lastBotChunkId);
+    var results = KNOWLEDGE.searchChunks(query, unlocked, lastBotChunkId, topicCompany);
 
     if (results.length && results[0].score >= 2) {
       botSay(results[0].text, null, results[0].id);
       return;
     }
 
-    if (unlocked) {
-      deliverBotResponse(function () {
-        return fetchAIComplete(query).then(function (aiReply) {
-          if (aiReply) return { text: aiReply };
-          if (results.length) return { text: results[0].text, chunkId: results[0].id };
-          return {
-            text:
-              "I'm not sure I have a sharp answer for that on the site — try asking about my work at Raisin, OLX, N26, Gojek, mentoring, or how to get in touch.",
-            chips: KNOWLEDGE.SUGGESTED_CHIPS.slice(0, 3),
-          };
-        });
-      });
-      return;
-    }
-
     deliverBotResponse(function () {
       return fetchAIComplete(query).then(function (aiReply) {
         if (aiReply) return { text: aiReply };
-
-        if (results.length) {
+        if (results.length && results[0].score >= 2) {
           return { text: results[0].text, chunkId: results[0].id };
         }
-
         return {
           text:
             "I'm not sure I have a sharp answer for that on the site — try asking about my work at Raisin, OLX, N26, Gojek, mentoring, or how to get in touch.",
@@ -522,6 +700,48 @@
         };
       });
     });
+  }
+
+  function processQuery(rawText, isRetry) {
+    var text = KNOWLEDGE.expandQueryWithTopic(rawText, topicCompany);
+    var unlocked = isUnlocked() || currentState === STATE.UNLOCKED;
+
+    if (!isRetry && KNOWLEDGE.isFrustration(rawText)) {
+      handleFrustration();
+      return;
+    }
+
+    if (KNOWLEDGE.isFollowUp(rawText)) {
+      answerFollowUp(unlocked);
+      return;
+    }
+
+    var askingAbout = rawText.match(/\b(?:asking|talking) about\s+(\w+)/i);
+    if (askingAbout) {
+      var named = askingAbout[1].toLowerCase();
+      if (KNOWLEDGE.COMPANIES.indexOf(named) !== -1) {
+        topicCompany = named;
+        storageSet(TOPIC_KEY, named, false);
+        text = "Tell me about " + named;
+      }
+    }
+
+    if (/^go deeper on\s+(\w+)/i.test(rawText)) {
+      var chipCompany = rawText.match(/^go deeper on\s+(\w+)/i)[1].toLowerCase();
+      if (KNOWLEDGE.COMPANIES.indexOf(chipCompany) !== -1) {
+        topicCompany = chipCompany;
+        storageSet(TOPIC_KEY, chipCompany, false);
+        text = "Go deeper on " + chipCompany;
+      }
+    }
+
+    var intent = KNOWLEDGE.matchIntent(text);
+    if (intent) {
+      answerFromIntent(intent, text);
+      return;
+    }
+
+    fallbackAnswer(text);
   }
 
   function looksLikePassword(text) {
@@ -594,6 +814,13 @@
     addMessage("user", text);
 
     if (/^request access$/i.test(text)) {
+      if (isUnlocked()) {
+        botSay(
+          "You already have portfolio access — ask me about Raisin, OLX, N26, or GoMart.",
+          ["Tell me about Raisin"]
+        );
+        return;
+      }
       startContactFlow("I can share portfolio access — what's your email?");
       return;
     }
@@ -628,13 +855,7 @@
 
     if (isUnlocked()) currentState = STATE.UNLOCKED;
 
-    var intent = KNOWLEDGE.matchIntent(text);
-    if (intent) {
-      answerFromIntent(intent, text);
-      return;
-    }
-
-    fallbackAnswer(text);
+    processQuery(text, false);
   }
 
   function buildWidget(wrap) {
@@ -676,6 +897,26 @@
     });
 
     if (isUnlocked()) currentState = STATE.UNLOCKED;
+    restoreTranscript();
+  }
+
+  function hasGreetedThisTab() {
+    return storageGet(GREETED_KEY, false) === "1";
+  }
+
+  function markGreetedThisTab() {
+    storageSet(GREETED_KEY, "1", false);
+  }
+
+  function hasTranscript() {
+    try {
+      var raw = sessionStorage.getItem(TRANSCRIPT_KEY);
+      if (!raw) return false;
+      var items = JSON.parse(raw);
+      return items && items.length > 0;
+    } catch (e) {
+      return false;
+    }
   }
 
   function toggle(open) {
@@ -686,7 +927,8 @@
     if (els.badge) els.badge.setAttribute("aria-expanded", isOpen ? "true" : "false");
     if (isOpen) {
       ensureSession();
-      if (els.messages && !els.messages.childElementCount) {
+      if (els.messages && !els.messages.childElementCount && !hasGreetedThisTab() && !hasTranscript()) {
+        markGreetedThisTab();
         botSay(
           "Hey — I'm Vipul. Ask me about my work, how I got to Berlin, case studies, or how to get in touch.",
           KNOWLEDGE.SUGGESTED_CHIPS
@@ -702,7 +944,11 @@
     if (opts.intent === "password" || opts.intent === "request_access") {
       setTimeout(function () {
         if (opts.intent === "password") startPasswordFlow();
-        else startContactFlow("I can share portfolio access — what's your email?");
+        else if (isUnlocked()) {
+          botSay("You already have portfolio access in this session.", ["Tell me about Raisin"]);
+        } else {
+          startContactFlow("I can share portfolio access — what's your email?");
+        }
       }, 300);
     } else if (opts.intent === "contact") {
       setTimeout(function () { startContactFlow(); }, 300);
@@ -713,6 +959,8 @@
 
   function init() {
     if (!KNOWLEDGE) return;
+
+    loadTopicState();
 
     var wraps = document.querySelectorAll(".gfq-wrap");
     if (!wraps.length) return;

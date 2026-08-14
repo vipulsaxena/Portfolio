@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS sessions (
   page_first_seen TEXT,
   unlocked_at TEXT,
   highlights TEXT NOT NULL DEFAULT '[]',
+  read_at TEXT,
   created_at TEXT NOT NULL,
   updated_at TEXT NOT NULL
 );

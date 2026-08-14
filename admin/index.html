@@ -36,6 +36,8 @@
       <p class="admin-sub">Highlighted threads surface first — password requests, recruiting, and contact leads.</p>
       <div class="admin-filters" id="filters">
         <button type="button" class="admin-filter is-active" data-filter="">All</button>
+        <button type="button" class="admin-filter" data-filter="unread">Unread</button>
+        <button type="button" class="admin-filter" data-filter="read">Read</button>
         <button type="button" class="admin-filter" data-filter="wants_access">Wants access</button>
         <button type="button" class="admin-filter" data-filter="recruiting">Recruiting</button>
         <button type="button" class="admin-filter" data-filter="mentoring">Mentoring</button>
@@ -46,7 +48,13 @@
     </section>
 
     <section class="hidden" id="thread-view">
-      <a href="#" class="admin-back" id="back-link">&larr; Back to inbox</a>
+      <div class="admin-thread-bar">
+        <a href="#" class="admin-back" id="back-link">&larr; Back to inbox</a>
+        <div class="admin-thread-actions">
+          <button type="button" class="admin-btn admin-btn--ghost" id="toggle-read-btn">Mark as read</button>
+          <button type="button" class="admin-btn admin-btn--danger" id="delete-thread-btn">Delete conversation</button>
+        </div>
+      </div>
       <div class="admin-summary" id="thread-summary"></div>
       <div class="admin-transcript" id="thread-messages"></div>
     </section>
