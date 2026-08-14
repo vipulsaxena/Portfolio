@@ -140,9 +140,55 @@
     }
   }
 
+  function clearActiveChips() {
+    if (!els.messages) return;
+    var turns = els.messages.querySelectorAll(".vipul-chat-turn");
+    if (!turns.length) return;
+    var last = turns[turns.length - 1];
+    var chips = last.querySelector(".vipul-chat-chips");
+    if (chips) chips.remove();
+  }
+
+  function addBotTurn(text, chips) {
+    if (!els.messages) return;
+    var turn = document.createElement("div");
+    turn.className = "vipul-chat-turn";
+    var msg = document.createElement("div");
+    msg.className = "vipul-chat-msg vipul-chat-msg--bot";
+    msg.textContent = text;
+    turn.appendChild(msg);
+
+    if (chips && chips.length) {
+      var row = document.createElement("div");
+      row.className = "vipul-chat-chips";
+      chips.forEach(function (label) {
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "vipul-chat-chip";
+        btn.textContent = label;
+        btn.addEventListener("click", function () {
+          handleUserInput(label);
+        });
+        row.appendChild(btn);
+      });
+      turn.appendChild(row);
+    }
+
+    els.messages.appendChild(turn);
+    scrollMessages();
+    pushHistory("bot", text);
+    apiMessage("bot", text);
+  }
+
   function setChips(chips) {
-    if (!els.chips) return;
-    els.chips.innerHTML = "";
+    clearActiveChips();
+    if (!els.messages || !chips || !chips.length) return;
+    var turns = els.messages.querySelectorAll(".vipul-chat-turn");
+    var turn = turns.length ? turns[turns.length - 1] : null;
+    if (!turn) return;
+
+    var row = document.createElement("div");
+    row.className = "vipul-chat-chips";
     chips.forEach(function (label) {
       var btn = document.createElement("button");
       btn.type = "button";
@@ -151,19 +197,21 @@
       btn.addEventListener("click", function () {
         handleUserInput(label);
       });
-      els.chips.appendChild(btn);
+      row.appendChild(btn);
     });
+    turn.appendChild(row);
+    scrollMessages();
   }
 
   function hideChips() {
-    if (els.chips) els.chips.innerHTML = "";
+    clearActiveChips();
   }
 
   function setInputEnabled(enabled) {
     if (els.input) els.input.disabled = !enabled;
     if (els.send) els.send.disabled = !enabled;
-    if (els.chips) {
-      els.chips.querySelectorAll(".vipul-chat-chip").forEach(function (btn) {
+    if (els.messages) {
+      els.messages.querySelectorAll(".vipul-chat-chip").forEach(function (btn) {
         btn.disabled = !enabled;
       });
     }
@@ -207,9 +255,7 @@
         hideTyping();
         if (!payload || !payload.text) return;
         if (payload.chunkId) lastBotChunkId = payload.chunkId;
-        addMessage("bot", payload.text);
-        if (payload.chips && payload.chips.length) setChips(payload.chips);
-        else hideChips();
+        addBotTurn(payload.text, payload.chips && payload.chips.length ? payload.chips : null);
       })
       .finally(function () {
         isResponding = false;
@@ -330,6 +376,32 @@
     });
   }
 
+  function looksLikePassword(text) {
+    var t = text.trim();
+    return (
+      !/\?/.test(t) &&
+      t.length >= 8 &&
+      t.length <= 48 &&
+      t.split(/\s+/).length === 1 &&
+      !isEmail(t) &&
+      /^[\w@#$%^&*!\-_.]+$/.test(t)
+    );
+  }
+
+  function attemptPasswordIfApplicable(text) {
+    if (isUnlocked()) return false;
+    if (currentState === STATE.COLLECT_EMAIL || currentState === STATE.COLLECT_INTENT) {
+      return false;
+    }
+    if (/^(request access|enter password|yes, get in touch)$/i.test(text)) return false;
+
+    var inAwait = currentState === STATE.AWAIT_PASSWORD;
+    if (!inAwait && !looksLikePassword(text)) return false;
+
+    tryPassword(text);
+    return true;
+  }
+
   function tryPassword(input) {
     deliverBotResponse(function () {
       var gate = global.PortfolioGate;
@@ -338,7 +410,7 @@
           text: "Password check isn't available in this browser context. Open the case study page to enter it there.",
         };
       }
-      return gate.verify(input).then(function (ok) {
+      return gate.verify(input.trim()).then(function (ok) {
         if (ok) {
           grantUnlock();
           return {
@@ -350,6 +422,12 @@
         currentState = STATE.AWAIT_PASSWORD;
         return {
           text: "That didn't match. Try again, or request access and I'll follow up.",
+          chips: ["Request access"],
+        };
+      }).catch(function () {
+        currentState = STATE.AWAIT_PASSWORD;
+        return {
+          text: "I couldn't verify that here — try again on https://vipulsaxena.com, or request access.",
           chips: ["Request access"],
         };
       });
@@ -364,6 +442,7 @@
     var text = (raw || "").trim();
     if (!text || isResponding) return;
 
+    hideChips();
     addMessage("user", text);
     ensureSession();
 
@@ -395,7 +474,7 @@
 
     if (currentState === STATE.COLLECT_INTENT) {
       apiPatchSession({ email: pendingEmail, intent: text });
-      currentState = isUnlocked() ? STATE.UNLOCKED : STATE.IDLE;
+      currentState = isUnlocked() ? STATE.UNLOCKED : STATE.AWAIT_PASSWORD;
       botSay(
         "Got it — I'll reply at " + pendingEmail + ". If you already have the portfolio password, you can enter it now.",
         ["Enter password"]
@@ -404,12 +483,7 @@
       return;
     }
 
-    if (currentState === STATE.AWAIT_PASSWORD) {
-      if (text.length < 50 && !/\?/.test(text)) {
-        tryPassword(text);
-        return;
-      }
-    }
+    if (attemptPasswordIfApplicable(text)) return;
 
     if (isUnlocked()) currentState = STATE.UNLOCKED;
 
@@ -428,32 +502,30 @@
       '<div class="gfq-panel" id="vipul-chat-panel">' +
       '  <div class="vipul-chat-panel">' +
       '    <div class="vipul-chat-header">' +
-      '      <div><p class="vipul-chat-header__title">Chat with Vipul</p>' +
+      '      <div><p class="vipul-chat-header__title">Chat with Vipul <span class="vipul-chat-beta">Beta</span></p>' +
       '      <p class="vipul-chat-header__sub">Ask about my work, background, or getting in touch</p></div>' +
       '      <button type="button" class="vipul-chat-close" aria-label="Close chat">&times;</button>' +
       "    </div>" +
       '    <div class="vipul-chat-messages" role="log" aria-live="polite" aria-label="Chat messages"></div>' +
-      '    <div class="vipul-chat-chips"></div>' +
       '    <form class="vipul-chat-form">' +
       '      <input class="vipul-chat-input" type="text" placeholder="Type a message…" autocomplete="off" aria-label="Message" />' +
       '      <button type="submit" class="vipul-chat-send">Send</button>' +
       "    </form>" +
       "  </div>" +
       "</div>" +
-      '<button type="button" class="gfq-badge vipul-chat-badge" aria-label="Chat with Vipul">' +
-      '  <img src="images/chat-icon.svg" alt="" width="28" height="28" />' +
+      '<button type="button" class="gfq-badge vipul-chat-badge" aria-label="Chat with Vipul" aria-expanded="false">' +
+      '  <img src="images/chat-icon.svg" alt="" width="26" height="26" />' +
       "</button>";
 
     els.panel = wrap.querySelector("#vipul-chat-panel");
     els.messages = wrap.querySelector(".vipul-chat-messages");
-    els.chips = wrap.querySelector(".vipul-chat-chips");
     els.form = wrap.querySelector(".vipul-chat-form");
     els.input = wrap.querySelector(".vipul-chat-input");
     els.send = wrap.querySelector(".vipul-chat-send");
     els.badge = wrap.querySelector(".gfq-badge");
     els.close = wrap.querySelector(".vipul-chat-close");
 
-    els.badge.addEventListener("click", function () { toggle(true); });
+    els.badge.addEventListener("click", function () { toggle(); });
     els.close.addEventListener("click", function () { toggle(false); });
     els.form.addEventListener("submit", function (e) {
       e.preventDefault();
@@ -470,7 +542,7 @@
     isOpen = open !== undefined ? open : !isOpen;
     els.panel.classList.toggle("panel-active", isOpen);
     if (wrapEl) wrapEl.classList.toggle("is-open", isOpen);
-    document.body.classList.toggle("vipul-chat-open", isOpen);
+    if (els.badge) els.badge.setAttribute("aria-expanded", isOpen ? "true" : "false");
     if (isOpen) {
       ensureSession();
       if (els.messages && !els.messages.childElementCount) {

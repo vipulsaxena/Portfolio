@@ -78,6 +78,24 @@
   font-weight: 700;
   color: #262626;
   margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.vipul-chat-beta {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #262626;
+  background: #ffda08;
+  border-radius: 999px;
+  line-height: 1.4;
+  vertical-align: middle;
 }
 
 .vipul-chat-header__sub {
@@ -158,6 +176,18 @@
   max-width: 100%;
 }
 
+.vipul-chat-turn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  max-width: 100%;
+}
+
+.vipul-chat-turn .vipul-chat-msg {
+  max-width: 85%;
+}
+
 .vipul-chat-typing {
   align-self: flex-start;
   display: inline-flex;
@@ -188,11 +218,21 @@
 
 .vipul-chat-chips {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  align-items: center;
   gap: 8px;
-  padding: 0 20px 12px;
-  background: #fafafa;
-  flex-shrink: 0;
+  padding: 0;
+  background: transparent;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+}
+
+.vipul-chat-chips::-webkit-scrollbar {
+  display: none;
 }
 
 .vipul-chat-chip {
@@ -205,6 +245,8 @@
   color: #262626;
   cursor: pointer;
   transition: border-color 0.15s, background 0.15s;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .vipul-chat-chip:hover {
@@ -275,16 +317,13 @@
 
 .gfq-badge img {
   position: absolute;
-  left: 50%;
-  top: 50%;
+  left: 53%;
+  top: 48%;
   transform: translate(-50%, -50%);
   border: none !important;
-  width: 52% !important;
+  width: 46% !important;
   height: auto !important;
-}
-
-body.vipul-chat-open {
-  overflow: hidden;
+  pointer-events: none;
 }
 
 @media (max-width: 720px) {
@@ -294,28 +333,29 @@ body.vipul-chat-open {
   }
 
   .gfq-wrap.is-open .gfq-badge {
-    opacity: 0;
-    pointer-events: none;
-    transform: scale(0.8);
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 10000001;
   }
 
   .gfq-panel.panel-active {
     position: fixed;
-    inset: 0;
-    width: 100%;
+    right: 12px;
+    bottom: 88px;
+    left: 12px;
+    width: auto;
     max-width: none;
     min-width: 0;
-    height: 100%;
-    max-height: none;
-    bottom: 0;
-    right: 0;
-    border-radius: 0;
-    border: 0;
+    height: auto;
+    max-height: min(75vh, 640px);
+    border-radius: 16px;
+    border: 1px solid #e7e7e7;
   }
 
   .vipul-chat-panel {
-    height: 100%;
-    max-height: none;
+    height: min(75vh, 640px);
+    max-height: min(75vh, 640px);
   }
 
   .vipul-chat-header {
