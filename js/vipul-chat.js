@@ -343,14 +343,8 @@
     clearActiveChips();
   }
 
-  function setInputEnabled(enabled) {
-    if (els.input) els.input.disabled = !enabled;
+  function setSendEnabled(enabled) {
     if (els.send) els.send.disabled = !enabled;
-    if (els.messages) {
-      els.messages.querySelectorAll(".vipul-chat-chip").forEach(function (btn) {
-        btn.disabled = !enabled;
-      });
-    }
   }
 
   function showTyping() {
@@ -378,7 +372,7 @@
   function deliverBotResponse(getResponse) {
     if (isResponding) return Promise.resolve();
     isResponding = true;
-    setInputEnabled(false);
+    setSendEnabled(false);
     showTyping();
 
     var delayP = new Promise(function (resolve) {
@@ -398,7 +392,7 @@
       })
       .finally(function () {
         isResponding = false;
-        setInputEnabled(true);
+        setSendEnabled(true);
         if (els.input && isOpen) els.input.focus();
       });
   }

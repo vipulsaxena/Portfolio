@@ -56,6 +56,19 @@ html{ scroll-behavior:smooth; scroll-padding-top:calc(var(--shell-h) + 8px); }
    page's link gets the pill background; the other stays transparent. */
 .shell-header .shell-pagenav a.shell-link{ font-size:16px; font-weight:600; background:transparent; padding:8px 12px; border-radius:8px; }
 .shell-header .shell-pagenav a.shell-link.is-active{ color:#262626; font-weight:800; background:#f7f7f7; }
+.shell-link__icon{ display:none; width:20px; height:20px; flex-shrink:0; }
+@media (max-width:520px){
+  .shell-header .shell-pagenav a.shell-link{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:40px; height:40px; padding:0;
+  }
+  .shell-pagenav .shell-link__text{
+    position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+    overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+  }
+  .shell-pagenav .shell-link__icon{ display:block; }
+  .shell-pagenav{ margin-left:-8px; }
+}
 
 .shell-link{ padding:8px 12px; font-size:14px; font-weight:500; color:#6e6e6e; text-decoration:none;
   border-radius:8px; transition:color .15s ease, background .15s ease; white-space:nowrap; }
