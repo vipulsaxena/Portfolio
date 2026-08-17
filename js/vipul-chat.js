@@ -45,6 +45,12 @@
     } catch (e) {}
   }
 
+  function storageRemove(key, useLocal) {
+    try {
+      (useLocal ? localStorage : sessionStorage).removeItem(key);
+    } catch (e) {}
+  }
+
   function getSessionId() {
     return storageGet(CONFIG.SESSION_KEY, true);
   }
@@ -82,6 +88,13 @@
   function loadTopicState() {
     topicCompany = storageGet(TOPIC_KEY, false);
     lastBotChunkId = storageGet(LAST_CHUNK_KEY, false);
+  }
+
+  function resetTopicState() {
+    topicCompany = null;
+    lastBotChunkId = null;
+    storageRemove(TOPIC_KEY, false);
+    storageRemove(LAST_CHUNK_KEY, false);
   }
 
   function setTopicFromChunkId(chunkId) {
@@ -366,7 +379,7 @@
   }
 
   function randomDelay() {
-    return 1000 + Math.floor(Math.random() * 3000);
+    return 1000 + Math.floor(Math.random() * 2000);
   }
 
   function deliverBotResponse(getResponse) {
@@ -456,88 +469,17 @@
     return KNOWLEDGE.CHUNKS[publicId] || KNOWLEDGE.CHUNKS.raisin_public;
   }
 
-  function resolveCompany(query) {
-    return KNOWLEDGE.getCompanyFromQuery(query) || topicCompany;
-  }
-
-  function answerFollowUp(unlocked) {
-    var company = topicCompany;
-    if (!company) {
-      botSay(
-        "Happy to go deeper — which should we focus on: Raisin, OLX, N26, or GoMart?",
-        ["Tell me about Raisin", "OLX monetisation work"]
-      );
-      return;
-    }
-
-    if (unlocked) {
-      var impactId = KNOWLEDGE.getImpactChunkId(company);
-      var fullId = company;
-      var lastWasImpact = lastBotChunkId && lastBotChunkId.indexOf("_impact") !== -1;
-      var lastWasPublic = lastBotChunkId && lastBotChunkId.indexOf("_public") !== -1;
-
-      if (lastWasPublic || lastWasImpact) {
-        botSay(KNOWLEDGE.CHUNKS[fullId], null, fullId);
-        return;
-      }
-      if (KNOWLEDGE.CHUNKS[impactId]) {
-        botSay(KNOWLEDGE.CHUNKS[impactId], null, impactId);
-        return;
-      }
-      botSay(KNOWLEDGE.CHUNKS[fullId], null, fullId);
-      return;
-    }
-
-    botSay(
-      getPublicTeaser(company) +
-        " I can share more in the full case study — enter the portfolio password or request access.",
-      ["Enter password", "Request access"],
-      KNOWLEDGE.getPublicChunkId(company)
-    );
-  }
-
   function handleFrustration() {
     var prior = getLastUserQuestion();
     if (!prior) {
       botSay(
-        "Sorry that missed the mark — try rephrasing, or ask about my work at Raisin, OLX, N26, Gojek, mentoring, or getting in touch.",
+        "Sorry that missed the mark — try rephrasing, or ask about my work at Raisin, GoPlay, N26, Gojek, mentoring, or getting in touch.",
         KNOWLEDGE.SUGGESTED_CHIPS.slice(0, 3)
       );
       return;
     }
     botSay("Sorry about that — let me try again on your question.", null);
     processQuery(prior, true);
-  }
-
-  function answerImpact(query, unlocked) {
-    var company = resolveCompany(query);
-    if (company) {
-      var impactId = KNOWLEDGE.getImpactChunkId(company);
-      if (unlocked && KNOWLEDGE.CHUNKS[impactId]) {
-        botSay(KNOWLEDGE.CHUNKS[impactId], null, impactId);
-        return;
-      }
-      if (!unlocked) {
-        botSay(
-          getPublicTeaser(company) +
-            " I can share more on impact and metrics in the full case study — enter the portfolio password or request access.",
-          ["Enter password", "Request access"],
-          KNOWLEDGE.getPublicChunkId(company)
-        );
-        return;
-      }
-    }
-
-    deliverBotResponse(function () {
-      return fetchAIComplete(query).then(function (aiReply) {
-        if (aiReply) return { text: aiReply };
-        return {
-          text:
-            "Impact varied by project — at Raisin it was coherence across 12 markets and enablement; at OLX monetisation lift at 317M+ user scale; at N26 clarity across 25 markets. Which would you like to go deeper on?",
-          chips: ["Raisin impact", "OLX monetisation work"],
-        };
-      });
-    });
   }
 
   function completeContactFlow(intentText) {
@@ -547,25 +489,11 @@
     pendingEmail = "";
     currentState = isUnlocked() ? STATE.UNLOCKED : STATE.IDLE;
 
-    var reply;
+    var reply = "Thanks — I'll reply at " + email + " soon.";
     var chips = null;
 
-    if (/\b(hiring|recruit|recruiter|interview|role|position|job)\b/i.test(intentText)) {
-      reply = "Thanks — I'll follow up at " + email + " about hiring.";
-    } else if (/\b(freelance|contract|consult|founder|startup)\b/i.test(intentText)) {
-      reply = "Thanks — I'll follow up at " + email + " about working together.";
-    } else if (/\b(mentor|mentorship|adplist|portfolio review)\b/i.test(intentText)) {
-      reply =
-        "Thanks — I'll follow up at " + email + ". You can also book a session on ADPList from my homepage.";
-    } else if (/\b(password|access|case stud)/i.test(intentText)) {
-      reply = "Thanks — I'll follow up at " + email + " with portfolio access details.";
-      if (!isUnlocked()) chips = ["Enter password"];
-    } else {
-      reply = "Thanks — I'll reply at " + email + " soon.";
-    }
-
-    if (!isUnlocked() && !chips) {
-      reply += " If you'd like case study access before we connect, you can enter the portfolio password anytime.";
+    if (!isUnlocked()) {
+      reply += " You can enter the portfolio password anytime to view locked case studies.";
       chips = ["Enter password"];
     }
 
@@ -604,38 +532,12 @@
       return;
     }
 
-    if (intent.action === "impact_answer") {
-      answerImpact(query, unlocked);
-      return;
-    }
-
     if (intent.locked) {
       var companyId = intent.chunkId;
-      var wantsImpact = KNOWLEDGE.wantsImpactMetrics(query);
-      var wantsDepth = KNOWLEDGE.wantsCaseStudyDepth(query);
-      var isOverview = KNOWLEDGE.isOverviewQuestion(query);
-
-      if (wantsImpact) {
-        answerImpact(query, unlocked);
-        return;
-      }
-
-      if (unlocked && wantsDepth) {
-        botSay(KNOWLEDGE.CHUNKS[companyId], null, companyId);
-        return;
-      }
-
-      if (!unlocked && (isOverview || !wantsDepth)) {
-        var chips = ["Go deeper on " + companyId.charAt(0).toUpperCase() + companyId.slice(1)];
-        if (!isOverview) chips.push("Enter password");
-        botSay(getPublicTeaser(companyId), chips, KNOWLEDGE.getPublicChunkId(companyId));
-        return;
-      }
-
       if (!unlocked) {
         botSay(
           getPublicTeaser(companyId) +
-            " The full case study has more process and detail — enter the portfolio password to go deeper, or request access.",
+            " The full case study is password-gated — enter the portfolio password to go deeper, or request access.",
           ["Enter password", "Request access"],
           KNOWLEDGE.getPublicChunkId(companyId)
         );
@@ -652,13 +554,6 @@
     }
 
     if (intent.chunkId && KNOWLEDGE.CHUNKS[intent.chunkId]) {
-      if (unlocked && KNOWLEDGE.wantsImpactMetrics(query)) {
-        var impactChunk = KNOWLEDGE.getImpactChunkId(intent.chunkId);
-        if (KNOWLEDGE.CHUNKS[impactChunk]) {
-          botSay(KNOWLEDGE.CHUNKS[impactChunk], null, impactChunk);
-          return;
-        }
-      }
       botSay(KNOWLEDGE.CHUNKS[intent.chunkId], null, intent.chunkId);
       return;
     }
@@ -669,27 +564,20 @@
   function fallbackAnswer(query) {
     var unlocked = isUnlocked() || currentState === STATE.UNLOCKED;
 
-    if (KNOWLEDGE.wantsImpactMetrics(query)) {
-      answerImpact(query, unlocked);
-      return;
-    }
-
-    var results = KNOWLEDGE.searchChunks(query, unlocked, lastBotChunkId, topicCompany);
-
-    if (results.length && results[0].score >= 2) {
-      botSay(results[0].text, null, results[0].id);
-      return;
-    }
-
+    // 1. Primary path: Delegate to Workers AI LLM Endpoint
     deliverBotResponse(function () {
       return fetchAIComplete(query).then(function (aiReply) {
         if (aiReply) return { text: aiReply };
-        if (results.length && results[0].score >= 2) {
+
+        // 2. Backup path: Search local static knowledge chunks if AI Endpoint fails or times out
+        var results = KNOWLEDGE.searchChunks(query, unlocked, lastBotChunkId, topicCompany);
+        if (results.length && results[0].score >= 1) {
           return { text: results[0].text, chunkId: results[0].id };
         }
+
+        // 3. Absolute last resort fallback
         return {
-          text:
-            "I'm not sure I have a sharp answer for that on the site — try asking about my work at Raisin, OLX, N26, Gojek, mentoring, or how to get in touch.",
+          text: "I'm not sure I have a sharp answer for that on the site — try asking about my work, case studies, or how to get in touch.",
           chips: KNOWLEDGE.SUGGESTED_CHIPS.slice(0, 3),
         };
       });
@@ -697,36 +585,22 @@
   }
 
   function processQuery(rawText, isRetry) {
+    var rawCompany = KNOWLEDGE.getCompanyFromQuery(rawText);
+
+    if (rawCompany) {
+      topicCompany = rawCompany;
+      storageSet(TOPIC_KEY, rawCompany, false);
+    } else if (
+      /\b(bye|goodbye|hobb(y|ies)|gaming|reading|all projects|across|philosophy|tech debt)\b/i.test(rawText)
+    ) {
+      resetTopicState();
+    }
+
     var text = KNOWLEDGE.expandQueryWithTopic(rawText, topicCompany);
-    var unlocked = isUnlocked() || currentState === STATE.UNLOCKED;
 
     if (!isRetry && KNOWLEDGE.isFrustration(rawText)) {
       handleFrustration();
       return;
-    }
-
-    if (KNOWLEDGE.isFollowUp(rawText)) {
-      answerFollowUp(unlocked);
-      return;
-    }
-
-    var askingAbout = rawText.match(/\b(?:asking|talking) about\s+(\w+)/i);
-    if (askingAbout) {
-      var named = askingAbout[1].toLowerCase();
-      if (KNOWLEDGE.COMPANIES.indexOf(named) !== -1) {
-        topicCompany = named;
-        storageSet(TOPIC_KEY, named, false);
-        text = "Tell me about " + named;
-      }
-    }
-
-    if (/^go deeper on\s+(\w+)/i.test(rawText)) {
-      var chipCompany = rawText.match(/^go deeper on\s+(\w+)/i)[1].toLowerCase();
-      if (KNOWLEDGE.COMPANIES.indexOf(chipCompany) !== -1) {
-        topicCompany = chipCompany;
-        storageSet(TOPIC_KEY, chipCompany, false);
-        text = "Go deeper on " + chipCompany;
-      }
     }
 
     var intent = KNOWLEDGE.matchIntent(text);
