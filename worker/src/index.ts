@@ -540,18 +540,28 @@ async function runCompletion(
   for (const model of models) {
     try {
       console.log(`[Workers AI] Executing model ${model}...`);
-
-      const result: unknown = await env.AI.run(model, {
-        messages,
-        max_tokens: 256,
-        temperature: 0.4,
-      });
-
+  
+      const result: unknown = await env.AI.run(
+        model,
+        {
+          messages,
+          max_tokens: 256,
+          temperature: 0.4,
+        },
+        {
+          gateway: {
+            id: "default", // Auto-creates and routes through default AI Gateway
+            skipCache: false,
+            cacheTtl: 3360,
+          },
+        }
+      );
+  
       console.log(
         `[Workers AI] Raw result from ${model}:`,
         JSON.stringify(result)
       );
-
+  
       const reply = extractAiReply(result);
       if (reply) return reply;
     } catch (err: unknown) {
