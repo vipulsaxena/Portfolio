@@ -286,6 +286,8 @@
   var ply = 0;
   var active = false;
   var raf = 0;
+  var lastCol = -1;
+  var lastRow = -1;
 
   function setMode(next) {
     mode = next;
@@ -316,6 +318,19 @@
     var rect = field.getBoundingClientRect();
     var lx = mx - rect.left;
     var ly = my - rect.top;
+
+    if (active && lx >= 0 && ly >= 0 && lx <= rect.width && ly <= rect.height) {
+      var col = Math.floor(lx / SPACING);
+      var row = Math.floor(ly / SPACING);
+      if (col !== lastCol || row !== lastRow) {
+        lastCol = col;
+        lastRow = row;
+        if (window.Sonic && window.Sonic.gridTick) window.Sonic.gridTick(col + row);
+      }
+    } else {
+      lastCol = lastRow = -1;
+    }
+
     var radius = mode.radius;
     var reach = radius * 1.2;
     var maxScale = mode.max;
@@ -475,6 +490,7 @@
       active = false;
       plx = 0;
       ply = 0;
+      lastCol = lastRow = -1;
       schedule();
     }, { passive: true });
   } else {
@@ -486,6 +502,7 @@
     }, { passive: true });
     hero.addEventListener("pointerleave", function () {
       active = false;
+      lastCol = lastRow = -1;
       update();
     }, { passive: true });
   }

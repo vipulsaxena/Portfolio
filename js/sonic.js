@@ -4,19 +4,18 @@
  * Subtle, quiet micro-tones on hover and press for .liquid interactive cards
  * only. No external libraries or audio files — everything is synthesised.
  * Lazy AudioContext (created on first user gesture per browser autoplay policy).
- * Mute toggle in the header + Ctrl+M, persisted in localStorage. Respects
- * prefers-reduced-motion (starts muted).
+ * Mute toggle in the header + Ctrl+M, persisted in localStorage. Starts muted
+ * (SFX off) until the user turns it on.
  */
 (function () {
   "use strict";
 
-  var KEY = "sonic-muted";
-  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var KEY = "sonic-sfx-enabled";
 
   var stored = null;
   try { stored = localStorage.getItem(KEY); } catch (e) {}
-  // default: ON, unless reduced-motion is requested or the user muted before
-  var muted = stored === null ? reduceMotion : stored === "1";
+  // default: OFF; only on if user explicitly enabled
+  var muted = stored !== "1";
 
   var ctx = null;
   var master = null;
@@ -183,7 +182,7 @@
   var toggleEl = null;
   function setMuted(v) {
     muted = v;
-    try { localStorage.setItem(KEY, muted ? "1" : "0"); } catch (e) {}
+    try { localStorage.setItem(KEY, muted ? "0" : "1"); } catch (e) {}
     if (toggleEl) render(toggleEl);
   }
 
@@ -201,8 +200,9 @@
       if (match !== lastHoverEl) { lastHoverEl = match; hover(); }
     });
 
+    var clickSel = 'a, button, [role="button"], .liquid, .archive__item, .schematic__cell';
     document.addEventListener("pointerdown", function (e) {
-      var match = e.target && e.target.closest ? e.target.closest(cardSel) : null;
+      var match = e.target && e.target.closest ? e.target.closest(clickSel) : null;
       if (match) click();
     });
 
