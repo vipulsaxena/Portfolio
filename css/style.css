@@ -1022,7 +1022,7 @@
      font-weight: 900;
 }
  .ski-pill {
-    background-color: #ffda08;
+    background-color: #f9eca2;
     padding: 0px 13px;
     line-height: 30px;
     margin-right: 6px;
@@ -1058,16 +1058,16 @@
 }
 .ski-pill-group__seg:first-child {
     padding-left: 14px;
-    background-color: #ffda08;
+    background-color: #f9eca2;
 }
 .ski-pill-group__seg:nth-child(2) {
-    background-color: #efca00;
+    background-color: #ebda7b;
 }
 .ski-pill-group__seg:nth-child(3) {
-    background-color: #d9b600;
+    background-color: #e9d047;
 }
 .ski-pill-group__seg:nth-child(4) {
-    background-color: #c4a300;
+    background-color: #dcc43d;
 }
 .ski-pill-group__seg:last-child {
     padding-right: 14px;
