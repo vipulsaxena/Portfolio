@@ -10,7 +10,8 @@
     "db:migrate:read": "wrangler d1 execute portfolio-chat --remote --file=migrations/001_read_at.sql",
     "db:migrate:read:local": "wrangler d1 execute portfolio-chat --local --file=migrations/001_read_at.sql",
     "test:sync": "node scripts/test-chat-sync.mjs",
-    "test:knowledge": "node scripts/test-chat-knowledge.mjs"
+    "test:knowledge": "node scripts/test-chat-knowledge.mjs",
+    "test:complete": "node scripts/test-chat-complete.mjs"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20250204.0",

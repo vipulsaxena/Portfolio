@@ -493,11 +493,23 @@ async function handleAdminDeleteSession(
 function extractAiReply(result: unknown): string {
   if (!result) return "";
   if (typeof result === "string") return result.trim();
+
   if (typeof result !== "object") return "";
 
   const r = result as Record<string, unknown>;
+
   if (typeof r.response === "string") return r.response.trim();
+
+  // Some models return { response: { response: "..." } } for JSON mode
+  if (r.response && typeof r.response === "object") {
+    const nested = r.response as Record<string, unknown>;
+    if (typeof nested.response === "string") return nested.response.trim();
+    if (typeof nested.text === "string") return nested.text.trim();
+  }
+
   if (typeof r.result === "string") return r.result.trim();
+  if (typeof r.text === "string") return r.text.trim();
+  if (typeof r.output === "string") return r.output.trim();
 
   if (Array.isArray(r.choices) && r.choices[0]) {
     const choice = r.choices[0] as {
@@ -515,22 +527,36 @@ async function runCompletion(
   env: Env,
   messages: { role: "system" | "user" | "assistant"; content: string }[]
 ): Promise<string> {
+  if (!env.AI) {
+    console.error("CRITICAL: env.AI binding is missing or undefined.");
+    return "";
+  }
+
   const models = [
-    "@cf/meta/llama-3.1-8b-instruct",
-    "@cf/meta/llama-3-8b-instruct",
+    "@cf/meta/llama-3.1-8b-instruct-fast",
+    "@cf/mistral/mistral-7b-instruct-v0.2-lora",
   ];
 
   for (const model of models) {
     try {
-      const result = await env.AI.run(model, {
+      console.log(`[Workers AI] Executing model ${model}...`);
+
+      const result: unknown = await env.AI.run(model, {
         messages,
-        max_tokens: 280,
+        max_tokens: 256,
         temperature: 0.4,
       });
+
+      console.log(
+        `[Workers AI] Raw result from ${model}:`,
+        JSON.stringify(result)
+      );
+
       const reply = extractAiReply(result);
       if (reply) return reply;
-    } catch (err) {
-      console.error("AI model error", model, err);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : String(err);
+      console.error(`[Workers AI Error] Model ${model} failed:`, message, err);
     }
   }
 
@@ -552,28 +578,27 @@ async function handleChatComplete(
     return json({ error: "message required" }, 400, request, env);
   }
 
-  const history = (body.history || []).slice(-6);
+  const history = (body.history || []).slice(-4);
   const topicNote = body.topicCompany
     ? `\nCurrent conversation topic company: ${body.topicCompany}.`
     : "";
 
-  const messages: { role: "system" | "user" | "assistant"; content: string }[] = [
-    {
-      role: "system",
-      content:
-        SYSTEM_PROMPT +
-        (body.unlocked
-          ? "\nUser has unlocked password-gated case studies."
-          : "\nUser has NOT unlocked password-gated case studies yet.") +
-        topicNote,
-    },
-  ];
+  const systemContent =
+    SYSTEM_PROMPT +
+    (body.unlocked
+      ? "\nUser has unlocked password-gated case studies."
+      : "\nUser has NOT unlocked password-gated case studies yet.") +
+    topicNote;
+
+  const messages: { role: "system" | "user" | "assistant"; content: string }[] =
+    [{ role: "system", content: systemContent }];
 
   history.forEach((m) => {
-    if (m.role === "user" || m.role === "bot") {
+    const role = m.role === "user" ? "user" : "assistant";
+    if (m.content && m.content.trim()) {
       messages.push({
-        role: m.role === "user" ? "user" : "assistant",
-        content: m.content,
+        role,
+        content: m.content.trim(),
       });
     }
   });
@@ -584,23 +609,14 @@ async function handleChatComplete(
     const reply = await runCompletion(env, messages);
 
     if (reply) {
-      return json({ reply }, 200, request, env);
+      return json({ reply, fallback: false }, 200, request, env);
     }
 
-    return json(
-      { reply: null, fallback: true },
-      200,
-      request,
-      env
-    );
-  } catch (err) {
-    console.error("AI error", err);
-    return json(
-      { reply: null, fallback: true },
-      200,
-      request,
-      env
-    );
+    return json({ reply: null, fallback: true }, 200, request, env);
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : String(err);
+    console.error("AI Route Exception:", message, err);
+    return json({ reply: null, fallback: true }, 200, request, env);
   }
 }
 
