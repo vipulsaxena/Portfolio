@@ -337,6 +337,20 @@ function requireAdmin(request: Request): boolean {
   return isValidAdminSession(getAdminToken(request));
 }
 
+const CONVERSATION_FILTER_SQL: Record<string, string> = {
+  two_way: `EXISTS (
+      SELECT 1 FROM messages mu
+      WHERE mu.session_id = s.id AND mu.role = 'user' AND LENGTH(TRIM(mu.content)) > 0
+    ) AND EXISTS (
+      SELECT 1 FROM messages mb
+      WHERE mb.session_id = s.id AND mb.role IN ('bot', 'assistant') AND LENGTH(TRIM(mb.content)) > 0
+    )`,
+  bot_only: `NOT EXISTS (
+      SELECT 1 FROM messages mu
+      WHERE mu.session_id = s.id AND mu.role = 'user' AND LENGTH(TRIM(mu.content)) > 0
+    )`,
+};
+
 async function handleAdminSessions(
   request: Request,
   env: Env
@@ -348,21 +362,26 @@ async function handleAdminSessions(
   const url = new URL(request.url);
   const filter = url.searchParams.get("filter");
   const filterTag = filter ? FILTER_TAGS[filter] : null;
+  const conversationWhere = filter ? CONVERSATION_FILTER_SQL[filter] : null;
 
   const rows = await env.DB.prepare(
     `SELECT s.*,
       (SELECT content FROM messages m WHERE m.session_id = s.id AND m.role = 'user' ORDER BY m.id DESC LIMIT 1) AS last_user_message
      FROM sessions s
+     ${conversationWhere ? `WHERE ${conversationWhere}` : ""}
      ORDER BY s.updated_at DESC
      LIMIT 200`
   ).all();
 
-  let sessions = (rows.results || []) as Record<string, unknown>[];
+  type AdminSessionRow = Record<string, unknown> & {
+    highlights: HighlightTag[];
+    read: boolean;
+  };
 
-  sessions = sessions.map((s) => ({
-    ...s,
-    highlights: parseJsonArray(s.highlights as string, []),
-    read: Boolean(s.read_at),
+  let sessions: AdminSessionRow[] = (rows.results || []).map((s) => ({
+    ...(s as Record<string, unknown>),
+    highlights: parseJsonArray((s as Record<string, string>).highlights, []),
+    read: Boolean((s as Record<string, unknown>).read_at),
   }));
 
   if (filter === "unread") {
@@ -375,15 +394,9 @@ async function handleAdminSessions(
     );
   }
 
-  sessions.sort((a, b) => {
-    const aRead = a.read ? 1 : 0;
-    const bRead = b.read ? 1 : 0;
-    if (aRead !== bRead) return aRead - bRead;
-    const aH = (a.highlights as HighlightTag[]).length;
-    const bH = (b.highlights as HighlightTag[]).length;
-    if (aH !== bH) return bH - aH;
-    return String(b.updated_at).localeCompare(String(a.updated_at));
-  });
+  sessions.sort((a, b) =>
+    String(b.updated_at).localeCompare(String(a.updated_at))
+  );
 
   return json({ sessions }, 200, request, env);
 }
@@ -406,7 +419,7 @@ async function handleAdminSessionDetail(
   }
 
   const messages = await env.DB.prepare(
-    "SELECT * FROM messages WHERE session_id = ? ORDER BY id ASC"
+    "SELECT * FROM messages WHERE session_id = ? ORDER BY id DESC"
   )
     .bind(sessionId)
     .all();
