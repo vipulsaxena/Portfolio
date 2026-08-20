@@ -1,5 +1,5 @@
 window.VIPUL_CHAT_CONFIG = {
-  ASSET_VERSION: "6",
+  ASSET_VERSION: "7",
   // Replace after `wrangler deploy` — see worker/README.md
   API_BASE_URL: "https://portfolio-chat.vipul-saxena01.workers.dev",
   SESSION_KEY: "vipulChatSessionId",

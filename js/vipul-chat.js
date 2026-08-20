@@ -532,6 +532,28 @@
       return;
     }
 
+    if (intent.id === "work_impact") {
+      var impactCompany = KNOWLEDGE.getCompanyFromQuery(query) || topicCompany;
+      if (impactCompany && KNOWLEDGE.isLockedProject(impactCompany)) {
+        var impactChunkId = KNOWLEDGE.getImpactChunkId(impactCompany);
+        if (!unlocked) {
+          botSay(
+            getPublicTeaser(impactCompany) +
+              " Impact details are in the password-gated case study — enter the portfolio password to go deeper, or request access.",
+            ["Enter password", "Request access"],
+            KNOWLEDGE.getPublicChunkId(impactCompany)
+          );
+          return;
+        }
+        if (KNOWLEDGE.CHUNKS[impactChunkId]) {
+          botSay(KNOWLEDGE.CHUNKS[impactChunkId], null, impactChunkId);
+          return;
+        }
+      }
+      fallbackAnswer(query);
+      return;
+    }
+
     if (intent.locked) {
       var companyId = intent.chunkId;
       if (!unlocked) {
@@ -663,7 +685,7 @@
       }).catch(function () {
         currentState = STATE.AWAIT_PASSWORD;
         return {
-          text: "I couldn't verify that here — try again on https://vipulsaxena.com, or request access.",
+          text: "I couldn't verify that here — try again, or request access and I'll follow up.",
           chips: ["Request access"],
         };
       });

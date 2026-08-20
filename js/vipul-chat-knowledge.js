@@ -121,6 +121,64 @@
       ],
       action: "deflect_private",
     },
+    {
+      id: "design_approach",
+      patterns: [/\bdesign approach\b/i, /\bhow do you design\b/i, /\bproduct design process\b/i],
+      chunkId: "design_approach",
+    },
+    {
+      id: "education",
+      patterns: [/\bwhere did you study\b/i, /\beducation\b/i, /\bdegree\b/i, /\buniversity\b/i],
+      chunkId: "education",
+    },
+    {
+      id: "engineering_background",
+      patterns: [
+        /\bengineer(ing)? background\b/i,
+        /\b(were you|you) an? engineer\b/i,
+        /\bengineer before\b/i,
+        /\bcs (degree|background)\b/i,
+      ],
+      chunkId: "engineering_background",
+    },
+    {
+      id: "years_experience",
+      patterns: [/\byears? of experience\b/i, /\bhow long have you\b/i, /\bexperience do you have\b/i],
+      chunkId: "years_experience",
+    },
+    {
+      id: "berlin",
+      patterns: [/\bwhy berlin\b/i, /\bwhy did you move\b/i, /\bwhy (are you|live) in berlin\b/i],
+      chunkId: "why_berlin",
+    },
+    {
+      id: "mentoring",
+      patterns: [/\bmentor(ing|ship)?\b/i, /\badplist\b/i],
+      chunkId: "mentoring",
+    },
+    {
+      id: "reading",
+      patterns: [/\bwhat (are you|do you) read(ing)?\b/i, /\breading\b/i, /\bbook\b/i],
+      chunkId: "personal_reading",
+    },
+    {
+      id: "gaming",
+      patterns: [/\bgaming\b/i, /\bplay(ing)? games\b/i, /\bdark souls\b/i, /\bbaldur'?s gate\b/i],
+      chunkId: "personal_gaming",
+    },
+    {
+      id: "fintech",
+      patterns: [/\bfintech experience\b/i, /\bfintech work\b/i, /\bfinancial (products|services)\b/i],
+      chunkId: "fintech",
+    },
+    {
+      id: "work_impact",
+      patterns: [
+        /\bimpact (at|on|you|generated)\b/i,
+        /\bwhat (was|were) the (impact|results|outcomes)\b/i,
+        /\bmeasurable (wins|results)\b/i,
+      ],
+    },
     // Locked Projects
     { id: "raisin", patterns: [/\braisin\b/i], chunkId: "raisin", locked: true },
     { id: "olx", patterns: [/\bolx\b/i], chunkId: "olx", locked: true },
@@ -145,7 +203,7 @@
     why_berlin:
       "I moved to Berlin to work at global scale. Here I've designed for tens of millions of users across dozens of markets — N26 across 25 countries, OLX across 17, Raisin across nine in Europe, the UK, and the US.",
     mentoring:
-      "Yes — I mentor on ADPList. You can book a session from the Engage section on my homepage. I help with product design craft, career navigation, portfolio reviews, and design team practices.",
+      "Yes — I mentor on ADPList. I help with product design craft, career navigation, portfolio reviews, and design team practices.",
     timeline:
       "2024–present: Raisin (Senior Product Designer, Berlin). 2022–2024: OLX Group. 2021–2022: N26. 2018–2021: Gojek (Lead PD, Jakarta). 2017–2018: Hike. 2014–2017: InstaLively. Started in mobile game UI at inoXapps.",
     fintech:
@@ -159,44 +217,44 @@
     personal_gaming:
       "Outside work I love stories that are deeply earned — especially Dark Souls (17 PlayStation platinums). Same patience and curiosity I bring to products. Also playing Baldur's Gate 3 and watching Jujutsu Kaisen.",
     
-    // PUBLIC CASE STUDIES
+    // PUBLIC CASE STUDIES (answer in chat — no links)
     goplay:
-      "I led product design for GoPlay — Gojek's OTT platform in Indonesia — from MVP to nationwide streaming on mobile, web, and Smart TV. Read the full public case study at https://vipulsaxena.com/goplay.html",
+      "I led product design for GoPlay — Gojek's OTT platform in Indonesia — from MVP to nationwide streaming across mobile, web, and Smart TV. I designed the core video playback experience, content discovery, localized UI/UX for low and high bandwidth conditions, and Smart TV navigation patterns.",
     instalively:
-      "I was the first hire at InstaLively — live video streaming optimized for low-bandwidth environments in India, reaching 50k+ users before acquisition. Read the full story at https://vipulsaxena.com/instalively.html",
+      "I was the first hire at InstaLively, designing live video streaming software optimized for low-bandwidth environments in India. I designed real-time low-latency streaming interfaces, streamer onboarding, and live audience interaction (chat and donations). The product grew to 50k+ active users before acquisition by Hike.",
     ninja:
-      "Silent Ninja Redesign focused on refining stealth-based game UI, controls, and user interaction patterns. Read the full case study at https://vipulsaxena.com/silent-ninja-redesign.html",
+      "Silent Ninja Redesign was a mobile game UI/UX redesign focused on stealth action mechanics. I refined HUD clarity, touch control ergonomics, menu navigation, and reduced interface clutter during active gameplay to maximize player immersion.",
     hike:
-      "At Hike, I authored the two-part UX case study 'Camera Is The New Keyboard' analyzing camera-first messaging, Hikemoji, and LiveDraw. Read Part 1 (https://uxplanet.org/camera-is-the-new-keyboard-77594daba99e) and Part 2 (https://uxplanet.org/camera-is-the-new-keyboard-part-2-19abc58d48f2) on UX Planet.",
+      "At Hike I authored a two-part UX case study on the camera-first messaging overhaul — 'Camera Is The New Keyboard.' The work focused on transitioning users from text-first to visual communication: Hikemoji avatar creation and customization, LiveDraw's real-time interactive canvas, and camera creation interfaces.",
 
     // LOCKED CASE STUDIES - TEASERS & FULL CONTENT
     raisin_public:
       "At Raisin I'm simplifying wealth management across EU, UK, and US — leading brand evolution across dashboard, mobile, email, and marketing for savers in nine markets.",
     raisin:
-      "I led Raisin's brand evolution across dashboard, mobile app, email, and marketing — translating a global brand refresh into cohesive experiences across 12 markets while establishing design enablement workflows.",
+      "I led Raisin's brand evolution across dashboard, mobile app, email, and marketing — translating a global brand refresh into cohesive experiences. I ran two parallel tracks: shipping the Wealth Hub MVP across 12 markets, and building design enablement — research practice, AI workflows, governed email system, mobile alignment, and team rituals. Customers had faced fragmented surfaces; we turned static Koto guidelines into a living product system.",
     raisin_impact:
-      "At Raisin the wins sit in shipping the Wealth Hub MVP across 12 markets with a coherent multi-surface experience, while standing up design enablement to reduce product fragmentation.",
+      "At Raisin the measurable wins sit in two tracks: shipping the Wealth Hub MVP across 12 markets with a coherent dashboard, mobile, and email experience — and standing up design enablement so the team could ship the rebrand without one-off reskins. Research practice, a governed email system, and mobile alignment reduced fragmentation customers felt across touchpoints.",
     
     olx_public:
       "At OLX I led Engagement & Monetisation design in Pay & Ship — payments, seller monetisation, and checkout across 17 countries on a platform used by 317M+ people.",
     olx:
-      "At OLX I led Engagement & Monetisation design in Pay & Ship across 17 countries — addressing Ad Package drop-off via research and A/B tests, AutoExtend, payment gateways, and DesignOps workshops.",
+      "At OLX I led Engagement & Monetisation design in Pay & Ship across 17 countries — Ad Package drop-off via research and A/B tests, Seller Take Rate AutoExtend, payment gateway, and DesignOps workshops. Platform serves 317M+ C2C and B2C users. Winning patterns rolled out to more markets.",
     olx_impact:
-      "At OLX, impact came from reducing Ad Package drop-off through research and A/B tests, shipping Seller Take Rate AutoExtend, and optimizing checkout flows across 17 markets.",
+      "At OLX, impact came from tightening monetisation flows at scale: reducing Ad Package drop-off through research and A/B tests, shipping Seller Take Rate AutoExtend, and improving the payment gateway experience — then rolling winning patterns across more of the 17-country footprint.",
 
     n26_public:
       "At N26 I evolved the home feed and transaction experience across 25 European markets — making multi-account activity easier to scan and act on.",
     n26:
-      "At N26 I evolved the home feed into a multi-activity view across 25 European markets — surfacing activity across Spaces, IBANs, and cards, alongside MoneyBeam reactions and transaction search.",
+      "At N26 I evolved the home feed into a multi-activity view across 25 European markets — surfacing activity across Spaces, IBANs, and cards. Research-led: customer interviews, cross-functional workshops, usability tests, launch-to-learn. Also shipped MoneyBeam reactions, feed↔crypto connections, and transaction search improvements.",
     n26_impact:
-      "At N26 the home feed work made multi-activity banking legible across 25 markets — eliminating dead ends between Spaces, IBANs, and cards.",
+      "At N26 the home feed work made multi-activity banking legible across 25 markets — fewer dead ends between Spaces, IBANs, and cards. Research, workshops, and launch-to-learn cycles informed MoneyBeam reactions, feed↔crypto connections, and transaction search improvements.",
 
     gomart_public:
       "On Gojek I led grocery design at Indonesia scale — GoMart, GoFresh, and the operational tools behind reliable nationwide fulfillment.",
     gomart:
-      "On Gojek I led grocery design at Indonesia scale — GoMart (B2C), GoFresh (B2B), plus shopper and driver tools using rapid design sprints for reliable fulfillment.",
+      "On Gojek I led grocery design at Indonesia scale — GoMart (B2C), GoFresh (B2B), plus shopper and driver tools. Studio Accelerator design sprints for fast, reliable fulfillment nationwide. Part of a broader on-demand and entertainment portfolio where I led a team of six.",
     gomart_impact:
-      "GoMart impact was about scaling reliable fulfillment in Indonesia — optimizing discovery, trust, and operational tools under real-world load.",
+      "GoMart impact was about reliable fulfillment at Indonesia scale — Studio Accelerator sprints across GoMart, GoFresh, and shopper/driver tools so discovery, trust, and operations held up under real-world load.",
   };
 
   function tokenizeQuery(query) {
