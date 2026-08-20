@@ -36,11 +36,11 @@ body.summary-v2 .container {
 
 /* Portfolio shell header offset (case-study deck header) */
 body.summary-v2.has-shell .why-hero--split .hero-stage {
-  padding-top: calc(var(--deck-top, 3.5rem) + 1.5rem);
+  padding-top: calc(var(--deck-top, 3.5rem) + 1.5rem + 5vh);
 }
 @media (max-width: 640px) {
   body.summary-v2.has-shell .why-hero--split .hero-stage {
-    padding-top: calc(var(--deck-top, 3.5rem) + 1rem);
+    padding-top: calc(var(--deck-top, 3.5rem) + 1rem + 5vh);
   }
 }
 
@@ -77,7 +77,7 @@ body.summary-v2.has-shell .why-hero--split .hero-stage {
   width: 100%;
   max-width: 100%;
   min-height: min(78svh, 44rem);
-  padding-top: 5.5rem;
+  padding-top: calc(5.5rem + 5vh);
   overflow: visible;
 }
 .why-hero--split .hero-split {
@@ -146,7 +146,7 @@ body.summary-v2.has-shell .why-hero--split .hero-stage {
   }
   .why-hero--split .hero-stage {
     min-height: auto;
-    padding-top: 5rem;
+    padding-top: calc(5rem + 5vh);
     padding-bottom: var(--sp-md);
   }
   .hero-split--stage {
@@ -251,7 +251,7 @@ body.summary-v2.has-shell .why-hero--split .hero-stage {
 /* ------------------------------ Hero stat strip ---------------------------- */
 .hero-stat-strip {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: var(--sp-md);
   margin-top: var(--sp-xl);
   padding-top: var(--sp-lg);
@@ -267,6 +267,15 @@ body.summary-v2.has-shell .why-hero--split .hero-stage {
   color: var(--on-dark);
 }
 .hero-stat-strip__label { font-size: var(--fs-xs); color: var(--on-dark-muted); margin-top: 0.35rem; max-width: none; }
+.hero-stat-strip__note {
+  font-size: var(--fs-2xs);
+  color: var(--accent-dim);
+  margin: 0.5rem 0 0;
+}
+.hero-stat-strip__value--text {
+  font-size: clamp(1.35rem, 2.2vw, 1.85rem);
+  line-height: 1.15;
+}
 
 /* Section rhythm — keep editorial measure, align grids on wide canvas */
 body.summary-v2 .section-head {
@@ -694,10 +703,17 @@ body.summary-v2.has-shell {
 }
 
 body.summary-v2.has-shell .shell-header {
-  background: #fff;
-  -webkit-backdrop-filter: none;
-  backdrop-filter: none;
-  border-bottom: 1px solid #e7e7e7;
+  /* Tier 1 — primary chrome: more opaque, stronger blur */
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--paper) 90%, transparent),
+      color-mix(in srgb, var(--paper) 72%, transparent) 52%
+    ),
+    color-mix(in srgb, var(--paper) 84%, transparent);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  backdrop-filter: blur(16px) saturate(1.4);
+  border-bottom: 1px solid color-mix(in srgb, var(--line) 65%, transparent);
 }
 
 body.summary-v2.has-shell .journey-nav {
@@ -707,7 +723,12 @@ body.summary-v2.has-shell .journey-nav {
 
 body.summary-v2.has-shell .period,
 body.summary-v2.has-shell [data-period] {
-  scroll-margin-top: calc(var(--journey-sticky-top) + 3.5rem);
+  scroll-margin-top: var(--journey-scroll-offset, calc(var(--journey-sticky-top) + 3.5rem));
+}
+
+/* Disable global smooth-scroll while journey nav drives position (prevents overshoot / bounce). */
+html.journey-nav-scrolling {
+  scroll-behavior: auto !important;
 }
 
 /* ------------------------------ Journey nav ------------------------------ */
@@ -723,9 +744,16 @@ body.summary-v2.has-shell [data-period] {
   width: 100%;
   padding-block: 0.625rem;
   padding-inline: clamp(1rem, 4vw, 2.5rem);
-  background: color-mix(in srgb, var(--paper) 92%, transparent);
-  backdrop-filter: blur(10px) saturate(1.2);
-  border-bottom: 1px solid var(--line);
+  /* Tier 2 — chapter nav: softer glass than shell header, still readable */
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--paper) 86%, transparent),
+      color-mix(in srgb, var(--paper) 78%, transparent)
+    );
+  -webkit-backdrop-filter: blur(10px) saturate(1.25);
+  backdrop-filter: blur(10px) saturate(1.25);
+  border-bottom: 1px solid color-mix(in srgb, var(--line) 58%, transparent);
   overflow-x: auto;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
@@ -929,9 +957,7 @@ body.summary-v2.has-shell [data-period] {
 
 /* -------------------------------- Period --------------------------------- */
 .period {
-  scroll-margin-top: 7rem;
-  content-visibility: auto;
-  contain-intrinsic-size: auto 50rem;
+  scroll-margin-top: var(--journey-scroll-offset, 7rem);
 }
 .period--alt { background: var(--paper-dim); }
 .period__head {
@@ -954,6 +980,15 @@ body.summary-v2.has-shell [data-period] {
 }
 .period__title { margin-top: 0.2rem; }
 .period__thesis { margin-top: var(--sp-md); max-width: 62ch; }
+.period__role {
+  margin-top: var(--sp-sm);
+  font-size: var(--fs-sm);
+  color: var(--ink-soft);
+  max-width: 52ch;
+  border-left: 2px solid var(--line-strong);
+  padding-left: var(--sp-md);
+  line-height: 1.5;
+}
 
 /* ----------------------------- Division rules ----------------------------- */
 .rule {
@@ -977,6 +1012,7 @@ body.summary-v2.has-shell [data-period] {
   border-bottom: 1px solid var(--line);
 }
 .period__head--split .period__thesis { max-width: 42ch; }
+.period__head--split .period__role { max-width: 42ch; }
 .period__head--split-start {
   align-items: start;
 }
@@ -1078,6 +1114,7 @@ body.summary-v2.has-shell [data-period] {
     align-items: start;
   }
   .period__head--split .period__thesis { max-width: 62ch; }
+  .period__head--split .period__role { max-width: 62ch; }
   .period__head-visual img {
     width: 100%;
     max-width: 100%;
@@ -4317,6 +4354,11 @@ body.summary-v2.has-shell [data-period] {
   color: var(--on-dark);
 }
 .metric-banner__label { font-size: var(--fs-xs); color: var(--on-dark-muted); margin-top: 0.5rem; max-width: 26ch; }
+.metric-banner__label--wide { max-width: none; }
+.metric-banner__value--text {
+  font-size: clamp(1.65rem, 3vw, 2.35rem);
+  line-height: 1.15;
+}
 .metric-banner__note { font-size: var(--fs-2xs); color: var(--accent-dim); margin-top: 0.5rem; }
 
 /* ------------------------------- Verdict box ------------------------------ */
@@ -4458,7 +4500,7 @@ body.summary-v2.has-shell [data-period] {
   }
 
   .period {
-    scroll-margin-top: 8.5rem;
+    scroll-margin-top: var(--journey-scroll-offset, 8.5rem);
   }
 
   body.summary-v2 .journey-nav {
@@ -4469,7 +4511,7 @@ body.summary-v2.has-shell [data-period] {
 
   body.summary-v2.has-shell .period,
   body.summary-v2.has-shell [data-period] {
-    scroll-margin-top: calc(var(--journey-sticky-top, 3.5rem) + 4rem);
+    scroll-margin-top: var(--journey-scroll-offset, calc(var(--journey-sticky-top, 3.5rem) + 4rem));
   }
 
   .journey-nav__btn {

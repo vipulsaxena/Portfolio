@@ -9,31 +9,109 @@
   var periods = Array.prototype.slice.call(document.querySelectorAll("[data-period]"));
   if (!navBtns.length || !periods.length) return;
 
+  var isNavScrolling = false;
+  var scrollGeneration = 0;
+  var journeyMediaPrimed = false;
+  var html = document.documentElement;
+
+  function getStickyOffset() {
+    var miniNav = document.querySelector(".mini-nav");
+    var shellHeader = document.querySelector(".shell-header");
+    var journeyNav = document.querySelector(".journey-nav");
+    return (miniNav ? miniNav.getBoundingClientRect().height : (shellHeader ? shellHeader.getBoundingClientRect().height : 0)) +
+           (journeyNav ? journeyNav.getBoundingClientRect().height : 0) + 8;
+  }
+
+  function syncScrollMargin() {
+    html.style.setProperty("--journey-scroll-offset", Math.round(getStickyOffset()) + "px");
+  }
+
+  function preloadDeferredInSection(section) {
+    section.querySelectorAll("[data-prototype-frame]").forEach(function (frame) {
+      var dataSrc = frame.getAttribute("data-src");
+      if (dataSrc && !frame.src) {
+        frame.src = dataSrc;
+        frame.removeAttribute("data-src");
+      }
+    });
+    section.querySelectorAll("video[data-src]").forEach(function (video) {
+      var dataSrc = video.getAttribute("data-src");
+      if (dataSrc) {
+        video.src = dataSrc;
+        video.removeAttribute("data-src");
+      }
+    });
+    section.querySelectorAll("img[loading=\"lazy\"]").forEach(function (img) {
+      img.loading = "eager";
+    });
+  }
+
+  function primeJourneyMedia() {
+    if (journeyMediaPrimed) return;
+    journeyMediaPrimed = true;
+    periods.forEach(preloadDeferredInSection);
+  }
+
+  function setActivePeriod(name) {
+    navBtns.forEach(function (b) {
+      b.classList.toggle("is-active", b.getAttribute("data-period-link") === name);
+    });
+  }
+
+  function scrollToJourneySection(target) {
+    var gen = ++scrollGeneration;
+    isNavScrolling = true;
+    setActivePeriod(target.getAttribute("data-period"));
+
+    syncScrollMargin();
+    primeJourneyMedia();
+
+    html.classList.add("journey-nav-scrolling");
+    html.style.overflowAnchor = "none";
+
+    function snap() {
+      if (gen !== scrollGeneration) return;
+      target.scrollIntoView({ block: "start", behavior: "auto" });
+    }
+
+    function cleanup() {
+      if (gen !== scrollGeneration) return;
+      html.classList.remove("journey-nav-scrolling");
+      html.style.overflowAnchor = "";
+      setTimeout(function () {
+        if (gen === scrollGeneration) isNavScrolling = false;
+      }, 80);
+    }
+
+    /* Instant scroll only — smooth + correction loops caused overshoot and bounce. */
+    requestAnimationFrame(function () {
+      snap();
+      requestAnimationFrame(function () {
+        snap();
+        cleanup();
+      });
+    });
+  }
+
+  syncScrollMargin();
+  window.addEventListener("resize", syncScrollMargin, { passive: true });
+
   navBtns.forEach(function (btn) {
     btn.addEventListener("click", function (e) {
       e.preventDefault();
       var target = document.querySelector('[data-period="' + btn.getAttribute("data-period-link") + '"]');
-      if (target) {
-        var miniNav = document.querySelector(".mini-nav");
-        var shellHeader = document.querySelector(".shell-header");
-        var journeyNav = document.querySelector(".journey-nav");
-        var offset = (miniNav ? miniNav.getBoundingClientRect().height : (shellHeader ? shellHeader.getBoundingClientRect().height : 0)) +
-                     (journeyNav ? journeyNav.getBoundingClientRect().height : 0) + 8;
-        var y = target.getBoundingClientRect().top + window.pageYOffset - offset;
-        window.scrollTo({ top: y, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
-      }
+      if (target) scrollToJourneySection(target);
     });
   });
 
   if ("IntersectionObserver" in window) {
     var io = new IntersectionObserver(
       function (entries) {
+        if (isNavScrolling) return;
         entries.forEach(function (entry) {
           if (entry.isIntersecting) {
             var name = entry.target.getAttribute("data-period");
-            navBtns.forEach(function (b) {
-              b.classList.toggle("is-active", b.getAttribute("data-period-link") === name);
-            });
+            setActivePeriod(name);
           }
         });
       },
