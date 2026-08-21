@@ -120,6 +120,26 @@ const cases = [
     topicCompany: "n26",
     expectIntent: "ninja",
   },
+  {
+    q: "not just n26 but across",
+    expectIntent: "list_projects",
+  },
+  {
+    q: "are you using AI?",
+    expectIntent: "using_ai",
+  },
+  {
+    q: "i would like to talk to vipul",
+    expectIntent: "contact",
+  },
+  {
+    q: "What is your philosophy on handling design tech debt when building design systems?",
+    expectIntent: "design_approach",
+  },
+  {
+    q: "I think you are only telling me about locked case studies",
+    expectIntentNot: "n26",
+  },
 ];
 
 let failed = 0;

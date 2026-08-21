@@ -287,7 +287,7 @@
   function pushHistory(role, content, skipStore) {
     recentHistory.push({ role: role, content: content });
     if (recentHistory.length > 12) recentHistory = recentHistory.slice(-12);
-    if (role === "user" && !skipStore) {
+    if (role === "user" && !skipStore && !KNOWLEDGE.isFrustration(content)) {
       storageSet(LAST_USER_QUESTION_KEY, content, false);
     }
   }
@@ -482,16 +482,10 @@
       processQuery(currentText, true);
       return;
     }
-    var prior = getLastUserQuestion();
-    if (!prior) {
-      botSay(
-        "Sorry that missed the mark — try rephrasing, or ask about my work at Raisin, GoPlay, N26, Gojek, mentoring, or getting in touch.",
-        KNOWLEDGE.SUGGESTED_CHIPS.slice(0, 3)
-      );
-      return;
-    }
-    botSay("Sorry about that — let me try again on your question.", null);
-    processQuery(prior, true);
+    botSay(
+      "Sorry that missed the mark — name a project (GoPlay, Raisin, N26, OLX, GoMart) or ask about background, hobbies, or getting in touch.",
+      KNOWLEDGE.SUGGESTED_CHIPS.slice(0, 3)
+    );
   }
 
   function completeContactFlow(intentText) {
@@ -566,9 +560,10 @@
       return;
     }
 
-    if (intent.locked) {
+    if (intent.locked || (intent.chunkId && KNOWLEDGE.COMPANIES.indexOf(intent.chunkId) !== -1)) {
       var companyId = intent.chunkId;
-      if (!unlocked) {
+      var detailId = KNOWLEDGE.pickCompanyChunkId(companyId, query, unlocked);
+      if (KNOWLEDGE.isLockedProject(companyId) && !unlocked) {
         botSay(
           getPublicTeaser(companyId) +
             " The full case study is password-gated — enter the portfolio password to go deeper, or request access.",
@@ -577,7 +572,10 @@
         );
         return;
       }
-
+      if (detailId && KNOWLEDGE.CHUNKS[detailId]) {
+        botSay(KNOWLEDGE.CHUNKS[detailId], null, detailId);
+        return;
+      }
       botSay(KNOWLEDGE.CHUNKS[companyId], null, companyId);
       return;
     }
@@ -809,6 +807,17 @@
     }
 
     if (currentState === STATE.COLLECT_INTENT) {
+      if (KNOWLEDGE.looksLikeWorkQuestion(text)) {
+        var email = pendingEmail;
+        if (email) {
+          syncPatchSession({ email: email, intent: text });
+          setCapturedEmail(email);
+        }
+        pendingEmail = "";
+        currentState = isUnlocked() ? STATE.UNLOCKED : STATE.IDLE;
+        processQuery(text, false);
+        return;
+      }
       completeContactFlow(text);
       return;
     }

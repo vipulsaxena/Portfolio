@@ -27,7 +27,6 @@
   var DEPTH_PATTERNS = [
     /\b(case stud(y|ies)|deep dive|full story|more detail|go deeper|in depth|summary)\b/i,
     /\b(process|how did you|walk me through)\b/i,
-    /\b(password.?gated|locked|full portfolio)\b/i,
     /\bgo deeper on\b/i,
     /\b(user |customer )?problem\b/i,
     /\bproblem statement\b/i,
@@ -77,6 +76,8 @@
     /\bwrong project\b/i,
     /\b(answers|responses) (are )?(not|weird)\b/i,
     /\bi (am )?asking about\b/i,
+    /\blocked case stud/i,
+    /\bonly telling me about\b/i,
   ];
 
   var INTENTS = [
@@ -121,6 +122,8 @@
         /\bwork together\b/i,
         /\bavailable for hire\b/i,
         /\bare you available\b/i,
+        /\btalk to vipul\b/i,
+        /\btalk to you\b/i,
       ],
       action: "collect_contact",
     },
@@ -141,7 +144,13 @@
     },
     {
       id: "design_approach",
-      patterns: [/\bdesign approach\b/i, /\bhow do you design\b/i, /\bproduct design process\b/i],
+      patterns: [
+        /\bdesign approach\b/i,
+        /\bhow do you design\b/i,
+        /\bproduct design process\b/i,
+        /\bdesign philosophy\b/i,
+        /\btech debt\b/i,
+      ],
       chunkId: "design_approach",
     },
     {
@@ -208,8 +217,20 @@
         /\bhow many projects\b/i,
         /\bprojects (have you|you have) worked\b/i,
         /\bacross (your )?work\b/i,
+        /\bnot just\b/i,
+        /\bbut across\b/i,
       ],
       chunkId: "list_projects",
+    },
+    {
+      id: "using_ai",
+      patterns: [
+        /\bare you using ai\b/i,
+        /\bis this (an? )?ai\b/i,
+        /\busing ai\??$/i,
+        /\b(this|the) chatbot\b/i,
+      ],
+      chunkId: "using_ai",
     },
     {
       id: "fintech",
@@ -267,6 +288,8 @@
       "Outside work I love stories that are deeply earned — especially Dark Souls (17 PlayStation platinums). Same patience and curiosity I bring to products. Also playing Baldur's Gate 3 and watching Jujutsu Kaisen.",
     list_projects:
       "Recent locked case studies (password-gated for depth): Raisin, OLX, N26, and GoMart. Public work I can discuss fully here: GoPlay, InstaLively, Silent Ninja Redesign, and Hike's camera-first messaging case study. Earlier: GrownOut and mobile game UI at inoXapps.",
+    using_ai:
+      "This chat uses AI to help me answer from my portfolio knowledge — I still review leads myself. In my work I also use AI-native prototyping (Cursor and similar) alongside research and Figma. If you'd rather talk to me directly, leave your email here.",
     
     // PUBLIC CASE STUDIES (answer in chat — no links)
     goplay:
@@ -386,13 +409,27 @@
   function shouldResetTopic(query) {
     if (!query) return false;
     if (isFrustration(query)) return true;
-    return /\b(bye|goodbye|hobb(y|ies)|free time|gaming|reading|all projects|list (down )?(the |your )?projects|philosophy|tech debt|hire you|available for hire|get in touch|password|request access)\b/i.test(
+    return /\b(bye|goodbye|hobb(y|ies)|free time|gaming|reading|all projects|list (down )?(the |your )?projects|not just|philosophy|tech debt|hire you|available for hire|get in touch|password|request access)\b/i.test(
       query
     );
   }
 
   function wantsTopicFollowUp(query) {
+    if (/\blocked case stud/i.test(query) || /\bonly telling me about\b/i.test(query)) return false;
     return isFollowUp(query) || wantsImpactMetrics(query) || wantsCaseStudyDepth(query) || wantsProblemDetail(query);
+  }
+
+  function looksLikeWorkQuestion(text) {
+    if (!text) return false;
+    if (/\?/.test(text)) return true;
+    if (getCompanyFromQuery(text) && /\b(how many|what|why|currently|did you|are you|impact|problem|headcount|under you)\b/i.test(text)) {
+      return true;
+    }
+    if (/\b(how many people|headcount|team size|work under you|report(s|ing) to you)\b/i.test(text)) return true;
+    var intent = matchIntent(text);
+    if (!intent) return false;
+    if (intent.action === "collect_contact" || intent.action === "request_access") return false;
+    return true;
   }
 
   function pickCompanyChunkId(companyId, query, unlocked) {
@@ -487,6 +524,7 @@
     expandQueryWithTopic: expandQueryWithTopic,
     shouldResetTopic: shouldResetTopic,
     wantsTopicFollowUp: wantsTopicFollowUp,
+    looksLikeWorkQuestion: looksLikeWorkQuestion,
     wantsProblemDetail: wantsProblemDetail,
     pickCompanyChunkId: pickCompanyChunkId,
   };

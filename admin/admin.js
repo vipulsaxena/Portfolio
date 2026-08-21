@@ -266,6 +266,39 @@
       });
   }
 
+  function orderThreadMessages(messages) {
+    var chrono = (messages || []).slice().sort(function (a, b) {
+      return (a.id || 0) - (b.id || 0);
+    });
+    var turns = [];
+    var i = 0;
+    while (i < chrono.length) {
+      var turn = [];
+      if (chrono[i].role === "user") {
+        turn.push(chrono[i]);
+        i += 1;
+        while (i < chrono.length && chrono[i].role !== "user") {
+          turn.push(chrono[i]);
+          i += 1;
+        }
+      } else {
+        while (i < chrono.length && chrono[i].role !== "user") {
+          turn.push(chrono[i]);
+          i += 1;
+        }
+      }
+      if (turn.length) turns.push(turn);
+    }
+    turns.reverse();
+    var out = [];
+    turns.forEach(function (turn) {
+      turn.forEach(function (m) {
+        out.push(m);
+      });
+    });
+    return out;
+  }
+
   function formatThreadMessage(m) {
     if (m.role === "system") {
       if (m.content === "Portfolio unlocked") {
@@ -379,7 +412,7 @@
           "<dt>Highlights</dt><dd><div class=\"admin-badges\">" + renderBadges(s.highlights) + "</div></dd>" +
           "</dl>";
         threadMessages.innerHTML = "";
-        (data.messages || []).forEach(function (m) {
+        (orderThreadMessages(data.messages || [])).forEach(function (m) {
           var formatted = formatThreadMessage(m);
           if (!formatted) return;
           var div = document.createElement("div");
