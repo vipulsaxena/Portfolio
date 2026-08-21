@@ -375,6 +375,72 @@ body.summary-v2 .ops-card--spread {
 .rejected strong { color: var(--bad); font-weight: 600; }
 .dark-surface .rejected, .why-hero .rejected { color: var(--on-dark-muted); }
 
+/* ------------------------------ Trade-off box ----------------------------- */
+.trade-off {
+  margin: var(--sp-md) 0;
+  padding: var(--sp-md) var(--sp-lg);
+  background: var(--accent-soft);
+  border: 1px solid rgba(48, 150, 255, 0.28);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-sm);
+}
+.trade-off--compact {
+  margin-top: var(--sp-sm);
+  padding: var(--sp-sm) var(--sp-md);
+}
+.trade-off__label {
+  margin: 0 0 var(--sp-sm);
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent-ink);
+}
+.trade-off__options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--sp-sm);
+  margin-bottom: var(--sp-sm);
+}
+@media (max-width: 520px) {
+  .trade-off__options { grid-template-columns: 1fr; }
+}
+.trade-off__option {
+  padding: 0.65rem 0.75rem;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(48, 150, 255, 0.18);
+  border-radius: calc(var(--radius-sm) - 2px);
+}
+.trade-off__option--chosen {
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+.trade-off__option-label {
+  margin: 0;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  color: var(--accent-ink);
+}
+.trade-off__option-text {
+  margin: 0.2rem 0 0;
+  font-size: var(--fs-xs);
+  color: var(--ink-soft);
+}
+.trade-off__position,
+.trade-off__settled,
+.trade-off__outcome {
+  margin: 0.35rem 0 0;
+  font-size: var(--fs-xs);
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
+.trade-off__position strong,
+.trade-off__settled strong,
+.trade-off__outcome strong {
+  color: var(--accent-ink);
+  font-weight: 700;
+}
+
 /* ---------------------------- Brand proof strip ---------------------------- */
 .brand-proof {
   display: flex; align-items: center; gap: var(--sp-lg);
@@ -960,6 +1026,9 @@ html.journey-nav-scrolling {
   scroll-margin-top: var(--journey-scroll-offset, 7rem);
 }
 .period--alt { background: var(--paper-dim); }
+#period-2 {
+  padding-bottom: calc(var(--sp-2xl) * 1.05);
+}
 .period__head {
   max-width: 60rem;
   padding-bottom: var(--sp-lg);
@@ -3489,14 +3558,21 @@ html.journey-nav-scrolling {
   inset: 0;
   z-index: 2;
   pointer-events: none;
+  /* +15% transparency vs prior opacities (×0.85); local override — not shared token */
   background:
-    var(--overlay-scrim-bottom-extra),
     linear-gradient(
       180deg,
-      rgba(11, 14, 20, 0.55) 0%,
-      rgba(11, 14, 20, 0.4) 45%,
-      rgba(11, 14, 20, 0.78) 78%,
-      rgba(11, 14, 20, 0.92) 100%
+      rgba(11, 14, 20, 0) 0%,
+      rgba(11, 14, 20, 0) 48%,
+      rgba(11, 14, 20, 0.38) 72%,
+      rgba(11, 14, 20, 0.7) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(11, 14, 20, 0.47) 0%,
+      rgba(11, 14, 20, 0.34) 45%,
+      rgba(11, 14, 20, 0.66) 78%,
+      rgba(11, 14, 20, 0.78) 100%
     );
 }
 .cura-beat__stage {
@@ -3517,7 +3593,10 @@ html.journey-nav-scrolling {
   pointer-events: auto;
 }
 .cura-beat__inner {
-  position: relative;
+  position: absolute;
+  bottom: 3.92%;
+  left: 0;
+  right: 0;
   z-index: 1;
   flex: none;
   display: block;
@@ -3659,6 +3738,11 @@ html.journey-nav-scrolling {
     padding-bottom: clamp(0.75rem, 3vw, 1.25rem);
     gap: var(--sp-md);
     justify-content: flex-end;
+  }
+  .cura-beat__inner {
+    position: relative;
+    bottom: auto;
+    transform: translateY(clamp(0.3825rem, 1.53vw, 0.6375rem));
   }
   .cura-beat__copy {
     padding: var(--sp-md) var(--page-inset);
