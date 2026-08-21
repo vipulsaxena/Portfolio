@@ -602,9 +602,18 @@ async function handleChatComplete(
   }
 
   const history = (body.history || []).slice(-4);
+  const message = body.message.trim();
   const topicNote = body.topicCompany
-    ? `\nCurrent conversation topic company: ${body.topicCompany}.`
+    ? `\nCurrent conversation topic company: ${body.topicCompany}. If the latest user message is about a different company, hobbies, reading, listing projects, hiring, or password/access, ignore earlier case-study turns.`
     : "";
+
+  const dropHistory =
+    /\b(hobb(y|ies)|free time|reading|password|hire|get in touch|all projects|list (the |your )?projects|goplay|instalively|silent ninja|hike)\b/i.test(
+      message
+    ) ||
+    (body.topicCompany &&
+      /\b(goplay|instalively|ninja|hike|raisin|olx|n26|gomart)\b/i.test(message) &&
+      !new RegExp("\\b" + body.topicCompany + "\\b", "i").test(message));
 
   const systemContent =
     SYSTEM_PROMPT +
@@ -616,17 +625,19 @@ async function handleChatComplete(
   const messages: { role: "system" | "user" | "assistant"; content: string }[] =
     [{ role: "system", content: systemContent }];
 
-  history.forEach((m) => {
-    const role = m.role === "user" ? "user" : "assistant";
-    if (m.content && m.content.trim()) {
-      messages.push({
-        role,
-        content: m.content.trim(),
-      });
-    }
-  });
+  if (!dropHistory) {
+    history.forEach((m) => {
+      const role = m.role === "user" ? "user" : "assistant";
+      if (m.content && m.content.trim()) {
+        messages.push({
+          role,
+          content: m.content.trim(),
+        });
+      }
+    });
+  }
 
-  messages.push({ role: "user", content: body.message.trim() });
+  messages.push({ role: "user", content: message });
 
   try {
     const reply = await runCompletion(env, messages);

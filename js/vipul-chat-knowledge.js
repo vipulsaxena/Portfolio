@@ -25,10 +25,14 @@
   };
 
   var DEPTH_PATTERNS = [
-    /\b(case stud(y|ies)|deep dive|full story|more detail|go deeper|in depth)\b/i,
+    /\b(case stud(y|ies)|deep dive|full story|more detail|go deeper|in depth|summary)\b/i,
     /\b(process|how did you|walk me through)\b/i,
     /\b(password.?gated|locked|full portfolio)\b/i,
     /\bgo deeper on\b/i,
+    /\b(user |customer )?problem\b/i,
+    /\bproblem statement\b/i,
+    /\bresearch\b/i,
+    /\bshipped\b/i,
   ];
 
   var IMPACT_PATTERNS = [
@@ -54,8 +58,8 @@
   ];
 
   var FOLLOWUP_PATTERNS = [
-    /^(more|more\?|go on|continue|and\?|ok and\?)$/i,
-    /^(tell me more|say more|go deeper|elaborate)\.?$/i,
+    /^(more|more\?|go on|continue|and\?|ok and\?|sure|ok)$/i,
+    /^(tell me more|say more|go deeper|elaborate|lets go deeper|let's go deeper)\.?$/i,
     /^what else\??$/i,
   ];
 
@@ -68,18 +72,26 @@
     /\byou didn'?t answer\b/i,
     /\bthat doesn'?t help\b/i,
     /\bnot helpful\b/i,
+    /\bnot relevant\b/i,
+    /\blost it\b/i,
+    /\bwrong project\b/i,
+    /\b(answers|responses) (are )?(not|weird)\b/i,
+    /\bi (am )?asking about\b/i,
   ];
 
   var INTENTS = [
     {
       id: "greeting",
-      patterns: [/^(hi|hello|hey|yo|howdy)\b/i, /^good (morning|afternoon|evening)/i],
+      patterns: [
+        /^(hi|hello|hey|yo|howdy)[\s!.]*$/i,
+        /^good (morning|afternoon|evening)[\s!.]*$/i,
+      ],
       answer:
         "Hey — I'm Vipul. Ask me about my work, background, case studies, or how to get in touch.",
     },
     {
       id: "who",
-      patterns: [/\bwho are you\b/i, /\bwhat do you do\b/i, /\babout you\b/i],
+      patterns: [/\bwho are you\b/i, /\bwhat do you do\b/i, /\babout you\b/i, /\babout vipul\b/i],
       answer:
         "I'm Vipul Saxena — product designer and design enablement leader, Berlin-based, currently at Raisin. I make complex B2C products clearer for customers and easier for teams to build well. 12 years across fintech, marketplaces, streaming, and social.",
     },
@@ -87,8 +99,12 @@
       id: "password_how",
       patterns: [
         /\bhow (do|can) i get (the )?password\b/i,
+        /\bcan i get (the )?password\b/i,
         /\brequest (the )?password\b/i,
         /\bpassword please\b/i,
+        /\bpassword (to|for) (enter )?(the )?(case stud(y|ies)|portfolio)\b/i,
+        /\b(get|give me|want) (the )?password\b/i,
+        /\bgive me access\b/i,
         /\baccess (to )?(your )?recent\b/i,
         /\bhow (can|do) i (access|see|view).*(work|portfolio|case stud)/i,
         /\b(access|see|view) your (work|portfolio)\b/i,
@@ -118,6 +134,8 @@
         /\bwork authorization\b/i,
         /\bactively looking\b/i,
         /\bexpected (salary|rate|comp)\b/i,
+        /\brights? to work\b/i,
+        /\bwork(ing)? (in )?(the )?eu\b/i,
       ],
       action: "deflect_private",
     },
@@ -128,8 +146,19 @@
     },
     {
       id: "education",
-      patterns: [/\bwhere did you study\b/i, /\beducation\b/i, /\bdegree\b/i, /\buniversity\b/i],
+      patterns: [
+        /\bwhere did you study\b/i,
+        /\bwhat did you study\b/i,
+        /\beducation\b/i,
+        /\bdegree\b/i,
+        /\buniversity\b/i,
+      ],
       chunkId: "education",
+    },
+    {
+      id: "origin",
+      patterns: [/\bwhere are you from\b/i, /\bwhere (do|did) you (grow|come) from\b/i, /\bhome town\b/i],
+      chunkId: "origin",
     },
     {
       id: "engineering_background",
@@ -162,9 +191,25 @@
       chunkId: "personal_reading",
     },
     {
+      id: "hobbies",
+      patterns: [/\bhobb(y|ies)\b/i, /\bfree time\b/i, /\boutside (of )?work\b/i],
+      chunkId: "personal_hobbies",
+    },
+    {
       id: "gaming",
       patterns: [/\bgaming\b/i, /\bplay(ing)? games\b/i, /\bdark souls\b/i, /\bbaldur'?s gate\b/i],
       chunkId: "personal_gaming",
+    },
+    {
+      id: "list_projects",
+      patterns: [
+        /\blist (down )?(the |your )?projects\b/i,
+        /\ball (the )?projects\b/i,
+        /\bhow many projects\b/i,
+        /\bprojects (have you|you have) worked\b/i,
+        /\bacross (your )?work\b/i,
+      ],
+      chunkId: "list_projects",
     },
     {
       id: "fintech",
@@ -196,6 +241,8 @@
       "I start with the problem and the people affected — research, constraints, and what 'good' looks like for customers and the business. Then I shape flows and interfaces that reduce cognitive load, validate early with prototypes and tests, and ship in tight loops with engineering and product.",
     education:
       "I studied Computer Science Engineering in India — that technical foundation still shapes how I work with engineers, prototypes, and design systems. I moved into product design early in my career and have been designing B2C products for 12 years since.",
+    origin:
+      "I'm based in Berlin. I grew up and studied in India — Computer Science Engineering — then worked across Asia before moving to Europe for global-scale product work.",
     engineering_background:
       "Yes — I started as a CS Engineering graduate and did design engineering and mobile game UI early on (inoXapps). That background helps me prototype in code, speak fluently with engineers, and reason about feasibility.",
     years_experience:
@@ -214,8 +261,12 @@
       "Figma, Sketch, Cursor, Claude Code, Maze, Marvin, UserTesting, Hotjar, Mixpanel, Dovetail, Miro, FigJam, Framer, ProtoPie, Spline, Blender — plus HTML/CSS/JS/React/Node when I need to build.",
     personal_reading:
       "Right now I'm reading It Can't Happen Here — and I usually rotate between fiction, design, and history depending on what I'm curious about.",
+    personal_hobbies:
+      "Outside work I read (currently It Can't Happen Here), play games — especially Dark Souls (17 PlayStation platinums) and Baldur's Gate 3 — and watch Jujutsu Kaisen.",
     personal_gaming:
       "Outside work I love stories that are deeply earned — especially Dark Souls (17 PlayStation platinums). Same patience and curiosity I bring to products. Also playing Baldur's Gate 3 and watching Jujutsu Kaisen.",
+    list_projects:
+      "Recent locked case studies (password-gated for depth): Raisin, OLX, N26, and GoMart. Public work I can discuss fully here: GoPlay, InstaLively, Silent Ninja Redesign, and Hike's camera-first messaging case study. Earlier: GrownOut and mobile game UI at inoXapps.",
     
     // PUBLIC CASE STUDIES (answer in chat — no links)
     goplay:
@@ -234,6 +285,8 @@
       "I led Raisin's brand evolution across dashboard, mobile app, email, and marketing — translating a global brand refresh into cohesive experiences. I ran two parallel tracks: shipping the Wealth Hub MVP across 12 markets, and building design enablement — research practice, AI workflows, governed email system, mobile alignment, and team rituals. Customers had faced fragmented surfaces; we turned static Koto guidelines into a living product system.",
     raisin_impact:
       "At Raisin the measurable wins sit in two tracks: shipping the Wealth Hub MVP across 12 markets with a coherent dashboard, mobile, and email experience — and standing up design enablement so the team could ship the rebrand without one-off reskins. Research practice, a governed email system, and mobile alignment reduced fragmentation customers felt across touchpoints.",
+    raisin_problem:
+      "At Raisin the customer problem was fragmented surfaces — dashboard, mobile, email, and marketing didn't feel like one product after the brand refresh. Static Koto guidelines weren't enough; savers needed a coherent wealth experience, so we ran Wealth Hub MVP across 12 markets in parallel with design enablement so the team could ship without one-off reskins.",
     
     olx_public:
       "At OLX I led Engagement & Monetisation design in Pay & Ship — payments, seller monetisation, and checkout across 17 countries on a platform used by 317M+ people.",
@@ -248,6 +301,8 @@
       "At N26 I evolved the home feed into a multi-activity view across 25 European markets — surfacing activity across Spaces, IBANs, and cards. Research-led: customer interviews, cross-functional workshops, usability tests, launch-to-learn. Also shipped MoneyBeam reactions, feed↔crypto connections, and transaction search improvements.",
     n26_impact:
       "At N26 the home feed work made multi-activity banking legible across 25 markets — fewer dead ends between Spaces, IBANs, and cards. Research, workshops, and launch-to-learn cycles informed MoneyBeam reactions, feed↔crypto connections, and transaction search improvements.",
+    n26_problem:
+      "At N26 the user problem was a home feed that didn't make multi-account activity easy to scan or act on across Spaces, IBANs, and cards. We used customer interviews, cross-functional workshops, usability tests, and launch-to-learn — I don't list the 25 European market names here.",
 
     gomart_public:
       "On Gojek I led grocery design at Indonesia scale — GoMart, GoFresh, and the operational tools behind reliable nationwide fulfillment.",
@@ -255,6 +310,8 @@
       "On Gojek I led grocery design at Indonesia scale — GoMart (B2C), GoFresh (B2B), plus shopper and driver tools. Studio Accelerator design sprints for fast, reliable fulfillment nationwide. Part of a broader on-demand and entertainment portfolio where I led a team of six.",
     gomart_impact:
       "GoMart impact was about reliable fulfillment at Indonesia scale — Studio Accelerator sprints across GoMart, GoFresh, and shopper/driver tools so discovery, trust, and operations held up under real-world load.",
+    gomart_problem:
+      "On GoMart the problem was grocery fulfillment at Indonesia scale — discovery, trust, and operations for GoMart (B2C) and GoFresh (B2B), plus the shopper and driver tools behind nationwide delivery. Studio Accelerator sprints were how we moved fast without dropping reliability.",
   };
 
   function tokenizeQuery(query) {
@@ -299,13 +356,13 @@
 
   function isLockedProject(companyId) {
     if (!companyId) return false;
-    var base = companyId.replace(/_public$|_impact$/, "").toLowerCase();
+    var base = companyId.replace(/_public$|_impact$|_problem$/, "").toLowerCase();
     return LOCKED_PROJECTS.indexOf(base) !== -1;
   }
 
   function getCompanyFromChunkId(chunkId) {
     if (!chunkId) return null;
-    var base = chunkId.replace(/_public$|_impact$/, "");
+    var base = chunkId.replace(/_public$|_impact$|_problem$/, "");
     if (COMPANIES.indexOf(base) !== -1) return base;
     return null;
   }
@@ -318,18 +375,52 @@
     return companyId + "_impact";
   }
 
+  function getProblemChunkId(companyId) {
+    return companyId + "_problem";
+  }
+
+  function wantsProblemDetail(query) {
+    return /\b(user |customer )?problem\b/i.test(query) || /\bproblem statement\b/i.test(query);
+  }
+
+  function shouldResetTopic(query) {
+    if (!query) return false;
+    if (isFrustration(query)) return true;
+    return /\b(bye|goodbye|hobb(y|ies)|free time|gaming|reading|all projects|list (down )?(the |your )?projects|philosophy|tech debt|hire you|available for hire|get in touch|password|request access)\b/i.test(
+      query
+    );
+  }
+
+  function wantsTopicFollowUp(query) {
+    return isFollowUp(query) || wantsImpactMetrics(query) || wantsCaseStudyDepth(query) || wantsProblemDetail(query);
+  }
+
+  function pickCompanyChunkId(companyId, query, unlocked) {
+    if (!companyId) return null;
+    if (wantsImpactMetrics(query) && CHUNKS[companyId + "_impact"]) {
+      return unlocked || !isLockedProject(companyId) ? companyId + "_impact" : companyId + "_public";
+    }
+    if (wantsProblemDetail(query) && CHUNKS[companyId + "_problem"]) {
+      return unlocked || !isLockedProject(companyId) ? companyId + "_problem" : companyId + "_public";
+    }
+    if (isLockedProject(companyId) && !unlocked) return companyId + "_public";
+    if (CHUNKS[companyId]) return companyId;
+    return null;
+  }
+
   function searchChunks(query, unlocked, excludeId, topicCompany) {
     var tokens = tokenizeQuery(query);
     if (!tokens.length) return [];
 
     var queryCompany = getCompanyFromQuery(query);
     var activeCompany = queryCompany || topicCompany;
+    var topicFollow = wantsTopicFollowUp(query);
 
     var results = [];
     Object.keys(CHUNKS).forEach(function (id) {
       if (excludeId && id === excludeId) return;
-      if (/_impact$/.test(id) && !unlocked) return;
-      
+      if (/_impact$|_problem$/.test(id) && !unlocked) return;
+
       var isLocked = isLockedProject(id);
       if (isLocked && !unlocked && !/_public$/.test(id)) return;
 
@@ -341,8 +432,8 @@
       });
 
       if (activeCompany) {
-        var companyBase = id.replace(/_public$|_impact$/, "");
-        if (companyBase === activeCompany && (queryCompany || isFollowUp(query) || wantsImpactMetrics(query) || wantsCaseStudyDepth(query))) {
+        var companyBase = id.replace(/_public$|_impact$|_problem$/, "");
+        if (companyBase === activeCompany && (queryCompany || topicFollow)) {
           score += 2;
         }
       }
@@ -367,12 +458,7 @@
     return null;
   }
 
-  function expandQueryWithTopic(query, topicCompany) {
-    if (!topicCompany) return query;
-    if (getCompanyFromQuery(query)) return query;
-    if (isFollowUp(query) || wantsImpactMetrics(query) || wantsCaseStudyDepth(query)) {
-      return query + " " + topicCompany;
-    }
+  function expandQueryWithTopic(query) {
     return query;
   }
 
@@ -397,6 +483,11 @@
     getCompanyFromChunkId: getCompanyFromChunkId,
     getPublicChunkId: getPublicChunkId,
     getImpactChunkId: getImpactChunkId,
+    getProblemChunkId: getProblemChunkId,
     expandQueryWithTopic: expandQueryWithTopic,
+    shouldResetTopic: shouldResetTopic,
+    wantsTopicFollowUp: wantsTopicFollowUp,
+    wantsProblemDetail: wantsProblemDetail,
+    pickCompanyChunkId: pickCompanyChunkId,
   };
 })(window);

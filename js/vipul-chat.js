@@ -436,10 +436,12 @@
   }
 
   function startContactFlow(prefill) {
-    if (isUnlocked() && getCapturedEmail()) {
+    if (getCapturedEmail()) {
       botSay(
-        "I already have your email (" + getCapturedEmail() + "). Tell me what you'd like to discuss and I'll follow up.",
-        null
+        "I already have your email (" +
+          getCapturedEmail() +
+          "). Tell me what you'd like to discuss and I'll follow up. You can also enter the portfolio password anytime if you have it.",
+        isUnlocked() ? null : ["Enter password"]
       );
       currentState = STATE.COLLECT_INTENT;
       pendingEmail = getCapturedEmail();
@@ -449,10 +451,14 @@
     botSay(prefill || "Happy to connect — what's your email?", []);
   }
 
+  function isCollectEscape(text) {
+    return /^(cancel|never mind|nevermind|stop|enter password|i have the password)$/i.test(text.trim());
+  }
+
   function startPasswordFlow() {
     if (isUnlocked()) {
       botSay(
-        "You're already unlocked — ask me anything about Raisin, OLX, N26, or GoMart.",
+        "You're already unlocked in this browser session — ask me anything about Raisin, OLX, N26, or GoMart.",
         ["Tell me about Raisin", "OLX monetisation work"]
       );
       return;
@@ -469,7 +475,13 @@
     return KNOWLEDGE.CHUNKS[publicId] || KNOWLEDGE.CHUNKS.raisin_public;
   }
 
-  function handleFrustration() {
+  function handleFrustration(currentText) {
+    resetTopicState();
+    var named = currentText && KNOWLEDGE.getCompanyFromQuery(currentText);
+    if (named) {
+      processQuery(currentText, true);
+      return;
+    }
     var prior = getLastUserQuestion();
     if (!prior) {
       botSay(
@@ -513,7 +525,7 @@
     if (intent.action === "request_access") {
       if (unlocked) {
         botSay(
-          "You already have portfolio access in this session — ask me about Raisin, OLX, N26, or GoMart anytime.",
+          "You already have portfolio access in this browser session — ask me about Raisin, OLX, N26, or GoMart anytime.",
           ["Tell me about Raisin"]
         );
         return;
@@ -594,7 +606,17 @@
         // 2. Backup path: Search local static knowledge chunks if AI Endpoint fails or times out
         var results = KNOWLEDGE.searchChunks(query, unlocked, lastBotChunkId, topicCompany);
         if (results.length && results[0].score >= 1) {
-          return { text: results[0].text, chunkId: results[0].id };
+          var top = results[0];
+          var topCompany = KNOWLEDGE.getCompanyFromChunkId(top.id);
+          var named = KNOWLEDGE.getCompanyFromQuery(query);
+          var weakSticky =
+            topCompany &&
+            !named &&
+            !KNOWLEDGE.wantsTopicFollowUp(query) &&
+            top.score < 2;
+          if (!weakSticky) {
+            return { text: top.text, chunkId: top.id };
+          }
         }
 
         // 3. Absolute last resort fallback
@@ -606,32 +628,59 @@
     });
   }
 
+  function answerFromTopic(query) {
+    var unlocked = isUnlocked() || currentState === STATE.UNLOCKED;
+    if (!topicCompany || !KNOWLEDGE.wantsTopicFollowUp(query)) return false;
+    var chunkId = KNOWLEDGE.pickCompanyChunkId(topicCompany, query, unlocked);
+    if (!chunkId || !KNOWLEDGE.CHUNKS[chunkId]) return false;
+    if (KNOWLEDGE.isLockedProject(topicCompany) && !unlocked) {
+      botSay(
+        getPublicTeaser(topicCompany) +
+          " The full case study is password-gated — enter the portfolio password to go deeper, or request access.",
+        ["Enter password", "Request access"],
+        KNOWLEDGE.getPublicChunkId(topicCompany)
+      );
+      return true;
+    }
+    botSay(KNOWLEDGE.CHUNKS[chunkId], null, chunkId);
+    return true;
+  }
+
   function processQuery(rawText, isRetry) {
     var rawCompany = KNOWLEDGE.getCompanyFromQuery(rawText);
 
-    if (rawCompany) {
+    if (KNOWLEDGE.shouldResetTopic(rawText) && !rawCompany) {
+      resetTopicState();
+    } else if (KNOWLEDGE.shouldResetTopic(rawText) && rawCompany) {
+      if (
+        /\b(hobb(y|ies)|free time|reading|password|hire|get in touch|all projects|list (down )?(the |your )?projects)\b/i.test(
+          rawText
+        )
+      ) {
+        resetTopicState();
+      } else {
+        topicCompany = rawCompany;
+        storageSet(TOPIC_KEY, rawCompany, false);
+      }
+    } else if (rawCompany) {
       topicCompany = rawCompany;
       storageSet(TOPIC_KEY, rawCompany, false);
-    } else if (
-      /\b(bye|goodbye|hobb(y|ies)|gaming|reading|all projects|across|philosophy|tech debt)\b/i.test(rawText)
-    ) {
-      resetTopicState();
     }
-
-    var text = KNOWLEDGE.expandQueryWithTopic(rawText, topicCompany);
 
     if (!isRetry && KNOWLEDGE.isFrustration(rawText)) {
-      handleFrustration();
+      handleFrustration(rawText);
       return;
     }
 
-    var intent = KNOWLEDGE.matchIntent(text);
+    var intent = KNOWLEDGE.matchIntent(rawText);
     if (intent) {
-      answerFromIntent(intent, text);
+      answerFromIntent(intent, rawText);
       return;
     }
 
-    fallbackAnswer(text);
+    if (answerFromTopic(rawText)) return;
+
+    fallbackAnswer(rawText);
   }
 
   function looksLikePassword(text) {
@@ -706,7 +755,7 @@
     if (/^request access$/i.test(text)) {
       if (isUnlocked()) {
         botSay(
-          "You already have portfolio access — ask me about Raisin, OLX, N26, or GoMart.",
+          "You already have portfolio access in this browser session — ask me about Raisin, OLX, N26, or GoMart.",
           ["Tell me about Raisin"]
         );
         return;
@@ -715,7 +764,8 @@
       return;
     }
 
-    if (/^enter password$/i.test(text)) {
+    if (/^enter password$/i.test(text) || /^i have the password$/i.test(text)) {
+      pendingEmail = "";
       startPasswordFlow();
       return;
     }
@@ -725,9 +775,31 @@
       return;
     }
 
+    if (currentState === STATE.COLLECT_EMAIL || currentState === STATE.COLLECT_INTENT) {
+      if (/^(cancel|never mind|nevermind|stop)$/i.test(text.trim())) {
+        pendingEmail = "";
+        currentState = isUnlocked() ? STATE.UNLOCKED : STATE.IDLE;
+        botSay("No problem — ask me anything else, or enter the portfolio password if you have it.", [
+          "Enter password",
+        ]);
+        return;
+      }
+      if (isCollectEscape(text)) {
+        pendingEmail = "";
+        currentState = isUnlocked() ? STATE.UNLOCKED : STATE.IDLE;
+        startPasswordFlow();
+        return;
+      }
+      if (currentState === STATE.COLLECT_EMAIL && looksLikePassword(text)) {
+        currentState = STATE.IDLE;
+        tryPassword(text);
+        return;
+      }
+    }
+
     if (currentState === STATE.COLLECT_EMAIL) {
       if (!isEmail(text)) {
-        botSay("That doesn't look like an email — mind trying again?");
+        botSay("That doesn't look like an email — mind trying again? Or say cancel, or enter the portfolio password.");
         return;
       }
       pendingEmail = text;
