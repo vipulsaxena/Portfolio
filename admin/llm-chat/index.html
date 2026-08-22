@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>LLM Chat — Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap">
+  <link rel="stylesheet" href="../admin.css">
+  <script src="../../js/follow-me-bootstrap.js"></script>
+  <link rel="icon" href="../../fav.png" type="image/png">
+</head>
+<body>
+  <header class="admin-header">
+    <div class="admin-header__inner">
+      <p class="admin-logo"><span></span>LLM Chat</p>
+      <button type="button" class="admin-btn admin-btn--ghost hidden" id="logout-btn">Log out</button>
+    </div>
+  </header>
+
+  <main class="admin-main" id="app">
+    <a class="admin-back" href="../">&larr; Admin</a>
+    <section class="admin-card admin-card--login" id="login-view">
+      <h1 class="admin-title">LLM Chat</h1>
+      <p class="admin-sub">Sign in to view portfolio chat conversations.</p>
+      <p class="admin-error hidden" id="login-error"></p>
+      <form id="login-form">
+        <label class="admin-label" for="password">Password</label>
+        <input class="admin-input" type="password" id="password" name="password" autocomplete="current-password" required>
+        <button type="submit" class="admin-btn">Sign in</button>
+      </form>
+    </section>
+
+    <section class="hidden" id="inbox-view">
+      <h1 class="admin-title">Conversations</h1>
+      <p class="admin-sub">Sorted by most recent activity.</p>
+      <div class="admin-filters" id="filters">
+        <button type="button" class="admin-filter is-active" data-filter="">All</button>
+        <button type="button" class="admin-filter" data-filter="unread">Unread</button>
+        <button type="button" class="admin-filter" data-filter="read">Read</button>
+        <button type="button" class="admin-filter" data-filter="two_way">Two-way</button>
+        <button type="button" class="admin-filter" data-filter="bot_only">Bot only / empty</button>
+        <button type="button" class="admin-filter" data-filter="wants_access">Wants access</button>
+        <button type="button" class="admin-filter" data-filter="recruiting">Recruiting</button>
+        <button type="button" class="admin-filter" data-filter="mentoring">Mentoring</button>
+        <button type="button" class="admin-filter" data-filter="unlocked">Unlocked</button>
+      </div>
+      <div class="admin-session-list" id="session-list"></div>
+      <p class="admin-empty hidden" id="inbox-empty">No conversations yet.</p>
+    </section>
+
+    <section class="hidden" id="thread-view">
+      <div class="admin-thread-bar">
+        <a href="#" class="admin-back" id="back-link">&larr; Back to inbox</a>
+        <div class="admin-thread-actions">
+          <button type="button" class="admin-btn admin-btn--ghost" id="toggle-read-btn">Mark as read</button>
+          <button type="button" class="admin-btn admin-btn--danger" id="delete-thread-btn">Delete conversation</button>
+        </div>
+      </div>
+      <div class="admin-summary" id="thread-summary"></div>
+      <div class="admin-transcript" id="thread-messages"></div>
+    </section>
+  </main>
+
+  <script src="../admin-config.js"></script>
+  <script src="../admin.js?v=11"></script>
+</body>
+</html>

@@ -14,8 +14,8 @@
     "test:complete": "node scripts/test-chat-complete.mjs"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20250204.0",
+    "@cloudflare/workers-types": "^5.20260820.1",
     "typescript": "^5.7.3",
-    "wrangler": "^3.109.1"
+    "wrangler": "^4.125.0"
   }
 }

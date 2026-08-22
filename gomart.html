@@ -433,6 +433,7 @@
       }
     </style>
 
+    <script src="js/follow-me-bootstrap.js"></script>
     <!-- Runs before render: hide the page until unlocked (no content flash).
          Always re-prompts on EXTERNAL entry (typed URL, bookmark, link from another
          site). Only skips the prompt for in-site navigation, reloads, and back/forward. -->
@@ -453,8 +454,11 @@
         var external = (t !== "reload" && t !== "back_forward") && !internal;
         var allow = false;
         try {
-          if (external) sessionStorage.removeItem(KEY);      // external entry -> force a fresh prompt
-          else allow = sessionStorage.getItem(KEY) === "1";  // in-site / reload / back -> honour session
+          if (sessionStorage.getItem("vipulFollow") || sessionStorage.getItem("vipulPresent")) {
+            sessionStorage.setItem(KEY, "1");
+            allow = true;
+          } else if (external) sessionStorage.removeItem(KEY);
+          else allow = sessionStorage.getItem(KEY) === "1";
         } catch(_){}
         window.__gateAllow = allow;
         if (!allow) document.documentElement.classList.add("gomart-locked");
@@ -1274,6 +1278,8 @@
       if (badge) badge.textContent = onHome ? (homePos + 1) + "/" + homeIndices.length : "";
     });
     if (history.replaceState) history.replaceState(null, "", "#" + (i + 1));
+    window.PortfolioDeck = { pageId: "gomart", getIndex: function () { return i; }, go: go };
+    window.dispatchEvent(new CustomEvent("portfolio:deck-change", { detail: { slide: i + 1 } }));
   }
 
   function go(n) {

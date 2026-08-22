@@ -65,6 +65,7 @@
       .pw-btn{ border:0; border-radius:999px; padding:14px 28px; font-size:1.02rem; font-weight:700; cursor:pointer; background:#ffda08; color:#262626; transition:filter .15s, transform .15s; }
       .pw-btn:hover{ filter:brightness(1.05); transform:translateY(-1px); }
     </style>
+    <script src="js/follow-me-bootstrap.js"></script>
     <script>
       (function(){
         var KEY = "raisinAccessGranted";
@@ -82,7 +83,10 @@
         var external = (t !== "reload" && t !== "back_forward") && !internal;
         var allow = false;
         try {
-          if (external) sessionStorage.removeItem(KEY);
+          if (sessionStorage.getItem("vipulFollow") || sessionStorage.getItem("vipulPresent")) {
+            sessionStorage.setItem(KEY, "1");
+            allow = true;
+          } else if (external) sessionStorage.removeItem(KEY);
           else allow = sessionStorage.getItem(KEY) === "1";
         } catch(_){}
         window.__gateAllow = allow;

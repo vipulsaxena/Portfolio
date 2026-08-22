@@ -16,12 +16,16 @@ import {
 } from "./auth";
 
 import { SYSTEM_PROMPT } from "./knowledge";
+import { handlePresentStart, handlePresentWs } from "./presentation";
+
+export { PresentationRoom } from "./presentation";
 
 export interface Env {
   DB: D1Database;
   AI: Ai;
   ADMIN_PASSWORD: string;
   ALLOWED_ORIGINS: string;
+  PRESENTATION: DurableObjectNamespace;
 }
 
 // IP-based abuse guard only — do not cap per-session message count (long chats must persist).
@@ -676,6 +680,22 @@ export default {
     }
 
     try {
+      if (url.pathname === "/api/present/start" && request.method === "POST") {
+        return handlePresentStart(request, env, (data, status) =>
+          json(data, status, request, env)
+        );
+      }
+      if (url.pathname === "/api/present/ws") {
+        const origin = request.headers.get("Origin") || "";
+        const allowed = getAllowedOrigins(env);
+        if (origin && !allowed.includes(origin) && !allowed.includes("*")) {
+          return json({ error: "forbidden" }, 403, request, env);
+        }
+        return handlePresentWs(request, env, (data, status) =>
+          json(data, status, request, env)
+        );
+      }
+
       await ensureSchema(env);
 
       if (url.pathname === "/api/chat/session" && request.method === "POST") {

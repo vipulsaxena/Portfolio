@@ -13,3 +13,10 @@ ALLOWED_ORIGINS = "https://vipulsaxena.com,https://www.vipulsaxena.com,http://lo
 
 [ai]
 binding = "AI"
+
+[durable_objects]
+bindings = [{ name = "PRESENTATION", class_name = "PresentationRoom" }]
+
+[[migrations]]
+tag = "v1-presentation"
+new_sqlite_classes = ["PresentationRoom"]

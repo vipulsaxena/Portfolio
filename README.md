@@ -17,7 +17,7 @@ Personal portfolio website for showcasing product design work, case studies, and
 
 ## Portfolio chat
 
-Visitors chat via the floating widget (replaces the Google Form). Conversations are stored in Cloudflare D1. Admin inbox: `/admin/` (password via `ADMIN_PASSWORD` secret).
+Visitors chat via the floating widget (replaces the Google Form). Conversations are stored in Cloudflare D1. Admin home: `/admin/` — LLM Chat at `/admin/llm-chat/` (password via `ADMIN_PASSWORD` secret), Presentation mode at `/admin/presentation/`.
 
 ### Setup
 

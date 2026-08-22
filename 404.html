@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Follow Vipul · Vipul Saxena</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <script>
+    (function () {
+      var m = location.pathname.match(/\/f\/([23456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz]{6,16})/i);
+      var id = m && m[1];
+      if (id) {
+        try {
+          sessionStorage.setItem("vipulFollow", JSON.stringify({
+            sessionId: id.toUpperCase(),
+            participantId: null,
+            following: false,
+            paused: false
+          }));
+          ["raisinAccessGranted","olxAccessGranted","n26AccessGranted","gomartAccessGranted"].forEach(function (k) {
+            sessionStorage.setItem(k, "1");
+          });
+        } catch (e) {}
+        location.replace("/?f=" + encodeURIComponent(id.toUpperCase()));
+      } else {
+        location.replace("/");
+      }
+    })();
+  </script>
+</head>
+<body>
+  <p>Opening presentation…</p>
+</body>
+</html>

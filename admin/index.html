@@ -4,65 +4,34 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <title>Chat Admin — Vipul Saxena</title>
+  <title>Admin — Vipul Saxena</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap">
   <link rel="stylesheet" href="admin.css">
+  <script src="../js/follow-me-bootstrap.js"></script>
   <link rel="icon" href="../fav.png" type="image/png">
 </head>
 <body>
   <header class="admin-header">
     <div class="admin-header__inner">
-      <p class="admin-logo"><span></span>Portfolio Chat</p>
-      <button type="button" class="admin-btn admin-btn--ghost hidden" id="logout-btn">Log out</button>
+      <p class="admin-logo"><span></span>Admin</p>
     </div>
   </header>
 
-  <main class="admin-main" id="app">
-    <section class="admin-card admin-card--login" id="login-view">
-      <h1 class="admin-title">Admin</h1>
-      <p class="admin-sub">Sign in to view portfolio chat conversations.</p>
-      <p class="admin-error hidden" id="login-error"></p>
-      <form id="login-form">
-        <label class="admin-label" for="password">Password</label>
-        <input class="admin-input" type="password" id="password" name="password" autocomplete="current-password" required>
-        <button type="submit" class="admin-btn">Sign in</button>
-      </form>
-    </section>
-
-    <section class="hidden" id="inbox-view">
-      <h1 class="admin-title">Conversations</h1>
-      <p class="admin-sub">Sorted by most recent activity.</p>
-      <div class="admin-filters" id="filters">
-        <button type="button" class="admin-filter is-active" data-filter="">All</button>
-        <button type="button" class="admin-filter" data-filter="unread">Unread</button>
-        <button type="button" class="admin-filter" data-filter="read">Read</button>
-        <button type="button" class="admin-filter" data-filter="two_way">Two-way</button>
-        <button type="button" class="admin-filter" data-filter="bot_only">Bot only / empty</button>
-        <button type="button" class="admin-filter" data-filter="wants_access">Wants access</button>
-        <button type="button" class="admin-filter" data-filter="recruiting">Recruiting</button>
-        <button type="button" class="admin-filter" data-filter="mentoring">Mentoring</button>
-        <button type="button" class="admin-filter" data-filter="unlocked">Unlocked</button>
-      </div>
-      <div class="admin-session-list" id="session-list"></div>
-      <p class="admin-empty hidden" id="inbox-empty">No conversations yet.</p>
-    </section>
-
-    <section class="hidden" id="thread-view">
-      <div class="admin-thread-bar">
-        <a href="#" class="admin-back" id="back-link">&larr; Back to inbox</a>
-        <div class="admin-thread-actions">
-          <button type="button" class="admin-btn admin-btn--ghost" id="toggle-read-btn">Mark as read</button>
-          <button type="button" class="admin-btn admin-btn--danger" id="delete-thread-btn">Delete conversation</button>
-        </div>
-      </div>
-      <div class="admin-summary" id="thread-summary"></div>
-      <div class="admin-transcript" id="thread-messages"></div>
-    </section>
+  <main class="admin-main">
+    <h1 class="admin-title">Admin</h1>
+    <p class="admin-sub">Choose a tool.</p>
+    <div class="admin-home-grid">
+      <a class="admin-home-card" href="llm-chat/">
+        <h2>LLM Chat</h2>
+        <p>Sign in to view portfolio chat conversations.</p>
+      </a>
+      <a class="admin-home-card" href="presentation/">
+        <h2>Presentation mode</h2>
+        <p>Start a Follow Me session and share a link. The audience never sees this page.</p>
+      </a>
+    </div>
   </main>
-
-  <script src="admin-config.js"></script>
-  <script src="admin.js?v=11"></script>
 </body>
 </html>

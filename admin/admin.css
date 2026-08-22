@@ -35,6 +35,7 @@ a {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
+  flex-wrap: wrap;
 }
 
 .admin-logo {
@@ -42,6 +43,7 @@ a {
   letter-spacing: -0.02em;
   margin: 0;
   font-size: 18px;
+  flex: 1;
 }
 
 .admin-logo span {
@@ -58,6 +60,54 @@ a {
   max-width: 960px;
   margin: 0 auto;
   padding: 32px 24px 64px;
+}
+
+.admin-home-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+@media (max-width: 640px) {
+  .admin-home-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.admin-home-card {
+  display: block;
+  background: #fff;
+  border: 1px solid #e7e7e7;
+  border-radius: 16px;
+  padding: 28px 24px;
+  text-decoration: none;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.admin-home-card:hover {
+  border-color: #d0d0d0;
+  box-shadow: 0 8px 24px -16px rgba(0, 0, 0, 0.28);
+}
+
+.admin-home-card h2 {
+  margin: 0 0 8px;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #262626;
+}
+
+.admin-home-card p {
+  margin: 0;
+  font-size: 14px;
+  color: #6e6e6e;
+}
+
+.admin-present .present-app {
+  max-width: 28rem;
+  margin: 0;
+  padding: 0;
 }
 
 .admin-card {
@@ -436,6 +486,10 @@ a {
   flex-wrap: wrap;
   align-items: center;
   gap: 8px;
+}
+
+.admin-main > .admin-back {
+  margin-bottom: 20px;
 }
 
 .admin-back {
