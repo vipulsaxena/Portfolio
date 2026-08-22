@@ -4155,7 +4155,7 @@ html.journey-nav-scrolling {
   height: auto !important;
   min-height: 0 !important;
   max-height: none;
-  aspect-ratio: 415 / calc(936 * 0.9);
+  aspect-ratio: 415 / 936;
   padding: 0;
   overflow: hidden;
   background: transparent;
@@ -4170,9 +4170,7 @@ html.journey-nav-scrolling {
   top: 0;
   left: 0;
   width: 100%;
-  height: calc(100% / 0.9);
-  transform: scaleY(0.9);
-  transform-origin: top center;
+  height: 100%;
   display: block;
   border: 0;
   background: transparent;
