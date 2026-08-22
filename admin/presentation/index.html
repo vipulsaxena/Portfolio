@@ -16,14 +16,24 @@
   <header class="admin-header">
     <div class="admin-header__inner">
       <p class="admin-logo"><span></span>Presentation mode</p>
+      <button type="button" class="admin-btn admin-btn--ghost hidden" id="logout-btn">Log out</button>
     </div>
   </header>
 
-  <main class="admin-main">
+  <main class="admin-main hidden" id="admin-home">
     <a class="admin-back" href="../">&larr; Admin</a>
     <div class="present-app" id="present-app"></div>
   </main>
   <script src="../../js/vipul-chat-config.js?v=11"></script>
-  <script src="../../js/follow-me.js?v=12"></script>
+  <script src="../admin-config.js"></script>
+  <script src="../admin-gate.js"></script>
+  <script>
+    document.addEventListener("admin:ready", function () {
+      if (window.__vipulFollowMeStarted) return;
+      var s = document.createElement("script");
+      s.src = "../../js/follow-me.js?v=13";
+      document.body.appendChild(s);
+    });
+  </script>
 </body>
 </html>

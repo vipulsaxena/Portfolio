@@ -20,20 +20,9 @@
     </div>
   </header>
 
-  <main class="admin-main" id="app">
+  <main class="admin-main hidden" id="admin-home">
     <a class="admin-back" href="../">&larr; Admin</a>
-    <section class="admin-card admin-card--login" id="login-view">
-      <h1 class="admin-title">LLM Chat</h1>
-      <p class="admin-sub">Sign in to view portfolio chat conversations.</p>
-      <p class="admin-error hidden" id="login-error"></p>
-      <form id="login-form">
-        <label class="admin-label" for="password">Password</label>
-        <input class="admin-input" type="password" id="password" name="password" autocomplete="current-password" required>
-        <button type="submit" class="admin-btn">Sign in</button>
-      </form>
-    </section>
-
-    <section class="hidden" id="inbox-view">
+    <section id="inbox-view">
       <h1 class="admin-title">Conversations</h1>
       <p class="admin-sub">Sorted by most recent activity.</p>
       <div class="admin-filters" id="filters">
@@ -65,6 +54,7 @@
   </main>
 
   <script src="../admin-config.js"></script>
-  <script src="../admin.js?v=11"></script>
+  <script src="../admin-gate.js"></script>
+  <script src="../admin.js?v=12"></script>
 </body>
 </html>

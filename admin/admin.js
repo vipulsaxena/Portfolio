@@ -17,8 +17,6 @@
   var inboxView = document.getElementById("inbox-view");
   var threadView = document.getElementById("thread-view");
   var logoutBtn = document.getElementById("logout-btn");
-  var loginForm = document.getElementById("login-form");
-  var loginError = document.getElementById("login-error");
   var sessionList = document.getElementById("session-list");
   var inboxEmpty = document.getElementById("inbox-empty");
   var threadSummary = document.getElementById("thread-summary");
@@ -58,8 +56,8 @@
     return fetch(apiUrl(path), Object.assign({ credentials: "include" }, options || {}, { headers: headers }));
   }
 
-  function show(el) { el.classList.remove("hidden"); }
-  function hide(el) { el.classList.add("hidden"); }
+  function show(el) { if (el) el.classList.remove("hidden"); }
+  function hide(el) { if (el) el.classList.add("hidden"); }
 
   function timeAgo(iso) {
     if (!iso) return "";
@@ -81,13 +79,6 @@
       .join("");
   }
 
-  function showLogin() {
-    show(loginView);
-    hide(inboxView);
-    hide(threadView);
-    hide(logoutBtn);
-  }
-
   function showInbox() {
     hide(loginView);
     show(inboxView);
@@ -103,45 +94,13 @@
     show(logoutBtn);
   }
 
-  function checkAuth() {
-    return api("/api/admin/me").then(function (res) {
-      return res.json().then(function (data) {
-        return data.authenticated;
-      });
-    });
+  function lock() {
+    if (window.AdminGate && typeof window.AdminGate.lock === "function") {
+      window.AdminGate.lock();
+      return;
+    }
+    location.replace("../");
   }
-
-  loginForm.addEventListener("submit", function (e) {
-    e.preventDefault();
-    hide(loginError);
-    var password = document.getElementById("password").value;
-    api("/api/admin/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ password: password }),
-    })
-      .then(function (res) {
-        if (!res.ok) throw new Error("Invalid password");
-        return res.json();
-      })
-      .then(function (data) {
-        if (data.token) {
-          try { sessionStorage.setItem("portfolioAdminToken", data.token); } catch (e) {}
-        }
-        showInbox();
-      })
-      .catch(function () {
-        show(loginError);
-        loginError.textContent = "Invalid password. Try again.";
-      });
-  });
-
-  logoutBtn.addEventListener("click", function () {
-    api("/api/admin/logout", { method: "POST" }).finally(function () {
-      try { sessionStorage.removeItem("portfolioAdminToken"); } catch (e) {}
-      showLogin();
-    });
-  });
 
   backLink.addEventListener("click", function (e) {
     e.preventDefault();
@@ -184,7 +143,7 @@
     api("/api/admin/sessions" + q)
       .then(function (res) {
         if (res.status === 401) {
-          showLogin();
+          lock();
           return null;
         }
         return res.json();
@@ -340,7 +299,7 @@
     return api("/api/admin/sessions/" + encodeURIComponent(id), { method: "DELETE" })
       .then(function (res) {
         if (res.status === 401) {
-          showLogin();
+          lock();
           return false;
         }
         if (!res.ok) throw new Error("Delete failed");
@@ -364,7 +323,7 @@
     })
       .then(function (res) {
         if (res.status === 401) {
-          showLogin();
+          lock();
           return false;
         }
         if (!res.ok) throw new Error("Update failed");
@@ -391,7 +350,7 @@
     api("/api/admin/sessions/" + encodeURIComponent(id))
       .then(function (res) {
         if (res.status === 401) {
-          showLogin();
+          lock();
           return null;
         }
         return res.json();
@@ -436,15 +395,15 @@
   function init() {
     var params = new URLSearchParams(location.search);
     var sessionId = params.get("session");
-
-    checkAuth().then(function (ok) {
-      if (!ok) {
-        showLogin();
-        return;
-      }
+    var start = function () {
       if (sessionId) openThread(sessionId);
       else showInbox();
-    });
+    };
+    if (window.AdminGate && typeof window.AdminGate.whenReady === "function") {
+      window.AdminGate.whenReady(start);
+    } else {
+      start();
+    }
   }
 
   init();

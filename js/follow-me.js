@@ -75,6 +75,19 @@
   var chip = null;
   var endedEl = null;
   var lastSection = null;
+  var lastHighlight = null;
+  var highlightTimer = null;
+  var highlightClearTimer = null;
+
+  var CASE_STUDY_PAGES = {
+    olx: 1,
+    n26: 1,
+    gomart: 1,
+    raisin: 1,
+    goplay: 1,
+    instalively: 1,
+    "silent-ninja": 1,
+  };
 
   function storageGet(key) {
     try {
@@ -128,6 +141,113 @@
 
   function isPrivatePage() {
     return isPresentPage() || isAdminPage();
+  }
+
+  function isCaseStudyPage() {
+    return !!CASE_STUDY_PAGES[currentPageId()];
+  }
+
+  function tabValue(el) {
+    return (
+      el.getAttribute("data-fm-value") ||
+      el.getAttribute("data-tab") ||
+      el.getAttribute("data-bg") ||
+      el.getAttribute("data-persona-id") ||
+      el.getAttribute("data-persona") ||
+      el.getAttribute("data-research-view") ||
+      ""
+    );
+  }
+
+  function widgetTabs(root) {
+    return root.querySelectorAll(
+      '[role="tab"], [data-tab], [data-bg], [data-persona-id], [data-persona], [data-research-view]'
+    );
+  }
+
+  function readWidgets() {
+    var out = {};
+    document.querySelectorAll("[data-fm-widget]").forEach(function (root) {
+      var id = root.getAttribute("data-fm-widget");
+      if (!id) return;
+      var active =
+        root.querySelector('[aria-selected="true"]') ||
+        root.querySelector(".is-active") ||
+        root.querySelector(".prototype-persona-tab--active");
+      var val = active ? tabValue(active) : "";
+      if (val) out[id] = val;
+    });
+    return Object.keys(out).length ? out : null;
+  }
+
+  function widgetsKey(w) {
+    if (!w) return "";
+    return Object.keys(w)
+      .sort()
+      .map(function (k) {
+        return k + "=" + w[k];
+      })
+      .join("&");
+  }
+
+  function applyWidgets(widgets) {
+    if (!widgets) return;
+    holdRemote(400);
+    Object.keys(widgets).forEach(function (id) {
+      var root = document.querySelector('[data-fm-widget="' + id + '"]');
+      if (!root) return;
+      var want = widgets[id];
+      var tabs = widgetTabs(root);
+      for (var i = 0; i < tabs.length; i++) {
+        if (tabValue(tabs[i]) !== want) continue;
+        if (tabs[i].getAttribute("aria-selected") === "true" || tabs[i].classList.contains("is-active")) {
+          return;
+        }
+        tabs[i].click();
+        return;
+      }
+    });
+  }
+
+  function stampHighlightIds() {
+    if (!isCaseStudyPage()) return;
+    var n = 0;
+    var nodes = document.querySelectorAll(
+      "a, button, [data-lightbox], [data-audit], .why-proof__frame, [role='tab'], .audit-item"
+    );
+    for (var i = 0; i < nodes.length; i++) {
+      var el = nodes[i];
+      if (el.closest(".follow-chip, .follow-ended, .shell-header, .vipul-chat, .gfq-root, [data-fm-skip]")) {
+        continue;
+      }
+      if (!el.getAttribute("data-fm-id")) {
+        el.setAttribute("data-fm-id", "e" + n);
+      }
+      n++;
+    }
+  }
+
+  function applyHighlight(id) {
+    document.querySelectorAll(".fm-hit").forEach(function (el) {
+      el.classList.remove("fm-hit");
+    });
+    clearTimeout(highlightClearTimer);
+    if (!id || !isCaseStudyPage()) return;
+    var el = document.querySelector('[data-fm-id="' + id + '"]');
+    if (!el) return;
+    el.classList.add("fm-hit");
+    highlightClearTimer = setTimeout(function () {
+      el.classList.remove("fm-hit");
+    }, 1400);
+  }
+
+  function setPresenterHighlight(id) {
+    lastHighlight = id;
+    clearTimeout(highlightTimer);
+    highlightTimer = setTimeout(function () {
+      lastHighlight = null;
+      broadcastLocal(true);
+    }, 1400);
   }
 
   function hrefFor(page, slide) {
@@ -213,13 +333,21 @@
       slide: slide,
       section: raisinSection(),
       scroll: readScrollRatio(),
+      widgets: readWidgets(),
+      highlight: isCaseStudyPage() ? lastHighlight : null,
       ts: Date.now(),
     };
   }
 
   function sameView(a, b) {
     if (!a || !b) return false;
-    return a.page === b.page && a.slide === b.slide && a.section === b.section;
+    return (
+      a.page === b.page &&
+      a.slide === b.slide &&
+      a.section === b.section &&
+      widgetsKey(a.widgets) === widgetsKey(b.widgets) &&
+      (a.highlight || "") === (b.highlight || "")
+    );
   }
 
   function applyState(state) {
@@ -260,6 +388,8 @@
         writeScrollRatio(state.scroll);
       }, slideChanged ? 80 : 0);
     }
+    applyWidgets(state.widgets);
+    applyHighlight(state.highlight);
   }
 
   function wsUrl() {
@@ -775,10 +905,39 @@
     if (e.target && e.target.closest && e.target.closest(".follow-chip, .follow-ended, #present-app, .follow-nav-cta, .follow-nav-badge")) {
       return;
     }
-    var t = e.target && e.target.closest
-      ? e.target.closest("a, button, .dot, .chapter-tab, [data-goto], [data-home], [data-tab], iframe, .proto-stage")
-      : null;
-    if (t) pauseFollowing();
+    var a = e.target && e.target.closest ? e.target.closest("a[href]") : null;
+    if (!a) return;
+    var href = a.getAttribute("href");
+    if (!href || href.charAt(0) === "#" || href.indexOf("javascript:") === 0) return;
+    try {
+      var next = new URL(a.href, location.href);
+      var herePath = location.pathname.replace(/\/+$/, "") || "/";
+      var nextPath = next.pathname.replace(/\/+$/, "") || "/";
+      if (next.origin !== location.origin || nextPath !== herePath) {
+        pauseFollowing();
+      }
+    } catch (err) {}
+  }
+
+  function onPresenterPointer(e) {
+    if (role !== "presenter" || ended || applyingRemote) return;
+    if (!isCaseStudyPage()) return;
+    if (e.target && e.target.closest && e.target.closest(".follow-chip, .follow-ended, .shell-header, .vipul-chat")) {
+      return;
+    }
+    var el = e.target && e.target.closest ? e.target.closest("[data-fm-id]") : null;
+    if (!el) return;
+    setPresenterHighlight(el.getAttribute("data-fm-id"));
+    broadcastLocal(true);
+  }
+
+  function onPresenterUi(e) {
+    if (role !== "presenter" || ended || applyingRemote) return;
+    if (!e.target || !e.target.closest) return;
+    if (!e.target.closest("[data-fm-widget]")) return;
+    setTimeout(function () {
+      broadcastLocal(true);
+    }, 0);
   }
 
   function wirePage() {
@@ -796,6 +955,8 @@
       true
     );
     document.addEventListener("click", onUserNavigate, true);
+    document.addEventListener("pointerdown", onPresenterPointer, true);
+    document.addEventListener("click", onPresenterUi, false);
     document.addEventListener("wheel", function (e) {
       noteUserGesture((e.deltaY || 0) + (e.deltaX || 0));
     }, { passive: true });
@@ -963,6 +1124,7 @@
 
   /* boot */
   function boot() {
+    stampHighlightIds();
     wirePage();
 
     if (isPresentPage()) {

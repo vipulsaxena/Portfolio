@@ -16,22 +16,39 @@
   <header class="admin-header">
     <div class="admin-header__inner">
       <p class="admin-logo"><span></span>Admin</p>
+      <button type="button" class="admin-btn admin-btn--ghost hidden" id="logout-btn">Log out</button>
     </div>
   </header>
 
   <main class="admin-main">
-    <h1 class="admin-title">Admin</h1>
-    <p class="admin-sub">Choose a tool.</p>
-    <div class="admin-home-grid">
-      <a class="admin-home-card" href="llm-chat/">
-        <h2>LLM Chat</h2>
-        <p>Sign in to view portfolio chat conversations.</p>
-      </a>
-      <a class="admin-home-card" href="presentation/">
-        <h2>Presentation mode</h2>
-        <p>Start a Follow Me session and share a link. The audience never sees this page.</p>
-      </a>
-    </div>
+    <section class="admin-card admin-card--login" id="login-view">
+      <h1 class="admin-title">Admin</h1>
+      <p class="admin-sub">Sign in to use LLM Chat and Presentation mode.</p>
+      <p class="admin-error hidden" id="login-error"></p>
+      <form id="login-form">
+        <label class="admin-label" for="password">Password</label>
+        <input class="admin-input" type="password" id="password" name="password" autocomplete="current-password" required>
+        <button type="submit" class="admin-btn">Sign in</button>
+      </form>
+    </section>
+
+    <section class="hidden" id="admin-home">
+      <h1 class="admin-title">Admin</h1>
+      <p class="admin-sub">Choose a tool.</p>
+      <div class="admin-home-grid">
+        <a class="admin-home-card" href="llm-chat/">
+          <h2>LLM Chat</h2>
+          <p>View portfolio chat conversations.</p>
+        </a>
+        <a class="admin-home-card" href="presentation/">
+          <h2>Presentation mode</h2>
+          <p>Start a Follow Me session and share a link. The audience never sees this page.</p>
+        </a>
+      </div>
+    </section>
   </main>
+
+  <script src="admin-config.js"></script>
+  <script src="admin-gate.js"></script>
 </body>
 </html>

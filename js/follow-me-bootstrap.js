@@ -67,6 +67,6 @@
   if (!presentPage && !hasSession()) return;
 
   var s = document.createElement("script");
-  s.src = "/js/follow-me.js?v=12";
+  s.src = "/js/follow-me.js?v=13";
   (document.body || document.head).appendChild(s);
 })();

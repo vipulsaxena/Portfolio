@@ -137,3 +137,12 @@
 @media (prefers-reduced-motion: reduce){
   .follow-chip, .follow-ended{ transition:none; }
 }
+
+.fm-hit{
+  outline:3px solid #ffda08;
+  outline-offset:4px;
+  box-shadow:0 0 0 6px rgba(255,218,8,.35);
+  border-radius:12px;
+  position:relative;
+  z-index:5;
+}

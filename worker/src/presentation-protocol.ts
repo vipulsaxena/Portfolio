@@ -17,6 +17,8 @@ export interface PresentationState {
   slide: number | null;
   section: string | null;
   scroll: number | null;
+  widgets: Record<string, string> | null;
+  highlight: string | null;
   ts: number;
 }
 
@@ -57,6 +59,30 @@ export interface SessionStats {
 
 const PAGE_SET = new Set<string>(PAGE_IDS);
 const SECTION_RE = /^[a-zA-Z0-9][a-zA-Z0-9_-]{0,63}$/;
+const WIDGET_KEY_RE = /^[a-zA-Z0-9][a-zA-Z0-9_-]{0,47}$/;
+const WIDGET_VAL_RE = /^[a-zA-Z0-9][a-zA-Z0-9._-]{0,63}$/;
+
+function sanitizeWidgets(raw: unknown): Record<string, string> | null {
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) return null;
+  const src = raw as Record<string, unknown>;
+  const out: Record<string, string> = {};
+  const keys = Object.keys(src).slice(0, 24);
+  for (const key of keys) {
+    if (!WIDGET_KEY_RE.test(key)) continue;
+    const val = src[key];
+    if (typeof val !== "string" || !WIDGET_VAL_RE.test(val)) continue;
+    out[key] = val;
+  }
+  return Object.keys(out).length ? out : null;
+}
+
+export function widgetsSignature(widgets: Record<string, string> | null | undefined): string {
+  if (!widgets) return "";
+  return Object.keys(widgets)
+    .sort()
+    .map((k) => k + "=" + widgets[k])
+    .join("&");
+}
 
 export function sanitizeState(raw: unknown): PresentationState | null {
   if (!raw || typeof raw !== "object") return null;
@@ -79,8 +105,14 @@ export function sanitizeState(raw: unknown): PresentationState | null {
     if (typeof o.scroll !== "number" || !Number.isFinite(o.scroll)) return null;
     scroll = Math.max(0, Math.min(1, o.scroll));
   }
+  const widgets = sanitizeWidgets(o.widgets);
+  let highlight: string | null = null;
+  if (o.highlight !== null && o.highlight !== undefined) {
+    if (typeof o.highlight !== "string" || !WIDGET_VAL_RE.test(o.highlight)) return null;
+    highlight = o.highlight;
+  }
   const ts = typeof o.ts === "number" && Number.isFinite(o.ts) ? o.ts : Date.now();
-  return { page: o.page as PageId, slide, section, scroll, ts };
+  return { page: o.page as PageId, slide, section, scroll, widgets, highlight, ts };
 }
 
 export function randomToken(bytes = 24): string {
