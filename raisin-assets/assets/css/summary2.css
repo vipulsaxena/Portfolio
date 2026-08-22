@@ -725,6 +725,7 @@ body.summary-v2 .ops-card--spread {
 .why-hero__body {
   position: relative; z-index: 1;
   margin-top: var(--sp-lg);
+  padding-bottom: 10rem;
   max-width: none;
   color: var(--on-dark-muted);
   font-size: var(--fs-base);
