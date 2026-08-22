@@ -68,6 +68,7 @@
   object-fit: cover; border: 1px solid rgba(244,242,236,0.25);
 }
 .quote-marquee { background: var(--dark); }
+.quote-marquee .marquee__track { animation-duration: 60s; }
 .quote-marquee .marquee__item {
   font-family: var(--font-body);
   font-size: var(--fs-sm);

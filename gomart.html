@@ -929,7 +929,7 @@
         </p>
 
         <div class="grid lg:grid-cols-[1.15fr_0.85fr] gap-6 items-start" data-anim style="--i:3">
-          <div class="nav-carousel" data-nav-carousel aria-roledescription="carousel" aria-label="Release 3 concept testing screens">
+          <div class="nav-carousel" data-nav-carousel data-fm-widget="gomart-nav" data-fm-kind="carousel" aria-roledescription="carousel" aria-label="Release 3 concept testing screens">
             <div class="nav-carousel__viewport">
               <div class="nav-carousel__track" data-nav-carousel-track>
                 <figure class="nav-carousel__slide">
@@ -1415,7 +1415,24 @@
       });
       if (caption) caption.textContent = CAPTIONS[i] || "";
       if (count) count.textContent = (i + 1) + " / " + slides.length;
+      root.setAttribute("data-fm-value", String(i));
+      document.dispatchEvent(
+        new CustomEvent("portfolio:widget-change", {
+          bubbles: true,
+          detail: { id: root.getAttribute("data-fm-widget"), value: String(i) },
+        })
+      );
     };
+
+    window.PortfolioCarousel = window.PortfolioCarousel || {
+      _fn: [],
+      go: function (el, n) {
+        this._fn.forEach(function (entry) {
+          if (entry.el === el) entry.go(n);
+        });
+      },
+    };
+    window.PortfolioCarousel._fn.push({ el: root, go: go });
 
     prev && prev.addEventListener("click", () => go(i - 1));
     next && next.addEventListener("click", () => go(i + 1));
@@ -1437,7 +1454,9 @@
       viewport.addEventListener("pointercancel", () => { x0 = null; });
     }
 
-    go(0);
+    var startAt = parseInt(root.getAttribute("data-fm-value"), 10);
+    go(Number.isFinite(startAt) ? startAt : 0);
+    document.dispatchEvent(new CustomEvent("portfolio:carousel-ready"));
   });
 })();
 </script>
