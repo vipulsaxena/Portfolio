@@ -1110,7 +1110,7 @@
             </div>
             <figcaption class="mt-3 inline-flex items-center gap-2 text-xs font-semibold text-mute"><span class="tag-pill" style="background:#e7e7e7;color:#262626">Hover ☝️</span> hover a finding to see the screen · click to zoom</figcaption>
           </figure>
-          <ul class="space-y-2 min-w-0" id="auditList" data-anim style="--i:3">
+          <ul class="space-y-2 min-w-0" id="auditList" data-fm-widget="olx-audit" data-fm-kind="audit" data-anim style="--i:3">
             <li><button type="button" class="audit-item active" data-audit="1"><span class="audit-num">1</span><span>Beyond paywall, users already know where to buy ad-package from? ie; from <strong class="text-ink">Account</strong>.</span></button></li>
             <li><button type="button" class="audit-item" data-audit="2"><span class="audit-num">2</span><span>Hotjar recordings show users <strong class="text-ink">trying to click sub-category bullet-points</strong> that do nothing.</span></button></li>
             <li><button type="button" class="audit-item" data-audit="3"><span class="audit-num">3</span><span>Category lists at <strong class="text-ink">L2 and beyond are long and lack hierarchy</strong>.</span></button></li>
@@ -1190,7 +1190,7 @@
                 <button type="button" class="proto-reset" data-proto-reset="a">Reset</button>
               </span>
             </div>
-            <button type="button" class="proto-stage" data-proto-cycle="a" aria-label="Variant A prototype — tap to show next screen in sequence">
+            <button type="button" class="proto-stage" data-proto-cycle="a" data-fm-widget="olx-proto-a" data-fm-kind="proto" data-fm-value="0" aria-label="Variant A prototype — tap to show next screen in sequence">
               <span class="proto-stage__inner">
                 <img data-proto-img="a" src="assets/olx/va-1.png" alt="Variant A prototype, frame 1 of 5">
               </span>
@@ -1211,7 +1211,7 @@
                 <button type="button" class="proto-reset" data-proto-reset="b">Reset</button>
               </span>
             </div>
-            <button type="button" class="proto-stage" data-proto-cycle="b" aria-label="Variant B prototype — tap to show next screen in sequence">
+            <button type="button" class="proto-stage" data-proto-cycle="b" data-fm-widget="olx-proto-b" data-fm-kind="proto" data-fm-value="0" aria-label="Variant B prototype — tap to show next screen in sequence">
               <span class="proto-stage__inner">
                 <img data-proto-img="b" src="assets/olx/oob-1.png" alt="Variant B prototype, frame 1 of 5">
               </span>
@@ -1727,7 +1727,8 @@
       img.alt =
         "Variant " + (key === "a" ? "A" : "B") + " prototype, frame " + (idx[key] + 1) + " of 5";
       if (step) step.textContent = String(idx[key] + 1);
-      const stage = img.closest(".proto-stage");
+      var stage = document.querySelector('[data-proto-cycle="' + key + '"]');
+      if (stage) stage.setAttribute("data-fm-value", String(idx[key]));
       if (stage && typeof stage._protoRefreshLens === "function") {
         stage._protoRefreshLens();
       }
@@ -1740,6 +1741,14 @@
       idx[key] = 0;
       render(key);
     }
+    window.PortfolioProto = {
+      go: function (key, n) {
+        if (!FRAMES[key]) return;
+        var len = FRAMES[key].length;
+        idx[key] = ((n % len) + len) % len;
+        render(key);
+      },
+    };
     document.querySelectorAll("[data-proto-cycle]").forEach((btn) => {
       btn.addEventListener("click", () => next(btn.dataset.protoCycle));
     });

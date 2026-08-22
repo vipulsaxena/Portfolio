@@ -992,7 +992,7 @@
         <p class="compare-copy text-sm md:text-base leading-relaxed w-full mb-2" data-anim style="--i:2">Bottom navigation wasn't a leap of faith. GoFood had proven the pattern, 6 IDIs validated Release 3, and the same five-tab IA carried straight into visual design.</p>
         <p class="compare-copy text-sm md:text-base leading-relaxed w-full mb-4" data-anim style="--i:2">Visually: wireframe placeholders became GoMart's brand system — green accents, photography, real merchant storefronts, and product-led promo cards. Structure unchanged; fidelity upgraded.</p>
         <div class="compare-stage" data-anim style="--i:3">
-          <div class="compare w-full" data-compare role="img" aria-label="Before and after comparison of Release 3 bottom navigation — wireframe versus visual design">
+          <div class="compare w-full" data-compare data-fm-widget="gomart-compare" data-fm-kind="compare" role="img" aria-label="Before and after comparison of Release 3 bottom navigation — wireframe versus visual design">
             <div class="compare__layer">
               <span class="compare__tag compare__tag--after">After · Visual design</span>
               <div class="compare__media">
@@ -1457,6 +1457,7 @@
       p = Math.max(0, Math.min(100, p));
       after.style.clipPath = "inset(0 " + (100 - p) + "% 0 0)";
       handle.style.left = p + "%";
+      root.setAttribute("data-fm-value", String(Math.round(p)));
     };
 
     root.addEventListener("pointerdown", (e) => {

@@ -1306,7 +1306,8 @@ html.journey-nav-scrolling {
   cursor: help;
 }
 .chip--tip:hover,
-.chip--tip:focus-visible {
+.chip--tip:focus-visible,
+.chip--tip.is-remote-hover {
   color: var(--ink);
   border-color: var(--ink-soft);
   outline: none;
@@ -1371,7 +1372,8 @@ html.journey-nav-scrolling {
   line-height: 1.35;
 }
 .chip--tip:hover .chip-tip,
-.chip--tip:focus-visible .chip-tip {
+.chip--tip:focus-visible .chip-tip,
+.chip--tip.is-remote-hover .chip-tip {
   opacity: 1;
   transform: translateX(-50%) translateY(0);
 }
@@ -1387,7 +1389,8 @@ html.journey-nav-scrolling {
   transform: none;
 }
 .wealth-hub-segments-chips .chip--tip:first-child:hover .chip-tip,
-.wealth-hub-segments-chips .chip--tip:first-child:focus-visible .chip-tip {
+.wealth-hub-segments-chips .chip--tip:first-child:focus-visible .chip-tip,
+.wealth-hub-segments-chips .chip--tip:first-child.is-remote-hover .chip-tip {
   transform: translateX(0) translateY(0);
 }
 
@@ -3055,7 +3058,8 @@ html.journey-nav-scrolling {
   position: relative;
   z-index: 2;
 }
-.why-proof--zoom:has(.why-proof__frame:hover) {
+.why-proof--zoom:has(.why-proof__frame:hover),
+.why-proof--zoom:has(.why-proof__frame.is-remote-hover) {
   z-index: 8;
 }
 .why-proof--zoom .why-proof__media {
@@ -3140,6 +3144,41 @@ html.journey-nav-scrolling {
     right: 0;
   }
 }
+.why-proof--zoom:has(.why-proof__frame.is-remote-hover) {
+  z-index: 8;
+}
+.why-proof--zoom .why-proof__media:has(.why-proof__frame.is-remote-hover) .why-proof__frame:not(.is-remote-hover) {
+  opacity: 0.45;
+}
+.why-proof--zoom .why-proof__frame.is-remote-hover {
+  z-index: 12;
+  overflow: visible;
+  background: transparent;
+  border-color: transparent;
+}
+.why-proof--zoom .why-proof__frame.is-remote-hover img {
+  transform: scale(1);
+  border-color: rgba(244, 242, 236, 0.22);
+  box-shadow: 0 1.25rem 2.75rem rgba(0, 0, 0, 0.55);
+}
+.why-proof--zoom-full .why-proof__frame.is-remote-hover img {
+  object-fit: contain;
+  object-position: left bottom;
+  transform: none;
+  height: auto;
+  width: min(
+    calc(var(--proof-hover-height) * var(--proof-ratio)),
+    min(92vw, 52rem)
+  );
+  max-height: var(--proof-hover-height);
+  background: rgba(11, 14, 20, 0.92);
+}
+.why-proof--zoom-full .why-proof__frame:nth-child(3).is-remote-hover img {
+  object-position: right bottom;
+  left: auto;
+  right: 0;
+}
+
 @media (hover: none), (pointer: coarse) {
   .why-proof--zoom .why-proof__frame {
     cursor: zoom-in;

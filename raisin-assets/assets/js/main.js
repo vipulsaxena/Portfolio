@@ -127,6 +127,7 @@
       pct = Math.max(0, Math.min(100, pct));
       before.style.clipPath = "inset(0 " + (100 - pct) + "% 0 0)";
       handle.style.left = pct + "%";
+      el.setAttribute("data-fm-value", String(Math.round(pct)));
     }
     var dragging = false;
     function posFromEvent(e) {

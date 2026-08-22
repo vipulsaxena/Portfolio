@@ -108,7 +108,21 @@
         i = (n + slides.length) % slides.length;
         track.style.transform = `translateX(-${i * 100}%)`;
         dots.forEach((d, idx) => d.setAttribute("aria-current", String(idx === i)));
+        root.setAttribute("data-fm-value", String(i));
+        document.dispatchEvent(
+          new CustomEvent("portfolio:widget-change", { bubbles: true, detail: { id: root.getAttribute("data-fm-widget"), value: String(i) } })
+        );
       };
+      window.PortfolioCarousel = window.PortfolioCarousel || {
+        _fn: [],
+        go: function (el, n) {
+          this._fn.forEach(function (entry) {
+            if (entry.el === el) entry.go(n);
+          });
+        },
+      };
+      window.PortfolioCarousel._fn.push({ el: root, go: go });
+      document.dispatchEvent(new CustomEvent("portfolio:carousel-ready"));
       prev && prev.addEventListener("click", () => go(i - 1));
       next && next.addEventListener("click", () => go(i + 1));
 
@@ -120,7 +134,8 @@
         const dx = e.clientX - x0; x0 = null;
         if (Math.abs(dx) > 40) go(dx < 0 ? i + 1 : i - 1);
       });
-      go(0);
+      var startAt = parseInt(root.getAttribute("data-fm-value"), 10);
+      go(Number.isFinite(startAt) ? startAt : 0);
     });
   })();
 
@@ -138,6 +153,7 @@
         p = Math.max(0, Math.min(100, p));
         after.style.clipPath = `inset(0 ${100 - p}% 0 0)`;
         handle.style.left = p + "%";
+        root.setAttribute("data-fm-value", String(Math.round(p)));
       };
       const start = (e) => { dragging = true; set(e.clientX); root.setPointerCapture(e.pointerId); };
       const move  = (e) => { if (dragging) set(e.clientX); };

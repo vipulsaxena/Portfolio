@@ -190,10 +190,15 @@
 
   function applyGrid() {
     if (!enabled()) {
-      grid.classList.remove("is-hovering");
-      grid.removeAttribute("data-hover-item");
-      grid.style.removeProperty("grid-template-columns");
-      grid.style.removeProperty("grid-template-rows");
+      if (hoverId < 0 || !ITEM_HOVER[hoverId]) {
+        grid.classList.remove("is-hovering");
+        grid.removeAttribute("data-hover-item");
+        grid.style.removeProperty("grid-template-columns");
+        grid.style.removeProperty("grid-template-rows");
+        return;
+      }
+      grid.classList.add("is-hovering");
+      grid.dataset.hoverItem = String(hoverId);
       return;
     }
 
@@ -247,6 +252,21 @@
   grid.addEventListener("mouseleave", onHoverOff);
   DESKTOP_MQ.addEventListener("change", applyGrid);
   applyGrid();
+
+  function setRemote(idStr, pressed) {
+    if (idStr === "none" || idStr === "" || idStr == null) hoverId = -1;
+    else hoverId = parseInt(idStr, 10);
+    if (!Number.isFinite(hoverId)) hoverId = -1;
+    applyGrid();
+    items.forEach(function (item, i) {
+      var on = !!pressed && i === hoverId;
+      item.classList.toggle("is-pressed", on);
+      if (on) pressedItem = item;
+    });
+    if (!pressed) pressedItem = null;
+  }
+
+  window.RaisinHero = { set: setRemote };
 
   /* Click-hold — center zoom on the image (starts immediately on press) */
   var pressedItem = null;

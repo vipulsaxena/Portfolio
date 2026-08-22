@@ -152,6 +152,7 @@
       el.getAttribute("data-fm-value") ||
       el.getAttribute("data-tab") ||
       el.getAttribute("data-bg") ||
+      el.getAttribute("data-audit") ||
       el.getAttribute("data-persona-id") ||
       el.getAttribute("data-persona") ||
       el.getAttribute("data-research-view") ||
@@ -161,8 +162,85 @@
 
   function widgetTabs(root) {
     return root.querySelectorAll(
-      '[role="tab"], [data-tab], [data-bg], [data-persona-id], [data-persona], [data-research-view]'
+      '[role="tab"], [data-tab], [data-bg], [data-audit], [data-persona-id], [data-persona], [data-research-view]'
     );
+  }
+
+  function readComparePct(root) {
+    var handle = root.querySelector(".compare__handle, .handle");
+    if (handle && handle.style.left) {
+      var n = parseFloat(handle.style.left);
+      if (Number.isFinite(n)) return String(Math.round(n));
+    }
+    return root.getAttribute("data-fm-value") || root.getAttribute("data-fm-pct") || "50";
+  }
+
+  function applyCompare(root, want) {
+    var p = parseInt(want, 10);
+    if (!Number.isFinite(p)) return;
+    p = Math.max(0, Math.min(100, p));
+    var before = root.querySelector(".compare__before");
+    var after = root.querySelector(".after-layer");
+    var handle = root.querySelector(".compare__handle, .handle");
+    var clip = "inset(0 " + (100 - p) + "% 0 0)";
+    if (before) before.style.clipPath = clip;
+    if (after) after.style.clipPath = clip;
+    if (handle) handle.style.left = p + "%";
+    root.setAttribute("data-fm-value", String(p));
+  }
+
+  function readCarouselIndex(root) {
+    var stored = root.getAttribute("data-fm-value");
+    if (stored) return stored;
+    var dots = root.querySelectorAll("[data-carousel-dots] button, .dot");
+    for (var i = 0; i < dots.length; i++) {
+      if (dots[i].getAttribute("aria-current") === "true") return String(i);
+    }
+    return "0";
+  }
+
+  function applyCarousel(root, want) {
+    var n = parseInt(want, 10);
+    if (!Number.isFinite(n)) return;
+    var track = root.querySelector("[data-carousel-track]");
+    var slides = track ? track.children.length : 0;
+    if (slides > 0) {
+      n = ((n % slides) + slides) % slides;
+      track.style.transform = "translateX(-" + n * 100 + "%)";
+      root.setAttribute("data-fm-value", String(n));
+      var dots = root.querySelectorAll("[data-carousel-dots] button, .dot");
+      for (var d = 0; d < dots.length; d++) {
+        dots[d].setAttribute("aria-current", String(d === n));
+      }
+    }
+    if (global.PortfolioCarousel && typeof global.PortfolioCarousel.go === "function") {
+      global.PortfolioCarousel.go(root, n);
+    }
+  }
+
+  function readWidgetValue(root) {
+    var kind = root.getAttribute("data-fm-kind") || "";
+    if (kind === "compare" || root.classList.contains("compare") || root.hasAttribute("data-compare")) {
+      return readComparePct(root);
+    }
+    if (kind === "carousel" || root.hasAttribute("data-carousel")) {
+      return readCarouselIndex(root);
+    }
+    if (kind === "hero") {
+      var hover = root.getAttribute("data-hover-item");
+      return hover != null && hover !== "" ? String(hover) : "none";
+    }
+    if (kind === "why" || kind === "proto" || kind === "tip") {
+      return root.getAttribute("data-fm-value") || "none";
+    }
+    var stored = root.getAttribute("data-fm-value");
+    if (stored) return stored;
+    var active =
+      root.querySelector('[aria-selected="true"]') ||
+      root.querySelector(".is-active") ||
+      root.querySelector(".prototype-persona-tab--active") ||
+      root.querySelector(".audit-item.active");
+    return active ? tabValue(active) : "";
   }
 
   function readWidgets() {
@@ -170,12 +248,12 @@
     document.querySelectorAll("[data-fm-widget]").forEach(function (root) {
       var id = root.getAttribute("data-fm-widget");
       if (!id) return;
-      var active =
-        root.querySelector('[aria-selected="true"]') ||
-        root.querySelector(".is-active") ||
-        root.querySelector(".prototype-persona-tab--active");
-      var val = active ? tabValue(active) : "";
-      if (val) out[id] = val;
+      var val = readWidgetValue(root);
+      if (!val) return;
+      out[id] = val;
+      if (root.getAttribute("data-fm-kind") === "hero") {
+        out[id + "-press"] = root.querySelector(".is-pressed") ? "1" : "0";
+      }
     });
     return Object.keys(out).length ? out : null;
   }
@@ -190,13 +268,95 @@
       .join("&");
   }
 
+  function applyOlxBg(root, want) {
+    root.querySelectorAll("[data-bg]").forEach(function (b) {
+      b.setAttribute("aria-selected", String(b.getAttribute("data-bg") === want));
+    });
+    document.querySelectorAll("[data-bg-shot]").forEach(function (s) {
+      s.classList.toggle("active", s.getAttribute("data-bg-shot") === want);
+    });
+  }
+
+  function applyAudit(root, want) {
+    root.querySelectorAll("[data-audit]").forEach(function (it) {
+      it.classList.toggle("active", it.getAttribute("data-audit") === want);
+    });
+    var stage = document.getElementById("auditStage");
+    if (!stage) return;
+    stage.querySelectorAll("[data-audit-shot]").forEach(function (sh) {
+      sh.classList.toggle("active", sh.getAttribute("data-audit-shot") === want);
+    });
+  }
+
+  function applyWhy(want) {
+    document.querySelectorAll(".why-proof__frame.is-remote-hover").forEach(function (el) {
+      el.classList.remove("is-remote-hover");
+    });
+    var wrap = document.querySelector('[data-fm-kind="why"]');
+    if (wrap) wrap.setAttribute("data-fm-value", want || "none");
+    if (!want || want === "none") return;
+    var frame = document.querySelector('.why-proof__frame[data-fm-why="' + want + '"]');
+    if (frame) frame.classList.add("is-remote-hover");
+  }
+
+  function applyTip(root, want) {
+    root.querySelectorAll(".chip--tip.is-remote-hover").forEach(function (el) {
+      el.classList.remove("is-remote-hover");
+    });
+    root.setAttribute("data-fm-value", want || "none");
+    if (!want || want === "none") return;
+    var chip = root.querySelector('.chip--tip[data-fm-tip="' + want + '"]');
+    if (chip) chip.classList.add("is-remote-hover");
+  }
+
   function applyWidgets(widgets) {
     if (!widgets) return;
     holdRemote(400);
     Object.keys(widgets).forEach(function (id) {
+      if (id.slice(-6) === "-press") return;
       var root = document.querySelector('[data-fm-widget="' + id + '"]');
       if (!root) return;
       var want = widgets[id];
+      var kind = root.getAttribute("data-fm-kind") || "";
+      if (kind === "compare" || root.hasAttribute("data-compare")) {
+        applyCompare(root, want);
+        return;
+      }
+      if (kind === "carousel" || root.hasAttribute("data-carousel")) {
+        applyCarousel(root, want);
+        return;
+      }
+      if (kind === "hero") {
+        if (global.RaisinHero && typeof global.RaisinHero.set === "function") {
+          global.RaisinHero.set(want, widgets[id + "-press"] === "1");
+        }
+        return;
+      }
+      if (kind === "why") {
+        applyWhy(want);
+        root.setAttribute("data-fm-value", want);
+        return;
+      }
+      if (kind === "tip") {
+        applyTip(root, want);
+        return;
+      }
+      if (kind === "proto") {
+        var key = root.getAttribute("data-proto-cycle");
+        var n = parseInt(want, 10);
+        if (global.PortfolioProto && typeof global.PortfolioProto.go === "function" && key) {
+          global.PortfolioProto.go(key, n);
+        }
+        return;
+      }
+      if (root.id === "bgSeg" || root.getAttribute("data-fm-widget") === "olx-bg") {
+        applyOlxBg(root, want);
+        return;
+      }
+      if (root.id === "auditList" || kind === "audit") {
+        applyAudit(root, want);
+        return;
+      }
       var tabs = widgetTabs(root);
       for (var i = 0; i < tabs.length; i++) {
         if (tabValue(tabs[i]) !== want) continue;
@@ -448,13 +608,34 @@
     }
   }
 
-  function appendSessionLog(entry) {
+  function writeSessionLog(list) {
     try {
-      var list = readSessionLog();
-      list.unshift(entry);
       localStorage.setItem(LOG_KEY, JSON.stringify(list.slice(0, 40)));
     } catch (e) {}
   }
+
+  function logEntryKey(item) {
+    return String(item.sessionId || "") + ":" + String(item.endedAt || "");
+  }
+
+  function deleteSessionLog(key) {
+    writeSessionLog(
+      readSessionLog().filter(function (item) {
+        return logEntryKey(item) !== key;
+      })
+    );
+  }
+
+  function appendSessionLog(entry) {
+    var list = readSessionLog();
+    list.unshift(entry);
+    writeSessionLog(list);
+  }
+
+  var LOG_TRASH =
+    '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">' +
+    '<path d="M3.5 4.5h9M6.5 4.5V3.2A.7.7 0 0 1 7.2 2.5h1.6a.7.7 0 0 1 .7.7v1.3M5 4.5l.4 8.2a1 1 0 0 0 1 .8h3.2a1 1 0 0 0 1-.8L11 4.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>' +
+    "</svg>";
 
   function renderSessionLog() {
     var list = readSessionLog();
@@ -464,16 +645,24 @@
         var when = item.endedAt ? new Date(item.endedAt).toLocaleString() : "";
         var dur = formatDuration(item.durationMs || 0);
         var peak = item.peakFollowing != null ? item.peakFollowing : item.following || 0;
+        var key = logEntryKey(item);
         return (
           "<li>" +
-          "<span class=\"present-log__when\">" +
+          '<div class="present-log__text">' +
+          '<span class="present-log__when">' +
           when +
           "</span>" +
-          "<span class=\"present-log__meta\">" +
+          '<span class="present-log__meta">' +
           dur +
           " · " +
           peak +
           " peak following</span>" +
+          "</div>" +
+          '<button type="button" class="present-log__delete" data-log-key="' +
+          key.replace(/"/g, "") +
+          '" aria-label="Delete this session">'+
+          LOG_TRASH +
+          "</button>" +
           "</li>"
         );
       })
@@ -486,6 +675,27 @@
       "</ul>" +
       "</section>"
     );
+  }
+
+  function bindSessionLog(root) {
+    if (!root || root.getAttribute("data-fm-log") === "1") return;
+    root.setAttribute("data-fm-log", "1");
+    root.addEventListener("click", function (e) {
+      var btn = e.target.closest ? e.target.closest("[data-log-key]") : null;
+      if (!btn || !root.contains(btn)) return;
+      var key = btn.getAttribute("data-log-key");
+      if (!key) return;
+      if (!confirm("Delete this session from the log?")) return;
+      deleteSessionLog(key);
+      var log = root.querySelector(".present-log");
+      var next = renderSessionLog();
+      if (!next) {
+        if (log) log.remove();
+        return;
+      }
+      if (log) log.outerHTML = next;
+      else root.insertAdjacentHTML("beforeend", next);
+    });
   }
 
   function shareUrl() {
@@ -940,6 +1150,77 @@
     }, 0);
   }
 
+  function onPresenterHover(e) {
+    if (role !== "presenter" || ended || applyingRemote) return;
+    if (!e.target || !e.target.closest) return;
+    var chip = e.target.closest(".chip--tip");
+    var tips = e.target.closest('[data-fm-kind="tip"]');
+    if (chip && tips) {
+      var tipVal = chip.getAttribute("data-fm-tip") || "none";
+      if (tips.getAttribute("data-fm-value") !== tipVal) {
+        tips.setAttribute("data-fm-value", tipVal);
+        broadcastLocal(true);
+      }
+      return;
+    }
+    var frame = e.target.closest(".why-proof__frame");
+    var why = e.target.closest('[data-fm-kind="why"]');
+    if (frame && why) {
+      var v = frame.getAttribute("data-fm-why") || "none";
+      if (why.getAttribute("data-fm-value") !== v) {
+        why.setAttribute("data-fm-value", v);
+        broadcastLocal(true);
+      }
+      return;
+    }
+    if (e.target.closest("[data-audit], [data-fm-kind=hero], [data-fm-kind=audit]")) {
+      setTimeout(function () {
+        broadcastLocal(true);
+      }, 0);
+    }
+  }
+
+  function onPresenterHoverOut(e) {
+    if (role !== "presenter" || ended || applyingRemote) return;
+    if (!e.target || !e.target.closest) return;
+    var tips = e.target.closest('[data-fm-kind="tip"]');
+    if (tips) {
+      var nextTip = e.relatedTarget;
+      if (nextTip && tips.contains(nextTip)) return;
+      if (tips.getAttribute("data-fm-value") === "none") return;
+      tips.setAttribute("data-fm-value", "none");
+      broadcastLocal(true);
+      return;
+    }
+    var why = e.target.closest('[data-fm-kind="why"]');
+    if (why) {
+      var next = e.relatedTarget;
+      if (next && why.contains(next)) return;
+      if (why.getAttribute("data-fm-value") === "none") return;
+      why.setAttribute("data-fm-value", "none");
+      broadcastLocal(true);
+      return;
+    }
+    var hero = e.target.closest('[data-fm-kind="hero"]');
+    if (hero) {
+      var nextHero = e.relatedTarget;
+      if (nextHero && hero.contains(nextHero)) return;
+      setTimeout(function () {
+        broadcastLocal(true);
+      }, 0);
+    }
+  }
+
+  function onPresenterCompare(e) {
+    if (role !== "presenter" || ended || applyingRemote) return;
+    if (!e.target || !e.target.closest) return;
+    if (!e.target.closest('[data-fm-kind="compare"], [data-compare], .compare')) return;
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(function () {
+      broadcastLocal(true);
+    }, 40);
+  }
+
   function wirePage() {
     window.addEventListener("portfolio:deck-change", onDeckChange);
     window.addEventListener(
@@ -954,9 +1235,30 @@
       },
       true
     );
+    window.addEventListener("portfolio:widget-change", function () {
+      if (role === "presenter") broadcastLocal(true);
+    });
+    window.addEventListener("portfolio:carousel-ready", function () {
+      if (role === "audience" && following && lastSent && lastSent.widgets) {
+        applyWidgets(lastSent.widgets);
+      }
+    });
     document.addEventListener("click", onUserNavigate, true);
     document.addEventListener("pointerdown", onPresenterPointer, true);
     document.addEventListener("click", onPresenterUi, false);
+    document.addEventListener("pointerover", onPresenterHover, true);
+    document.addEventListener("pointerout", onPresenterHoverOut, true);
+    document.addEventListener("pointermove", onPresenterCompare, { passive: true });
+    document.addEventListener("pointerup", function (e) {
+      if (role !== "presenter" || ended) return;
+      var t = e.target && e.target.closest
+        ? e.target.closest('[data-fm-kind="hero"], [data-fm-kind="compare"], [data-fm-kind="carousel"], [data-carousel], [data-compare], .compare')
+        : null;
+      if (!t && !document.querySelector('[data-fm-kind="hero"], [data-fm-kind="compare"]')) return;
+      setTimeout(function () {
+        broadcastLocal(true);
+      }, 0);
+    });
     document.addEventListener("wheel", function (e) {
       noteUserGesture((e.deltaY || 0) + (e.deltaX || 0));
     }, { passive: true });
@@ -1088,6 +1390,7 @@
       '<button type="button" class="follow-chip__btn" id="present-start">Start presentation</button>' +
       "</div>" +
       renderSessionLog();
+    bindSessionLog(root);
     document.getElementById("present-start").addEventListener("click", function () {
       var btn = document.getElementById("present-start");
       var err = document.getElementById("present-error");
