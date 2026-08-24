@@ -158,8 +158,13 @@ section { position: relative; }
 }
 
 ::selection {
-  background: var(--accent);
-  color: white;
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+}
+
+::-moz-selection {
+  background: var(--accent-soft);
+  color: var(--accent-ink);
 }
 
 /* Scrollbar (webkit) — subtle, on-brand */

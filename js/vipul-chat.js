@@ -30,6 +30,10 @@
   var wrapEl = null;
   var els = {};
   var restoringTranscript = false;
+  var pendingLockedCompany = null;
+  var pendingLockedFromRequest = false;
+  var accessRequestActive = false;
+  var accessRequestCompany = null;
 
   function storageGet(key, useLocal) {
     try {
@@ -70,9 +74,6 @@
   function grantUnlock() {
     storageSet(CONFIG.UNLOCK_KEY, "1", false);
     storageSet(CONFIG.UNLOCK_KEY, "1", true);
-    (CONFIG.GATE_KEYS || []).forEach(function (key) {
-      storageSet(key, "1", false);
-    });
     currentState = STATE.UNLOCKED;
     syncPatchSession({ unlocked_at: new Date().toISOString() });
   }
@@ -435,7 +436,43 @@
     });
   }
 
+  function accessPurposePrompt() {
+    var label = accessRequestCompany
+      ? KNOWLEDGE.getCompanyLabel(accessRequestCompany)
+      : "this";
+    return (
+      "What do you need access to the " +
+      label +
+      " case study for — hiring, a portfolio review, a reference, or something else?"
+    );
+  }
+
+  function startAccessRequestFlow(companyId) {
+    accessRequestActive = true;
+    accessRequestCompany = companyId || topicCompany || null;
+    if (accessRequestCompany) {
+      topicCompany = accessRequestCompany;
+      storageSet(TOPIC_KEY, accessRequestCompany, false);
+    }
+    var label = accessRequestCompany
+      ? KNOWLEDGE.getCompanyLabel(accessRequestCompany)
+      : "portfolio";
+    if (getCapturedEmail()) {
+      pendingEmail = getCapturedEmail();
+      currentState = STATE.COLLECT_INTENT;
+      botSay(
+        "I already have your email (" + getCapturedEmail() + "). " + accessPurposePrompt(),
+        null
+      );
+      return;
+    }
+    currentState = STATE.COLLECT_EMAIL;
+    botSay("I can share access to the " + label + " case study — what's your email?", []);
+  }
+
   function startContactFlow(prefill) {
+    accessRequestActive = false;
+    accessRequestCompany = null;
     if (getCapturedEmail()) {
       botSay(
         "I already have your email (" +
@@ -490,16 +527,28 @@
 
   function completeContactFlow(intentText) {
     var email = pendingEmail;
-    syncPatchSession({ email: email, intent: intentText });
+    var wasAccess = accessRequestActive;
+    var companyLabel = accessRequestCompany
+      ? KNOWLEDGE.getCompanyLabel(accessRequestCompany)
+      : null;
+    var intent =
+      wasAccess && companyLabel
+        ? companyLabel + " case study access — " + intentText
+        : intentText;
+    syncPatchSession({ email: email, intent: intent });
     setCapturedEmail(email);
     pendingEmail = "";
+    accessRequestActive = false;
+    accessRequestCompany = null;
     currentState = isUnlocked() ? STATE.UNLOCKED : STATE.IDLE;
 
-    var reply = "Thanks — I'll reply at " + email + " soon.";
+    var reply = wasAccess
+      ? "Thanks — I'll follow up at " + email + " with access details."
+      : "Thanks — I'll reply at " + email + " soon.";
     var chips = null;
 
     if (!isUnlocked()) {
-      reply += " You can enter the portfolio password anytime to view locked case studies.";
+      reply += " You can enter the portfolio password anytime if you already have it.";
       chips = ["Enter password"];
     }
 
@@ -524,7 +573,7 @@
         );
         return;
       }
-      startContactFlow("I can share portfolio access — what's your email?");
+      startAccessRequestFlow(topicCompany);
       return;
     }
 
@@ -720,7 +769,7 @@
           grantUnlock();
           return {
             text:
-              "You're in — ask me anything about Raisin, OLX, N26, or GoMart. Case study pages are unlocked for this session too.",
+              "You're in — ask me anything about Raisin, OLX, N26, or GoMart. The case study pages stay password-gated — use Unlock on the card to open them.",
             chips: ["Tell me about Raisin", "OLX monetisation work"],
           };
         }
@@ -758,12 +807,14 @@
         );
         return;
       }
-      startContactFlow("I can share portfolio access — what's your email?");
+      startAccessRequestFlow(topicCompany);
       return;
     }
 
     if (/^enter password$/i.test(text) || /^i have the password$/i.test(text)) {
       pendingEmail = "";
+      accessRequestActive = false;
+      accessRequestCompany = null;
       startPasswordFlow();
       return;
     }
@@ -776,6 +827,8 @@
     if (currentState === STATE.COLLECT_EMAIL || currentState === STATE.COLLECT_INTENT) {
       if (/^(cancel|never mind|nevermind|stop)$/i.test(text.trim())) {
         pendingEmail = "";
+        accessRequestActive = false;
+        accessRequestCompany = null;
         currentState = isUnlocked() ? STATE.UNLOCKED : STATE.IDLE;
         botSay("No problem — ask me anything else, or enter the portfolio password if you have it.", [
           "Enter password",
@@ -784,11 +837,15 @@
       }
       if (isCollectEscape(text)) {
         pendingEmail = "";
+        accessRequestActive = false;
+        accessRequestCompany = null;
         currentState = isUnlocked() ? STATE.UNLOCKED : STATE.IDLE;
         startPasswordFlow();
         return;
       }
       if (currentState === STATE.COLLECT_EMAIL && looksLikePassword(text)) {
+        accessRequestActive = false;
+        accessRequestCompany = null;
         currentState = STATE.IDLE;
         tryPassword(text);
         return;
@@ -802,12 +859,16 @@
       }
       pendingEmail = text;
       currentState = STATE.COLLECT_INTENT;
-      botSay("So, what is it about that you'd like to get in touch?");
+      botSay(
+        accessRequestActive
+          ? accessPurposePrompt()
+          : "So, what is it about that you'd like to get in touch?"
+      );
       return;
     }
 
     if (currentState === STATE.COLLECT_INTENT) {
-      if (KNOWLEDGE.looksLikeWorkQuestion(text)) {
+      if (!accessRequestActive && KNOWLEDGE.looksLikeWorkQuestion(text)) {
         var email = pendingEmail;
         if (email) {
           syncPatchSession({ email: email, intent: text });
@@ -890,6 +951,29 @@
     }
   }
 
+  function greetLockedCaseStudy(companyId) {
+    if (!companyId || !KNOWLEDGE.isLockedProject(companyId)) return;
+    topicCompany = companyId;
+    storageSet(TOPIC_KEY, companyId, false);
+    markGreetedThisTab();
+    var label = KNOWLEDGE.getCompanyLabel(companyId);
+    if (isUnlocked()) {
+      botSay(
+        "Hey — I'm Vipul. You're already unlocked in this browser session, so I can talk through " +
+          label +
+          " in detail. What would you like to know?",
+        ["Tell me about " + label, "What was the customer problem?"]
+      );
+      return;
+    }
+    botSay(
+      "Hey — I'm Vipul. The " +
+        label +
+        " case study is locked. Share your email and I'll send access — or enter the password if you already have it.",
+      ["Request access", "Enter password"]
+    );
+  }
+
   function toggle(open) {
     if (!els.panel) return;
     isOpen = open !== undefined ? open : !isOpen;
@@ -898,7 +982,28 @@
     if (els.badge) els.badge.setAttribute("aria-expanded", isOpen ? "true" : "false");
     if (isOpen) {
       ensureSession();
-      if (els.messages && !els.messages.childElementCount && !hasGreetedThisTab() && !hasTranscript()) {
+      if (pendingLockedCompany) {
+        var lockedCompany = pendingLockedCompany;
+        var fromRequest = pendingLockedFromRequest;
+        pendingLockedCompany = null;
+        pendingLockedFromRequest = false;
+        if (fromRequest) {
+          markGreetedThisTab();
+          var label = KNOWLEDGE.getCompanyLabel(lockedCompany);
+          if (isUnlocked()) {
+            topicCompany = lockedCompany;
+            storageSet(TOPIC_KEY, lockedCompany, false);
+            botSay(
+              "You're already unlocked in this browser session. Ask me about " + label + ".",
+              ["Tell me about " + label]
+            );
+          } else {
+            startAccessRequestFlow(lockedCompany);
+          }
+        } else {
+          greetLockedCaseStudy(lockedCompany);
+        }
+      } else if (els.messages && !els.messages.childElementCount && !hasGreetedThisTab() && !hasTranscript()) {
         markGreetedThisTab();
         botSay(
           "Hey — I'm Vipul. Ask me about my work, how I got to Berlin, case studies, or how to get in touch.",
@@ -911,6 +1016,13 @@
 
   function open(opts) {
     opts = opts || {};
+    var company = opts.company && String(opts.company).toLowerCase();
+    if (company && KNOWLEDGE.isLockedProject(company)) {
+      pendingLockedCompany = company;
+      pendingLockedFromRequest = opts.intent === "request_access";
+      toggle(true);
+      return;
+    }
     toggle(true);
     if (opts.intent === "password" || opts.intent === "request_access") {
       setTimeout(function () {
@@ -918,7 +1030,7 @@
         else if (isUnlocked()) {
           botSay("You already have portfolio access in this session.", ["Tell me about Raisin"]);
         } else {
-          startContactFlow("I can share portfolio access — what's your email?");
+          startAccessRequestFlow(topicCompany);
         }
       }, 300);
     } else if (opts.intent === "contact") {
@@ -952,8 +1064,16 @@
     });
 
     document.querySelectorAll("[data-pw-request]").forEach(function (btn) {
-      btn.addEventListener("click", function () {
-        open({ intent: "request_access" });
+      btn.addEventListener("click", function (e) {
+        e.preventDefault();
+        var modal = btn.closest(".pw-modal");
+        var company = modal && modal.getAttribute("data-company");
+        if (modal) {
+          modal.classList.remove("open");
+          modal.setAttribute("aria-hidden", "true");
+        }
+        if (company) open({ company: company, intent: "request_access" });
+        else open({ intent: "request_access" });
       });
     });
   }

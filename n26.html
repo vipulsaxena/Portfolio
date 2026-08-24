@@ -36,6 +36,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap">
     <link rel="stylesheet" href="css/shell.css">
+    <link rel="stylesheet" href="css/custom-cursor.css">
     <link rel="stylesheet" href="css/portfolio-gate-previews.css">
 
     <!-- Tailwind (Play CDN) + theme config (identical to template-2.html) -->
@@ -67,7 +68,6 @@
       :root{ --deck-top:3.5rem; --ink:#262626; --muted:#6e6e6e; --line:#e7e7e7; --accent:#ffda08; }
       html,body{ height:100%; }
       body{ background:#ffffff; font-family:"Inter", system-ui, sans-serif; overflow:hidden; }
-      ::selection{ background:#ffda08; color:#262626; }
 
       /* Brand yellow highlight (matches Portfolio) */
       .hl{ background:#ffda08; color:#262626; padding:0 .1em; border-radius:.08em;
@@ -360,7 +360,7 @@
       <p class="pw-error" id="n26GateError" role="alert" hidden>Incorrect password. Please try again.</p>
       <div class="pw-actions">
         <a class="pw-back" href="index.html">&larr; Back home</a>
-        <button type="submit" class="pw-btn">Unlock &rarr;</button>
+        <button type="submit" class="pw-btn">Unlock</button>
       </div>
     </form>
   </div>
@@ -1196,6 +1196,7 @@
   });
 })();
 </script>
+<script defer src="js/custom-cursor.js"></script>
 <script defer src="js/portfolio-gate.js"></script>
 </body>
 </html>

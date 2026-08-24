@@ -9,6 +9,21 @@
     "Do you mentor on ADPList?",
   ];
 
+  var COMPANY_LABELS = {
+    raisin: "Raisin",
+    olx: "OLX",
+    n26: "N26",
+    gomart: "GoMart",
+    goplay: "GoPlay",
+    instalively: "InstaLively",
+    ninja: "Silent Ninja",
+    hike: "Hike",
+  };
+
+  function getCompanyLabel(companyId) {
+    return COMPANY_LABELS[companyId] || companyId;
+  }
+
   var LOCKED_PROJECTS = ["raisin", "olx", "n26", "gomart"];
   var PUBLIC_PROJECTS = ["goplay", "instalively", "ninja", "hike"];
   var COMPANIES = LOCKED_PROJECTS.concat(PUBLIC_PROJECTS);
@@ -504,6 +519,8 @@
     INTENTS: INTENTS,
     CHUNKS: CHUNKS,
     LOCKED_PROJECTS: LOCKED_PROJECTS,
+    COMPANY_LABELS: COMPANY_LABELS,
+    getCompanyLabel: getCompanyLabel,
     PUBLIC_PROJECTS: PUBLIC_PROJECTS,
     COMPANIES: COMPANIES,
     STOPWORDS: STOPWORDS,

@@ -97,7 +97,8 @@
     <link href="css/zoom.css" rel="stylesheet">
     <link rel="stylesheet" href="css/shell.css">
     <link rel="stylesheet" href="css/portfolio-gate-previews.css">
-    <link rel="stylesheet" href="css/vipul-chat.css?v=11">
+    <link rel="stylesheet" href="css/custom-cursor.css">
+    <link rel="stylesheet" href="css/vipul-chat.css?v=16">
     <script src="js/follow-me-bootstrap.js"></script>
 </head>
 
@@ -132,21 +133,14 @@
         <header class="hero">
             <div class="container">
                 <div class="patterns patterns--dots patterns--hero ">                      </div>
-                <h1><span class="text-gradient">Hey, I'm Vipul.</span><br><br>I make complex products <b class="tooltip"><span>Product strategy, discovery, research, prototyping, design critique, validation, AI-native prototyping</span>clearer</b> for customers — and easier for <b class="tooltip"><span>Design systems, DesignOps, design coaching, research practice, quality standards, AI workflows</span>teams</b> to build well. Berlin-based. Currently designing at <a href="https://www.raisin.com/" target="_blank" rel="noopener" class="m link_fix"><i>Raisin</i></a>.</h1>
-                <p>12 years of B2C product design, an engineering foundation, and a builder's instinct for how great design teams operate. I've designed at scale across social, streaming, on-demand, marketplaces, and fintech — and along the way developed an equal obsession with the systems, tools, and practices that let design teams do their best work. I design products — and how the teams behind them work.</p>
-
-                <br>
-                <nav class="hero-nav" aria-label="Social profiles">
-                <a href="https://www.linkedin.com/in/saxenavipul/" target="_blank" rel="noopener" class="hotlinks l link_fix"><i>LinkedIn</i></a>
-                <a href="https://dribbble.com/vipulsaxena_fc" target="_blank" rel="noopener" class="hotlinks d link_fix"><i>Dribbble</i></a>
-                </nav>
+                <h1><span class="text-gradient hero-greeting">Hey I'm Vipul</span><span class="hero-thesis">I make complex products clearer for customers — and easier for teams to build well. Berlin-based. Currently designing at <a href="https://www.raisin.com/" target="_blank" rel="noopener" class="m link_fix"><i>Raisin</i></a>.</span></h1>
             </div>
         </header>
         <div class="container">
             <div class="post-list">
-                <span class="date" id="recent-projects">Contact me to access recent projects</span>
+                <span class="date" id="featured-work">Featured work</span>
                 <hr>
-                <div class="post-item post featured trg_cnt liquid" role="button" tabindex="0">
+                <div class="post-item post featured trg_cnt liquid" role="button" tabindex="0" data-company="raisin">
                     <a target="_blank" rel="noopener">
                         <ul>
                             <li class="cover">
@@ -156,15 +150,14 @@
                                 </figure>
                             </li>
                             <li class="infos">
-                                <p class="title">Brand evolution at Raisin<span class="status-icon status-icon-lock"></span></p>
+                                <p class="title">Brand evolution at Raisin</p>
                                 <p class="description">Led Raisin’s B2C brand evolution into live product — across 12 markets in EU, the UK, and the US. Research-led hierarchy and product system work that helped savers understand and manage their wealth more clearly with measurable gains and the operating model that made evolution stick beyond the rebrand.</p>
-                                <button type="button" class="card-cta" id="raisin-gate-trigger" aria-haspopup="dialog" aria-controls="raisinPwModal"><span class="status-icon status-icon-lock card-cta__lock" aria-hidden="true"></span> Enter case study</button>
                             </li>
                         </ul>
                     </a>
                 </div>
                 <hr>
-                <div class="post-item post featured trg_cnt liquid" role="button" tabindex="0">
+                <div class="post-item post featured trg_cnt liquid" role="button" tabindex="0" data-company="olx">
                     <a target="_blank" rel="noopener">
                         <ul>
                             <li class="cover">
@@ -174,15 +167,14 @@
                                 </figure>
                             </li>
                             <li class="infos">
-                                <p class="title">Growing OLX's paying sellers<span class="status-icon status-icon-lock"></span></p>
+                                <p class="title">Growing OLX's paying sellers</p>
                                 <p class="description">Led Engagement & Monetisation design in Pay & Ship across OLX’s 17-country marketplace — Ad Package drop-off work via research and A/B tests, Seller-take-rate AutoExtend, and DesignOps workshops, with winning patterns rolling out to more markets.</p>
-                                <button type="button" class="card-cta" id="olx-gate-trigger" aria-haspopup="dialog" aria-controls="olxPwModal"><span class="status-icon status-icon-lock card-cta__lock" aria-hidden="true"></span> Enter case study</button>
                             </li>
                         </ul>
                     </a>
                 </div>
                 <hr>
-                <div class="post-item post featured trg_cnt liquid" role="button" tabindex="0">
+                <div class="post-item post featured trg_cnt liquid" role="button" tabindex="0" data-company="n26">
                     <a target="_blank" rel="noopener">
                         <ul>
                             <li class="cover">
@@ -192,15 +184,14 @@
                                 </figure>
                             </li>
                             <li class="infos">
-                                <p class="title">Home-feed evolution at N26<span class="status-icon status-icon-lock"></span></p>
+                                <p class="title">Home-feed evolution at N26</p>
                                 <p class="description">Evolved N26’s home feed for 25 European markets — surfacing activity across spaces, IBANs, and cards from Germany outward — alongside MoneyBeam, crypto activity, and transaction search improvements.</p>
-                                <button type="button" class="card-cta" id="n26-gate-trigger" aria-haspopup="dialog" aria-controls="n26PwModal"><span class="status-icon status-icon-lock card-cta__lock" aria-hidden="true"></span> Enter case study</button>
                             </li>
                         </ul>
                     </a>
                 </div>
                 <hr>
-                <div class="post-item post featured trg_cnt liquid" role="button" tabindex="0">
+                <div class="post-item post featured trg_cnt liquid" role="button" tabindex="0" data-company="gomart">
                     <a target="_blank" rel="noopener">
                         <ul>
                             <li class="cover">
@@ -210,10 +201,9 @@
                                 </figure>
                             </li>
                             <li class="infos">
-                                <p class="title">Instant Grocery on Gojek<span class="status-icon status-icon-lock"></span></p>
+                                <p class="title">Instant Grocery on Gojek</p>
 
                                 <p class="description">Led enhancements with Studio Accelerator design sprints on Indonesia-scale grocery — GoMart (B2C) and GoFresh (B2B) journeys, plus shopper and driver tools — enabling fast, reliable fulfillment across cities nationwide.</p>
-                                <button type="button" class="card-cta" id="gomart-gate-trigger" aria-haspopup="dialog" aria-controls="gomartPwModal"><span class="status-icon status-icon-lock card-cta__lock" aria-hidden="true"></span> Enter case study</button>
                             </li>
                         </ul>
                     </a>
@@ -223,13 +213,11 @@
 
         <div class="container">
             <div class="post-list">
-                <span class="date" id="case-studies">Public Case Studies</span>
-                <hr>
                 <div class="post-item post featured liquid">
                     <a href="goplay.html">
                         <ul>
                             <!-- <div class="action--icon">
-                                <span class="status-icon status-icon-direction"></span>
+                                
                             </div> -->
                             <li class="cover">
                                 <figure>
@@ -238,7 +226,7 @@
                                 </figure>
                             </li>
                             <li class="infos">
-                                <p class="title">Shaking Up Indonesia's OTT Scene<span class="status-icon status-icon-direction"></span></p>
+                                <p class="title">Shaking Up Indonesia's OTT Scene</p>
                                 <p class="description">Product design for GoPlay from MVP to a nationwide OTT in Indonesia — Gojek streaming on mobile, web, and SmartTV, with discovery shaped through research and rapid experimentation that lifted engagement quarter over quarter.</p>
 
                             </li>
@@ -252,7 +240,7 @@
                         <ul>
                         <!--     <div class="action--icon">
 
-                                <span class="status-icon status-icon-external"></span>
+                                
 
                             </div> -->
                             <li class="cover">
@@ -263,7 +251,7 @@
                                 </figure>
                             </li>
                             <li class="infos">
-                                <p class="title">Camera Is The New Keyboard<span class="status-icon status-icon-external"></span></p>
+                                <p class="title">Camera Is The New Keyboard</p>
 
                                 <p class="description">A two-part UX case study on turning the camera into the primary input for Hike, India’s homegrown messenger — guerrilla research, gesture refactoring, motion-driven discovery, smart sticker algorithms, and metric wins at scale.</p>
 
@@ -271,34 +259,6 @@
                         </ul>
                     </a>
                 </div>
-                <hr>
-                <div class="post-item post featured liquid">
-
-                    <a href="instalively.html">
-
-                        <ul>
-                            <!-- <div class="action--icon">
-
-                                <span class="status-icon status-icon-direction"></span>
-
-                            </div> -->
-                            <li class="cover">
-                                <figure>
-
-                                    <img loading="lazy" decoding="async" alt="InstaLively live-streaming app concept" width="auto" height="100%" src="images/dribble_optimized.gif">
-
-                                </figure>
-                            </li>
-                            <li class="infos">
-                                <p class="title">InstaLively Takes On Periscope & Meerkat<span class="status-icon status-icon-direction"></span></p>
-
-                                <p class="description">On InstaLively’s founding team I shaped UX, brand, and front-end for one-tap live video built for low-bandwidth India — YouTube-native streams, B2C discovery and B2B “go live anywhere” modes — through 25k+ users and Hike’s acquisition.</p>
-
-                            </li>
-                        </ul>
-                    </a>
-                </div>
-                <hr>
             </div>
         </div>
         <div class="container">
@@ -312,6 +272,7 @@
                                 <img loading="lazy" decoding="async" alt="Knowledge on Demand blog article" width="72" height="87" src="images/byrslf.png">
                             </figure>
                             <div class="more-work-card__body">
+                                
                                 <h3 class="more-work-card__title">Knowledge on demand</h3>
                                 <span class="ski-pill">Blog</span>
                                 <p class="more-work-card__desc">On learning when you need it.</p>
@@ -319,14 +280,15 @@
                         </a>
                     </article>
                     <article class="post-item post featured liquid more-work-card" role="listitem">
-                        <a class="more-work-card__link" href="silent-ninja-redesign.html">
+                        <a class="more-work-card__link" href="instalively.html">
                             <figure class="more-work-card__media">
-                                <img loading="lazy" decoding="async" alt="Silent Ninja app redesign" width="72" height="87" src="images/silent.jpg">
+                                <img loading="lazy" decoding="async" alt="InstaLively live-streaming app concept" width="72" height="87" src="images/dribble_optimized.gif">
                             </figure>
                             <div class="more-work-card__body">
-                                <h3 class="more-work-card__title">Silent Ninja call blocking</h3>
-                                <span class="ski-pill">Archive</span>
-                                <p class="more-work-card__desc">Android call-blocking UX refresh.</p>
+                                
+                                <h3 class="more-work-card__title">InstaLively live video app</h3>
+                                <span class="ski-pill">Case study</span>
+                                <p class="more-work-card__desc">One-tap live streaming for low-bandwidth India.</p>
                             </div>
                         </a>
                     </article>
@@ -336,9 +298,23 @@
                                 <img loading="lazy" decoding="async" alt="Popcorn ticket-booking app UI and motion kit" width="72" height="87" src="images/popcorn_full.gif">
                             </figure>
                             <div class="more-work-card__body">
+                                
                                 <h3 class="more-work-card__title">Popcorn UI kit</h3>
                                 <span class="ski-pill">Sketch Resource</span>
                                 <p class="more-work-card__desc">Free Sketch + Principle ticket UI kit.</p>
+                            </div>
+                        </a>
+                    </article>
+                    <article class="post-item post featured liquid more-work-card" role="listitem">
+                        <a class="more-work-card__link" href="silent-ninja-redesign.html">
+                            <figure class="more-work-card__media">
+                                <img loading="lazy" decoding="async" alt="Silent Ninja app redesign" width="72" height="87" src="images/silent.jpg">
+                            </figure>
+                            <div class="more-work-card__body">
+                                
+                                <h3 class="more-work-card__title">Silent Ninja call blocking app</h3>
+                                <span class="ski-pill">Archive</span>
+                                <p class="more-work-card__desc">Android call-blocking UX refresh.</p>
                             </div>
                         </a>
                     </article>
@@ -350,7 +326,7 @@
                 <span class="date">Engage</span>
                 <hr>
 
-               <div style="height: 600px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); border-radius: 16px; overflow: hidden; width: 100%;">
+               <div class="adplist-embed adplist-embed--booking">
                     <iframe data-lazy-src="https://adplist.org/widgets/booking?src=vipul-saxena" title="" width="100%" height="100%" loading="lazy" style="border: 0px;"></iframe>
                </div>
                
@@ -365,8 +341,12 @@
         <div class="shell-footer-lead">
           <div>
             <p class="shell-footer-title">Let’s build something.</p>
-            <p class="shell-footer-copy">Say hi via <a href="#" id="footer-contact-trigger">💬 Chat with me</a> 👋 or request any inquiry. You can also <a href="https://twitter.com/intent/tweet?screen_name=vipulsaxena_fc" target="_blank" rel="noopener">tweet me</a>, or send me an old fashioned <a href="mailto:vipul.saxena01@gmail.com">email</a>.</p>
+            <p class="shell-footer-copy">Say hi 👋 — <a href="#" id="footer-contact-trigger">💬 chat with me</a>, <a href="https://twitter.com/intent/tweet?screen_name=vipulsaxena_fc" target="_blank" rel="noopener">tweet me</a>, or send an old-fashioned <a href="mailto:vipul.saxena01@gmail.com">email</a>.</p>
           </div>
+          <nav class="shell-footer-social" aria-label="Social profiles">
+            <a href="https://www.linkedin.com/in/saxenavipul/" target="_blank" rel="noopener" class="hotlinks l link_fix"><i>LinkedIn</i></a>
+            <a href="https://dribbble.com/vipulsaxena_fc" target="_blank" rel="noopener" class="hotlinks d link_fix"><i>Dribbble</i></a>
+          </nav>
         </div>
         <div class="shell-footer-base">
           <p>© 2026 · Vipul Saxena · Product Design Portfolio</p>
@@ -406,7 +386,7 @@
       .card-cta__lock{ width:14px; height:14px; padding:0; flex-shrink:0; background-size:contain; }
     </style>
 
-    <div class="pw-modal" id="olxPwModal" role="dialog" aria-modal="true" aria-labelledby="pwTitle" aria-hidden="true">
+    <div class="pw-modal" id="olxPwModal" data-company="olx" role="dialog" aria-modal="true" aria-labelledby="pwTitle" aria-hidden="true">
       <div class="pw-backdrop" data-pw-close></div>
       <div class="pw-card pw-card--preview" role="document">
         <button type="button" class="pw-close" aria-label="Close" data-pw-close>&times;</button>
@@ -439,15 +419,15 @@
           <input type="password" id="olxPwInput" class="pw-input" placeholder="Password" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Password">
           <p class="pw-error" id="olxPwError" role="alert" hidden>Incorrect password. Please try again.</p>
           <div class="pw-actions">
-            <button type="button" class="pw-btn pw-btn--ghost" data-pw-request>Request password</button>
-            <button type="submit" class="pw-btn">Unlock &rarr;</button>
+            <button type="button" class="pw-btn pw-btn--ghost" data-pw-request>Request access</button>
+            <button type="submit" class="pw-btn">Unlock</button>
           </div>
         </form>
       </div>
     </div>
 
     <!-- ===================== Raisin password gate modal ===================== -->
-    <div class="pw-modal" id="raisinPwModal" role="dialog" aria-modal="true" aria-labelledby="raisinPwTitle" aria-hidden="true">
+    <div class="pw-modal" id="raisinPwModal" data-company="raisin" role="dialog" aria-modal="true" aria-labelledby="raisinPwTitle" aria-hidden="true">
       <div class="pw-backdrop" data-pw-close></div>
       <div class="pw-card pw-card--preview" role="document">
         <button type="button" class="pw-close" aria-label="Close" data-pw-close>&times;</button>
@@ -480,15 +460,15 @@
           <input type="password" id="raisinPwInput" class="pw-input" placeholder="Password" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Password">
           <p class="pw-error" id="raisinPwError" role="alert" hidden>Incorrect password. Please try again.</p>
           <div class="pw-actions">
-            <button type="button" class="pw-btn pw-btn--ghost" data-pw-request>Request password</button>
-            <button type="submit" class="pw-btn">Unlock &rarr;</button>
+            <button type="button" class="pw-btn pw-btn--ghost" data-pw-request>Request access</button>
+            <button type="submit" class="pw-btn">Unlock</button>
           </div>
         </form>
       </div>
     </div>
 
     <!-- ===================== N26 password gate modal ===================== -->
-    <div class="pw-modal" id="n26PwModal" role="dialog" aria-modal="true" aria-labelledby="n26PwTitle" aria-hidden="true">
+    <div class="pw-modal" id="n26PwModal" data-company="n26" role="dialog" aria-modal="true" aria-labelledby="n26PwTitle" aria-hidden="true">
       <div class="pw-backdrop" data-pw-close></div>
       <div class="pw-card pw-card--preview" role="document">
         <button type="button" class="pw-close" aria-label="Close" data-pw-close>&times;</button>
@@ -521,15 +501,15 @@
           <input type="password" id="n26PwInput" class="pw-input" placeholder="Password" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Password">
           <p class="pw-error" id="n26PwError" role="alert" hidden>Incorrect password. Please try again.</p>
           <div class="pw-actions">
-            <button type="button" class="pw-btn pw-btn--ghost" data-pw-request>Request password</button>
-            <button type="submit" class="pw-btn">Unlock &rarr;</button>
+            <button type="button" class="pw-btn pw-btn--ghost" data-pw-request>Request access</button>
+            <button type="submit" class="pw-btn">Unlock</button>
           </div>
         </form>
       </div>
     </div>
 
     <!-- ===================== GoMart password gate modal ===================== -->
-    <div class="pw-modal" id="gomartPwModal" role="dialog" aria-modal="true" aria-labelledby="gomartPwTitle" aria-hidden="true">
+    <div class="pw-modal" id="gomartPwModal" data-company="gomart" role="dialog" aria-modal="true" aria-labelledby="gomartPwTitle" aria-hidden="true">
       <div class="pw-backdrop" data-pw-close></div>
       <div class="pw-card pw-card--preview" role="document">
         <button type="button" class="pw-close" aria-label="Close" data-pw-close>&times;</button>
@@ -562,8 +542,8 @@
           <input type="password" id="gomartPwInput" class="pw-input" placeholder="Password" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Password">
           <p class="pw-error" id="gomartPwError" role="alert" hidden>Incorrect password. Please try again.</p>
           <div class="pw-actions">
-            <button type="button" class="pw-btn pw-btn--ghost" data-pw-request>Request password</button>
-            <button type="submit" class="pw-btn">Unlock &rarr;</button>
+            <button type="button" class="pw-btn pw-btn--ghost" data-pw-request>Request access</button>
+            <button type="submit" class="pw-btn">Unlock</button>
           </div>
         </form>
       </div>
@@ -574,12 +554,12 @@
     <script>
       (function(){
         var PASSWORD = "portfolio26";
-        var trigger = document.getElementById("raisin-gate-trigger");
+        var card    = document.querySelector('.trg_cnt[data-company="raisin"]');
         var modal   = document.getElementById("raisinPwModal");
         var form    = document.getElementById("raisinPwForm");
         var input   = document.getElementById("raisinPwInput");
         var error   = document.getElementById("raisinPwError");
-        if (!trigger || !modal) return;
+        if (!modal || !form || !input) return;
 
         function open(){
           if (window.loadCaseStudyPreviews) window.loadCaseStudyPreviews();
@@ -592,11 +572,12 @@
           modal.classList.remove("open");
           modal.setAttribute("aria-hidden", "true");
         }
+        function tryOpen(e){
+          if (e) e.preventDefault();
+          open();
+        }
 
-        trigger.addEventListener("click", function(e){ e.preventDefault(); e.stopPropagation(); open(); });
-        trigger.addEventListener("keydown", function(e){
-          if (e.key === "Enter" || e.key === " ") { e.preventDefault(); e.stopPropagation(); open(); }
-        });
+        if (card) card.addEventListener("click", tryOpen);
         modal.querySelectorAll("[data-pw-close]").forEach(function(el){ el.addEventListener("click", close); });
         document.addEventListener("keydown", function(e){
           if (e.key === "Escape" && modal.classList.contains("open")) close();
@@ -617,12 +598,12 @@
     <script>
       (function(){
         var PASSWORD = "portfolio26";
-        var trigger = document.getElementById("olx-gate-trigger");
+        var card    = document.querySelector('.trg_cnt[data-company="olx"]');
         var modal   = document.getElementById("olxPwModal");
         var form    = document.getElementById("olxPwForm");
         var input   = document.getElementById("olxPwInput");
         var error   = document.getElementById("olxPwError");
-        if (!trigger || !modal) return;
+        if (!modal || !form || !input) return;
 
         function open(){
           if (window.loadCaseStudyPreviews) window.loadCaseStudyPreviews();
@@ -635,11 +616,12 @@
           modal.classList.remove("open");
           modal.setAttribute("aria-hidden", "true");
         }
+        function tryOpen(e){
+          if (e) e.preventDefault();
+          open();
+        }
 
-        trigger.addEventListener("click", function(e){ e.preventDefault(); e.stopPropagation(); open(); });
-        trigger.addEventListener("keydown", function(e){
-          if (e.key === "Enter" || e.key === " ") { e.preventDefault(); e.stopPropagation(); open(); }
-        });
+        if (card) card.addEventListener("click", tryOpen);
         modal.querySelectorAll("[data-pw-close]").forEach(function(el){ el.addEventListener("click", close); });
         document.addEventListener("keydown", function(e){
           if (e.key === "Escape" && modal.classList.contains("open")) close();
@@ -660,12 +642,12 @@
     <script>
       (function(){
         var PASSWORD = "portfolio26";
-        var trigger = document.getElementById("n26-gate-trigger");
+        var card    = document.querySelector('.trg_cnt[data-company="n26"]');
         var modal   = document.getElementById("n26PwModal");
         var form    = document.getElementById("n26PwForm");
         var input   = document.getElementById("n26PwInput");
         var error   = document.getElementById("n26PwError");
-        if (!trigger || !modal) return;
+        if (!modal || !form || !input) return;
 
         function open(){
           if (window.loadCaseStudyPreviews) window.loadCaseStudyPreviews();
@@ -678,11 +660,12 @@
           modal.classList.remove("open");
           modal.setAttribute("aria-hidden", "true");
         }
+        function tryOpen(e){
+          if (e) e.preventDefault();
+          open();
+        }
 
-        trigger.addEventListener("click", function(e){ e.preventDefault(); e.stopPropagation(); open(); });
-        trigger.addEventListener("keydown", function(e){
-          if (e.key === "Enter" || e.key === " ") { e.preventDefault(); e.stopPropagation(); open(); }
-        });
+        if (card) card.addEventListener("click", tryOpen);
         modal.querySelectorAll("[data-pw-close]").forEach(function(el){ el.addEventListener("click", close); });
         document.addEventListener("keydown", function(e){
           if (e.key === "Escape" && modal.classList.contains("open")) close();
@@ -703,12 +686,12 @@
     <script>
       (function(){
         var PASSWORD = "portfolio26";
-        var trigger = document.getElementById("gomart-gate-trigger");
+        var card    = document.querySelector('.trg_cnt[data-company="gomart"]');
         var modal   = document.getElementById("gomartPwModal");
         var form    = document.getElementById("gomartPwForm");
         var input   = document.getElementById("gomartPwInput");
         var error   = document.getElementById("gomartPwError");
-        if (!trigger || !modal) return;
+        if (!modal || !form || !input) return;
 
         function open(){
           if (window.loadCaseStudyPreviews) window.loadCaseStudyPreviews();
@@ -721,11 +704,12 @@
           modal.classList.remove("open");
           modal.setAttribute("aria-hidden", "true");
         }
+        function tryOpen(e){
+          if (e) e.preventDefault();
+          open();
+        }
 
-        trigger.addEventListener("click", function(e){ e.preventDefault(); e.stopPropagation(); open(); });
-        trigger.addEventListener("keydown", function(e){
-          if (e.key === "Enter" || e.key === " ") { e.preventDefault(); e.stopPropagation(); open(); }
-        });
+        if (card) card.addEventListener("click", tryOpen);
         modal.querySelectorAll("[data-pw-close]").forEach(function(el){ el.addEventListener("click", close); });
         document.addEventListener("keydown", function(e){
           if (e.key === "Escape" && modal.classList.contains("open")) close();
@@ -755,13 +739,14 @@
     <script defer src="js/sonic.js"></script>
     <script defer src="js/dot-grid.js"></script>
     <!-- Shared shell header interactions (mobile menu, scrollspy, share) -->
+    <script defer src="js/custom-cursor.js"></script>
     <script defer src="template.js"></script>
 
     <script defer src="js/lazy-third-party.js"></script>
     <script defer src="js/portfolio-gate.js"></script>
-    <script defer src="js/vipul-chat-config.js?v=11"></script>
-    <script defer src="js/vipul-chat-knowledge.js?v=11"></script>
-    <script defer src="js/vipul-chat.js?v=11"></script>
+    <script defer src="js/vipul-chat-config.js?v=16"></script>
+    <script defer src="js/vipul-chat-knowledge.js?v=16"></script>
+    <script defer src="js/vipul-chat.js?v=16"></script>
 
     <script>
         //Font observer loader
@@ -769,10 +754,6 @@
         var font = new FontFaceObserver('serif');
 
         jQuery(document).ready(function( $ ){
-            $('.trg_cnt').click(function() {
-                if (window.VipulChat) VipulChat.open({ intent: 'request_access' });
-            });
-            // Keyboard activation for gated project cards (role=button)
             $('.trg_cnt[role="button"]').on('keydown', function(e) {
                 if (e.key === 'Enter' || e.key === ' ' || e.keyCode === 13 || e.keyCode === 32) {
                     e.preventDefault();

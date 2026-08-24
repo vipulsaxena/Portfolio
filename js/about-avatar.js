@@ -1,11 +1,14 @@
 (function () {
-  var AVATAR_DIR = "images/avatar_assets/";
   var DEFAULT_KEY = "default";
   var MORPH_MS = 560;
 
   var bio = document.querySelector(".about-bio");
   var layers = document.querySelectorAll(".avatar-morph__img");
   if (!bio || layers.length < 2) return;
+
+  var morphRoot = document.querySelector(".avatar-morph");
+  var AVATAR_DIR =
+    (morphRoot && morphRoot.getAttribute("data-dir")) || "images/avatar_assets/";
 
   var activeLayer = 0;
   var currentKey = DEFAULT_KEY;

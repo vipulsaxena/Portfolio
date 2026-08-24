@@ -103,13 +103,12 @@
     <link rel="stylesheet" href="css/style.css">
     <link href="css/zoom.css" rel="stylesheet">
     <link rel="stylesheet" href="css/shell.css">
-    <link rel="stylesheet" href="css/vipul-chat.css?v=11">
+    <link rel="stylesheet" href="css/custom-cursor.css">
+    <link rel="stylesheet" href="css/vipul-chat.css?v=16">
     <script src="js/follow-me-bootstrap.js"></script>
 </head>
 
 <body>
-
-<script defer src="js/defer-spline.js"></script>
 
 <!-- SECTION: Sticky Navigation (shared shell — see css/shell.css) -->
 <header class="shell-header">
@@ -141,19 +140,33 @@
         <article class="post">
             <div class="container">
                 <div class="post-header">
-                    <div class="post-cover outter_box" data-tilt data-tilt-full-page-listening data-tilt-glare data-tilt-max-glare="0.8" >
-                    <spline-viewer class="spline-3d" url="https://prod.spline.design/bpIj8gVoy4x6xI2F/scene.splinecode"></spline-viewer>
-                        <div class="lazy inner_box avatar-stack" aria-hidden="true">
-                            <div class="avatar-morph">
-                                <img class="avatar-morph__img is-active" src="images/avatar_assets/default.png" alt="" width="420" height="420" decoding="async">
-                                <img class="avatar-morph__img" src="images/avatar_assets/default.png" alt="" width="420" height="420" decoding="async">
+                    <div class="about-stage">
+                        <div class="about-hover-photos" aria-hidden="true">
+                            <div class="about-hover__frame" id="about-hover-frame">
+                                <img class="about-hover__img" alt="" decoding="async">
+                            </div>
+                            <div class="about-hover__sources" hidden>
+                                <img data-hover="1" src="images/avatar_assets/study.png" alt="" width="320" decoding="async">
+                                <img data-hover="2" src="images/avatar_assets/artist.png" alt="" width="320" decoding="async">
+                                <img data-hover="3" src="images/avatar_assets/coder.png" alt="" width="320" decoding="async">
+                                <img data-hover="4" src="images/avatar_assets/designer.png" alt="" width="320" decoding="async">
+                                <img data-hover="5" src="images/avatar_assets/seller.png" alt="" width="320" decoding="async">
+                                <img data-hover="6" src="images/avatar_assets/researcher.png" alt="" width="320" decoding="async">
+                                <img data-hover="7" src="images/hike_poster.jpg" alt="" width="320" decoding="async">
+                                <img data-hover="8" src="images/goplay_poster.jpg" alt="" width="320" decoding="async">
+                                <img data-hover="9" src="images/gomart_gojek.png" alt="" width="320" decoding="async">
+                                <img data-hover="10" src="images/olx_mon.png" alt="" width="320" decoding="async">
+                                <img data-hover="11" src="images/n26_cards.png" alt="" width="320" decoding="async">
+                                <img data-hover="12" src="images/avatar_assets/storyteller.png" alt="" width="320" decoding="async">
+                                <img data-hover="13" src="images/avatar_assets/gamer.png" alt="" width="320" decoding="async">
+                                <img data-hover="14" src="images/avatar_assets/devil.png" alt="" width="320" decoding="async">
+                                <img data-hover="15" src="images/avatar_assets/default.png" alt="" width="320" decoding="async">
                             </div>
                         </div>
+                        <p class="about-hero-text">I studied <span class="about-hover about-hover--1">Computer Science Engineering</span>, but <span class="about-hover about-hover--2">visual design</span> was always pulling at my sleeve. My early career was a multidisciplinary mix of <span class="about-hover about-hover--3">writing front-end code</span> for web/mobile-apps and <span class="about-hover about-hover--4">designing mobile-games</span>. Driven by user empathy at early startups, I even stepped into <span class="about-hover about-hover--5">B2B sales</span> to learn firsthand why customers bought in or walked away. <span class="about-hover about-hover--6">Researching</span> into those front-row insights was the exact signal I needed to pivot into Product Design full-time.</p>
+                        <p class="about-hero-text">Fast forward to today, and I've spent over 12 years designing and building digital products across <span class="about-hover about-hover--7">social</span>, <span class="about-hover about-hover--8">streaming</span>, <span class="about-hover about-hover--9">on-demand</span>, <span class="about-hover about-hover--10">marketplaces</span>, and <span class="about-hover about-hover--11">fintech</span>.</p>
+                        <p class="about-hero-text">Outside of work, I love <span class="about-hover about-hover--12">stories</span> that are deeply earned. My favorites live inside the environmental storytelling of <span class="about-hover about-hover--13">Dark Souls games</span>, where I've racked up <span class="about-hover about-hover--14">17 PlayStation platinum trophies</span>. Uncovering hidden lore and complex mechanics takes patience and deep curiosity—the same energy I bring to <span class="about-hover about-hover--15">building products</span>.</p>
                     </div>
-                </div>
-                <div class="about-bio">
-                    <p>I studied <span class="about-bio__hit" data-avatar="study" tabindex="0">Computer Science Engineering</span>, but <span class="about-bio__hit" data-avatar="artist" tabindex="0">visual design</span> was always pulling at my sleeve. My early career became a multidisciplinary mix—<span class="about-bio__hit" data-avatar="coder" tabindex="0">writing front-end code</span> for web/mobile-apps/mobile-games and <span class="about-bio__hit" data-avatar="designer" tabindex="0">designing</span> them at the same time (Design engineering). Driven by user empathy at early startups, I even stepped into <span class="about-bio__hit" data-avatar="seller" tabindex="0">B2B sales</span> to learn firsthand why customers bought in or walked away. <span class="about-bio__hit" data-avatar="researcher" tabindex="0">Researching</span> into those front-row insights was the exact signal I needed to pivot into Product Design full-time.</p>
-                    <p>Outside of work, I love <span class="about-bio__hit" data-avatar="storyteller" tabindex="0">stories</span> that are deeply earned. My favorites live inside the environmental storytelling of <span class="about-bio__hit" data-avatar="gamer" tabindex="0">Dark Souls games</span>, where I’ve racked up <span class="about-bio__hit" data-avatar="devil" tabindex="0">17 PlayStation platinum trophies</span>. Uncovering hidden lore and complex mechanics takes patience and deep curiosity—the same energy I bring to <span class="about-bio__hit" data-avatar="default" tabindex="0">building products</span>.</p>
                 </div>
             </div>
         </article>
@@ -177,7 +190,7 @@
                                 </li>
                                 <li class="infos">
 
-                                    <p class="title">Raisin - Berlin, Germany<span class="status-icon status-icon-external"></span></p>
+                                    <p class="title">Raisin - Berlin, Germany</p>
                                     <p class="role">Senior Product Designer</p>
 
                                     <p class="description">Simplifying wealth management across EU, UK and US.
@@ -204,7 +217,7 @@
                                 </li>
                                 <li class="infos">
 
-                                    <p class="title">OLX Group - Berlin, Germany<span class="status-icon status-icon-external"></span></p>
+                                    <p class="title">OLX Group - Berlin, Germany</p>
                                     <p class="role">Senior Product Designer</p>
 
                                     <p class="description">Led design for Monetisation Packs within the Pay & Ship unit, driving growth and revenue for a platform serving over 317 million C2C and B2C users. I owned key areas like OLX Ad Packages, Seller Take Rate, Payment Gateway, and value-added services—building features with a long-term vision to enhance user empowerment, platform trust, and sustainable monetization.
@@ -231,7 +244,7 @@
                             </li>
                             <li class="infos">
 
-                                <p class="title">N26 - Berlin, Germany<span class="status-icon status-icon-external"></span></p>
+                                <p class="title">N26 - Berlin, Germany</p>
                                 <p class="role">Senior Product Designer</p>
 
                                 <p class="description">
@@ -259,7 +272,7 @@
                             </li>
                             <li class="infos">
 
-                                <p class="title">Gojek - Jakarta, Indonesia<span class="status-icon status-icon-external"></span></p>
+                                <p class="title">Gojek - Jakarta, Indonesia</p>
                                 <p class="role">Lead Product Designer</p>
 
                                 <p class="description">
@@ -288,7 +301,7 @@
                             </li>
                             <li class="infos">
 
-                                <p class="title">Hike - New Delhi, India<span class="status-icon status-icon-external"></span></p>
+                                <p class="title">Hike - New Delhi, India</p>
                                 <p class="role">Product Designer</p>
 
                                 <p class="description">Redesigned Hike’s AR camera and content consumption experiences (stories & timeline), and filed my first IP around a media recommendation engine. I also took multiple new features from 0→1—including Hikemoji (personalized avatars), LiveDraw (real-time video call doodling with face detection), Hike Discover (3rd-party content), and the Hike 5.0 website.</p>
@@ -312,7 +325,7 @@
                             </li>
                             <li class="infos">
 
-                                <p class="title">InstaLively - New Delhi, India<span class="status-icon status-icon-external"></span></p>
+                                <p class="title">InstaLively - New Delhi, India</p>
                                 <p class="role">UX Engineer I / II</p>
 
                                 <p class="description">
@@ -341,7 +354,7 @@
                             </li>
                             <li class="infos">
 
-                                <p class="title">GrownOut - Gurugram, India<span class="status-icon status-icon-external"></span></p>
+                                <p class="title">GrownOut - Gurugram, India</p>
                                 <p class="role">UX Engineer</p>
                                 Led all design and front-end development(MEAN stack) efforts building this automated referral hiring product. We raised $3M+ in venture capital from Matrix Partners and in 2017, GrownOut was acquired by PeopleStrong.
 
@@ -368,7 +381,7 @@
                             </li>
                             <li class="infos">
 
-                                <p class="title">inoXapps - Noida Area, India<span class="status-icon status-icon-external"></span></p>
+                                <p class="title">inoXapps - Noida Area, India</p>
                                 <p class="role">UI/UX Designer</p>
 
                                 <p class="description">Launched my design journey in UI/UX for mobile games—designing intuitive interfaces, shaping in-game user flows, refining HUDs and menus, and crafting smooth transitions that enhance gameplay.</p>
@@ -384,7 +397,7 @@
             <div class="post-list no-decoration">
                 <span class="date">Mentoring reviews</span>
                 <hr>
-                <div class="mentoring-reviews-embed">
+                <div class="adplist-embed adplist-embed--reviews">
                     <iframe data-lazy-src="https://adplist.org/widgets/reviews?src=vipul-saxena" title="All Reviews" width="100%" height="100%" loading="lazy"></iframe>
                 </div>
                 <hr>
@@ -524,8 +537,12 @@
         <div class="shell-footer-lead">
           <div>
             <p class="shell-footer-title">Let’s build something.</p>
-            <p class="shell-footer-copy">Say hi via <a href="#" id="footer-contact-trigger">💬 Chat with me</a> 👋 or request any inquiry. You can also <a href="https://twitter.com/intent/tweet?screen_name=vipulsaxena_fc" target="_blank" rel="noopener">tweet me</a>, or send me an old fashioned <a href="mailto:vipul.saxena01@gmail.com">email</a>.</p>
+            <p class="shell-footer-copy">Say hi 👋 — <a href="#" id="footer-contact-trigger">💬 chat with me</a>, <a href="https://twitter.com/intent/tweet?screen_name=vipulsaxena_fc" target="_blank" rel="noopener">tweet me</a>, or send an old-fashioned <a href="mailto:vipul.saxena01@gmail.com">email</a>.</p>
           </div>
+          <nav class="shell-footer-social" aria-label="Social profiles">
+            <a href="https://www.linkedin.com/in/saxenavipul/" target="_blank" rel="noopener" class="hotlinks l link_fix"><i>LinkedIn</i></a>
+            <a href="https://dribbble.com/vipulsaxena_fc" target="_blank" rel="noopener" class="hotlinks d link_fix"><i>Dribbble</i></a>
+          </nav>
         </div>
         <div class="shell-footer-base">
           <p>© 2026 · Vipul Saxena · Product Design Portfolio</p>
@@ -538,19 +555,19 @@
     <script src="js/zoom.js"></script>
     <script src="js/transition.js"></script>
     <script src="js/fontfaceobserver.js"></script>
-    <script type="text/javascript" src="js/vanilla-tilt.min.js"></script>
     <script type="module" src="js/custom.js"></script>
     <script defer src="js/field-surface.js"></script>
     <script defer src="js/liquid-glass.js"></script>
     <script defer src="js/sonic.js"></script>
     <script defer src="js/dot-grid.js"></script>
-    <script defer src="js/about-avatar.js"></script>
+    <script defer src="js/about-hover-reveal.js"></script>
+    <script defer src="js/custom-cursor.js"></script>
     <script defer src="template.js"></script>
     <script defer src="js/lazy-third-party.js"></script>
     <script defer src="js/portfolio-gate.js"></script>
-    <script defer src="js/vipul-chat-config.js?v=11"></script>
-    <script defer src="js/vipul-chat-knowledge.js?v=11"></script>
-    <script defer src="js/vipul-chat.js?v=11"></script>
+    <script defer src="js/vipul-chat-config.js?v=16"></script>
+    <script defer src="js/vipul-chat-knowledge.js?v=16"></script>
+    <script defer src="js/vipul-chat.js?v=16"></script>
     <!-- Start of Magnify Widget Snippet -->
     <!-- app.usemagnify.com -->
     <!-- End of Magnify Widget Snippet -->

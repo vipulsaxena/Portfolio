@@ -110,6 +110,9 @@ const noise2D = makeNoise2D();
 
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+// Shared tempo for orb noise and the name wash (per Pixi ticker frame @ 60fps).
+const ORB_INC = 0.0009;
+
 // Authored trios — names describe the wash, not a single seed hue.
 const LUMINESCENCE = [
   { name: "Dusk", hues: [222, 28, 268], sat: 84, light: 56 },
@@ -177,6 +180,17 @@ class ColorPalette {
       "--hue-complimentary2",
       this.complimentaryHue2
     );
+
+    // Same hexes / order as Luminescence dots (HUD) so the name matches the pill.
+    document.documentElement.style.setProperty("--lum-text-1", this.baseColor);
+    document.documentElement.style.setProperty(
+      "--lum-text-2",
+      this.complimentaryColor1
+    );
+    document.documentElement.style.setProperty(
+      "--lum-text-3",
+      this.complimentaryColor2
+    );
   }
 }
 
@@ -208,7 +222,7 @@ class Orb {
     this.xOff = random(0, 1000);
     this.yOff = random(0, 1000);
     // how quickly the noise/self similar random values step through time
-    this.inc = 0.0009;
+    this.inc = ORB_INC;
 
     // PIXI.Graphics is used to draw 2d primitives (in this case a circle) to the canvas
     this.graphics = new PIXI.Graphics();
@@ -378,11 +392,26 @@ for (let i = 0; i < 10; i++) {
   orbs.push(orb);
 }
 
-function tickOrbs() {
+const heroGreeting = document.querySelector(".hero-greeting.text-gradient");
+let heroWashPhase = 0;
+
+function tickHeroWash(delta = 1) {
+  if (reduceMotion) return;
+  // Same step as Orb.inc — one full colour loop when phase advances by 1.
+  heroWashPhase = (heroWashPhase + ORB_INC * delta) % 1;
+  const pos = (heroWashPhase * 100).toFixed(3) + "% 0";
+  if (heroGreeting) heroGreeting.style.backgroundPosition = pos;
+  document.querySelectorAll(".about-hover:hover").forEach(function (el) {
+    el.style.backgroundPosition = pos;
+  });
+}
+
+function tickOrbs(delta) {
   orbs.forEach((orb) => {
     orb.update();
     orb.render();
   });
+  tickHeroWash(delta);
 }
 
 if (!reduceMotion) {

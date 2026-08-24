@@ -1,0 +1,142 @@
+/* Custom cursor — active only when JS adds html.has-custom-cursor */
+
+.has-custom-cursor,
+.has-custom-cursor * {
+  cursor: none !important;
+}
+
+/* Restore native cursors while hovering text fields */
+.has-custom-cursor.custom-cursor-native,
+.has-custom-cursor.custom-cursor-native * {
+  cursor: auto !important;
+}
+
+.has-custom-cursor.custom-cursor-native input,
+.has-custom-cursor.custom-cursor-native textarea,
+.has-custom-cursor.custom-cursor-native select,
+.has-custom-cursor.custom-cursor-native [contenteditable="true"] {
+  cursor: text !important;
+}
+
+/* Third-party iframes (ADPList, YouTube, etc.) use the native cursor */
+.has-custom-cursor iframe {
+  cursor: auto !important;
+}
+
+#custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 999px;
+  /* White fill + difference reads as black on light bg and inverts text beneath */
+  background-color: #fff;
+  mix-blend-mode: difference;
+  box-shadow: none;
+  pointer-events: none;
+  z-index: 10000010;
+  opacity: 0;
+  transform: translate3d(-100px, -100px, 0) translate(-50%, -50%);
+  transition:
+    width 0.18s ease-out,
+    height 0.18s ease-out,
+    opacity 0.15s ease-out,
+    background-color 0.12s ease-out,
+    mix-blend-mode 0.12s ease-out;
+  will-change: transform;
+}
+
+/* Solid black + white icons where blend would fight photos or UI chrome */
+#custom-cursor.is-hover,
+#custom-cursor.is-native,
+#custom-cursor.is-over-media,
+#custom-cursor.is-selecting {
+  background-color: #262626;
+  mix-blend-mode: normal;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.14);
+}
+
+#custom-cursor.is-selecting {
+  opacity: 0 !important;
+}
+
+/* Icon lives on ::after so it can rotate without fighting position transforms */
+#custom-cursor::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 2rem;
+  height: 2rem;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 0;
+  transform: translate(-50%, -50%);
+  transition: background-size 0.18s ease-out, transform 0.18s ease-out;
+}
+
+#custom-cursor.is-visible {
+  opacity: 1;
+}
+
+#custom-cursor.is-hover {
+  width: 4.4rem;
+  height: 4.4rem;
+}
+
+#custom-cursor.is-visible.is-hover {
+  opacity: 0.7;
+}
+
+#custom-cursor.is-hover::after {
+  background-image: url("../images/icon-arrow--default.svg");
+  background-size: 2rem;
+  filter: invert(1);
+}
+
+#custom-cursor.is-hover.is-external::after {
+  background-image: url("../images/icon-arrow--direction.svg");
+  background-size: 2rem;
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+#custom-cursor.is-hover.is-locked::after {
+  background-image: url("../images/icon-lock-cursor.svg");
+  background-size: 1.65rem;
+  background-position: center;
+  transform: translate(-50%, -50%);
+}
+
+#custom-cursor.is-hover.is-close::after {
+  background-image:
+    linear-gradient(45deg, transparent 42%, #fff 42%, #fff 58%, transparent 58%),
+    linear-gradient(-45deg, transparent 42%, #fff 42%, #fff 58%, transparent 58%);
+  filter: none;
+  background-size: 100% 100%;
+  width: 1.45rem;
+  height: 1.45rem;
+  transform: translate(-50%, -50%);
+}
+
+#custom-cursor.is-native {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #custom-cursor,
+  #custom-cursor::after {
+    transition: opacity 0.15s ease-out;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .has-custom-cursor,
+  .has-custom-cursor * {
+    cursor: auto !important;
+  }
+
+  #custom-cursor {
+    display: none !important;
+  }
+}

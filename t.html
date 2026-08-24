@@ -49,6 +49,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap">
     <link rel="stylesheet" href="css/shell.css">
+    <link rel="stylesheet" href="css/custom-cursor.css">
 
     <!-- Tailwind (Play CDN) + theme config -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -74,7 +75,6 @@
       :root{ --deck-top:3.5rem; }
       html,body{ height:100%; }
       body{ background:#ffffff; font-family:"Inter", system-ui, sans-serif; overflow:hidden; }
-      ::selection{ background:#ffda08; color:#262626; }
 
       .hl{ background:#ffda08; color:#262626; padding:0 .1em; border-radius:.08em;
            -webkit-box-decoration-break:clone; box-decoration-break:clone; }
@@ -316,7 +316,7 @@
       <p class="pw-error" id="olxGateError" role="alert" hidden>Incorrect password. Please try again.</p>
       <div class="pw-actions">
         <a class="pw-back" href="index.html">&larr; Back home</a>
-        <button type="submit" class="pw-btn">Unlock &rarr;</button>
+        <button type="submit" class="pw-btn">Unlock</button>
       </div>
     </form>
   </div>
@@ -771,7 +771,7 @@
           Thanks for <span class="hl">reading</span> 🙌
         </h2>
         <p class="mt-8 text-lg md:text-xl text-white/70 max-w-[52ch]" data-anim style="--i:2">
-          Let's build something together — say hi via <a class="underline decoration-accent decoration-2 underline-offset-2 hover:text-white" href="#" id="footer-contact-trigger">chat with me</a>, <a class="underline decoration-accent decoration-2 underline-offset-2 hover:text-white" href="https://twitter.com/intent/tweet?screen_name=vipulsaxena_fc" target="_blank" rel="noopener">tweet me</a>, or send an old-fashioned <a class="underline decoration-accent decoration-2 underline-offset-2 hover:text-white" href="mailto:vipul.saxena01@gmail.com">email</a>.
+          Say hi 👋 — <a class="underline underline-offset-2 decoration-white/40 hover:decoration-white/70" href="#" id="footer-contact-trigger">💬 chat with me</a>, <a class="underline underline-offset-2 decoration-white/40 hover:decoration-white/70" href="https://twitter.com/intent/tweet?screen_name=vipulsaxena_fc" target="_blank" rel="noopener">tweet me</a>, or send an old-fashioned <a class="underline underline-offset-2 decoration-white/40 hover:decoration-white/70" href="mailto:vipul.saxena01@gmail.com">email</a>.
         </p>
         <div class="mt-10 flex flex-wrap items-center justify-center gap-4" data-anim style="--i:3">
           <a class="nav-btn !w-auto !px-5 !text-white !bg-white/10 !border-white/20 hover:!bg-white/20 hover:!border-white/40" href="raisin.html">← Raisin</a>
@@ -1034,5 +1034,6 @@
 })();
 </script>
 
+<script defer src="js/custom-cursor.js"></script>
 </body>
 </html>

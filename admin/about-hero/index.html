@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>About hero archive — Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap">
+  <link rel="stylesheet" href="../admin.css">
+  <link rel="stylesheet" href="../../css/style.css">
+  <link rel="stylesheet" href="../../css/shell.css">
+  <script src="../../js/follow-me-bootstrap.js"></script>
+  <link rel="icon" href="../../fav.png" type="image/png">
+</head>
+<body>
+  <header class="admin-header">
+    <div class="admin-header__inner">
+      <p class="admin-logo"><span></span>About hero archive</p>
+      <button type="button" class="admin-btn admin-btn--ghost hidden" id="logout-btn">Log out</button>
+    </div>
+  </header>
+
+  <div class="hidden" id="admin-home">
+    <div class="admin-main" style="padding-bottom: 0">
+      <a class="admin-back" href="../">&larr; Admin</a>
+      <p class="admin-sub">Private archive. Spline, avatar morph, and bio copy — not linked from the public site.</p>
+    </div>
+    <article class="post">
+      <div class="container">
+        <div class="post-header">
+          <div class="post-cover outter_box" data-tilt data-tilt-full-page-listening data-tilt-glare data-tilt-max-glare="0.8">
+            <spline-viewer class="spline-3d" url="https://prod.spline.design/bpIj8gVoy4x6xI2F/scene.splinecode"></spline-viewer>
+            <div class="lazy inner_box avatar-stack" aria-hidden="true">
+              <div class="avatar-morph" data-dir="../../images/avatar_assets/">
+                <img class="avatar-morph__img is-active" src="../../images/avatar_assets/default.png" alt="" width="420" height="420" decoding="async">
+                <img class="avatar-morph__img" src="../../images/avatar_assets/default.png" alt="" width="420" height="420" decoding="async">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="about-bio">
+          <p>I studied <span class="about-bio__hit" data-avatar="study" tabindex="0">Computer Science Engineering</span>, but <span class="about-bio__hit" data-avatar="artist" tabindex="0">visual design</span> was always pulling at my sleeve. My early career became a multidisciplinary mix—<span class="about-bio__hit" data-avatar="coder" tabindex="0">writing front-end code</span> for web/mobile-apps/mobile-games and <span class="about-bio__hit" data-avatar="designer" tabindex="0">designing</span> them at the same time (Design engineering). Driven by user empathy at early startups, I even stepped into <span class="about-bio__hit" data-avatar="seller" tabindex="0">B2B sales</span> to learn firsthand why customers bought in or walked away. <span class="about-bio__hit" data-avatar="researcher" tabindex="0">Researching</span> into those front-row insights was the exact signal I needed to pivot into Product Design full-time.</p>
+          <p>Outside of work, I love <span class="about-bio__hit" data-avatar="storyteller" tabindex="0">stories</span> that are deeply earned. My favorites live inside the environmental storytelling of <span class="about-bio__hit" data-avatar="gamer" tabindex="0">Dark Souls games</span>, where I’ve racked up <span class="about-bio__hit" data-avatar="devil" tabindex="0">17 PlayStation platinum trophies</span>. Uncovering hidden lore and complex mechanics takes patience and deep curiosity—the same energy I bring to <span class="about-bio__hit" data-avatar="default" tabindex="0">building products</span>.</p>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <script src="../admin-config.js"></script>
+  <script src="../admin-gate.js"></script>
+  <script defer src="../../js/defer-spline.js"></script>
+  <script src="../../js/vanilla-tilt.min.js"></script>
+  <script defer src="../../js/about-avatar.js"></script>
+</body>
+</html>

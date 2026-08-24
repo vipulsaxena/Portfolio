@@ -49,11 +49,11 @@
     return;
   }
 
-  ["raisin-gate-trigger", "olx-gate-trigger", "n26-gate-trigger", "gomart-gate-trigger"].forEach(function (id) {
-    var trigger = document.getElementById(id);
-    if (!trigger) return;
-    trigger.addEventListener("mouseenter", loadCaseStudyPreviews, { once: true });
-    trigger.addEventListener("focus", loadCaseStudyPreviews, { once: true });
+  ["raisin", "olx", "n26", "gomart"].forEach(function (company) {
+    var card = document.querySelector('.trg_cnt[data-company="' + company + '"]');
+    if (!card) return;
+    card.addEventListener("mouseenter", loadCaseStudyPreviews, { once: true });
+    card.addEventListener("focus", loadCaseStudyPreviews, { once: true });
   });
 
   if ("requestIdleCallback" in window) {
