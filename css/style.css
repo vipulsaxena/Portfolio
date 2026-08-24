@@ -1304,7 +1304,7 @@
   transition: opacity 0.35s ease;
 }
 
-/* Magnetic field layer disabled — Fascination mode syncs to dot grid and orbs. */
+/* Magnetic field layer disabled — field mode still syncs to the dot grid. */
 .field-surface {
   display: none !important;
 }
@@ -1945,14 +1945,6 @@ a, button, [role="button"], .liquid, .archive__item, .schematic__cell {
 }
 #sonic-toggle[aria-pressed="true"] .hud-value {
     color: #b0b0b0;
-}
-.orb-cta--field .field-dot {
-    background: #3096FF;
-    box-shadow: 0 0 0 0.12rem rgba(48, 150, 255, 0.35);
-}
-.orb-cta--field[data-mode="repel"] .field-dot {
-    background: #ff8a2a;
-    box-shadow: 0 0 0 0.12rem rgba(255, 138, 42, 0.35);
 }
 .orb-cta__icon {
     display: none;

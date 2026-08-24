@@ -1,5 +1,5 @@
 /**
- * Field mode (Fascination: Attract / Repel) — syncs hero dot grid and Pixi orbs.
+ * Field mode (Attract / Repel) — shared state for the hero dot grid.
  * No full-page surface gradient layer (visual surface is disabled in CSS).
  */
 (function () {
@@ -23,59 +23,10 @@
       window.dispatchEvent(
         new CustomEvent("field-mode-change", { detail: { mode: id } })
       );
-      updateToggle();
     },
     cycleMode: function () {
       var i = FIELD_MODE_IDS.indexOf(modeId);
       this.setMode(FIELD_MODE_IDS[(i + 1) % FIELD_MODE_IDS.length]);
     }
   };
-
-  function modeLabel(id) {
-    if (id === "repel") return "Repel";
-    return "Attract";
-  }
-
-  function updateToggle() {
-    var btn = document.getElementById("field-mode-toggle");
-    if (!btn) return;
-    var label = btn.querySelector(".field-label");
-    var text = modeLabel(modeId);
-    if (label) label.textContent = text;
-    btn.setAttribute("aria-label", "Fascination: " + text + ". Click to switch.");
-    btn.dataset.mode = modeId;
-  }
-
-  function initToggle() {
-    var cluster = document.getElementById("cta-cluster");
-    if (!cluster || document.getElementById("field-mode-toggle")) return;
-
-    var btn = document.createElement("button");
-    btn.type = "button";
-    btn.id = "field-mode-toggle";
-    btn.className = "orb-cta orb-cta--field";
-    btn.innerHTML =
-      '<span class="dot field-dot" aria-hidden="true"></span><span class="hud-label">Fascination: <span class="hud-value field-label">Attract</span></span>';
-
-    var luminescence = cluster.querySelector(".overlay__btn--colors");
-    if (luminescence) luminescence.after(btn);
-    else cluster.appendChild(btn);
-
-    btn.addEventListener("click", function () {
-      window.FieldMode.cycleMode();
-    });
-
-    window.addEventListener("field-mode-change", updateToggle);
-    updateToggle();
-  }
-
-  function init() {
-    initToggle();
-  }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init);
-  } else {
-    init();
-  }
 })();

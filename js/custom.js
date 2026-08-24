@@ -110,17 +110,6 @@ const noise2D = makeNoise2D();
 
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-function lerp(a, b, t) {
-  return a + (b - a) * t;
-}
-
-let fieldModeId = document.documentElement.dataset.fieldMode || "attract";
-if (fieldModeId !== "attract" && fieldModeId !== "repel") fieldModeId = "attract";
-
-let pointerX = 0;
-let pointerY = 0;
-let pointerActive = false;
-
 // ColorPalette class
 class ColorPalette {
   constructor() {
@@ -230,10 +219,6 @@ class Orb {
     // how quickly the noise/self similar random values step through time
     this.inc = 0.002;
 
-    this.magX = 0;
-    this.magY = 0;
-    this.influence = 0;
-
     // PIXI.Graphics is used to draw 2d primitives (in this case a circle) to the canvas
     this.graphics = new PIXI.Graphics();
     this.graphics.alpha = 0.825;
@@ -335,42 +320,7 @@ class Orb {
     };
   }
 
-  applyMagnetism(cx, cy, modeId, active) {
-    const radius = Math.hypot(window.innerWidth, window.innerHeight) * 0.72;
-    const attractStrength = 92;
-    const repelStrength = 68;
-
-    if (!active) {
-      this.magX = lerp(this.magX, 0, 0.08);
-      this.magY = lerp(this.magY, 0, 0.08);
-      this.influence = lerp(this.influence, 0, 0.09);
-      return;
-    }
-
-    const dx = cx - this.x;
-    const dy = cy - this.y;
-    const dist = Math.hypot(dx, dy);
-    if (dist > radius || dist < 1) {
-      this.magX = lerp(this.magX, 0, 0.06);
-      this.magY = lerp(this.magY, 0, 0.06);
-      this.influence = lerp(this.influence, 0, 0.1);
-      return;
-    }
-
-    const f = 1 - dist / radius;
-    const smooth = f * f * (3 - 2 * f);
-    this.influence = lerp(this.influence, smooth, 0.12);
-    const sign = modeId === "repel" ? -1 : 1;
-    const strength = modeId === "repel" ? repelStrength : attractStrength;
-    const tx = sign * (dx / dist) * smooth * strength;
-    const ty = sign * (dy / dist) * smooth * strength;
-    const follow = 0.038 + smooth * 0.055;
-
-    this.magX = lerp(this.magX, tx, follow);
-    this.magY = lerp(this.magY, ty, follow);
-  }
-
-  update(cx, cy, modeId, active) {
+  update() {
     this.xOff += this.inc;
     this.yOff += this.inc;
 
@@ -381,21 +331,11 @@ class Orb {
     this.x = map(xNoise, -1, 1, this.bounds["x"].min, this.bounds["x"].max);
     this.y = map(yNoise, -1, 1, this.bounds["y"].min, this.bounds["y"].max);
     this.scale = map(scaleNoise, -1, 1, 0.5, 1);
-
-    if (!reduceMotion) {
-      this.applyMagnetism(cx, cy, modeId, active);
-    } else {
-      this.magX = 0;
-      this.magY = 0;
-      this.influence = 0;
-    }
   }
 
   render() {
-    const infl = this.influence;
-    this.graphics.alpha = Math.min(1, 0.825 + infl * 0.72);
-    this.graphics.x = this.x + this.magX;
-    this.graphics.y = this.y + this.magY;
+    this.graphics.x = this.x;
+    this.graphics.y = this.y;
     this.graphics.scale.set(this.scale);
 
     // clear anything currently drawn to graphics
@@ -432,12 +372,6 @@ const app = new PIXI.Application({
 // (a Gaussian PIXI.filters.BlurFilter falls off too fast and looks sharp).
 const kawaseBlur = new KawaseBlurFilter(30, 10, true);
 app.stage.filters = [kawaseBlur];
-const orbCanvas = app.view;
-const BLUR_REST = 30;
-const BLUR_FOCUS = 8;
-const CANVAS_OPACITY_REST = 0.34;
-const CANVAS_OPACITY_FOCUS = 0.88;
-let canvasOpacity = CANVAS_OPACITY_REST;
 
 // Create colour palette
 const colorPalette = new ColorPalette();
@@ -453,54 +387,18 @@ for (let i = 0; i < 10; i++) {
   orbs.push(orb);
 }
 
-// Animate!
 function tickOrbs() {
-  let maxInfluence = 0;
-
   orbs.forEach((orb) => {
-    orb.update(pointerX, pointerY, fieldModeId, pointerActive);
-    maxInfluence = Math.max(maxInfluence, orb.influence);
+    orb.update();
     orb.render();
   });
-
-  const focus = pointerActive ? maxInfluence : 0;
-  kawaseBlur.strength = lerp(BLUR_REST, BLUR_FOCUS, focus);
-  const targetOpacity = lerp(CANVAS_OPACITY_REST, CANVAS_OPACITY_FOCUS, focus);
-  canvasOpacity = lerp(canvasOpacity, targetOpacity, 0.1);
-  orbCanvas.style.opacity = String(canvasOpacity);
 }
 
 if (!reduceMotion) {
-  document.addEventListener(
-    "pointermove",
-    (e) => {
-      pointerX = e.clientX;
-      pointerY = e.clientY;
-      pointerActive = true;
-    },
-    { passive: true }
-  );
-  document.addEventListener(
-    "pointerleave",
-    () => {
-      pointerActive = false;
-    },
-    { passive: true }
-  );
-  window.addEventListener("blur", () => {
-    pointerActive = false;
-  });
-  window.addEventListener("field-mode-change", (e) => {
-    fieldModeId = e.detail.mode;
-  });
-  document.addEventListener("DOMContentLoaded", () => {
-    if (window.FieldMode) fieldModeId = window.FieldMode.id;
-  });
-
   app.ticker.add(tickOrbs);
 } else {
   orbs.forEach((orb) => {
-    orb.update(0, 0, fieldModeId, false);
+    orb.update();
     orb.render();
   });
 }
