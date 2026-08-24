@@ -110,56 +110,46 @@ const noise2D = makeNoise2D();
 
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-// ColorPalette class
+// Authored trios — names describe the wash, not a single seed hue.
+const LUMINESCENCE = [
+  { name: "Dusk", hues: [222, 28, 268], sat: 84, light: 56 },
+  { name: "Reef", hues: [188, 162, 16], sat: 82, light: 54 },
+  { name: "Cinder", hues: [18, 352, 38], sat: 86, light: 55 },
+  { name: "Orchard", hues: [128, 48, 348], sat: 80, light: 54 },
+  { name: "Marine", hues: [210, 192, 232], sat: 84, light: 56 },
+  { name: "Citrus", hues: [48, 78, 22], sat: 88, light: 56 },
+  { name: "Twilight", hues: [268, 328, 222], sat: 82, light: 55 },
+  { name: "Meadow", hues: [142, 52, 198], sat: 80, light: 54 },
+  { name: "Ember", hues: [28, 8, 280], sat: 86, light: 55 },
+  { name: "Ice", hues: [198, 218, 250], sat: 78, light: 58 }
+];
+
 class ColorPalette {
   constructor() {
-    this.setColors();
+    this.index = ~~random(0, LUMINESCENCE.length);
+    this.applyPalette();
     this.setCustomProperties();
   }
 
-  setColors() {
-    // 1) Pick a base hue anywhere on the wheel so every click feels fresh
-    //    (the old 220–360 window only ever produced blue/purple/magenta).
-    this.hue = ~~random(0, 360);
-
-    // 2) Derive the other two hues from a colour-harmony relationship chosen
-    //    at random, so the trio is always musically related — never clashing.
-    //    [analogous, tight analogous, triadic, split-complementary,
-    //     complementary + accent, wide analogous].
-    const harmonies = [
-      [30, 60],
-      [-25, 25],
-      [120, 240],
-      [150, 210],
-      [180, 150],
-      [45, -45]
-    ];
-    const [offset1, offset2] = harmonies[~~random(0, harmonies.length)];
-    this.complimentaryHue1 = (this.hue + offset1 + 360) % 360;
-    this.complimentaryHue2 = (this.hue + offset2 + 360) % 360;
-
-    // 3) Premium tone: rich but never neon. A single saturation/lightness pair
-    //    per palette keeps the three orbs cohesive and gallery-clean. Values
-    //    are jittered each click for subtle variety between palettes.
-    this.saturation = ~~random(78, 92);
-    this.lightness = ~~random(52, 60);
-
-    // define a base color
+  applyPalette() {
+    const p = LUMINESCENCE[this.index];
+    this.name = p.name;
+    this.hue = p.hues[0];
+    this.complimentaryHue1 = p.hues[1];
+    this.complimentaryHue2 = p.hues[2];
+    this.saturation = p.sat;
+    this.lightness = p.light;
     this.baseColor = hslToHex(this.hue, this.saturation, this.lightness);
-    // first harmony color
     this.complimentaryColor1 = hslToHex(
       this.complimentaryHue1,
       this.saturation,
       this.lightness
     );
-    // second harmony color
     this.complimentaryColor2 = hslToHex(
       this.complimentaryHue2,
       this.saturation,
       this.lightness
     );
-
-    // store the color choices in an array so that a random one can be picked later
     this.colorChoices = [
       this.baseColor,
       this.complimentaryColor1,
@@ -167,12 +157,13 @@ class ColorPalette {
     ];
   }
 
-  randomColor() {
-    // pick a random color
-    return this.colorChoices[~~random(0, this.colorChoices.length)].replace(
-      "#",
-      "0x"
-    );
+  next() {
+    this.index = (this.index + 1) % LUMINESCENCE.length;
+    this.applyPalette();
+  }
+
+  colorAt(i) {
+    return this.colorChoices[i % this.colorChoices.length].replace("#", "0x");
   }
 
   setCustomProperties() {
@@ -217,11 +208,11 @@ class Orb {
     this.xOff = random(0, 1000);
     this.yOff = random(0, 1000);
     // how quickly the noise/self similar random values step through time
-    this.inc = 0.002;
+    this.inc = 0.0009;
 
     // PIXI.Graphics is used to draw 2d primitives (in this case a circle) to the canvas
     this.graphics = new PIXI.Graphics();
-    this.graphics.alpha = 0.825;
+    this.graphics.alpha = 0.7;
 
     // 250ms after the last window resize event, recalculate orb positions.
     window.addEventListener(
@@ -330,7 +321,7 @@ class Orb {
 
     this.x = map(xNoise, -1, 1, this.bounds["x"].min, this.bounds["x"].max);
     this.y = map(yNoise, -1, 1, this.bounds["y"].min, this.bounds["y"].max);
-    this.scale = map(scaleNoise, -1, 1, 0.5, 1);
+    this.scale = map(scaleNoise, -1, 1, 0.78, 1);
   }
 
   render() {
@@ -370,7 +361,7 @@ const app = new PIXI.Application({
 // and left the "AI Colors" button dead.)
 // Kawase blur gives the wide, even, soft spread used on the live site
 // (a Gaussian PIXI.filters.BlurFilter falls off too fast and looks sharp).
-const kawaseBlur = new KawaseBlurFilter(30, 10, true);
+const kawaseBlur = new KawaseBlurFilter(40, 10, true);
 app.stage.filters = [kawaseBlur];
 
 // Create colour palette
@@ -380,7 +371,7 @@ const colorPalette = new ColorPalette();
 const orbs = [];
 
 for (let i = 0; i < 10; i++) {
-  const orb = new Orb(colorPalette.randomColor());
+  const orb = new Orb(colorPalette.colorAt(i));
 
   app.stage.addChild(orb.graphics);
 
@@ -403,28 +394,17 @@ if (!reduceMotion) {
   });
 }
 
-function colorNameFromHue(hue) {
-  const h = ((hue % 360) + 360) % 360;
-  if (h < 20 || h >= 340) return "Rose";
-  if (h < 45) return "Amber";
-  if (h < 70) return "Gold";
-  if (h < 150) return "Verdant";
-  if (h < 200) return "Cyan";
-  if (h < 250) return "Azure";
-  if (h < 290) return "Violet";
-  if (h < 320) return "Magenta";
-  return "Crimson";
-}
-
-// Keep the luminescence button in sync with the orb's active primary color.
 function updateColorBadge() {
-  const name = colorNameFromHue(colorPalette.hue);
+  const name = colorPalette.name;
+  const colors = colorPalette.colorChoices;
   document.querySelectorAll(".overlay__btn--colors").forEach((btn) => {
-    const dot = btn.querySelector(".dot");
+    const dots = btn.querySelectorAll(".dot");
+    dots.forEach((dot, i) => {
+      if (colors[i]) dot.style.background = colors[i];
+    });
     const nameEl = btn.querySelector(".color-name");
-    if (dot) dot.style.background = colorPalette.baseColor;
     if (nameEl) nameEl.textContent = name;
-    btn.setAttribute("aria-label", `Luminescence: ${name}. Click to randomize colors.`);
+    btn.setAttribute("aria-label", `Luminescence: ${name}. Click to cycle palettes.`);
   });
 }
 
@@ -444,11 +424,11 @@ publishOrbPalette();
 const colorsBtns = document.querySelectorAll(".overlay__btn--colors");
 colorsBtns.forEach((colorsBtn) => {
   colorsBtn.addEventListener("click", () => {
-    colorPalette.setColors();
+    colorPalette.next();
     colorPalette.setCustomProperties();
 
-    orbs.forEach((orb) => {
-      orb.fill = colorPalette.randomColor();
+    orbs.forEach((orb, i) => {
+      orb.fill = colorPalette.colorAt(i);
     });
 
     updateColorBadge();

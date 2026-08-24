@@ -1300,7 +1300,7 @@
   height: 100%;
   pointer-events: none;
   z-index: -2;
-  opacity: 0.34;
+  opacity: 0.20;
   transition: opacity 0.35s ease;
 }
 
@@ -1933,6 +1933,16 @@ a, button, [role="button"], .liquid, .archive__item, .schematic__cell {
     -webkit-transition: background 0.3s ease;
     transition: background 0.3s ease;
 }
+.overlay__btn--colors .dots {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.16rem;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+}
+.overlay__btn--colors .dot {
+    margin-right: 0;
+}
 .orb-cta .hud-value {
     color: #262626;
     font-weight: 400;
@@ -1968,6 +1978,14 @@ a, button, [role="button"], .liquid, .archive__item, .schematic__cell {
         margin-right: 0;
         width: 0.75rem;
         height: 0.75rem;
+    }
+    .overlay__btn--colors .dots {
+        margin-right: 0;
+        gap: 0.12rem;
+    }
+    .overlay__btn--colors .dot {
+        width: 0.42rem;
+        height: 0.42rem;
     }
     .orb-cta__icon {
         display: block;
