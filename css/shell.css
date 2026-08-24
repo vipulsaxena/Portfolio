@@ -140,7 +140,7 @@ button.shell-link:focus-visible{ outline:none; box-shadow:0 0 0 3px rgba(255,218
 
 /* Contact lead */
 .shell-footer-lead{ display:flex; flex-direction:column; gap:24px; }
-@media (min-width:768px){ .shell-footer-lead{ flex-direction:row; align-items:center; justify-content:space-between; } }
+@media (min-width:768px){ .shell-footer-lead{ flex-direction:row; align-items:flex-end; justify-content:space-between; } }
 .shell-footer-title{ font-size:28px; font-weight:800; letter-spacing:-.02em; margin:0 0 10px; }
 .shell-footer-copy{ font-size:17px; line-height:1.65; color:#6e6e6e; margin:0; max-width:62ch; }
 .shell-footer-copy a{
@@ -155,8 +155,14 @@ button.shell-link:focus-visible{ outline:none; box-shadow:0 0 0 3px rgba(255,218
   border-bottom-color:#262626;
 }
 
-.shell-footer-social{ display:flex; align-items:center; gap:24px; flex-shrink:0; }
-.shell-footer-social .hotlinks{ margin-right:0; }
+.shell-footer-social{ display:flex; align-items:flex-end; gap:24px; flex-shrink:0; }
+.shell-footer-social .hotlinks{
+  margin-right:0;
+  min-width:0;
+  min-height:0;
+  font-size:17px;
+  line-height:1.65;
+}
 .shell-footer-social .link_fix{ color:inherit !important; }
 .shell-footer-social .hotlinks.l i{
   color:inherit; border-bottom:#0371AE solid 0.2rem;
