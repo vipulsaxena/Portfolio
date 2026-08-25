@@ -450,6 +450,45 @@
     line-height: 1.32;
     max-width: 62ch;
 }
+.hero h1 .hero-thesis a.link_fix {
+    position: relative;
+    color: inherit !important;
+    text-decoration: none;
+    display: inline-block;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+}
+.hero h1 .hero-thesis a.link_fix::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    bottom: auto;
+    height: 0.2rem;
+    background-color: #ffda08;
+    transition: height 0.2s ease-in-out, background-color 0.2s ease-in-out;
+    pointer-events: none;
+}
+.hero h1 .hero-thesis a.link_fix i {
+    color: inherit;
+    border-bottom: none;
+    transition: none;
+}
+.hero h1 .hero-thesis a.link_fix:hover,
+.hero h1 .hero-thesis a.link_fix:focus-visible {
+    color: inherit !important;
+}
+.hero h1 .hero-thesis a.link_fix:hover::after,
+.hero h1 .hero-thesis a.link_fix:focus-visible::after {
+    height: 0.6rem;
+    background-color: #262626;
+}
+.hero h1 .hero-thesis a.link_fix:hover i,
+.hero h1 .hero-thesis a.link_fix:focus-visible i {
+    border-bottom: none;
+}
 @media screen and (max-width: 39rem) {
     .hero h1 .hero-greeting {
         font-size: clamp(2.88rem, 8.8vw, 3.84rem);
@@ -461,6 +500,12 @@
         margin-top: 1.6rem;
         font-size: 2.4rem;
         line-height: 1.35;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .hero h1 .hero-thesis a.link_fix:hover::after,
+    .hero h1 .hero-thesis a.link_fix:focus-visible::after {
+        height: 0.2rem;
     }
 }
  .square--wrapper {

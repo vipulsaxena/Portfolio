@@ -31,7 +31,13 @@
   var iframePauseDepth = 0;
 
   function clearHoverClasses() {
-    cursor.classList.remove("is-hover", "is-external", "is-locked", "is-close");
+    cursor.classList.remove(
+      "is-hover",
+      "is-external",
+      "is-locked",
+      "is-close",
+      "is-chat"
+    );
   }
 
   function pauseForIframe() {
@@ -70,6 +76,14 @@
   }
 
   function updateMediaBlend(target) {
+    if (
+      target &&
+      target instanceof Element &&
+      target.closest(".gfq-badge, .vipul-chat-badge")
+    ) {
+      cursor.classList.remove("is-over-media");
+      return;
+    }
     var overMedia =
       !!(target && target instanceof Element && target.closest(MEDIA));
     cursor.classList.toggle("is-over-media", overMedia);
@@ -81,7 +95,7 @@
       cursor.classList.add("is-visible");
     }
     setPosition(e.clientX, e.clientY);
-    updateMediaBlend(e.target);
+    classify(e.target);
   }
 
   function clearHover() {
@@ -95,7 +109,13 @@
     cursor.classList.toggle("is-native", on);
     root.classList.toggle("custom-cursor-native", on);
     if (on) {
-      cursor.classList.remove("is-hover", "is-external", "is-locked", "is-close");
+      cursor.classList.remove(
+        "is-hover",
+        "is-external",
+        "is-locked",
+        "is-close",
+        "is-chat"
+      );
     }
   }
 
@@ -115,6 +135,10 @@
 
   function isCloseControl(el) {
     return !!(el && el.closest && el.closest(".pw-close, .vipul-chat-close"));
+  }
+
+  function isChatBadge(el) {
+    return !!(el && el.closest && el.closest(".gfq-badge, .vipul-chat-badge"));
   }
 
   function classify(target) {
@@ -140,12 +164,25 @@
       return;
     }
 
+    if (isChatBadge(interactive)) {
+      cursor.classList.add("is-hover", "is-chat");
+      cursor.classList.remove("is-external", "is-locked", "is-close");
+      return;
+    }
+
+    // Open chat panel chrome: keep close cursor; leave other panel UI alone
     if (interactive.closest(".gfq-wrap")) {
+      if (isCloseControl(interactive)) {
+        cursor.classList.add("is-hover", "is-close");
+        cursor.classList.remove("is-external", "is-locked", "is-chat");
+        return;
+      }
       clearHoverClasses();
       return;
     }
 
     cursor.classList.add("is-hover");
+    cursor.classList.remove("is-chat");
 
     if (isCloseControl(interactive)) {
       cursor.classList.add("is-close");
@@ -155,7 +192,7 @@
 
     if (isLockedCard(interactive)) {
       cursor.classList.add("is-locked");
-      cursor.classList.remove("is-external");
+      cursor.classList.remove("is-external", "is-close");
       return;
     }
 
@@ -169,9 +206,9 @@
 
     if (!forceInternal && isExternalLink(link)) {
       cursor.classList.add("is-external");
-      cursor.classList.remove("is-locked");
+      cursor.classList.remove("is-locked", "is-close");
     } else {
-      cursor.classList.remove("is-external", "is-locked");
+      cursor.classList.remove("is-external", "is-locked", "is-close");
     }
   }
 
