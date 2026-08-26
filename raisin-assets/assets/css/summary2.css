@@ -400,13 +400,13 @@ body.summary-v2 .ops-card--spread {
 }
 .trade-off__option {
   padding: 0.65rem 0.75rem;
-  background: var(--paper);
+  background: transparent;
   border: var(--border);
   border-radius: var(--radius-sm);
 }
 .trade-off__option--chosen {
   border-color: var(--accent);
-  background: var(--accent-wash);
+  background: var(--paper);
 }
 .trade-off__option-label {
   margin: 0;
