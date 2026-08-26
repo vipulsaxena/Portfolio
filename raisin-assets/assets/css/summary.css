@@ -75,7 +75,7 @@
   font-weight: 500;
   color: var(--on-dark);
 }
-.quote-marquee .marquee__item .who { color: var(--accent-dim); font-weight: 600; margin-right: 0.5em; }
+.quote-marquee .marquee__item .who { color: var(--on-dark); font-weight: 600; margin-right: 0.5em; }
 .quote-marquee .marquee__item::after { content: "•"; }
 
 @keyframes marquee-scroll {

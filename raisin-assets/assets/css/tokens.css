@@ -1,44 +1,59 @@
 /* ==========================================================================
    Design Tokens — Raisin Journey Case Study
    Typography: Inter (matches vipulsaxena.com portfolio)
-   Color: neutral executive base + Raisin Blue as the single accent.
+   Color: portfolio chrome (yellow + neutrals) + Raisin Blue for client/product only.
    ========================================================================== */
 
 :root {
-  /* ---- Color: executive-neutral base ---- */
-  --ink: #12130f;
-  --ink-soft: #34362f;
-  --paper: #faf9f6;
-  --paper-dim: #f1efe9;
-  --line: #e3e0d7;
-  --line-strong: #c9c5b8;
-  --muted: #75725f;
+  /* ---- Color: portfolio-aligned base ---- */
+  --ink: #262626;
+  --ink-soft: #6e6e6e;
+  --paper: #ffffff;
+  --paper-dim: #f7f7f7;
+  --line: #e7e7e7;
+  --line-strong: #d4d4d4;
+  --muted: #6e6e6e;
 
-  /* ---- Color: Raisin Blue accent ---- */
-  --accent: #3096ff;
-  --accent-ink: #0a2540;
-  --accent-soft: #e4f1ff;
-  --accent-dim: #7fbbff;
+  /* ---- Color: portfolio accent (deck chrome) ----
+     Weight scale (light → strong):
+       outline  — chrome labels (e.g. Brand evolution)
+       wash     — secondary content (trade-off, quotes)
+       soft     — primary content (enablement fills)
+       accent   — interactive selected chrome (journey/tabs)
+       deep     — text/labels on yellow fills
+  */
+  --accent: #ffda08;
+  --accent-ink: #262626;
+  --accent-soft: #fff3b0;
+  --accent-wash: #fff8d6;
+  --accent-dim: #f5d03a;
+  --accent-deep: #5c4a00;
+
+  /* ---- Client / product (Raisin brand — artifacts only) ---- */
+  --client: #3096ff;
+  --client-ink: #0a2540;
+  --client-soft: #e4f1ff;
+  --client-dim: #7fbbff;
 
   /* ---- Category colors (from Web Dashboard color system) ---- */
-  --cat-savings: #3096ff;
+  --cat-savings: var(--client);
   --cat-invest: #d98c3d;
   --cat-retire: #3f9a6b;
 
   /* ---- Signal colors ---- */
-  --good: #3f9a6b;
+  --good: #2f7a52;
   --warn: #d98c3d;
   --bad: #c0553f;
 
-  /* ---- Track surfaces ---- */
-  --enablement-surface: var(--accent-ink);
-  --enablement-surface-text: var(--paper);
-  --enablement-surface-muted: #b9cfe6;
-  --enablement-surface-accent: var(--accent);
-  --enablement-surface-stat: #8fd4b0;
-  --enablement-surface-line: rgba(255, 255, 255, 0.16);
+  /* ---- Track surfaces (enablement = yellow-family fill, readable ink) ---- */
+  --enablement-surface: var(--accent-soft);
+  --enablement-surface-text: var(--accent-ink);
+  --enablement-surface-muted: #6b5c1e;
+  --enablement-surface-accent: var(--accent-deep);
+  --enablement-surface-stat: var(--good);
+  --enablement-surface-line: color-mix(in srgb, var(--accent-deep) 22%, transparent);
 
-  /* ---- Dark surfaces (used for hero/section-break blocks) ---- */
+  /* ---- Dark surfaces (cinematic beats / photo overlays only) ---- */
   --dark: #0b0e14;
   --dark-soft: #171b24;
   --on-dark: #f4f2ec;
@@ -74,6 +89,14 @@
   --radius-md: 1rem;
   --radius-lg: 1.75rem;
   --radius-pill: 999px;
+
+  /* ---- Borders (one system for panels / callouts / chips) ---- */
+  --border: 1px solid var(--line);
+  --border-strong: 1px solid var(--line-strong);
+  --border-accent: 1px solid color-mix(in srgb, var(--accent) 65%, var(--line-strong));
+  --rule-accent: 3px solid var(--accent);
+  --rule-ink: 3px solid var(--ink);
+  --rule-muted: 3px solid var(--line-strong);
 
   /* ---- Motion ---- */
   --ease: cubic-bezier(0.16, 1, 0.3, 1);

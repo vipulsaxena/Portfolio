@@ -67,7 +67,7 @@ button {
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--accent-ink);
+  color: var(--muted);
 }
 .eyebrow::before {
   content: "";
@@ -158,13 +158,36 @@ section { position: relative; }
 }
 
 ::selection {
-  background: var(--accent-soft);
+  background: var(--accent);
   color: var(--accent-ink);
 }
 
 ::-moz-selection {
-  background: var(--accent-soft);
+  background: var(--accent);
   color: var(--accent-ink);
+}
+
+/* Yellow fills: soft yellow selection disappears — use deep contrast */
+.enablement-surface ::selection,
+.trade-off ::selection,
+.findings-card--accent ::selection,
+.track-key__item--enablement ::selection,
+.journey-nav__btn.is-active ::selection,
+.tabs-compare__tab.is-active ::selection,
+.tag--outline ::selection {
+  background: var(--accent-deep);
+  color: #fff8e7;
+}
+
+.enablement-surface ::-moz-selection,
+.trade-off ::-moz-selection,
+.findings-card--accent ::-moz-selection,
+.track-key__item--enablement ::-moz-selection,
+.journey-nav__btn.is-active ::-moz-selection,
+.tabs-compare__tab.is-active ::-moz-selection,
+.tag--outline ::-moz-selection {
+  background: var(--accent-deep);
+  color: #fff8e7;
 }
 
 /* Scrollbar (webkit) — subtle, on-brand */
