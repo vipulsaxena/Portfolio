@@ -58,6 +58,11 @@
     });
   }
 
+  function revealPeriodHead(section) {
+    var head = section.querySelector(".period__head.reveal");
+    if (head) head.classList.add("is-visible");
+  }
+
   function scrollToJourneySection(target) {
     var gen = ++scrollGeneration;
     isNavScrolling = true;
@@ -65,6 +70,7 @@
 
     syncScrollMargin();
     primeJourneyMedia();
+    revealPeriodHead(target);
 
     html.classList.add("journey-nav-scrolling");
     html.style.overflowAnchor = "none";
@@ -118,6 +124,18 @@
       { rootMargin: "-45% 0px -45% 0px", threshold: 0 }
     );
     periods.forEach(function (p) { io.observe(p); });
+
+    var periodPrimeIo = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          preloadDeferredInSection(entry.target);
+          revealPeriodHead(entry.target);
+        });
+      },
+      { rootMargin: "15% 0px 15% 0px", threshold: 0 }
+    );
+    periods.forEach(function (p) { periodPrimeIo.observe(p); });
   }
 
   /* Keep the active chapter visible inside the horizontally scrolling nav */
@@ -734,4 +752,68 @@
   );
 
   animatedRoots.forEach(function (el) { io.observe(el); });
+})();
+
+/* ==========================================================================
+   Trade-off A/B switchers (Wealth Hub bets)
+   ========================================================================== */
+(function () {
+  "use strict";
+
+  function activateVariant(root, variant) {
+    var v = variant === "b" ? "b" : "a";
+    root.querySelectorAll("[data-variant]").forEach(function (tab) {
+      if (!tab.matches(".trade-off-switcher__tab")) return;
+      var on = tab.getAttribute("data-variant") === v;
+      tab.classList.toggle("trade-off-switcher__tab--active", on);
+      tab.setAttribute("aria-selected", on ? "true" : "false");
+      tab.tabIndex = on ? 0 : -1;
+    });
+    root.querySelectorAll("[data-variant-img]").forEach(function (img) {
+      var on = img.getAttribute("data-variant-img") === v;
+      img.classList.toggle("is-active", on);
+      img.hidden = !on;
+    });
+    if (!root.hasAttribute("data-trade-off-visual-only")) {
+      root.querySelectorAll("[data-variant-panel]").forEach(function (panel) {
+        var on = panel.getAttribute("data-variant-panel") === v;
+        panel.classList.toggle("is-active", on);
+        panel.hidden = !on;
+      });
+    }
+  }
+
+  document.querySelectorAll("[data-trade-off-switcher]").forEach(function (root) {
+    var tabs = Array.prototype.slice.call(root.querySelectorAll(".trade-off-switcher__tab"));
+    if (!tabs.length) return;
+
+    activateVariant(root, root.getAttribute("data-default") || "a");
+
+    root.addEventListener("click", function (e) {
+      var tab = e.target.closest(".trade-off-switcher__tab");
+      if (!tab || !root.contains(tab)) return;
+      activateVariant(root, tab.getAttribute("data-variant"));
+    });
+
+    root.addEventListener("keydown", function (e) {
+      var tab = e.target.closest(".trade-off-switcher__tab");
+      if (!tab || !root.contains(tab)) return;
+      var idx = tabs.indexOf(tab);
+      if (idx < 0) return;
+      var next = null;
+      if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+        next = tabs[(idx + 1) % tabs.length];
+      } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+        next = tabs[(idx - 1 + tabs.length) % tabs.length];
+      } else if (e.key === "Home") {
+        next = tabs[0];
+      } else if (e.key === "End") {
+        next = tabs[tabs.length - 1];
+      }
+      if (!next) return;
+      e.preventDefault();
+      activateVariant(root, next.getAttribute("data-variant"));
+      next.focus();
+    });
+  });
 })();

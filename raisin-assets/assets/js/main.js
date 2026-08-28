@@ -37,8 +37,8 @@
   if ("IntersectionObserver" in window && revealEls.length) {
     var coarsePointer = window.matchMedia("(pointer: coarse)").matches;
     var narrowViewport = window.matchMedia("(max-width: 900px)").matches;
-    var revealRootMargin = coarsePointer || narrowViewport ? "0px 0px 0px 0px" : "0px 0px -8% 0px";
-    var revealThreshold = coarsePointer || narrowViewport ? 0.05 : 0.15;
+    var revealRootMargin = coarsePointer || narrowViewport ? "0px 0px 0px 0px" : "12% 0px -4% 0px";
+    var revealThreshold = coarsePointer || narrowViewport ? 0 : 0.08;
     var io = new IntersectionObserver(
       function (entries) {
         entries.forEach(function (entry) {
@@ -123,6 +123,11 @@
   document.querySelectorAll(".compare").forEach(function (el) {
     var before = el.querySelector(".compare__before");
     var handle = el.querySelector(".compare__handle");
+    el.addEventListener("dragstart", function (e) { e.preventDefault(); });
+    el.querySelectorAll("img").forEach(function (img) {
+      img.setAttribute("draggable", "false");
+      img.addEventListener("dragstart", function (e) { e.preventDefault(); });
+    });
     function setPos(pct) {
       pct = Math.max(0, Math.min(100, pct));
       before.style.clipPath = "inset(0 " + (100 - pct) + "% 0 0)";
@@ -135,7 +140,13 @@
       var x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
       return (x / rect.width) * 100;
     }
-    el.addEventListener("pointerdown", function (e) { dragging = true; setPos(posFromEvent(e)); });
+    el.addEventListener("pointerdown", function (e) {
+      dragging = true;
+      if (e.pointerId != null && el.setPointerCapture) {
+        try { el.setPointerCapture(e.pointerId); } catch (err) { /* ignore */ }
+      }
+      setPos(posFromEvent(e));
+    });
     window.addEventListener("pointermove", function (e) { if (dragging) setPos(posFromEvent(e)); });
     window.addEventListener("pointerup", function () { dragging = false; });
     el.addEventListener("click", function (e) {

@@ -24,7 +24,9 @@
   var cursor = document.createElement("div");
   cursor.id = "custom-cursor";
   cursor.setAttribute("aria-hidden", "true");
-  document.body.appendChild(cursor);
+  // Mount on <html>, not <body>: password gates hide body > * except the gate
+  // dialog, which would hide the cursor while cursor:none stays active.
+  root.appendChild(cursor);
   root.classList.add("has-custom-cursor");
 
   var visible = false;
