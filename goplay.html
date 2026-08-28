@@ -72,8 +72,8 @@
 
     <!-- Component styles (shared with template.html) -->
     <style type="text/css">
-      html{ scroll-behavior:smooth; }
-      body{ background:#ffffff; font-family:"Inter", system-ui, sans-serif; }
+      html{ scroll-behavior:smooth; overflow-x:clip; }
+      body{ background:#ffffff; font-family:"Inter", system-ui, sans-serif; overflow-x:clip; }
       .hl{ background:#ffda08; color:#262626; padding:0 .1em; border-radius:.08em; -webkit-box-decoration-break:clone; box-decoration-break:clone; }
 
       .carousel-track{ display:flex; transition:transform .45s cubic-bezier(.22,.61,.36,1); }
@@ -88,6 +88,62 @@
       [data-reveal]{ opacity:0; transform:translateY(22px); transition:opacity .6s ease, transform .6s ease; }
       [data-reveal].is-in{ opacity:1; transform:none; }
       @media (prefers-reduced-motion: reduce){ [data-reveal]{ opacity:1; transform:none; transition:none; } .marquee-track{ animation:none; } html{ scroll-behavior:auto; } }
+
+      /* Redesigned experience — TV/web: full-width horizontal scroll; height matches mobile */
+      [data-fm-widget="goplay-surface"]{
+        --surface-scroll-inset:max(1.25rem, calc((100vw - min(80rem, 100vw)) / 2 + 1.25rem));
+        --surface-mobile-track-w:min(48rem, 100%);
+        --surface-mobile-col-w:var(--surface-mobile-track-w);
+        --surface-frame-h:calc(var(--surface-mobile-col-w) * 1788 / 978);
+        --surface-media-radius:1.25rem;
+      }
+      @media (min-width:640px){
+        [data-fm-widget="goplay-surface"]{
+          --surface-mobile-col-w:calc((var(--surface-mobile-track-w) - 1.5rem) / 2);
+          --surface-frame-h:calc(var(--surface-mobile-col-w) * 1788 / 978);
+        }
+      }
+      @media (min-width:768px){
+        [data-fm-widget="goplay-surface"]{
+          --surface-scroll-inset:max(2rem, calc((100vw - min(80rem, 100vw)) / 2 + 2rem));
+        }
+      }
+      .surface-mobile-grid video{
+        aspect-ratio:978 / 1788;
+        border-radius:var(--surface-media-radius);
+      }
+      [data-fm-widget="goplay-surface"] [data-panel]{ min-height:var(--surface-frame-h); }
+      .surface-scroll-bleed{
+        width:100vw; max-width:100vw;
+        margin-left:calc(50% - 50vw);
+      }
+      .surface-device-strip{
+        display:flex; gap:0; align-items:flex-end;
+        overflow-x:auto; overflow-y:visible;
+        height:var(--surface-frame-h);
+        padding-left:var(--surface-scroll-inset);
+        padding-right:var(--surface-scroll-inset);
+        overscroll-behavior-x:contain;
+        touch-action:pan-x pinch-zoom;
+        -webkit-overflow-scrolling:touch;
+        scrollbar-width:none;
+        -ms-overflow-style:none;
+      }
+      .surface-device-strip::-webkit-scrollbar{ display:none; }
+      .surface-device-frame{
+        flex:0 0 auto;
+        line-height:0;
+      }
+      .surface-device-frame img{
+        height:var(--surface-frame-h) !important; width:auto !important;
+        max-width:none !important;
+        display:block;
+        border-radius:var(--surface-media-radius) !important;
+      }
+
+      .img-plain{
+        border:none; outline:none; box-shadow:none; border-radius:0;
+      }
 
       #lightbox{ position:fixed; inset:0; z-index:2000; display:none; align-items:center; justify-content:center; background:rgb(255 255 255 / 85%); padding:5vw; }
       #lightbox.open{ display:flex; }
@@ -141,7 +197,7 @@
     <div class="mt-9 flex flex-wrap gap-x-10 gap-y-6" data-reveal>
       <div><p class="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-mute mb-1.5">Role</p><p class="font-semibold">Product Design Lead</p></div>
       <div><p class="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-mute mb-1.5">Timeline</p><p class="font-semibold">2017–2019</p></div>
-      <div><p class="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-mute mb-1.5">Team</p><p class="font-semibold">2 designers · Research · Writing · Illustration</p></div>
+      <div><p class="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-mute mb-1.5">Team</p><p class="font-semibold">3 designers · Research · Writing · Illustration</p></div>
       <div><p class="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-mute mb-1.5">Platforms</p><p class="font-semibold">iOS · Android · Web · Smart TV</p></div>
     </div>
 
@@ -171,7 +227,7 @@
       <p class="text-mute text-xs font-bold uppercase tracking-[0.18em] mb-5" data-reveal>Overview</p>
       <div class="grid lg:grid-cols-[1.6fr_1fr] gap-10 lg:gap-20 items-start">
         <p class="text-2xl md:text-3xl font-medium leading-snug max-w-[32ch]" data-reveal>
-          GoPlay is Gojek's OTT platform — publicly available across Indonesia with exclusive movies and series, including the country's 2019 Academy Awards entry <em>Memories of My Body</em> and originals co-produced with Vice. I joined at the MVP stage as design lead, owning design across every GoPlay surface.
+          GoPlay is Gojek's OTT platform for Indonesia — exclusive movies and series, from the country's 2019 Academy Awards entry <em>Memories of My Body</em> to originals co-produced with Vice. I joined at MVP as design lead and owned design across every surface.
         </p>
         <div class="grid gap-6" data-reveal>
           <div><p class="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-mute mb-2">My contribution</p><p>Research · IA · Interaction · Design System · Design Ops</p></div>
@@ -310,16 +366,10 @@
         </li>
       </ol>
 
-      <div class="mt-14 grid md:grid-cols-2 gap-6" data-reveal>
-        <figure>
-          <img loading="lazy" decoding="async" src="assets/goplay/goplay_design_process.png" alt="GoPlay design process" data-lightbox class="w-full rounded-2xl border border-line">
-          <figcaption class="mt-3 text-sm text-mute">The design process we ran at GoPlay.</figcaption>
-        </figure>
-        <figure>
-          <img loading="lazy" decoding="async" src="assets/goplay/my_role_goplay.png" alt="Cross-organisation collaboration map" data-lightbox class="w-full rounded-2xl border border-line">
-          <figcaption class="mt-3 text-sm text-mute">Cross-org collaboration — my point of view.</figcaption>
-        </figure>
-      </div>
+      <figure class="mt-14" data-reveal>
+        <img loading="lazy" decoding="async" src="assets/goplay/goplay_design_process.png" alt="GoPlay design process" data-lightbox class="w-full rounded-2xl border border-line">
+        <figcaption class="mt-3 text-sm text-mute">The design process we ran at GoPlay.</figcaption>
+      </figure>
 
       <!-- Foundations -->
       <h3 class="mt-20 mb-4 text-xl md:text-2xl font-bold tracking-tight" data-reveal>Getting the basics right first</h3>
@@ -420,7 +470,7 @@
       <!-- Experiment outcomes — zig-zag -->
       <div class="mt-20 space-y-16">
         <div class="grid md:grid-cols-2 gap-8 md:gap-14 items-center" data-reveal>
-          <img src="assets/goplay/goplay_ss2.png" alt="Redesigned Continue Watching rail" data-lightbox class="w-full rounded-2xl border border-line">
+          <img src="assets/goplay/goplay_ss2.png" alt="Redesigned Continue Watching rail" data-lightbox class="w-full block img-plain">
           <div>
             <p class="text-mute text-xs font-bold uppercase tracking-[0.16em] mb-3">Continue Watching</p>
             <h3 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-4">Play and details, finally separate</h3>
@@ -437,7 +487,7 @@
           </div>
         </div>
         <div class="grid md:grid-cols-2 gap-8 md:gap-14 items-center" data-reveal>
-          <img src="assets/goplay/goplay_ur_4.png" alt="Personalised home feed" data-lightbox class="w-full rounded-2xl border border-line">
+          <img src="assets/goplay/goplay_ur_4.png" alt="Personalised home feed" data-lightbox class="w-full block img-plain">
           <div>
             <p class="text-mute text-xs font-bold uppercase tracking-[0.16em] mb-3">Personalised home</p>
             <h3 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-4">Setting context and tone</h3>
@@ -448,18 +498,17 @@
 
       <!-- Research gallery -->
       <div data-carousel data-reveal data-fm-widget="goplay-ia" data-fm-kind="carousel">
-        <div class="overflow-hidden rounded-2xl ring-1 ring-line">
+        <div class="carousel-viewport overflow-hidden rounded-2xl ring-1 ring-line">
           <div class="carousel-track" data-carousel-track>
             <figure><div class="aspect-video flex items-center justify-center bg-elev"><img src="assets/goplay/goplay_ur_1.png" alt="Moderated research session" data-lightbox class="max-w-full max-h-full object-contain"></div><figcaption class="p-4 text-sm text-mute">A moderated research session with a GoPlay viewer.</figcaption></figure>
-            <figure><div class="aspect-video flex items-center justify-center bg-elev"><img src="assets/goplay/goplay_ss1.png" alt="Behavioural questions" data-lightbox class="max-w-full max-h-full object-contain"></div><figcaption class="p-4 text-sm text-mute">The most important behavioural questions, up front.</figcaption></figure>
-            <figure><div class="aspect-video flex items-center justify-center bg-elev"><img src="assets/goplay/goplay_ss2.png" alt="Continue-watching alternatives" data-lightbox class="max-w-full max-h-full object-contain"></div><figcaption class="p-4 text-sm text-mute">Six alternatives tested — #1 and #6 preferred.</figcaption></figure>
+            <figure data-slide-plain><div class="aspect-video flex items-center justify-center bg-elev"><img src="assets/goplay/goplay_ss2.png" alt="Continue-watching alternatives" data-lightbox class="max-w-full max-h-full object-contain img-plain"></div><figcaption class="p-4 text-sm text-mute">Six alternatives tested — #1 and #6 preferred.</figcaption></figure>
             <figure><div class="aspect-video flex items-center justify-center bg-elev"><img src="assets/goplay/decide.gif" alt="User types emerged" data-lightbox class="max-w-full max-h-full object-contain"></div><figcaption class="p-4 text-sm text-mute">Two distinct user types emerged for viewing &amp; deleting.</figcaption></figure>
             <figure><div class="aspect-video flex items-center justify-center bg-elev"><img src="assets/goplay/goplay_ur_2.png" alt="Synthesis" data-lightbox class="max-w-full max-h-full object-contain"></div><figcaption class="p-4 text-sm text-mute">Synthesising the continue-watching findings.</figcaption></figure>
-            <figure><div class="aspect-video flex items-center justify-center bg-elev"><img src="assets/goplay/goplay_ss3.png" alt="Details-page variations" data-lightbox class="max-w-full max-h-full object-contain"></div><figcaption class="p-4 text-sm text-mute">Details-page layout variations for review.</figcaption></figure>
+            <figure data-slide-plain><div class="aspect-video flex items-center justify-center bg-elev"><img src="assets/goplay/goplay_ss3.png" alt="Details-page variations" data-lightbox class="max-w-full max-h-full object-contain img-plain"></div><figcaption class="p-4 text-sm text-mute">Details-page layout variations for review.</figcaption></figure>
             <figure><div class="aspect-video flex items-center justify-center bg-elev"><img src="assets/goplay/goplay_ss4.png" alt="Card sorting exercise" data-lightbox class="max-w-full max-h-full object-contain"></div><figcaption class="p-4 text-sm text-mute">An online hybrid card-sort exercise.</figcaption></figure>
             <figure><div class="aspect-video flex items-center justify-center bg-elev"><img src="assets/goplay/goplay_ss5.png" alt="Similarity matrix" data-lightbox class="max-w-full max-h-full object-contain"></div><figcaption class="p-4 text-sm text-mute">Similarity matrix → the final details-page IA.</figcaption></figure>
             <figure><div class="aspect-video flex items-center justify-center bg-elev"><img src="assets/goplay/goplay_ur_3.png" alt="A/B testing home feed" data-lightbox class="max-w-full max-h-full object-contain"></div><figcaption class="p-4 text-sm text-mute">A/B testing presentation layers on the home feed.</figcaption></figure>
-            <figure><div class="aspect-video flex items-center justify-center bg-elev"><img src="assets/goplay/goplay_ur_4.png" alt="Poster and tone A/B tests" data-lightbox class="max-w-full max-h-full object-contain"></div><figcaption class="p-4 text-sm text-mute">Poster and tone A/B tests to set expectation.</figcaption></figure>
+            <figure data-slide-plain><div class="aspect-video flex items-center justify-center bg-elev"><img src="assets/goplay/goplay_ur_4.png" alt="Poster and tone A/B tests" data-lightbox class="max-w-full max-h-full object-contain img-plain"></div><figcaption class="p-4 text-sm text-mute">Poster and tone A/B tests to set expectation.</figcaption></figure>
           </div>
         </div>
         <div class="mt-4 flex items-center justify-between">
@@ -487,23 +536,27 @@
           <button role="tab" data-tab="2" aria-selected="false" class="px-5 py-2 rounded-full text-sm font-semibold transition">Web</button>
         </div>
         <div data-panel="0">
-          <div class="grid sm:grid-cols-2 gap-6 max-w-3xl">
-            <video class="w-full rounded-2xl border border-line bg-black" autoplay muted loop playsinline controls><source src="assets/goplay/tabs.mp4" type="video/mp4"></video>
-            <video class="w-full rounded-2xl border border-line bg-black" autoplay muted loop playsinline controls><source src="assets/goplay/details_page.mp4" type="video/mp4"></video>
+          <div class="surface-mobile-grid grid sm:grid-cols-2 gap-6 max-w-3xl">
+            <video class="w-full border border-line bg-black" autoplay muted loop playsinline controls><source src="assets/goplay/tabs.mp4" type="video/mp4"></video>
+            <video class="w-full border border-line bg-black" autoplay muted loop playsinline controls><source src="assets/goplay/details_page.mp4" type="video/mp4"></video>
           </div>
         </div>
         <div data-panel="1" hidden>
-          <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-            <img loading="lazy" decoding="async" src="assets/goplay/goplay_ss6.png" alt="Smart TV interface" data-lightbox class="w-full rounded-xl border border-line">
-            <img loading="lazy" decoding="async" src="assets/goplay/goplay_ss7.png" alt="Smart TV interface" data-lightbox class="w-full rounded-xl border border-line">
-            <img loading="lazy" decoding="async" src="assets/goplay/goplay_ss8.png" alt="Smart TV interface" data-lightbox class="w-full rounded-xl border border-line">
+          <div class="surface-scroll-bleed">
+            <div class="surface-device-strip" tabindex="0" aria-label="Smart TV screens — scroll horizontally">
+              <div class="surface-device-frame"><img loading="lazy" decoding="async" src="assets/goplay/goplay_ss6.png" alt="Smart TV interface" data-lightbox></div>
+              <div class="surface-device-frame"><img loading="lazy" decoding="async" src="assets/goplay/goplay_ss7.png" alt="Smart TV interface" data-lightbox></div>
+              <div class="surface-device-frame"><img loading="lazy" decoding="async" src="assets/goplay/goplay_ss8.png" alt="Smart TV interface" data-lightbox></div>
+            </div>
           </div>
         </div>
         <div data-panel="2" hidden>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <img loading="lazy" decoding="async" src="assets/goplay/goplay_ss12.png" alt="Web interface" data-lightbox class="w-full rounded-xl border border-line">
-            <img loading="lazy" decoding="async" src="assets/goplay/goplay_ss13.png" alt="Web interface" data-lightbox class="w-full rounded-xl border border-line">
-            <img loading="lazy" decoding="async" src="assets/goplay/goplay_ss14.png" alt="Web interface" data-lightbox class="w-full rounded-xl border border-line">
+          <div class="surface-scroll-bleed">
+            <div class="surface-device-strip" tabindex="0" aria-label="Web screens — scroll horizontally">
+              <div class="surface-device-frame"><img loading="lazy" decoding="async" src="assets/goplay/goplay_ss12.png" alt="Web interface" data-lightbox></div>
+              <div class="surface-device-frame"><img loading="lazy" decoding="async" src="assets/goplay/goplay_ss13.png" alt="Web interface" data-lightbox></div>
+              <div class="surface-device-frame"><img loading="lazy" decoding="async" src="assets/goplay/goplay_ss14.png" alt="Web interface" data-lightbox></div>
+            </div>
           </div>
         </div>
       </div>
@@ -518,7 +571,7 @@
       <p class="text-lg text-mute max-w-[60ch] mb-10" data-reveal>Over three quarters the experiments compounded into clearly positive results across engagement — and set up the next bet: the Smart TV app.</p>
 
       <figure data-reveal>
-        <img loading="lazy" decoding="async" src="assets/goplay/goplay_mvp_messure.png" alt="GoPlay experiment outcomes — MAU, minutes watched, continue-watching, and task satisfaction vs MVP baseline" data-lightbox class="w-full rounded-2xl border border-line shadow-sm">
+        <img loading="lazy" decoding="async" src="assets/goplay/goplay_mvp_messure.png" alt="GoPlay experiment outcomes — MAU, minutes watched, continue-watching, and task satisfaction vs MVP baseline" data-lightbox class="w-full block img-plain">
         <figcaption class="mt-4 text-sm text-mute">Experiment impact across three quarters — engagement, continue-watching, and satisfaction vs the MVP baseline.</figcaption>
       </figure>
 
@@ -584,6 +637,46 @@
 
 <script defer src="js/custom-cursor.js"></script>
 <script src="template.js?v=16" defer></script>
+<script defer>
+(function () {
+  function syncGoplaySurfaceHeight() {
+    var root = document.querySelector('[data-fm-widget="goplay-surface"]');
+    if (!root) return;
+    var video = root.querySelector(".surface-mobile-grid video");
+    if (!video) return;
+    var h = Math.round(video.getBoundingClientRect().height);
+    if (h > 0) root.style.setProperty("--surface-frame-h", h + "px");
+  }
+
+  if (typeof ResizeObserver !== "undefined") {
+    var grid = document.querySelector('[data-fm-widget="goplay-surface"] .surface-mobile-grid');
+    if (grid) new ResizeObserver(syncGoplaySurfaceHeight).observe(grid);
+  }
+  window.addEventListener("load", syncGoplaySurfaceHeight);
+  window.addEventListener("resize", syncGoplaySurfaceHeight);
+
+  function syncGoplayIaFrame(index) {
+    var root = document.querySelector('[data-fm-widget="goplay-ia"]');
+    if (!root) return;
+    var viewport = root.querySelector(".carousel-viewport");
+    var slides = root.querySelectorAll("[data-carousel-track] > *");
+    var plain = slides[index] && slides[index].hasAttribute("data-slide-plain");
+    if (!viewport) return;
+    viewport.classList.toggle("ring-1", !plain);
+    viewport.classList.toggle("ring-line", !plain);
+    viewport.classList.toggle("rounded-2xl", !plain);
+  }
+  document.addEventListener("portfolio:widget-change", function (e) {
+    if (!e.detail || e.detail.id !== "goplay-ia") return;
+    syncGoplayIaFrame(parseInt(e.detail.value, 10));
+  });
+  document.addEventListener("portfolio:carousel-ready", function () {
+    var root = document.querySelector('[data-fm-widget="goplay-ia"]');
+    syncGoplayIaFrame(parseInt(root && root.getAttribute("data-fm-value") || "0", 10));
+  });
+  syncGoplayIaFrame(parseInt(document.querySelector('[data-fm-widget="goplay-ia"]')?.getAttribute("data-fm-value") || "0", 10));
+})();
+</script>
 <script defer src="js/portfolio-gate.js"></script>
 <script defer src="js/vipul-chat-config.js?v=16"></script>
 <script defer src="js/vipul-chat-knowledge.js?v=16"></script>
