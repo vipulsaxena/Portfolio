@@ -1537,6 +1537,19 @@
   transition: opacity 0.35s ease;
 }
 
+/* Plain white middle zone (Featured work / Experiences) — see js/scroll-surface.js */
+html.is-plain-surface .orb-canvas {
+  opacity: 0;
+}
+html.is-plain-surface::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: #fff;
+  z-index: -3;
+  pointer-events: none;
+}
+
 /* Magnetic field layer disabled — field mode still syncs to the dot grid. */
 .field-surface {
   display: none !important;
