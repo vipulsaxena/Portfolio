@@ -345,7 +345,7 @@
   var galleryIndex = 0;
   var TOUCH_MQ = window.matchMedia("(hover: none), (pointer: coarse)");
 
-  var GALLERY_CONTAINERS = ".beat__media, .findings-visuals, .why-proof__media, .mock-panel, .research-banner__img, .post-mvp-card__visual, .period-split__visual";
+  var GALLERY_CONTAINERS = ".beat__media, .findings-visuals, .why-proof__media, .mock-panel, .research-banner__img, .post-mvp-card__visual, .post-mvp-carousel, .period-split__visual";
 
   function imagesInContainer(container) {
     if (container.classList.contains("why-proof__media")) {
@@ -597,18 +597,51 @@
 })();
 
 /* ==========================================================================
-   WoW beat — marquee track duplicate for seamless loop
+   WoW beat — marquee track duplicate + matched scroll speed
    ========================================================================== */
 (function () {
   "use strict";
 
-  var tracks = document.querySelectorAll(".wow-beat__marquee-track");
-  tracks.forEach(function (track) {
-    var set = track.querySelector(".wow-beat__marquee-set");
-    if (!set || track.querySelectorAll(".wow-beat__marquee-set").length > 1) return;
-    var clone = set.cloneNode(true);
-    clone.setAttribute("aria-hidden", "true");
-    track.appendChild(clone);
+  var MARQUEE_PX_PER_SEC = 42;
+
+  function syncMarqueeSpeed(track) {
+    var distance = track.scrollWidth / 2;
+    if (!distance) return;
+    track.style.animationDuration = (distance / MARQUEE_PX_PER_SEC) + "s";
+  }
+
+  function initTrack(track) {
+    var sets = track.querySelectorAll(".wow-beat__marquee-set");
+    if (!sets.length) return;
+    if (sets.length === 1) {
+      var clone = sets[0].cloneNode(true);
+      clone.setAttribute("aria-hidden", "true");
+      track.appendChild(clone);
+    }
+    syncMarqueeSpeed(track);
+  }
+
+  function initAll() {
+    document.querySelectorAll(".wow-beat__marquee-track").forEach(initTrack);
+  }
+
+  initAll();
+  window.addEventListener("load", initAll);
+
+  var resizeTimer;
+  window.addEventListener("resize", function () {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function () {
+      document.querySelectorAll(".wow-beat__marquee-track").forEach(syncMarqueeSpeed);
+    }, 150);
+  });
+
+  document.querySelectorAll(".wow-beat img").forEach(function (img) {
+    if (img.complete) return;
+    img.addEventListener("load", function () {
+      var track = img.closest(".wow-beat__marquee-track");
+      if (track) syncMarqueeSpeed(track);
+    }, { once: true });
   });
 })();
 
@@ -815,5 +848,77 @@
       activateVariant(root, next.getAttribute("data-variant"));
       next.focus();
     });
+  });
+})();
+
+/* ==========================================================================
+   Post-MVP release carousels — auto-rotate, loop, pause off-screen
+   ========================================================================== */
+(function () {
+  "use strict";
+
+  var carousels = document.querySelectorAll("[data-post-mvp-carousel]");
+  if (!carousels.length) return;
+
+  var REDUCE_MQ = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  carousels.forEach(function (root) {
+    var track = root.querySelector(".post-mvp-carousel__track");
+    var slides = Array.prototype.slice.call(root.querySelectorAll(".post-mvp-carousel__slide"));
+    if (!track || slides.length < 2) return;
+
+    var index = 0;
+    var intervalMs = parseInt(root.getAttribute("data-interval") || "4500", 10);
+    var timer = null;
+    var isVisible = true;
+
+    function goTo(nextIndex) {
+      index = (nextIndex + slides.length) % slides.length;
+      track.style.transform = "translate3d(-" + (index * 100) + "%, 0, 0)";
+      slides.forEach(function (slide, i) {
+        slide.classList.toggle("is-active", i === index);
+      });
+      root.setAttribute("data-slide-index", String(index + 1));
+    }
+
+    function stop() {
+      if (timer) {
+        clearInterval(timer);
+        timer = null;
+      }
+    }
+
+    function start() {
+      stop();
+      if (REDUCE_MQ.matches || !isVisible || root.classList.contains("is-animation-paused")) return;
+      timer = setInterval(function () {
+        goTo(index + 1);
+      }, intervalMs);
+    }
+
+    goTo(0);
+    start();
+
+    root.addEventListener("mouseenter", stop);
+    root.addEventListener("mouseleave", start);
+    root.addEventListener("focusin", stop);
+    root.addEventListener("focusout", start);
+
+    if ("IntersectionObserver" in window) {
+      var io = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            isVisible = entry.isIntersecting;
+            root.classList.toggle("is-animation-paused", !entry.isIntersecting);
+            if (isVisible) start();
+            else stop();
+          });
+        },
+        { rootMargin: "80px 0px", threshold: 0.15 }
+      );
+      io.observe(root);
+    }
+
+    REDUCE_MQ.addEventListener("change", start);
   });
 })();
