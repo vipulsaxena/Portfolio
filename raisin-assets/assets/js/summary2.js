@@ -164,24 +164,15 @@
 (function () {
   "use strict";
 
-  var grid = document.querySelector(".hero-bento");
-  if (!grid) return;
-
-  var items = Array.prototype.slice.call(grid.querySelectorAll(".hero-bento__item"));
-  if (!items.length) return;
-
+  var heroApis = new WeakMap();
   var DESKTOP_MQ = window.matchMedia("(min-width: 901px)");
   var HOVER_MQ = window.matchMedia("(hover: hover) and (pointer: fine)");
   var REDUCE_MQ = window.matchMedia("(prefers-reduced-motion: reduce)");
 
   var HOVER_SIZE = 4;
-  var hoverId = -1;
-
   var DEFAULT_COL_WEIGHTS = [1.28, 1.05, 0.92, 0.82];
   var DEFAULT_ROW_WEIGHTS = [1.0, 1.02, 0.96, 0.94];
   var MIDDLE_SQUEEZE_COLS = [0.85, 0.85, null, null];
-
-  /* Per-tile hover: anchor track, expansion multiplier, optional row/col squeeze */
   var ITEM_HOVER = [
     { col: 0, row: 0, size: 4 },
     { col: 2, row: 0, size: 6, squeezeCols: MIDDLE_SQUEEZE_COLS },
@@ -202,126 +193,148 @@
     return parts.join(" ");
   }
 
-  function enabled() {
-    return DESKTOP_MQ.matches && HOVER_MQ.matches && !REDUCE_MQ.matches;
-  }
+  function initHeroBento(grid) {
+    if (!grid || grid.dataset.heroBentoInit) return null;
+    var items = Array.prototype.slice.call(grid.querySelectorAll(".hero-bento__item"));
+    if (!items.length) return null;
+    grid.dataset.heroBentoInit = "1";
+    grid.removeAttribute("aria-hidden");
 
-  function applyGrid() {
-    if (!enabled()) {
-      if (hoverId < 0 || !ITEM_HOVER[hoverId]) {
-        grid.classList.remove("is-hovering");
-        grid.removeAttribute("data-hover-item");
-        grid.style.removeProperty("grid-template-columns");
-        grid.style.removeProperty("grid-template-rows");
+    var hoverId = -1;
+    var hoverRaf = 0;
+    var pressedItem = null;
+
+    function enabled() {
+      return DESKTOP_MQ.matches && HOVER_MQ.matches && !REDUCE_MQ.matches;
+    }
+
+    function applyGrid() {
+      if (!enabled()) {
+        if (hoverId < 0 || !ITEM_HOVER[hoverId]) {
+          grid.classList.remove("is-hovering");
+          grid.removeAttribute("data-hover-item");
+          grid.style.removeProperty("grid-template-columns");
+          grid.style.removeProperty("grid-template-rows");
+          return;
+        }
+        grid.classList.add("is-hovering");
+        grid.dataset.hoverItem = String(hoverId);
         return;
       }
+
+      if (hoverId < 0) {
+        grid.classList.remove("is-hovering");
+        grid.removeAttribute("data-hover-item");
+        grid.style.gridTemplateColumns = buildTracks(DEFAULT_COL_WEIGHTS, -1, HOVER_SIZE);
+        grid.style.gridTemplateRows = buildTracks(DEFAULT_ROW_WEIGHTS, -1, HOVER_SIZE);
+        return;
+      }
+
+      var config = ITEM_HOVER[hoverId];
       grid.classList.add("is-hovering");
       grid.dataset.hoverItem = String(hoverId);
-      return;
+      grid.style.gridTemplateColumns = buildTracks(
+        DEFAULT_COL_WEIGHTS,
+        config.col,
+        config.size,
+        config.squeezeCols
+      );
+      grid.style.gridTemplateRows = buildTracks(
+        DEFAULT_ROW_WEIGHTS,
+        config.row,
+        config.size,
+        config.squeezeRows
+      );
     }
 
-    if (hoverId < 0) {
-      grid.classList.remove("is-hovering");
-      grid.removeAttribute("data-hover-item");
-      grid.style.gridTemplateColumns = buildTracks(DEFAULT_COL_WEIGHTS, -1, HOVER_SIZE);
-      grid.style.gridTemplateRows = buildTracks(DEFAULT_ROW_WEIGHTS, -1, HOVER_SIZE);
-      return;
+    function onHover(id) {
+      if (!enabled() || hoverId === id) return;
+      hoverId = id;
+      if (hoverRaf) cancelAnimationFrame(hoverRaf);
+      hoverRaf = requestAnimationFrame(applyGrid);
     }
 
-    var config = ITEM_HOVER[hoverId];
-    grid.classList.add("is-hovering");
-    grid.dataset.hoverItem = String(hoverId);
-    grid.style.gridTemplateColumns = buildTracks(
-      DEFAULT_COL_WEIGHTS,
-      config.col,
-      config.size,
-      config.squeezeCols
-    );
-    grid.style.gridTemplateRows = buildTracks(
-      DEFAULT_ROW_WEIGHTS,
-      config.row,
-      config.size,
-      config.squeezeRows
-    );
-  }
+    function onHoverOff() {
+      if (!enabled()) return;
+      hoverId = -1;
+      if (hoverRaf) cancelAnimationFrame(hoverRaf);
+      hoverRaf = requestAnimationFrame(applyGrid);
+    }
 
-  function onHover(id) {
-    if (!enabled() || hoverId === id) return;
-    hoverId = id;
-    if (hoverRaf) cancelAnimationFrame(hoverRaf);
-    hoverRaf = requestAnimationFrame(applyGrid);
-  }
+    function clearPress() {
+      if (pressedItem) {
+        pressedItem.classList.remove("is-pressed");
+        pressedItem = null;
+      }
+    }
 
-  function onHoverOff() {
-    if (!enabled()) return;
-    hoverId = -1;
-    if (hoverRaf) cancelAnimationFrame(hoverRaf);
-    hoverRaf = requestAnimationFrame(applyGrid);
-  }
+    function onPressStart(item, e) {
+      if (REDUCE_MQ.matches) return;
+      if (e.pointerType === "mouse" && e.button !== 0) return;
+      clearPress();
+      pressedItem = item;
+      item.classList.add("is-pressed");
+    }
 
-  var hoverRaf = 0;
+    function onPressEnd() {
+      clearPress();
+    }
 
-  items.forEach(function (item, index) {
-    item.addEventListener("mouseenter", function () {
-      onHover(index);
+    function setRemote(idStr, pressed) {
+      if (idStr === "none" || idStr === "" || idStr == null) hoverId = -1;
+      else hoverId = parseInt(idStr, 10);
+      if (!Number.isFinite(hoverId)) hoverId = -1;
+      applyGrid();
+      items.forEach(function (item, i) {
+        var on = !!pressed && i === hoverId;
+        item.classList.toggle("is-pressed", on);
+        if (on) pressedItem = item;
+      });
+      if (!pressed) pressedItem = null;
+    }
+
+    items.forEach(function (item, index) {
+      item.addEventListener("mouseenter", function () {
+        onHover(index);
+      });
+      item.addEventListener("pointerdown", function (e) {
+        onPressStart(item, e);
+      });
+      item.addEventListener("pointerup", onPressEnd);
+      item.addEventListener("pointercancel", onPressEnd);
+      item.addEventListener("pointerleave", function () {
+        if (pressedItem === item) clearPress();
+      });
+      item.addEventListener("contextmenu", function (e) {
+        if (pressedItem === item) e.preventDefault();
+      });
     });
-  });
 
-  grid.addEventListener("mouseleave", onHoverOff);
-  DESKTOP_MQ.addEventListener("change", applyGrid);
-  applyGrid();
-
-  function setRemote(idStr, pressed) {
-    if (idStr === "none" || idStr === "" || idStr == null) hoverId = -1;
-    else hoverId = parseInt(idStr, 10);
-    if (!Number.isFinite(hoverId)) hoverId = -1;
+    grid.addEventListener("mouseleave", onHoverOff);
+    DESKTOP_MQ.addEventListener("change", applyGrid);
     applyGrid();
-    items.forEach(function (item, i) {
-      var on = !!pressed && i === hoverId;
-      item.classList.toggle("is-pressed", on);
-      if (on) pressedItem = item;
-    });
-    if (!pressed) pressedItem = null;
+
+    var api = { set: setRemote, grid: grid };
+    heroApis.set(grid, api);
+    return api;
   }
 
-  window.RaisinHero = { set: setRemote };
+  function activeHeroGrid() {
+    var stageGrid = document.querySelector("#present-stage .hero-bento");
+    if (stageGrid) return stageGrid;
+    return document.querySelector(".hero-bento");
+  }
 
-  /* Click-hold — center zoom on the image (starts immediately on press) */
-  var pressedItem = null;
+  document.querySelectorAll(".hero-bento").forEach(initHeroBento);
 
-  function clearPress() {
-    if (pressedItem) {
-      pressedItem.classList.remove("is-pressed");
-      pressedItem = null;
+  window.initHeroBento = initHeroBento;
+  window.RaisinHero = {
+    set: function (idStr, pressed) {
+      var grid = activeHeroGrid();
+      var api = grid && heroApis.get(grid);
+      if (api) api.set(idStr, pressed);
     }
-  }
-
-  function onPressStart(item, e) {
-    if (REDUCE_MQ.matches) return;
-    if (e.pointerType === "mouse" && e.button !== 0) return;
-
-    clearPress();
-    pressedItem = item;
-    item.classList.add("is-pressed");
-  }
-
-  function onPressEnd() {
-    clearPress();
-  }
-
-  items.forEach(function (item) {
-    item.addEventListener("pointerdown", function (e) {
-      onPressStart(item, e);
-    });
-    item.addEventListener("pointerup", onPressEnd);
-    item.addEventListener("pointercancel", onPressEnd);
-    item.addEventListener("pointerleave", function () {
-      if (pressedItem === item) clearPress();
-    });
-    item.addEventListener("contextmenu", function (e) {
-      if (pressedItem === item) e.preventDefault();
-    });
-  });
+  };
 })();
 
 /* ==========================================================================
@@ -345,7 +358,7 @@
   var galleryIndex = 0;
   var TOUCH_MQ = window.matchMedia("(hover: none), (pointer: coarse)");
 
-  var GALLERY_CONTAINERS = ".beat__media, .findings-visuals, .why-proof__media, .mock-panel, .research-banner__img, .post-mvp-card__visual, .post-mvp-carousel, .period-split__visual";
+  var GALLERY_CONTAINERS = ".beat__media, .findings-visuals, .why-proof__media, .mock-panel, .research-banner__img, .post-mvp-card__visual, .post-mvp-carousel, .period-split__visual, .ai-tools-grid";
 
   function imagesInContainer(container) {
     if (container.classList.contains("why-proof__media")) {
@@ -862,6 +875,73 @@
 
   var REDUCE_MQ = window.matchMedia("(prefers-reduced-motion: reduce)");
 
+  function buildPostMvpCarouselControls(carouselRoot, slideCount, onSelect) {
+    var nav = carouselRoot.querySelector(".post-mvp-carousel__nav");
+    var dotsWrap;
+    var prevBtn;
+    var nextBtn;
+
+    if (!nav) {
+      nav = document.createElement("div");
+      nav.className = "post-mvp-carousel__nav";
+
+      prevBtn = document.createElement("button");
+      prevBtn.type = "button";
+      prevBtn.className = "post-mvp-carousel__prev";
+      prevBtn.setAttribute("aria-label", "Previous slide");
+      prevBtn.textContent = "←";
+
+      dotsWrap = document.createElement("div");
+      dotsWrap.className = "post-mvp-carousel__dots";
+      dotsWrap.setAttribute("role", "tablist");
+      dotsWrap.setAttribute("aria-label", carouselRoot.getAttribute("aria-label") || "Carousel slides");
+
+      nextBtn = document.createElement("button");
+      nextBtn.type = "button";
+      nextBtn.className = "post-mvp-carousel__next";
+      nextBtn.setAttribute("aria-label", "Next slide");
+      nextBtn.textContent = "→";
+
+      for (var dotIndex = 0; dotIndex < slideCount; dotIndex += 1) {
+        var dot = document.createElement("button");
+        dot.type = "button";
+        dot.className = "post-mvp-carousel__dot";
+        dot.setAttribute("role", "tab");
+        dot.setAttribute("aria-label", "Slide " + (dotIndex + 1));
+        dot.addEventListener("click", function (selectedIndex) {
+          return function () {
+            onSelect(selectedIndex);
+          };
+        }(dotIndex));
+        dotsWrap.appendChild(dot);
+      }
+
+      nav.appendChild(prevBtn);
+      nav.appendChild(dotsWrap);
+      nav.appendChild(nextBtn);
+      carouselRoot.appendChild(nav);
+    } else {
+      dotsWrap = nav.querySelector(".post-mvp-carousel__dots");
+      prevBtn = nav.querySelector(".post-mvp-carousel__prev");
+      nextBtn = nav.querySelector(".post-mvp-carousel__next");
+    }
+
+    return {
+      dots: Array.prototype.slice.call(dotsWrap.querySelectorAll(".post-mvp-carousel__dot")),
+      prev: prevBtn,
+      next: nextBtn
+    };
+  }
+
+  function syncPostMvpCarouselDots(dots, activeIndex) {
+    dots.forEach(function (dot, dotIndex) {
+      var isActive = dotIndex === activeIndex;
+      dot.classList.toggle("is-active", isActive);
+      if (isActive) dot.setAttribute("aria-current", "true");
+      else dot.removeAttribute("aria-current");
+    });
+  }
+
   carousels.forEach(function (root) {
     var track = root.querySelector(".post-mvp-carousel__track");
     var slides = Array.prototype.slice.call(root.querySelectorAll(".post-mvp-carousel__slide"));
@@ -871,6 +951,23 @@
     var intervalMs = parseInt(root.getAttribute("data-interval") || "4500", 10);
     var timer = null;
     var isVisible = true;
+    var controls = buildPostMvpCarouselControls(root, slides.length, function (nextIndex) {
+      goTo(nextIndex);
+      start();
+    });
+    var dots = controls.dots;
+    if (controls.prev) {
+      controls.prev.addEventListener("click", function () {
+        goTo(index - 1);
+        start();
+      });
+    }
+    if (controls.next) {
+      controls.next.addEventListener("click", function () {
+        goTo(index + 1);
+        start();
+      });
+    }
 
     function goTo(nextIndex) {
       index = (nextIndex + slides.length) % slides.length;
@@ -878,6 +975,7 @@
       slides.forEach(function (slide, i) {
         slide.classList.toggle("is-active", i === index);
       });
+      syncPostMvpCarouselDots(dots, index);
       root.setAttribute("data-slide-index", String(index + 1));
     }
 

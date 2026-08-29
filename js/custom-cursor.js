@@ -6,12 +6,19 @@
  * - Does not hide the native cursor until the custom one is ready
  * - Restores native cursor over text fields
  * - Distinguishes internal / external / locked targets
+ * - Interactive hover uses ekino-style liquid glass (SVG feDisplacementMap)
  */
 (function () {
   "use strict";
 
   var finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
   if (!finePointer.matches) return;
+
+  var CURSOR_LENS_PX = 44;
+  var DISP_MAP_PX = CURSOR_LENS_PX * 2;
+  var DISP_STRENGTH = 42;
+  var DISP_CHROMA = 0.08;
+  var FILTER_ID = "cursor-liquid-glass";
 
   var INTERACTIVE =
     'a[href], button:not([disabled]), [role="button"], summary';
@@ -28,9 +35,242 @@
   // dialog, which would hide the cursor while cursor:none stays active.
   root.appendChild(cursor);
   root.classList.add("has-custom-cursor");
+  ensureLiquidGlassFilter();
 
   var visible = false;
   var iframePauseDepth = 0;
+
+  function clampByte(v) {
+    return Math.max(0, Math.min(255, Math.round(v)));
+  }
+
+  function smoothstep(edge0, edge1, x) {
+    var t = (x - edge0) / (edge1 - edge0);
+    if (t <= 0) return 0;
+    if (t >= 1) return 1;
+    return t * t * (3 - 2 * t);
+  }
+
+  function blurDisplacementMap(data, size, radius) {
+    var out = new Uint8ClampedArray(data.length);
+    var r = radius || 2;
+
+    for (var y = 0; y < size; y++) {
+      for (var x = 0; x < size; x++) {
+        var rs = 0;
+        var gs = 0;
+        var bs = 0;
+        var count = 0;
+
+        for (var ky = -r; ky <= r; ky++) {
+          for (var kx = -r; kx <= r; kx++) {
+            var sx = x + kx;
+            var sy = y + ky;
+            if (sx < 0 || sy < 0 || sx >= size || sy >= size) continue;
+            var si = (sy * size + sx) * 4;
+            rs += data[si];
+            gs += data[si + 1];
+            bs += data[si + 2];
+            count += 1;
+          }
+        }
+
+        var di = (y * size + x) * 4;
+        out[di] = rs / count;
+        out[di + 1] = gs / count;
+        out[di + 2] = bs / count;
+        out[di + 3] = data[di + 3];
+      }
+    }
+
+    return out;
+  }
+
+  function createDisplacementMapDataUrl() {
+    var size = DISP_MAP_PX;
+    var cx = size / 2;
+    var cy = size / 2;
+    var radius = size / 2 - 0.5;
+    var raw = new Uint8ClampedArray(size * size * 4);
+
+    for (var y = 0; y < size; y++) {
+      for (var x = 0; x < size; x++) {
+        var dx = x + 0.5 - cx;
+        var dy = y + 0.5 - cy;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        var norm = dist / radius;
+        var i = (y * size + x) * 4;
+
+        if (norm > 1) {
+          raw[i] = 128;
+          raw[i + 1] = 128;
+          raw[i + 2] = 128;
+          raw[i + 3] = 255;
+          continue;
+        }
+
+        var edge = smoothstep(0.42, 0.96, norm);
+        var len = dist || 1;
+        var ux = dx / len;
+        var uy = dy / len;
+        raw[i] = clampByte(128 + ux * DISP_STRENGTH * edge);
+        raw[i + 1] = clampByte(128 + uy * DISP_STRENGTH * edge);
+        raw[i + 2] = 128;
+        raw[i + 3] = 255;
+      }
+    }
+
+    var blurred = blurDisplacementMap(raw, size, 2);
+    var canvas = document.createElement("canvas");
+    canvas.width = size;
+    canvas.height = size;
+    var ctx = canvas.getContext("2d");
+    if (!ctx) return "";
+    ctx.putImageData(new ImageData(blurred, size, size), 0, 0);
+    return canvas.toDataURL("image/png");
+  }
+
+  function svgEl(tag, attrs) {
+    var el = document.createElementNS("http://www.w3.org/2000/svg", tag);
+    Object.keys(attrs).forEach(function (key) {
+      el.setAttribute(key, attrs[key]);
+    });
+    return el;
+  }
+
+  function ensureLiquidGlassFilter() {
+    if (document.getElementById(FILTER_ID)) return;
+
+    var mapUrl = createDisplacementMapDataUrl();
+    if (!mapUrl) return;
+
+    var svg = svgEl("svg", {
+      id: "cursor-liquid-glass-defs",
+      "aria-hidden": "true",
+      width: "0",
+      height: "0",
+      style: "position:absolute;overflow:hidden"
+    });
+
+    var defs = svgEl("defs", {});
+    var filter = svgEl("filter", {
+      id: FILTER_ID,
+      x: "0",
+      y: "0",
+      width: "100%",
+      height: "100%",
+      filterUnits: "objectBoundingBox",
+      "color-interpolation-filters": "sRGB"
+    });
+
+    filter.appendChild(
+      svgEl("feGaussianBlur", {
+        in: "SourceGraphic",
+        stdDeviation: "0.17",
+        result: "blurred"
+      })
+    );
+
+    var feImage = svgEl("feImage", {
+      href: mapUrl,
+      "xlink:href": mapUrl,
+      x: "0",
+      y: "0",
+      width: String(DISP_MAP_PX),
+      height: String(DISP_MAP_PX),
+      preserveAspectRatio: "none",
+      result: "dispMap"
+    });
+    filter.appendChild(feImage);
+
+    var baseScale = -28;
+    var scaleR = baseScale * (1 + DISP_CHROMA);
+    var scaleG = baseScale;
+    var scaleB = baseScale * (1 - DISP_CHROMA);
+
+    filter.appendChild(
+      svgEl("feDisplacementMap", {
+        in: "blurred",
+        in2: "dispMap",
+        scale: String(scaleR),
+        xChannelSelector: "R",
+        yChannelSelector: "G",
+        result: "dispR"
+      })
+    );
+    filter.appendChild(
+      svgEl("feDisplacementMap", {
+        in: "blurred",
+        in2: "dispMap",
+        scale: String(scaleG),
+        xChannelSelector: "R",
+        yChannelSelector: "G",
+        result: "dispG"
+      })
+    );
+    filter.appendChild(
+      svgEl("feDisplacementMap", {
+        in: "blurred",
+        in2: "dispMap",
+        scale: String(scaleB),
+        xChannelSelector: "R",
+        yChannelSelector: "G",
+        result: "dispB"
+      })
+    );
+    filter.appendChild(
+      svgEl("feColorMatrix", {
+        in: "dispR",
+        type: "matrix",
+        values: "1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0",
+        result: "chanR"
+      })
+    );
+    filter.appendChild(
+      svgEl("feColorMatrix", {
+        in: "dispG",
+        type: "matrix",
+        values: "0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0",
+        result: "chanG"
+      })
+    );
+    filter.appendChild(
+      svgEl("feColorMatrix", {
+        in: "dispB",
+        type: "matrix",
+        values: "0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0",
+        result: "chanB"
+      })
+    );
+    filter.appendChild(
+      svgEl("feComposite", {
+        in: "chanR",
+        in2: "chanG",
+        operator: "arithmetic",
+        k1: "0",
+        k2: "1",
+        k3: "1",
+        k4: "0",
+        result: "compRG"
+      })
+    );
+    filter.appendChild(
+      svgEl("feComposite", {
+        in: "compRG",
+        in2: "chanB",
+        operator: "arithmetic",
+        k1: "0",
+        k2: "1",
+        k3: "1",
+        k4: "0"
+      })
+    );
+
+    defs.appendChild(filter);
+    svg.appendChild(defs);
+    root.appendChild(svg);
+    root.classList.add("has-cursor-liquid-glass");
+  }
 
   function clearHoverClasses() {
     cursor.classList.remove(
@@ -270,7 +510,9 @@
 
   finePointer.addEventListener("change", function (mq) {
     if (!mq.matches) {
-      root.classList.remove("has-custom-cursor", "custom-cursor-native");
+      root.classList.remove("has-custom-cursor", "custom-cursor-native", "has-cursor-liquid-glass");
+      var defs = document.getElementById("cursor-liquid-glass-defs");
+      if (defs) defs.remove();
       cursor.remove();
     }
   });

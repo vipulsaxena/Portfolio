@@ -13,7 +13,8 @@
    (reference basis: 16px, matching instalively.html).
    ===================================================================== */
 
-:root{ --shell-h:64px; }
+:root{ --shell-h:64px; --shell-inset-x:20px; }
+@media (min-width:768px){ :root{ --shell-inset-x:32px; } }
 
 ::selection {
   background-color: #ffda08;
@@ -37,10 +38,15 @@ html{ scroll-behavior:smooth; scroll-padding-top:calc(var(--shell-h) + 8px); }
   -webkit-backdrop-filter:blur(16px) saturate(180%); backdrop-filter:blur(16px) saturate(180%);
   border-bottom:1px solid rgba(255,255,255,0.45); font-family:"Inter", system-ui, sans-serif;
 }
-.shell-inner{ max-width:1280px; margin:0 auto; padding:0 20px; }
-@media (min-width:768px){ .shell-inner{ padding:0 32px; } }
+.shell-inner{ max-width:1280px; margin:0 auto; padding:0 var(--shell-inset-x); }
 
 .shell-bar{ height:var(--shell-h); display:flex; align-items:center; justify-content:flex-start; gap:16px; }
+
+/* Deck bottom bar — same inset + max-width as header (.shell-inner) */
+.ctrl .shell-inner.shell-bar{
+  display:flex; align-items:center; justify-content:flex-start; gap:16px;
+  width:100%; min-width:0; height:auto;
+}
 
 /* left-aligned brand + inline link group (used on index/about) */
 .shell-left{ display:flex; align-items:center; gap:12px; min-width:0; }

@@ -2911,6 +2911,12 @@ html.journey-nav-scrolling {
   border-radius: var(--radius-sm);
   height: 100%;
 }
+.post-mvp-card__copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-sm);
+  min-width: 0;
+}
 .post-mvp-card__label {
   margin: 0;
   font-size: var(--fs-2xs);
@@ -2964,7 +2970,7 @@ html.journey-nav-scrolling {
   margin: var(--sp-xs) 0 0;
   min-width: 0;
   border-radius: var(--radius-sm);
-  overflow: hidden;
+  overflow: visible;
 }
 .post-mvp-carousel__viewport {
   overflow: hidden;
@@ -2990,6 +2996,60 @@ html.journey-nav-scrolling {
 }
 .post-mvp-carousel__slide img[data-lightbox] {
   cursor: zoom-in;
+}
+.post-mvp-carousel__dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: 0.65rem;
+}
+.post-mvp-carousel__nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.65rem;
+  margin-top: 0.65rem;
+}
+.post-mvp-carousel__nav .post-mvp-carousel__dots {
+  margin-top: 0;
+}
+.post-mvp-carousel__prev,
+.post-mvp-carousel__next {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+.post-mvp-carousel__prev:hover,
+.post-mvp-carousel__next:hover {
+  border-color: color-mix(in srgb, var(--ink) 24%, transparent);
+  background: color-mix(in srgb, var(--paper) 88%, var(--ink));
+}
+.post-mvp-carousel__dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ink) 22%, transparent);
+  cursor: pointer;
+  transition: width 0.2s ease, background 0.2s ease;
+}
+.post-mvp-carousel__dot.is-active,
+.post-mvp-carousel__dot[aria-current="true"] {
+  width: 1.35rem;
+  background: var(--accent);
 }
 .post-mvp-card__visual--duo {
   display: grid;
@@ -5395,4 +5455,13 @@ body.summary-v2 .footer-base {
   padding-bottom: calc(var(--sp-lg) + env(safe-area-inset-bottom, 0px));
   padding-inline: max(var(--gutter), env(safe-area-inset-left, 0px))
     max(var(--gutter), env(safe-area-inset-right, 0px));
+}
+
+/* Deck-only copy variants — hidden on case study page */
+.lede--present-short,
+.device-story__text--present,
+.period__thesis--present,
+.why-proof__text--present,
+.proof-intro__lede--present {
+  display: none;
 }
