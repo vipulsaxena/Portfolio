@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge; chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+
+  <title>Raisin — Presentation · Vipul Saxena</title>
+  <meta name="description" content="Raisin Brand Evolution case study — presentation mode.">
+
+  <link rel="icon" href="fav.png" sizes="32x32" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap">
+  <link rel="stylesheet" href="css/shell.css">
+  <link rel="stylesheet" href="css/custom-cursor.css">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            base:  '#0b0e14',
+            elev:  '#12161f',
+            card:  '#161b26',
+            line:  'rgba(244,242,236,0.12)',
+            ink:   '#f4f2ec',
+            mute:  '#9a9c8f',
+            accent:'#ffda08',
+            accink:'#262626',
+            client:'#3096ff',
+          },
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+          borderRadius: { '2xl': '1.25rem', '3xl': '1.75rem' },
+          maxWidth: { content: '80rem' },
+        }
+      }
+    }
+  </script>
+
+  <style type="text/css">
+    :root {
+      --deck-top: 3.5rem;
+      --dark: #0b0e14;
+      --on-dark: #f4f2ec;
+      --on-dark-muted: #9a9c8f;
+      --line-dark: rgba(244, 242, 236, 0.12);
+      --accent: #ffda08;
+      --client: #3096ff;
+      --good: #5ecf8f;
+      --warn: #e8a85c;
+      --fade-ms: 300ms;
+    }
+    html, body { height: 100%; }
+    body {
+      background: var(--dark);
+      color: var(--on-dark);
+      font-family: "Inter", system-ui, sans-serif;
+      overflow: hidden;
+    }
+
+    .deck {
+      position: fixed;
+      inset: 0;
+      top: var(--deck-top);
+      overflow: hidden;
+    }
+    .deck-stage {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+    .slide {
+      position: absolute;
+      inset: 0;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--fade-ms) ease;
+    }
+    .slide.is-active {
+      opacity: 1;
+      pointer-events: auto;
+      z-index: 2;
+    }
+    .slide.is-leaving {
+      opacity: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .slide-inner {
+      margin: 0 auto;
+      width: 100%;
+      max-width: 80rem;
+      padding: clamp(1.25rem, 3vw, 2.5rem) clamp(1.25rem, 5vw, 4rem);
+      padding-bottom: calc(5rem + env(safe-area-inset-bottom, 0px));
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 100%;
+      box-sizing: border-box;
+    }
+
+    .slide-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--on-dark-muted);
+      margin: 0 0 0.85rem;
+      line-height: 1.4;
+    }
+    .slide-label--practice::before {
+      content: "";
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--accent);
+      margin-right: 0.5rem;
+      vertical-align: middle;
+      position: relative;
+      top: -1px;
+    }
+    .slide-label--enablement::before {
+      content: "";
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--client);
+      margin-right: 0.5rem;
+      vertical-align: middle;
+      position: relative;
+      top: -1px;
+    }
+    .slide-title {
+      font-size: clamp(2rem, 4.2vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.12;
+      color: var(--on-dark);
+      margin: 0 0 1.25rem;
+      max-width: 22ch;
+    }
+    .slide-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-top: 1rem;
+    }
+    .slide-chip {
+      display: inline-flex;
+      align-items: center;
+      font-size: 0.875rem;
+      line-height: 1.3;
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      border: 1px solid var(--line-dark);
+      color: var(--on-dark-muted);
+      background: rgba(255, 255, 255, 0.03);
+    }
+    .slide-chip--risk {
+      border-color: rgba(232, 168, 92, 0.45);
+      color: #e8c89a;
+    }
+
+    .artifact {
+      flex: 1 1 auto;
+      min-height: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      max-height: min(58vh, 520px);
+      margin: 0.5rem 0;
+    }
+    .artifact img,
+    .artifact video {
+      display: block;
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      border-radius: 0.75rem;
+      border: 1px solid var(--line-dark);
+      background: #0f1319;
+    }
+
+    .artifact-triptych {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+      width: 100%;
+      height: 100%;
+      align-items: stretch;
+    }
+    .artifact-triptych__cell {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      min-width: 0;
+    }
+    .artifact-triptych__cell img {
+      flex: 1;
+      width: 100%;
+      height: 100%;
+      min-height: 180px;
+      object-fit: cover;
+      object-position: top center;
+    }
+    .artifact-triptych__cap {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--on-dark-muted);
+      text-align: center;
+    }
+
+    .artifact-ab {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      width: 100%;
+      height: 100%;
+    }
+    .artifact-ab__panel {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      min-width: 0;
+      min-height: 0;
+    }
+    .artifact-ab__media {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 200px;
+      border-radius: 0.75rem;
+      border: 1px solid var(--line-dark);
+      background: #0f1319;
+      overflow: hidden;
+    }
+    .artifact-ab__media img,
+    .artifact-ab__media video {
+      width: 100%;
+      height: 100%;
+      max-height: 42vh;
+      object-fit: contain;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+    }
+    .artifact-ab__tag {
+      position: absolute;
+      top: 0.65rem;
+      left: 0.65rem;
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.55rem;
+      border-radius: 999px;
+      background: rgba(11, 14, 20, 0.85);
+      border: 1px solid var(--line-dark);
+      color: var(--on-dark-muted);
+    }
+    .artifact-ab__panel--chosen .artifact-ab__media {
+      border-color: rgba(255, 218, 8, 0.55);
+      box-shadow: 0 0 0 1px rgba(255, 218, 8, 0.2);
+    }
+    .artifact-ab__panel--chosen .artifact-ab__tag {
+      background: var(--accent);
+      color: #262626;
+      border-color: var(--accent);
+    }
+    .artifact-ab__tag--chosen::after {
+      content: " · CHOSEN";
+    }
+    .artifact-ab__split {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      min-height: 220px;
+    }
+    .artifact-ab__split img {
+      width: 100%;
+      height: 100%;
+      max-height: 42vh;
+      object-fit: contain;
+    }
+    .artifact-ab__split .artifact-ab__tag--a { left: 25%; transform: translateX(-50%); }
+    .artifact-ab__split .artifact-ab__tag--b { left: 75%; transform: translateX(-50%); }
+
+    .artifact-before-after {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      width: 100%;
+    }
+    .artifact-before-after__panel {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .artifact-before-after__panel img {
+      width: 100%;
+      max-height: 42vh;
+      object-fit: contain;
+    }
+
+    .artifact-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      width: 100%;
+      max-width: 36rem;
+    }
+    .artifact-stat__targets {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      padding: 1rem 1.25rem;
+      border-radius: 0.75rem;
+      border: 1px dashed var(--line-dark);
+      background: rgba(255, 255, 255, 0.02);
+    }
+    .artifact-stat__targets-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--on-dark-muted);
+    }
+    .artifact-stat__target {
+      font-size: 0.95rem;
+      color: var(--on-dark-muted);
+      margin: 0;
+      line-height: 1.4;
+    }
+    .artifact-stat__hero {
+      font-size: clamp(3.5rem, 10vw, 6.5rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      color: var(--accent);
+      font-variant-numeric: tabular-nums;
+    }
+    .artifact-stat__hero span {
+      color: var(--on-dark-muted);
+      font-size: 0.45em;
+      font-weight: 700;
+      vertical-align: middle;
+      margin: 0 0.15em;
+    }
+    .artifact-stat__quote {
+      margin: 0;
+      padding: 1rem 1.25rem;
+      border-left: 3px solid var(--accent);
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 0 0.5rem 0.5rem 0;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: var(--on-dark);
+      font-style: italic;
+    }
+    .artifact-stat__quote cite {
+      display: block;
+      margin-top: 0.5rem;
+      font-size: 0.75rem;
+      font-style: normal;
+      font-weight: 600;
+      color: var(--on-dark-muted);
+    }
+
+    .artifact-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.85rem;
+      width: 100%;
+    }
+    .artifact-card {
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--line-dark);
+      border-radius: 0.75rem;
+      background: var(--card);
+      overflow: hidden;
+      min-height: 280px;
+    }
+    .artifact-card__head {
+      padding: 0.85rem 1rem 0.5rem;
+    }
+    .artifact-card__title {
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--on-dark-muted);
+      margin: 0 0 0.35rem;
+    }
+    .artifact-card__impact {
+      font-size: 0.82rem;
+      line-height: 1.35;
+      color: var(--on-dark);
+      margin: 0;
+    }
+    .artifact-card__media {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.5rem;
+      min-height: 140px;
+      background: #0f1319;
+    }
+    .artifact-card__media img,
+    .artifact-card__media video {
+      max-width: 100%;
+      max-height: 160px;
+      object-fit: contain;
+      border: 0;
+      border-radius: 0.35rem;
+      background: transparent;
+    }
+
+    .artifact-grid2x2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+      width: 100%;
+    }
+    .artifact-grid2x2__cell {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+    .artifact-grid2x2__cell img {
+      width: 100%;
+      max-height: 22vh;
+      object-fit: contain;
+      background: #0f1319;
+    }
+    .artifact-grid2x2__cap {
+      font-size: 0.8rem;
+      line-height: 1.35;
+      color: var(--on-dark-muted);
+      margin: 0;
+    }
+
+    .artifact-close {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      width: 100%;
+    }
+    .artifact-close__cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+    .artifact-close__col {
+      padding: 1rem 1.15rem;
+      border-radius: 0.75rem;
+      border: 1px solid var(--line-dark);
+      background: rgba(255, 255, 255, 0.02);
+    }
+    .artifact-close__col--enablement {
+      border-color: rgba(48, 150, 255, 0.35);
+    }
+    .artifact-close__col-label {
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--on-dark-muted);
+      margin: 0 0 0.75rem;
+    }
+    .artifact-close__col--enablement .artifact-close__col-label {
+      color: var(--client);
+    }
+    .artifact-close__stat {
+      font-size: 1.05rem;
+      font-weight: 700;
+      line-height: 1.45;
+      color: var(--on-dark);
+      margin: 0 0 0.5rem;
+    }
+    .artifact-close__stat--miss {
+      color: var(--on-dark-muted);
+      font-weight: 600;
+    }
+    .artifact-close__testimonials {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.65rem;
+    }
+    .artifact-close__quote {
+      margin: 0;
+      padding: 0.75rem;
+      font-size: 0.68rem;
+      line-height: 1.4;
+      color: var(--on-dark-muted);
+      border: 1px solid var(--line-dark);
+      border-radius: 0.5rem;
+      background: rgba(255, 255, 255, 0.02);
+    }
+    .artifact-close__quote strong {
+      display: block;
+      font-size: 0.62rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--on-dark);
+      margin-bottom: 0.35rem;
+    }
+
+    .progress {
+      position: fixed;
+      top: var(--deck-top);
+      left: 0;
+      height: 3px;
+      z-index: 950;
+      background: var(--accent);
+      width: 0;
+      transition: width var(--fade-ms) ease;
+    }
+    .deck-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--on-dark-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  </style>
+
+  <style type="text/css">
+    .ctrl {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 900;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.75rem clamp(1.25rem, 5vw, 2.5rem);
+      padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
+      background: rgba(11, 14, 20, 0.92);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid var(--line-dark);
+    }
+    .chapter-tabs { display: flex; align-items: center; gap: 0.35rem; overflow-x: auto; }
+    .chapter-tab {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      padding: 0.4rem 0.8rem;
+      border-radius: 999px;
+      color: var(--on-dark-muted);
+      background: transparent;
+      border: 1px solid transparent;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+    }
+    .chapter-tab:hover { color: var(--on-dark); background: rgba(255, 255, 255, 0.06); }
+    .chapter-tab[aria-current="true"] {
+      color: var(--on-dark);
+      background: rgba(255, 218, 8, 0.15);
+      border-color: rgba(255, 218, 8, 0.45);
+    }
+    .chapter-tab:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(255, 218, 8, 0.35); }
+    .chapter-tab .ct-count { color: var(--on-dark-muted); font-weight: 600; margin-left: 0.35rem; }
+    .chapter-tab[aria-current="true"] .ct-count { color: var(--accent); }
+    .chapter-tab { display: inline-flex; align-items: center; justify-content: center; gap: 0.35rem; }
+    .chapter-tab .ct-icon { display: none; align-items: center; justify-content: center; line-height: 0; }
+
+    .ctrl-dots { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+    .dot-group { display: flex; align-items: center; gap: 0.4rem; }
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: rgba(244, 242, 236, 0.2);
+      transition: all 0.2s ease;
+      cursor: pointer;
+      border: 0;
+      padding: 0;
+    }
+    .dot[aria-current="true"] { background: var(--accent); width: 26px; }
+    .dot:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(255, 218, 8, 0.35); }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.5rem;
+      height: 2.5rem;
+      border: 1px solid var(--line-dark);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--on-dark);
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color 0.15s ease, background 0.15s ease;
+    }
+    .nav-btn:hover { border-color: rgba(255, 218, 8, 0.55); background: rgba(255, 218, 8, 0.12); }
+    .nav-btn:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(255, 218, 8, 0.35); }
+    .nav-btn:disabled,
+    .nav-btn.is-hidden { opacity: 0; pointer-events: none; }
+    .nav-btn--text {
+      width: auto;
+      padding: 0 1rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      white-space: nowrap;
+      border-radius: 999px;
+    }
+
+    .counter {
+      font-variant-numeric: tabular-nums;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--on-dark);
+      white-space: nowrap;
+    }
+    .counter .sep { color: var(--on-dark-muted); }
+
+    .shell-header { background: var(--dark); border-bottom: 1px solid var(--line-dark); }
+    .shell-brand { color: var(--on-dark); }
+
+    @media (max-width: 1023px) {
+      .artifact-triptych { grid-template-columns: 1fr; }
+      .artifact-ab,
+      .artifact-before-after,
+      .artifact-cards,
+      .artifact-close__cols { grid-template-columns: 1fr; }
+      .artifact-grid2x2 { grid-template-columns: 1fr; }
+      .artifact-close__testimonials { grid-template-columns: 1fr 1fr; }
+      .slide-title { max-width: none; }
+    }
+    @media (max-width: 640px) {
+      .ctrl { gap: 0.5rem; padding-left: 0.85rem; padding-right: 0.85rem; }
+      .chapter-tab .ct-count,
+      .chapter-tab .ct-label { display: none; }
+      .chapter-tab .ct-icon { display: inline-flex; }
+      .chapter-tab {
+        width: 2.4rem;
+        height: 2.4rem;
+        padding: 0;
+        flex-shrink: 0;
+        border-color: var(--line-dark);
+        background: rgba(255, 255, 255, 0.04);
+      }
+      .ctrl-dots { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .slide, .progress { transition: none; }
+    }
+  </style>
+</head>
+
+<body class="bg-base text-ink font-sans antialiased">
+
+<header class="shell-header" style="height:var(--deck-top);">
+  <div class="shell-inner shell-bar" style="height:var(--deck-top);">
+    <a href="raisin.html" class="shell-brand">Case study</a>
+    <p class="deck-title" id="deckTitle">Raisin — Brand Evolution</p>
+    <div class="shell-actions">
+      <button type="button" class="nav-btn" data-fullscreen aria-label="Toggle fullscreen" title="Fullscreen">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3m13-5v3a2 2 0 0 1-2 2h-3"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<main class="deck" aria-label="Raisin case study presentation">
+  <div class="deck-stage" id="track"></div>
+</main>
+
+<div class="ctrl" role="group" aria-label="Slideshow controls">
+  <div class="chapter-tabs" id="chapters" aria-label="Chapters"></div>
+  <div class="ctrl-dots hidden lg:flex" id="dots" aria-label="Slides"></div>
+  <div class="ml-auto flex items-center gap-3">
+    <span class="counter"><span id="curNum">01</span> <span class="sep">/</span> <span id="totNum">13</span></span>
+    <button type="button" class="nav-btn" data-prev aria-label="Previous slide">←</button>
+    <button type="button" class="nav-btn" data-next aria-label="Next slide">→</button>
+    <a href="raisin.html" class="nav-btn nav-btn--text hidden" id="backToCase" aria-label="Back to case study">Back to case study</a>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var FADE_MS = 300;
+  var IMG = "raisin-assets/assets/img/";
+  var VID = "raisin-assets/assets/video/";
+
+  var SLIDES = [
+    {
+      id: 1,
+      chapter: "opening",
+      track: "practice",
+      label: "OPENING · THE SITUATION",
+      title: "One brand. Three disconnected surfaces. No operating model.",
+      layout: "triptych",
+      artifactImg: null,
+      artifact: {
+        panels: [
+          { src: IMG + "proof/old-dashboard.jpg.webp", alt: "Legacy web dashboard", cap: "Gap 01 · Web catalogue" },
+          { src: IMG + "proof/pull-to-refresh.webp", alt: "Legacy mobile app", cap: "Gap 02 · Mobile disconnect" },
+          { src: IMG + "proof/email.webp", alt: "Transactional email", cap: "Gap 03 · No shared system" }
+        ]
+      },
+      chips: [
+        "Gap 01: Web felt like a catalogue",
+        "Gap 02: Guidelines, not a product system",
+        "Gap 03: No shared research or files"
+      ],
+      youSay: "When I joined, customers experienced three different brands depending on where they landed. My remit was two parallel tracks — Practice to fix what customers see, Enablement to fix how the team works."
+    },
+    {
+      id: 2,
+      chapter: "wealth-hub",
+      track: "practice",
+      label: "WEALTH HUB · BASELINE RESEARCH",
+      title: "8 interviews told us the dashboard was a catalogue. Not a home.",
+      layout: "single",
+      artifactImg: IMG + "dashboard-web/round1-synthesis.webp",
+      artifact: { alt: "Co-creation synthesis — HMW statements clustered on glass" },
+      chips: [
+        "8 qualitative interviews · Germany",
+        "Co-creation: HMW → workshops → one concept",
+        "Signal: 'Too much Raisin, too little me'"
+      ],
+      youSay: "Before touching the design, we ran a qualitative baseline — eight interviews across three archetypes. Then a co-creation sprint where I ran stakeholder workshops against the same insights."
+    },
+    {
+      id: 3,
+      chapter: "wealth-hub",
+      track: "practice",
+      label: "WEALTH HUB · DECISION 01 · CUSTOMER RESEARCH",
+      title: "Overview-first won. The donut shipped.",
+      layout: "ab",
+      artifactImg: null,
+      artifact: {
+        a: { kind: "video", src: VID + "dashboard-web/treemap.mp4", label: "A · Treemap" },
+        b: { kind: "video", src: VID + "dashboard-web/donut.mp4", label: "B · Donut", chosen: true }
+      },
+      chips: [
+        "12 participants · DE / NL · 2 prototypes",
+        "Settled by customer research",
+        "Treemap density blocked orientation"
+      ],
+      youSay: "I ran Raisin's first international study — twelve participants, two prototypes. Treemap density blocked orientation at a glance. The donut made allocation legible."
+    },
+    {
+      id: 4,
+      chapter: "wealth-hub",
+      track: "practice",
+      label: "WEALTH HUB · DECISION 02 · DESIGN CRITIQUE",
+      title: "Hierarchy isn't complexity. It's how savers think about money.",
+      layout: "beforeAfter",
+      artifactImg: null,
+      artifact: {
+        before: { src: IMG + "proof/dash-old.webp", alt: "Legacy dashboard — flat catalogue" },
+        after: { src: IMG + "proof/dash-new.webp", alt: "Wealth Hub — structured hierarchy" }
+      },
+      chips: [
+        "Engineering favoured flat list",
+        "I settled this in design critique",
+        "Flat list = catalogue · hierarchy = home"
+      ],
+      youSay: "A flat list organises around Raisin's catalogue. The hierarchy maps to what customers hold. I took that position before the evidence confirmed it."
+    },
+    {
+      id: 5,
+      chapter: "wealth-hub",
+      track: "practice",
+      label: "WEALTH HUB · OUTCOME",
+      title: "Both bets held. Customers praised the structure, not the polish.",
+      layout: "stat",
+      artifactImg: null,
+      artifact: {
+        targets: [
+          "80% adoption target · 3 months post-launch",
+          "90% task completion — not systematically measured pre-ship",
+          "NPS tracked across DE / NL / ES / PL"
+        ],
+        hero: "+23 → +53",
+        heroLabel: "Dashboard NPS",
+        quote: "Everything works great. I especially like the drill-down graphics — Overview → Fixed deposit → individual bank.",
+        quoteSource: "🇩🇪 Germany · Brand Evolution survey"
+      },
+      chips: [
+        "80% adoption · Met at 3 months",
+        "72–87% agree they can manage wealth",
+        "~1,900 respondents · 4 markets"
+      ],
+      youSay: "Pre-declared targets: 80% adoption, 90% task completion, NPS. Adoption target met at three months. NPS from +23 to +53."
+    },
+    {
+      id: 6,
+      chapter: "post-mvp",
+      track: "practice",
+      label: "POST-MVP · THREE RELEASES",
+      title: "One worked. One didn't. One proved something different.",
+      layout: "cards",
+      artifactImg: null,
+      artifact: {
+        cards: [
+          {
+            title: "Filtering",
+            impact: "All-deposits view led adoption",
+            media: { kind: "image", src: IMG + "dashboard-web/r2-all-deposits.webp", alt: "All-deposits filtering lens" }
+          },
+          {
+            title: "Zero-state A/B",
+            impact: "No conversion lift — hypothesis not tight enough",
+            media: { kind: "video", src: VID + "dashboard-web/zero-state-demo.mp4", alt: "Zero-state donut carousel" }
+          },
+          {
+            title: "Wrapped",
+            impact: "Strong engagement · soft AuM · intent architecture incomplete",
+            media: { kind: "image", src: IMG + "brand/wrapped-1-welcome.png", alt: "Raisin Wrapped welcome" }
+          }
+        ]
+      },
+      chips: [
+        "Filtering: adoption win",
+        "Zero-state: measured miss",
+        "Wrapped: engagement without AuM lift"
+      ],
+      youSay: "After MVP we owned three releases, each measured against a shared framework I built. I reported all three the same way."
+    },
+    {
+      id: 7,
+      chapter: "post-mvp",
+      track: "enablement",
+      label: "POST-MVP · ENABLEMENT",
+      title: "In parallel: the infrastructure that doesn't depend on me.",
+      layout: "single",
+      artifactImg: IMG + "wow/workshop.webp",
+      artifact: { alt: "Ways of Working workshop — Figma file standards" },
+      chips: [
+        "WoW: one Figma file · still how every project starts",
+        "PoP: shared fidelity language · still how we critique",
+        "UX measurement framework · authored pre-releases"
+      ],
+      youSay: "Ways of Working standardised the files. Principles of Prototyping standardised the conversation. The measurement framework I built before the releases, not after."
+    },
+    {
+      id: 8,
+      chapter: "mobile",
+      track: "practice",
+      label: "MOBILE · READ THE STALL",
+      title: "42% / 25% / 33%. Copying web would have been wrong.",
+      layout: "single",
+      artifactImg: IMG + "dashboard-mobile/mobile-research.webp",
+      artifact: { alt: "Mobile desk research — interaction data breakdown" },
+      chips: [
+        "Programme stalled — read before redesigning",
+        "42% portfolio · 25% donut · 33% tabs",
+        "Rule: inherit concept · redesign surface"
+      ],
+      youSay: "The interaction data said copying web was wrong. The rule I set: inherit the concept, redesign the surface."
+    },
+    {
+      id: 9,
+      chapter: "mobile",
+      track: "practice",
+      label: "MOBILE · THE EMBEDDED BET",
+      title: "Thin analytics tab as MVP erodes trust before the feature proves itself.",
+      layout: "ab",
+      artifactImg: null,
+      artifact: {
+        mode: "split",
+        src: IMG + "dashboard-mobile/compare.webp",
+        alt: "Standalone analytics tab vs embedded insight on Home",
+        a: { label: "A · Standalone tab" },
+        b: { label: "B · Embedded", chosen: true }
+      },
+      chips: [
+        "Maze: 92.9% vs 71.4% task success",
+        "Show wealth where people land",
+        "Open risk: pending products 42.9% / 57.1%"
+      ],
+      youSay: "Embed first, build out the dedicated view once there's depth. One open risk I named before launch — pending products still split."
+    },
+    {
+      id: 10,
+      chapter: "mobile",
+      track: "practice",
+      label: "MOBILE · SHIPPED + VISION",
+      title: "Structure praised again. And a vision for what comes next.",
+      layout: "single",
+      artifactImg: IMG + "dashboard-mobile/multi-mocks.webp",
+      artifact: { alt: "Redesigned mobile dashboard across nine core screens" },
+      chips: [
+        "App Store: 5/5 praising structure · DE / NL / ES",
+        "Cura: reporting → helping savers decide",
+        "VP mandate · I authored the 8-slide narrative"
+      ],
+      youSay: "App store reviews already praising structure — same signal as web, different surface. I also authored the Cura vision."
+    },
+    {
+      id: 11,
+      chapter: "design-ai",
+      track: "enablement",
+      label: "DESIGN × AI · THE PROGRAMME",
+      title: "A VP mandate became design's 180-day operating plan.",
+      layout: "single",
+      artifactImg: IMG + "ai-enablement/program-overview.webp",
+      artifact: { alt: "Design × AI programme overview" },
+      chips: [
+        "1 of 4 AI Champions · Lab → Showcase → Clinic",
+        "8 designers coached · foundations → autonomy",
+        "Ticket closure: 10d → 7d"
+      ],
+      youSay: "As one of four AI Champions I wrote design's operating plan. Eight designers coached from foundations to autonomy."
+    },
+    {
+      id: 12,
+      chapter: "design-ai",
+      track: "enablement",
+      label: "DESIGN × AI · THE TOOLS",
+      title: "Four tools. Built in a sprint. Used every day.",
+      layout: "grid2x2",
+      artifactImg: null,
+      artifact: {
+        tiles: [
+          { src: IMG + "ai-enablement/tool-1.webp", alt: "Design QA tool", caption: "Design QA — catches visual drift" },
+          { src: IMG + "ai-enablement/tool-2.webp", alt: "Copywriting tool", caption: "Copywriting — Raisin voice from Figma" },
+          { src: IMG + "ai-enablement/tool-3.webp", alt: "Typography system", caption: "Typography — safe prototyping fonts" },
+          { src: IMG + "ai-enablement/tool-4.webp", alt: "Annotation tool", caption: "Annotation — comments → GitLab at code line" }
+        ]
+      },
+      chips: [
+        "Design QA · visual drift",
+        "Copywriting · Raisin voice",
+        "Annotation · prototype → GitLab"
+      ],
+      youSay: "Four tools the team uses every day. These aren't demos. They're in production."
+    },
+    {
+      id: 13,
+      chapter: "proof",
+      track: "practice",
+      label: "PROOF · CLOSE",
+      title: "What moved. What didn't. Both matter.",
+      layout: "close",
+      artifactImg: null,
+      artifact: {
+        practice: [
+          "NPS +23 → +53",
+          "80%+ web adoption · Met",
+          "92.9% mobile task success"
+        ],
+        enablement: [
+          "10d → 7d ticket closure",
+          "4 tools · 4 playbooks still in use",
+          "8 designers coached to autonomy"
+        ],
+        misses: [
+          "Zero-state: no conversion lift",
+          "Wrapped: AuM not significant"
+        ],
+        testimonials: [
+          { who: "VP of Design", text: "Key voice in our Director of Design hiring — interview through final hire decision." },
+          { who: "VP of Design", text: "Clear spikes in innovation, peer leadership, and AI integration — a pioneer." },
+          { who: "Head of Product", text: "Pragmatic yet aspirational — domain depth helps us deliver faster." },
+          { who: "Director of Product", text: "Grabbed the requirement, came with his own research — green light on the spot." },
+          { who: "Chief of AI", text: "Got into AI early and pulled the design team into Cursor with him." }
+        ]
+      },
+      chips: [
+        "NPS +23→+53 · 80%+ web · 92.9% mobile",
+        "10d→7d closure · 4 tools · 4 playbooks in use",
+        "Zero-state: no lift · Wrapped: AuM not significant"
+      ],
+      youSay: "NPS from +23 to +53. Zero-state: no conversion lift — reported. Wrapped: AuM not significant — reported. The testimonials are there to read."
+    }
+  ];
+
+  var CHAP_LABELS = {
+    opening: "Opening",
+    "wealth-hub": "Wealth Hub",
+    "post-mvp": "Post-MVP",
+    mobile: "Mobile",
+    "design-ai": "Design × AI",
+    proof: "Proof"
+  };
+
+  var track = document.getElementById("track");
+  var dotsWrap = document.getElementById("dots");
+  var progress = document.getElementById("progress");
+  var curNum = document.getElementById("curNum");
+  var totNum = document.getElementById("totNum");
+  var deckTitle = document.getElementById("deckTitle");
+  var prevBtns = Array.from(document.querySelectorAll("[data-prev]"));
+  var nextBtns = Array.from(document.querySelectorAll("[data-next]"));
+  var backToCase = document.getElementById("backToCase");
+  var chapWrap = document.getElementById("chapters");
+  var N = SLIDES.length;
+  var pad = function (n) { return String(n).padStart(2, "0"); };
+  var i = 0;
+  var leavingTimer = null;
+  var currentSlideEl = null;
+
+  function esc(s) {
+    return String(s)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  function mediaHtml(item) {
+    if (!item) return "";
+    if (item.kind === "video") {
+      return '<video muted loop playsinline autoplay preload="none" src="' + esc(item.src) + '" title="' + esc(item.alt || "") + '"></video>';
+    }
+    return '<img src="' + esc(item.src) + '" alt="' + esc(item.alt || "") + '" loading="eager" decoding="async">';
+  }
+
+  function renderChips(chips) {
+    return chips.map(function (c) {
+      var cls = "slide-chip";
+      if (/pending products|open risk|42\.9%/i.test(c)) cls += " slide-chip--risk";
+      return '<span class="' + cls + '">' + esc(c) + "</span>";
+    }).join("");
+  }
+
+  function renderTriptych(artifact) {
+    var panels = artifact.panels.map(function (p) {
+      return (
+        '<div class="artifact-triptych__cell">' +
+          '<img src="' + esc(p.src) + '" alt="' + esc(p.alt) + '" loading="eager" decoding="async">' +
+          '<span class="artifact-triptych__cap">' + esc(p.cap) + "</span>" +
+        "</div>"
+      );
+    }).join("");
+    return '<div class="artifact artifact-triptych">' + panels + "</div>";
+  }
+
+  function renderSingle(slide) {
+    var alt = (slide.artifact && slide.artifact.alt) || "";
+    return (
+      '<div class="artifact">' +
+        '<img src="' + esc(slide.artifactImg) + '" alt="' + esc(alt) + '" loading="eager" decoding="async">' +
+      "</div>"
+    );
+  }
+
+  function renderAb(artifact) {
+    if (artifact.mode === "split") {
+      return (
+        '<div class="artifact artifact-ab">' +
+          '<div class="artifact-ab__split">' +
+            '<img src="' + esc(artifact.src) + '" alt="' + esc(artifact.alt) + '" loading="eager" decoding="async">' +
+            '<span class="artifact-ab__tag artifact-ab__tag--a">' + esc(artifact.a.label) + "</span>" +
+            '<span class="artifact-ab__tag artifact-ab__tag--chosen artifact-ab__tag--b">' + esc(artifact.b.label) + "</span>" +
+          "</div>" +
+        "</div>"
+      );
+    }
+    function panel(key, data) {
+      var chosen = data.chosen ? " artifact-ab__panel--chosen" : "";
+      var tagCls = data.chosen ? " artifact-ab__tag--chosen" : "";
+      return (
+        '<div class="artifact-ab__panel' + chosen + '">' +
+          '<div class="artifact-ab__media">' +
+            mediaHtml(data) +
+            '<span class="artifact-ab__tag' + tagCls + '">' + esc(data.label) + "</span>" +
+          "</div>" +
+        "</div>"
+      );
+    }
+    return '<div class="artifact artifact-ab">' + panel("a", artifact.a) + panel("b", artifact.b) + "</div>";
+  }
+
+  function renderBeforeAfter(artifact) {
+    return (
+      '<div class="artifact artifact-before-after">' +
+        '<div class="artifact-before-after__panel">' +
+          '<span class="artifact-ab__tag">Before</span>' +
+          '<img src="' + esc(artifact.before.src) + '" alt="' + esc(artifact.before.alt) + '" loading="eager" decoding="async">' +
+        "</div>" +
+        '<div class="artifact-before-after__panel">' +
+          '<span class="artifact-ab__tag artifact-ab__tag--chosen">After</span>' +
+          '<img src="' + esc(artifact.after.src) + '" alt="' + esc(artifact.after.alt) + '" loading="eager" decoding="async">' +
+        "</div>" +
+      "</div>"
+    );
+  }
+
+  function renderStat(artifact) {
+    var targets = artifact.targets.map(function (t) {
+      return '<p class="artifact-stat__target">' + esc(t) + "</p>";
+    }).join("");
+    return (
+      '<div class="artifact artifact-stat">' +
+        '<div class="artifact-stat__targets">' +
+          '<p class="artifact-stat__targets-label">Pre-declared targets</p>' +
+          targets +
+        "</div>" +
+        '<div class="artifact-stat__hero" aria-label="NPS change">' + esc(artifact.hero) + "</div>" +
+        '<blockquote class="artifact-stat__quote">' +
+          "<p>\u201C" + esc(artifact.quote) + "\u201D</p>" +
+          "<cite>" + esc(artifact.quoteSource) + "</cite>" +
+        "</blockquote>" +
+      "</div>"
+    );
+  }
+
+  function renderCards(artifact) {
+    var cards = artifact.cards.map(function (c) {
+      return (
+        '<article class="artifact-card">' +
+          '<div class="artifact-card__head">' +
+            '<p class="artifact-card__title">' + esc(c.title) + "</p>" +
+            '<p class="artifact-card__impact">' + esc(c.impact) + "</p>" +
+          "</div>" +
+          '<div class="artifact-card__media">' + mediaHtml(c.media) + "</div>" +
+        "</article>"
+      );
+    }).join("");
+    return '<div class="artifact artifact-cards">' + cards + "</div>";
+  }
+
+  function renderGrid2x2(artifact) {
+    var tiles = artifact.tiles.map(function (t) {
+      return (
+        '<div class="artifact-grid2x2__cell">' +
+          '<img src="' + esc(t.src) + '" alt="' + esc(t.alt) + '" loading="eager" decoding="async">' +
+          '<p class="artifact-grid2x2__cap">' + esc(t.caption) + "</p>" +
+        "</div>"
+      );
+    }).join("");
+    return '<div class="artifact artifact-grid2x2">' + tiles + "</div>";
+  }
+
+  function renderClose(artifact) {
+    var practice = artifact.practice.map(function (s) {
+      return '<p class="artifact-close__stat">' + esc(s) + "</p>";
+    }).join("");
+    var enablement = artifact.enablement.map(function (s) {
+      return '<p class="artifact-close__stat">' + esc(s) + "</p>";
+    }).join("");
+    var misses = artifact.misses.map(function (s) {
+      return '<p class="artifact-close__stat artifact-close__stat--miss">' + esc(s) + "</p>";
+    }).join("");
+    var quotes = artifact.testimonials.map(function (q) {
+      return (
+        '<blockquote class="artifact-close__quote">' +
+          "<strong>" + esc(q.who) + "</strong>" +
+          esc(q.text) +
+        "</blockquote>"
+      );
+    }).join("");
+    return (
+      '<div class="artifact artifact-close">' +
+        '<div class="artifact-close__cols">' +
+          '<div class="artifact-close__col">' +
+            '<p class="artifact-close__col-label">Practice</p>' +
+            practice + misses +
+          "</div>" +
+          '<div class="artifact-close__col artifact-close__col--enablement">' +
+            '<p class="artifact-close__col-label">Enablement</p>' +
+            enablement +
+          "</div>" +
+        "</div>" +
+        '<div class="artifact-close__testimonials" aria-label="Testimonials">' + quotes + "</div>" +
+      "</div>"
+    );
+  }
+
+  function renderArtifact(slide) {
+    switch (slide.layout) {
+      case "triptych": return renderTriptych(slide.artifact);
+      case "single": return renderSingle(slide);
+      case "ab": return renderAb(slide.artifact);
+      case "beforeAfter": return renderBeforeAfter(slide.artifact);
+      case "stat": return renderStat(slide.artifact);
+      case "cards": return renderCards(slide.artifact);
+      case "grid2x2": return renderGrid2x2(slide.artifact);
+      case "close": return renderClose(slide.artifact);
+      default: return "";
+    }
+  }
+
+  function pauseVideos(root) {
+    if (!root) return;
+    root.querySelectorAll("video").forEach(function (v) {
+      v.pause();
+      v.removeAttribute("src");
+      v.load();
+    });
+  }
+
+  function playVideos(root) {
+    if (!root) return;
+    root.querySelectorAll("video").forEach(function (v) {
+      var p = v.play();
+      if (p && p.catch) p.catch(function () {});
+    });
+  }
+
+  function renderSlide(index) {
+    var slide = SLIDES[index];
+    var trackClass = "slide-label--" + slide.track;
+    var html =
+      '<section class="slide is-active" data-slide-index="' + index + '" aria-label="Slide ' + (index + 1) + '">' +
+        '<div class="slide-inner">' +
+          '<p class="slide-label ' + trackClass + '">' + esc(slide.label) + "</p>" +
+          '<h1 class="slide-title">' + esc(slide.title) + "</h1>" +
+          renderArtifact(slide) +
+          '<div class="slide-chips" aria-label="Context">' + renderChips(slide.chips) + "</div>" +
+        "</div>" +
+      "</section>";
+
+    var prev = currentSlideEl;
+    if (prev) {
+      prev.classList.remove("is-active");
+      prev.classList.add("is-leaving");
+      pauseVideos(prev);
+      clearTimeout(leavingTimer);
+      leavingTimer = setTimeout(function () {
+        if (prev.parentNode) prev.parentNode.removeChild(prev);
+      }, FADE_MS);
+    }
+
+    track.insertAdjacentHTML("beforeend", html);
+    currentSlideEl = track.lastElementChild;
+    requestAnimationFrame(function () {
+      playVideos(currentSlideEl);
+    });
+  }
+
+  /* ---------- chapters & dots from SLIDES array ---------- */
+  var chapters = [];
+  SLIDES.forEach(function (s, idx) {
+    var id = s.chapter;
+    var ch = chapters.find(function (c) { return c.id === id; });
+    if (!ch) {
+      ch = { id: id, label: CHAP_LABELS[id] || id, slides: [] };
+      chapters.push(ch);
+    }
+    ch.slides.push(idx);
+  });
+  var chapterOf = function (idx) {
+    return chapters.find(function (c) { return c.slides.indexOf(idx) >= 0; });
+  };
+
+  var chapterTabs = chapters.map(function (ch) {
+    var b = document.createElement("button");
+    b.className = "chapter-tab";
+    b.type = "button";
+    b.innerHTML = '<span class="ct-label">' + esc(ch.label) + '</span><span class="ct-count">' + ch.slides.length + "</span>";
+    b.setAttribute("aria-label", "Jump to " + ch.label);
+    b.addEventListener("click", function () { go(ch.slides[0]); });
+    chapWrap.appendChild(b);
+    return b;
+  });
+
+  var dots = [];
+  chapters.forEach(function (ch) {
+    var group = document.createElement("div");
+    group.className = "dot-group";
+    ch.slides.forEach(function (idx) {
+      var b = document.createElement("button");
+      b.className = "dot";
+      b.type = "button";
+      b.setAttribute("aria-label", "Go to slide " + (idx + 1));
+      b.dataset.tip = pad(idx + 1);
+      b.addEventListener("click", function () { go(idx); });
+      group.appendChild(b);
+      dots[idx] = b;
+    });
+    dotsWrap.appendChild(group);
+  });
+  totNum.textContent = pad(N);
+
+  function updateChrome() {
+    var slide = SLIDES[i];
+    dots.forEach(function (d, idx) {
+      d.setAttribute("aria-current", String(idx === i));
+    });
+    var ch = chapterOf(i);
+    chapterTabs.forEach(function (t, ci) {
+      var cur = chapters[ci] === ch;
+      t.setAttribute("aria-current", String(cur));
+      var cnt = t.querySelector(".ct-count");
+      if (cnt && cur) {
+        cnt.textContent = (ch.slides.indexOf(i) + 1) + "/" + ch.slides.length;
+      } else if (cnt) {
+        cnt.textContent = String(chapters[ci].slides.length);
+      }
+    });
+    curNum.textContent = pad(i + 1);
+    progress.style.width = ((i + 1) / N) * 100 + "%";
+    deckTitle.textContent = slide.label.split("·")[0].trim() + " — Raisin";
+    prevBtns.forEach(function (b) {
+      b.classList.toggle("is-hidden", i === 0);
+      b.disabled = i === 0;
+    });
+    var onLast = i === N - 1;
+    nextBtns.forEach(function (b) {
+      b.classList.toggle("hidden", onLast);
+      b.disabled = onLast;
+    });
+    backToCase.classList.toggle("hidden", !onLast);
+    if (history.replaceState) history.replaceState(null, "", "#" + (i + 1));
+    window.PortfolioDeck = { pageId: "raisin", getIndex: function () { return i; }, go: go };
+    window.dispatchEvent(new CustomEvent("portfolio:deck-change", { detail: { slide: i + 1 } }));
+  }
+
+  function go(n) {
+    var next = Math.max(0, Math.min(N - 1, n));
+    if (next === i && currentSlideEl) return;
+    i = next;
+    renderSlide(i);
+    updateChrome();
+  }
+  var next = function () { go(i + 1); };
+  var prev = function () { go(i - 1); };
+
+  prevBtns.forEach(function (b) { b.addEventListener("click", prev); });
+  nextBtns.forEach(function (b) { b.addEventListener("click", next); });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.target.closest("input, textarea, iframe, [contenteditable]")) return;
+    if (e.key === "Escape") {
+      e.preventDefault();
+      location.href = "raisin.html";
+      return;
+    }
+    switch (e.key) {
+      case "ArrowRight":
+      case "PageDown":
+        e.preventDefault();
+        next();
+        break;
+      case " ":
+        e.preventDefault();
+        e.shiftKey ? prev() : next();
+        break;
+      case "ArrowLeft":
+      case "PageUp":
+        e.preventDefault();
+        prev();
+        break;
+      case "Home":
+        e.preventDefault();
+        go(0);
+        break;
+      case "End":
+        e.preventDefault();
+        go(N - 1);
+        break;
+    }
+  });
+
+  var x0 = null, y0 = null, sdx = 0, sdy = 0, axis = null;
+  track.addEventListener("touchstart", function (e) {
+    if (e.touches.length !== 1) { x0 = null; return; }
+    x0 = e.touches[0].clientX;
+    y0 = e.touches[0].clientY;
+    sdx = sdy = 0;
+    axis = null;
+  }, { passive: true });
+  track.addEventListener("touchmove", function (e) {
+    if (x0 === null) return;
+    sdx = e.touches[0].clientX - x0;
+    sdy = e.touches[0].clientY - y0;
+    if (!axis && (Math.abs(sdx) > 8 || Math.abs(sdy) > 8)) {
+      axis = Math.abs(sdx) > Math.abs(sdy) ? "x" : "y";
+    }
+    if (axis === "x" && e.cancelable) e.preventDefault();
+  }, { passive: false });
+  track.addEventListener("touchend", function () {
+    if (x0 === null) return;
+    if (axis === "x" && Math.abs(sdx) > 45) (sdx < 0 ? next() : prev());
+    x0 = y0 = null;
+    axis = null;
+  }, { passive: true });
+  track.addEventListener("touchcancel", function () {
+    x0 = y0 = null;
+    axis = null;
+  }, { passive: true });
+
+  var fsBtn = document.querySelector("[data-fullscreen]");
+  if (fsBtn) {
+    fsBtn.addEventListener("click", function () {
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
+      else document.exitFullscreen?.();
+    });
+  }
+
+  var start = parseInt((location.hash || "").replace("#", ""), 10);
+  if (!isNaN(start) && start >= 1 && start <= N) i = start - 1;
+  go(i);
+})();
+</script>
+<script defer src="js/custom-cursor.js"></script>
+</body>
+</html>
