@@ -1,19 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" class="summary-v2">
 <head>
     <meta charset="utf-8">
-    <!-- Analytics (GA + Clarity) — skipped on localhost; see js/gtag-init.js -->
     <script src="js/gtag-init.js"></script>
     <meta http-equiv="x-ua-compatible" content="ie=edge; chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-
     <title>N26 — Multi-Activity Feed Across 25 Markets · Vipul Saxena</title>
     <meta name="description" content="How I evolved N26's home feed into an all-activity view across 25 countries — research-led, cross-functional, shipped to production with measurable engagement and CSAT uplift.">
     <meta name="keywords" content="Vipul Saxena, N26, Fintech, Mobile Banking, Home Feed, Multi-Activity Feed, Product Design, UX Research, CSAT, Engagement, Design Case Study, Berlin">
     <meta name="author" content="Vipul Saxena" />
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://vipulsaxena.com/n26.html">
     <meta property="og:url" content="https://vipulsaxena.com/n26.html" />
     <meta property="og:title" content="N26 — Multi-Activity Feed Across 25 Markets · Vipul Saxena" />
     <meta property="og:description" content="Evolving N26's home feed into an all-activity view across 25 countries — research-led, shipped to production with measurable engagement and CSAT uplift." />
@@ -28,326 +24,23 @@
     <meta name="twitter:description" content="Evolving N26's home feed into an all-activity view across 25 countries — research-led, shipped to production with measurable engagement and CSAT uplift." />
     <meta name="twitter:url" content="https://vipulsaxena.com/n26.html" />
     <meta name="twitter:image" content="https://vipulsaxena.com/images/n26_cards.png" />
-
     <link rel="icon" href="fav.png" sizes="32x32" type="image/png">
-
-    <!-- Fonts (match Portfolio: Inter) -->
+    <link rel="shortcut icon" href="fav.png" type="image/png">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="canonical" href="https://vipulsaxena.com/n26.html">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap">
     <link rel="stylesheet" href="css/shell.css">
     <link rel="stylesheet" href="css/custom-cursor.css">
     <link rel="stylesheet" href="css/portfolio-gate-previews.css">
-
-    <!-- Tailwind (Play CDN) + theme config (identical to template-2.html) -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              base:  '#ffffff',   /* page background            */
-              elev:  '#f7f7f7',   /* elevated section bg        */
-              card:  '#ffffff',   /* card surface               */
-              line:  '#e7e7e7',   /* hairline borders           */
-              ink:   '#262626',   /* primary text               */
-              mute:  '#6e6e6e',   /* secondary text             */
-              accent:'#ffda08',   /* brand yellow               */
-              accink:'#262626',   /* text on accent             */
-            },
-            fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
-            borderRadius: { '2xl': '1.25rem', '3xl': '1.75rem' },
-            maxWidth: { content: '80rem' },
-          }
-        }
-      }
-    </script>
-
-    <!-- Deck styles Tailwind can't express cleanly (fixed viewport, track, transitions) -->
-    <style type="text/css">
-      :root{ --deck-top:3.5rem; --present-inset:clamp(1.25rem,4vw,3rem); --present-top:clamp(1rem,2.5vw,2rem); --present-bottom:8%; --ink:#262626; --muted:#6e6e6e; --line:#e7e7e7; --accent:#ffda08; }
-      html,body{ height:100%; }
-      body{ background:#ffffff; font-family:"Inter", system-ui, sans-serif; overflow:hidden; }
-
-      /* Brand yellow highlight (matches Portfolio) */
-      .hl{ background:#ffda08; color:#262626; padding:0 .1em; border-radius:.08em;
-           -webkit-box-decoration-break:clone; box-decoration-break:clone; }
-
-      /* Breadcrumb (consistent with olx.html) */
-      .crumb{ display:inline-flex; flex-wrap:wrap; align-items:center; gap:.5rem; font-size:.95rem; color:#6e6e6e; font-weight:600; }
-      .crumb .sep{ color:#c4c4c4; }
-      .crumb .now{ color:#262626; text-decoration:underline; text-decoration-color:#ffda08; text-decoration-thickness:3px; text-underline-offset:3px; }
-
-      /* Inline hover tooltip (definition of a phrase) */
-      .tip{ position:relative; cursor:help; color:#262626; text-decoration:underline; text-decoration-color:#ffda08; text-decoration-thickness:3px; text-underline-offset:3px; }
-      .tip::after{ content:attr(data-tip); position:absolute; left:50%; bottom:calc(100% + 10px); transform:translateX(-50%) translateY(4px);
-        background:#262626; color:#fff; font-size:.82rem; font-weight:500; line-height:1.45; text-align:center; letter-spacing:0; text-transform:none;
-        padding:.55rem .75rem; border-radius:.6rem; width:max-content; max-width:20rem; box-shadow:0 14px 30px -12px rgba(0,0,0,.5);
-        opacity:0; pointer-events:none; transition:opacity .15s ease, transform .15s ease; z-index:60; }
-      .tip::before{ content:""; position:absolute; left:50%; bottom:calc(100% + 5px); transform:translateX(-50%) translateY(4px);
-        border:6px solid transparent; border-top-color:#262626; opacity:0; pointer-events:none; transition:opacity .15s ease, transform .15s ease; z-index:60; }
-      .tip:hover::after, .tip:focus-visible::after,
-      .tip:hover::before, .tip:focus-visible::before{ opacity:1; transform:translateX(-50%) translateY(0); }
-      .tip:focus-visible{ outline:none; }
-
-      /* ---------- Deck viewport ---------- */
-      .deck{ position:fixed; inset:0; top:var(--deck-top); overflow:hidden; }
-      .deck-track{
-        display:flex; height:100%; width:100%;
-        transition:transform .6s cubic-bezier(.7,0,.2,1);
-        will-change:transform;
-      }
-      .slide{
-        flex:0 0 100%; height:100%; width:100%; overflow-y:auto;
-        display:flex; flex-direction:column; position:relative;
-      }
-      .slide-inner{
-        margin:0 auto; width:100%; max-width:100%;
-        padding-top:var(--present-top);
-        padding-inline:var(--present-inset);
-        padding-bottom:var(--present-bottom);
-        flex:1 1 auto; display:flex; flex-direction:column; justify-content:center;
-        box-sizing:border-box;
-      }
-      .slide-inner.top{ justify-content:flex-start; }
-      .slide-inner.is-split{
-        max-width:100%;
-        padding:0;
-      }
-      .deck-split-grid{ width:100%; }
-      .deck-split-copy{
-        min-width:0;
-        width:100%;
-        box-sizing:border-box;
-      }
-      .slide-inner.is-split .deck-split-copy{
-        padding-top:var(--present-top);
-        padding-inline:var(--present-inset);
-        padding-bottom:var(--present-bottom);
-      }
-      .deck-split-copy :is(p, h1, h2, h3, h4, blockquote, figcaption, ul, ol){
-        max-width:100%;
-      }
-      .deck-split-copy > :is(div, figure){
-        max-width:100%;
-      }
-
-      /* Per-slide reveal: children fade-up only while the slide is active */
-      .slide [data-anim]{ opacity:0; transform:translateY(26px); transition:opacity .6s ease, transform .6s ease; }
-      .slide.is-active [data-anim]{ opacity:1; transform:none; }
-      .slide.is-active [data-anim]{ transition-delay:calc(var(--i,0) * 90ms); }
-
-      /* Wireframe / screen placeholder (matches template-2.html) */
-      .wf{
-        position:relative; display:flex; align-items:center; justify-content:center;
-        color:#a3a3a3; font-size:.8rem; letter-spacing:.14em; text-transform:uppercase; font-weight:600;
-        background-color:#fafafa;
-        background-image:
-          linear-gradient(#ededed 1px, transparent 1px),
-          linear-gradient(90deg, #ededed 1px, transparent 1px);
-        background-size:26px 26px;
-        border:1px dashed #dcdcdc; border-radius:1rem; overflow:hidden;
-      }
-      .wf span{ position:relative; z-index:1; padding:.4em .8em; background:rgba(255,255,255,.7); border-radius:.5em; text-align:center; }
-
-      /* Device frames */
-      .device-phone{ border:8px solid #e7e7e7; border-radius:2rem; background:#fff; box-shadow:0 24px 50px -24px rgba(38,38,38,.25); }
-
-      /* Minimal iPhone mock for recorded prototypes */
-      .phone-mock{ position:relative; width:100%; max-width:260px; margin-inline:auto; padding:5px; background:#1c1c1e; border-radius:2rem; box-shadow:0 16px 38px -22px rgba(0,0,0,.45); }
-      .phone-mock video, .phone-mock img{ display:block; width:100%; height:auto; border-radius:1.6rem; background:#000; }
-
-      /* Three hypotheses — side-by-side concept cards */
-      .slide-n26-hypo .n26-hypo-head{ margin-bottom:clamp(.65rem,1.2vw,1rem); }
-      .n26-hypo-grid{
-        display:grid; grid-template-columns:1fr; gap:1rem;
-        width:100%; flex:1 1 auto; min-height:0; align-content:start;
-      }
-      @media (min-width:1024px){
-        .n26-hypo-grid{
-          grid-template-columns:repeat(3,minmax(0,1fr));
-          gap:clamp(.65rem,1.2vw,1rem);
-          align-items:stretch;
-        }
-      }
-      .n26-hypo-card{
-        display:flex; flex-direction:column; min-width:0; min-height:0;
-        background:#fff; border:1px solid #e7e7e7; border-radius:1rem;
-        padding:clamp(.65rem,1.2vw,1rem);
-      }
-      .n26-hypo-card__media{
-        flex:0 0 auto; display:flex; justify-content:center; padding-bottom:.5rem;
-      }
-      @media (min-width:1024px){
-        .n26-hypo-card__media .phone-mock{ max-width:min(100%,11.25rem); }
-      }
-      .n26-hypo-card__body{
-        flex:1 1 auto; min-width:0; display:flex; flex-direction:column; gap:.35rem;
-      }
-      .n26-hypo-card__label{
-        font-size:.65rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#6e6e6e;
-      }
-      .n26-hypo-card__title{
-        font-size:clamp(.95rem,1.05vw,1.1rem); font-weight:800; letter-spacing:-.02em; line-height:1.25;
-      }
-      .n26-hypo-card__p{
-        font-size:.78rem; line-height:1.45; color:#6e6e6e; margin:0; flex:1 1 auto;
-      }
-      .n26-hypo-card [data-replay]{
-        margin-top:auto; align-self:flex-start; font-size:.72rem; padding:.35rem .7rem;
-      }
-
-      /* Eyebrow chip (design timeline / sprint labels from Figma) */
-      .chip{ display:inline-flex; align-items:center; gap:.4rem; font-size:.75rem; font-weight:700;
-        padding:.35rem .75rem; border-radius:999px; background:#fff3b0; color:#262626; border:1px solid #f4d000; }
-
-      /* ---------- Bottom control bar ---------- */
-      .ctrl{
-        position:fixed; left:0; right:0; bottom:0; z-index:900;
-        padding-top:.75rem; padding-bottom:calc(.75rem + env(safe-area-inset-bottom,0px));
-        background:rgba(255,255,255,.85); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
-        border-top:1px solid #e7e7e7;
-      }
-      .chapter-tabs{ display:flex; align-items:center; gap:.35rem; }
-      .chapter-tab{ font-size:.75rem; font-weight:700; letter-spacing:.01em; padding:.4rem .8rem; border-radius:999px;
-        color:#6e6e6e; background:transparent; border:1px solid transparent; cursor:pointer; white-space:nowrap;
-        transition:color .15s ease, background .15s ease, border-color .15s ease; }
-      .chapter-tab:hover{ color:#262626; background:#f2f2f2; }
-      .chapter-tab[aria-current="true"]{ color:#262626; background:#fff3b0; border-color:#ffda08; }
-      .chapter-tab:focus-visible{ outline:none; box-shadow:0 0 0 3px rgba(255,218,8,.55); }
-      .chapter-tab .ct-count{ color:#a3a3a3; font-weight:600; margin-left:.35rem; }
-      .chapter-tab[aria-current="true"] .ct-count{ color:#8a7a00; }
-      .chapter-tab{ display:inline-flex; align-items:center; justify-content:center; gap:.35rem; }
-      .chapter-tab .ct-icon{ display:none; align-items:center; justify-content:center; line-height:0; }
-
-      .ctrl-dots{ display:flex; align-items:center; gap:1rem; flex-wrap:wrap; }
-      .dot-group{ display:flex; align-items:center; gap:.4rem; }
-      .dot{ width:9px; height:9px; border-radius:999px; background:#d4d4d4; transition:all .2s ease; cursor:pointer; border:0; padding:0; }
-      .dot[aria-current="true"]{ background:#ffda08; width:26px; }
-      .dot{ position:relative; }
-      .dot::after{ content:attr(data-tip); position:absolute; left:50%; bottom:calc(100% + 12px);
-        transform:translateX(-50%) translateY(4px); background:#262626; color:#fff; font-size:.72rem; font-weight:600;
-        padding:.34rem .6rem; border-radius:.45rem; white-space:nowrap; box-shadow:0 10px 24px -10px rgba(0,0,0,.45);
-        opacity:0; pointer-events:none; transition:opacity .14s ease, transform .14s ease; z-index:40; }
-      .dot::before{ content:""; position:absolute; left:50%; bottom:calc(100% + 7px); transform:translateX(-50%) translateY(4px);
-        border:5px solid transparent; border-top-color:#262626; opacity:0; pointer-events:none;
-        transition:opacity .14s ease, transform .14s ease; z-index:40; }
-      .dot:hover::after, .dot:focus-visible::after,
-      .dot:hover::before, .dot:focus-visible::before{ opacity:1; transform:translateX(-50%) translateY(0); }
-      .dot:focus-visible{ outline:none; box-shadow:0 0 0 3px rgba(255,218,8,.55); }
-
-      .nav-btn{ display:inline-flex; align-items:center; justify-content:center; width:2.5rem; height:2.5rem;
-        border:1px solid #e7e7e7; border-radius:999px; background:#fff; color:#262626; cursor:pointer;
-        transition:border-color .15s ease, transform .15s ease, background .15s ease; }
-      .nav-btn:hover{ border-color:#ffda08; background:#fff3b0; }
-      .nav-btn:focus-visible{ outline:none; box-shadow:0 0 0 3px rgba(255,218,8,.55); }
-      .nav-btn:disabled{ opacity:.35; cursor:default; }
-      .nav-btn:disabled:hover{ border-color:#e7e7e7; background:#fff; }
-      .nav-btn.is-active{ border-color:#ffda08; background:#fff3b0; }
-      .nav-home{ gap:.3rem; }
-      .nav-home .home-count{ display:none; font-size:.72rem; font-weight:700; font-variant-numeric:tabular-nums; }
-      .nav-home.is-active{ width:auto; padding:0 .7rem; }
-      .nav-home.is-active .home-count{ display:inline; }
-
-      .counter{ font-variant-numeric:tabular-nums; font-weight:700; font-size:.9rem; color:#262626; white-space:nowrap; }
-      .counter .sep{ color:#a3a3a3; }
-
-      @media (max-width: 640px){
-        .ctrl .shell-inner{ gap:8px; }
-        .counter{ display:none; }
-        .home-count{ display:none !important; }
-        .nav-home.is-active{ width:2.5rem; padding:0; }
-        .chapter-tab .ct-count,
-        .chapter-tab .ct-label{ display:none; }
-        .chapter-tab .ct-icon{ display:inline-flex; }
-        .chapter-tab{ width:2.5rem; height:2.5rem; padding:0; flex-shrink:0; border-color:#e7e7e7; background:#fff; }
-        .chapter-tabs{ flex:0 1 auto; min-width:0; gap:.35rem; overflow:visible; }
-        .ml-auto{ flex:0 0 auto; }
-      }
-
-      /* Scroll progress bar (top of viewport, under header) */
-      .progress{ position:fixed; top:var(--deck-top); left:0; height:3px; z-index:950;
-        background:#ffda08; width:0; transition:width .6s cubic-bezier(.7,0,.2,1); }
-
-      /* Deck title in header */
-      .deck-title{ font-size:.9rem; font-weight:600; color:#6e6e6e; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-
-      /* Keyboard hint pill */
-      .kbd{ display:inline-flex; align-items:center; gap:.35rem; font-size:.75rem; color:#6e6e6e; }
-      .key{ display:inline-block; min-width:1.5rem; padding:.15rem .4rem; text-align:center; font-size:.7rem; font-weight:700;
-        border:1px solid #e7e7e7; border-bottom-width:2px; border-radius:.4rem; background:#fff; color:#262626; }
-
-      /* Lightbox (expand imagery — same as olx.html) */
-      #lightbox{ position:fixed; inset:0; z-index:2000; display:none; align-items:center; justify-content:center; background:rgb(255 255 255 / 90%); padding:5vw; }
-      #lightbox.open{ display:flex; }
-      #lightbox img{ max-width:100%; max-height:90vh; border-radius:.75rem; box-shadow:0 24px 60px -20px rgba(0,0,0,.35); }
-
-      .slide-scroll > .slide-inner{ justify-content:flex-start; }
-      .slide.is-vcenter > .slide-inner{ justify-content:center; }
-      .slide.is-vbottom > .slide-inner{ justify-content:flex-end; }
-
-      /* Mobile + tablet — desktop (1024px+) unchanged */
-      @media (max-width: 1023px) {
-        .slide > .slide-inner { justify-content: flex-start; }
-        .slide.is-vcenter > .slide-inner { justify-content: center; }
-        .slide.is-vbottom > .slide-inner { justify-content: flex-end; }
-        .slide-scroll > .slide-inner,
-        .slide-inner.top { justify-content: flex-start; }
-        .slide-bleed { overflow-x: hidden; overflow-y: auto; }
-        .slide-workshop { overflow-x: hidden; overflow-y: auto; }
-        .slide-workshop > img[data-lightbox] { pointer-events: auto; }
-        .deck-split-grid { height: auto !important; min-height: 0 !important; }
-        .n26-cover-stack {
-          min-height: 300px; display: flex; flex-direction: column; align-items: center;
-          justify-content: flex-end; gap: .75rem; padding-bottom: .5rem;
-        }
-        .n26-cover-stack .n26-cover-char,
-        .n26-cover-stack .phone-mock {
-          position: relative !important; left: auto !important; transform: none !important; margin-inline: auto;
-        }
-        .n26-cover-stack .n26-cover-char { max-width: 200px; width: min(72vw, 200px); }
-        .n26-cover-stack .phone-mock { max-width: 255px; }
-        .n26-launch-phones {
-          position: relative !important; min-height: 0 !important; display: flex; flex-direction: column;
-          align-items: center; gap: 1rem; padding: 1rem 0;
-        }
-        .n26-launch-phones .phone-mock {
-          position: relative !important; left: auto !important; right: auto !important; top: auto !important;
-          transform: none !important; margin: 0 auto; max-width: 260px !important;
-        }
-        .n26-hero-img { max-width: min(100%, 28rem) !important; width: 100% !important; }
-      }
-
-      @media (prefers-reduced-motion: reduce){
-        .deck-track{ transition:none; }
-        .progress{ transition:none; }
-        .slide [data-anim]{ opacity:1 !important; transform:none !important; transition:none !important; }
-      }
-
-      /* ===== Password gate (secure entry) ===== */
-      #n26Gate{ display:none; }
-      html.n26-locked{ overflow:hidden; }
-      html.n26-locked body > *:not(#n26Gate){ display:none !important; }
-      html.n26-locked #n26Gate{ display:flex; }
-      #n26Gate{ position:fixed; inset:0; z-index:10000; align-items:center; justify-content:center; padding:5vw; background:#fff; }
-      .pw-card{ position:relative; width:100%; max-width:520px; background:#fff; border:1px solid var(--line); border-radius:24px; padding:40px; box-shadow:0 30px 60px -20px rgba(0,0,0,.25); }
-      .pw-eyebrow{ font-size:.8rem; letter-spacing:.16em; text-transform:uppercase; font-weight:700; color:var(--muted); margin:0 0 10px; }
-      .pw-title{ font-size:2rem; font-weight:800; letter-spacing:-.02em; color:var(--ink); margin:0 0 8px; }
-      .pw-desc{ font-size:1.08rem; line-height:1.5; color:var(--muted); margin:0 0 20px; }
-      .pw-input{ box-sizing:border-box; width:100%; padding:16px 18px; border:1px solid var(--line); border-radius:14px; font-size:1.05rem; color:var(--ink); outline:none; transition:border-color .15s, box-shadow .15s; }
-      .pw-input:focus-visible{ border-color:var(--accent); box-shadow:0 0 0 3px rgba(255,218,8,.35); }
-      .pw-error{ color:#e0362f; font-size:.9rem; font-weight:600; margin:10px 0 0; }
-      .pw-actions{ display:flex; gap:10px; justify-content:flex-end; align-items:center; margin-top:20px; }
-      .pw-back{ margin-right:auto; font-size:.9rem; font-weight:600; color:var(--muted); text-decoration:none; }
-      .pw-back:hover{ color:var(--ink); }
-      .pw-btn{ border:0; border-radius:999px; padding:14px 28px; font-size:1.02rem; font-weight:700; cursor:pointer; background:var(--accent); color:var(--ink); transition:filter .15s, transform .15s; }
-      .pw-btn:hover{ filter:brightness(1.05); transform:translateY(-1px); }
-    </style>
-
+    <link rel="stylesheet" href="raisin-assets/assets/css/tokens.css">
+    <link rel="stylesheet" href="raisin-assets/assets/css/base.css">
+    <link rel="stylesheet" href="raisin-assets/assets/css/components.css">
+    <link rel="stylesheet" href="raisin-assets/assets/css/summary.css">
+    <link rel="stylesheet" href="raisin-assets/assets/css/summary2.css">
+    <link rel="stylesheet" href="css/n26-web.css">
     <script src="js/follow-me-bootstrap.js"></script>
-    <!-- Runs before render: hide the page until unlocked (no content flash).
-         Always re-prompts on EXTERNAL entry (typed URL, bookmark, link from another
-         site). Only skips the prompt for in-site navigation, reloads, and back/forward. -->
     <script>
       (function(){
         var KEY = "n26AccessGranted";
@@ -376,10 +69,8 @@
       })();
     </script>
 </head>
+<body class="summary-v2 has-shell">
 
-<body class="bg-base text-ink font-sans antialiased">
-
-<!-- ===================== Password gate (secure entry) ===================== -->
 <div id="n26Gate" role="dialog" aria-modal="true" aria-labelledby="n26GateTitle">
   <div class="pw-card pw-card--preview" role="document">
     <div class="pw-preview" aria-hidden="true">
@@ -406,7 +97,7 @@
     </div>
     <p class="pw-eyebrow">🔒 Protected case study</p>
     <h2 class="pw-title" id="n26GateTitle">Enter password to view</h2>
-    <p class="pw-desc">This N26 Premium case study is password-protected. Enter the password to continue.</p>
+    <p class="pw-desc">This N26 case study is password-protected. Enter the password to continue.</p>
     <form id="n26GateForm" novalidate>
       <input type="password" id="n26GateInput" class="pw-input" placeholder="Password" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Password">
       <p class="pw-error" id="n26GateError" role="alert" hidden>Incorrect password. Please try again.</p>
@@ -418,573 +109,548 @@
   </div>
 </div>
 
-<!-- ============================================================= -->
-<!-- Slim header (shared shell shell.css, adapted for the deck)     -->
-<!-- ============================================================= -->
 <header class="shell-header" style="height:var(--deck-top);">
   <div class="shell-inner shell-bar" style="height:var(--deck-top);">
     <a href="index.html" class="shell-brand">Home</a>
     <p class="deck-title" id="deckTitle">N26 — Multi-activity Feed</p>
     <div class="shell-actions">
-      <button type="button" class="nav-btn" data-fullscreen aria-label="Toggle fullscreen" title="Fullscreen">
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3m13-5v3a2 2 0 0 1-2 2h-3"/></svg>
-      </button>
+      <a class="nav-btn nav-btn--present" href="n26-presentation.html" aria-label="Enter presentation mode" title="Presentation mode" onclick="try{sessionStorage.setItem('vipulPresent','1');sessionStorage.setItem('n26AccessGranted','1')}catch(e){}">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h20v12H2z"/><path d="M12 15v6"/><path d="m8 21 4-3 4 3"/></svg>
+        <span>Present</span>
+      </a>
     </div>
   </div>
 </header>
 
-<!-- Progress bar -->
-<div class="progress" id="progress" aria-hidden="true"></div>
+<main>
 
-<!-- ============================================================= -->
-<!-- DECK — each .slide is one full page.                          -->
-<!-- ============================================================= -->
-<main class="deck" aria-label="N26 case study slideshow">
-  <div class="deck-track" id="track">
+<!-- ============================== HERO ============================== -->
+<section class="why-hero why-hero--split" id="hero">
+  <div class="hero-stage">
+    <div class="container hero-split hero-split--stage">
+      <div class="hero-split__content">
+        <div class="hero__kicker">
+          <span class="tag tag--outline">Fintech · N26 · March 2022</span>
+        </div>
+        <h1 class="hero__title">What is <span class="hl">N26</span>?</h1>
+        <p class="hero__sub hero__sub--thesis">N26 is a mobile banking solution based out of Germany that serves <strong>7 million customers</strong> across <strong>25 countries</strong>.</p>
+        <p class="hero__sub">With features like Spaces, round-ups, automations, cashback, and statistics, N26 helps users manage spending to reach financial goals. It provides a free basic current account with a debit card, overdraft, investment products, and premium accounts for a monthly fee.</p>
+        <p class="hero__sub">This case study follows one project on the Home-feed team — evolving the Main Account Feed into an All-Activity view — alongside other shipped work from my time there.</p>
+      </div>
+      <figure class="n26-hero-visual reveal">
+        <img src="assets/n26/overview.png" alt="N26 mobile app — Home feed with balance and recent transactions" data-lightbox loading="lazy">
+      </figure>
+    </div>
+  </div>
+</section>
 
-    <!-- ===== SLIDE 01 · What is N26? (Cover + Highlights-1) ===== -->
-    <section class="slide slide-scroll is-active bg-elev" data-chapter="case-study" data-title="What is N26?" data-home-slide>
-      <div class="slide-inner top is-split">
-        <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-stretch lg:h-full deck-split-grid">
-          <div class="flex flex-col justify-center deck-split-copy">
-            <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Fintech · N26 · March 2022</p>
-            <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-6 max-w-[14ch]" data-anim style="--i:1">What is <span class="hl">N26</span>?</h1>
-            <p class="text-ink text-lg md:text-xl leading-relaxed max-w-[46ch] mb-6" data-anim style="--i:2">
-              N26 is a mobile banking solution based out of Germany that serves <strong>7 million customers</strong> across <strong>25 countries</strong>.
-            </p>
-            <p class="text-mute text-base md:text-lg leading-relaxed max-w-[50ch] mb-8" data-anim style="--i:3">
-              With features like spaces, round-ups, automations, cashback, and statistics, N26 helps users manage their spending to reach their financial goals. It provides a free basic current account with a debit card, overdraft, investment products, and premium accounts for a monthly fee.
-            </p>
-            <div class="flex flex-wrap items-center gap-4" data-anim style="--i:4">
-              <button type="button" class="shell-btn" data-next>Start →</button>
-              <span class="kbd">or Use <span class="key">←</span> <span class="key">→</span> · <span class="key">Space</span></span>
-            </div>
-          </div>
-          <div class="flex items-end justify-center" data-anim style="--i:2">
-            <img src="assets/n26/overview.png" alt="N26 mobile app — Home feed with balance and recent transactions" data-lightbox class="n26-hero-img w-full lg:w-[42rem] max-w-[42rem] h-auto object-contain object-bottom cursor-zoom-in" loading="lazy">
+<!-- ============================== CONTEXT ============================== -->
+<section class="why-hero" id="context" style="padding-block:var(--sp-2xl);">
+  <div class="container">
+    <p class="eyebrow">N26 Highlights</p>
+    <h2 class="why-hero__statement">What I did at N26</h2>
+    <nav class="crumb reveal n26-crumb" aria-label="Team placement">
+      <span>N26</span><span class="sep" aria-hidden="true">›</span>
+      <span>Engagement Segment</span><span class="sep" aria-hidden="true">›</span>
+      <span class="now">👨‍💻 Home-feed Team</span>
+    </nav>
+
+    <div class="period-split period-split--50-50 reveal">
+      <div class="period-split__main">
+        <p class="lede">The Home-feed team has the most cross-collaboration across N26 — be it launching Crypto, kicking off Trading products, or Overdraft. My secondary objective was to help increase discoverability of such products through the Home section of the app.</p>
+        <p class="lede">Beyond the feed, I contributed to how the design team measured and researched product quality at scale across 25 European markets.</p>
+        <p class="beat__subtitle n26-resp-heading">Other responsibilities</p>
+        <ul class="n26-check-list">
+          <li><span class="n26-check-list__icon" aria-hidden="true">✓</span><span><strong>Measuring UX</strong> — analyse, communicate and follow up on monthly CSAT results, tracking the right UX metrics.</span></li>
+          <li><span class="n26-check-list__icon" aria-hidden="true">✓</span><span><strong>Research Lab volunteer</strong> — helping designers set up user research and launch tests across research platforms.</span></li>
+        </ul>
+      </div>
+      <figure class="period-split__visual">
+        <img src="assets/n26/illust-1.png" alt="Illustration of a cross-functional team building a brick house together" loading="lazy">
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== JOURNEY NAV ============================== -->
+<nav class="journey-nav" aria-label="Journey chapters">
+  <button class="journey-nav__btn" data-period-link="journey-intro">Journey</button>
+  <span class="journey-nav__sep" aria-hidden="true">·</span>
+  <button class="journey-nav__btn" data-period-link="period-1"><span class="journey-nav__n">01</span> Multi-activity Feed</button>
+  <span class="journey-nav__sep" aria-hidden="true">·</span>
+  <button class="journey-nav__btn" data-period-link="period-2"><span class="journey-nav__n">02</span> Highlights</button>
+  <span class="journey-nav__sep" aria-hidden="true">·</span>
+  <button class="journey-nav__btn" data-period-link="proof">Proof</button>
+</nav>
+
+<!-- ============================== JOURNEY INTRO ============================== -->
+<section class="section section--tight" id="journey-intro" data-period="journey-intro">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">The case study</p>
+      <h2 class="h-display h-2">Journey</h2>
+      <p class="lede">One flagship feed project — research-led, cross-functional, shipped to production.</p>
+      <p class="lede lede--present-short"><strong>Practice</strong> = the feed shipped · <strong>Enablement</strong> = how the team measured UX quality at scale.</p>
+      <p class="lede lede--remit">My remit on the Home-feed team: evolve the Main Account Feed into an All-Activity view as Spaces gained IBANs — and, in parallel, help the design org track CSAT and run research across <strong>25 European markets</strong>. <strong>Practice</strong> = customer outcomes on the feed. <strong>Enablement</strong> = team capability. <strong>I</strong> where I owned design; <strong>we</strong> at squad and segment scale.</p>
+    </div>
+    <div class="track-key reveal-stagger">
+      <div class="track-key__item track-key__item--practice">
+        <p class="track-key__label">Practice</p>
+        <p class="track-key__text">Discovery interviews, three concept hypotheses, usability validation, and Concept C shipped to 25 markets.</p>
+      </div>
+      <div class="track-key__item track-key__item--enablement enablement-surface">
+        <p class="track-key__label enablement-label">
+          <svg class="enablement-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Enablement
+        </p>
+        <p class="track-key__text">Monthly CSAT analysis across markets and Research Lab support — helping designers set up and launch tests.</p>
+      </div>
+    </div>
+    <p class="why-hero__body"><strong>Impact: MAU activity, Spaces adoption of All-Activity, CSAT uplift, and a Europe-wide rollout — alongside CSAT rituals and research support the team adopted. Measured in Proof.</strong></p>
+    <hr class="rule rule--thick" aria-hidden="true">
+  </div>
+</section>
+
+<!-- ============================== PERIOD 01 ============================== -->
+<section class="section period" id="period-1" data-period="period-1">
+  <div class="container">
+    <header class="period__head period__head--split period__head--thick-rule reveal">
+      <div class="period__head-copy">
+        <div class="period__meta">
+          <span class="period__num">01</span>
+          <div class="chip-row">
+            <span class="chip">Home feed</span>
+            <span class="chip">25 markets</span>
           </div>
         </div>
+        <h2 class="h-display h-2 period__title">Multi-activity Feed</h2>
+        <p class="lede period__thesis period__thesis--present">Spaces spending was invisible on the Feed. Research → three concepts → Concept C shipped across 25 markets.</p>
+        <p class="lede period__thesis">With Spaces evolving into fully functioning accounts with IBANs — and later cards — we needed users to feel in control of activity across all accounts through their Home feed.</p>
+        <p class="period__role"><strong>I led</strong> feed design, research synthesis, and concept validation. <strong>We shipped</strong> Concept C across 25 markets.</p>
+        <p class="n26-shoutouts"><strong>Shoutouts:</strong> Rubin (Illustrator), Katie (UX Writer), Mireia (Researcher), Lea (PM), Dan (CPO), Engineering (FE &amp; QE — most collaborated with) and the Data Science team.</p>
       </div>
-    </section>
-
-    <!-- ===== SLIDE 02 · What I did at N26? (Highlights-2) ===== -->
-    <section class="slide slide-scroll is-vcenter" data-chapter="case-study" data-title="What I did at N26" data-home-slide>
-      <div class="slide-inner top is-split">
-        <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center deck-split-grid">
-          <div class="flex flex-col justify-center deck-split-copy">
-            <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">N26 Highlights</p>
-            <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-6 max-w-[18ch]" data-anim style="--i:1">What I did at N26</h2>
-            <nav class="crumb mb-8" aria-label="Team placement" data-anim style="--i:2">
-              <span>N26</span><span class="sep" aria-hidden="true">›</span>
-              <span>Engagement Segment</span><span class="sep" aria-hidden="true">›</span>
-              <span class="now">👨‍💻 Home-feed Team</span>
-            </nav>
-            <p class="text-mute text-lg leading-relaxed mb-6" data-anim style="--i:3">
-              The Home-feed team has the most cross-collaboration across N26 — be it launching Crypto, kicking off Trading products, or Overdraft. My secondary objective was to help increase discoverability of such products through the Home section of the app.
-            </p>
-            <div class="text-mute text-lg leading-relaxed" data-anim style="--i:4">
-              <p class="mb-3">My other responsibilities in the design team included:</p>
-              <ul class="space-y-3">
-                <li class="flex gap-3"><span class="shrink-0 w-6 h-6 rounded-full bg-accent text-accink text-sm font-bold flex items-center justify-center">✓</span><span><strong class="text-ink">Measuring UX</strong> — analyse, communicate and follow up on monthly CSAT results, tracking the right UX metrics.</span></li>
-                <li class="flex gap-3"><span class="shrink-0 w-6 h-6 rounded-full bg-accent text-accink text-sm font-bold flex items-center justify-center">✓</span><span><strong class="text-ink">Research Lab volunteer</strong> — helping designers set up user research and launch tests across research platforms.</span></li>
-              </ul>
-            </div>
-          </div>
-          <div class="mx-auto w-full max-w-[460px]" data-anim style="--i:2">
-            <img src="assets/n26/illust-1.png" alt="Illustration of a cross-functional team building a brick house together" class="w-full h-auto object-contain" loading="lazy">
+      <figure class="period__head-visual period__head-visual--mobile-mocks reveal">
+        <div class="n26-cover-stack">
+          <img src="assets/n26/N26-Infocard.png" alt="Illustration of an N26 customer checking their multi-activity feed notifications on their phone" data-lightbox class="n26-cover-char" loading="lazy">
+          <div class="phone-mock">
+            <video loop muted playsinline preload="metadata" data-autoplay-inview aria-hidden="true" tabindex="-1">
+              <source src="assets/n26/final.mov" type="video/mp4">
+            </video>
           </div>
         </div>
-      </div>
-    </section>
+      </figure>
+    </header>
+    <hr class="rule rule--thick" aria-hidden="true">
 
-    <!-- ===== SLIDE 04 · Case study cover · Multi-activity Feed (CS-1) ===== -->
-    <section class="slide slide-scroll is-vcenter bg-[#F1E0CA] text-accink" data-chapter="case-study" data-title="Case study · Multi-activity Feed">
-      <div class="slide-inner top is-split">
-        <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-end deck-split-grid">
-          <div class="flex flex-col justify-center deck-split-copy">
-            <h2 class="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.08] max-w-[16ch]" data-anim style="--i:0">Multi-activity Feed</h2>
-            <p class="mt-6 text-xl md:text-2xl font-semibold max-w-[40ch]" data-anim style="--i:2">Evolving the Main Account Feed into an All-Activity Feed.</p>
-            <p class="mt-6 text-accink/80 text-lg leading-relaxed max-w-[60ch]" data-anim style="--i:3">
-              With the evolution of Spaces into fully functioning accounts with IBANs — and later also cards — we wanted to help users feel in control of their activity across all their accounts through their Feed.
-            </p>
-            <div class="mt-8 flex flex-wrap items-center gap-3" data-anim style="--i:4">
-              <span class="px-3 py-1.5 rounded-full bg-ink text-white text-sm font-semibold">🌐 12-week design timeline · On Production</span>
+    <div class="period__story">
+
+    <div class="n26-story-warm">
+    <article class="beat reveal" id="problem">
+      <div class="period-split period-split--50-50">
+        <div class="period-split__main">
+          <p class="beat__eyebrow">The Problem</p>
+          <h3 class="beat__title">Spending in Spaces was <span class="hl">invisible</span> on the Feed</h3>
+          <p class="beat__text">Users with spending Spaces (Spaces with IBANs) don't see their outgoing transactions in the Feed when they log in — making it hard to stay on top of their spending.</p>
+          <p class="beat__text">Spaces now supports up to 10 IBANs across personal &amp; shared Spaces, with Virtual (and potentially Physical) cards in development — plus plans for Crypto, Overdraft and Instalments. Activity from all these spending Spaces needs a unified view on the Home feed.</p>
+        </div>
+        <figure class="period-split__visual">
+          <img src="assets/n26/n26-problem.png" alt="N26 Home feed with a transfer flagged as failed for insufficient funds, beside a customer asking why a transfer from a savings space isn't visible on the home feed" data-lightbox loading="lazy">
+        </figure>
+      </div>
+    </article>
+
+    <article class="beat reveal" id="hmw">
+      <p class="beat__eyebrow">How Might We?</p>
+      <h3 class="beat__title">How might we help users who have a Space with IBAN <span class="hl">view the activity on their home-feed, at a glance</span>?</h3>
+      <div class="period-split period-split--50-50 n26-split--after-title">
+        <div class="period-split__main">
+          <div class="n26-bet-badge">🍋 Prioritised bet</div>
+          <p class="beat__text">Provide a Feed experience with <span class="tip" tabindex="0" data-tip="Updates &amp; actions on the latest big transactions, security alerts, etc.">relevant</span> information <span class="tip" tabindex="0" data-tip="Overviews in a digestible manner; easily identify any aspect that needs attention.">at a glance</span> that enables <span class="tip" tabindex="0" data-tip="Actionable; show &amp; hide based on relevancy; customise notifications &amp; updates.">confident decision making</span> and creates <span class="tip" tabindex="0" data-tip="Avoiding negative figures or surprises.">peace of mind</span>.</p>
+          <p class="beat__subtitle">Success Metrics</p>
+          <ul class="n26-metrics-list">
+            <li>% increase in MAU activity and retention</li>
+            <li>% of Spaces users churned to the All-Activity view</li>
+            <li>Ratio of usage between Main Account and All-activity feed</li>
+            <li>% increase in user satisfaction via CSAT score</li>
+            <li>% of users upgrading to the next membership tier</li>
+          </ul>
+        </div>
+        <figure class="period-split__visual">
+          <img src="assets/n26/effort-impact-matric.png" alt="Effort–Impact matrix mapping ideas across Quick-wins, Big bets, Maybe and Time-sink quadrants" data-lightbox loading="lazy">
+          <figcaption class="period-split__caption">Effort–Impact matrix we used to prioritise ideas and land on the bet.</figcaption>
+        </figure>
+      </div>
+    </article>
+
+    <article class="beat reveal" id="research">
+      <p class="beat__eyebrow">Discovery · Research</p>
+      <h3 class="beat__title">We ran <span class="hl">six customer interviews</span> to learn more about user needs</h3>
+      <p class="beat__text">The goal: understand users' mental model when keeping track of transactions across their different accounts.</p>
+      <p class="beat__stat">Sample set · <strong>6 moderated interviews</strong> · mental model across Main account &amp; Spaces</p>
+      <div class="period-split period-split--50-50 n26-split--after-title">
+        <div class="period-split__main">
+          <p class="beat__subtitle">Our learnings</p>
+          <div class="n26-quote-stack">
+            <div class="n26-quote-card">
+              <blockquote>
+                <p>"I want to see Spaces transactions in the Spaces area too… but for my everyday, the Home is where I want to easily see all my transactions."</p>
+                <footer>— N26 You User</footer>
+              </blockquote>
+              <div class="n26-quote-card__learn">
+                <span aria-hidden="true">↳</span>
+                <p><span class="n26-quote-card__learn-label">Learned · </span>Main account transactions hold top priority, while Spaces transactions vary depending on the Space's purpose.</p>
+              </div>
             </div>
-            <div class="mt-10 max-w-[70ch]" data-anim style="--i:5">
-              <p class="text-xs font-bold uppercase tracking-[0.18em] text-accink/70 mb-2">Shoutouts</p>
-              <p class="text-accink/80 leading-relaxed">Rubin (Illustrator), Katie (UX Writer), Mireia (Researcher), Lea (PM), Dan (CPO), Engineering (FE & QE — most collaborated with) and the Data Science team.</p>
+            <div class="n26-quote-card">
+              <blockquote>
+                <p>"If I don't have enough money for a payment from a Space or Main account, I want something very visible telling me in advance."</p>
+                <footer>— N26 Smart User</footer>
+              </blockquote>
+              <div class="n26-quote-card__learn">
+                <span aria-hidden="true">↳</span>
+                <p><span class="n26-quote-card__learn-label">Learned · </span>It's okay to have redundancy across sections if it increases visibility on important information.</p>
+              </div>
             </div>
           </div>
-          <div class="relative mx-auto w-full max-w-[620px] min-h-[280px] sm:min-h-[340px] md:min-h-[400px] n26-cover-stack" data-anim style="--i:3">
-            <img src="assets/n26/N26-Infocard.png" alt="Illustration of an N26 customer checking their multi-activity feed notifications on their phone" data-lightbox class="n26-cover-char absolute bottom-0 z-0 h-auto w-full object-contain object-bottom cursor-zoom-in" style="left:50%;max-width:310px" loading="lazy">
-            <div class="phone-mock absolute z-20 bottom-0 !max-w-[285px] !mx-0 pointer-events-none" style="left:20%">
-              <video loop data-autoplay muted playsinline preload="metadata" tabindex="-1" aria-hidden="true" class="pointer-events-none">
-                <source src="assets/n26/final.mov" type="video/mp4">
+        </div>
+        <figure class="period-split__visual">
+          <img src="assets/n26/internview.png" alt="Moderated customer interviews mapping how users think about transactions across their accounts" data-lightbox loading="lazy">
+          <figcaption class="period-split__caption">Six moderated interviews to map the mental model: what they pay for → which account → where they expect to see it.</figcaption>
+        </figure>
+      </div>
+      <div class="n26-insight-grid reveal-stagger">
+        <div class="n26-insight-card"><div class="n26-insight-card__icon" aria-hidden="true">🔔</div><p class="n26-insight-card__title">Stay updated</p><p class="n26-insight-card__text">Updates &amp; actions on the latest big transactions, security alerts, etc.</p></div>
+        <div class="n26-insight-card"><div class="n26-insight-card__icon" aria-hidden="true">📊</div><p class="n26-insight-card__title">Digestible overview</p><p class="n26-insight-card__text">Overviews in a digestible manner; easily identify anything needing attention.</p></div>
+        <div class="n26-insight-card"><div class="n26-insight-card__icon" aria-hidden="true">🛡️</div><p class="n26-insight-card__title">No surprises</p><p class="n26-insight-card__text">Avoiding negative figures or unpleasant surprises.</p></div>
+        <div class="n26-insight-card"><div class="n26-insight-card__icon" aria-hidden="true">🎛️</div><p class="n26-insight-card__title">In control</p><p class="n26-insight-card__text">Actionable; show &amp; hide based on relevancy; customise notifications &amp; updates.</p></div>
+      </div>
+    </article>
+    </div><!-- /.n26-story-warm -->
+
+    <article class="beat reveal" id="workshop">
+      <p class="beat__eyebrow">Ideation</p>
+      <h3 class="beat__title">Design-led cross-functional workshop to ideate on possible solutions</h3>
+      <p class="beat__text">Agenda included reviewing existing research, assessing competitive solutions, and a sketching session with "How Might We" prompts to generate divergent concepts.</p>
+      <p class="beat__stat">Cross-functional · design-led workshop · competitive benchmark + divergent sketching</p>
+      <figure class="n26-inline-figure">
+        <img src="assets/n26/slide11.png" alt="Cross-functional workshop board — use cases, considerations, competitor benchmark, brainstorming and next steps" data-lightbox loading="lazy">
+        <figcaption>Workshop board — research recap, competitive benchmark, and divergent sketching.</figcaption>
+      </figure>
+    </article>
+
+    <article class="beat reveal" id="concepts">
+      <p class="beat__eyebrow">Concepts</p>
+      <h3 class="beat__title">Designed three possible hypotheses</h3>
+      <div class="n26-hypo-stack">
+        <article class="n26-hypo-row">
+          <div class="n26-hypo-row__media">
+            <div class="phone-mock">
+              <video muted playsinline loop preload="metadata" data-autoplay-inview aria-label="Concept A — All Accounts view prototype recording">
+                <source src="assets/n26/hyp1.mov" type="video/mp4">
               </video>
             </div>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== SLIDE 07 · The Problem (CS-2) ===== -->
-    <section class="slide slide-scroll is-vcenter" data-chapter="case-study" data-title="The Problem">
-      <div class="slide-inner top is-split">
-        <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center deck-split-grid">
-          <div class="flex flex-col justify-center deck-split-copy">
-            <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">The Problem</p>
-            <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-6 max-w-[18ch] leading-[1.1]" data-anim style="--i:1">
-              Spending in Spaces was <span class="hl">invisible</span> on the Feed
-            </h2>
-            <p class="text-ink text-lg leading-relaxed max-w-[48ch] mb-6" data-anim style="--i:2">
-              Users with spending Spaces (Spaces with IBANs) don’t see their outgoing transactions in the Feed when they log in — making it hard to stay on top of their spending.
-            </p>
-            <p class="text-mute leading-relaxed max-w-[52ch]" data-anim style="--i:3">
-              Spaces now supports up to 10 IBANs across personal & shared Spaces, with Virtual (and potentially Physical) cards in development — plus plans for Crypto, Overdraft and Instalments. Activity from all these spending Spaces needs a unified view on the Home feed.
-            </p>
+          <div class="n26-hypo-row__copy">
+            <p class="n26-hypo-row__label">Concept A</p>
+            <p class="n26-hypo-row__title">All Accounts view</p>
+            <p class="n26-hypo-row__p">Seeing all accounts together gives a better overview. Switching between accounts increases mental load. Quick actions are tied to the main account.</p>
+            <button type="button" class="n26-replay-btn" data-replay><span aria-hidden="true">↻</span> Play again</button>
           </div>
-          <div class="mx-auto w-full max-w-[440px]" data-anim style="--i:2">
-            <img src="assets/n26/n26-problem.png" alt="N26 Home feed with a transfer flagged as failed for insufficient funds, beside a customer asking why a transfer from a savings space isn’t visible on the home feed" data-lightbox class="w-full h-auto max-h-[72vh] object-contain cursor-zoom-in" loading="lazy">
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== SLIDE 08 · How Might We (CS-3) ===== -->
-    <section class="slide slide-scroll" data-chapter="case-study" data-title="How Might We">
-      <div class="slide-inner">
-        <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">How Might We?</p>
-        <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight leading-[1.15] max-w-[26ch] mb-8" data-anim style="--i:1">
-          How might we help users who have a Space with IBAN <span class="hl">view the activity on their home-feed, at a glance</span>?
-        </h2>
-        <div class="grid lg:grid-cols-[1fr_1.2fr] gap-8 lg:gap-16 items-start deck-split-grid">
-          <div class="deck-split-copy">
-            <div class="inline-block bg-accent text-accink font-bold rounded-xl px-4 py-2 mb-6 -rotate-2 shadow-md" data-anim style="--i:2">🍋 Prioritised bet</div>
-            <p class="text-ink text-lg md:text-xl font-semibold leading-snug max-w-[42ch] mb-8" data-anim style="--i:3">
-              Provide a Feed experience with <span class="tip" tabindex="0" data-tip="Updates &amp; actions on the latest big transactions, security alerts, etc.">relevant</span> information <span class="tip" tabindex="0" data-tip="Overviews in a digestible manner; easily identify any aspect that needs attention.">at a glance</span> that enables <span class="tip" tabindex="0" data-tip="Actionable; show &amp; hide based on relevancy; customise notifications &amp; updates.">confident decision making</span> and creates <span class="tip" tabindex="0" data-tip="Avoiding negative figures or surprises.">peace of mind</span>.
-            </p>
-            <p class="text-xs font-bold uppercase tracking-[0.18em] text-mute mb-4" data-anim style="--i:4">Success Metrics</p>
-            <ul class="space-y-3" data-anim style="--i:5">
-              <li class="flex gap-3 items-start"><span class="shrink-0 mt-1 w-2 h-2 rounded-full bg-accent"></span><span class="text-mute">% increase in MAU activity and retention</span></li>
-              <li class="flex gap-3 items-start"><span class="shrink-0 mt-1 w-2 h-2 rounded-full bg-accent"></span><span class="text-mute">% of Spaces users churned to the All-Activity view</span></li>
-              <li class="flex gap-3 items-start"><span class="shrink-0 mt-1 w-2 h-2 rounded-full bg-accent"></span><span class="text-mute">Ratio of usage between Main Account and All-activity feed</span></li>
-              <li class="flex gap-3 items-start"><span class="shrink-0 mt-1 w-2 h-2 rounded-full bg-accent"></span><span class="text-mute">% increase in user satisfaction via CSAT score</span></li>
-              <li class="flex gap-3 items-start"><span class="shrink-0 mt-1 w-2 h-2 rounded-full bg-accent"></span><span class="text-mute">% of users upgrading to the next membership tier</span></li>
-            </ul>
-          </div>
-          <figure class="m-0" data-anim style="--i:3">
-            <img src="assets/n26/effort-impact-matric.png" alt="Effort–Impact matrix mapping ideas across Quick-wins, Big bets, Maybe and Time-sink quadrants" data-lightbox class="w-full h-auto object-contain cursor-zoom-in" loading="lazy">
-            <figcaption class="mt-3 text-sm text-mute">Effort–Impact matrix we used to prioritise ideas and land on the bet.</figcaption>
-          </figure>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== SLIDE 09 · Six customer interviews (CS-4) ===== -->
-    <section class="slide slide-scroll bg-elev" data-chapter="case-study" data-title="Six customer interviews">
-      <div class="slide-inner top">
-        <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-2" data-anim style="--i:0">Discovery · Research</p>
-        <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-2 max-w-[32ch]" data-anim style="--i:1">
-          We ran <span class="hl">six customer interviews</span> to learn more about user needs
-        </h2>
-        <p class="text-mute leading-relaxed max-w-[72ch] mb-4" data-anim style="--i:2">
-          The goal: understand users’ mental model when keeping track of transactions across their different accounts.
-        </p>
-
-        <!-- Learnings (quote ↔ meaning) + interviews visual -->
-        <div class="grid lg:grid-cols-2 gap-6 lg:gap-10 items-start mb-6">
-          <div data-anim style="--i:3">
-            <p class="text-xs font-bold uppercase tracking-[0.18em] text-mute mb-3">Our learnings</p>
-            <div class="space-y-3">
-              <div class="rounded-xl border border-line bg-card overflow-hidden shadow-sm">
-                <blockquote class="p-4 text-ink">
-                  <p class="text-sm leading-relaxed">“I want to see Spaces transactions in the Spaces area too… but for my everyday, the Home is where I want to easily see all my transactions.”</p>
-                  <footer class="mt-2 text-xs text-mute font-semibold">— N26 You User</footer>
-                </blockquote>
-                <div class="flex gap-2.5 items-start px-4 py-2.5 bg-[#fff8dd] border-t border-line">
-                  <span class="shrink-0 text-accink font-bold" aria-hidden="true">↳</span>
-                  <p class="text-ink text-xs leading-relaxed"><span class="font-bold uppercase tracking-[0.12em] text-mute">Learned · </span>Main account transactions hold top priority, while Spaces transactions vary depending on the Space’s purpose.</p>
-                </div>
-              </div>
-              <div class="rounded-xl border border-line bg-card overflow-hidden shadow-sm">
-                <blockquote class="p-4 text-ink">
-                  <p class="text-sm leading-relaxed">“If I don’t have enough money for a payment from a Space or Main account, I want something very visible telling me in advance.”</p>
-                  <footer class="mt-2 text-xs text-mute font-semibold">— N26 Smart User</footer>
-                </blockquote>
-                <div class="flex gap-2.5 items-start px-4 py-2.5 bg-[#fff8dd] border-t border-line">
-                  <span class="shrink-0 text-accink font-bold" aria-hidden="true">↳</span>
-                  <p class="text-ink text-xs leading-relaxed"><span class="font-bold uppercase tracking-[0.12em] text-mute">Learned · </span>It’s okay to have redundancy across sections if it increases visibility on important information.</p>
-                </div>
-              </div>
+        </article>
+        <article class="n26-hypo-row">
+          <div class="n26-hypo-row__media">
+            <div class="phone-mock">
+              <video muted playsinline loop preload="metadata" data-autoplay-inview aria-label="Concept B — Multi-select Accounts prototype recording">
+                <source src="assets/n26/hyp2.mov" type="video/mp4">
+              </video>
             </div>
           </div>
-          <figure class="m-0" data-anim style="--i:4">
-            <img src="assets/n26/internview.png" alt="Moderated customer interviews mapping how users think about transactions across their accounts" data-lightbox class="w-full h-auto max-h-[34vh] object-contain cursor-zoom-in" loading="lazy">
-            <figcaption class="mt-2 text-xs text-mute">Six moderated interviews to map the mental model: what they pay for → which account → where they expect to see it.</figcaption>
-          </figure>
-        </div>
-
-        <!-- Research-insight cards (descriptions always visible — no layout shift on hover) -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 items-stretch" data-anim style="--i:5">
-          <div class="bg-card border border-line rounded-xl p-4 transition-all duration-200 hover:-translate-y-1 hover:border-accent hover:shadow-lg focus-within:border-accent focus-within:shadow-lg" tabindex="0">
-            <div class="text-xl mb-2" aria-hidden="true">🔔</div>
-            <p class="font-bold text-sm mb-1">Stay updated</p>
-            <p class="text-mute text-xs leading-relaxed">Updates &amp; actions on the latest big transactions, security alerts, etc.</p>
+          <div class="n26-hypo-row__copy">
+            <p class="n26-hypo-row__label">Concept B</p>
+            <p class="n26-hypo-row__title">Multi-select Accounts</p>
+            <p class="n26-hypo-row__p">Filtering between Main account and Spaces with available-balance information gives users a complete overview of their finances.</p>
+            <button type="button" class="n26-replay-btn" data-replay><span aria-hidden="true">↻</span> Play again</button>
           </div>
-          <div class="bg-card border border-line rounded-xl p-4 transition-all duration-200 hover:-translate-y-1 hover:border-accent hover:shadow-lg focus-within:border-accent focus-within:shadow-lg" tabindex="0">
-            <div class="text-xl mb-2" aria-hidden="true">📊</div>
-            <p class="font-bold text-sm mb-1">Digestible overview</p>
-            <p class="text-mute text-xs leading-relaxed">Overviews in a digestible manner; easily identify anything needing attention.</p>
-          </div>
-          <div class="bg-card border border-line rounded-xl p-4 transition-all duration-200 hover:-translate-y-1 hover:border-accent hover:shadow-lg focus-within:border-accent focus-within:shadow-lg" tabindex="0">
-            <div class="text-xl mb-2" aria-hidden="true">🛡️</div>
-            <p class="font-bold text-sm mb-1">No surprises</p>
-            <p class="text-mute text-xs leading-relaxed">Avoiding negative figures or unpleasant surprises.</p>
-          </div>
-          <div class="bg-card border border-line rounded-xl p-4 transition-all duration-200 hover:-translate-y-1 hover:border-accent hover:shadow-lg focus-within:border-accent focus-within:shadow-lg" tabindex="0">
-            <div class="text-xl mb-2" aria-hidden="true">🎛️</div>
-            <p class="font-bold text-sm mb-1">In control</p>
-            <p class="text-mute text-xs leading-relaxed">Actionable; show &amp; hide based on relevancy; customise notifications &amp; updates.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== SLIDE 07 · Cross-functional workshop (CS-6) ===== -->
-    <section class="slide slide-workshop slide-bleed is-vbottom relative" data-chapter="case-study" data-title="Cross-functional workshop">
-      <!-- Full-bleed workshop board as background (click to expand) -->
-      <img src="assets/n26/slide11.png" alt="Cross-functional workshop board — use cases, considerations, competitor benchmark, brainstorming and next steps" data-lightbox class="absolute inset-0 w-full h-full object-cover cursor-zoom-in" loading="lazy">
-      <!-- Text content in a solid container -->
-      <div class="slide-inner relative z-10">
-        <div class="bg-[#C29E62] text-white rounded-2xl p-8 md:p-12 w-full max-w-full shadow-2xl shadow-black/25" data-anim style="--i:0">
-          <p class="text-white/75 text-xs font-bold uppercase tracking-[0.2em] mb-4">Ideation</p>
-          <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight leading-[1.12] max-w-[24ch]">
-            Next step was a design-led cross-functional workshop to ideate on possible solutions
-          </h2>
-          <p class="mt-5 text-lg md:text-xl text-white/85">
-            Agenda included reviewing existing research, assessing competitive solutions, and a sketching session with “How Might We” prompts to generate divergent concepts.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== SLIDE 12 · Three hypotheses (CS-7) ===== -->
-    <section class="slide slide-scroll bg-elev slide-n26-hypo" data-chapter="case-study" data-title="Three hypotheses">
-      <div class="slide-inner top">
-        <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Concepts</p>
-        <h2 class="n26-hypo-head text-2xl md:text-3xl font-extrabold tracking-tight w-full" data-anim style="--i:1">Designed three possible hypotheses</h2>
-        <div class="n26-hypo-grid">
-          <article class="n26-hypo-card" data-anim style="--i:2">
-            <div class="n26-hypo-card__media">
-              <div class="phone-mock">
-                <video data-autoplay muted playsinline preload="metadata" poster="assets/n26/hyp-1.png" aria-label="Concept A — All Accounts view prototype recording">
-                  <source src="assets/n26/hyp1.mov" type="video/mp4">
-                </video>
-              </div>
-            </div>
-            <div class="n26-hypo-card__body">
-              <p class="n26-hypo-card__label">Concept A</p>
-              <p class="n26-hypo-card__title">All Accounts view</p>
-              <p class="n26-hypo-card__p">Seeing all accounts together gives a better overview. Switching between accounts increases mental load. Quick actions are tied to the main account.</p>
-              <button type="button" data-replay class="inline-flex items-center gap-2 font-semibold rounded-full bg-elev border border-line text-ink hover:border-accent hover:bg-[#fff3b0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors"><span aria-hidden="true">↻</span> Play again</button>
-            </div>
-          </article>
-          <article class="n26-hypo-card" data-anim style="--i:3">
-            <div class="n26-hypo-card__media">
-              <div class="phone-mock">
-                <video data-autoplay muted playsinline preload="metadata" poster="assets/n26/hyp3.png" aria-label="Concept B — Multi-select Accounts prototype recording">
-                  <source src="assets/n26/hyp2.mov" type="video/mp4">
-                </video>
-              </div>
-            </div>
-            <div class="n26-hypo-card__body">
-              <p class="n26-hypo-card__label">Concept B</p>
-              <p class="n26-hypo-card__title">Multi-select Accounts</p>
-              <p class="n26-hypo-card__p">Filtering between Main account and Spaces with available-balance information gives users a complete overview of their finances.</p>
-              <button type="button" data-replay class="inline-flex items-center gap-2 font-semibold rounded-full bg-elev border border-line text-ink hover:border-accent hover:bg-[#fff3b0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors"><span aria-hidden="true">↻</span> Play again</button>
-            </div>
-          </article>
-          <article class="n26-hypo-card" data-anim style="--i:4">
-            <div class="n26-hypo-card__media">
-              <div class="phone-mock">
-                <video data-autoplay muted playsinline preload="metadata" poster="assets/n26/hyp-3.png" aria-label="Concept C — Switch between accounts prototype recording">
-                  <source src="assets/n26/hyp3.mov" type="video/mp4">
-                </video>
-              </div>
-            </div>
-            <div class="n26-hypo-card__body">
-              <p class="n26-hypo-card__label">Concept C</p>
-              <p class="n26-hypo-card__title">Switch between accounts</p>
-              <p class="n26-hypo-card__p">See all accounts at once or one at a time — a simplified experience with a sense of control. Quick actions change with the selected account.</p>
-              <button type="button" data-replay class="inline-flex items-center gap-2 font-semibold rounded-full bg-elev border border-line text-ink hover:border-accent hover:bg-[#fff3b0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors"><span aria-hidden="true">↻</span> Play again</button>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== SLIDE 13 · Usability test · 8 customers (CS-8) ===== -->
-    <section class="slide slide-scroll" data-chapter="case-study" data-title="Usability test · 8 customers">
-      <div class="slide-inner top">
-        <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Validation</p>
-        <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-8 max-w-[26ch]" data-anim style="--i:1">
-          Tested the concepts for usability with <span class="hl">8 customers</span>
-        </h2>
-        <!-- Each insight paired with the takeaway it drove -->
-        <div class="hidden lg:grid lg:grid-cols-[1fr_2.5rem_1fr] gap-4 mb-3" data-anim style="--i:2">
-          <p class="text-xs font-bold uppercase tracking-[0.18em] text-mute">Insight</p>
-          <span></span>
-          <p class="text-xs font-bold uppercase tracking-[0.18em] text-accink/70">Takeaway</p>
-        </div>
-        <div class="space-y-4">
-          <div class="grid lg:grid-cols-[1fr_2.5rem_1fr] gap-3 lg:gap-4 items-stretch" data-anim style="--i:3">
-            <div class="bg-elev rounded-2xl p-5 flex items-center"><p class="m-0 text-mute leading-relaxed">Most users liked viewing all accounts at once, but the <strong class="text-ink">Main Account view still holds more importance</strong>.</p></div>
-            <div class="hidden lg:flex items-center justify-center text-ink/30 text-2xl" aria-hidden="true">→</div>
-            <div class="bg-accent text-accink rounded-2xl p-5 flex items-center"><p class="m-0 leading-relaxed">Keep <strong>Main Account</strong> view as the default, with an option to switch between feeds.</p></div>
-          </div>
-          <div class="grid lg:grid-cols-[1fr_2.5rem_1fr] gap-3 lg:gap-4 items-stretch" data-anim style="--i:4">
-            <div class="bg-elev rounded-2xl p-5 flex items-center"><p class="m-0 text-mute leading-relaxed">The option to <strong class="text-ink">multi-select Spaces</strong> is useful to some users — they prefer choosing IBAN-enabled Spaces over normal ones.</p></div>
-            <div class="hidden lg:flex items-center justify-center text-ink/30 text-2xl" aria-hidden="true">→</div>
-            <div class="bg-accent text-accink rounded-2xl p-5 flex items-center"><p class="m-0 leading-relaxed">Letting users choose their preference is key — but we must balance the complexity and be sure of the feature’s usability.</p></div>
-          </div>
-          <div class="grid lg:grid-cols-[1fr_2.5rem_1fr] gap-3 lg:gap-4 items-stretch" data-anim style="--i:5">
-            <div class="bg-elev rounded-2xl p-5 flex items-center"><p class="m-0 text-mute leading-relaxed">Users expect <strong class="text-ink">quick actions to change</strong> with account selection; in multi-select they were rather confused.</p></div>
-            <div class="hidden lg:flex items-center justify-center text-ink/30 text-2xl" aria-hidden="true">→</div>
-            <div class="bg-accent text-accink rounded-2xl p-5 flex items-center"><p class="m-0 leading-relaxed">For multi-select, we could explore letting users choose which account to action from — but this definitely adds complexity and tampers with the purpose of quick actions.</p></div>
-          </div>
-          <div class="grid lg:grid-cols-[1fr_2.5rem_1fr] gap-3 lg:gap-4 items-stretch" data-anim style="--i:6">
-            <div class="bg-elev rounded-2xl p-5 flex items-center"><p class="m-0 text-mute leading-relaxed"><strong class="text-ink">Swiping accounts</strong> with top overviews felt like an easy and valuable experience.</p></div>
-            <div class="hidden lg:flex items-center justify-center text-ink/30 text-2xl" aria-hidden="true">→</div>
-            <div class="bg-accent text-accink rounded-2xl p-5 flex items-center"><p class="m-0 leading-relaxed">Explore a <strong>top-navigation scheme</strong> further and evolve it into something more obvious to users.</p></div>
-          </div>
-        </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 mt-8" data-anim style="--i:7">
-          <figure class="m-0"><img src="assets/n26/usa-1.png" alt="Moderated remote usability session testing a concept prototype over video call" data-lightbox class="w-full h-56 md:h-72 object-cover object-center rounded-2xl border border-line cursor-zoom-in" loading="lazy"></figure>
-          <figure class="m-0"><img src="assets/n26/usa-2.png" alt="Moderated remote usability session testing a concept prototype over video call" data-lightbox class="w-full h-56 md:h-72 object-cover object-center rounded-2xl border border-line cursor-zoom-in" loading="lazy"></figure>
-        </div>
-        <p class="text-sm text-mute mt-3" data-anim style="--i:8">8 moderated remote usability sessions run over video call.</p>
-      </div>
-    </section>
-
-    <!-- ===== SLIDE 14 · Design reviews (CS-9) ===== -->
-    <section class="slide slide-workshop slide-bleed is-vbottom relative" data-chapter="case-study" data-title="Design reviews">
-      <!-- Full-bleed design-review board as background (click to expand) -->
-      <img src="assets/n26/slide14.png" alt="Design-review board — Visual Design Exploration of tab designs, feed designs and UX writing" data-lightbox class="absolute inset-0 w-full h-full object-cover cursor-zoom-in" loading="lazy">
-      <!-- Text content in a solid container -->
-      <div class="slide-inner relative z-10">
-        <div class="bg-[#C29E62] text-white rounded-2xl p-8 md:p-12 w-full shadow-2xl shadow-black/25" data-anim style="--i:0">
-          <p class="text-white/75 text-xs font-bold uppercase tracking-[0.2em] mb-4">Iteration</p>
-          <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight leading-[1.12] max-w-[24ch]">
-            Led design reviews with cross-functional teams to iterate on the insights
-          </h2>
-          <p class="mt-5 text-lg md:text-xl text-white/85">
-            Participants included Engagement-team designers, Lead designers from different segments, PMs, Engineering, and the Head of Product.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== SLIDE 15 · Launch to learn + Next Steps (merged CS-10 + CS-11) ===== -->
-    <section class="slide slide-scroll is-vcenter" data-chapter="case-study" data-title="Launch to learn 🚀">
-      <div class="slide-inner top is-split">
-        <div class="grid lg:grid-cols-2 gap-8 lg:gap-14 items-center deck-split-grid">
-
-          <!-- Content -->
-          <div class="deck-split-copy">
-            <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-3" data-anim style="--i:0">Outcome</p>
-            <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4" data-anim style="--i:1">Launch to learn 🚀</h2>
-            <p class="text-mute leading-relaxed max-w-[52ch] mb-5" data-anim style="--i:2">
-              Shipped <strong class="text-ink">Concept C</strong> — launching only the <strong class="text-ink">Home</strong> and <strong class="text-ink">“All activity” feed</strong> to a first monitored cohort. The experiment was a success.
-            </p>
-
-            <!-- Metrics -->
-            <div class="grid grid-cols-2 gap-5 md:gap-6 border-t border-line pt-5" data-anim style="--i:3">
-              <div>
-                <div class="text-3xl md:text-4xl font-extrabold tracking-tight leading-none">+2.5%</div>
-                <div class="mt-1.5 text-sm text-mute max-w-[20ch]">MAU activity &amp; retention</div>
-              </div>
-              <div>
-                <div class="text-3xl md:text-4xl font-extrabold tracking-tight leading-none">28%</div>
-                <div class="mt-1.5 text-sm text-mute max-w-[20ch]">Spaces users moved to All-Activity</div>
-              </div>
-              <div>
-                <div class="text-3xl md:text-4xl font-extrabold tracking-tight leading-none">3:7</div>
-                <div class="mt-1.5 text-sm text-mute max-w-[20ch]">Main : All-Activity usage ratio</div>
-              </div>
-              <div>
-                <div class="text-3xl md:text-4xl font-extrabold tracking-tight leading-none">+4.5%</div>
-                <div class="mt-1.5 text-sm text-mute max-w-[20ch]">CSAT uplift, measured via post-launch survey</div>
-              </div>
-            </div>
-
-            <!-- Next steps -->
-            <p class="flex gap-3 mt-6 text-mute leading-relaxed" data-anim style="--i:4">
-              <span class="shrink-0 mt-2 w-1.5 h-1.5 rounded-full bg-accent"></span>
-              <span><strong class="text-ink">Rolled out</strong> to <span class="hl">25 countries</span> (Germany first) — now refining v1 from in-app feedback.</span>
-            </p>
-          </div>
-
-          <!-- Media: stacked devices — video in front (bigger), survey behind (smaller) -->
-          <div data-anim style="--i:2">
-            <div class="relative w-full max-w-[440px] mx-auto n26-launch-phones">
-              <!-- behind: in-app feedback survey — smaller, rotated, peeking out -->
-              <div class="phone-mock !max-w-[190px] absolute -right-4 lg:-right-6 top-16 z-0 rotate-[6deg] shadow-2xl shadow-black/25">
-                <img src="assets/n26/next-steps.png" alt="In-app survey asking which transactions to filter from the all-activity feed" data-lightbox class="cursor-zoom-in" loading="lazy">
-              </div>
-              <!-- front: final build video — larger, at the top -->
-              <div class="phone-mock !max-w-[260px] relative z-10">
-                <video data-autoplay muted playsinline preload="metadata" aria-label="Final Concept C visuals — Home and All activity feed prototype recording">
-                  <source src="assets/n26/final.mov" type="video/mp4">
-                </video>
-              </div>
-            </div>
-            <!-- Play again — below the video -->
-            <div class="mt-5 flex justify-center relative z-10">
-              <button type="button" data-replay class="inline-flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-full bg-elev border border-line text-ink hover:border-accent hover:bg-[#fff3b0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors"><span aria-hidden="true">↻</span> Play again</button>
+        </article>
+        <article class="n26-hypo-row">
+          <div class="n26-hypo-row__media">
+            <div class="phone-mock">
+              <video muted playsinline loop preload="metadata" data-autoplay-inview aria-label="Concept C — Switch between accounts prototype recording">
+                <source src="assets/n26/hyp3.mov" type="video/mp4">
+              </video>
             </div>
           </div>
+          <div class="n26-hypo-row__copy">
+            <p class="n26-hypo-row__label">Concept C</p>
+            <p class="n26-hypo-row__title">Switch between accounts</p>
+            <p class="n26-hypo-row__p">See all accounts at once or one at a time — a simplified experience with a sense of control. Quick actions change with the selected account.</p>
+            <button type="button" class="n26-replay-btn" data-replay><span aria-hidden="true">↻</span> Play again</button>
+          </div>
+        </article>
+      </div>
+    </article>
 
+    <article class="beat reveal">
+      <p class="beat__eyebrow">Iteration</p>
+      <h3 class="beat__title">Design reviews with cross-functional teams</h3>
+      <p class="beat__text">Participants included Engagement-team designers, Lead designers from different segments, PMs, Engineering, and the Head of Product — iterating on usability insights together.</p>
+      <figure class="n26-inline-figure">
+        <img src="assets/n26/slide14.png" alt="Design-review board — Visual Design Exploration of tab designs, feed designs and UX writing" data-lightbox loading="lazy">
+        <figcaption>Design-review board — tab designs, feed layouts, and UX writing exploration.</figcaption>
+      </figure>
+    </article>
+
+    <article class="beat reveal" id="validation">
+      <p class="beat__eyebrow">Validation</p>
+      <h3 class="beat__title">Tested the concepts for usability with <span class="hl">8 customers</span></h3>
+      <p class="beat__text">Each insight from testing was paired with the takeaway it drove in the next iteration.</p>
+      <p class="beat__stat">Sample set · <strong>8 remote usability sessions</strong> · 3 concept prototypes · moderated over video</p>
+      <div class="n26-pair-grid">
+        <div class="n26-pair-row">
+          <div class="n26-pair-insight">Most users liked viewing all accounts at once, but the <strong>Main Account view still holds more importance</strong>.</div>
+          <div class="n26-pair-arrow" aria-hidden="true">→</div>
+          <div class="n26-pair-takeaway">Keep <strong>Main Account</strong> view as the default, with an option to switch between feeds.</div>
+        </div>
+        <div class="n26-pair-row">
+          <div class="n26-pair-insight">The option to <strong>multi-select Spaces</strong> is useful to some users — they prefer choosing IBAN-enabled Spaces over normal ones.</div>
+          <div class="n26-pair-arrow" aria-hidden="true">→</div>
+          <div class="n26-pair-takeaway">Letting users choose their preference is key — but we must balance the complexity and be sure of the feature's usability.</div>
+        </div>
+        <div class="n26-pair-row">
+          <div class="n26-pair-insight">Users expect <strong>quick actions to change</strong> with account selection; in multi-select they were rather confused.</div>
+          <div class="n26-pair-arrow" aria-hidden="true">→</div>
+          <div class="n26-pair-takeaway">For multi-select, we could explore letting users choose which account to action from — but this definitely adds complexity and tampers with the purpose of quick actions.</div>
+        </div>
+        <div class="n26-pair-row">
+          <div class="n26-pair-insight"><strong>Swiping accounts</strong> with top overviews felt like an easy and valuable experience.</div>
+          <div class="n26-pair-arrow" aria-hidden="true">→</div>
+          <div class="n26-pair-takeaway">Explore a <strong>top-navigation scheme</strong> further and evolve it into something more obvious to users.</div>
         </div>
       </div>
-    </section>
-
-    <!-- ===== SLIDE 16 · Case-study wrap-up ===== -->
-    <section class="slide slide-scroll is-vcenter bg-[#F1E0CA] text-accink" data-chapter="case-study" data-title="Wrap-up">
-      <div class="slide-inner text-center items-center">
-        <p class="text-accink/60 text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Case study · wrap-up</p>
-        <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4 max-w-[22ch] mx-auto" data-anim style="--i:1">
-          Researched, shipped, and measured
-        </h2>
-        <p class="text-accink/80 text-lg leading-relaxed max-w-[60ch] mx-auto mb-10" data-anim style="--i:2">
-          The Multi-activity Feed launched into production and rolled out across Europe — grounded in research, validated in testing, and shaped with the whole team.
-        </p>
-
-        <div class="flex flex-wrap items-center justify-center gap-4" data-anim style="--i:3">
-          <button type="button" data-goto="Highlight · MoneyBeam Reactions" class="inline-flex items-center gap-2 text-base font-bold px-7 py-3.5 rounded-full bg-accent !text-[#262626] hover:brightness-105 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accink/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#F1E0CA] transition-all">See highlights <span aria-hidden="true">→</span></button>
-          <button type="button" data-goto="Thanks" class="inline-flex items-center gap-2 text-base font-semibold px-7 py-3.5 rounded-full border border-accink/25 !text-[#262626] hover:border-accent hover:bg-[#fff3b0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accink/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#F1E0CA] transition-colors">Skip to end</button>
-        </div>
+      <div class="n26-photo-strip reveal">
+        <figure class="n26-photo-strip__item">
+          <img src="assets/n26/usa-1.png" alt="Moderated remote usability session testing a concept prototype over video call" data-lightbox loading="lazy">
+        </figure>
+        <figure class="n26-photo-strip__item">
+          <img src="assets/n26/usa-2.png" alt="Moderated remote usability session testing a concept prototype over video call" data-lightbox loading="lazy">
+        </figure>
       </div>
-    </section>
+      <p class="n26-photo-strip__caption">8 moderated remote usability sessions run over video call.</p>
+    </article>
 
-    <!-- ===================== CHAPTER · HIGHLIGHTS (after the case study) ===================== -->
-
-    <!-- HIGHLIGHT · MoneyBeam Reactions -->
-    <section class="slide slide-scroll is-vcenter bg-elev" data-chapter="highlights" data-title="Highlight · MoneyBeam Reactions">
-      <div class="slide-inner top is-split">
-        <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center deck-split-grid">
-          <div class="flex flex-col justify-center deck-split-copy">
-            <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Highlight</p>
-            <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4 max-w-[16ch]" data-anim style="--i:1">MoneyBeam Reactions</h2>
-            <p class="mb-6" data-anim style="--i:2"><span class="chip">⚡ 1 week Hack-a-thon · On Production</span></p>
-            <p class="text-ink text-lg leading-relaxed max-w-[46ch] mb-6" data-anim style="--i:3">
-              Allow users to express “thanks” to their friends for a MoneyBeam (N26-to-N26) transaction while confirming receipt of payment.
-            </p>
-            <p class="text-mute leading-relaxed max-w-[50ch]" data-anim style="--i:4">
-              A delightful interaction incentivizes users to send thanks to their peers; acknowledgement from the recipient helps the sender gain confidence. Time was limited, but to expand the idea we explored more expressions, notes, and gifs to make it more customisable.
-            </p>
+    <article class="beat reveal" id="outcome">
+      <p class="beat__eyebrow">Outcome</p>
+      <h3 class="beat__title">Launch to learn 🚀</h3>
+      <p class="beat__text">Shipped <strong>Concept C</strong> — launching only the <strong>Home</strong> and <strong>"All activity" feed</strong> to a first monitored cohort. The experiment was a success.</p>
+      <p class="beat__stat">12-week design timeline · monitored cohort → <strong>25-country rollout</strong> (Germany first) · refining v1 from in-app feedback</p>
+      <div class="n26-outcome-visual">
+        <div class="n26-launch-phones">
+          <div class="phone-mock phone-mock--back">
+            <img src="assets/n26/next-steps.png" alt="In-app survey asking which transactions to filter from the all-activity feed" data-lightbox loading="lazy">
           </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 items-start" data-anim style="--i:3">
-            <figure class="m-0"><img src="assets/n26/moneybeam-receiver.png" alt="MoneyBeam receiver screen — Myles sent thanks" data-lightbox class="w-full h-auto max-h-[56vh] object-contain drop-shadow-xl cursor-zoom-in"><figcaption class="mt-2 text-center text-xs font-semibold text-mute">Receiver side</figcaption></figure>
-            <figure class="m-0"><img src="assets/n26/moneybeam-sender.png" alt="MoneyBeam sender screen — Send thanks action" data-lightbox class="w-full h-auto max-h-[56vh] object-contain drop-shadow-xl cursor-zoom-in"><figcaption class="mt-2 text-center text-xs font-semibold text-mute">Sender side</figcaption></figure>
+          <div class="phone-mock phone-mock--front">
+            <video muted playsinline loop preload="metadata" data-autoplay-inview aria-label="Final Concept C visuals — Home and All activity feed prototype recording">
+              <source src="assets/n26/final.mov" type="video/mp4">
+            </video>
           </div>
         </div>
+        <button type="button" class="n26-replay-btn n26-replay-btn--outcome" data-replay><span aria-hidden="true">↻</span> Play again</button>
       </div>
-    </section>
+    </article>
 
-    <!-- HIGHLIGHT · Feed ↔ Crypto -->
-    <section class="slide slide-scroll is-vcenter" data-chapter="highlights" data-title="Highlight · Feed ↔ Crypto">
-      <div class="slide-inner top is-split">
-        <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center deck-split-grid">
-          <div class="flex flex-col justify-center deck-split-copy">
-            <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Highlight</p>
-            <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4 max-w-[14ch]" data-anim style="--i:1">Feed <span class="hl">↔</span> Crypto</h2>
-            <p class="mb-6" data-anim style="--i:2"><span class="chip">🗓️ 2 week design sprint · On Production</span></p>
-            <p class="text-ink text-lg leading-relaxed max-w-[46ch] mb-6" data-anim style="--i:3">
-              Surface crypto activity within the Home feed so users can track their trades alongside everyday transactions — increasing discoverability of a new product right where people already look.
-            </p>
-            <ul class="space-y-3 max-w-[46ch]" data-anim style="--i:4">
-              <li class="flex gap-3"><span class="shrink-0 w-6 h-6 rounded-full bg-accent text-accink text-sm font-bold flex items-center justify-center">↑</span><span class="text-mute">Crypto surfaced natively in the transaction feed</span></li>
-              <li class="flex gap-3"><span class="shrink-0 w-6 h-6 rounded-full bg-accent text-accink text-sm font-bold flex items-center justify-center">↑</span><span class="text-mute">Consistent activity model across all product lines</span></li>
-            </ul>
-          </div>
-          <div class="mx-auto w-full max-w-[460px]" data-anim style="--i:3">
-            <img src="assets/n26/feed-crypto.png" alt="N26 Home feed surfacing Bitcoin activity alongside a crypto transaction detail screen" data-lightbox class="w-full h-auto max-h-[64vh] object-contain drop-shadow-2xl cursor-zoom-in" loading="lazy">
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- HIGHLIGHT · Search filters & suggestions -->
-    <section class="slide slide-scroll bg-elev" data-chapter="highlights" data-title="Highlight · Search filters">
-      <div class="slide-inner">
-        <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Highlight</p>
-        <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4 max-w-[20ch]" data-anim style="--i:1">Search filters & suggestions</h2>
-        <p class="mb-8" data-anim style="--i:2"><span class="chip">🗓️ 4 week design sprint · On Production</span></p>
-        <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-start deck-split-grid">
-          <div class="deck-split-copy">
-            <p class="text-ink text-lg leading-relaxed max-w-[46ch] mb-8" data-anim style="--i:3">
-              Improve the search experience to help users find relevant transactions with suggestions, filters, and tags — across both the mobile app and WebApp.
-            </p>
-            <div class="grid grid-cols-2 gap-6" data-anim style="--i:4">
-              <div>
-                <div class="text-4xl md:text-6xl font-extrabold tracking-tight leading-none">+10%</div>
-                <div class="mt-2 text-mute max-w-[18ch]">increase in transaction search after the improvements</div>
-              </div>
-              <div>
-                <div class="text-4xl md:text-6xl font-extrabold tracking-tight leading-none">−12%</div>
-                <div class="mt-2 text-mute max-w-[18ch]">reduction in “no search results”</div>
-              </div>
-            </div>
-          </div>
-          <div data-anim style="--i:4">
-            <img src="assets/n26/search.png" alt="Search filters and suggestions across the N26 desktop WebApp and mobile app" data-lightbox class="w-full h-auto max-h-[64vh] object-contain drop-shadow-2xl rounded-lg cursor-zoom-in" loading="lazy">
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== SLIDE 17 · Closing / CTA ===== -->
-    <section class="slide slide-scroll is-vcenter bg-ink text-white" data-chapter="highlights" data-title="Thanks">
-      <div class="slide-inner items-center text-center">
-        <p class="text-white/60 text-xs font-bold uppercase tracking-[0.2em] mb-8" data-anim style="--i:0">Fin</p>
-        <h2 class="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.12] max-w-[18ch]" data-anim style="--i:1">
-          Thanks for watching.
-        </h2>
-        <div class="mt-10 flex flex-wrap items-center justify-center gap-4" data-anim style="--i:2">
-          <a class="nav-btn !w-auto !px-5 !text-white !bg-white/10 !border-white/20 hover:!bg-white/20 hover:!border-white/40" href="olx.html">← OLX — Ad Package</a>
-          <a class="nav-btn !w-auto !px-5 !text-white !bg-white/10 !border-white/20 hover:!bg-white/20 hover:!border-white/40" href="index.html">Back to home</a>
-          <a class="nav-btn !w-auto !px-5 !text-white !bg-white/10 !border-white/20 hover:!bg-white/20 hover:!border-white/40" href="gomart.html">GoMart →</a>
-        </div>
-        <p class="mt-14 text-white/40 text-sm" data-anim style="--i:3">© 2024 · Vipul Saxena · N26 · Product Design Portfolio</p>
-      </div>
-    </section>
-
+    </div><!-- /.period__story -->
   </div>
+</section>
+
+<!-- ============================== PERIOD 02 ============================== -->
+<section class="section period period--alt" id="period-2" data-period="period-2">
+  <div class="container">
+    <header class="period__head reveal">
+      <div class="period__meta">
+        <span class="period__num">02</span>
+        <div class="chip-row">
+          <span class="chip">Home-feed team</span>
+          <span class="chip">On production</span>
+        </div>
+      </div>
+      <h2 class="h-display h-2 period__title">Highlights</h2>
+      <p class="lede period__thesis period__thesis--present">Other shipped work from the Home-feed team and adjacent sprints — each on production.</p>
+    </header>
+    <hr class="rule rule--thick" aria-hidden="true">
+
+    <div class="period__story">
+    <article class="beat reveal">
+      <div class="period-split period-split--50-50">
+        <div class="period-split__main">
+          <p class="beat__eyebrow">Highlight</p>
+          <h3 class="beat__title">MoneyBeam Reactions</h3>
+          <p class="n26-chip-row"><span class="n26-chip">⚡ 1 week Hack-a-thon · On Production</span></p>
+          <p class="beat__text">Allow users to express "thanks" to their friends for a MoneyBeam (N26-to-N26) transaction while confirming receipt of payment.</p>
+          <p class="beat__text">A delightful interaction incentivizes users to send thanks to their peers; acknowledgement from the recipient helps the sender gain confidence. Time was limited, but to expand the idea we explored more expressions, notes, and gifs to make it more customisable.</p>
+        </div>
+        <div class="period-split__visual">
+          <div class="n26-dual-screens">
+            <figure class="n26-dual-screens__item">
+              <img src="assets/n26/moneybeam-receiver.png" alt="MoneyBeam receiver screen — Myles sent thanks" data-lightbox loading="lazy">
+              <figcaption class="period-split__caption">Receiver side</figcaption>
+            </figure>
+            <figure class="n26-dual-screens__item">
+              <img src="assets/n26/moneybeam-sender.png" alt="MoneyBeam sender screen — Send thanks action" data-lightbox loading="lazy">
+              <figcaption class="period-split__caption">Sender side</figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <hr class="rule" aria-hidden="true">
+
+    <article class="beat reveal">
+      <div class="period-split period-split--50-50">
+        <div class="period-split__main">
+          <p class="beat__eyebrow">Highlight</p>
+          <h3 class="beat__title">Feed <span class="hl">↔</span> Crypto</h3>
+          <p class="n26-chip-row"><span class="n26-chip">🗓️ 2 week design sprint · On Production</span></p>
+          <p class="beat__text">Surface crypto activity within the Home feed so users can track their trades alongside everyday transactions — increasing discoverability of a new product right where people already look.</p>
+          <ul class="n26-check-list">
+            <li><span class="n26-check-list__icon" aria-hidden="true">↑</span><span>Crypto surfaced natively in the transaction feed</span></li>
+            <li><span class="n26-check-list__icon" aria-hidden="true">↑</span><span>Consistent activity model across all product lines</span></li>
+          </ul>
+        </div>
+        <figure class="period-split__visual">
+          <img src="assets/n26/feed-crypto.png" alt="N26 Home feed surfacing Bitcoin activity alongside a crypto transaction detail screen" data-lightbox loading="lazy">
+        </figure>
+      </div>
+    </article>
+
+    <hr class="rule" aria-hidden="true">
+
+    <article class="beat reveal">
+      <div class="period-split period-split--50-50">
+        <div class="period-split__main">
+          <p class="beat__eyebrow">Highlight</p>
+          <h3 class="beat__title">Search filters &amp; suggestions</h3>
+          <p class="n26-chip-row"><span class="n26-chip">🗓️ 4 week design sprint · On Production</span></p>
+          <p class="beat__text">Improve the search experience to help users find relevant transactions with suggestions, filters, and tags — across both the mobile app and WebApp.</p>
+          <div class="n26-highlight-metrics">
+            <div><div class="n26-metric__value">+10%</div><div class="n26-metric__label">increase in transaction search after the improvements</div></div>
+            <div><div class="n26-metric__value">−12%</div><div class="n26-metric__label">reduction in "no search results"</div></div>
+          </div>
+        </div>
+        <figure class="period-split__visual">
+          <img src="assets/n26/search.png" alt="Search filters and suggestions across the N26 desktop WebApp and mobile app" data-lightbox loading="lazy">
+        </figure>
+      </div>
+    </article>
+    </div><!-- /.period__story -->
+  </div>
+</section>
+
+<!-- ============================== PROOF ============================== -->
+<section class="section" id="proof" data-period="proof">
+  <div class="container">
+    <div class="proof-intro reveal">
+      <p class="eyebrow">Proof</p>
+      <h2 class="h-display h-2 proof-intro__title">What it produced — measured on the feed and across the team.</h2>
+      <p class="lede proof-intro__lede proof-intro__lede--present">The All-Activity feed moved engagement and satisfaction — alongside CSAT rituals the org adopted.</p>
+      <p class="lede proof-intro__lede">Feed metrics came from a monitored launch cohort before the Europe-wide rollout. Enablement work — monthly CSAT analysis and Research Lab support — ran in parallel across 25 markets.</p>
+    </div>
+
+    <div class="proof-track proof-track--practice reveal">
+      <div class="proof-track__head">
+        <div class="proof-track__titles">
+          <p class="proof-label">Practice</p>
+          <p class="proof-track__lede">Customer outcomes on the Multi-activity Feed.</p>
+        </div>
+        <span class="proof-track__badge proof-track__badge--practice">Practice</span>
+      </div>
+      <div class="metric-banner metric-banner--4 reveal-stagger">
+        <div class="metric-banner__item">
+          <div class="metric-banner__value mono-stat metric-banner__value--text">+2.5%</div>
+          <div class="metric-banner__label metric-banner__label--wide">MAU activity &amp; retention — monitored launch cohort before Europe-wide rollout</div>
+        </div>
+        <div class="metric-banner__item">
+          <div class="metric-banner__value mono-stat"><span data-count="28" data-suffix="%">0</span></div>
+          <div class="metric-banner__label metric-banner__label--wide">Spaces users moved to the All-Activity view</div>
+        </div>
+        <div class="metric-banner__item">
+          <div class="metric-banner__value mono-stat metric-banner__value--text">3 : 7</div>
+          <div class="metric-banner__label metric-banner__label--wide">Main Account vs All-Activity usage ratio after launch</div>
+        </div>
+        <div class="metric-banner__item">
+          <div class="metric-banner__value mono-stat metric-banner__value--text">+4.5%</div>
+          <div class="metric-banner__label metric-banner__label--wide">CSAT uplift — measured via post-launch survey</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="proof-track proof-track--enablement reveal">
+      <div class="proof-track__head">
+        <div class="proof-track__titles">
+          <p class="proof-label">Enablement</p>
+          <p class="proof-track__lede">Team capability at segment scale.</p>
+        </div>
+        <span class="proof-track__badge proof-track__badge--enablement enablement-label">
+          <svg class="enablement-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Enablement
+        </span>
+      </div>
+      <div class="metric-banner metric-banner--4 reveal-stagger">
+        <div class="metric-banner__item">
+          <div class="metric-banner__value mono-stat"><span data-count="25">0</span> markets</div>
+          <div class="metric-banner__label metric-banner__label--wide">Feed rolled out across Europe — Germany first, then market by market</div>
+        </div>
+        <div class="metric-banner__item">
+          <div class="metric-banner__value mono-stat metric-banner__value--text">Monthly CSAT</div>
+          <div class="metric-banner__label metric-banner__label--wide">Analysed, communicated, and followed up on UX metrics across European markets</div>
+        </div>
+        <div class="metric-banner__item">
+          <div class="metric-banner__value mono-stat metric-banner__value--text">Research Lab</div>
+          <div class="metric-banner__label metric-banner__label--wide">Volunteer — helping designers set up user research and launch tests across platforms</div>
+        </div>
+        <div class="metric-banner__item">
+          <div class="metric-banner__value mono-stat metric-banner__value--text">+10% · −12%</div>
+          <div class="metric-banner__label metric-banner__label--wide">Search filters sprint — transaction search up, "no results" down (separate highlight project)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== BRAND FINALE ============================== -->
+<section class="brand-finale n26-brand-finale" aria-label="N26 in context">
+  <div class="brand-finale__media" aria-hidden="true">
+    <video data-src="assets/n26/final.mov" muted loop playsinline data-autoplay-inview preload="none" title=""></video>
+  </div>
+  <div class="brand-finale__scrim" aria-hidden="true"></div>
+  <div class="container brand-finale__content reveal">
+    <p class="n26-brand-finale__wordmark" aria-label="N26">N26</p>
+    <p class="eyebrow brand-finale__eyebrow">Shipped to production</p>
+    <p class="brand-finale__line text-on-dark">One feed for all activity<br>— across 25 markets customers actually use.</p>
+  </div>
+</section>
+
 </main>
 
-<!-- ============================================================= -->
-<!-- Bottom control bar — dots / prev-next / counter               -->
-<!-- ============================================================= -->
-<div class="ctrl" role="group" aria-label="Slideshow controls">
-  <div class="shell-inner shell-bar">
-  <button type="button" class="nav-btn nav-home" data-home aria-label="Back to first slide" title="Back to first slide">
-    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>
-    <span class="home-count" data-home-count aria-hidden="true"></span>
-  </button>
-  <div class="chapter-tabs" id="chapters" aria-label="Chapters"></div>
-  <div class="ctrl-dots hidden lg:flex" id="dots" aria-label="Slides"></div>
-  <div class="ml-auto flex items-center gap-3">
-    <span class="counter"><span id="curNum">01</span> <span class="sep">/</span> <span id="totNum">17</span></span>
-    <button type="button" class="nav-btn" data-prev aria-label="Previous slide">←</button>
-    <button type="button" class="nav-btn" data-next aria-label="Next slide">→</button>
+<footer class="shell-footer" id="contact">
+  <div class="shell-inner">
+    <div class="shell-prevnext">
+      <a href="index.html" class="shell-card"><p class="k">← Home</p><p class="t">Portfolio</p></a>
+      <a href="olx-presentation.html" class="shell-card next"><p class="k">Next →</p><p class="t">OLX — Ad Package</p></a>
+    </div>
   </div>
+</footer>
+
+<div class="lightbox lightbox--gallery" role="dialog" aria-modal="true" aria-label="Media viewer">
+  <button class="lightbox__close" type="button" aria-label="Close">✕</button>
+  <div class="lightbox__stage">
+    <img class="lightbox__img" alt="">
   </div>
 </div>
 
-<!-- Lightbox overlay -->
-<div id="lightbox" aria-hidden="true"><img alt="Expanded view"></div>
-
-<!-- ===================== Password gate validation ===================== -->
+<script src="raisin-assets/assets/js/main.js"></script>
+<script src="raisin-assets/assets/js/summary2.js"></script>
+<script src="js/n26-web.js"></script>
 <script src="js/portfolio-gate-previews.js"></script>
 <script>
   (function(){
@@ -995,8 +661,6 @@
     var error = document.getElementById("n26GateError");
     if (!gate || !form) return;
 
-    // window.__gateAllow is decided by the pre-render script in <head>: true only
-    // for in-site navigation / reload / back-forward with a valid session.
     if (window.__gateAllow) {
       document.documentElement.classList.remove("n26-locked");
       gate.remove();
@@ -1010,248 +674,11 @@
         try { sessionStorage.setItem("n26AccessGranted", "1"); } catch(_){}
         document.documentElement.classList.remove("n26-locked");
         gate.remove();
-        window.dispatchEvent(new Event("resize"));
       } else {
         error.hidden = false; input.focus(); input.select();
       }
     });
   })();
-</script>
-
-<!-- ===================== Full-page slideshow (vanilla JS) ===================== -->
-<script>
-(function () {
-  "use strict";
-  const track    = document.getElementById("track");
-  const slides   = Array.from(track.children);
-  const dotsWrap = document.getElementById("dots");
-  const progress = document.getElementById("progress");
-  const curNum   = document.getElementById("curNum");
-  const totNum   = document.getElementById("totNum");
-  const deckTitle= document.getElementById("deckTitle");
-  const prevBtns = Array.from(document.querySelectorAll("[data-prev]"));
-  const nextBtns = Array.from(document.querySelectorAll("[data-next]"));
-  const homeBtns = Array.from(document.querySelectorAll("[data-home]"));
-  const N = slides.length;
-  const homeIndices = slides.map((s, idx) => (s.hasAttribute("data-home-slide") ? idx : -1)).filter((x) => x >= 0);
-  const pad = (n) => String(n).padStart(2, "0");
-
-  const chapWrap = document.getElementById("chapters");
-  const CHAP_LABELS = { "highlights": "Highlights", "case-study": "Case study" };
-  const CHAP_ICONS = {
-    "case-study": '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 13H8"/></svg>',
-    "highlights": '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>'
-  };
-
-  let i = 0;
-
-  /* ---------- build chapters from data-chapter ---------- */
-  const chapters = [];
-  slides.forEach((s, idx) => {
-    const id = s.dataset.chapter || "main";
-    let ch = chapters.find((c) => c.id === id);
-    if (!ch) { ch = { id, label: CHAP_LABELS[id] || id, start: idx, end: idx, slides: [] }; chapters.push(ch); }
-    ch.end = idx; ch.slides.push(idx);
-  });
-  const chapterOf = (idx) => chapters.find((c) => idx >= c.start && idx <= c.end);
-  chapters.forEach((c) => { c.countSlides = c.slides.filter((idx) => !slides[idx].hasAttribute("data-home-slide")); });
-
-  /* ---------- chapter tabs (hidden when there is only one chapter) ---------- */
-  const chapterTabs = (chapters.length > 1 ? chapters : []).map((ch) => {
-    const b = document.createElement("button");
-    b.className = "chapter-tab";
-    b.type = "button";
-    b.innerHTML =
-      '<span class="ct-label">' + ch.label + "</span>" +
-      '<span class="ct-icon" aria-hidden="true">' + (CHAP_ICONS[ch.id] || "") + "</span>" +
-      '<span class="ct-count">' + ch.countSlides.length + "</span>";
-    b.setAttribute("aria-label", "Jump to " + ch.label);
-    b.addEventListener("click", () => go(ch.countSlides.length ? ch.countSlides[0] : ch.start));
-    chapWrap && chapWrap.appendChild(b);
-    return b;
-  });
-
-  /* ---------- grouped dots (hover shows the slide title) ---------- */
-  const dots = [];
-  const dotSegmentsForChapter = (ch) => {
-    const homeInCh = ch.slides.filter((idx) => slides[idx].hasAttribute("data-home-slide"));
-    const restInCh = ch.slides.filter((idx) => !slides[idx].hasAttribute("data-home-slide"));
-    return homeInCh.length && restInCh.length ? [homeInCh, restInCh] : [ch.slides];
-  };
-  chapters.forEach((ch) => {
-    dotSegmentsForChapter(ch).forEach((indices) => {
-      const group = document.createElement("div");
-      group.className = "dot-group";
-      indices.forEach((idx) => {
-        const b = document.createElement("button");
-        b.className = "dot";
-        b.type = "button";
-        const label = slides[idx].dataset.title || ("Slide " + (idx + 1));
-        b.setAttribute("aria-label", "Go to slide " + (idx + 1) + ": " + label);
-        b.dataset.tip = pad(idx + 1) + " · " + label;
-        b.addEventListener("click", () => go(idx));
-        group.appendChild(b);
-        dots[idx] = b;
-      });
-      dotsWrap.appendChild(group);
-    });
-  });
-  totNum.textContent = pad(N);
-
-  /* ---------- render current state ---------- */
-  function render() {
-    track.style.transform = `translateX(-${i * 100}%)`;
-    slides.forEach((s, idx) => {
-      const active = idx === i;
-      s.classList.toggle("is-active", active);
-      if (active) s.scrollTop = 0;
-    });
-    dots.forEach((d, idx) => d.setAttribute("aria-current", String(idx === i)));
-    const homePos = homeIndices.indexOf(i);
-    const onHome = homePos >= 0;
-    const ch = chapterOf(i);
-    chapterTabs.forEach((t, ci) => {
-      const cur = !onHome && chapters[ci] === ch;
-      t.setAttribute("aria-current", String(cur));
-      const cnt = t.querySelector(".ct-count");
-      if (cnt) cnt.textContent = cur ? (chapters[ci].countSlides.indexOf(i) + 1) + "/" + chapters[ci].countSlides.length : String(chapters[ci].countSlides.length);
-    });
-    curNum.textContent = pad(i + 1);
-    progress.style.width = ((i + 1) / N) * 100 + "%";
-    const t = slides[i].dataset.title;
-    deckTitle.textContent = t || "N26 — Multi-activity Feed";
-    prevBtns.forEach((b) => (b.disabled = i === 0));
-    nextBtns.forEach((b) => (b.disabled = i === N - 1));
-    homeBtns.forEach((b) => {
-      b.classList.toggle("is-active", onHome);
-      b.setAttribute("aria-current", onHome ? "true" : "false");
-      const badge = b.querySelector("[data-home-count]");
-      if (badge) badge.textContent = onHome ? (homePos + 1) + "/" + homeIndices.length : "";
-    });
-    if (history.replaceState) history.replaceState(null, "", "#" + (i + 1));
-    window.PortfolioDeck = { pageId: "n26", getIndex: function () { return i; }, go: go };
-    window.dispatchEvent(new CustomEvent("portfolio:deck-change", { detail: { slide: i + 1 } }));
-  }
-
-  function go(n) {
-    i = Math.max(0, Math.min(N - 1, n));
-    render();
-  }
-  const next = () => go(i + 1);
-  const prev = () => go(i - 1);
-
-  prevBtns.forEach((b) => b.addEventListener("click", prev));
-  nextBtns.forEach((b) => b.addEventListener("click", next));
-  document.querySelectorAll("[data-home]").forEach((b) => b.addEventListener("click", () => go(0)));
-
-  /* ---------- lightbox (click any [data-lightbox] image to expand) ---------- */
-  const lb = document.getElementById("lightbox");
-  const lbImg = lb ? lb.querySelector("img") : null;
-  const lbOpen = () => lb && lb.classList.contains("open");
-  const closeLb = () => { if (lb) { lb.classList.remove("open"); lb.setAttribute("aria-hidden", "true"); } };
-  if (lb && lbImg) {
-    document.addEventListener("click", (e) => {
-      const t = e.target.closest("[data-lightbox]");
-      if (t && t.tagName === "IMG") { lbImg.src = t.currentSrc || t.src; lbImg.alt = t.alt || ""; lb.classList.add("open"); lb.setAttribute("aria-hidden", "false"); }
-      else if (e.target === lb || e.target === lbImg) { closeLb(); }
-    });
-  }
-
-  /* ---------- keyboard ---------- */
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && lbOpen()) { e.preventDefault(); closeLb(); return; }
-    if (lbOpen()) return;
-    if (e.target.closest("input, textarea, iframe, [contenteditable]")) return;
-    switch (e.key) {
-      case "ArrowRight": case "PageDown":
-        e.preventDefault(); next(); break;
-      case " ":
-        e.preventDefault(); e.shiftKey ? prev() : next(); break;
-      case "ArrowLeft": case "PageUp":
-        e.preventDefault(); prev(); break;
-      /* ArrowUp / ArrowDown are intentionally left to scroll the active slide */
-      case "Home": e.preventDefault(); go(0); break;
-      case "End":  e.preventDefault(); go(N - 1); break;
-    }
-  });
-
-  /* ---------- touch swipe (works over vertically scrollable slides too) ---------- */
-  let x0 = null, y0 = null, sdx = 0, sdy = 0, axis = null;
-  track.addEventListener("touchstart", (e) => {
-    if (e.touches.length !== 1) { x0 = null; return; }
-    x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; sdx = sdy = 0; axis = null;
-  }, { passive: true });
-  track.addEventListener("touchmove", (e) => {
-    if (x0 === null) return;
-    sdx = e.touches[0].clientX - x0; sdy = e.touches[0].clientY - y0;
-    if (!axis && (Math.abs(sdx) > 8 || Math.abs(sdy) > 8)) axis = Math.abs(sdx) > Math.abs(sdy) ? "x" : "y";
-    if (axis === "x" && e.cancelable) e.preventDefault();
-  }, { passive: false });
-  track.addEventListener("touchend", () => {
-    if (x0 === null) return;
-    if (axis === "x" && Math.abs(sdx) > 45) (sdx < 0 ? next() : prev());
-    x0 = y0 = null; axis = null;
-  }, { passive: true });
-  track.addEventListener("touchcancel", () => { x0 = y0 = null; axis = null; }, { passive: true });
-
-  /* ---------- fullscreen ---------- */
-  const fsBtn = document.querySelector("[data-fullscreen]");
-  fsBtn && fsBtn.addEventListener("click", () => {
-    if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
-    else document.exitFullscreen?.();
-  });
-
-  /* ---------- init from hash ---------- */
-  const start = parseInt((location.hash || "").replace("#", ""), 10);
-  if (!isNaN(start) && start >= 1 && start <= N) i = start - 1;
-  render();
-})();
-</script>
-<script>
-/* Autoplay prototype recordings when in viewport + "Play again" CTA */
-(function(){
-  var vids = Array.prototype.slice.call(document.querySelectorAll('video[data-autoplay]'));
-  if(!vids.length) return;
-
-  if('IntersectionObserver' in window){
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(e){
-        var v = e.target;
-        if(e.isIntersecting && e.intersectionRatio >= 0.5){
-          var p = v.play();
-          if(p && p.catch) p.catch(function(){});
-        } else {
-          v.pause();
-        }
-      });
-    }, { threshold: [0, 0.5, 1] });
-    vids.forEach(function(v){ io.observe(v); });
-  }
-
-  document.querySelectorAll('[data-replay]').forEach(function(btn){
-    btn.addEventListener('click', function(){
-      var card = btn.closest('.n26-hypo-card') || btn.closest('.grid');
-      var v = card && card.querySelector('video');
-      if(!v) return;
-      v.currentTime = 0;
-      var p = v.play();
-      if(p && p.catch) p.catch(function(){});
-    });
-  });
-
-  /* Highlights-preview cards jump to the matching slide via its dot control */
-  var allSlides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
-  document.querySelectorAll('[data-goto]').forEach(function(el){
-    el.addEventListener('click', function(){
-      var title = el.getAttribute('data-goto');
-      var idx = -1;
-      allSlides.forEach(function(s, k){ if(s.dataset.title === title) idx = k; });
-      if(idx < 0) return;
-      var dot = document.querySelector('.dot[aria-label^="Go to slide ' + (idx + 1) + ':"]');
-      if(dot) dot.click();
-    });
-  });
-})();
 </script>
 <script defer src="js/custom-cursor.js"></script>
 <script defer src="js/portfolio-gate.js"></script>

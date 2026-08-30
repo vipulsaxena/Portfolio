@@ -40,11 +40,13 @@
   window.loadCaseStudyPreviews = loadCaseStudyPreviews;
 
   var pageGate = document.getElementById("raisinGate")
+    || document.getElementById("raisinPresentGate")
     || document.getElementById("n26Gate")
+    || document.getElementById("n26PresentGate")
     || document.getElementById("olxGate")
     || document.getElementById("gomartGate");
 
-  if (pageGate) {
+  if (pageGate || document.querySelector(".pw-card--preview .pw-preview")) {
     loadCaseStudyPreviews();
     return;
   }

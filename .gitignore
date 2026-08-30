@@ -1,4 +1,7 @@
 # Temporary working folders used for Figma exports / render checks
+.screenshots/
+.screenshots-gomart/
+.olx-screenshots/
 .olx_tmp/
 .tpl_tmp/
 .hdr_tmp/
@@ -10,6 +13,7 @@ olx_preview_tmp.html
 
 # Dependencies and OS metadata
 node_modules/
+.pnpm-store/
 .DS_Store
 **/.DS_Store
 worker/.wrangler/

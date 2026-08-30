@@ -1,0 +1,79 @@
+/* ==========================================================================
+   Design Tokens — OLX Case Study (web-page mode)
+   Typography: Inter (matches vipulsaxena.com portfolio)
+   Color: portfolio chrome + OLX navy/sage client surfaces
+   ========================================================================== */
+
+:root {
+  --ink: #262626;
+  --ink-soft: #6e6e6e;
+  --paper: #ffffff;
+  --paper-dim: #f7f7f7;
+  --line: #e7e7e7;
+  --line-strong: #d4d4d4;
+  --muted: #6e6e6e;
+
+  --accent: #ffda08;
+  --accent-ink: #262626;
+  --accent-soft: #fff3b0;
+  --accent-wash: #fff8d6;
+  --accent-dim: #f5d03a;
+  --accent-deep: #5c4a00;
+
+  /* Client / product (OLX brand) */
+  --client: #123b4d;
+  --client-ink: #0a2540;
+  --client-soft: #cde3c4;
+  --client-dim: #8fb89a;
+
+  --cat-sellers: #2f8fe0;
+  --cat-market: #17b3a3;
+  --cat-buyer: #ef6b7d;
+
+  --good: #1a9e5a;
+  --warn: #d98c3d;
+  --bad: #c0553f;
+
+  --enablement-surface: var(--client-soft);
+  --enablement-surface-text: var(--accent-ink);
+  --enablement-surface-muted: #3d5a4a;
+  --enablement-surface-accent: var(--client);
+  --enablement-surface-stat: var(--good);
+  --enablement-surface-line: color-mix(in srgb, var(--client) 22%, transparent);
+
+  --dark: #0b0e14;
+  --dark-soft: #171b24;
+  --on-dark: #f4f2ec;
+  --on-dark-muted: #9a9c8f;
+
+  --font-display: "Inter", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+
+  --fs-2xs: 0.6875rem;
+  --fs-xs: 0.8125rem;
+  --fs-sm: 0.9375rem;
+  --fs-base: 1.0625rem;
+  --fs-md: 1.25rem;
+  --fs-lg: 1.75rem;
+  --fs-xl: 2.5rem;
+  --fs-2xl: 3.5rem;
+  --fs-3xl: 5rem;
+
+  --sp-micro: 0.25rem;
+  --sp-xs: 0.5rem;
+  --sp-sm: 0.875rem;
+  --sp-md: 1.25rem;
+  --sp-lg: 2rem;
+  --sp-xl: 3rem;
+  --sp-2xl: 5rem;
+
+  --deck-top: 3.5rem;
+  --journey-sticky-top: var(--deck-top);
+  --journey-scroll-offset: 7rem;
+
+  --content-max: 80rem;
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.25rem;
+}

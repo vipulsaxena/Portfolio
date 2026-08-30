@@ -436,19 +436,19 @@
             <div class="pw-preview__slide">
               <picture>
                 <source type="image/webp" data-srcset="images/previews/R1.webp">
-                <img data-preview-img data-src="images/previews/R1.jpg" alt="" width="640" height="300" decoding="async" draggable="false">
+                <img data-preview-img data-src="images/previews/R1.jpg" alt="" width="640" height="356" decoding="async" draggable="false">
               </picture>
             </div>
             <div class="pw-preview__slide">
               <picture>
                 <source type="image/webp" data-srcset="images/previews/R2.webp">
-                <img data-preview-img data-src="images/previews/R2.jpg" alt="" width="640" height="300" decoding="async" draggable="false">
+                <img data-preview-img data-src="images/previews/R2.jpg" alt="" width="640" height="356" decoding="async" draggable="false">
               </picture>
             </div>
             <div class="pw-preview__slide">
               <picture>
                 <source type="image/webp" data-srcset="images/previews/R3.webp">
-                <img data-preview-img data-src="images/previews/R3.jpg" alt="" width="640" height="300" decoding="async" draggable="false">
+                <img data-preview-img data-src="images/previews/R3.jpg" alt="" width="640" height="356" decoding="async" draggable="false">
               </picture>
             </div>
           </div>
@@ -630,8 +630,11 @@
         form.addEventListener("submit", function(e){
           e.preventDefault();
           if (input.value === PASSWORD) {
-            try { sessionStorage.setItem("olxAccessGranted", "1"); } catch(_){}
-            window.location.href = "olx.html";
+            try {
+              sessionStorage.setItem("olxAccessGranted", "1");
+              sessionStorage.setItem("vipulPresent", "1");
+            } catch(_){}
+            window.location.href = "olx-presentation.html";
           } else {
             error.hidden = false; input.focus(); input.select();
           }
@@ -674,8 +677,11 @@
         form.addEventListener("submit", function(e){
           e.preventDefault();
           if (input.value === PASSWORD) {
-            try { sessionStorage.setItem("n26AccessGranted", "1"); } catch(_){}
-            window.location.href = "n26.html";
+            try {
+              sessionStorage.setItem("n26AccessGranted", "1");
+              sessionStorage.setItem("vipulPresent", "1");
+            } catch(_){}
+            window.location.href = "n26-presentation.html";
           } else {
             error.hidden = false; input.focus(); input.select();
           }
@@ -719,8 +725,11 @@
           e.preventDefault();
           error.hidden = true;
           if (input.value === PASSWORD) {
-            try { sessionStorage.setItem("gomartAccessGranted", "1"); } catch(_){}
-            window.location.href = "gomart.html";
+            try {
+              sessionStorage.setItem("gomartAccessGranted", "1");
+              sessionStorage.setItem("vipulPresent", "1");
+            } catch(_){}
+            window.location.href = "gomart-presentation.html";
           } else {
             error.hidden = false; input.focus(); input.select();
           }

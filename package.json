@@ -22,6 +22,8 @@
   },
   "homepage": "https://github.com/vipulsaxena/Portfolio#readme",
   "devDependencies": {
-    "http-server": "^14.1.1"
+    "@playwright/test": "^1.62.1",
+    "http-server": "^14.1.1",
+    "playwright": "^1.62.1"
   }
 }

@@ -8,9 +8,9 @@
   var PAGES = {
     index: "index.html",
     about: "about.html",
-    olx: "olx.html",
-    n26: "n26.html",
-    gomart: "gomart.html",
+    olx: "olx-presentation.html",
+    n26: "n26-presentation.html",
+    gomart: "gomart-presentation.html",
     raisin: "raisin.html",
     goplay: "goplay.html",
     instalively: "instalively.html",
@@ -23,8 +23,11 @@
     "index.html": "index",
     "about.html": "about",
     "olx.html": "olx",
+    "olx-presentation.html": "olx",
     "n26.html": "n26",
+    "n26-presentation.html": "n26",
     "gomart.html": "gomart",
+    "gomart-presentation.html": "gomart",
     "raisin.html": "raisin",
     "goplay.html": "goplay",
     "instalively.html": "instalively",
@@ -487,6 +490,43 @@
     return best;
   }
 
+  function olxSection() {
+    if (currentPageId() !== "olx") return null;
+    var ids = [
+      "hero",
+      "context",
+      "stakes",
+      "journey-intro",
+      "period-1",
+      "period-2",
+      "period-3",
+      "period-4",
+      "proof",
+      "contact",
+    ];
+    var mid = window.innerHeight * 0.4;
+    var best = null;
+    var bestDist = Infinity;
+    ids.forEach(function (id) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      var r = el.getBoundingClientRect();
+      var dist = Math.abs(r.top - mid);
+      if (r.bottom > 80 && dist < bestDist) {
+        bestDist = dist;
+        best = id;
+      }
+    });
+    return best;
+  }
+
+  function caseStudySection() {
+    var page = currentPageId();
+    if (page === "raisin") return raisinSection();
+    if (page === "olx") return olxSection();
+    return null;
+  }
+
   function localState() {
     var page = currentPageId();
     if (page === "present" || page === "admin") return null;
@@ -497,7 +537,7 @@
     return {
       page: page,
       slide: slide,
-      section: raisinSection(),
+      section: caseStudySection(),
       scroll: readScrollRatio(),
       widgets: readWidgets(),
       highlight: isCaseStudyPage() ? lastHighlight : null,
@@ -541,7 +581,7 @@
         global.PortfolioDeck.go(idx);
       }
     }
-    if (state.section && here === "raisin") {
+    if (state.section && (here === "raisin" || here === "olx")) {
       var el = document.getElementById(state.section);
       if (el && lastSection !== state.section) {
         lastSection = state.section;

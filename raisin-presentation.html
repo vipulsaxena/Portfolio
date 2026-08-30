@@ -20,6 +20,7 @@
   <link rel="stylesheet" href="raisin-assets/assets/css/summary2.css">
   <link rel="stylesheet" href="css/shell.css">
   <link rel="stylesheet" href="css/custom-cursor.css">
+  <link rel="stylesheet" href="css/portfolio-gate-previews.css">
 
   <script>
     (function () {
@@ -2649,6 +2650,7 @@
       padding: 5vw; background: #fff;
     }
     .pw-card {
+      position: relative;
       width: 100%; max-width: 520px; background: #fff; border: 1px solid var(--line);
       border-radius: 24px; padding: 40px; box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.25);
     }
@@ -2678,7 +2680,29 @@
 <body class="summary-v2">
 
 <div id="raisinPresentGate" role="dialog" aria-modal="true" aria-labelledby="raisinPresentGateTitle">
-  <div class="pw-card" role="document">
+  <div class="pw-card pw-card--preview" role="document">
+    <div class="pw-preview" aria-hidden="true">
+      <div class="pw-preview__track">
+        <div class="pw-preview__slide">
+          <picture>
+            <source type="image/webp" data-srcset="images/previews/R1.webp">
+            <img data-preview-img data-src="images/previews/R1.jpg" alt="" width="640" height="356" decoding="async" draggable="false">
+          </picture>
+        </div>
+        <div class="pw-preview__slide">
+          <picture>
+            <source type="image/webp" data-srcset="images/previews/R2.webp">
+            <img data-preview-img data-src="images/previews/R2.jpg" alt="" width="640" height="356" decoding="async" draggable="false">
+          </picture>
+        </div>
+        <div class="pw-preview__slide">
+          <picture>
+            <source type="image/webp" data-srcset="images/previews/R3.webp">
+            <img data-preview-img data-src="images/previews/R3.jpg" alt="" width="640" height="356" decoding="async" draggable="false">
+          </picture>
+        </div>
+      </div>
+    </div>
     <p class="pw-eyebrow">Protected presentation</p>
     <h2 class="pw-title" id="raisinPresentGateTitle">Enter password to view</h2>
     <p class="pw-desc">The Raisin presentation is password-protected when opened directly. Use the same password as the case study.</p>
@@ -4088,7 +4112,7 @@
     <div class="present-thanks__actions">
       <a class="present-thanks__btn" href="raisin.html">← Web mode</a>
       <a class="present-thanks__btn" href="index.html">Back to home</a>
-      <a class="present-thanks__btn" href="olx.html">OLX →</a>
+      <a class="present-thanks__btn" href="olx-presentation.html">OLX →</a>
     </div>
     <p class="present-thanks__copy">© 2026 · Vipul Saxena · Raisin · Product Design Portfolio</p>
   </div>
@@ -4122,6 +4146,7 @@
 <script src="raisin-assets/assets/js/main.js"></script>
 <script src="raisin-assets/assets/js/summary2.js"></script>
 <script src="js/raisin-present.js"></script>
+<script src="js/portfolio-gate-previews.js"></script>
 <script>
   (function () {
     var PASSWORD = "portfolio26";

@@ -1,28 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" class="summary-v2">
 <head>
-    <!-- Priority tags. These must come first. -->
     <meta charset="utf-8">
-    <!-- Analytics (GA + Clarity) — skipped on localhost; see js/gtag-init.js -->
+    <script>
+      (function () {
+        if (/[?&]web=1(?:&|$)/.test(location.search)) return;
+        location.replace("olx-presentation.html" + location.search + location.hash);
+      })();
+    </script>
     <script src="js/gtag-init.js"></script>
     <meta http-equiv="x-ua-compatible" content="ie=edge; chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-
-    <!-- Document Title -->
     <title>OLX Ad Package — Fixing an 80–90% Seller Drop-off · Vipul Saxena</title>
-
-    <!-- Search Engine and Browser Meta Tags. -->
     <meta name="description" content="How I diagnosed an 80–90% seller drop-off in OLX's Ad Package flow and led a multi-level category redesign that delivered a +12% conversion uplift and 8% increase in paying sellers across 17 markets.">
     <meta name="keywords" content="Vipul Saxena, OLX, Ad Package, Product Design, Monetisation, Marketplace, Opportunity Scoring, Usability Testing, A/B Testing, Seller Conversion, Case Study, Berlin">
     <meta name="author" content="Vipul Saxena" />
-
-    <!-- For SEO -->
-    <meta name="google-site-verification" content="_Pw468vxdtRMyLByV9sPOX9VYJasRQnTRz_-iD-x_e8" />
-    <meta name="majestic-site-verification" content="MJ12_bd697943-0265-4d5f-9db4-60760044d91b" />
-    <meta name="robots" content="index, follow" />
-
-    <!-- Social -->
+    <meta name="robots" content="index, follow">
     <meta property="og:url" content="https://vipulsaxena.com/olx.html" />
     <meta property="og:title" content="OLX Ad Package — Fixing an 80–90% Seller Drop-off · Vipul Saxena" />
     <meta property="og:description" content="Diagnosed an 80–90% seller drop-off in OLX's Ad Package flow and led a redesign that delivered +12% conversion uplift and 8% more paying sellers." />
@@ -31,731 +24,63 @@
     <meta property="og:site_name" content="Vipulsaxena.com" />
     <meta property="og:image" content="https://vipulsaxena.com/assets/olx/olx_cover.png" />
     <meta property="og:image:type" content="image/png" />
-    <meta name='twitter:card' content='summary_large_image' />
-    <meta name='twitter:site' content='@vipulsaxena_fc' />
-    <meta name='twitter:title' content='OLX Ad Package — Fixing an 80–90% Seller Drop-off · Vipul Saxena' />
-    <meta name='twitter:description' content='Diagnosed an 80–90% seller drop-off in OLX&apos;s Ad Package flow and led a redesign that delivered +12% conversion uplift and 8% more paying sellers.' />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@vipulsaxena_fc" />
+    <meta name="twitter:title" content="OLX Ad Package — Fixing an 80–90% Seller Drop-off · Vipul Saxena" />
+    <meta name="twitter:description" content="Diagnosed an 80–90% seller drop-off in OLX's Ad Package flow and led a redesign that delivered +12% conversion uplift and 8% more paying sellers." />
     <meta name="twitter:url" content="https://vipulsaxena.com/olx.html" />
-    <meta name='twitter:image' content="https://vipulsaxena.com/assets/olx/olx_cover.png" />
-
-    <!-- Favicon Meta Tags.  -->
+    <meta name="twitter:image" content="https://vipulsaxena.com/assets/olx/olx_cover.png" />
     <link rel="icon" href="fav.png" sizes="32x32" type="image/png">
     <link rel="shortcut icon" href="fav.png" type="image/png">
     <meta name="theme-color" content="#ffffff">
     <link rel="canonical" href="https://vipulsaxena.com/olx.html">
-
-    <!-- Fonts (match Portfolio: Inter) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap">
     <link rel="stylesheet" href="css/shell.css">
     <link rel="stylesheet" href="css/custom-cursor.css">
     <link rel="stylesheet" href="css/portfolio-gate-previews.css">
-
-    <!-- Tailwind (Play CDN) + theme config -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              base:'#ffffff', elev:'#f7f7f7', card:'#ffffff', line:'#e7e7e7',
-              ink:'#262626', mute:'#6e6e6e', accent:'#ffda08', accink:'#262626',
-              navy:'#123b4d', sellers:'#2f8fe0', market:'#17b3a3', buyer:'#ef6b7d',
-            },
-            fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
-            borderRadius: { '2xl': '1.25rem', '3xl': '1.75rem' },
-            maxWidth: { content: '80rem' },
-          }
-        }
-      }
-    </script>
-
-    <!-- Deck styles (adapted from template-2.html) -->
-    <style type="text/css">
-      :root{
-        --deck-top:3.5rem;
-        --present-inset:clamp(1.25rem,4vw,3rem);
-        --present-top:clamp(1rem,2.5vw,2rem);
-        --present-bottom:8%;
-      }
-      html,body{ height:100%; }
-      body{ background:#ffffff; font-family:"Inter", system-ui, sans-serif; overflow:hidden; }
-
-      .hl{ background:#ffda08; color:#262626; padding:0 .1em; border-radius:.08em;
-           -webkit-box-decoration-break:clone; box-decoration-break:clone; }
-
-      /* ---------- Deck viewport ---------- */
-      .deck{ position:fixed; inset:0; top:var(--deck-top); overflow:hidden; }
-      .deck-track{ display:flex; height:100%; width:100%;
-        transition:transform .6s cubic-bezier(.7,0,.2,1); will-change:transform; }
-      .slide{ flex:0 0 100%; height:100%; width:100%; overflow-y:auto;
-        display:flex; flex-direction:column; position:relative; }
-      .slide-inner{
-        margin:0 auto; width:100%; max-width:100%;
-        padding-top:var(--present-top);
-        padding-inline:var(--present-inset);
-        padding-bottom:8%;
-        flex:1 1 auto; display:flex; flex-direction:column; justify-content:center;
-        box-sizing:border-box;
-      }
-      .slide-inner.top{ justify-content:flex-start; }
-      /* Split slides — outer shell is full-bleed; copy column carries the deck inset */
-      .slide-inner.is-split{
-        max-width:100%;
-        padding:0;
-      }
-      .deck-split-grid{ width:100%; }
-      .deck-split-copy{
-        box-sizing:border-box;
-        padding-top:var(--present-top);
-        padding-inline:var(--present-inset);
-        padding-bottom:8%;
-        min-width:0;
-        width:100%;
-      }
-      /* Split copy — fill the text column; overrides arbitrary max-w-[Nch] utilities */
-      .deck-split-copy :is(p, h1, h2, h3, h4, blockquote, figcaption, ul, ol){
-        max-width:100%;
-      }
-      .deck-split-copy > :is(div, figure){
-        max-width:100%;
-      }
-      .deck-eyebrow{ margin:0 0 clamp(0.65rem, 1.2vw, 0.85rem); }
-      .deck-eyebrow + :is(h1,h2,h3){ margin-top:0; margin-bottom:clamp(0.85rem, 1.6vw, 1.25rem); }
-
-      /* Per-slide reveal */
-      .slide [data-anim]{ opacity:0; transform:translateY(26px); transition:opacity .6s ease, transform .6s ease; }
-      .slide.is-active [data-anim]{ opacity:1; transform:none; transition-delay:calc(var(--i,0) * 80ms); }
-
-      /* Highlights breadcrumb */
-      .crumb{ display:inline-flex; flex-wrap:wrap; align-items:center; gap:.5rem; font-size:.95rem; color:#6e6e6e; font-weight:600; }
-      .crumb .sep{ color:#c4c4c4; }
-      .crumb .now{ color:#262626; text-decoration:underline; text-decoration-color:#ffda08; text-decoration-thickness:3px; text-underline-offset:3px; }
-
-      .cs-formula{ font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size:.95rem;
-        background:#f7f7f7; border:1px solid #e7e7e7; border-radius:12px; padding:12px 16px; display:inline-block; color:#262626; }
-
-      /* ---------- Chapter-2 component accents ---------- */
-      .tag-pill{ display:inline-flex; align-items:center; gap:.4rem; font-size:.72rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; padding:.35rem .85rem; border-radius:999px; color:#fff; }
-      .tag-sellers{ background:#2f8fe0; } .tag-market{ background:#17b3a3; } .tag-buyer{ background:#ef6b7d; }
-
-      .time-pill{ display:inline-flex; align-items:center; gap:.5rem; font-size:.85rem; font-weight:600; color:#262626; background:#f7f7f7; border:1px solid #e7e7e7; border-radius:999px; padding:.4rem .95rem; }
-
-      .slide-bg-sage{ background-color:#CDE3C4; }
-
-      /* Cross-hatch texture behind the cover UI frame */
-      .cover-tex{
-        background-color:#CDE3C4; background-image:url("assets/olx/bg2.png"); background-repeat:repeat;
-        background-size:200px auto; background-position:center;
-      }
-      .slide-cover{ overflow-x:visible; overflow-y:auto; }
-      .slide-cover .slide-inner,
-      .slide-cover .slide-inner > .grid{ overflow:visible; }
-      .slide-cover .cover-copy{ position:relative; z-index:2; color:#121212; }
-      .slide-cover .cover-copy h1{ color:#121212; }
-      .slide-cover .cover-copy .text-mute{ color:#1a1a1a; }
-      .slide-cover .cover-copy .text-ink{ color:#121212; }
-      .slide-cover .cover-panel{
-        position:relative; overflow:visible;
-        display:flex; align-items:center; justify-content:center;
-        min-height:240px;
-      }
-      .slide-cover .cover-panel__tex{
-        position:absolute; inset:0; z-index:0; overflow:hidden;
-        pointer-events:none;
-      }
-      @media (min-width:1024px){
-        .slide-cover .cover-panel{ justify-content:flex-end; }
-      }
-      .phone-mock{
-        position:relative; width:100%; max-width:min(100%,17.5rem); margin-inline:auto;
-        padding:6px; background:#1c1c1e; border-radius:2rem;
-        box-shadow:0 20px 44px -20px rgba(0,0,0,.42), 0 0 0 1px rgba(0,0,0,.08);
-      }
-      .phone-mock--cover{
-        position:relative; z-index:1;
-        width:min(48rem, 92vw);
-        max-width:48rem;
-        margin:0;
-        flex-shrink:0;
-      }
-      .phone-mock::before{
-        content:""; position:absolute; top:10px; left:50%; z-index:2; width:28%; max-width:5.5rem; height:5px;
-        transform:translateX(-50%); border-radius:999px; background:#0a0a0a; box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);
-        pointer-events:none;
-      }
-      .phone-mock video, .phone-mock img{
-        display:block; width:100%; height:auto; border-radius:1.55rem; background:#000;
-      }
-      .time-pill::before{ content:""; width:.5rem; height:.5rem; border-radius:999px; background:#ffda08; }
-
-      .dotgrid{ display:grid; grid-template-columns:repeat(3, 2.4rem); gap:.5rem; }
-      .dotgrid i{ width:2.4rem; height:2.4rem; border-radius:999px; display:block; box-shadow:inset 0 0 0 2px rgba(255,255,255,.6); }
-
-      .stage{ background:#fff; border:1px solid #e7e7e7; border-radius:14px; padding:.9rem 1rem; min-width:9.5rem; box-shadow:0 1px 2px rgba(0,0,0,.04); }
-      .stage h5{ font-weight:800; font-size:.9rem; margin:0 0 .35rem; }
-      .stage p{ color:#6e6e6e; font-size:.78rem; line-height:1.35; margin:0; }
-      .flow-arrow{ color:#c4c4c4; font-size:1.3rem; flex:0 0 auto; }
-
-      .note{ position:relative; padding:0.9rem 1rem; font-size:.88rem; line-height:1.42; border-radius:3px;
-        border:1px solid transparent;
-        box-shadow:2px 4px 11px rgba(38,38,38,.11), inset 0 1px 0 rgba(255,255,255,.45); }
-      .note b{ font-weight:800; }
-      /* JTBD sticky notes — slide 06 */
-      .note-when{
-        background:linear-gradient(168deg, #fffef5 0%, #fff6c8 48%, #ffef9e 100%);
-        border-color:rgba(255,210,80,.45);
-        color:#262626;
-        transform:rotate(-0.6deg);
-        transform-origin:left top;
-      }
-      .note-job{
-        background:linear-gradient(168deg, #ffe566 0%, #f5d03a 52%, #e6bc1a 100%);
-        border-color:rgba(180,140,0,.28);
-        color:#262626;
-      }
-      .jtbd-job-stack{ display:flex; flex-direction:column; gap:.65rem; padding:.35rem 0 .15rem; }
-      .jtbd-job-stack .note-job:nth-child(1){ transform:rotate(-0.85deg); transform-origin:left center; }
-      .jtbd-job-stack .note-job:nth-child(2){ transform:rotate(0.65deg); transform-origin:right center; }
-      .note-catalyst{
-        background:linear-gradient(168deg, #ecfbf7 0%, #c9ebe4 55%, #a8dfd4 100%);
-        border-color:rgba(23,120,100,.22);
-        color:#0f3b34;
-      }
-      .jtbd-catalyst-stack{ display:flex; flex-direction:column; gap:.65rem; padding:.35rem 0 .15rem; }
-      .jtbd-catalyst-stack .note-catalyst:nth-child(1){ transform:rotate(0.5deg); transform-origin:left center; }
-      .jtbd-catalyst-stack .note-catalyst:nth-child(2){ transform:rotate(-0.55deg); transform-origin:right center; }
-
-      /* Slide 07 — research-findings spreadsheet backdrop */
-      .lim-bg{ position:absolute; inset:0; pointer-events:none; z-index:0;
-        background:url("assets/olx/limitation-bg.png") center top / cover no-repeat; }
-
-      .prob{ background:#fff; border:1px solid #e7e7e7; border-radius:16px; padding:1.05rem 1.15rem; box-shadow:0 10px 26px -16px rgba(0,0,0,.28); }
-      .prob b{ display:block; font-weight:800; color:#262626; margin-bottom:.5rem; line-height:1.3; font-size:.95rem; }
-      .prob span{ color:#6e6e6e; font-size:.85rem; line-height:1.45; display:block; }
-      .prob.win{ border-color:#ffda08; box-shadow:0 0 0 3px rgba(255,218,8,.25); }
-
-      .abadge{ flex:0 0 auto; width:1.6rem; height:1.6rem; border-radius:999px; display:inline-flex; align-items:center; justify-content:center; font-size:.78rem; font-weight:800; color:#fff; }
-      .a-a{ background:#ef6b7d; } .a-b{ background:#2f8fe0; }
-      .abadge-stack{
-        position:relative; display:inline-flex; flex-direction:column; align-items:center;
-        vertical-align:middle; flex-shrink:0;
-      }
-      .abadge-stack .abadge{ margin:0; }
-      .abadge-crown{
-        display:block; width:1.15rem; height:auto; margin-bottom:-.35rem; z-index:1;
-        filter:drop-shadow(0 1px 2px rgba(0,0,0,.18)); object-fit:contain;
-      }
-      .photo-variant-badge .abadge-crown{ width:1.5rem; margin-bottom:-.5rem; }
-      .photo-variant-badge{
-        position:absolute; top:1rem; left:1rem; z-index:10;
-        display:flex; flex-direction:column; align-items:center; pointer-events:none;
-      }
-      .photo-variant-badge__letter{
-        width:2.75rem; height:2.75rem; border-radius:999px;
-        display:flex; align-items:center; justify-content:center;
-        font-size:1.15rem; font-weight:800; color:#fff;
-        box-shadow:0 2px 8px rgba(0,0,0,.18);
-      }
-      .photo-variant-badge--a .photo-variant-badge__letter{ background:#ef6b7d; }
-      .photo-variant-badge--b .photo-variant-badge__letter{ background:#2f8fe0; }
-      .photo-variant-badge--crown .photo-variant-badge__letter{
-        box-shadow:0 0 0 3px #fff, 0 0 0 6px #ffda08, 0 4px 12px rgba(0,0,0,.2);
-      }
-      .test-photo-fig--winner img{ border-color:#ffda08; box-shadow:0 0 0 2px rgba(255,218,8,.35); }
-
-      .panel-green{ background:#e3f0e4 url("assets/olx/bg3.png") center bottom / cover no-repeat; color:#123b2a; position:relative; overflow:hidden; }
-      /* Research interviews — full-height teal radial panel */
-      .panel-bg4{ background:#8fe6f2 url("assets/olx/bg4.png") center / cover no-repeat; }
-
-      /* User problem — analytics dashboard + funnel overlay */
-      .panel-problem-stat{ background:#b8e8ec url("assets/olx/Problem_stat.png") center / cover no-repeat; }
-
-      /* Survey panel — SurveyMonkey card over the pink cross-hatch backdrop */
-      .panel-bg5{ background:#ece0dc url("assets/olx/bg5.png") center / cover no-repeat; position:relative; overflow:hidden; }
-
-      .panel-wheat{ background:#f4e3bf; position:relative; overflow:hidden; }
-      .panel-wheat::after{ content:""; position:absolute; inset:0; background:radial-gradient(circle at 80% 20%, rgba(255,255,255,.4), transparent 45%); }
-
-      .vlabel{ display:block; text-align:center; font-weight:800; color:#fff; padding:.6rem; border-radius:14px 14px 0 0; letter-spacing:.01em; font-size:.92rem; }
-      .vlabel-a{ background:#ef6b7d; } .vlabel-b{ background:#2f8fe0; }
-
-      .mini-card{ background:#fff; border:1px solid #e7e7e7; border-radius:14px; box-shadow:0 6px 20px -12px rgba(0,0,0,.2); }
-      .csat-outcome-card{ max-width:min(100%, 26rem); width:100%; }
-      .csat-outcome-card .csat-outcome-q{ font-size:.72rem; line-height:1.5; color:#6e6e6e; font-style:italic; margin-top:.5rem; }
-      .csat-outcome-card svg{ display:block; width:100%; max-width:11rem; margin:.85rem auto 0; }
-
-      /* Next steps — bg9 panel + desktop/mobile composite flush left */
-      .panel-next-steps{
-        background:#e8ecef url("assets/olx/bg9.png") center / cover no-repeat;
-        overflow:hidden;
-      }
-      .panel-next-steps .next-steps-combo{
-        position:relative; z-index:10; display:block;
-        align-self:center; margin:0;
-        width:auto; max-width:90%; height:auto;
-        max-height:min(calc(100dvh - var(--deck-top) - 5rem), 100%);
-        object-fit:contain; object-position:left center;
-        filter:drop-shadow(0 18px 40px rgba(0,0,0,.14));
-        cursor:zoom-in;
-      }
-
-      /* Desktop directions — 3 hypothesis cards (slide 11), full-width stack + scroll */
-      .slide-hypo .slide-inner{ justify-content:flex-start; }
-      .slide-hypo .hypo-intro{ color:#262626; font-size:1rem; line-height:1.55; margin:0 0 1.25rem; max-width:72ch; position:relative; z-index:2; }
-      .slide-hypo .hypo-intro strong{ color:#262626; }
-      .hypo-grid{ display:flex; flex-direction:column; gap:1.5rem; width:100%; max-width:100%; }
-      .hypo-card{ display:flex; flex-direction:column; width:100%; max-width:100%; height:auto; background:#fff; border:1px solid #e7e7e7; border-radius:16px; overflow:hidden;
-        box-shadow:0 8px 24px -14px rgba(0,0,0,.18); }
-      .hypo-card__media{ flex:0 0 auto; background:linear-gradient(180deg, #fafafa 0%, #f2f2f2 100%); border-bottom:1px solid #e7e7e7; padding:1rem 1.25rem; }
-      .hypo-card__media img{ display:block; width:100%; max-width:100%; height:auto; border-radius:12px; border:1px solid rgba(0,0,0,.06); cursor:zoom-in; }
-      .hypo-card__body{ flex:1 1 auto; display:flex; flex-direction:column; gap:.5rem; justify-content:center; padding:1rem 1.25rem 1.25rem; min-width:0; }
-      @media (min-width:1024px){
-        .hypo-card{ flex-direction:row; align-items:stretch; }
-        .hypo-card__media{
-          flex:0 0 52%; max-width:52%; border-bottom:0; border-right:1px solid #e7e7e7;
-          padding:1rem 1.15rem; display:flex; align-items:center; justify-content:center;
-        }
-        .hypo-card__body{ padding:1.15rem 1.35rem 1.25rem; }
-      }
-      @media (min-width:1024px){
-        .hypo-card__media{ flex:0 0 56%; max-width:56%; padding:1.1rem 1.25rem; }
-      }
-      .hypo-card__eyebrow{ font-size:.7rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#6e6e6e; }
-      .hypo-card__title{ font-size:1.15rem; font-weight:800; letter-spacing:-.02em; color:#262626; line-height:1.25; }
-      .hypo-card__p{ font-size:.9rem; line-height:1.5; color:#6e6e6e; margin:0; }
-      .hypo-card__p + .hypo-card__p{ margin-top:.2rem; }
-
-      /* Slide 12 — full-slide directions canvas (Variant A vs B) */
-      .slide-directions{ position:relative; background:#e8eaed; }
-      .slide-directions .directions-bg{
-        position:absolute; inset:0; z-index:0; pointer-events:none;
-        background:url("assets/olx/directions.png") center center / cover no-repeat;
-      }
-      .slide-directions .directions-content{
-        position:relative; z-index:1; min-height:100%; display:flex; flex-direction:column;
-        max-width:100%; width:100%; margin-inline:auto; box-sizing:border-box;
-        padding:var(--present-top) var(--present-inset) 8%;
-      }
-      .slide-directions .directions-head{ text-shadow:0 0 20px rgba(255,255,255,.95), 0 1px 2px rgba(255,255,255,.8); }
-      .slide-directions .proto-hint{ margin-top:.75rem; }
-      .slide-directions .directions-foot{ margin-top:auto; width:100%; }
-
-      .proto-grid{ display:grid; grid-template-columns:1fr; gap:1.5rem; width:100%; margin-top:.75rem; flex:1 1 auto; }
-      @media (min-width:1024px){ .proto-grid{ grid-template-columns:1fr 1fr; gap:1.25rem; } }
-      @media (min-width:1200px){ .proto-grid{ gap:1.5rem; } }
-      .proto-col{ display:flex; flex-direction:column; min-width:0; height:100%; overflow:visible; }
-      .proto-col .vlabel{
-        display:flex; align-items:center; justify-content:space-between; gap:.75rem;
-        border-radius:14px 14px 0 0; font-size:.92rem; padding:.65rem .85rem; text-align:left;
-      }
-      .proto-col .vlabel-title{ flex:1 1 auto; min-width:0; line-height:1.3; }
-      .vlabel-actions{ display:flex; align-items:center; gap:.35rem; flex-shrink:0; flex-wrap:wrap; justify-content:flex-end; }
-      .vlabel .proto-reset{
-        flex:0 0 auto; font-size:.72rem; font-weight:700; letter-spacing:.02em;
-        color:#262626; background:rgba(255,255,255,.92); border:1px solid rgba(255,255,255,.55);
-        border-radius:999px; padding:.35rem .75rem; cursor:pointer;
-        transition:background .15s ease, border-color .15s ease, box-shadow .15s ease;
-      }
-      .vlabel .proto-mag-toggle{
-        flex:0 0 auto; display:inline-flex; align-items:center; gap:.45rem;
-        margin:0; padding:0; border:0; background:transparent; cursor:pointer;
-        font-size:.72rem; font-weight:600; letter-spacing:.01em; color:#262626;
-        -webkit-tap-highlight-color:transparent;
-      }
-      .proto-mag-toggle__text{ line-height:1; user-select:none; }
-      .proto-mag-switch{
-        position:relative; flex-shrink:0;
-        width:2.75rem; height:1.625rem; border-radius:999px;
-        background:#e9e9ea;
-        box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);
-        transition:background .22s ease;
-      }
-      .proto-mag-switch__thumb{
-        position:absolute; top:2px; left:2px;
-        width:1.375rem; height:1.375rem; border-radius:50%;
-        background:#fff;
-        box-shadow:0 2px 5px rgba(0,0,0,.22), 0 0 0 .5px rgba(0,0,0,.05);
-        transition:transform .22s cubic-bezier(.4,0,.2,1);
-        will-change:transform;
-      }
-      .proto-mag-toggle[aria-pressed="true"] .proto-mag-switch{ background:#34c759; }
-      .proto-mag-toggle[aria-pressed="true"] .proto-mag-switch__thumb{ transform:translateX(1.125rem); }
-      .vlabel .proto-reset:hover{ background:#fff; border-color:#fff; box-shadow:0 1px 4px rgba(0,0,0,.12); }
-      .proto-mag-toggle:hover .proto-mag-switch{ filter:brightness(.97); }
-      .proto-mag-toggle[aria-pressed="true"]:hover .proto-mag-switch{ filter:brightness(1.03); }
-      .vlabel .proto-reset:focus-visible,
-      .proto-mag-toggle:focus-visible{ outline:none; border-radius:999px; box-shadow:0 0 0 3px rgba(255,255,255,.85), 0 0 0 5px rgba(255,218,8,.55); }
-      @media (hover:none), (pointer:coarse){
-        .vlabel .proto-mag-toggle{ display:none; }
-      }
-      .proto-stage{
-        position:relative;
-        display:flex; align-items:flex-start; justify-content:center; width:100%; margin:0; padding:0;
-        border:1px solid #e7e7e7; border-top:0; border-radius:0 0 14px 14px; background:#fff;
-        overflow:visible; cursor:pointer; min-height:min(52vh, 28rem);
-        transition:box-shadow .15s ease, border-color .15s ease;
-      }
-      .proto-stage.is-magnifying{ z-index:40; }
-      .proto-stage__inner{
-        position:relative; width:100%; display:flex; justify-content:center; align-items:flex-start;
-        overflow:hidden; border-radius:0 0 13px 13px;
-      }
-      .proto-lens{
-        position:absolute; z-index:50; width:26.25rem; height:26.25rem; border-radius:50%;
-        border:5px solid #fff; box-shadow:0 8px 32px rgba(0,0,0,.24), 0 0 0 1px rgba(0,0,0,.06);
-        background-color:#fff; background-repeat:no-repeat; pointer-events:none;
-        opacity:0; visibility:hidden; transition:opacity .12s ease, visibility 0s linear .12s;
-      }
-      .proto-lens::after{
-        content:""; position:absolute; left:50%; top:50%; width:8px; height:8px; margin:-4px 0 0 -4px;
-        border-radius:50%; background:#ffda08; box-shadow:0 0 0 1px rgba(38,38,38,.35);
-      }
-      .proto-stage.is-magnifying{ cursor:none; }
-      .proto-stage.is-magnifying .proto-lens{ opacity:1; visibility:visible; transition-delay:0s; }
-      @media (hover:none), (pointer:coarse){
-        .proto-lens{ display:none !important; }
-        .proto-stage.is-magnifying{ cursor:pointer; }
-      }
-      .proto-stage:hover{ border-color:#ffda08; box-shadow:0 0 0 3px rgba(255,218,8,.22); }
-      .proto-stage:focus-visible{ outline:none; border-color:#ffda08; box-shadow:0 0 0 3px rgba(255,218,8,.55); }
-      .proto-stage img{ display:block; width:100%; height:auto; max-height:min(52vh, 28rem); object-fit:contain; object-position:center top; background:transparent; pointer-events:none; }
-      .proto-meta{ margin-top:.5rem; padding:0 .1rem; }
-      .proto-frame{ font-size:.8rem; font-weight:700; font-variant-numeric:tabular-nums; color:#6e6e6e; }
-
-      /* CSAT gauge — fill the meter when slide 4 activates */
-      .csat-arc{ stroke-dashoffset:100; }
-      .slide.is-active .csat-arc{ stroke-dashoffset:0; transition:stroke-dashoffset 1.2s cubic-bezier(.65,0,.35,1) .25s; }
-
-      /* Interactive UX-audit bullets ↔ screenshot */
-      .audit-stage{
-        position:relative; border-radius:16px; overflow:hidden; border:1px solid #e7e7e7; background:#fff;
-        width:100%;
-      }
-      .slide-audit > .slide-inner{
-        flex:1 1 auto; display:flex; flex-direction:column; min-height:0;
-      }
-      .slide-audit .audit-layout{
-        flex:1 1 auto; min-height:0; align-items:stretch;
-      }
-      .slide-audit .audit-figure{
-        display:grid; grid-template-rows:minmax(0,1fr) auto; min-height:0; height:100%;
-      }
-      .slide-audit .audit-stage{
-        width:100%; height:100%; min-height:12rem; max-height:none;
-      }
-      @media (max-width:1023px){
-        .slide-audit .audit-figure{ height:auto; grid-template-rows:auto auto; }
-        .slide-audit .audit-stage{
-          height:auto; aspect-ratio:1024/548; max-height:min(48vh, calc(100dvh - var(--deck-top) - 14rem));
-        }
-        .slide-audit .audit-layout{ grid-template-columns:1fr; }
-      }
-      .audit-shot{ position:absolute; inset:0; width:100%; height:100%; object-fit:contain; background:transparent; opacity:0; visibility:hidden; transform:scale(1.01); pointer-events:none; transition:opacity .35s ease, transform .35s ease, visibility 0s linear .35s; cursor:zoom-in; }
-      .audit-shot.active{ opacity:1; visibility:visible; transform:none; pointer-events:auto; transition-delay:0s; }
-      .audit-item{ display:flex; gap:.85rem; align-items:flex-start; width:100%; text-align:left; padding:.65rem .8rem; border-radius:12px; border:1px solid transparent; background:transparent; cursor:pointer; transition:background .15s ease, border-color .15s ease, box-shadow .15s ease; }
-      .audit-item:hover{ background:#fff; border-color:#e7e7e7; box-shadow:0 1px 2px rgba(0,0,0,.05); }
-      .audit-item.active{ background:#fff; border-color:#ffda08; box-shadow:0 0 0 3px rgba(255,218,8,.22); }
-      .audit-item:focus-visible{ outline:none; border-color:#ffda08; box-shadow:0 0 0 3px rgba(255,218,8,.55); }
-      .audit-num{ flex:0 0 auto; width:1.65rem; height:1.65rem; border-radius:999px; background:#efefef; color:#6e6e6e; font-weight:800; font-size:.78rem; display:inline-flex; align-items:center; justify-content:center; margin-top:.05rem; transition:background .15s ease, color .15s ease; }
-      .audit-item:hover .audit-num, .audit-item.active .audit-num{ background:#ffda08; color:#262626; }
-      .audit-item span{ color:#6e6e6e; line-height:1.45; }
-      .slide-audit #auditList{ min-width:0; font-size:.92rem; align-self:start; }
-      @media (min-width:768px){
-        .slide-audit #auditList .audit-item{ padding:.55rem .65rem; gap:.7rem; }
-        .slide-audit #auditList .audit-item span{ font-size:.88rem; line-height:1.4; }
-      }
-
-      /* Highlights — full-bleed workshop boards + sage overlay (n26 workshop pattern) */
-      .hl-slide{ position:relative; overflow:hidden; }
-      .hl-slide__bg{
-        position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
-        object-position:center; cursor:default; pointer-events:none;
-      }
-      .hl-slide .slide-inner{
-        position:relative; z-index:10; justify-content:flex-start;
-        max-width:100%; margin-inline:auto; width:100%; box-sizing:border-box;
-        padding:var(--present-top) var(--present-inset) 8%;
-      }
-      .hl-overlay{
-        width:100%; max-width:40rem;
-        background:#CDE3C4; color:#262626;
-        border-radius:1rem; border:1px solid rgba(38,38,38,.08);
-        padding:clamp(1.25rem,3vw,2rem) clamp(1.35rem,3.5vw,2.25rem);
-        box-shadow:0 22px 48px -22px rgba(0,0,0,.32);
-      }
-      .hl-slide .hl-overlay--dock{
-        max-width:100%;
-        box-sizing:border-box;
-      }
-      .hl-slide--wide .hl-overlay{ max-width:min(52rem, 100%); }
-      .hl-overlay__title{
-        font-size:clamp(1.75rem,4vw,2.75rem); font-weight:800; letter-spacing:-.03em;
-        line-height:1.08; margin:0 0 .85rem;
-      }
-      .hl-overlay__lead{ font-size:1.05rem; line-height:1.5; margin:0; font-weight:600; }
-      .hl-overlay__sub{ font-size:.88rem; line-height:1.45; color:#6e6e6e; margin:.65rem 0 0; }
-      .hl-overlay__media{
-        margin-top:1rem; display:flex; justify-content:flex-end;
-      }
-      .hl-overlay__media img{
-        max-width:min(100%,11rem); height:auto; border-radius:.65rem;
-        border:1px solid rgba(38,38,38,.1); box-shadow:0 8px 24px -12px rgba(0,0,0,.25);
-      }
-      .hl-principles{
-        margin-top:1.15rem; display:flex; flex-direction:column; gap:.65rem;
-        max-height:min(42vh, 22rem); overflow-y:auto; padding-right:.15rem;
-      }
-      .hl-slide--3 .hl-principles-row{
-        flex:1 1 auto; display:flex; align-items:center; justify-content:center;
-        min-height:0; width:100%; z-index:11; padding:.35rem 0;
-        pointer-events:none;
-      }
-      .hl-slide--3 .hl-principles-track{
-        display:flex; flex-direction:row; align-items:stretch; justify-content:center;
-        flex-wrap:nowrap;
-        gap:clamp(.75rem,1.4vw,1.15rem); width:100%; max-width:100%;
-        overflow-x:auto; padding:.5rem clamp(.65rem,2.5vw,1.35rem);
-        scroll-snap-type:x proximity; pointer-events:auto;
-        -webkit-overflow-scrolling:touch;
-      }
-      .hl-slide--3 .hl-principle{
-        flex:0 0 min(16.25rem,78vw); scroll-snap-align:center;
-        max-height:min(44vh,18rem); overflow-y:auto;
-        padding:1rem 1.15rem; border-radius:.9rem;
-      }
-      .hl-slide--3 .hl-principle h3{
-        margin:0 0 .55rem; font-size:1.05rem; line-height:1.38;
-      }
-      .hl-slide--3 .hl-principle p{ font-size:.9rem; line-height:1.52; }
-      @media (min-width:1100px){
-        .hl-slide--3 .hl-principles-track{ overflow-x:visible; gap:1rem; }
-        .hl-slide--3 .hl-principle{
-          flex:1 1 0; min-width:0; max-width:none;
-          max-height:min(46vh,19.5rem);
-          padding:1.05rem 1.2rem;
-        }
-        .hl-slide--3 .hl-principle h3{ font-size:1.08rem; }
-        .hl-slide--3 .hl-principle p{ font-size:.92rem; }
-      }
-      .hl-principle{
-        background:rgba(255,255,255,.88); border:1px solid rgba(38,38,38,.08);
-        border-radius:.75rem; padding:.75rem .9rem;
-      }
-      .hl-principle h3{
-        margin:0 0 .35rem; font-size:.92rem; font-weight:800; line-height:1.35; color:#262626;
-      }
-      .hl-principle p{ margin:0; font-size:.78rem; line-height:1.45; color:#6e6e6e; }
-
-      /* Highlight slides 16–18 — title top, copy docked above nav; slide 18 + horizontal principles */
-      .hl-slide--1 .slide-inner,
-      .hl-slide--2 .slide-inner,
-      .hl-slide--3 .slide-inner{
-        display:flex; flex-direction:column; min-height:calc(100dvh - var(--deck-top));
-        padding-top:var(--present-top);
-        padding-bottom:8%;
-        justify-content:flex-start;
-      }
-      .hl-slide--1 .hl-slide__sticker,
-      .hl-slide--2 .hl-slide__sticker{
-        position:absolute;
-        z-index:15; margin:0; pointer-events:none;
-        height:auto; object-fit:contain; object-position:top right;
-        filter:drop-shadow(0 10px 28px rgba(0,0,0,.18));
-      }
-      .hl-slide--1 .hl-slide__sticker{
-        top:20%;
-        right:20%;
-        width:min(72vw,46rem); max-height:min(56vh,36rem);
-      }
-      .hl-slide--2 .hl-slide__sticker{
-        top:8%;
-        right:10%;
-        width:min(66.34vw,43.64rem); max-height:min(52.4vh,34.92rem);
-      }
-      .hl-slide--1 .hl-slide__headline,
-      .hl-slide--2 .hl-slide__headline,
-      .hl-slide--3 .hl-slide__headline{
-        margin:0; font-weight:800; letter-spacing:-.03em;
-        line-height:1.05; color:#fff;
-        text-shadow:0 2px 12px rgba(0,0,0,.45), 0 0 32px rgba(0,0,0,.25);
-        pointer-events:auto; flex-shrink:0; position:relative; z-index:12;
-        white-space:nowrap; width:max-content; max-width:100%;
-      }
-      .hl-slide--1 .hl-slide__headline{
-        font-size:clamp(1.75rem,5vw,3.25rem);
-      }
-      .hl-slide--2 .hl-slide__headline{
-        font-size:clamp(1.15rem,3.4vw,3rem);
-      }
-      .hl-slide--3 .hl-slide__headline{
-        font-size:clamp(0.95rem,2.55vw,2.75rem);
-      }
-      .hl-slide--1 .hl-overlay--dock,
-      .hl-slide--2 .hl-overlay--dock,
-      .hl-slide--3 .hl-overlay--dock{
-        margin-top:auto; margin-bottom:0;
-        align-self:stretch; width:100%; max-width:100%;
-        padding:clamp(1.45rem,3.2vw,2.15rem) clamp(1.5rem,3.6vw,2.5rem);
-      }
-      .hl-slide--1 .hl-overlay--dock .hl-overlay__lead,
-      .hl-slide--2 .hl-overlay--dock .hl-overlay__lead,
-      .hl-slide--3 .hl-overlay--dock .hl-overlay__lead{
-        font-size:clamp(1.2rem,2.35vw,1.4rem); line-height:1.48;
-      }
-      .hl-slide--1 .hl-overlay--dock .hl-overlay__sub,
-      .hl-slide--2 .hl-overlay--dock .hl-overlay__sub,
-      .hl-slide--3 .hl-overlay--dock .hl-overlay__sub{
-        font-size:clamp(1rem,1.85vw,1.08rem); line-height:1.5; margin-top:.75rem;
-      }
-
-      /* Segmented toggle (Background views) */
-      .seg{ display:inline-flex; padding:4px; background:#efefef; border:1px solid #e7e7e7; border-radius:999px; gap:2px; }
-      .seg-btn{ font-size:.8rem; font-weight:700; padding:.4rem .95rem; border-radius:999px; color:#6e6e6e; background:transparent; border:0; cursor:pointer; white-space:nowrap; transition:color .15s ease, background .15s ease, box-shadow .15s ease; }
-      .seg-btn:hover{ color:#262626; }
-      .seg-btn[aria-selected="true"]{ color:#262626; background:#fff; box-shadow:0 1px 2px rgba(0,0,0,.1); }
-      .seg-btn:focus-visible{ outline:none; box-shadow:0 0 0 3px rgba(255,218,8,.55); }
-      .bgview-shot{ display:none; }
-      .bgview-shot.active{ display:block; animation:bgFade .35s ease; }
-      @keyframes bgFade{ from{ opacity:0; transform:translateY(6px); } to{ opacity:1; transform:none; } }
-
-      /* ---------- Bottom control bar ---------- */
-      .ctrl{ position:fixed; left:0; right:0; bottom:0; z-index:900;
-        padding-top:.65rem; padding-bottom:calc(.65rem + env(safe-area-inset-bottom,0px));
-        background:rgba(255,255,255,.9); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); border-top:1px solid #e7e7e7; }
-      .chapter-tabs{ display:flex; align-items:center; gap:.35rem; }
-      .chapter-tab{ font-size:.75rem; font-weight:700; letter-spacing:.01em; padding:.4rem .8rem; border-radius:999px;
-        color:#6e6e6e; background:transparent; border:1px solid transparent; cursor:pointer; white-space:nowrap;
-        transition:color .15s ease, background .15s ease, border-color .15s ease; }
-      .chapter-tab:hover{ color:#262626; background:#f2f2f2; }
-      .chapter-tab[aria-current="true"]{ color:#262626; background:#fff3b0; border-color:#ffda08; }
-      .chapter-tab:focus-visible{ outline:none; box-shadow:0 0 0 3px rgba(255,218,8,.55); }
-      .chapter-tab .ct-count{ color:#a3a3a3; font-weight:600; margin-left:.35rem; }
-      .chapter-tab[aria-current="true"] .ct-count{ color:#8a7a00; }
-      .chapter-tab{ display:inline-flex; align-items:center; justify-content:center; gap:.35rem; }
-      .chapter-tab .ct-icon{ display:none; align-items:center; justify-content:center; line-height:0; }
-
-      .ctrl-dots{ display:flex; align-items:center; gap:1rem; }
-      .dot-group{ display:flex; align-items:center; gap:.4rem; }
-      .dot{ width:9px; height:9px; border-radius:999px; background:#d4d4d4; transition:all .2s ease; cursor:pointer; border:0; padding:0; }
-      .dot[aria-current="true"]{ background:#ffda08; width:26px; }
-      .dot:focus-visible{ outline:none; box-shadow:0 0 0 3px rgba(255,218,8,.55); }
-      .dot{ position:relative; }
-      .dot::after{ content:attr(data-tip); position:absolute; left:50%; bottom:calc(100% + 12px);
-        transform:translateX(-50%) translateY(4px); background:#262626; color:#fff; font-size:.72rem; font-weight:600;
-        padding:.34rem .6rem; border-radius:.45rem; white-space:nowrap; box-shadow:0 10px 24px -10px rgba(0,0,0,.45);
-        opacity:0; pointer-events:none; transition:opacity .14s ease, transform .14s ease; z-index:40; }
-      .dot::before{ content:""; position:absolute; left:50%; bottom:calc(100% + 7px); transform:translateX(-50%) translateY(4px);
-        border:5px solid transparent; border-top-color:#262626; opacity:0; pointer-events:none;
-        transition:opacity .14s ease, transform .14s ease; z-index:40; }
-      .dot:hover::after, .dot:focus-visible::after,
-      .dot:hover::before, .dot:focus-visible::before{ opacity:1; transform:translateX(-50%) translateY(0); }
-
-      .nav-btn{ display:inline-flex; align-items:center; justify-content:center; width:2.4rem; height:2.4rem;
-        border:1px solid #e7e7e7; border-radius:999px; background:#fff; color:#262626; cursor:pointer;
-        transition:border-color .15s ease, transform .15s ease, background .15s ease; }
-      .nav-btn:hover{ border-color:#ffda08; background:#fff3b0; }
-      .nav-btn:focus-visible{ outline:none; box-shadow:0 0 0 3px rgba(255,218,8,.55); }
-      .nav-btn:disabled{ opacity:.35; cursor:default; }
-      .nav-btn:disabled:hover{ border-color:#e7e7e7; background:#fff; }
-      .nav-btn.is-active{ border-color:#ffda08; background:#fff3b0; }
-      .nav-home{ gap:.3rem; }
-      .nav-home .home-count{ display:none; font-size:.72rem; font-weight:700; font-variant-numeric:tabular-nums; }
-      .nav-home.is-active{ width:auto; padding:0 .7rem; }
-      .nav-home.is-active .home-count{ display:inline; }
-
-      .counter{ font-variant-numeric:tabular-nums; font-weight:700; font-size:.85rem; color:#262626; white-space:nowrap; }
-      .counter .sep{ color:#a3a3a3; }
-
-      /* ---------- Mobile control bar: keep ← / → visible, hide counter, let chapter tabs scroll ---------- */
-      @media (max-width: 640px){
-        .ctrl .shell-inner{ gap:8px; }
-        .counter{ display:none; }
-        .home-count{ display:none !important; }
-        .nav-home.is-active{ width:2.4rem; padding:0; }
-        .chapter-tab .ct-count,
-        .chapter-tab .ct-label{ display:none; }
-        .chapter-tab .ct-icon{ display:inline-flex; }
-        .chapter-tab{ width:2.4rem; height:2.4rem; padding:0; flex-shrink:0; border-color:#e7e7e7; background:#fff; }
-        .chapter-tabs{ flex:0 1 auto; min-width:0; gap:.35rem; overflow:visible; }
-        .ml-auto{ flex:0 0 auto; }
-      }
-
-      .progress{ position:fixed; top:var(--deck-top); left:0; height:3px; z-index:950; background:#ffda08; width:0; transition:width .6s cubic-bezier(.7,0,.2,1); }
-      .deck-title{ font-size:.9rem; font-weight:600; color:#6e6e6e; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-      .kbd{ display:inline-flex; align-items:center; gap:.35rem; font-size:.75rem; color:#6e6e6e; }
-      .key{ display:inline-block; min-width:1.5rem; padding:.15rem .4rem; text-align:center; font-size:.7rem; font-weight:700; border:1px solid #e7e7e7; border-bottom-width:2px; border-radius:.4rem; background:#fff; color:#262626; }
-
-      #lightbox{ position:fixed; inset:0; z-index:2000; display:none; align-items:center; justify-content:center; background:rgb(255 255 255 / 90%); padding:5vw; }
-      #lightbox.open{ display:flex; }
-      #lightbox img{ max-width:100%; max-height:90vh; border-radius:.75rem; box-shadow:0 24px 60px -20px rgba(0,0,0,.35); background:transparent; }
-
-      .slide-scroll > .slide-inner{ justify-content:flex-start; }
-      .slide.is-vcenter > .slide-inner{ justify-content:center; }
-
-      /* Mobile + tablet — desktop (1024px+) unchanged */
-      @media (max-width: 1023px) {
-        .slide > .slide-inner { justify-content: flex-start; }
-        .slide.is-vcenter > .slide-inner { justify-content: center; }
-        .slide-scroll > .slide-inner,
-        .slide-inner.top { justify-content: flex-start; }
-        .slide-bleed,
-        .hl-slide { overflow-x: hidden; overflow-y: auto; }
-        .deck-split-grid { height: auto !important; min-height: 0 !important; }
-        .slide-split-panel { min-height: 0 !important; height: auto !important; }
-        .panel-next-steps .next-steps-combo {
-          max-width: 100%; max-height: none; align-self: center; margin-inline: auto;
-        }
-        .hl-slide--1 .hl-slide__headline,
-        .hl-slide--2 .hl-slide__headline,
-        .hl-slide--3 .hl-slide__headline {
-          white-space: normal; width: auto; max-width: 100%;
-        }
-        .hl-slide--1 .hl-slide__sticker,
-        .hl-slide--2 .hl-slide__sticker {
-          position: relative !important; top: auto !important; right: auto !important;
-          width: min(52vw, 11rem); max-height: none; margin: 0 auto 1rem; display: block;
-          filter: drop-shadow(0 6px 16px rgba(0,0,0,.15));
-        }
-        .hl-slide--1 .slide-inner,
-        .hl-slide--2 .slide-inner,
-        .hl-slide--3 .slide-inner {
-          min-height: auto;
-          padding-bottom: 8%;
-        }
-        .phone-mock--cover { width: min(100%, 20rem); max-width: 20rem; }
-      }
-
-      @media (prefers-reduced-motion: reduce){
-        .deck-track{ transition:none; } .progress{ transition:none; }
-        .slide [data-anim]{ opacity:1 !important; transform:none !important; transition:none !important; }
-        .csat-arc{ stroke-dashoffset:0 !important; transition:none !important; }
-        .note-when, .note-job, .note-catalyst{ transform:none !important; }
-      }
-
-      /* ===== Password gate (secure entry) ===== */
-      #olxGate{ display:none; }
-      html.olx-locked{ overflow:hidden; }
-      html.olx-locked body > *:not(#olxGate){ display:none !important; }
-      html.olx-locked #olxGate{ display:flex; }
-      #olxGate{ position:fixed; inset:0; z-index:10000; align-items:center; justify-content:center; padding:5vw; background:#fff; }
-      .pw-card{ position:relative; width:100%; max-width:520px; background:#fff; border:1px solid #e7e7e7; border-radius:24px; padding:40px; box-shadow:0 30px 60px -20px rgba(0,0,0,.25); }
-      .pw-eyebrow{ font-size:.8rem; letter-spacing:.16em; text-transform:uppercase; font-weight:700; color:#6e6e6e; margin:0 0 10px; }
-      .pw-title{ font-size:2rem; font-weight:800; letter-spacing:-.02em; color:#262626; margin:0 0 8px; }
-      .pw-desc{ font-size:1.08rem; line-height:1.5; color:#6e6e6e; margin:0 0 20px; }
-      .pw-input{ box-sizing:border-box; width:100%; padding:16px 18px; border:1px solid #e7e7e7; border-radius:14px; font-size:1.05rem; color:#262626; outline:none; transition:border-color .15s, box-shadow .15s; }
-      .pw-input:focus-visible{ border-color:#ffda08; box-shadow:0 0 0 3px rgba(255,218,8,.35); }
-      .pw-error{ color:#e0362f; font-size:.9rem; font-weight:600; margin:10px 0 0; }
-      .pw-actions{ display:flex; gap:10px; justify-content:flex-end; align-items:center; margin-top:20px; }
-      .pw-back{ margin-right:auto; font-size:.9rem; font-weight:600; color:#6e6e6e; text-decoration:none; }
-      .pw-back:hover{ color:#262626; }
-      .pw-btn{ border:0; border-radius:999px; padding:14px 28px; font-size:1.02rem; font-weight:700; cursor:pointer; background:#ffda08; color:#262626; transition:filter .15s, transform .15s; }
-      .pw-btn:hover{ filter:brightness(1.05); transform:translateY(-1px); }
+    <link rel="stylesheet" href="assets/olx/css/tokens.css">
+    <link rel="stylesheet" href="raisin-assets/assets/css/base.css">
+    <link rel="stylesheet" href="raisin-assets/assets/css/components.css">
+    <link rel="stylesheet" href="raisin-assets/assets/css/summary.css">
+    <link rel="stylesheet" href="raisin-assets/assets/css/summary2.css">
+    <link rel="stylesheet" href="assets/olx/css/olx-summary.css">
+    <style>
+      :root { --deck-top: 3.5rem; }
+      #olxGate { display: none; }
+      html.olx-locked { overflow: hidden; }
+      html.olx-locked body > *:not(#olxGate) { display: none !important; }
+      html.olx-locked #olxGate { display: flex; }
+      #olxGate {
+        position: fixed; inset: 0; z-index: 10000;
+        align-items: center; justify-content: center; padding: 5vw; background: #fff;
+      }
+      .pw-card {
+        position: relative; width: 100%; max-width: 520px; background: #fff;
+        border: 1px solid #e7e7e7; border-radius: 24px; padding: 40px;
+        box-shadow: 0 30px 60px -20px rgba(0,0,0,.25);
+      }
+      .pw-eyebrow { font-size: .8rem; letter-spacing: .16em; text-transform: uppercase; font-weight: 700; color: #6e6e6e; margin: 0 0 10px; }
+      .pw-title { font-size: 2rem; font-weight: 800; letter-spacing: -.02em; color: #262626; margin: 0 0 8px; }
+      .pw-desc { font-size: 1.08rem; line-height: 1.5; color: #6e6e6e; margin: 0 0 20px; }
+      .pw-input {
+        box-sizing: border-box; width: 100%; padding: 16px 18px;
+        border: 1px solid #e7e7e7; border-radius: 14px; font-size: 1.05rem; color: #262626; outline: none;
+        transition: border-color .15s, box-shadow .15s;
+      }
+      .pw-input:focus-visible { border-color: #ffda08; box-shadow: 0 0 0 3px rgba(255,218,8,.35); }
+      .pw-error { color: #e0362f; font-size: .9rem; font-weight: 600; margin: 10px 0 0; }
+      .pw-actions { display: flex; gap: 10px; justify-content: flex-end; align-items: center; margin-top: 20px; }
+      .pw-back { margin-right: auto; font-size: .9rem; font-weight: 600; color: #6e6e6e; text-decoration: none; }
+      .pw-back:hover { color: #262626; }
+      .pw-btn {
+        border: 0; border-radius: 999px; padding: 14px 28px; font-size: 1.02rem; font-weight: 700;
+        cursor: pointer; background: #ffda08; color: #262626; transition: filter .15s, transform .15s;
+      }
+      .pw-btn:hover { filter: brightness(1.05); transform: translateY(-1px); }
     </style>
-
     <script src="js/follow-me-bootstrap.js"></script>
-    <!-- Runs before render: hide the page until unlocked (no content flash). -->
     <script>
       (function(){
         var KEY = "olxAccessGranted";
@@ -784,10 +109,8 @@
       })();
     </script>
 </head>
+<body class="summary-v2 has-shell">
 
-<body class="bg-base text-ink font-sans antialiased">
-
-<!-- ===================== Password gate (secure entry) ===================== -->
 <div id="olxGate" role="dialog" aria-modal="true" aria-labelledby="olxGateTitle">
   <div class="pw-card pw-card--preview" role="document">
     <div class="pw-preview" aria-hidden="true">
@@ -826,665 +149,681 @@
   </div>
 </div>
 
-<!-- Slim deck header -->
 <header class="shell-header" style="height:var(--deck-top);">
   <div class="shell-inner shell-bar" style="height:var(--deck-top);">
     <a href="index.html" class="shell-brand">Home</a>
-    <p class="deck-title" id="deckTitle">OLX Ad Package</p>
+    <p class="deck-title" id="deckTitle">OLX — Ad Package</p>
     <div class="shell-actions">
-      <button type="button" class="nav-btn" data-fullscreen aria-label="Toggle fullscreen" title="Fullscreen">
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3m13-5v3a2 2 0 0 1-2 2h-3"/></svg>
-      </button>
+      <a class="nav-btn nav-btn--present" href="olx-presentation.html" aria-label="Enter presentation mode" title="Presentation mode" onclick="try{sessionStorage.setItem('vipulPresent','1');sessionStorage.setItem('olxAccessGranted','1')}catch(e){}">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h20v12H2z"/><path d="M12 15v6"/><path d="m8 21 4-3 4 3"/></svg>
+        <span>Present</span>
+      </a>
     </div>
   </div>
 </header>
 
-<!-- Progress bar -->
-<div class="progress" id="progress" aria-hidden="true"></div>
-
-<main class="deck" aria-label="OLX slideshow">
-  <div class="deck-track" id="track">
-
-    <!-- ===================== CHAPTER 1 · HIGHLIGHTS ===================== -->
-
-    <!-- HIGHLIGHT 01 · What is OLX? -->
-    <section class="slide slide-scroll is-active" data-chapter="case-study" data-title="What is OLX?" data-home-slide>
-      <div class="slide-inner top is-split">
-        <div class="grid lg:grid-cols-[1.35fr_1fr] lg:h-full deck-split-grid">
-          <div class="order-2 md:order-1 flex flex-col justify-center deck-split-copy">
-            <p class="deck-eyebrow text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Quick Highlights</p>
-            <h2 class="text-navy font-extrabold tracking-tight leading-[1.05] text-4xl md:text-5xl lg:text-6xl" data-anim style="--i:1">What is OLX?</h2>
-            <p class="mt-5 text-lg md:text-xl text-navy/80 leading-snug max-w-[42ch]" data-anim style="--i:2">
-              OLX is a leading marketplace ecosystem serving more than <span class="font-bold text-navy">317&nbsp;million</span> C2C and B2C users to buy and sell new / used products globally.
-            </p>
-            <div class="mt-6 text-2xl md:text-[1.7rem] leading-none tracking-wide" data-anim style="--i:3" role="img" aria-label="17 country flags">🇺🇦 🇧🇷 🇮🇳 🇮🇩 🇵🇹 🇷🇴 🇵🇱 🇿🇦 🇦🇷 🇧🇬 🇰🇿 🇮🇹 🇹🇷 🇺🇿 🇨🇱 🇨🇴 🇵🇪</div>
-            <p class="mt-5 text-sm md:text-base text-mute leading-relaxed max-w-[54ch]" data-anim style="--i:4">
-              Our users across 17 countries don't just find good deals — they help the environment too, leaning on a circular consumption cycle rather than a linear one.
-            </p>
-            <div class="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-6" data-anim style="--i:5">
-              <div>
-                <div class="text-3xl md:text-4xl font-extrabold text-navy leading-none">5.2M</div>
-                <div class="mt-3 text-navy"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19a4.5 4.5 0 0 0 0-9 6 6 0 0 0-11.6-1.6A4 4 0 0 0 6 18.5"/><path d="M6 18.5h11.5"/></svg></div>
-                <div class="mt-2 text-xs text-mute leading-tight max-w-[15ch]">Tonnes of CO₂-eq emissions</div>
-              </div>
-              <div>
-                <div class="text-3xl md:text-4xl font-extrabold text-navy leading-none">3.6M</div>
-                <div class="mt-3 text-navy"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 9 5-9 5-9-5 9-5Z"/><path d="m3 12 9 5 9-5"/><path d="m3 17 9 5 9-5"/></svg></div>
-                <div class="mt-2 text-xs text-mute leading-tight max-w-[15ch]">Tonnes of materials</div>
-              </div>
-              <div>
-                <div class="text-3xl md:text-4xl font-extrabold text-navy leading-none">645M</div>
-                <div class="mt-3 text-navy"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5S12.5 4 12 2c-.5 2-1.5 3.9-3.5 5.5S5 13 5 15a7 7 0 0 0 7 7Z"/></svg></div>
-                <div class="mt-2 text-xs text-mute leading-tight max-w-[15ch]">M³ of water</div>
-              </div>
-              <div>
-                <div class="text-3xl md:text-4xl font-extrabold text-navy leading-none">122M</div>
-                <div class="mt-3 text-navy"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8Z"/></svg></div>
-                <div class="mt-2 text-xs text-mute leading-tight max-w-[15ch]">GJ-eq of energy</div>
-              </div>
-            </div>
-            <div class="mt-8 flex flex-wrap items-center gap-4" data-anim style="--i:6">
-              <button type="button" class="shell-btn" data-next>Start →</button>
-              <span class="kbd">or Use <span class="key">←</span> <span class="key">→</span> · <span class="key">Space</span></span>
-            </div>
+<main>
+<!-- ============================== HERO — What is OLX? ============================== -->
+<section class="why-hero why-hero--split olx-hero" id="hero">
+  <div class="hero-stage">
+    <div class="container hero-split hero-split--stage">
+      <div class="hero-split__content">
+        <div class="hero__kicker">
+          <span class="tag tag--outline">Marketplace · Pay &amp; Ship</span>
+        </div>
+        <h1 class="hero__title">OLX is a leading marketplace ecosystem — monetisation at scale across 17 countries.</h1>
+        <p class="hero__sub hero__sub--thesis">OLX serves more than <strong>317&nbsp;million</strong> C2C and B2C users buying and selling new and used products globally.</p>
+        <p class="hero__sub">Our users across 17 countries don't just find good deals — they help the environment too, leaning on a circular consumption cycle rather than a linear one.</p>
+        <div class="olx-stats-grid reveal-stagger">
+          <div>
+            <div class="olx-stat__num">5.2M</div>
+            <div class="olx-stat__label">Tonnes of CO₂-eq emissions avoided</div>
           </div>
-          <div class="order-1 md:order-2 relative h-56 md:h-auto" data-anim style="--i:1">
-            <img loading="lazy" decoding="async" src="assets/olx/olx_planet.png" alt="Aerial view of a forest with a lake shaped like the OLX logo" class="absolute inset-0 w-full h-full object-cover">
+          <div>
+            <div class="olx-stat__num">3.6M</div>
+            <div class="olx-stat__label">Tonnes of materials reused</div>
+          </div>
+          <div>
+            <div class="olx-stat__num">645M</div>
+            <div class="olx-stat__label">M³ of water saved</div>
+          </div>
+          <div>
+            <div class="olx-stat__num">122M</div>
+            <div class="olx-stat__label">GJ-eq of energy saved</div>
           </div>
         </div>
       </div>
-    </section>
+      <div class="hero-split__visual reveal">
+        <img src="assets/olx/olx_planet.png" alt="Aerial view of a forest with a lake shaped like the OLX logo" width="1200" height="800" decoding="async" fetchpriority="high">
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- HIGHLIGHT 02 · What I do at OLX? -->
-    <section class="slide slide-scroll" data-chapter="case-study" data-title="What I do at OLX?" data-home-slide>
-      <div class="slide-inner top">
-        <p class="deck-eyebrow text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Quick Highlights</p>
-        <h2 class="text-navy font-extrabold tracking-tight leading-[1.05] text-4xl md:text-5xl" data-anim style="--i:1">What I do at OLX?</h2>
-        <nav class="crumb mt-4" aria-label="Team placement" data-anim style="--i:2">
-          <span>OLX Group</span><span class="sep">›</span>
-          <span>Horizontal</span><span class="sep">›</span>
-          <span>Pay &amp; Ship</span><span class="sep">›</span>
-          <span class="now">Engagement &amp; Monetisation</span>
-        </nav>
-        <div class="mt-6 md:mt-2 grid lg:grid-cols-[0.55fr_2.1fr] gap-6 lg:gap-10 items-end deck-split-grid">
-          <p class="text-lg md:text-xl text-mute leading-relaxed max-w-[36ch] md:order-1 order-2 md:pb-12" data-anim style="--i:3">
-            I was responsible for all things design within the <span class="text-ink font-semibold">Engagement &amp; Monetisation</span> packs, under the <span class="text-ink font-semibold">Pay &amp; Ship</span> pillar.
-          </p>
-          <figure class="md:order-2 order-1" data-anim style="--i:2">
-            <img loading="lazy" decoding="async" src="assets/olx/olx_org_map.png" alt="Org map: Opportunities, Offering and Pricing feed Engagement & Monetisation, which sits under Pay & Ship inside OLX Horizontal and the wider OLX Group" data-lightbox class="w-full max-h-[68vh] object-contain cursor-zoom-in">
-          </figure>
+<!-- ============================== CONTEXT — Role at OLX ============================== -->
+<section class="section section--tight" id="context" data-period="context">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">My role</p>
+      <h2 class="h-display h-2">What I do at OLX</h2>
+      <p class="lede">I led Engagement &amp; Monetisation design in Pay &amp; Ship — payments, seller monetisation, and checkout across 17 countries on a platform used by 317M+ people.</p>
+    </div>
+    <nav class="olx-crumb reveal" aria-label="Team placement">
+      <span>OLX Group</span><span class="sep">›</span>
+      <span>Horizontal</span><span class="sep">›</span>
+      <span>Pay &amp; Ship</span><span class="sep">›</span>
+      <span class="now">Engagement &amp; Monetisation</span>
+    </nav>
+    <div class="olx-split olx-split--55-45 reveal olx-mt-md">
+      <p class="beat__text">I was responsible for all things design within the <strong>Engagement &amp; Monetisation</strong> packs, under the <strong>Pay &amp; Ship</strong> pillar. That scope covered monetisation flows end to end — Ad Limits, Ad packages, Seller Take Rate, and the payment gateway experience — then rolling winning patterns to more of the 17-country footprint.</p>
+      <figure class="olx-figure-frame">
+        <img src="assets/olx/olx_org_map.png" alt="Org map: Opportunities, Offering and Pricing feed Engagement & Monetisation, which sits under Pay & Ship inside OLX Horizontal and the wider OLX Group" loading="lazy" data-lightbox>
+      </figure>
+    </div>
+    <hr class="rule rule--thick" aria-hidden="true">
+  </div>
+</section>
+
+<!-- ============================== THE STARTING POINT ============================== -->
+<section class="why-hero olx-stakes" id="stakes">
+  <div class="container olx-stakes__inner">
+    <p class="eyebrow">The starting point</p>
+    <h2 class="why-hero__statement">Sellers were dropping out of the buy-package flow — especially at category selection.</h2>
+
+    <div class="why-proofs olx-stakes__proofs reveal-stagger">
+      <article class="why-proof reveal">
+        <div class="why-proof__content">
+          <p class="why-proof__num">Identified friction 01</p>
+          <h4 class="why-proof__title">Extreme drop-off at category selection</h4>
+          <p class="why-proof__text"><strong>Diagnosis:</strong> Almost <strong>80% of B2C and 90% of C2C Sellers</strong> abandoned the buy-package flow at the category-selection step — before they could purchase an Ad package.</p>
+        </div>
+        <div class="why-proof__media why-proof__media--single">
+          <div class="why-proof__frame" style="--proof-ratio: 4 / 3"><img src="assets/olx/graph_prob.png" alt="Buy-package funnel — 20.55% reach package selected; category selection flagged at OpScore 13.12" loading="lazy" data-lightbox></div>
+        </div>
+      </article>
+      <article class="why-proof reveal">
+        <div class="why-proof__content">
+          <p class="why-proof__num">Identified friction 02</p>
+          <h4 class="why-proof__title">Category hierarchy didn’t match seller mental models</h4>
+          <p class="why-proof__text"><strong>Diagnosis:</strong> Long L2+ lists, non-clickable sub-category bullets, and weak links between categories and package pricing made advance package buying feel opaque.</p>
+        </div>
+        <div class="why-proof__media why-proof__media--single">
+          <div class="why-proof__frame" style="--proof-ratio: 1024 / 548"><img src="assets/olx/olx_audit_3.png" alt="UX audit — long L2 sub-category list in buy-package flow" loading="lazy" data-lightbox></div>
+        </div>
+      </article>
+      <article class="why-proof reveal">
+        <div class="why-proof__content">
+          <p class="why-proof__num">Identified friction 03</p>
+          <h4 class="why-proof__title">Monetisation opportunity buried in the flow</h4>
+          <p class="why-proof__text"><strong>Diagnosis:</strong> Opportunity Scoring surfaced category selection at <strong>OpScore 13.12</strong> — the highest-opportunity friction point across 24 mapped limitations in monetisation flows.</p>
+        </div>
+        <div class="why-proof__media why-proof__media--single">
+          <div class="why-proof__frame" style="--proof-ratio: 16 / 10"><img src="assets/olx/olx_opscore_cards.png" alt="Opportunity landscape — category selection as top opportunity" loading="lazy" data-lightbox></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<nav class="journey-nav" aria-label="Journey chapters">
+  <button class="journey-nav__btn" data-period-link="journey-intro">Journey</button>
+  <span class="journey-nav__sep">·</span>
+  <button class="journey-nav__btn" data-period-link="period-1"><span class="journey-nav__n">01</span> Objective</button>
+  <span class="journey-nav__sep">·</span>
+  <button class="journey-nav__btn" data-period-link="period-2"><span class="journey-nav__n">02</span> Research</button>
+  <span class="journey-nav__sep">·</span>
+  <button class="journey-nav__btn" data-period-link="period-3"><span class="journey-nav__n">03</span> Problem</button>
+  <span class="journey-nav__sep">·</span>
+  <button class="journey-nav__btn" data-period-link="period-4"><span class="journey-nav__n">04</span> Solution</button>
+  <span class="journey-nav__sep">·</span>
+  <button class="journey-nav__btn" data-period-link="proof">Proof</button>
+</nav>
+
+<!-- ============================== JOURNEY INTRO ============================== -->
+<section class="section section--tight" id="journey-intro" data-period="journey-intro">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Closing the case</p>
+      <h2 class="h-display h-2">Journey</h2>
+      <p class="lede lede--remit">16 weeks on the buy-package flow — from diagnosis through research, exploration, usability testing, and production validation across 17 markets.</p>
+    </div>
+    <div class="track-key reveal-stagger olx-track-key">
+      <div class="track-key__item track-key__item--practice">
+        <p class="track-key__label">Case study</p>
+        <p class="track-key__text">Ad Package — research, redesign, A/B validation, and rollout of category selection.</p>
+      </div>
+      <div class="track-key__item track-key__item--enablement enablement-surface">
+        <p class="track-key__label enablement-label">
+          <svg class="enablement-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          DesignOps
+        </p>
+        <p class="track-key__text">Cross-pillar workshops — monetisation sprints, Figma ways of working, design principles.</p>
+      </div>
+    </div>
+    <p class="why-hero__body olx-journey-impact"><strong>Impact: +12% conversion uplift trend, 8% more paying Sellers, CSAT 7.9 — with workshops that scaled practice beyond this flow.</strong></p>
+    <hr class="rule rule--thick" aria-hidden="true">
+  </div>
+  <div class="olx-band olx-band--sage reveal">
+    <div class="container olx-cover-grid">
+      <div class="olx-cover-copy">
+        <span class="time-pill">16 weeks of design timeline · In development</span>
+        <div class="olx-shoutouts olx-mt-md">
+          <p class="olx-shoutouts__label">Shoutouts</p>
+          <p class="beat__text">Lorena (UX Writer), Małgorzata (Researcher), Claude (PM), Oana (CPO), Kuba (EM), Monica &amp; Arsen (Jr. PD) — along with the Engineering &amp; BI teams.</p>
         </div>
       </div>
-    </section>
+      <div class="cover-tex olx-cover-video">
+        <div class="phone-mock phone-mock--cover">
+          <video data-autoplay-inview muted playsinline loop preload="metadata" poster="assets/olx/olx_cover.png" aria-label="Screen recording of the redesigned OLX buy-package category selection flow">
+            <source src="assets/olx/OLX_vid.mov" type="video/quicktime">
+            <source src="assets/olx/OLX_vid.mov" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- ===================== CHAPTER 2 · CASE STUDY ===================== -->
-
-    <!-- CS 01 · COVER — OLX Ad Package -->
-    <section class="slide slide-cover slide-scroll slide-bg-sage" data-chapter="case-study" data-title="OLX Ad Package">
-      <div class="slide-inner top is-split">
-        <div class="grid lg:grid-cols-[1.15fr_1fr] lg:h-full deck-split-grid">
-          <div class="order-2 md:order-1 cover-copy flex flex-col justify-center deck-split-copy">
-            <p class="deck-eyebrow text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Case study · OLX Group</p>
-            <h1 class="font-extrabold tracking-tight leading-[1.04] text-4xl md:text-6xl" data-anim style="--i:1">OLX Ad Package</h1>
-            <span class="time-pill mt-5 self-start" data-anim style="--i:2">16 weeks of design timeline · In development</span>
-            <p class="mt-6 text-lg text-mute leading-relaxed max-w-[52ch]" data-anim style="--i:3">
-              OLX is monetised through Ad Limits, and one of the primary ways Sellers keep posting more ads is by <span class="text-ink font-semibold">buying Ad packages</span>.
-            </p>
-            <p class="mt-4 text-lg text-mute leading-relaxed max-w-[52ch]" data-anim style="--i:4">
-              The updated Ad-package purchasing UX streamlines category selection and provides clearer guidance when buying Ad packages.
-            </p>
-            <div class="mt-8" data-anim style="--i:5">
-              <p class="text-[0.7rem] font-bold uppercase tracking-[0.16em] text-mute mb-2">Shoutouts</p>
-              <p class="text-sm text-mute leading-relaxed max-w-[56ch]">Lorena (UX Writer), Małgorzata (Researcher), Claude (PM), Oana (CPO), Kuba (EM), Monica &amp; Arsen (Jr. PD) — along with the Engineering &amp; BI teams.</p>
-            </div>
+<!-- ============================== PERIOD 01 — Objective ============================== -->
+<section class="section period period--olx period--alt" id="period-1" data-period="period-1">
+  <div class="container">
+    <header class="period__head period__head--split period__head--thick-rule reveal">
+      <div class="period__head-copy">
+        <div class="period__meta">
+          <span class="period__num">01</span>
+          <div class="chip-row">
+            <span class="chip">Monetisation</span>
+            <span class="chip">Pay &amp; Ship</span>
           </div>
-          <div class="order-1 md:order-2 cover-panel p-6 md:p-10 min-h-[240px]" data-anim style="--i:2">
-            <div class="cover-panel__tex cover-tex" aria-hidden="true"></div>
-            <div class="phone-mock phone-mock--cover">
-              <video data-autoplay muted playsinline loop preload="metadata" poster="assets/olx/olx_cover.png" aria-label="Screen recording of the redesigned OLX buy-package category selection flow">
-                <source src="assets/olx/OLX_vid.mov" type="video/quicktime">
-                <source src="assets/olx/OLX_vid.mov" type="video/mp4">
-              </video>
-            </div>
+        </div>
+        <h2 class="h-display h-2 period__title">Business objective &amp; context</h2>
+        <p class="lede period__thesis">Grow the share of monthly paying Sellers through improvements to existing monetisation flows — while contributing to a CSAT goal of <span class="hl">+8.0</span>.</p>
+        <p class="period__role"><strong>Even a 1% increase</strong> in paying Sellers can amount to an additional <strong>$110k–$160k</strong> in monthly revenue.</p>
+        <div class="mini-card olx-csat-header-card olx-mt-md reveal">
+          <svg viewBox="0 0 120 72" width="132" height="80" aria-hidden="true">
+            <path d="M10 62 A50 50 0 0 1 110 62" fill="none" stroke="#e7e7e7" stroke-width="10" stroke-linecap="round"/>
+            <path class="csat-arc" d="M10 62 A50 50 0 0 1 93 24" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100" fill="none" stroke="#1a9e5a" stroke-width="10" stroke-linecap="round"/>
+            <text x="60" y="58" text-anchor="middle" font-size="20" font-weight="800" fill="#123b4d">7.3</text>
+          </svg>
+          <div>
+            <p class="olx-csat-header-card__title">Customer Satisfaction</p>
+            <p class="olx-csat-header-card__text">Baseline CSAT the redesign aims to lift toward +8.0.</p>
           </div>
         </div>
       </div>
-    </section>
+      <figure class="period__head-visual panel-green reveal">
+        <p class="olx-mission-quote">Build a profitable transactional business ensuring high retention and improving CSAT</p>
+      </figure>
+    </header>
+    <hr class="rule rule--thick" aria-hidden="true">
 
-    <!-- CS 02 · BUSINESS OBJECTIVE -->
-    <section class="slide slide-scroll" data-chapter="case-study" data-title="Business Objective">
-      <div class="slide-inner top is-split">
-        <div class="grid lg:grid-cols-[1.2fr_1fr] lg:h-full deck-split-grid">
-          <div class="order-2 md:order-1 flex flex-col justify-center deck-split-copy">
-            <p class="deck-eyebrow text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Business</p>
-            <h2 class="font-extrabold tracking-tight leading-[1.05] text-3xl md:text-5xl" data-anim style="--i:1">Business Objective</h2>
-            <p class="mt-6 text-xl md:text-2xl font-medium leading-snug max-w-[34ch]" data-anim style="--i:2">
-              Grow the share of monthly paying Sellers through improvements to existing monetisation flows — while contributing to a CSAT goal of <span class="hl">+8.0</span>.
-            </p>
-            <p class="mt-8 text-[0.7rem] font-bold uppercase tracking-[0.16em] text-mute" data-anim style="--i:3">Revenue projection</p>
-            <p class="mt-2 text-lg text-mute leading-relaxed max-w-[46ch]" data-anim style="--i:4">
-              Even a <strong class="text-ink font-semibold">1% increase</strong> in paying Sellers can amount to an additional <strong class="text-ink font-semibold">$110k–$160k</strong> in monthly revenue.
-            </p>
-            <div class="mini-card mt-6 p-5 inline-flex items-center gap-4 self-start" data-anim style="--i:5">
-              <svg viewBox="0 0 120 72" width="132" height="80" aria-hidden="true">
-                <path d="M10 62 A50 50 0 0 1 110 62" fill="none" stroke="#e7e7e7" stroke-width="10" stroke-linecap="round"/>
-                <path class="csat-arc" d="M10 62 A50 50 0 0 1 93 24" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100" fill="none" stroke="#1a9e5a" stroke-width="10" stroke-linecap="round"/>
-                <text x="60" y="58" text-anchor="middle" font-size="20" font-weight="800" fill="#123b4d">7.3</text>
-              </svg>
-              <div>
-                <p class="font-bold text-ink text-sm">Customer Satisfaction</p>
-                <p class="text-mute text-xs mt-1 max-w-[22ch]">Baseline CSAT the redesign aims to lift toward +8.0.</p>
+    <div class="period__story">
+    <article class="beat reveal beat--background">
+      <p class="beat__eyebrow">Background</p>
+      <h3 class="beat__title">Background</h3>
+      <div class="olx-bg-intro">
+        <p class="beat__text">As a Seller on OLX you get a few free ads until you're required to pay — with the option to promote Ads to potential Buyers on a <strong>30-day Ad life-cycle</strong>. Sellers create ads, hit the paywall and promotion, run a 30-day lifecycle via the Marketplace, then OLX Delivery to Buyers.</p>
+        <div class="seg" id="bgSeg" role="tablist" aria-label="Background view" data-fm-widget="olx-bg">
+          <button type="button" class="seg-btn" data-bg="1" role="tab" aria-selected="true">Ad lifecycle</button>
+          <button type="button" class="seg-btn" data-bg="2" role="tab" aria-selected="false">Personas</button>
+        </div>
+      </div>
+      <figure class="olx-bg-figure olx-figure-bleed olx-mt-md">
+        <img loading="lazy" class="bgview-shot active olx-w-full" data-bg-shot="1" data-lightbox src="assets/olx/case_background.png" alt="OLX monetisation ecosystem — Sellers create ads, hit the paywall and promotion, run a 30-day lifecycle via the Marketplace, then OLX Delivery to Buyers">
+        <img loading="lazy" class="bgview-shot olx-w-full" data-bg-shot="2" data-lightbox src="assets/olx/case_background-2.png" alt="Seller and Buyer personas — C2C Sellers, B2C Sellers and Buyer types">
+      </figure>
+    </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== PERIOD 02 — Research ============================== -->
+<section class="section period period--olx" id="period-2" data-period="period-2">
+  <div class="container">
+    <header class="period__head reveal">
+      <div class="period__meta">
+        <span class="period__num">02</span>
+        <div class="chip-row"><span class="chip">Research</span><span class="chip">OpScore</span></div>
+      </div>
+      <h2 class="h-display h-2 period__title">Research through prioritisation</h2>
+      <p class="lede period__thesis">12 Seller interviews, 24 limitations, and Opportunity Scoring — category selection emerged as the bet at OpScore <strong>13.12</strong>.</p>
+    </header>
+    <hr class="rule rule--thick" aria-hidden="true">
+
+    <div class="period__story">
+    <article class="beat beat--research reveal">
+      <div class="olx-split olx-split--50-50">
+        <div>
+          <p class="beat__eyebrow">Jobs to be Done</p>
+          <h3 class="beat__title">Initiate research — Jobs to be Done</h3>
+          <p class="beat__text">To begin, we ran <strong>12 B2C &amp; C2C Seller interviews</strong> to understand their <strong>Desires, Limitations and Catalysts</strong> when selling on OLX — with emphasis on the monetisation flows.</p>
+          <div class="jtbd-grid olx-mt-md">
+            <div>
+              <p class="beat__subtitle">When</p>
+              <div class="note note-when">Sellers (B2C/C2C) choose OLX to sell one or multiple goods and list their Ads.</div>
+            </div>
+            <div>
+              <p class="beat__subtitle">They would like to</p>
+              <div class="jtbd-job-stack">
+                <div class="note note-job">Determine &amp; act on how to attract Buyers to their goods.</div>
+                <div class="note note-job">Optimise the pricing of under-performing goods against the money they invest.</div>
+              </div>
+            </div>
+            <div>
+              <p class="beat__subtitle">So that</p>
+              <div class="jtbd-catalyst-stack">
+                <div class="note note-catalyst"><b>B2C/C2C</b> — they reach their desired ROI per item.</div>
+                <div class="note note-catalyst"><b>C2C</b> — they feel they're contributing to sustainability and getting rid of unwanted goods.</div>
               </div>
             </div>
           </div>
-          <div class="order-1 md:order-2 panel-green flex items-center px-[clamp(1.5rem,4vw,3.5rem)] py-[clamp(2rem,5vw,4rem)] min-h-[240px]" data-anim style="--i:2">
-            <p class="relative z-10 text-3xl md:text-5xl font-extrabold tracking-tight leading-[1.1] max-w-[14ch]">Build a profitable transactional business ensuring high retention and improving CSAT</p>
-          </div>
         </div>
-      </div>
-    </section>
-
-    <!-- CS 03 · BACKGROUND — the monetisation ecosystem -->
-    <section class="slide slide-scroll bg-elev" data-chapter="case-study" data-title="Background">
-      <div class="slide-inner top">
-        <p class="deck-eyebrow text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Background</p>
-        <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight" data-anim style="--i:1">Background</h2>
-        <div class="flex flex-wrap items-center justify-between gap-4 mb-6" data-anim style="--i:2">
-          <p class="text-lg text-mute leading-relaxed max-w-[62ch]">
-            As a Seller on OLX you get a few free ads until you're required to pay — with the option to promote Ads to potential Buyers on a <strong class="text-ink font-semibold">30-day Ad life-cycle</strong>.
-          </p>
-          <div class="seg shrink-0" id="bgSeg" role="tablist" aria-label="Background view" data-fm-widget="olx-bg">
-            <button type="button" class="seg-btn" data-bg="1" role="tab" aria-selected="true">Ad lifecycle</button>
-            <button type="button" class="seg-btn" data-bg="2" role="tab" aria-selected="false">Personas</button>
-          </div>
-        </div>
-        <figure class="rounded-2xl border border-line bg-white p-4 md:p-6" data-anim style="--i:3">
-          <img loading="lazy" class="bgview-shot active w-full" data-bg-shot="1" data-lightbox src="assets/olx/case_background.png" alt="OLX monetisation ecosystem — Sellers create ads, hit the paywall and promotion, run a 30-day lifecycle via the Marketplace, then OLX Delivery to Buyers">
-          <img loading="lazy" class="bgview-shot w-full" data-bg-shot="2" data-lightbox src="assets/olx/case_background-2.png" alt="Seller and Buyer personas — C2C Sellers (Chatterbox, Low-effort Lover, Steady Seller, Fast Earner, Busy Trader), B2C Sellers (Pro, Casual, Grey) and Buyer types (Speedy Saver, Careful Comparer, Patient Shopper, Local Speedster)">
+        <figure class="olx-figure-frame reveal">
+          <img loading="lazy" src="assets/olx/olx_interviews.png" alt="Grid of 12 remote interview participants across B2C and C2C Sellers" data-lightbox>
+          <figcaption class="beat__text olx-mt-sm">12 remote interviews across B2C and C2C Sellers.</figcaption>
         </figure>
       </div>
-    </section>
+    </article>
 
-    <!-- CS 04 · INITIATE RESEARCH · JTBD -->
-    <section class="slide slide-scroll" data-chapter="case-study" data-title="Initiate Research · JTBD">
-      <div class="slide-inner top is-split">
-        <div class="grid lg:grid-cols-[1.15fr_0.85fr] lg:h-full deck-split-grid">
-          <div class="order-2 md:order-1 flex flex-col justify-center deck-split-copy">
-            <p class="deck-eyebrow text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Research</p>
-            <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight max-w-[24ch]" data-anim style="--i:1">Initiate research — Jobs to be Done</h2>
-            <p class="mt-4 text-base md:text-lg text-mute leading-relaxed max-w-[70ch]" data-anim style="--i:2">
-              To begin, we ran <strong class="text-ink font-semibold">12 B2C &amp; C2C Seller interviews</strong> to understand their <strong class="text-ink font-semibold">Desires, Limitations and Catalysts</strong> when selling on OLX — with emphasis on the monetisation flows.
-            </p>
-            <div class="mt-8" data-anim style="--i:3">
-              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div>
-                  <p class="text-sm font-bold text-ink mb-3">When</p>
-                  <div class="note note-when">Sellers (B2C/C2C) choose OLX to sell one or multiple goods and list their Ads.</div>
-                  <p class="text-xs text-mute mt-2 text-center">User</p>
-                </div>
-                <div>
-                  <p class="text-sm font-bold text-ink mb-3">They would like to</p>
-                  <div class="jtbd-job-stack">
-                    <div class="note note-job">Determine &amp; act on how to attract Buyers to their goods.</div>
-                    <div class="note note-job">Optimise the pricing of under-performing goods against the money they invest.</div>
-                  </div>
-                  <p class="text-xs text-mute mt-2 text-center">Job step</p>
-                </div>
-                <div>
-                  <p class="text-sm font-bold text-ink mb-3">So that</p>
-                  <div class="jtbd-catalyst-stack">
-                    <div class="note note-catalyst"><b>B2C/C2C</b> — they reach their desired ROI per item.</div>
-                    <div class="note note-catalyst"><b>C2C</b> — they feel they're contributing to sustainability and getting rid of unwanted goods.</div>
-                  </div>
-                  <p class="text-xs text-mute mt-2 text-center">Catalysts</p>
-                </div>
-              </div>
-              <p class="mt-6 text-sm text-mute md:hidden">12 remote interviews across B2C and C2C Sellers.</p>
-            </div>
-          </div>
-          <figure class="order-1 md:order-2 panel-bg4 flex flex-col items-center justify-center p-6 md:p-10 min-h-[280px] h-full m-0" data-anim style="--i:4">
-            <img loading="lazy" src="assets/olx/olx_interviews.png" alt="Grid of 12 remote interview participants across B2C and C2C Sellers" data-lightbox class="w-full max-w-[min(100%,28rem)] cursor-zoom-in">
-            <figcaption class="mt-4 text-sm text-mute text-center hidden md:block">12 remote interviews across B2C and C2C Sellers.</figcaption>
+    <article class="beat reveal">
+      <p class="beat__eyebrow">Synthesis</p>
+      <h3 class="beat__title">We analysed the 24 identified limitations</h3>
+      <p class="beat__text">Post qualitative research, findings were clustered into 24 limitations. With: Research Lead, Lead PM, HOD, myself &amp; 2 Jr. Designers.</p>
+      <div class="olx-prob-grid olx-mt-md beat--spaced-after">
+        <div class="prob"><b>Sellers can't relate to what personalisation does to their Ads</b><span>The personalised-page option wasn't transparent or attractive enough to users.</span></div>
+        <div class="prob"><b>Statistics feel like a free feature — why pay for it?</b><span>Sellers assume Ad statistics are always free, so the benefit of paying is unclear.</span></div>
+        <div class="prob"><b>No freedom to decide when to use Pay-if-you-sell</b><span>You first have to use up the pool of free ads to use STR — and Sellers often don't know this.</span></div>
+        <div class="prob win"><b>Hard to find the exact category when buying Ad packages</b><span>Sellers don't find the category-selection process user-friendly. <strong>OpScore 13.12 — the bet.</strong></span></div>
+        <div class="prob"><b>Sellers don't see the direct results of paying for promotions</b><span>Promotion lifts views, but that didn't clearly translate into sales versus re-posting.</span></div>
+        <div class="prob"><b>Package price is often inadequate to item price</b><span>For cheap items the package price is close to the item's value — the sale is no longer profitable.</span></div>
+        <div class="prob"><b>STR is only available for OLX Delivery listings</b><span>Users may not know STR exists, especially if their inventory doesn't match OLX Delivery.</span></div>
+        <div class="prob prob--more"><b>…and 17 more</b><span>All 24 limitations were mapped, then quantified and scored next.</span></div>
+      </div>
+    </article>
+
+    <article class="beat reveal">
+      <div class="olx-split olx-split--60-40">
+        <div>
+          <p class="beat__eyebrow">Prioritisation</p>
+          <h3 class="beat__title">Quantification to prioritisation</h3>
+          <p class="beat__text">I surveyed Sellers on the <strong>importance</strong> &amp; <strong>satisfaction</strong> of each problem area, then used <strong>Opportunity Scoring</strong> to generate an OpScore. Category selection was a top opportunity — the bet we chose.</p>
+          <span class="cs-formula olx-mt-md">OpScore = Importance + max(Importance − Satisfaction, 0)</span>
+          <figure class="olx-mt-md">
+            <img loading="lazy" src="assets/olx/olx_opscore_cards.png" alt="Opportunity landscape plotting each feature by importance against satisfaction" data-lightbox class="olx-img-card">
+            <figcaption class="beat__text olx-mt-sm">Opportunity landscape — <span class="hl">category selection</span> was a top opportunity (OpScore <strong>13.12</strong>).</figcaption>
           </figure>
         </div>
+        <figure class="olx-figure-frame reveal">
+          <img loading="lazy" src="assets/olx/survey.png" alt="SurveyMonkey questionnaire asking Sellers to rate importance and satisfaction for each problem area" data-lightbox>
+        </figure>
       </div>
-    </section>
+    </article>
+    </div>
+  </div>
+</section>
 
-    <!-- CS 05 · 24 LIMITATIONS -->
-    <section class="slide slide-scroll bg-elev" data-chapter="case-study" data-title="24 limitations">
-      <div class="lim-bg" aria-hidden="true"></div>
-      <div class="slide-inner top relative z-10">
-        <p class="deck-eyebrow text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Synthesis</p>
-        <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight max-w-[26ch]" data-anim style="--i:1">We analysed the 24 identified limitations</h2>
-        <p class="text-base text-mute leading-relaxed max-w-[72ch] mb-2" data-anim style="--i:2">Post qualitative research, findings were clustered into 24 limitations. A sample of the sharpest:</p>
-        <p class="text-sm text-mute mb-8" data-anim style="--i:3">With: Research Lead, Lead PM, HOD, myself &amp; 2 Jr. Designers.</p>
-        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4" data-anim style="--i:4">
-          <div class="prob"><b>Sellers can't relate to what personalisation does to their Ads</b><span>The personalised-page option wasn't transparent or attractive enough to users.</span></div>
-          <div class="prob"><b>Statistics feel like a free feature — why pay for it?</b><span>Sellers assume Ad statistics are always free, so the benefit of paying is unclear.</span></div>
-          <div class="prob"><b>No freedom to decide when to use Pay-if-you-sell</b><span>You first have to use up the pool of free ads to use STR — and Sellers often don't know this.</span></div>
-          <div class="prob win"><b>Hard to find the exact category when buying Ad packages</b><span>Sellers don't find the category-selection process user-friendly. <strong class="text-ink">OpScore 13.12 — the bet.</strong></span></div>
-          <div class="prob"><b>Sellers don't see the direct results of paying for promotions</b><span>Promotion lifts views, but that didn't clearly translate into sales versus re-posting.</span></div>
-          <div class="prob"><b>Package price is often inadequate to item price</b><span>For cheap items the package price is close to the item's value — the sale is no longer profitable.</span></div>
-          <div class="prob"><b>STR is only available for OLX Delivery listings</b><span>Users may not know STR exists, especially if their inventory doesn't match OLX Delivery.</span></div>
-          <div class="prob" style="background:#f0f0f0;border-style:dashed"><b>…and 17 more</b><span>All 24 limitations were mapped, then quantified and scored next.</span></div>
+<!-- ============================== PERIOD 03 — Problem ============================== -->
+<section class="section period period--olx period--alt" id="period-3" data-period="period-3">
+  <div class="container">
+    <header class="period__head reveal">
+      <div class="period__meta">
+        <span class="period__num">03</span>
+        <div class="chip-row"><span class="chip">Drop-off</span><span class="chip">UX audit</span></div>
+      </div>
+      <h2 class="h-display h-2 period__title">The category-selection problem</h2>
+      <p class="lede period__thesis">Almost <span class="hl">80% of B2C and 90% of C2C Sellers</span> drop at the category-selection page of the buy-package flow.</p>
+    </header>
+    <hr class="rule rule--thick" aria-hidden="true">
+
+    <article class="beat reveal">
+      <div class="olx-split olx-split--50-50">
+        <div>
+          <blockquote class="mini-card olx-quote-card">
+            “I like the option to buy an Ad package in advance, but it gets tricky to find the same category in which I post multiple ads.”
+          </blockquote>
+          <p class="beat__text olx-mt-md">Funnel data showed only <strong>20.55%</strong> of users reaching package selected — with category-selection flagged at OpScore 13.12 as the highest-opportunity friction point in the buy-package journey.</p>
         </div>
+        <figure class="olx-figure-frame reveal">
+          <img loading="lazy" src="assets/olx/graph_prob.png" alt="Users funnel from the buy-package flow: 20.55% at package selected, with category-selection called out at OpScore 13.12" data-lightbox>
+        </figure>
       </div>
-    </section>
+    </article>
 
-    <!-- CS 06 · QUANTIFICATION → PRIORITISATION -->
-    <section class="slide slide-scroll" data-chapter="case-study" data-title="Quantification &amp; OpScore">
-      <div class="slide-inner top is-split">
-        <div class="grid lg:grid-cols-[1.25fr_0.75fr] lg:h-full deck-split-grid">
-          <div class="order-2 md:order-1 flex flex-col justify-center deck-split-copy">
-            <p class="deck-eyebrow text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Prioritisation</p>
-            <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight max-w-[24ch]" data-anim style="--i:1">Quantification to prioritisation</h2>
-            <p class="mt-4 text-base md:text-lg text-mute leading-relaxed max-w-[62ch]" data-anim style="--i:2">
-              I surveyed Sellers on the <strong class="text-ink font-semibold">importance</strong> &amp; <strong class="text-ink font-semibold">satisfaction</strong> of each problem area, then used <strong class="text-ink font-semibold">Opportunity Scoring</strong> to generate an OpScore.
-            </p>
-            <span class="cs-formula mt-5 self-start" data-anim style="--i:3">OpScore = Importance + max(Importance − Satisfaction, 0)</span>
-            <figure class="mt-5" data-anim style="--i:4">
-              <img loading="lazy" src="assets/olx/olx_opscore_cards.png" alt="Opportunity landscape plotting each feature by importance against satisfaction, split into Additional advantages, Strengthen, Ignore and Improve quadrants" data-lightbox class="w-full max-h-[42vh] object-contain rounded-2xl border border-line bg-white cursor-zoom-in">
-              <figcaption class="mt-2 text-xs text-mute max-w-[70ch]">Opportunity landscape — <span class="hl">category selection</span> was a top opportunity (OpScore <strong class="text-ink font-semibold">13.12</strong>), the bet we chose.</figcaption>
-            </figure>
+    <article class="beat reveal">
+      <p class="beat__eyebrow">Audit</p>
+      <h3 class="beat__title">Ran a UX audit on the buy-package flow</h3>
+      <p class="beat__text">Five findings from Hotjar recordings, heatmaps, and flow walkthroughs — hover a finding to see the screen.</p>
+      <div class="olx-audit-layout olx-audit-block">
+        <figure class="olx-audit-figure">
+          <div class="audit-stage" id="auditStage">
+            <img loading="lazy" class="audit-shot active" data-audit-shot="1" data-lightbox src="assets/olx/olx_audit_1.png" alt="Audit — seller account overview">
+            <img loading="lazy" class="audit-shot" data-audit-shot="2" data-lightbox src="assets/olx/olx_audit_2.png" alt="Audit — category grid with click heatmap">
+            <img loading="lazy" class="audit-shot" data-audit-shot="3" data-lightbox src="assets/olx/olx_audit_3.png" alt="Audit — long L2 sub-category list">
+            <img loading="lazy" class="audit-shot" data-audit-shot="4" data-lightbox src="assets/olx/olx_audit_4.png" alt="Audit — package selection">
+            <img loading="lazy" class="audit-shot" data-audit-shot="5" data-lightbox src="assets/olx/olx_audit_5.png" alt="Audit — mega-package details">
           </div>
-          <div class="order-1 md:order-2 panel-bg5 flex items-center justify-center p-8 md:p-12 min-h-[260px]" data-anim style="--i:2">
-            <img loading="lazy" src="assets/olx/survey.png" alt="SurveyMonkey questionnaire asking Sellers to rate importance and satisfaction for each problem area" data-lightbox class="w-[78%] max-w-[360px] rounded-xl shadow-2xl shadow-ink/25 ring-1 ring-black/5 cursor-zoom-in">
+          <figcaption class="beat__text olx-audit-hint"><span class="tag-pill tag-pill--muted">Hover</span> a finding to see the screen · click to zoom</figcaption>
+        </figure>
+        <ul id="auditList" data-fm-widget="olx-audit" data-fm-kind="audit">
+          <li><button type="button" class="audit-item active" data-audit="1"><span class="audit-num">1</span><span>Beyond paywall, users already know where to buy ad-package from? ie; from <strong>Account</strong>.</span></button></li>
+          <li><button type="button" class="audit-item" data-audit="2"><span class="audit-num">2</span><span>Hotjar recordings show users <strong>trying to click sub-category bullet-points</strong> that do nothing.</span></button></li>
+          <li><button type="button" class="audit-item" data-audit="3"><span class="audit-num">3</span><span>Category lists at <strong>L2 and beyond are long and lack hierarchy</strong>.</span></button></li>
+          <li><button type="button" class="audit-item" data-audit="4"><span class="audit-num">4</span><span>Sub-categories drive package price, but that link <strong>lacks upfront discovery</strong>.</span></button></li>
+          <li><button type="button" class="audit-item" data-audit="5"><span class="audit-num">5</span><span>To see the exact categories included, user has to tap <strong>“What's included in mega-package”</strong>.</span></button></li>
+        </ul>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ============================== PERIOD 04 — Solution ============================== -->
+<section class="section period period--olx" id="period-4" data-period="period-4">
+  <div class="container">
+    <header class="period__head reveal">
+      <div class="period__meta">
+        <span class="period__num">04</span>
+        <div class="chip-row"><span class="chip">Explore</span><span class="chip">Test</span></div>
+      </div>
+      <h2 class="h-display h-2 period__title">Desktop-first exploration &amp; validation</h2>
+      <p class="lede period__thesis">More than <strong>60% of Ad packages</strong> are purchased via the OLX website — so we explored on desktop, narrowed to two concepts, and tested with 10 users.</p>
+    </header>
+    <hr class="rule rule--thick" aria-hidden="true">
+
+    <div class="period__story">
+    <article class="beat reveal">
+      <p class="beat__eyebrow">Explore</p>
+      <h3 class="beat__title">Designed 3 possible directions for desktop</h3>
+      <div class="hypo-grid olx-mt-md">
+        <article class="hypo-card">
+          <div class="hypo-card__media">
+            <img loading="lazy" src="assets/olx/olx_direction1.png" alt="Direction 1 — real-time offer view" data-lightbox>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CS 07 · USER PROBLEM -->
-    <section class="slide slide-scroll bg-base" data-chapter="case-study" data-title="User Problem">
-      <div class="slide-inner top is-split">
-        <div class="grid lg:grid-cols-[1.05fr_0.95fr] lg:h-full deck-split-grid">
-          <div class="order-2 md:order-1 flex flex-col justify-center deck-split-copy">
-            <p class="deck-eyebrow text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Problem</p>
-            <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight" data-anim style="--i:1">User Problem</h2>
-            <p class="mt-5 text-xl md:text-2xl font-medium leading-snug max-w-[32ch]" data-anim style="--i:2">
-              Almost <span class="hl">80% of B2C and 90% of C2C Sellers</span> drop at the category-selection page of the buy-package flow.
-            </p>
-            <div class="flex items-start gap-4 mt-8 max-w-[40ch]" data-anim style="--i:3">
-              <span class="shrink-0 w-11 h-11 rounded-full bg-navy text-white flex items-center justify-center font-extrabold text-lg leading-none" aria-hidden="true">”</span>
-              <blockquote class="rounded-2xl bg-elev border border-line p-5 text-base md:text-lg leading-relaxed text-ink">
-                “I like the option to buy an Ad package in advance, but it gets tricky to find the same category in which I post multiple ads.”
-              </blockquote>
-            </div>
+          <div class="hypo-card__body">
+            <p class="hypo-card__eyebrow">#1 Hypothesis</p>
+            <h4 class="hypo-card__title">Real-time offer view</h4>
+            <p class="hypo-card__p">Users would appreciate if they can simultaneously browse Ad packages while choosing the category in which they'd like to post ads, making the overall process dynamic.</p>
+            <p class="hypo-card__p">Offers are shown based on availability. Categories are seen upfront on the offer view.</p>
           </div>
-          <figure class="order-1 md:order-2 panel-problem-stat relative flex items-center justify-center p-5 md:p-8 min-h-[300px] h-full m-0" data-anim style="--i:4">
-            <img loading="lazy" src="assets/olx/graph_prob.png" alt="Users funnel from the buy-package flow: 20.55% at package selected, with category-selection called out at OpScore 13.12" data-lightbox class="relative z-10 w-full max-w-[min(100%,26rem)] drop-shadow-2xl shadow-ink/20 cursor-zoom-in">
-          </figure>
-        </div>
+        </article>
+        <article class="hypo-card">
+          <div class="hypo-card__media">
+            <img loading="lazy" src="assets/olx/olx_direction2.png" alt="Direction 2 — multi-level category menu" data-lightbox>
+          </div>
+          <div class="hypo-card__body">
+            <p class="hypo-card__eyebrow">#2 Hypothesis</p>
+            <h4 class="hypo-card__title">Multi-level menu</h4>
+            <p class="hypo-card__p">A linear selection process should reduce cognitive load, along with the multi-level menu that should ease the selection process.</p>
+            <p class="hypo-card__p">Minimum selection to see offers would be L2 selection. Selected category is marked with a '✔' at summary &amp; offer page.</p>
+          </div>
+        </article>
+        <article class="hypo-card">
+          <div class="hypo-card__media">
+            <img loading="lazy" src="assets/olx/olx_direction3.png" alt="Direction 3 — multi-selection view" data-lightbox>
+          </div>
+          <div class="hypo-card__body">
+            <p class="hypo-card__eyebrow">#3 Hypothesis</p>
+            <h4 class="hypo-card__title">Multi-selection view</h4>
+            <p class="hypo-card__p">OLX only offers packages in pre-set bundled categories; letting users multi-select category bundles could enable advance planning.</p>
+            <p class="hypo-card__p">Letting users multi-select categories across various L1 would require change in business logic (high effort), and so in the current state only multiple bundles can be selected.</p>
+          </div>
+        </article>
       </div>
-    </section>
+    </article>
 
-    <!-- CS 08 · UX AUDIT -->
-    <section class="slide slide-scroll slide-audit" data-chapter="case-study" data-title="UX Audit">
-      <div class="slide-inner top slide-audit-inner">
-        <p class="deck-eyebrow text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Audit</p>
-        <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight max-w-[26ch]" data-anim style="--i:1">Ran a UX audit on the buy-package flow</h2>
-        <div class="grid lg:grid-cols-[1.72fr_0.62fr] gap-6 lg:gap-8 items-stretch audit-layout">
-          <figure class="audit-figure m-0 min-w-0" data-anim style="--i:2">
-            <div class="audit-stage" id="auditStage">
-              <img loading="lazy" class="audit-shot active" data-audit-shot="1" data-lightbox src="assets/olx/olx_audit_1.png" alt="Audit — seller account overview: 'Your ads' on web and mobile">
-              <img loading="lazy" class="audit-shot" data-audit-shot="2" data-lightbox src="assets/olx/olx_audit_2.png" alt="Audit — category grid with click heatmap next to the mobile category list">
-              <img loading="lazy" class="audit-shot" data-audit-shot="3" data-lightbox src="assets/olx/olx_audit_3.png" alt="Audit — long L2 sub-category list with click heatmap">
-              <img loading="lazy" class="audit-shot" data-audit-shot="4" data-lightbox src="assets/olx/olx_audit_4.png" alt="Audit — package selection: Standard, Premium, Mega and mobile 'Pay to post'">
-              <img loading="lazy" class="audit-shot" data-audit-shot="5" data-lightbox src="assets/olx/olx_audit_5.png" alt="Audit — mega-package details: what's included in the package">
-            </div>
-            <figcaption class="mt-3 inline-flex items-center gap-2 text-xs font-semibold text-mute"><span class="tag-pill" style="background:#e7e7e7;color:#262626">Hover ☝️</span> hover a finding to see the screen · click to zoom</figcaption>
-          </figure>
-          <ul class="space-y-2 min-w-0" id="auditList" data-fm-widget="olx-audit" data-fm-kind="audit" data-anim style="--i:3">
-            <li><button type="button" class="audit-item active" data-audit="1"><span class="audit-num">1</span><span>Beyond paywall, users already know where to buy ad-package from? ie; from <strong class="text-ink">Account</strong>.</span></button></li>
-            <li><button type="button" class="audit-item" data-audit="2"><span class="audit-num">2</span><span>Hotjar recordings show users <strong class="text-ink">trying to click sub-category bullet-points</strong> that do nothing.</span></button></li>
-            <li><button type="button" class="audit-item" data-audit="3"><span class="audit-num">3</span><span>Category lists at <strong class="text-ink">L2 and beyond are long and lack hierarchy</strong>.</span></button></li>
-            <li><button type="button" class="audit-item" data-audit="4"><span class="audit-num">4</span><span>Sub-categories drive package price, but that link <strong class="text-ink">lacks upfront discovery</strong>.</span></button></li>
-            <li><button type="button" class="audit-item" data-audit="5"><span class="audit-num">5</span><span>To see the exact categories included, user has to tap <strong class="text-ink">“What’s included in mega-package”</strong>.</span></button></li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- CS 09 · DESKTOP-FIRST · 3 HYPOTHESES -->
-    <section class="slide slide-scroll slide-hypo bg-elev" data-chapter="case-study" data-title="Desktop-first · Hypothesis">
-      <div class="slide-inner top">
-        <p class="deck-eyebrow text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Explore</p>
-        <h2 class="text-xl md:text-3xl font-extrabold tracking-tight text-ink max-w-[28ch]" data-anim style="--i:1">Designed 3 possible directions for desktop</h2>
-        <p class="hypo-intro">
-          Why desktop first? More than <strong>60% of Ad packages</strong> are purchased via the OLX website.
-        </p>
-        <div class="hypo-grid" data-anim style="--i:2">
-          <article class="hypo-card">
-            <div class="hypo-card__media">
-              <img loading="lazy" src="assets/olx/olx_direction1.png" alt="Direction 1 — real-time offer view with categories and package offers side by side" data-lightbox>
-            </div>
-            <div class="hypo-card__body">
-              <p class="hypo-card__eyebrow">#1 Hypothesis</p>
-              <h3 class="hypo-card__title">Real-time offer view</h3>
-              <p class="hypo-card__p">Users would appreciate if they can simultaneously browse Ad packages while choosing the category in which they’d like to post ads, making the overall process dynamic.</p>
-              <p class="hypo-card__p">Offers are shown based on availability. Categories are seen upfront on the offer view.</p>
-            </div>
-          </article>
-          <article class="hypo-card">
-            <div class="hypo-card__media">
-              <img loading="lazy" src="assets/olx/olx_direction2.png" alt="Direction 2 — multi-level category menu with linear selection" data-lightbox>
-            </div>
-            <div class="hypo-card__body">
-              <p class="hypo-card__eyebrow">#2 Hypothesis</p>
-              <h3 class="hypo-card__title">Multi-level menu</h3>
-              <p class="hypo-card__p">A linear selection process should reduce cognitive load, along with the multi-level menu that should ease the selection process.</p>
-              <p class="hypo-card__p">Minimum selection to see offers would be L2 selection. Selected category is marked with a ‘✔’ at summary &amp; offer page.</p>
-            </div>
-          </article>
-          <article class="hypo-card">
-            <div class="hypo-card__media">
-              <img loading="lazy" src="assets/olx/olx_direction3.png" alt="Direction 3 — multi-selection view across category bundles" data-lightbox>
-            </div>
-            <div class="hypo-card__body">
-              <p class="hypo-card__eyebrow">#3 Hypothesis</p>
-              <h3 class="hypo-card__title">Multi-selection view</h3>
-              <p class="hypo-card__p">OLX only offers packages in pre-set bundled categories; letting users multi-select category bundles could enable advance planning.</p>
-              <p class="hypo-card__p">Letting users multi-select categories across various L1 would require change in business logic (high effort), and so in the current state only multiple bundles can be selected.</p>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- CS 10 · VARIANT A vs VARIANT B (interactive prototypes) -->
-    <section class="slide slide-scroll slide-directions" data-chapter="case-study" data-title="Variant A vs B">
-      <div class="directions-bg" aria-hidden="true"></div>
-      <div class="slide-inner top directions-content">
-        <div class="directions-head" data-anim style="--i:0">
-          <p class="deck-eyebrow text-mute text-xs font-bold uppercase tracking-[0.2em]">Two concepts</p>
-          <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight max-w-[28ch] text-ink">Two directions, head to head</h2>
-          <p class="proto-hint">
-            <span class="tag-pill" style="background:#e7e7e7;color:#262626">Interactive ☝️ — tap a prototype to advance</span>
-          </p>
-        </div>
-        <div class="proto-grid" data-anim style="--i:1">
+    <article class="beat reveal beat--proto">
+      <p class="beat__eyebrow">Two concepts</p>
+      <h3 class="beat__title">Two directions, head to head</h3>
+      <p class="beat__text">Design critique to narrow it down to 2 ideas — 9 P&amp;S designers, 4 PMs across pillars, the Engineering team, the P&amp;S HOD and the Data team.</p>
+      <p class="beat__text olx-hint"><span class="tag-pill tag-pill--muted">Interactive</span> — tap a prototype to advance</p>
+      <div class="olx-band olx-band--directions olx-mt-md">
+        <div class="olx-band__inner">
+          <div class="proto-grid">
           <div class="proto-col">
             <div class="vlabel vlabel-a">
               <span class="vlabel-title">Variant A · Real-time offer view</span>
               <span class="vlabel-actions">
-                <button type="button" class="proto-mag-toggle" data-proto-magnify="a" aria-pressed="true" aria-label="Magnifier on, click to turn off">
-                  <span class="proto-mag-toggle__text">Magnify</span>
-                  <span class="proto-mag-switch" aria-hidden="true"><span class="proto-mag-switch__thumb"></span></span>
-                </button>
+                <button type="button" class="proto-mag-toggle" data-proto-magnify="a" aria-pressed="true" aria-label="Magnifier on"><span class="proto-mag-toggle__text">Magnify</span><span class="proto-mag-switch" aria-hidden="true"><span class="proto-mag-switch__thumb"></span></span></button>
                 <button type="button" class="proto-reset" data-proto-reset="a">Reset</button>
               </span>
             </div>
-            <button type="button" class="proto-stage" data-proto-cycle="a" data-fm-widget="olx-proto-a" data-fm-kind="proto" data-fm-value="0" aria-label="Variant A prototype — tap to show next screen in sequence">
+            <button type="button" class="proto-stage" data-proto-cycle="a" data-fm-widget="olx-proto-a" data-fm-kind="proto" data-fm-value="0" aria-label="Variant A prototype — tap to show next screen">
               <span class="proto-stage__inner">
                 <img data-proto-img="a" src="assets/olx/va-1.png" alt="Variant A prototype, frame 1 of 5">
               </span>
               <span class="proto-lens" aria-hidden="true"></span>
             </button>
-            <div class="proto-meta">
-              <span class="proto-frame">Frame <span data-proto-step="a">1</span> / 5</span>
-            </div>
+            <div class="proto-meta"><span class="proto-frame">Frame <span data-proto-step="a">1</span> / 5</span></div>
           </div>
           <div class="proto-col">
             <div class="vlabel vlabel-b">
               <span class="vlabel-title">Variant B · Multi-level menu</span>
               <span class="vlabel-actions">
-                <button type="button" class="proto-mag-toggle" data-proto-magnify="b" aria-pressed="true" aria-label="Magnifier on, click to turn off">
-                  <span class="proto-mag-toggle__text">Magnify</span>
-                  <span class="proto-mag-switch" aria-hidden="true"><span class="proto-mag-switch__thumb"></span></span>
-                </button>
+                <button type="button" class="proto-mag-toggle" data-proto-magnify="b" aria-pressed="true" aria-label="Magnifier on"><span class="proto-mag-toggle__text">Magnify</span><span class="proto-mag-switch" aria-hidden="true"><span class="proto-mag-switch__thumb"></span></span></button>
                 <button type="button" class="proto-reset" data-proto-reset="b">Reset</button>
               </span>
             </div>
-            <button type="button" class="proto-stage" data-proto-cycle="b" data-fm-widget="olx-proto-b" data-fm-kind="proto" data-fm-value="0" aria-label="Variant B prototype — tap to show next screen in sequence">
+            <button type="button" class="proto-stage" data-proto-cycle="b" data-fm-widget="olx-proto-b" data-fm-kind="proto" data-fm-value="0" aria-label="Variant B prototype — tap to show next screen">
               <span class="proto-stage__inner">
                 <img data-proto-img="b" src="assets/olx/oob-1.png" alt="Variant B prototype, frame 1 of 5">
               </span>
               <span class="proto-lens" aria-hidden="true"></span>
             </button>
-            <div class="proto-meta">
-              <span class="proto-frame">Frame <span data-proto-step="b">1</span> / 5</span>
-            </div>
+            <div class="proto-meta"><span class="proto-frame">Frame <span data-proto-step="b">1</span> / 5</span></div>
+          </div>
           </div>
         </div>
-        <div class="directions-foot rounded-2xl bg-ink text-white p-6 md:p-8 mt-5" data-anim style="--i:2">
-          <p class="text-xl md:text-2xl font-extrabold tracking-tight">Design critique to narrow it down to 2 ideas.</p>
-          <p class="mt-2 text-white/60">9 P&amp;S designers, 4 PMs across pillars, the Engineering team, the P&amp;S HOD and the Data team.</p>
+      </div>
+    </article>
+
+    <article class="beat reveal">
+      <p class="beat__eyebrow">Test</p>
+      <h3 class="beat__title">We tested 2 concepts for usability with <span class="hl">10 users</span></h3>
+      <p class="beat__text">Moderated sessions compared Variant A (real-time offer view) against Variant B (multi-level menu) — each insight paired with the takeaway it drove.</p>
+      <div class="olx-insight-grid olx-mt-md">
+        <div class="olx-insight-row">
+          <div class="olx-insight-card"><span class="abadge a-a">A</span> <strong>4/8 struggled</strong> to associate dropdown categories with the dynamic offer. Task time was <strong>15% lower</strong> than Production.</div>
+          <div class="olx-insight-arrow" aria-hidden="true">→</div>
+          <div class="olx-takeaway-card">Primary/secondary/tertiary categories got associated with filters — adding <strong>cognitive load</strong> and failing the hypothesis.</div>
+        </div>
+        <div class="olx-insight-row">
+          <div class="olx-insight-card"><span class="abadge-stack"><img class="abadge-crown" src="assets/olx/crown.png" alt="" width="22" height="22" decoding="async" aria-hidden="true"><span class="abadge a-b">B</span></span> <strong>7/8 were satisfied</strong> with the multi-level menu and appreciated the summary view. Task time was <strong>28% higher</strong> than Production.</div>
+          <div class="olx-insight-arrow" aria-hidden="true">→</div>
+          <div class="olx-takeaway-card">Users found categories with <strong>ease</strong>; one suggested a <strong>shortcut to repeat</strong> the selection.</div>
+        </div>
+        <div class="olx-insight-row">
+          <div class="olx-insight-card"><span class="abadge a-a">A</span> Only <strong>2/8</strong> found the filter view easier to compare — and they ignored the 'see-more' CTA while comparing packages.</div>
+          <div class="olx-insight-arrow" aria-hidden="true">→</div>
+          <div class="olx-takeaway-card">Most users expect offers to carry as much <strong>upfront information</strong> as possible.</div>
+        </div>
+        <div class="olx-insight-row">
+          <div class="olx-insight-card"><span class="abadge-stack"><img class="abadge-crown" src="assets/olx/crown.png" alt="" width="22" height="22" decoding="async" aria-hidden="true"><span class="abadge a-b">B</span></span> With <strong>upfront category tags</strong>, 5/8 intuitively named categories as a variable for why price differs per package.</div>
+          <div class="olx-insight-arrow" aria-hidden="true">→</div>
+          <div class="olx-takeaway-card">Users don't always tap see-more — a long list of category tags can also add cognitive load.</div>
         </div>
       </div>
-    </section>
-
-    <!-- CS 11 · USABILITY TEST -->
-    <section class="slide slide-scroll" data-chapter="case-study" data-title="Usability test">
-      <div class="slide-inner top">
-        <p class="deck-eyebrow text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Test</p>
-        <h2 class="w-full max-w-none text-2xl md:text-4xl font-extrabold tracking-tight" data-anim style="--i:1">We tested 2 concepts for usability with <span class="hl">10 users</span></h2>
-        <!-- Each insight paired with the takeaway it drove -->
-        <div class="hidden lg:grid lg:grid-cols-[1fr_2.5rem_1fr] gap-4 mb-3" data-anim style="--i:2">
-          <p class="text-xs font-bold uppercase tracking-[0.18em] text-mute">Insight</p>
-          <span></span>
-          <p class="text-xs font-bold uppercase tracking-[0.18em] text-accink/70">Takeaway</p>
-        </div>
-        <div class="space-y-4">
-          <div class="grid lg:grid-cols-[1fr_2.5rem_1fr] gap-3 lg:gap-4 items-stretch" data-anim style="--i:3">
-            <div class="bg-elev rounded-2xl p-5 flex items-center"><p class="m-0 text-mute leading-relaxed"><span class="abadge a-a inline-flex align-middle mr-2">A</span><strong class="text-ink">4/8 struggled</strong> to associate dropdown categories with the dynamic offer. Task time was <strong class="text-ink">15% lower</strong> than Production.</p></div>
-            <div class="hidden lg:flex items-center justify-center text-ink/30 text-2xl" aria-hidden="true">→</div>
-            <div class="bg-accent text-accink rounded-2xl p-5 flex items-center"><p class="m-0 leading-relaxed">Primary/secondary/tertiary categories got associated with filters — adding <strong>cognitive load</strong> and failing the hypothesis.</p></div>
-          </div>
-          <div class="grid lg:grid-cols-[1fr_2.5rem_1fr] gap-3 lg:gap-4 items-stretch" data-anim style="--i:4">
-            <div class="bg-elev rounded-2xl p-5 flex items-center"><p class="m-0 text-mute leading-relaxed"><span class="abadge-stack mr-2" title="Variant B — usability test winner"><img class="abadge-crown" src="assets/olx/crown.png" alt="" width="22" height="22" decoding="async" aria-hidden="true"><span class="abadge a-b">B</span></span><strong class="text-ink">7/8 were satisfied</strong> with the multi-level menu and appreciated the summary view. Task time was <strong class="text-ink">28% higher</strong> than Production.</p></div>
-            <div class="hidden lg:flex items-center justify-center text-ink/30 text-2xl" aria-hidden="true">→</div>
-            <div class="bg-accent text-accink rounded-2xl p-5 flex items-center"><p class="m-0 leading-relaxed">Users found categories with <strong>ease</strong>; one suggested a <strong>shortcut to repeat</strong> the selection.</p></div>
-          </div>
-          <div class="grid lg:grid-cols-[1fr_2.5rem_1fr] gap-3 lg:gap-4 items-stretch" data-anim style="--i:5">
-            <div class="bg-elev rounded-2xl p-5 flex items-center"><p class="m-0 text-mute leading-relaxed"><span class="abadge a-a inline-flex align-middle mr-2">A</span>Only <strong class="text-ink">2/8</strong> found the filter view easier to compare — and they ignored the &lsquo;see-more&rsquo; CTA while comparing packages.</p></div>
-            <div class="hidden lg:flex items-center justify-center text-ink/30 text-2xl" aria-hidden="true">→</div>
-            <div class="bg-accent text-accink rounded-2xl p-5 flex items-center"><p class="m-0 leading-relaxed">Most users expect offers to carry as much <strong>upfront information</strong> as possible.</p></div>
-          </div>
-          <div class="grid lg:grid-cols-[1fr_2.5rem_1fr] gap-3 lg:gap-4 items-stretch" data-anim style="--i:6">
-            <div class="bg-elev rounded-2xl p-5 flex items-center"><p class="m-0 text-mute leading-relaxed"><span class="abadge-stack mr-2" title="Variant B — usability test winner"><img class="abadge-crown" src="assets/olx/crown.png" alt="" width="22" height="22" decoding="async" aria-hidden="true"><span class="abadge a-b">B</span></span>With <strong class="text-ink">upfront category tags</strong>, 5/8 intuitively named categories as a variable for why price differs per package.</p></div>
-            <div class="hidden lg:flex items-center justify-center text-ink/30 text-2xl" aria-hidden="true">→</div>
-            <div class="bg-accent text-accink rounded-2xl p-5 flex items-center"><p class="m-0 leading-relaxed">Users don&rsquo;t always tap see-more — a long list of category tags can also add cognitive load.</p></div>
-          </div>
-        </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 mt-8" data-anim style="--i:7">
-          <figure class="relative m-0 test-photo-fig">
-            <span class="photo-variant-badge photo-variant-badge--a" aria-hidden="true"><span class="photo-variant-badge__letter">A</span></span>
-            <img loading="lazy" src="assets/olx/olx_test_a.png" alt="Moderated session — Variant A" data-lightbox class="w-full rounded-2xl border border-line cursor-zoom-in">
-          </figure>
-          <figure class="relative m-0 test-photo-fig test-photo-fig--winner">
-            <span class="photo-variant-badge photo-variant-badge--b photo-variant-badge--crown" title="Variant B — usability test winner">
-              <img class="abadge-crown" src="assets/olx/crown.png" alt="" width="28" height="28" decoding="async" aria-hidden="true">
-              <span class="photo-variant-badge__letter">B</span>
-            </span>
-            <img loading="lazy" src="assets/olx/olx_test_b.png" alt="Moderated session — Variant B, usability test winner" data-lightbox class="w-full rounded-2xl border border-line cursor-zoom-in">
-          </figure>
-        </div>
+      <div class="test-photo-grid olx-mt-lg">
+        <figure class="test-photo-fig">
+          <span class="photo-variant-badge photo-variant-badge--a" aria-hidden="true"><span class="photo-variant-badge__letter">A</span></span>
+          <img loading="lazy" src="assets/olx/olx_test_a.png" alt="Moderated session — Variant A" data-lightbox>
+        </figure>
+        <figure class="test-photo-fig test-photo-fig--winner">
+          <span class="photo-variant-badge photo-variant-badge--b photo-variant-badge--crown" title="Variant B — usability test winner">
+            <img class="abadge-crown" src="assets/olx/crown.png" alt="" width="28" height="28" decoding="async" aria-hidden="true">
+            <span class="photo-variant-badge__letter">B</span>
+          </span>
+          <img loading="lazy" src="assets/olx/olx_test_b.png" alt="Moderated session — Variant B, usability test winner" data-lightbox>
+        </figure>
       </div>
-    </section>
-
-    <!-- CS 12 · PRODUCTION OUTCOME -->
-    <section class="slide slide-scroll" data-chapter="case-study" data-title="Production outcome">
-      <div class="slide-inner top is-split">
-        <div class="grid lg:grid-cols-[1.05fr_0.95fr] lg:h-full deck-split-grid">
-          <div class="order-2 md:order-1 flex flex-col justify-center deck-split-copy">
-            <p class="deck-eyebrow text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Outcome</p>
-            <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight max-w-[22ch]" data-anim style="--i:1">Validated on production</h2>
-            <p class="mt-5 text-xl md:text-2xl font-medium leading-snug max-w-[40ch]" data-anim style="--i:2">
-              Variant B went into an <span class="hl">A (Production) / B (Multi-level menu)</span> test in the Polish market — where we saw a <strong class="text-ink font-semibold">+12% upward trend</strong> in purchase conversion of Ad packages.
-            </p>
-            <p class="mt-6 text-lg text-mute leading-relaxed max-w-[52ch]" data-anim style="--i:3">
-              Uplift in package conversion lifts Ads posted on the platform and translated into an <strong class="text-ink font-semibold">8% increase in paying Sellers</strong> 🍾
-            </p>
-            <p class="mt-4 text-lg text-mute leading-relaxed max-w-[52ch]" data-anim style="--i:4">
-              Seller CSAT rose <strong class="text-ink font-semibold">0.6 points</strong> as well 🎉 The winning version is gradually rolling out across all other markets.
-            </p>
-            <div class="mini-card csat-outcome-card mt-8 p-5 self-start" data-anim style="--i:5">
-              <p class="font-bold text-ink text-sm leading-tight">Customer Satisfaction</p>
-              <p class="csat-outcome-q">When you think about your most recent experience with our platform, how would you rate your overall satisfaction with it? On a scale of 0 to 10</p>
-              <svg viewBox="0 0 120 72" role="img" aria-label="Customer Satisfaction score 7.9 out of 10">
-                <path d="M10 62 A50 50 0 0 1 110 62" fill="none" stroke="#e7e7e7" stroke-width="10" stroke-linecap="round"/>
-                <path class="csat-arc" d="M10 62 A50 50 0 0 1 99 28" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100" fill="none" stroke="#1a9e5a" stroke-width="10" stroke-linecap="round"/>
-                <text x="60" y="58" text-anchor="middle" font-size="20" font-weight="800" fill="#123b4d">7.9</text>
-              </svg>
-            </div>
-          </div>
-          <figure class="order-1 md:order-2 panel-problem-stat relative flex items-center justify-center p-5 md:p-8 min-h-[300px] h-full m-0" data-anim style="--i:2">
-            <img loading="lazy" src="assets/olx/graph_solv.png" alt="Conversion uplift in the buy-package flow after Variant B — +12% trend in Ad package purchase conversion" data-lightbox class="relative z-10 w-full max-w-[min(100%,26rem)] drop-shadow-2xl shadow-ink/20 cursor-zoom-in">
-          </figure>
-        </div>
-      </div>
-    </section>
-
-    <!-- CS 12b · NEXT STEPS — repeat purchase & recommendations -->
-    <section class="slide slide-scroll slide-next-steps" data-chapter="case-study" data-title="Next steps">
-      <div class="slide-inner top is-split">
-        <div class="grid lg:grid-cols-[1.05fr_0.95fr] lg:h-full deck-split-grid">
-          <div class="order-2 md:order-1 flex flex-col justify-center deck-split-copy">
-            <p class="deck-eyebrow text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">After launch</p>
-            <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight max-w-[22ch]" data-anim style="--i:1">Next steps</h2>
-            <p class="mt-5 text-xl md:text-2xl font-medium leading-snug max-w-[40ch]" data-anim style="--i:2">
-              A usability participant flagged <strong class="text-ink font-semibold">repeat Ad package purchases</strong> — and data showed ~<strong class="text-ink font-semibold">31% of B2C Sellers</strong> were buying again.
-            </p>
-            <p class="mt-6 text-lg text-mute leading-relaxed max-w-[52ch]" data-anim style="--i:3">
-              We shipped a <strong class="text-ink font-semibold">shortcut banner</strong> for their last package — the first step toward <strong class="text-ink font-semibold">recommendations</strong> from Ad posting history.
-            </p>
-            <p class="mt-4 text-lg text-mute leading-relaxed max-w-[52ch]" data-anim style="--i:4">
-              Package recommendations are <strong class="text-ink font-semibold">in moderation</strong> and live in <strong class="text-ink font-semibold">Poland</strong>. The winning category-selection pattern is on <strong class="text-ink font-semibold">mobile</strong> too.
-            </p>
-          </div>
-          <figure class="order-1 md:order-2 panel-next-steps relative flex items-center justify-start min-h-[300px] h-full m-0" data-anim style="--i:2">
-            <img loading="lazy" decoding="async" src="assets/olx/comb_mob_desk.png" alt="Desktop and mobile buy-package flows — shortcut banner and aligned category selection" data-lightbox class="next-steps-combo">
-          </figure>
-        </div>
-      </div>
-    </section>
-
-    <!-- CS 13 · CASE-STUDY WRAP-UP -->
-    <section class="slide slide-scroll is-vcenter slide-bg-sage text-ink" data-chapter="case-study" data-title="Wrap-up">
-      <div class="slide-inner text-center items-center">
-        <p class="deck-eyebrow text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">OLX · Pay &amp; Ship</p>
-        <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight max-w-[24ch] mx-auto text-ink" data-anim style="--i:1">
-          From category drop-off to production uplift
-        </h2>
-        <p class="text-lg text-ink/85 leading-relaxed max-w-[62ch] mx-auto mb-10" data-anim style="--i:2">
-          We reframed how Sellers pick categories when buying Ad packages — desktop-first exploration, moderated usability, and an in-market A/B that lifted package conversion and CSAT. The same interaction patterns are rolling out on web and mobile across OLX markets.
-        </p>
-
-        <div class="flex flex-wrap items-center justify-center gap-3 md:gap-4" data-anim style="--i:3">
-          <button type="button" data-goto="Workshop!" class="inline-flex items-center gap-2 text-base font-bold px-6 py-3.5 md:px-7 rounded-full bg-accent !text-ink hover:brightness-105 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink/20 focus-visible:ring-offset-2 focus-visible:ring-offset-[#CDE3C4] transition-all">
-            See highlights <span class="!text-ink" aria-hidden="true">→</span>
-          </button>
-          <button type="button" data-goto="Thanks" class="inline-flex items-center gap-2 text-base font-semibold px-6 py-3.5 md:px-7 rounded-full border border-ink/25 !text-ink hover:border-accent hover:bg-[#fff3b0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink/20 focus-visible:ring-offset-2 focus-visible:ring-offset-[#CDE3C4] transition-colors">
-            Skip to end
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===================== CHAPTER · HIGHLIGHTS (after the case study) ===================== -->
-
-    <!-- HIGHLIGHT 01 · Workshop — auto-extend sprint -->
-    <section class="slide hl-slide hl-slide--1" data-chapter="highlights" data-title="Workshop!">
-      <img class="hl-slide__bg" src="assets/olx/OLX%20Highlights%20-%204.png" alt="Workshop board — cross-pillar design sprint for auto-extend and Pay if you sell" loading="lazy" decoding="async">
-      <img class="hl-slide__sticker" src="assets/olx/workshop-1.png" alt="" width="184" height="184" decoding="async" aria-hidden="true">
-      <div class="slide-inner">
-        <h2 class="hl-slide__headline" data-anim style="--i:0">Workshop!</h2>
-        <div class="hl-overlay hl-overlay--dock" data-anim style="--i:1">
-          <p class="hl-overlay__lead">Lead a cross-pillar design-sprint resulting in auto-extend feature for &lsquo;Pay if you sell&rsquo; model.</p>
-          <p class="hl-overlay__sub">Monetisation packs · Sellers success domain</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- HIGHLIGHT 02 · Workshop — Figma master pages -->
-    <section class="slide hl-slide hl-slide--2" data-chapter="highlights" data-title="Workshop! Workshop!">
-      <img class="hl-slide__bg" src="assets/olx/OLX%20Highlights%20-%205.png" alt="Workshop — aligning ways of working and Figma master pages across pillars" loading="lazy" decoding="async">
-      <img class="hl-slide__sticker" src="assets/olx/nexus.png" alt="Nexus — cross-pillar design collaboration" loading="lazy" decoding="async">
-      <div class="slide-inner">
-        <h2 class="hl-slide__headline" data-anim style="--i:0">Workshop! Workshop!</h2>
-        <div class="hl-overlay hl-overlay--dock" data-anim style="--i:1">
-          <p class="hl-overlay__lead">Lead a designer group to align ways of working to create &amp; maintain master pages on Figma</p>
-          <p class="hl-overlay__sub">12 Product designers across Pay&amp;Ship, Engagment and Core</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- HIGHLIGHT 03 · Workshop — design principles -->
-    <section class="slide hl-slide hl-slide--3" data-chapter="highlights" data-title="Workshop! Workshop! Workshop!">
-      <img class="hl-slide__bg" src="assets/olx/OLX%20Highlights%20-%206.png" alt="Design principles workshop — clarity, simplicity, integration, care, and progressive discoverability" loading="lazy" decoding="async">
-      <div class="slide-inner">
-        <h2 class="hl-slide__headline" data-anim style="--i:0">Workshop! Workshop! Workshop!</h2>
-        <div class="hl-principles-row" data-anim style="--i:1">
-          <div class="hl-principles-track">
-            <article class="hl-principle">
-              <h3><span style="color:#0073CE">Increase confidence</span> through clarity.</h3>
-              <p>At OLX, we prioritize clarity at every level – within our ecosystem and across teams. It&rsquo;s essential that everyone understands what&rsquo;s happening and why.</p>
-            </article>
-            <article class="hl-principle">
-              <h3><span style="color:#00A624">Keep it simple</span></h3>
-              <p>We embrace simplicity as the foundation of our design philosophy. When something is intuitively designed, it just feels right. This simplicity leads to a genuine and timeless user experience.</p>
-            </article>
-            <article class="hl-principle">
-              <h3><span style="color:#FE2626">Harmonious</span> Integration</h3>
-              <p>Each component is a part of a larger whole, and it should seamlessly contribute to the overall system. There are no isolated features or exceptions; everything works together cohesively.</p>
-            </article>
-            <article class="hl-principle">
-              <h3><span style="color:#E960FF">Takes care</span> of you</h3>
-              <p>OLX champions its users — their security, privacy, and empower trust in trade. It makes sensible decisions for you that respect your time, data, and attention.</p>
-            </article>
-            <article class="hl-principle">
-              <h3><span style="color:#B7BA28">Empower everyone through progressive discoverability</span>.</h3>
-              <p>Everyone at all levels of experience with OLX should feel like they know how to use the product, regardless of how many features they use.</p>
-            </article>
-          </div>
-        </div>
-        <div class="hl-overlay hl-overlay--dock" data-anim style="--i:2">
-          <p class="hl-overlay__lead">Co-lead design principal workshop</p>
-          <p class="hl-overlay__sub">2 Heads of Design, 4 Design leads and 4 Sr. Product Designers</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- CS 13 · CLOSING / CTA -->
-    <section class="slide bg-ink text-white" data-chapter="highlights" data-title="Thanks">
-      <div class="slide-inner items-center text-center">
-        <p class="text-white/60 text-xs font-bold uppercase tracking-[0.2em] mb-8" data-anim style="--i:0">Fin</p>
-        <h2 class="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.12] max-w-[18ch]" data-anim style="--i:1">
-          Thanks for watching.
-        </h2>
-        <div class="mt-10 flex flex-wrap items-center justify-center gap-4" data-anim style="--i:2">
-          <a class="nav-btn !w-auto !px-5 !text-white !bg-white/10 !border-white/20 hover:!bg-white/20 hover:!border-white/40" href="raisin.html">← Raisin</a>
-          <a class="nav-btn !w-auto !px-5 !text-white !bg-white/10 !border-white/20 hover:!bg-white/20 hover:!border-white/40" href="index.html">Back to home</a>
-          <a class="nav-btn !w-auto !px-5 !text-white !bg-white/10 !border-white/20 hover:!bg-white/20 hover:!border-white/40" href="n26.html">N26 →</a>
-        </div>
-        <p class="mt-14 text-white/40 text-sm" data-anim style="--i:3">© 2023 · Vipul Saxena · OLX Ad Package · Product Design Portfolio</p>
-      </div>
-    </section>
-
+    </article>
+    </div>
   </div>
+</section>
+
+<!-- ============================== PROOF ============================== -->
+<section class="section period period--olx period--alt" id="proof" data-period="proof">
+  <div class="container">
+    <div class="proof-intro reveal">
+      <p class="eyebrow">Proof</p>
+      <h2 class="h-display h-2 proof-intro__title">What the Ad Package work produced — measured on production.</h2>
+      <p class="lede proof-intro__lede">Variant B validated in Poland with uplift in conversion and paying Sellers — alongside cross-pillar workshops that scaled practice beyond this flow.</p>
+    </div>
+
+    <div class="proof-track proof-track--practice reveal">
+      <div class="proof-track__head">
+        <div class="proof-track__titles">
+          <p class="proof-label">Case study</p>
+          <p class="proof-track__lede">Ad Package — buy-flow outcomes.</p>
+        </div>
+        <span class="proof-track__badge proof-track__badge--practice">Practice</span>
+      </div>
+      <div class="metric-banner metric-banner--4 reveal-stagger">
+        <div class="metric-banner__item">
+          <div class="metric-banner__value mono-stat">+12%</div>
+          <div class="metric-banner__label metric-banner__label--wide">Upward trend in package purchase conversion · Poland A/B</div>
+        </div>
+        <div class="metric-banner__item">
+          <div class="metric-banner__value mono-stat">8%</div>
+          <div class="metric-banner__label metric-banner__label--wide">Increase in paying Sellers</div>
+        </div>
+        <div class="metric-banner__item">
+          <div class="metric-banner__value mono-stat">7.9</div>
+          <div class="metric-banner__label metric-banner__label--wide">Seller CSAT · +0.6 from baseline 7.3</div>
+        </div>
+        <div class="metric-banner__item">
+          <div class="metric-banner__value mono-stat metric-banner__value--text">Rolling out</div>
+          <div class="metric-banner__label metric-banner__label--wide">Winning pattern across markets · mobile aligned</div>
+        </div>
+      </div>
+
+      <div class="period__story">
+        <article class="beat beat--impact reveal">
+          <div class="olx-split olx-split--50-50">
+            <div>
+              <p class="beat__text">Variant B went into an <span class="hl">A (Production) / B (Multi-level menu)</span> test in Poland. Uplift in package conversion lifts Ads posted on the platform. The winning version is gradually rolling out across all other markets.</p>
+              <div class="mini-card csat-outcome-card olx-mt-md">
+                <p class="olx-csat-outcome-card__title">Customer Satisfaction</p>
+                <p class="csat-outcome-q">When you think about your most recent experience with our platform, how would you rate your overall satisfaction with it? On a scale of 0 to 10</p>
+                <svg viewBox="0 0 120 72" role="img" aria-label="Customer Satisfaction score 7.9 out of 10">
+                  <path d="M10 62 A50 50 0 0 1 110 62" fill="none" stroke="#e7e7e7" stroke-width="10" stroke-linecap="round"/>
+                  <path class="csat-arc" d="M10 62 A50 50 0 0 1 99 28" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100" fill="none" stroke="#1a9e5a" stroke-width="10" stroke-linecap="round"/>
+                  <text x="60" y="58" text-anchor="middle" font-size="20" font-weight="800" fill="#123b4d">7.9</text>
+                </svg>
+              </div>
+            </div>
+            <figure class="olx-figure-frame reveal">
+              <img loading="lazy" src="assets/olx/graph_solv.png" alt="Conversion uplift in the buy-package flow after Variant B — +12% trend" data-lightbox>
+            </figure>
+          </div>
+        </article>
+
+        <article class="beat reveal">
+          <p class="beat__eyebrow">After launch</p>
+          <h3 class="beat__title">Next steps</h3>
+          <p class="beat__text">A usability participant flagged <strong>repeat Ad package purchases</strong> — and data showed ~<strong>31% of B2C Sellers</strong> were buying again. We shipped a <strong>shortcut banner</strong> for their last package — the first step toward <strong>recommendations</strong> from Ad posting history.</p>
+          <p class="beat__text">Package recommendations are <strong>in moderation</strong> and live in <strong>Poland</strong>. The winning category-selection pattern is on <strong>mobile</strong> too.</p>
+          <figure class="olx-figure-frame reveal olx-mt-md">
+            <img loading="lazy" decoding="async" src="assets/olx/comb_mob_desk.png" alt="Desktop and mobile buy-package flows — shortcut banner and aligned category selection" data-lightbox>
+          </figure>
+        </article>
+      </div>
+    </div>
+
+    <div class="proof-track proof-track--enablement reveal">
+      <div class="proof-track__head">
+        <div class="proof-track__titles">
+          <p class="proof-label">DesignOps</p>
+          <p class="proof-track__lede">Cross-pillar workshops beyond the case study.</p>
+        </div>
+        <span class="proof-track__badge proof-track__badge--enablement enablement-label">
+          <svg class="enablement-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          DesignOps
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="olx-hl-slide olx-hl-slide--dock olx-band reveal">
+    <img class="olx-hl-slide__bg" src="assets/olx/OLX%20Highlights%20-%204.png" alt="" loading="lazy" decoding="async">
+    <div class="olx-hl-slide__inner container">
+      <h3 class="olx-hl-slide__title">Workshop!</h3>
+      <div class="olx-hl-overlay">
+        <p class="olx-hl-overlay__lead">Lead a cross-pillar design-sprint resulting in auto-extend feature for &lsquo;Pay if you sell&rsquo; model.</p>
+        <p class="olx-hl-overlay__sub">Monetisation packs · Sellers success domain</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="olx-hl-slide olx-hl-slide--dock olx-band reveal">
+    <img class="olx-hl-slide__bg" src="assets/olx/OLX%20Highlights%20-%205.png" alt="" loading="lazy" decoding="async">
+    <div class="olx-hl-slide__inner container">
+      <h3 class="olx-hl-slide__title">Workshop! Workshop!</h3>
+      <div class="olx-hl-overlay">
+        <p class="olx-hl-overlay__lead">Lead a designer group to align ways of working to create &amp; maintain master pages on Figma</p>
+        <p class="olx-hl-overlay__sub">12 Product designers across Pay&amp;Ship, Engagment and Core</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="olx-hl-slide olx-hl-slide--principles olx-band reveal">
+    <img class="olx-hl-slide__bg" src="assets/olx/OLX%20Highlights%20-%206.png" alt="" loading="lazy" decoding="async">
+    <div class="olx-hl-slide__inner container">
+      <h3 class="olx-hl-slide__title">Workshop! Workshop! Workshop!</h3>
+      <div class="olx-hl-principles-row">
+        <div class="olx-principles-track olx-hl-principles-track">
+          <article class="olx-principle">
+            <h3><span class="olx-principle-accent olx-principle-accent--blue">Increase confidence</span> through clarity.</h3>
+            <p>At OLX, we prioritize clarity at every level – within our ecosystem and across teams. It's essential that everyone understands what's happening and why.</p>
+          </article>
+          <article class="olx-principle">
+            <h3><span class="olx-principle-accent olx-principle-accent--green">Keep it simple</span></h3>
+            <p>We embrace simplicity as the foundation of our design philosophy. When something is intuitively designed, it just feels right.</p>
+          </article>
+          <article class="olx-principle">
+            <h3><span class="olx-principle-accent olx-principle-accent--red">Harmonious</span> Integration</h3>
+            <p>Each component is a part of a larger whole, and it should seamlessly contribute to the overall system.</p>
+          </article>
+          <article class="olx-principle">
+            <h3><span class="olx-principle-accent olx-principle-accent--pink">Takes care</span> of you</h3>
+            <p>OLX champions its users — their security, privacy, and empower trust in trade.</p>
+          </article>
+          <article class="olx-principle">
+            <h3><span class="olx-principle-accent olx-principle-accent--lime">Empower everyone through progressive discoverability</span>.</h3>
+            <p>Everyone at all levels of experience with OLX should feel like they know how to use the product.</p>
+          </article>
+        </div>
+      </div>
+      <div class="olx-hl-overlay">
+        <p class="olx-hl-overlay__lead">Co-lead design principal workshop</p>
+        <p class="olx-hl-overlay__sub">2 Heads of Design, 4 Design leads and 4 Sr. Product Designers</p>
+      </div>
+    </div>
+  </div>
+</section>
 </main>
 
-<!-- Bottom control bar -->
-<div class="ctrl" role="group" aria-label="Slideshow controls">
-  <div class="shell-inner shell-bar">
-  <button type="button" class="nav-btn nav-home" data-home aria-label="Back to first slide" title="Back to first slide">
-    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>
-    <span class="home-count" data-home-count aria-hidden="true"></span>
-  </button>
-  <div class="chapter-tabs" id="chapters" aria-label="Chapters"></div>
-  <div class="ctrl-dots hidden lg:flex" id="dots" aria-label="Slides"></div>
-  <div class="ml-auto flex items-center gap-3">
-    <span class="counter"><span id="curNum">01</span> <span class="sep">/</span> <span id="totNum">00</span></span>
-    <button type="button" class="nav-btn" data-prev aria-label="Previous slide">←</button>
-    <button type="button" class="nav-btn" data-next aria-label="Next slide">→</button>
+<footer class="shell-footer" id="contact">
+  <div class="shell-inner">
+    <div class="shell-prevnext">
+      <a href="raisin.html" class="shell-card"><p class="k">← Raisin</p><p class="t">Brand Evolution</p></a>
+      <a href="n26-presentation.html" class="shell-card next"><p class="k">Next →</p><p class="t">N26 — Banking</p></a>
+    </div>
   </div>
+</footer>
+
+<div class="lightbox lightbox--gallery" role="dialog" aria-modal="true" aria-label="Media viewer">
+  <button class="lightbox__close" type="button" aria-label="Close">✕</button>
+  <button class="lightbox__prev" type="button" aria-label="Previous slide" hidden>←</button>
+  <button class="lightbox__next" type="button" aria-label="Next slide" hidden>→</button>
+  <div class="lightbox__stage">
+    <img class="lightbox__img" alt="">
+    <video class="lightbox__video" playsinline controls loop muted hidden></video>
   </div>
+  <p class="lightbox__counter" aria-live="polite" hidden></p>
 </div>
 
-<!-- Lightbox overlay -->
-<div id="lightbox" aria-hidden="true"><img alt="Expanded view"></div>
-
-<!-- Password gate validation -->
+<script src="raisin-assets/assets/js/main.js"></script>
+<script src="raisin-assets/assets/js/summary2.js"></script>
+<script src="js/olx-web.js"></script>
 <script src="js/portfolio-gate-previews.js"></script>
 <script>
   (function(){
@@ -1498,10 +837,10 @@
     if (window.__gateAllow) {
       document.documentElement.classList.remove("olx-locked");
       gate.remove();
-      return;
+    } else {
+      setTimeout(function(){ if (input) input.focus(); }, 80);
     }
 
-    setTimeout(function(){ input && input.focus(); }, 80);
     form.addEventListener("submit", function(e){
       e.preventDefault();
       if (input.value === PASSWORD) {
@@ -1514,379 +853,7 @@
     });
   })();
 </script>
-
-<!-- Deck engine — chapters (Highlights / Case study), grouped dots, skip, lightbox -->
-<script>
-(function () {
-  "use strict";
-  const track    = document.getElementById("track");
-  const slides   = Array.from(track.children).filter((el) => el.classList.contains("slide"));
-  const dotsWrap = document.getElementById("dots");
-  const chapWrap = document.getElementById("chapters");
-  const progress = document.getElementById("progress");
-  const curNum   = document.getElementById("curNum");
-  const totNum   = document.getElementById("totNum");
-  const deckTitle= document.getElementById("deckTitle");
-  const prevBtns = Array.from(document.querySelectorAll("[data-prev]"));
-  const nextBtns = Array.from(document.querySelectorAll("[data-next]"));
-  const homeBtns = Array.from(document.querySelectorAll("[data-home]"));
-  const N = slides.length;
-  const homeIndices = slides.map((s, idx) => (s.hasAttribute("data-home-slide") ? idx : -1)).filter((x) => x >= 0);
-  const pad = (n) => String(n).padStart(2, "0");
-  const CHAP_LABELS = { "highlights": "Highlights", "case-study": "Case study" };
-  const CHAP_ICONS = {
-    "case-study": '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 13H8"/></svg>',
-    "highlights": '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>'
-  };
-  let i = 0;
-
-  /* ---------- build chapters from data-chapter ---------- */
-  const chapters = [];
-  slides.forEach((s, idx) => {
-    const id = s.dataset.chapter || "main";
-    let ch = chapters.find((c) => c.id === id);
-    if (!ch) { ch = { id, label: CHAP_LABELS[id] || id, start: idx, end: idx, slides: [] }; chapters.push(ch); }
-    ch.end = idx; ch.slides.push(idx);
-  });
-  const chapterOf = (idx) => chapters.find((c) => idx >= c.start && idx <= c.end);
-  chapters.forEach((c) => { c.countSlides = c.slides.filter((idx) => !slides[idx].hasAttribute("data-home-slide")); });
-
-  /* ---------- chapter tabs (also the skip control) ---------- */
-  const chapterTabs = chapters.map((ch) => {
-    const b = document.createElement("button");
-    b.className = "chapter-tab";
-    b.type = "button";
-    b.innerHTML =
-      '<span class="ct-label">' + ch.label + "</span>" +
-      '<span class="ct-icon" aria-hidden="true">' + (CHAP_ICONS[ch.id] || "") + "</span>" +
-      '<span class="ct-count">' + ch.countSlides.length + "</span>";
-    b.setAttribute("aria-label", "Jump to " + ch.label);
-    b.addEventListener("click", () => go(ch.countSlides.length ? ch.countSlides[0] : ch.start));
-    chapWrap.appendChild(b);
-    return b;
-  });
-
-  /* ---------- grouped dots ---------- */
-  const dots = [];
-  const dotSegmentsForChapter = (ch) => {
-    const homeInCh = ch.slides.filter((idx) => slides[idx].hasAttribute("data-home-slide"));
-    const restInCh = ch.slides.filter((idx) => !slides[idx].hasAttribute("data-home-slide"));
-    return homeInCh.length && restInCh.length ? [homeInCh, restInCh] : [ch.slides];
-  };
-  chapters.forEach((ch) => {
-    dotSegmentsForChapter(ch).forEach((indices) => {
-      const group = document.createElement("div");
-      group.className = "dot-group";
-      indices.forEach((idx) => {
-        const b = document.createElement("button");
-        b.className = "dot";
-        b.type = "button";
-        b.setAttribute("aria-label", ("Go to slide " + (idx + 1) + ": " + (slides[idx].dataset.title || "")).trim());
-        b.dataset.tip = pad(idx + 1) + " · " + (slides[idx].dataset.title || ("Slide " + (idx + 1)));
-        b.addEventListener("click", () => go(idx));
-        group.appendChild(b);
-        dots[idx] = b;
-      });
-      dotsWrap.appendChild(group);
-    });
-  });
-  totNum.textContent = pad(N);
-
-  /* ---------- render ---------- */
-  function render() {
-    track.style.transform = "translateX(-" + i * 100 + "%)";
-    slides.forEach((s, idx) => {
-      const active = idx === i;
-      s.classList.toggle("is-active", active);
-      if (active) s.scrollTop = 0;
-    });
-    dots.forEach((d, idx) => d.setAttribute("aria-current", String(idx === i)));
-    const homePos = homeIndices.indexOf(i);
-    const onHome = homePos >= 0;
-    const ch = chapterOf(i);
-    chapterTabs.forEach((t, ci) => {
-      const cur = !onHome && chapters[ci] === ch;
-      t.setAttribute("aria-current", String(cur));
-      const cnt = t.querySelector(".ct-count");
-      if (cnt) cnt.textContent = cur ? (chapters[ci].countSlides.indexOf(i) + 1) + "/" + chapters[ci].countSlides.length : String(chapters[ci].countSlides.length);
-    });
-    curNum.textContent = pad(i + 1);
-    progress.style.width = ((i + 1) / N) * 100 + "%";
-    deckTitle.textContent = slides[i].dataset.title || "OLX Ad Package";
-    prevBtns.forEach((b) => (b.disabled = i === 0));
-    nextBtns.forEach((b) => (b.disabled = i === N - 1));
-    homeBtns.forEach((b) => {
-      b.classList.toggle("is-active", onHome);
-      b.setAttribute("aria-current", onHome ? "true" : "false");
-      const badge = b.querySelector("[data-home-count]");
-      if (badge) badge.textContent = onHome ? (homePos + 1) + "/" + homeIndices.length : "";
-    });
-    if (history.replaceState) history.replaceState(null, "", "#" + (i + 1));
-    window.PortfolioDeck = { pageId: "olx", getIndex: function () { return i; }, go: go };
-    window.dispatchEvent(new CustomEvent("portfolio:deck-change", { detail: { slide: i + 1 } }));
-    document.querySelectorAll("video[data-autoplay]").forEach((v) => {
-      const onActive = v.closest(".slide")?.classList.contains("is-active");
-      if (onActive) {
-        const p = v.play();
-        if (p && p.catch) p.catch(() => {});
-      } else {
-        v.pause();
-      }
-    });
-  }
-  function go(n) { i = Math.max(0, Math.min(N - 1, n)); render(); }
-  const next = () => go(i + 1);
-  const prev = () => go(i - 1);
-
-  document.querySelectorAll("[data-goto]").forEach((el) => {
-    el.addEventListener("click", () => {
-      const title = el.getAttribute("data-goto");
-      const idx = slides.findIndex((s) => s.dataset.title === title);
-      if (idx >= 0) go(idx);
-    });
-  });
-
-  prevBtns.forEach((b) => b.addEventListener("click", prev));
-  nextBtns.forEach((b) => b.addEventListener("click", next));
-  document.querySelectorAll("[data-home]").forEach((b) => b.addEventListener("click", () => go(0)));
-
-  /* ---------- lightbox ---------- */
-  const lb = document.getElementById("lightbox");
-  const lbImg = lb ? lb.querySelector("img") : null;
-  const lbOpen = () => lb && lb.classList.contains("open");
-  const closeLb = () => { if (lb) { lb.classList.remove("open"); lb.setAttribute("aria-hidden", "true"); } };
-  if (lb && lbImg) {
-    document.addEventListener("click", (e) => {
-      const t = e.target.closest("[data-lightbox]");
-      if (t && t.tagName === "IMG") { lbImg.src = t.currentSrc || t.src; lbImg.alt = t.alt || ""; lb.classList.add("open"); lb.setAttribute("aria-hidden", "false"); }
-      else if (e.target === lb || e.target === lbImg) { closeLb(); }
-    });
-  }
-
-  /* ---------- keyboard ---------- */
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && lbOpen()) { e.preventDefault(); closeLb(); return; }
-    if (lbOpen()) return;
-    if (e.target.closest("input, textarea, iframe, [contenteditable]")) return;
-    switch (e.key) {
-      case "ArrowRight": case "PageDown": e.preventDefault(); next(); break;
-      case " ": e.preventDefault(); e.shiftKey ? prev() : next(); break;
-      case "ArrowLeft": case "PageUp": e.preventDefault(); prev(); break;
-      case "Home": e.preventDefault(); go(0); break;
-      case "End":  e.preventDefault(); go(N - 1); break;
-    }
-  });
-
-  /* ---------- touch swipe (works over vertically scrollable slides too) ---------- */
-  let x0 = null, y0 = null, sdx = 0, sdy = 0, axis = null;
-  track.addEventListener("touchstart", (e) => {
-    if (e.touches.length !== 1) { x0 = null; return; }
-    x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; sdx = sdy = 0; axis = null;
-  }, { passive: true });
-  track.addEventListener("touchmove", (e) => {
-    if (x0 === null) return;
-    sdx = e.touches[0].clientX - x0; sdy = e.touches[0].clientY - y0;
-    if (!axis && (Math.abs(sdx) > 8 || Math.abs(sdy) > 8)) axis = Math.abs(sdx) > Math.abs(sdy) ? "x" : "y";
-    if (axis === "x" && e.cancelable) e.preventDefault();
-  }, { passive: false });
-  track.addEventListener("touchend", () => {
-    if (x0 === null) return;
-    if (axis === "x" && Math.abs(sdx) > 45) (sdx < 0 ? next() : prev());
-    x0 = y0 = null; axis = null;
-  }, { passive: true });
-  track.addEventListener("touchcancel", () => { x0 = y0 = null; axis = null; }, { passive: true });
-
-  /* ---------- fullscreen ---------- */
-  const fsBtn = document.querySelector("[data-fullscreen]");
-  fsBtn && fsBtn.addEventListener("click", () => {
-    if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
-    else document.exitFullscreen?.();
-  });
-
-  /* ---------- Background view toggle (lifecycle ↔ personas) ---------- */
-  (function () {
-    const seg = document.getElementById("bgSeg");
-    if (!seg) return;
-    const btns = Array.from(seg.querySelectorAll("[data-bg]"));
-    const shots = Array.from(document.querySelectorAll("[data-bg-shot]"));
-    function activate(n) {
-      btns.forEach((b) => b.setAttribute("aria-selected", String(b.dataset.bg === n)));
-      shots.forEach((s) => s.classList.toggle("active", s.dataset.bgShot === n));
-    }
-    btns.forEach((b) => b.addEventListener("click", () => activate(b.dataset.bg)));
-  })();
-
-  /* ---------- interactive UX-audit bullets ↔ screenshot ---------- */
-  (function () {
-    const list = document.getElementById("auditList");
-    const stage = document.getElementById("auditStage");
-    if (!list || !stage) return;
-    const items = Array.from(list.querySelectorAll("[data-audit]"));
-    const shots = Array.from(stage.querySelectorAll("[data-audit-shot]"));
-    function activate(n) {
-      items.forEach((it) => it.classList.toggle("active", it.dataset.audit === n));
-      shots.forEach((sh) => sh.classList.toggle("active", sh.dataset.auditShot === n));
-    }
-    items.forEach((it) => {
-      const n = it.dataset.audit;
-      it.addEventListener("mouseenter", () => activate(n));
-      it.addEventListener("focus", () => activate(n));
-      it.addEventListener("click", () => activate(n));
-    });
-  })();
-
-  /* ---------- Variant A/B prototype frame cycling (slide 12) ---------- */
-  (function () {
-    const FRAMES = {
-      a: [1, 2, 3, 4, 5].map((n) => "assets/olx/va-" + n + ".png"),
-      b: [1, 2, 3, 4, 5].map((n) => "assets/olx/oob-" + n + ".png"),
-    };
-    const idx = { a: 0, b: 0 };
-    function render(key) {
-      const img = document.querySelector('[data-proto-img="' + key + '"]');
-      const step = document.querySelector('[data-proto-step="' + key + '"]');
-      if (!img || !FRAMES[key]) return;
-      img.src = FRAMES[key][idx[key]];
-      img.alt =
-        "Variant " + (key === "a" ? "A" : "B") + " prototype, frame " + (idx[key] + 1) + " of 5";
-      if (step) step.textContent = String(idx[key] + 1);
-      var stage = document.querySelector('[data-proto-cycle="' + key + '"]');
-      if (stage) stage.setAttribute("data-fm-value", String(idx[key]));
-      if (stage && typeof stage._protoRefreshLens === "function") {
-        stage._protoRefreshLens();
-      }
-    }
-    function next(key) {
-      idx[key] = (idx[key] + 1) % FRAMES[key].length;
-      render(key);
-    }
-    function reset(key) {
-      idx[key] = 0;
-      render(key);
-    }
-    window.PortfolioProto = {
-      go: function (key, n) {
-        if (!FRAMES[key]) return;
-        var len = FRAMES[key].length;
-        idx[key] = ((n % len) + len) % len;
-        render(key);
-      },
-    };
-    document.querySelectorAll("[data-proto-cycle]").forEach((btn) => {
-      btn.addEventListener("click", () => next(btn.dataset.protoCycle));
-    });
-    document.querySelectorAll("[data-proto-reset]").forEach((btn) => {
-      btn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        reset(btn.dataset.protoReset);
-      });
-    });
-
-    const ZOOM = 2.35;
-    const canMagnify = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-    function protoImageBox(img, root) {
-      const rr = root.getBoundingClientRect();
-      const ir = img.getBoundingClientRect();
-      if (!ir.width || !ir.height) return null;
-      return {
-        left: ir.left - rr.left,
-        top: ir.top - rr.top,
-        width: ir.width,
-        height: ir.height,
-      };
-    }
-    function clearLens(stage) {
-      stage.classList.remove("is-magnifying");
-    }
-    if (canMagnify) {
-      document.querySelectorAll(".proto-stage").forEach((stage) => {
-        const inner = stage.querySelector(".proto-stage__inner");
-        const img = stage.querySelector("[data-proto-img]");
-        const lens = stage.querySelector(".proto-lens");
-        if (!inner || !img || !lens) return;
-        stage._protoMagnifyEnabled = true;
-        const lensSize = () => lens.offsetWidth || 420;
-        let lastPointer = null;
-        function updateLens(e) {
-          if (!e || !stage._protoMagnifyEnabled) {
-            clearLens(stage);
-            return;
-          }
-          const sr = stage.getBoundingClientRect();
-          const ir = inner.getBoundingClientRect();
-          const x = e.clientX - ir.left;
-          const y = e.clientY - ir.top;
-          const box = protoImageBox(img, inner);
-          if (!box) {
-            clearLens(stage);
-            return;
-          }
-          const ix = x - box.left;
-          const iy = y - box.top;
-          if (ix < 0 || iy < 0 || ix > box.width || iy > box.height) {
-            clearLens(stage);
-            return;
-          }
-          const size = lensSize();
-          const half = size / 2;
-          const lensX = e.clientX - sr.left;
-          const lensY = e.clientY - sr.top;
-          stage.classList.add("is-magnifying");
-          lens.style.left = lensX - half + "px";
-          lens.style.top = lensY - half + "px";
-          lens.style.backgroundImage = 'url("' + (img.currentSrc || img.src) + '")';
-          lens.style.backgroundSize = box.width * ZOOM + "px " + box.height * ZOOM + "px";
-          lens.style.backgroundPosition =
-            -(ix * ZOOM - half) + "px " + -(iy * ZOOM - half) + "px";
-        }
-        function move(e) {
-          lastPointer = { clientX: e.clientX, clientY: e.clientY };
-          updateLens(e);
-        }
-        stage._protoRefreshLens = function () {
-          if (lastPointer && stage.matches(":hover") && stage._protoMagnifyEnabled) {
-            updateLens(lastPointer);
-          } else if (!stage._protoMagnifyEnabled) {
-            clearLens(stage);
-          }
-        };
-        stage.addEventListener("mouseenter", move);
-        stage.addEventListener("mousemove", move);
-        stage.addEventListener("mouseleave", () => {
-          lastPointer = null;
-          clearLens(stage);
-        });
-        img.addEventListener("load", () => stage._protoRefreshLens());
-      });
-    }
-
-    document.querySelectorAll("[data-proto-magnify]").forEach((btn) => {
-      btn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        const key = btn.dataset.protoMagnify;
-        const stage = document.querySelector('[data-proto-cycle="' + key + '"]');
-        const on = btn.getAttribute("aria-pressed") !== "true";
-        btn.setAttribute("aria-pressed", on ? "true" : "false");
-        btn.setAttribute(
-          "aria-label",
-          on ? "Magnifier on, click to turn off" : "Magnifier off, click to turn on"
-        );
-        if (stage) {
-          stage._protoMagnifyEnabled = on;
-          if (!on) clearLens(stage);
-        }
-      });
-    });
-  })();
-
-  /* ---------- init from hash ---------- */
-  const start = parseInt((location.hash || "").replace("#", ""), 10);
-  if (!isNaN(start) && start >= 1 && start <= N) i = start - 1;
-  render();
-})();
-</script>
 <script defer src="js/custom-cursor.js"></script>
 <script defer src="js/portfolio-gate.js"></script>
-
 </body>
 </html>
