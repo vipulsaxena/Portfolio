@@ -2512,7 +2512,17 @@
       backdrop-filter: blur(10px);
       border-top: 1px solid var(--line);
     }
-    .chapter-tabs { display: flex; align-items: center; gap: 0.35rem; overflow-x: auto; flex-shrink: 1; min-width: 0; }
+    .chapter-tabs {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      overflow-x: auto;
+      flex-shrink: 1;
+      min-width: 0;
+      padding: 4px;
+      margin: -4px;
+      scroll-padding-inline: 4px;
+    }
     .chapter-tab {
       position: relative;
       font-size: 0.75rem;
@@ -2579,6 +2589,8 @@
     }
     .chapter-tab:focus-visible {
       outline: none;
+      overflow: visible;
+      z-index: 1;
       box-shadow: 0 0 0 3px rgba(255, 218, 8, 0.55);
     }
     .ct-dots {
@@ -2606,6 +2618,7 @@
       background: #fff; color: var(--ink); cursor: pointer; text-decoration: none;
     }
     .nav-btn:hover { border-color: var(--accent); background: var(--accent-soft); }
+    .nav-btn:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(255, 218, 8, 0.55); }
     .nav-btn:disabled, .nav-btn.is-hidden { opacity: 0; pointer-events: none; }
     .nav-btn--text { width: auto; padding: 0 1rem; font-size: 0.8rem; font-weight: 700; }
     .nav-btn--exit { width: auto; padding: 0 0.85rem; gap: 0.4rem; font-size: 0.8rem; font-weight: 700; }
