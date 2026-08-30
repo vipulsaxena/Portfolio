@@ -10,61 +10,59 @@
 
   var CHAPTER_LABELS = {
     setup: "Setup",
-    "period-1": "01 · A home for their wealth",
-    "period-2": "02 · Better product, Better process",
-    "period-3": "03 · Mobile and the horizon",
-    "period-4": "04 · Design × AI",
+    "period-1": "01 · Wealth Hub",
+    "period-2": "02 · Mobile",
+    "period-3": "03 · Enablement",
     proof: "Proof",
-    finale: "The brand, built out",
     thanks: "Thanks"
   };
 
   var CHAPTER_SHORT = {
-    setup: "0",
+    setup: "S",
     "period-1": "01",
     "period-2": "02",
     "period-3": "03",
-    "period-4": "04",
     proof: "P",
-    finale: "B",
     thanks: "✓"
   };
 
+  var CHAPTER_NAV_IDS = ["setup", "period-1", "period-2", "period-3", "proof"];
+
   /* Presentation trim — hide web-depth copy; thesis/body max ~2 lines in deck. */
   var PRESENT_TRIM = {
-    hero: [".hero__sub"],
+    hero: [".hero__sub:not(.hero__sub--thesis)"],
     "gap-01": [".why-proof__text:not(.why-proof__text--present)"],
     "gap-02": [".why-proof__text:not(.why-proof__text--present)"],
     "gap-03": [".why-proof__text:not(.why-proof__text--present)"],
-    journey: [".lede--remit", ".why-hero__body", ".rule--thick", ".lede:not(.lede--present-short)"],
-    "p1-intro": [".period__thesis:not(.period__thesis--present)"],
+    journey: [".lede--remit", ".why-hero__body:not(.why-hero__body--present)", ".rule--thick", ".lede:not(.lede--present-short)"],
+    "p1-intro": [".period__thesis:not(.period__thesis--present)", ".present-constraint-chips"],
     "p1-baseline": [
-      ".beat__text:not(.beat__text--problem)",
-      ".chip-row",
-      ".beat__needs",
-      ".beat__subtitle"
+      ".beat__text:not(.beat__text--problem):not(.beat__text--present)",
+      ".beat__needs"
     ],
-    "p1-co-creation": [".beat__text", ".research-stickies", ".period-split__caption"],
+    "p1-co-creation": [".beat__text:not(.beat__text--present)", ".period-split__caption"],
     "p1-tradeoff-01": [
       ".trade-off__label",
       ".trade-off__options",
       ".trade-off__position",
       ".trade-off__outcome",
-      ".beat__enablement",
       ".trade-off-switcher__scope",
       ".period-split__caption",
-      ".beat__text"
+      ".beat__text:not(.present-evidence-line)"
     ],
     "p1-tradeoff-02": [
       ".trade-off__label",
       ".trade-off__options",
       ".trade-off__position",
-      ".beat__enablement",
       ".period-split__caption",
-      ".beat__text"
+      ".beat__text:not(.present-org-decision)"
     ],
-    "p1-outcomes": [".wealth-hub-constraints", ".beat__text", ".beat__caption"],
-    "p2-intro": [".period__thesis:not(.period__thesis--present)"],
+    "p1-colour-map": [".beat__text:not(.beat__text--present)", ".period-split__caption"],
+    "p1-outcomes": [
+      ".wealth-hub-constraints",
+      ".beat__text",
+      ".beat__caption:not(.present-outcomes-chip)"
+    ],
     "p2-wow": [".wow-beat__content .beat__text", ".wow-beat__content .enablement-label", ".wow-beat__content .beat__stat + .beat__stat"],
     "p3-intro": [".period__thesis:not(.period__thesis--present)"],
     "p3-desk-research": [".device-story__text:not(.device-story__text--present)"],
@@ -72,16 +70,23 @@
     "p3-prototype": [
       ".device-story__text:not(.device-story__text--present)",
       ".trade-off--compact",
-      ".beat__enablement",
       ".period-split__caption"
     ],
-    "p3-maze": [".device-story__text:not(.device-story__text--present)", ".beat__enablement"],
-    "p3-shipped": [".device-story__text:not(.device-story__text--present)", ".mobile-shipped-reviews"],
+    "p3-maze": [".device-story__text:not(.device-story__text--present):not(.device-story__text--present-risk)"],
+    "p3-shipped": [
+      ".device-story__text:not(.device-story__text--present)",
+      ".mobile-shipped-reviews__quote:nth-child(n+3)"
+    ],
     "p3-cura": [".beat__text", ".beat__enablement"],
-    "p4-intro": [".period__thesis:not(.period__thesis--present)"],
-    "p4-origin": [".device-story__text:not(.device-story__text--present)", ".beat__enablement"],
-    "p4-toolkit": [".ai-toolkit-card__text"],
-    "p4-lab-tools": [".device-story__text:not(.device-story__text--present)", ".period-split__caption"],
+    "p4-intro": [
+      ".period__thesis:not(.period__thesis--present)",
+      ".present-p4-enablement",
+      ".present-p4-intro-stat",
+      ".present-p4-intro-chips",
+      ".period__meta .chip-row"
+    ],
+    "p4-toolkit": [".ai-toolkit-card__text", ".ai-toolkit-grid__note"],
+    "p4-lab-tools": [".device-story__text:not(.device-story__text--present)"],
     "p4-coaching": [
       ".device-story__text:not(.device-story__text--present)",
       ".ai-cadence-card__text"
@@ -100,41 +105,35 @@
     { id: "p1-co-creation", chapter: "period-1", selector: '[aria-label="Co-creation sprint"]' },
     { id: "p1-tradeoff-01", chapter: "period-1", selector: '[aria-label="Trade-off 01 — user research, treemap vs donut"]' },
     { id: "p1-tradeoff-02", chapter: "period-1", selector: '[aria-label="Trade-off 02 — catalogue list vs asset-class hierarchy"]' },
+    { id: "p1-colour-map", chapter: "period-1", selector: '[aria-label="Product colour map"]' },
     { id: "p1-outcomes", chapter: "period-1", selector: '[aria-label="After MVP launch — outcomes"]' },
-    { id: "p2-intro", chapter: "period-2", selector: "#period-2 .period__head" },
-    { id: "p2-release-01", chapter: "period-2", selector: "#period-2 .post-mvp-card:nth-of-type(1)" },
-    { id: "p2-release-02", chapter: "period-2", selector: "#period-2 .post-mvp-card:nth-of-type(2)" },
-    { id: "p2-release-03", chapter: "period-2", selector: "#period-2 .post-mvp-card:nth-of-type(3)" },
-    { id: "p2-release-04", chapter: "period-2", selector: "#period-2 .post-mvp-card:nth-of-type(4)" },
-    { id: "p2-wow", chapter: "period-2", selector: "#period-2 .beat--wow" },
-    { id: "p3-intro", chapter: "period-3", selector: "#period-3 .period__head" },
-    { id: "p3-desk-research", chapter: "period-3", selector: "#period-3 .mobile-journey__row:first-child" },
-    { id: "p3-parity", chapter: "period-3", selector: "#period-3 .mobile-journey__row:nth-child(2)" },
-    { id: "p3-prototype", chapter: "period-3", selector: "#period-3 .mobile-journey__row--prototype" },
-    { id: "p3-maze", chapter: "period-3", selector: "#period-3 .mobile-journey__row:nth-child(4)" },
-    { id: "p3-shipped", chapter: "period-3", selector: "#period-3 .mobile-journey__shipped" },
-    { id: "p3-cura", chapter: "period-3", selector: "#period-3 .beat--cura" },
-    { id: "p4-intro", chapter: "period-4", selector: "#period-4 .period__head" },
-    { id: "p4-origin", chapter: "period-4", selector: "#period-4 .ai-journey__row:first-child" },
-    { id: "p4-toolkit", chapter: "period-4", selector: "#period-4 .ai-journey__toolkit" },
-    { id: "p4-lab-tools", chapter: "period-4", selector: "#period-4 .ai-journey__tools" },
+    { id: "p3-intro", chapter: "period-2", selector: "#period-3 .period__head" },
+    { id: "p3-desk-research", chapter: "period-2", selector: "#period-3 .mobile-journey__row:first-child" },
+    { id: "p3-parity", chapter: "period-2", selector: "#period-3 .mobile-journey__row:nth-child(2)" },
+    { id: "p3-prototype", chapter: "period-2", selector: "#period-3 .mobile-journey__row--prototype" },
+    { id: "p3-maze", chapter: "period-2", selector: "#period-3 .mobile-journey__row:nth-child(4)" },
+    { id: "p3-shipped", chapter: "period-2", selector: "#period-3 .mobile-journey__shipped" },
+    { id: "p3-cura", chapter: "period-2", selector: "#period-3 .beat--cura" },
+    { id: "p4-intro", chapter: "period-3", selector: "#period-4 .period__head" },
+    { id: "p4-toolkit", chapter: "period-3", selector: "#period-4 .ai-journey__toolkit" },
+    { id: "p4-lab-tools", chapter: "period-3", selector: "#period-4 .ai-journey__tools" },
     {
       id: "p4-coaching",
-      chapter: "period-4",
+      chapter: "period-3",
       compositeLayout: "coaching",
       composite: [
         "#period-4 .device-story__row--reverse.ai-journey__row",
         "#period-4 .ai-cadence"
       ]
     },
+    { id: "p2-wow", chapter: "period-3", selector: "#period-2 .beat--wow" },
     {
       id: "proof",
       chapter: "proof",
       compositeLayout: "proof",
       composite: ["#proof", ".quote-marquee"],
-      title: "Proof"
+      title: "What moved. What didn't. Both matter."
     },
-    { id: "brand-finale", chapter: "finale", selector: ".brand-finale", title: "The brand, built out" },
     { id: "thanks", chapter: "thanks", selector: "#present-beat-thanks", title: "Thanks" }
   ];
 
@@ -170,8 +169,7 @@
 
   var FULL_BLEED_SLIDES = {
     "p2-wow": true,
-    "p3-cura": true,
-    "brand-finale": true
+    "p3-cura": true
   };
 
   var SLIDE_LAYOUT = {
@@ -184,12 +182,8 @@
     "p1-co-creation": "viewport",
     "p1-tradeoff-01": "viewport",
     "p1-tradeoff-02": "viewport",
+    "p1-colour-map": "viewport-split",
     "p1-outcomes": "viewport-split",
-    "p2-intro": "viewport",
-    "p2-release-01": "viewport",
-    "p2-release-02": "viewport",
-    "p2-release-03": "viewport",
-    "p2-release-04": "viewport",
     "p3-intro": "viewport",
     "p3-desk-research": "viewport",
     "p3-parity": "viewport",
@@ -199,7 +193,6 @@
     "p3-cura": "viewport",
     "p2-wow": "viewport",
     "p4-intro": "viewport",
-    "p4-origin": "viewport",
     "p4-toolkit": "viewport",
     "p4-lab-tools": "viewport",
     "p4-coaching": "viewport",
@@ -225,7 +218,6 @@
       FULL_BLEED_SLIDES[entry.id] ||
       entry.id === "hero" ||
       entry.id === "thanks" ||
-      entry.id === "brand-finale" ||
       entry.id === "p1-outcomes" ||
       entry.id === "p3-prototype"
     ) {
@@ -1105,6 +1097,7 @@
 
   if (chapWrap) {
     chapters.forEach(function (ch) {
+      if (CHAPTER_NAV_IDS.indexOf(ch.id) < 0) return;
       var b = document.createElement("button");
       b.className = "chapter-tab";
       b.type = "button";

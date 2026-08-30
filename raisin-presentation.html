@@ -113,7 +113,7 @@
     .present-slide.is-active { opacity: 1; }
     .present-slide.is-leaving { opacity: 0; }
     /* Unified horizontal inset — slides that don't manage their own padding */
-    body.summary-v2 .present-slide.container:not(.present-slide--p2-wow):not(.present-slide--p3-cura):not(.present-slide--p4-toolkit):not(.present-slide--p4-coaching):not(.present-slide--proof):not(.present-beat-proof):not(.present-beat-coaching):not([class*="present-slide--p2-release-"]):not(.period__head--split):not(.present-slide--p1-outcomes):not(.present-slide--p3-prototype):not(.present-slide--hero):not(.present-slide--brand-finale):not(.present-thanks) {
+    body.summary-v2 .present-slide.container:not(.present-slide--p2-wow):not(.present-slide--p3-cura):not(.present-slide--p4-toolkit):not(.present-slide--p4-coaching):not(.present-slide--proof):not(.present-beat-proof):not(.present-beat-coaching):not(.period__head--split):not(.present-slide--p1-outcomes):not(.present-slide--p1-colour-map):not(.present-slide--p3-prototype):not(.present-slide--hero):not(.present-thanks) {
       width: 100%;
       max-width: 100%;
       margin-inline: auto;
@@ -260,11 +260,52 @@
       background: none;
       gap: 0;
     }
+    /* Compact enablement — title + stat only in deck */
+    .present-slide .beat__enablement .enablement-surface__text,
+    .present-slide .post-mvp-measurement .enablement-surface__text {
+      display: none !important;
+    }
+    .present-slide .present-constraint-chips,
+    .present-slide .present-target-chips,
+    .present-slide .present-miss-chips,
+    .present-slide .present-p4-intro-chips {
+      margin: 0;
+      flex-wrap: wrap;
+      gap: clamp(0.35rem, 0.75vh, 0.5rem);
+    }
+    .present-slide .present-evidence-line,
+    .present-slide .present-org-decision,
+    .present-slide .device-story__text--present-risk,
+    .present-slide .beat__text--present {
+      display: block;
+      -webkit-line-clamp: unset;
+      overflow: visible;
+    }
+    .present-slide .present-evidence-line strong,
+    .present-slide .present-org-decision strong {
+      color: var(--ink);
+    }
+    .present-slide--p1-outcomes .present-target-chips {
+      margin-bottom: clamp(0.25rem, 0.5vh, 0.4rem);
+    }
+    .present-slide--p1-outcomes .wealth-hub-impact__item:nth-child(2) .wealth-hub-impact__value {
+      font-weight: 600;
+    }
     #present-source .lede--present-short,
     #present-source .device-story__text--present,
     #present-source .period__thesis--present,
     #present-source .why-proof__text--present,
-    #present-source .proof-intro__lede--present {
+    #present-source .proof-intro__lede--present,
+    #present-source .beat__text--present,
+    #present-source .present-constraint-chips,
+    #present-source .present-target-chips,
+    #present-source .present-p4-intro-chips,
+    #present-source .present-p4-enablement,
+    #present-source .present-p4-intro-stat,
+    #present-source .present-p4-toolkit-stat,
+    #present-source .present-p4-toolkit-enablement,
+    #present-source .present-evidence-line,
+    #present-source .present-org-decision {
       display: none;
     }
     .present-slide .lede--present-short,
@@ -781,7 +822,7 @@
       min-height: 0;
       height: 100%;
       align-items: center;
-      grid-template-columns: minmax(0, max-content) minmax(0, 1fr);
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
       gap: clamp(1rem, 2vw, var(--sp-xl));
     }
     .present-slide--p1-outcomes .period-split__visual {
@@ -852,6 +893,89 @@
         max-height: none;
         overflow: visible;
       }
+    }
+
+    .present-slide--p1-baseline .period-split__main {
+      --present-baseline-gap: clamp(0.38rem, 0.7vh, 0.55rem);
+      gap: var(--present-baseline-gap);
+    }
+    .present-slide--p1-baseline .period-split__main > * {
+      margin: 0;
+    }
+    .present-slide--p1-baseline .beat__subtitle {
+      margin-top: clamp(0.45rem, 1vh, 0.75rem);
+      margin-bottom: calc(-1 * clamp(0.1rem, 0.22vh, 0.18rem));
+      font-size: var(--present-eyebrow-size);
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--muted);
+      line-height: 1.25;
+      max-width: none;
+    }
+    .present-slide--p1-baseline .beat__text--problem {
+      display: block;
+      -webkit-line-clamp: unset;
+      overflow: visible;
+      font-size: var(--present-lede-size);
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.35;
+    }
+    .present-slide--p1-baseline .chip-row {
+      margin: 0;
+    }
+    .present-slide--p1-baseline .period-split__visual {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .present-slide--p1-baseline .period-split__visual img {
+      width: 100%;
+      max-height: min(58vh, 32rem);
+      object-fit: contain;
+      transform: scale(1.2);
+      transform-origin: center center;
+    }
+
+    /* Colour map — viewport split, centered visual */
+    .present-slide--p1-colour-map {
+      min-height: var(--present-vh);
+      max-height: var(--present-vh);
+      overflow: hidden;
+      padding-block: var(--present-top);
+      padding-inline: var(--present-inset);
+      padding-bottom: var(--present-bottom);
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+    }
+    .present-slide--p1-colour-map.period-split {
+      width: 100%;
+      min-height: 0;
+      height: 100%;
+      align-items: center;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: var(--present-split-gap);
+    }
+    .present-slide--p1-colour-map .period-split__visual {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+    }
+    .present-slide--p1-colour-map .period-split__visual img {
+      width: 100%;
+      max-height: min(62vh, 34rem);
+      object-fit: contain;
+    }
+    .present-slide--p1-colour-map .period-split__main {
+      min-height: 0;
+      max-height: calc(var(--present-vh) - var(--present-bottom) - var(--present-top));
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: var(--present-copy-gap);
     }
 
     .present-slide--gap-01,
@@ -1322,15 +1446,20 @@
       position: relative;
       display: block;
     }
+    .present-slide--p3-cura.beat--cura {
+      margin-top: -30px !important;
+    }
     #present-stage:has(.present-slide--p2-wow.is-active),
     #present-stage:has(.present-slide--p3-cura.is-active) {
       overflow: hidden;
       height: 100%;
     }
 
-    /* Filmstrip copy band — shared typography (WoW + Cura) */
+    /* Filmstrip copy band — shared typography + text position (WoW + Cura) */
     .present-slide--p2-wow,
     .present-slide--p3-cura {
+      --present-filmstrip-copy-lift: 15%;
+      --present-filmstrip-copy-band: calc(var(--present-bottom) + clamp(12rem, 38vh, 20rem));
       --present-filmstrip-title-size: clamp(calc(3.68rem / 2.25), calc(7.6vw / 2.25), calc(4.4rem / 2.25));
       --present-filmstrip-stat-size: clamp(calc(2.56rem / 2.25), calc(4.4vw / 2.25), calc(2.96rem / 2.25));
       --present-filmstrip-eyebrow-size: clamp(calc(2.56rem / 3.375), calc(4.4vw / 3.375), calc(2.96rem / 3.375));
@@ -1338,7 +1467,9 @@
 
     /* Ways of Working — edge-to-edge marquees, copy band pinned to bottom */
     .present-slide--p2-wow {
-      --wow-copy-band: calc(var(--present-bottom) + clamp(12rem, 38vh, 20rem));
+      --wow-copy-lift: var(--present-filmstrip-copy-lift);
+      --wow-copy-band: var(--present-filmstrip-copy-band);
+      --wow-carousel-lift: 15%;
     }
     .present-slide--p2-wow > .wow-beat {
       position: absolute;
@@ -1354,10 +1485,15 @@
     }
     .present-slide--p2-wow .wow-beat__carousel {
       position: absolute;
-      inset: 0 0 var(--wow-copy-band) 0;
+      z-index: 1;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: var(--wow-carousel-lift);
       width: 100%;
+      height: auto;
       margin: 0;
-      padding-block: clamp(0.3rem, 0.85vh, 0.55rem);
+      padding-block: 0;
       box-sizing: border-box;
       overflow: hidden;
       display: flex;
@@ -1366,8 +1502,12 @@
     }
     .present-slide--p2-wow .wow-beat__scrim {
       position: absolute;
-      inset: 0 0 var(--wow-copy-band) 0;
-      z-index: 1;
+      z-index: 2;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      top: auto;
+      height: 100%;
       pointer-events: none;
     }
     .present-slide--p2-wow .wow-beat__rows {
@@ -1377,7 +1517,8 @@
       min-height: 0;
       display: flex;
       flex-direction: column;
-      gap: clamp(0.2rem, 0.65vh, 0.45rem);
+      justify-content: flex-end;
+      gap: 10%;
     }
     .present-slide--p2-wow .wow-beat__row {
       flex: 1 1 0;
@@ -1428,8 +1569,8 @@
       position: absolute;
       left: 0;
       right: 0;
-      bottom: 0;
-      z-index: 2;
+      bottom: var(--wow-copy-lift);
+      z-index: 3;
       height: var(--wow-copy-band);
       max-width: none;
       width: 100%;
@@ -1437,6 +1578,9 @@
       padding: clamp(0.45rem, 1.2vh, 0.75rem) var(--present-inset);
       padding-bottom: var(--present-bottom);
       box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
       overflow: visible;
       opacity: 1 !important;
       transform: none !important;
@@ -1610,6 +1754,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      box-sizing: border-box;
     }
     .present-slide--p3-parity .mobile-journey__visual--compare img {
       width: 100%;
@@ -1621,9 +1766,9 @@
 
     /* Design vision — Cura filmstrip edge-to-edge in viewport */
     .present-slide--p3-cura {
-      --cura-copy-band: calc(var(--present-bottom) + clamp(12rem, 38vh, 20rem));
+      --cura-copy-band: var(--present-filmstrip-copy-band);
       --cura-filmstrip-top: 30%;
-      --cura-copy-lift: 15%;
+      --cura-copy-lift: var(--present-filmstrip-copy-lift);
     }
     .present-slide--p3-cura > .cura-beat {
       position: absolute;
@@ -1683,10 +1828,10 @@
     .present-slide--p3-cura .cura-filmstrip {
       position: absolute !important;
       z-index: 1;
-      top: var(--cura-filmstrip-top) !important;
+      top: auto !important;
       left: 0 !important;
       right: 0 !important;
-      bottom: calc(var(--cura-copy-band) + var(--cura-copy-lift)) !important;
+      bottom: 5% !important;
       width: 100%;
       max-width: none;
       min-height: var(--cura-slide-h);
@@ -1695,7 +1840,7 @@
       padding: 0;
       overflow: hidden;
       display: flex;
-      align-items: center;
+      align-items: flex-end;
       pointer-events: none;
     }
     .present-slide--p3-cura .cura-filmstrip__slide {
@@ -1821,6 +1966,16 @@
     .present-slide--p4-lab-tools .ai-tools-grid {
       align-self: center;
       width: 100%;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(0.5rem, 1vh, 0.85rem);
+    }
+    .present-slide--p4-lab-tools .ai-tools-grid__caption {
+      margin: clamp(0.25rem, 0.5vh, 0.4rem) 0 0;
+      font-size: clamp(0.72rem, 1.1vw, 0.82rem);
+      line-height: 1.35;
+      color: var(--muted);
+      text-align: center;
     }
     .present-slide--p4-lab-tools .ai-tools-grid__frame {
       cursor: pointer;
@@ -1858,19 +2013,51 @@
       font-family: var(--font-display);
       font-size: var(--present-display-size);
       font-weight: 600;
-      line-height: 1.26;
+      line-height: 1.22;
       letter-spacing: -0.02em;
       color: var(--ink);
     }
     .present-slide--p4-toolkit .ai-toolkit-copy {
       grid-column: 1;
+      --present-toolkit-gap: clamp(0.38rem, 0.7vh, 0.55rem);
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-self: center;
       min-width: 0;
       padding-right: 0;
-      gap: var(--present-copy-gap);
+      gap: var(--present-toolkit-gap);
+    }
+    .present-slide--p4-toolkit .ai-toolkit-copy > * {
+      margin: 0;
+    }
+    .present-slide--p4-toolkit .present-p4-toolkit-stat {
+      margin: 0;
+      font-size: var(--present-stat-size);
+      line-height: 1.35;
+      color: var(--good);
+    }
+    .present-slide--p4-toolkit .present-p4-toolkit-enablement {
+      margin: 0;
+      margin-top: clamp(0.45rem, 1vh, 0.75rem);
+      padding: clamp(0.55rem, 1.1vh, 0.75rem) clamp(0.65rem, 1.2vw, 0.9rem);
+      display: flex;
+      flex-direction: column;
+      gap: clamp(0.22rem, 0.45vh, 0.35rem);
+    }
+    .present-slide--p4-toolkit .present-p4-toolkit-enablement .enablement-label,
+    .present-slide--p4-toolkit .present-p4-toolkit-enablement .enablement-surface__title,
+    .present-slide--p4-toolkit .present-p4-toolkit-enablement .enablement-surface__stat {
+      margin: 0;
+    }
+    .present-slide--p4-toolkit .present-p4-toolkit-enablement .enablement-surface__title {
+      font-size: var(--present-lede-size);
+      line-height: 1.35;
+      max-width: none;
+    }
+    .present-slide--p4-toolkit .present-p4-toolkit-enablement .enablement-surface__stat {
+      font-size: var(--present-stat-size);
+      line-height: 1.3;
     }
     .present-slide--p4-toolkit .ai-toolkit-panel {
       grid-column: 2;
@@ -1898,6 +2085,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: flex-start;
+      gap: clamp(0.28rem, 0.55vh, 0.42rem);
       padding: clamp(0.7rem, 1.4vh, 1rem) clamp(0.65rem, 1.15vw, 0.9rem);
       min-height: clamp(4.5rem, 11vh, 6.25rem);
       height: 100%;
@@ -1905,7 +2093,7 @@
     .present-slide--p4-toolkit .ai-toolkit-card__icon-wrap {
       width: clamp(1.85rem, 3.2vw, 2.35rem);
       height: clamp(1.85rem, 3.2vw, 2.35rem);
-      margin-bottom: clamp(0.35rem, 0.75vh, 0.55rem);
+      margin: 0;
     }
     .present-slide--p4-toolkit .ai-toolkit-card__icon {
       width: clamp(1rem, 1.75vw, 1.25rem);
@@ -2002,6 +2190,7 @@
       height: 100%;
       max-height: min(calc(var(--present-vh) - var(--present-top) - var(--present-bottom)), 42rem);
       margin: 0;
+      transform: translateY(calc(var(--present-vh) * 0.05));
     }
     .present-slide--p4-coaching .present-coaching__visual img {
       width: auto;
@@ -2027,7 +2216,7 @@
     .present-slide--p4-coaching .ai-cadence-grid {
       flex: 0 0 auto;
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: clamp(0.5rem, 1vw, 0.75rem);
       align-items: stretch;
       min-height: 0;
@@ -2068,7 +2257,7 @@
         grid-row: 2;
       }
       .present-slide--p4-coaching .ai-cadence-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
 
@@ -2325,6 +2514,7 @@
     }
     .chapter-tabs { display: flex; align-items: center; gap: 0.35rem; overflow-x: auto; flex-shrink: 1; min-width: 0; }
     .chapter-tab {
+      position: relative;
       font-size: 0.75rem;
       font-weight: 700;
       border-radius: 999px;
@@ -2349,6 +2539,12 @@
         border-color 0.15s ease,
         color 0.15s ease;
       max-width: 2.35rem;
+    }
+    .chapter-tab:not([aria-current="true"])::before {
+      content: "";
+      position: absolute;
+      inset: -6px -4px;
+      border-radius: inherit;
     }
     .chapter-tab .ct-label,
     .chapter-tab .ct-dots { display: none; }
@@ -2511,8 +2707,9 @@
         </div>
         <div class="hero__brand-lockup">
           <img class="hero__title-logo" src="raisin-assets/assets/img/branding/raisin-logo-white.svg" alt="Raisin" width="908" height="211">
-          <h1 class="hero__title">Raisin is a European savings and investment marketplace — with ~€80bn in assets under management.</h1>
+          <h1 class="hero__title">Raisin was evolving its brand across product, mobile, and email — without an operating model to make that evolution stick.</h1>
         </div>
+        <p class="hero__sub hero__sub--thesis">Raisin is a European savings and investment marketplace — with ~€80bn in assets under management.</p>
         <p class="hero__sub">I lead B2C design in Growth &amp; Engagement — evolving Raisin’s brand across web and mobile, and the practice that makes multi-market change stick.</p>
       </div>
       <div class="hero-bento" aria-hidden="true" data-fm-widget="raisin-hero" data-fm-kind="hero">
@@ -2533,7 +2730,7 @@
     <h2 class="why-hero__statement">Raisin was evolving its brand across product, mobile, and email — without an operating model to make that evolution stick.</h2>
 
     <div class="why-proofs" data-fm-widget="raisin-why" data-fm-kind="why" data-fm-value="none">
-      <article class="why-proof why-proof--zoom reveal">
+      <article class="why-proof why-proof--zoom why-proof--crop-top reveal">
         <div class="why-proof__content">
           <p class="why-proof__num">Identified Gap 01</p>
           <h4 class="why-proof__title">A fragmented product experience</h4>
@@ -2580,13 +2777,11 @@
 <nav class="journey-nav" aria-label="Journey chapters">
   <button class="journey-nav__btn" data-period-link="journey-intro">Journey</button>
   <span class="journey-nav__sep">·</span>
-  <button class="journey-nav__btn" data-period-link="period-1"><span class="journey-nav__n">01</span> A home for their wealth</button>
+  <button class="journey-nav__btn" data-period-link="period-1"><span class="journey-nav__n">01</span> Wealth Hub</button>
   <span class="journey-nav__sep">·</span>
-  <button class="journey-nav__btn" data-period-link="period-2"><span class="journey-nav__n">02</span> Better product, Better process</button>
+  <button class="journey-nav__btn" data-period-link="period-3"><span class="journey-nav__n">02</span> Mobile</button>
   <span class="journey-nav__sep">·</span>
-  <button class="journey-nav__btn" data-period-link="period-3"><span class="journey-nav__n">03</span> Mobile and the horizon</button>
-  <span class="journey-nav__sep">·</span>
-  <button class="journey-nav__btn" data-period-link="period-4"><span class="journey-nav__n">04</span> Design × AI</button>
+  <button class="journey-nav__btn" data-period-link="period-4"><span class="journey-nav__n">03</span> Enablement</button>
   <span class="journey-nav__sep">·</span>
   <button class="journey-nav__btn" data-period-link="proof">Proof</button>
 </nav>
@@ -2614,7 +2809,7 @@
         <p class="track-key__text">Rituals, research OS, docs, tooling, coaching — I built; the org adopted.</p>
       </div>
     </div>
-    <p class="why-hero__body"><strong>Impact: NPS, task success, adoption, AuM, and retention all moved on the customer side — alongside research rituals, playbooks, AI workflows, and coaching the org adopted. Measured honestly in Proof; not everything lifted.</strong></p>
+    <p class="why-hero__body why-hero__body--present"><strong>Impact: NPS, task success, adoption, AuM, and retention all moved on the customer side — alongside research rituals, playbooks, AI workflows, and coaching the org adopted. Measured honestly in Proof; not everything lifted.</strong></p>
     <hr class="rule rule--thick" aria-hidden="true">
   </div>
 </section>
@@ -2632,7 +2827,7 @@
           </div>
         </div>
         <h2 class="h-display h-2 period__title">A home for their wealth</h2>
-        <p class="lede period__thesis period__thesis--present">Catalogue landing, not a home for wealth. Research → trade-offs → Wealth Hub MVP across 12 markets.</p>
+        <p class="lede period__thesis period__thesis--present">Catalogue landing, not a home for wealth. Foundation fix — not polish; returns cut from MVP scope.</p>
         <p class="lede period__thesis">The web dashboard still behaved like a product catalogue — deposits first, not the customer’s holdings. This chapter turns that surface into a single home for wealth across savings, investments, and retirement, and carries the new brand into a live, multi-market product.</p>
         <p class="period__role"><strong>I led</strong> Wealth Hub research, IA, and the design bets. <strong>We shipped</strong> MVP across 12 markets.</p>
       </div>
@@ -2681,6 +2876,7 @@
                 </div>
                 <p class="beat__subtitle">Customer problem</p>
                 <p class="beat__text beat__text--problem">A catalogue landing, not a home for their money. Savers couldn’t orient to what they held across savings, investments, and retirement.</p>
+                <p class="beat__text beat__text--present">Next: co-creation — turn scattered insights into one Wealth Hub concept.</p>
                 <p class="beat__needs"><strong>Orient</strong> — consolidated view across asset classes · <strong>Monitor</strong> — total wealth at a glance · <strong>Act</strong> — maturities and pending tasks surfaced</p>
               </div>
               <figure class="period-split__visual">
@@ -2707,6 +2903,7 @@
                   <span class="workflow-strip__arrow" aria-hidden="true">→</span>
                   <span class="workflow-strip__step">One concept</span>
                 </div>
+                <p class="beat__text beat__text--present">Two weeks — HMW statements, stakeholder workshops, one converged Wealth Hub concept.</p>
                 <p class="beat__text">We spent two weeks turning the research into How-Might-We statements. I then ran stakeholder workshops on shared boards — Head of Design, PM, Director, and designers from other tribes — everyone ideating against the same insights and data points, not opinion.</p>
                 <div class="research-stickies" aria-label="How-Might-We statements from the sprint">
                   <blockquote class="research-sticky">
@@ -2726,8 +2923,9 @@
             <div class="wealth-hub-beat reveal" aria-label="Trade-off 01 — user research, treemap vs donut">
               <div class="trade-off-switcher trade-off-switcher--split" data-trade-off-switcher data-trade-off-visual-only data-default="b" aria-label="Visualization trade-off — prototype compare">
                 <div class="trade-off-switcher__left">
-                  <p class="beat__eyebrow">Product design strategy · trade-off 01 · validated with customers</p>
+                  <p class="beat__eyebrow">TRADE-OFF · VALIDATED WITH CUSTOMERS · 12 PARTICIPANTS · DE + NL</p>
                   <h3 class="beat__title">User research · treemap vs donut — how much detail on landing?</h3>
+                  <p class="beat__text present-evidence-line"><strong>Evidence:</strong> Donut beat treemap — allocation legible at a glance; route into account actions.</p>
                   <p class="beat__text">Several landing decisions still needed customer evidence — not critique. I led Raisin’s first international study on allocation visualization: treemap vs donut.</p>
                   <p class="beat__stat">Sample set · 12 participants · 2 prototypes · PRE + POST-KYC · 🇩🇪 🇳🇱</p>
                   <div class="chip-row" aria-label="Sample set — Raisin B2C archetypes">
@@ -2834,8 +3032,9 @@
                   <p class="period-split__caption">Variation A explored in critique · B shipped — overview → asset class → bank</p>
                 </div>
                 <div class="trade-off-switcher__left">
-                  <p class="beat__eyebrow">Product design strategy · trade-off 02 · settled in design critique</p>
+                  <p class="beat__eyebrow">TRADE-OFF · DESIGN CRITIQUE · RESEARCH CASE PRESENTED INTERNALLY</p>
                   <h3 class="beat__title">Catalogue list vs asset-class hierarchy</h3>
+                  <p class="beat__text present-org-decision"><strong>Org decision:</strong> Hierarchy won — flat catalogue list rejected in critique.</p>
                   <p class="beat__text">Organisation was the call critique couldn’t settle. Engineering favoured a flat list to ship faster; I argued for hierarchy by what customers hold.</p>
                   <div class="trade-off trade-off--compact" aria-label="Trade-off — flat list vs hierarchy">
                     <p class="trade-off__label">Key trade-off</p>
@@ -2869,6 +3068,7 @@
               <div class="period-split__main">
                 <p class="beat__eyebrow">Wealth Hub · systems</p>
                 <h3 class="beat__title">A colour map for light, dark, and twelve markets.</h3>
+                <p class="beat__text beat__text--present">Distinct asset-class hues across 12 markets — one source for design, engineering, and markets.</p>
                 <p class="beat__text">The hierarchy needed a colour system, not just a layout. I gave each asset class a distinct, accessible identity across 12 markets and both themes — savings blue, investments amber, retirement green — with rules for savings-only markets, documented so design, engineering, and markets shipped from one source.</p>
                 <p class="beat__stat">12 markets · 3 market-type rules · light + dark token specs</p>
                 <aside class="enablement-callout enablement-surface beat__enablement" aria-label="Enablement — product colour map">
@@ -2908,6 +3108,11 @@
               <div class="period-split__main">
                 <p class="beat__eyebrow">After MVP launch · against targets declared before design</p>
                 <h3 class="beat__title">Both bets held at scale.</h3>
+                <div class="chip-row present-target-chips" aria-label="Success targets">
+                  <span class="chip">80% adoption · met at 3 months</span>
+                  <span class="chip">90% task completion · not measured pre-ship</span>
+                  <span class="chip">NPS +23 → +53 · 4 markets</span>
+                </div>
                 <p class="beat__text">Customers used Wealth Hub as a home for their wealth, not a product catalogue.</p>
                 <ul class="wealth-hub-constraints" aria-label="Constraints declared before design">
                   <li>Fixed API surface — design within existing endpoints, not a new data model</li>
@@ -2915,7 +3120,7 @@
                   <li>PRE + POST-KYC — one experience, two customer states</li>
                   <li>Success targets set before design — 80% adoption · 90% task completion · NPS</li>
                 </ul>
-                <p class="beat__caption">Brand Evolution survey · ~1,900 respondents · DE / NL / ES / PL</p>
+                <p class="beat__caption present-outcomes-chip">Brand Evolution survey · ~1,900 respondents · DE / NL / ES / PL</p>
                 <div class="wealth-hub-impact" aria-label="Measured against targets declared before design">
                   <div class="wealth-hub-impact__metrics">
                     <div class="wealth-hub-impact__item">
@@ -3263,7 +3468,7 @@
     <header class="period__head period__head--split period__head--split-start period__head--thick-rule reveal">
       <div class="period__head-copy">
         <div class="period__meta">
-          <span class="period__num">03</span>
+          <span class="period__num">02</span>
           <div class="chip-row">
             <span class="chip">B2C</span>
             <span class="chip">Growth tribe</span>
@@ -3366,7 +3571,7 @@
               <div class="device-story__copy">
                 <p class="device-story__eyebrow">Maze validation · Unmoderated study · Two-week</p>
                 <h4 class="device-story__title">Pressure-test the IA</h4>
-                <p class="device-story__text device-story__text--present">Tabbed IA won — <strong>92.9%</strong> vs <strong>71.4%</strong> task success. Open risk: pending products (<strong>42.9%</strong>).</p>
+                <p class="device-story__text device-story__text--present device-story__text--present-risk">Tabbed IA won — <strong>92.9%</strong> vs <strong>71.4%</strong> task success. Open risk: locating pending products — only <strong>42.9%</strong> success; flagged before ship.</p>
                 <p class="device-story__text">Two-week unmoderated study on the live prototype — portfolio-card vs tabbed IA. <strong>Research goal:</strong> confirm asset-on-platform Home improves wealth clarity, the Portfolio tab still works for owned products, and primary sections stay legible. Portfolio-card won — <strong>92.9%</strong> task success vs <strong>71.4%</strong>. Open risk: locating pending products <strong>42.9%</strong>.</p>
                 <aside class="enablement-callout enablement-surface beat__enablement" aria-label="Enablement — research operating model">
                   <p class="enablement-label">
@@ -3559,7 +3764,7 @@
     <header class="period__head period__head--split period__head--split-start period__head--thick-rule reveal">
       <div class="period__head-copy">
         <div class="period__meta">
-          <span class="period__num">04</span>
+          <span class="period__num">03</span>
           <div class="chip-row">
             <span class="chip">Design org</span>
             <span class="chip">1 of 4 AI Champions</span>
@@ -3608,6 +3813,16 @@
               <div class="ai-toolkit-copy">
                 <p class="ai-section-label">Design × Cursor toolkit</p>
                 <p class="ai-toolkit-intro">The programme was mostly coaching — the toolkit supported it.</p>
+                <p class="beat__stat present-p4-toolkit-stat">1 of 4 AI Champions · Kick-start Lab → Showcase + Clinic · 180 days</p>
+                <aside class="enablement-callout enablement-surface beat__enablement present-p4-toolkit-enablement" aria-label="Enablement — 180-day operating plan">
+                  <p class="enablement-label">
+                    <svg class="enablement-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                    Enablement
+                  </p>
+                  <p class="enablement-surface__title">Turned a VP mandate into design’s operating plan.</p>
+                  <p class="enablement-surface__text">Lab → Showcase → Clinic documented in Confluence. I championed design’s slice until the workflows stuck.</p>
+                  <p class="enablement-surface__stat">Confluence · 180-day plan · Showcase + Clinic</p>
+                </aside>
               </div>
               <div class="ai-toolkit-panel">
               <div class="ai-toolkit-grid reveal-stagger">
@@ -3670,25 +3885,25 @@
                   <div class="ai-tools-grid__frame">
                     <img src="raisin-assets/assets/img/ai-enablement/tool-1.webp" alt="Design QA tool — compare Figma and developed screens for visual drift" width="678" height="604" loading="lazy" data-lightbox>
                   </div>
-                  <figcaption class="period-split__caption">Design QA — Figma link + developed screen to catch visual drift</figcaption>
+                  <figcaption class="ai-tools-grid__caption">Design QA — Figma link + developed screen to catch visual drift</figcaption>
                 </figure>
                 <figure class="ai-tools-grid__item">
                   <div class="ai-tools-grid__frame">
                     <img src="raisin-assets/assets/img/ai-enablement/tool-2.webp" alt="Copywriting tool — Raisin writing principles applied from a Figma link" width="687" height="611" loading="lazy" data-lightbox>
                   </div>
-                  <figcaption class="period-split__caption">Copywriting — Raisin voice from a Figma link; suggests copy and replaces it in place</figcaption>
+                  <figcaption class="ai-tools-grid__caption">Copywriting — Raisin voice from a Figma link</figcaption>
                 </figure>
                 <figure class="ai-tools-grid__item">
                   <div class="ai-tools-grid__frame">
                     <img src="raisin-assets/assets/img/ai-enablement/tool-3.webp" alt="Raisin typography system for safe prototyping with premium fonts" width="687" height="611" loading="lazy" data-lightbox>
                   </div>
-                  <figcaption class="period-split__caption">Typography system — prototype safely with Raisin premium fonts</figcaption>
+                  <figcaption class="ai-tools-grid__caption">Typography — prototype safely with Raisin premium fonts</figcaption>
                 </figure>
                 <figure class="ai-tools-grid__item">
                   <div class="ai-tools-grid__frame">
                     <img src="raisin-assets/assets/img/ai-enablement/tool-4.webp" alt="Annotation tool — stakeholder comments on prototypes synced to GitLab issues" width="687" height="611" loading="lazy" data-lightbox>
                   </div>
-                  <figcaption class="period-split__caption">Annotation — stakeholder comments on prototypes, synced as GitLab issues</figcaption>
+                  <figcaption class="ai-tools-grid__caption">Annotation — comments synced as GitLab issues</figcaption>
                 </figure>
               </div>
             </div>
@@ -3724,6 +3939,11 @@
                   <h4 class="ai-cadence-card__title">Office hours</h4>
                   <p class="ai-cadence-card__text">Open troubleshooting for Cursor setup, prompts, and workflow questions.</p>
                 </li>
+                <li class="ai-cadence-card">
+                  <span class="ai-cadence-card__phase">MonoRepo</span>
+                  <h4 class="ai-cadence-card__title">Design → Storybook → MR</h4>
+                  <p class="ai-cadence-card__text">Enabled designers to contribute to the mono-repo — pipeline to Storybook, gradually moving to MR-based contribution.</p>
+                </li>
               </ol>
             </div>
 
@@ -3754,20 +3974,20 @@
       </div>
       <div class="metric-banner metric-banner--4 reveal-stagger">
         <div class="metric-banner__item">
-          <div class="metric-banner__value mono-stat"><span data-prefix="+" data-count="41" data-suffix=" avg">0</span></div>
-          <div class="metric-banner__label metric-banner__label--wide">Design NPS increase — measured in DE, NL, ES, PL · launched across 12 markets · loyalty held</div>
+          <div class="metric-banner__value mono-stat metric-banner__value--text">+23 → +53</div>
+          <div class="metric-banner__label metric-banner__label--wide">Design NPS increase — measured in DE, NL, ES, PL · launched across 12 markets</div>
         </div>
         <div class="metric-banner__item">
-          <div class="metric-banner__value mono-stat metric-banner__value--text">Led adoption</div>
-          <div class="metric-banner__label metric-banner__label--wide">Post-MVP dashboard filtering — all-deposits view drove uptake</div>
+          <div class="metric-banner__value mono-stat metric-banner__value--text">80% adoption</div>
+          <div class="metric-banner__label metric-banner__label--wide">Post-MVP dashboard filtering — met at 3 months · all-deposits view drove uptake</div>
         </div>
         <div class="metric-banner__item">
-          <div class="metric-banner__value mono-stat metric-banner__value--text">80%+ · 92.9%</div>
-          <div class="metric-banner__label metric-banner__label--wide">Web and mobile task success — hierarchy research · winning mobile IA</div>
+          <div class="metric-banner__value mono-stat metric-banner__value--text">92.9%</div>
+          <div class="metric-banner__label metric-banner__label--wide">Mobile task success — Maze-validated IA · shipping now</div>
         </div>
         <div class="metric-banner__item">
-          <div class="metric-banner__value mono-stat metric-banner__value--text">Positive impact</div>
-          <div class="metric-banner__label metric-banner__label--wide">AuM, adoption &amp; retention — positive post-launch impact (details not disclosed)</div>
+          <div class="metric-banner__value mono-stat metric-banner__value--text">72–87%</div>
+          <div class="metric-banner__label metric-banner__label--wide">Agree they can better understand and manage their wealth — Brand Evolution survey</div>
         </div>
       </div>
     </div>
@@ -3785,19 +4005,19 @@
       </div>
       <div class="metric-banner metric-banner--4 reveal-stagger">
         <div class="metric-banner__item">
-          <div class="metric-banner__value mono-stat"><span data-count="30" data-suffix="%">0</span> faster</div>
+          <div class="metric-banner__value mono-stat metric-banner__value--text">30% faster</div>
           <div class="metric-banner__label metric-banner__label--wide">Ticket closure 10d → 7d · 60–70% automatable-work diagnosis · 4 tools in daily production</div>
         </div>
         <div class="metric-banner__item">
-          <div class="metric-banner__value mono-stat"><span data-count="8">0</span> designers</div>
+          <div class="metric-banner__value mono-stat metric-banner__value--text">8 designers</div>
           <div class="metric-banner__label metric-banner__label--wide">Coached 1:1 on AI workflows — foundations first, then autonomy on live work</div>
         </div>
         <div class="metric-banner__item">
-          <div class="metric-banner__value mono-stat"><span data-count="4">0</span> playbooks</div>
-          <div class="metric-banner__label">Design critique, ways of working, product semantics, and the research operating model — all still in use</div>
+          <div class="metric-banner__value mono-stat metric-banner__value--text">4 playbooks</div>
+          <div class="metric-banner__label metric-banner__label--wide">Design critique, ways of working, product semantics, and the research operating model — all still in use</div>
         </div>
         <div class="metric-banner__item">
-          <div class="metric-banner__value mono-stat">Hiring panel</div>
+          <div class="metric-banner__value mono-stat metric-banner__value--text">Hiring panel</div>
           <div class="metric-banner__label metric-banner__label--wide">Director of Design and +1 Product Designer hiring — interviews, product case, final hire decision</div>
         </div>
       </div>
@@ -3836,9 +4056,7 @@
 <section class="present-thanks present-beat-thanks" id="present-beat-thanks" aria-label="Thanks">
   <div class="present-thanks__inner">
     <p class="present-thanks__fin">Fin</p>
-    <h2 class="present-thanks__title">Thanks for <span class="present-thanks__hl">watching</span>.</h2>
-    <p class="present-thanks__lede">Thanks for your time — whether you explored this on your own or we went through it together. I'd love to connect.</p>
-    <p class="present-thanks__contact">Say hi 👋 — <a href="#" id="footer-contact-trigger">💬 chat with me</a>, <a href="https://twitter.com/intent/tweet?screen_name=vipulsaxena_fc" target="_blank" rel="noopener">tweet me</a>, or send an old-fashioned <a href="mailto:vipul.saxena01@gmail.com">email</a>.</p>
+    <h2 class="present-thanks__title">Thanks for watching.</h2>
     <div class="present-thanks__actions">
       <a class="present-thanks__btn" href="raisin.html">← Web mode</a>
       <a class="present-thanks__btn" href="index.html">Back to home</a>
@@ -3854,7 +4072,7 @@
   <div class="shell-inner shell-bar">
   <div class="chapter-tabs" id="chapters" aria-label="Chapters"></div>
   <div class="ctrl-end">
-    <span class="counter"><span id="curNum">01</span> <span class="sep">/</span> <span id="totNum">25</span></span>
+    <span class="counter"><span id="curNum">01</span> <span class="sep">/</span> <span id="totNum">26</span></span>
     <button type="button" class="nav-btn" data-prev aria-label="Previous slide">←</button>
     <button type="button" class="nav-btn" data-next aria-label="Next slide">→</button>
     <a href="raisin.html" class="nav-btn nav-btn--text is-hidden" id="backToCase" aria-label="Back to case study">Back to case study</a>

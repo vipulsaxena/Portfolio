@@ -176,8 +176,8 @@
       "xlink:href": mapUrl,
       x: "0",
       y: "0",
-      width: String(DISP_MAP_PX),
-      height: String(DISP_MAP_PX),
+      width: String(CURSOR_LENS_PX),
+      height: String(CURSOR_LENS_PX),
       preserveAspectRatio: "none",
       result: "dispMap"
     });
