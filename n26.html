@@ -65,7 +65,7 @@
 
     <!-- Deck styles Tailwind can't express cleanly (fixed viewport, track, transitions) -->
     <style type="text/css">
-      :root{ --deck-top:3.5rem; --ink:#262626; --muted:#6e6e6e; --line:#e7e7e7; --accent:#ffda08; }
+      :root{ --deck-top:3.5rem; --present-inset:clamp(1.25rem,4vw,3rem); --present-top:clamp(1rem,2.5vw,2rem); --present-bottom:8%; --ink:#262626; --muted:#6e6e6e; --line:#e7e7e7; --accent:#ffda08; }
       html,body{ height:100%; }
       body{ background:#ffffff; font-family:"Inter", system-ui, sans-serif; overflow:hidden; }
 
@@ -102,9 +102,34 @@
         display:flex; flex-direction:column; position:relative;
       }
       .slide-inner{
-        margin:0 auto; width:100%; max-width:80rem;
-        padding:clamp(1.5rem,4vw,4rem) clamp(1.25rem,5vw,4rem);
+        margin:0 auto; width:100%; max-width:100%;
+        padding-top:var(--present-top);
+        padding-inline:var(--present-inset);
+        padding-bottom:var(--present-bottom);
         flex:1 1 auto; display:flex; flex-direction:column; justify-content:center;
+        box-sizing:border-box;
+      }
+      .slide-inner.top{ justify-content:flex-start; }
+      .slide-inner.is-split{
+        max-width:100%;
+        padding:0;
+      }
+      .deck-split-grid{ width:100%; }
+      .deck-split-copy{
+        min-width:0;
+        width:100%;
+        box-sizing:border-box;
+      }
+      .slide-inner.is-split .deck-split-copy{
+        padding-top:var(--present-top);
+        padding-inline:var(--present-inset);
+        padding-bottom:var(--present-bottom);
+      }
+      .deck-split-copy :is(p, h1, h2, h3, h4, blockquote, figcaption, ul, ol){
+        max-width:100%;
+      }
+      .deck-split-copy > :is(div, figure){
+        max-width:100%;
       }
 
       /* Per-slide reveal: children fade-up only while the slide is active */
@@ -131,6 +156,46 @@
       /* Minimal iPhone mock for recorded prototypes */
       .phone-mock{ position:relative; width:100%; max-width:260px; margin-inline:auto; padding:5px; background:#1c1c1e; border-radius:2rem; box-shadow:0 16px 38px -22px rgba(0,0,0,.45); }
       .phone-mock video, .phone-mock img{ display:block; width:100%; height:auto; border-radius:1.6rem; background:#000; }
+
+      /* Three hypotheses — side-by-side concept cards */
+      .slide-n26-hypo .n26-hypo-head{ margin-bottom:clamp(.65rem,1.2vw,1rem); }
+      .n26-hypo-grid{
+        display:grid; grid-template-columns:1fr; gap:1rem;
+        width:100%; flex:1 1 auto; min-height:0; align-content:start;
+      }
+      @media (min-width:1024px){
+        .n26-hypo-grid{
+          grid-template-columns:repeat(3,minmax(0,1fr));
+          gap:clamp(.65rem,1.2vw,1rem);
+          align-items:stretch;
+        }
+      }
+      .n26-hypo-card{
+        display:flex; flex-direction:column; min-width:0; min-height:0;
+        background:#fff; border:1px solid #e7e7e7; border-radius:1rem;
+        padding:clamp(.65rem,1.2vw,1rem);
+      }
+      .n26-hypo-card__media{
+        flex:0 0 auto; display:flex; justify-content:center; padding-bottom:.5rem;
+      }
+      @media (min-width:1024px){
+        .n26-hypo-card__media .phone-mock{ max-width:min(100%,11.25rem); }
+      }
+      .n26-hypo-card__body{
+        flex:1 1 auto; min-width:0; display:flex; flex-direction:column; gap:.35rem;
+      }
+      .n26-hypo-card__label{
+        font-size:.65rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#6e6e6e;
+      }
+      .n26-hypo-card__title{
+        font-size:clamp(.95rem,1.05vw,1.1rem); font-weight:800; letter-spacing:-.02em; line-height:1.25;
+      }
+      .n26-hypo-card__p{
+        font-size:.78rem; line-height:1.45; color:#6e6e6e; margin:0; flex:1 1 auto;
+      }
+      .n26-hypo-card [data-replay]{
+        margin-top:auto; align-self:flex-start; font-size:.72rem; padding:.35rem .7rem;
+      }
 
       /* Eyebrow chip (design timeline / sprint labels from Figma) */
       .chip{ display:inline-flex; align-items:center; gap:.4rem; font-size:.75rem; font-weight:700;
@@ -217,20 +282,9 @@
       #lightbox.open{ display:flex; }
       #lightbox img{ max-width:100%; max-height:90vh; border-radius:.75rem; box-shadow:0 24px 60px -20px rgba(0,0,0,.35); }
 
-      .slide-inner.top{ justify-content:flex-start; padding-top:clamp(1rem,3vh,2rem); }
-      .slide-scroll > .slide-inner{ justify-content:flex-start; padding-bottom:calc(5rem + env(safe-area-inset-bottom, 0px)); }
-      /* Vertically center slide content (equal space above/below) */
-      .slide.is-vcenter > .slide-inner{
-        justify-content:center;
-        padding-top:clamp(1.5rem,4vw,4rem);
-        padding-bottom:calc(5rem + env(safe-area-inset-bottom, 0px));
-      }
-      /* Workshop overlays — pin card to bottom with equal spacing above control bar */
-      .slide.is-vbottom > .slide-inner{
-        justify-content:flex-end;
-        padding-top:clamp(1.5rem,4vw,4rem);
-        padding-bottom:calc(5rem + env(safe-area-inset-bottom, 0px));
-      }
+      .slide-scroll > .slide-inner{ justify-content:flex-start; }
+      .slide.is-vcenter > .slide-inner{ justify-content:center; }
+      .slide.is-vbottom > .slide-inner{ justify-content:flex-end; }
 
       /* Mobile + tablet — desktop (1024px+) unchanged */
       @media (max-width: 1023px) {
@@ -238,7 +292,7 @@
         .slide.is-vcenter > .slide-inner { justify-content: center; }
         .slide.is-vbottom > .slide-inner { justify-content: flex-end; }
         .slide-scroll > .slide-inner,
-        .slide-inner.top { padding-bottom: calc(5rem + env(safe-area-inset-bottom, 0px)); }
+        .slide-inner.top { justify-content: flex-start; }
         .slide-bleed { overflow-x: hidden; overflow-y: auto; }
         .slide-workshop { overflow-x: hidden; overflow-y: auto; }
         .slide-workshop > img[data-lightbox] { pointer-events: auto; }
@@ -390,9 +444,9 @@
 
     <!-- ===== SLIDE 01 · What is N26? (Cover + Highlights-1) ===== -->
     <section class="slide slide-scroll is-active bg-elev" data-chapter="case-study" data-title="What is N26?" data-home-slide>
-      <div class="slide-inner" style="padding-bottom:calc(4rem + env(safe-area-inset-bottom, 0px))">
+      <div class="slide-inner top is-split">
         <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-stretch lg:h-full deck-split-grid">
-          <div class="flex flex-col justify-center">
+          <div class="flex flex-col justify-center deck-split-copy">
             <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Fintech · N26 · March 2022</p>
             <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-6 max-w-[14ch]" data-anim style="--i:1">What is <span class="hl">N26</span>?</h1>
             <p class="text-ink text-lg md:text-xl leading-relaxed max-w-[46ch] mb-6" data-anim style="--i:2">
@@ -415,9 +469,9 @@
 
     <!-- ===== SLIDE 02 · What I did at N26? (Highlights-2) ===== -->
     <section class="slide slide-scroll is-vcenter" data-chapter="case-study" data-title="What I did at N26" data-home-slide>
-      <div class="slide-inner">
+      <div class="slide-inner top is-split">
         <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center deck-split-grid">
-          <div>
+          <div class="flex flex-col justify-center deck-split-copy">
             <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">N26 Highlights</p>
             <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-6 max-w-[18ch]" data-anim style="--i:1">What I did at N26</h2>
             <nav class="crumb mb-8" aria-label="Team placement" data-anim style="--i:2">
@@ -445,9 +499,9 @@
 
     <!-- ===== SLIDE 04 · Case study cover · Multi-activity Feed (CS-1) ===== -->
     <section class="slide slide-scroll is-vcenter bg-[#F1E0CA] text-accink" data-chapter="case-study" data-title="Case study · Multi-activity Feed">
-      <div class="slide-inner">
+      <div class="slide-inner top is-split">
         <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-end deck-split-grid">
-          <div>
+          <div class="flex flex-col justify-center deck-split-copy">
             <h2 class="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.08] max-w-[16ch]" data-anim style="--i:0">Multi-activity Feed</h2>
             <p class="mt-6 text-xl md:text-2xl font-semibold max-w-[40ch]" data-anim style="--i:2">Evolving the Main Account Feed into an All-Activity Feed.</p>
             <p class="mt-6 text-accink/80 text-lg leading-relaxed max-w-[60ch]" data-anim style="--i:3">
@@ -475,9 +529,9 @@
 
     <!-- ===== SLIDE 07 · The Problem (CS-2) ===== -->
     <section class="slide slide-scroll is-vcenter" data-chapter="case-study" data-title="The Problem">
-      <div class="slide-inner">
+      <div class="slide-inner top is-split">
         <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center deck-split-grid">
-          <div>
+          <div class="flex flex-col justify-center deck-split-copy">
             <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">The Problem</p>
             <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-6 max-w-[18ch] leading-[1.1]" data-anim style="--i:1">
               Spending in Spaces was <span class="hl">invisible</span> on the Feed
@@ -504,7 +558,7 @@
           How might we help users who have a Space with IBAN <span class="hl">view the activity on their home-feed, at a glance</span>?
         </h2>
         <div class="grid lg:grid-cols-[1fr_1.2fr] gap-8 lg:gap-16 items-start deck-split-grid">
-          <div>
+          <div class="deck-split-copy">
             <div class="inline-block bg-accent text-accink font-bold rounded-xl px-4 py-2 mb-6 -rotate-2 shadow-md" data-anim style="--i:2">🍋 Prioritised bet</div>
             <p class="text-ink text-lg md:text-xl font-semibold leading-snug max-w-[42ch] mb-8" data-anim style="--i:3">
               Provide a Feed experience with <span class="tip" tabindex="0" data-tip="Updates &amp; actions on the latest big transactions, security alerts, etc.">relevant</span> information <span class="tip" tabindex="0" data-tip="Overviews in a digestible manner; easily identify any aspect that needs attention.">at a glance</span> that enables <span class="tip" tabindex="0" data-tip="Actionable; show &amp; hide based on relevancy; customise notifications &amp; updates.">confident decision making</span> and creates <span class="tip" tabindex="0" data-tip="Avoiding negative figures or surprises.">peace of mind</span>.
@@ -528,7 +582,7 @@
 
     <!-- ===== SLIDE 09 · Six customer interviews (CS-4) ===== -->
     <section class="slide slide-scroll bg-elev" data-chapter="case-study" data-title="Six customer interviews">
-      <div class="slide-inner" style="justify-content:flex-start; padding-top:clamp(0.75rem,2vh,1.5rem); padding-bottom:calc(4.75rem + env(safe-area-inset-bottom,0px))">
+      <div class="slide-inner top">
         <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-2" data-anim style="--i:0">Discovery · Research</p>
         <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight mb-2 max-w-[32ch]" data-anim style="--i:1">
           We ran <span class="hl">six customer interviews</span> to learn more about user needs
@@ -615,57 +669,63 @@
     </section>
 
     <!-- ===== SLIDE 12 · Three hypotheses (CS-7) ===== -->
-    <section class="slide slide-scroll bg-elev" data-chapter="case-study" data-title="Three hypotheses">
-      <div class="slide-inner" style="justify-content:flex-start;padding-bottom:calc(5rem + env(safe-area-inset-bottom, 0px))">
+    <section class="slide slide-scroll bg-elev slide-n26-hypo" data-chapter="case-study" data-title="Three hypotheses">
+      <div class="slide-inner top">
         <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Concepts</p>
-        <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-8 w-full" data-anim style="--i:1">Designed three possible hypotheses</h2>
-        <div class="space-y-6">
-          <div class="bg-card border border-line rounded-2xl p-6 md:p-8 grid lg:grid-cols-[260px_1fr] gap-6 lg:gap-10 items-center" data-anim style="--i:2">
-            <div class="phone-mock">
-              <video data-autoplay muted playsinline preload="metadata" poster="assets/n26/hyp-1.png" aria-label="Concept A — All Accounts view prototype recording">
-                <source src="assets/n26/hyp1.mov" type="video/mp4">
-              </video>
+        <h2 class="n26-hypo-head text-2xl md:text-3xl font-extrabold tracking-tight w-full" data-anim style="--i:1">Designed three possible hypotheses</h2>
+        <div class="n26-hypo-grid">
+          <article class="n26-hypo-card" data-anim style="--i:2">
+            <div class="n26-hypo-card__media">
+              <div class="phone-mock">
+                <video data-autoplay muted playsinline preload="metadata" poster="assets/n26/hyp-1.png" aria-label="Concept A — All Accounts view prototype recording">
+                  <source src="assets/n26/hyp1.mov" type="video/mp4">
+                </video>
+              </div>
             </div>
-            <div>
-              <p class="text-xs font-bold uppercase tracking-[0.16em] text-mute mb-1">Concept A</p>
-              <p class="font-bold text-xl md:text-2xl mb-3">All Accounts view</p>
-              <p class="text-mute leading-relaxed max-w-[60ch] mb-4">Seeing all accounts together gives a better overview. Switching between accounts increases mental load. Quick actions are tied to the main account.</p>
-              <button type="button" data-replay class="inline-flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-full bg-elev border border-line text-ink hover:border-accent hover:bg-[#fff3b0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors"><span aria-hidden="true">↻</span> Play again</button>
+            <div class="n26-hypo-card__body">
+              <p class="n26-hypo-card__label">Concept A</p>
+              <p class="n26-hypo-card__title">All Accounts view</p>
+              <p class="n26-hypo-card__p">Seeing all accounts together gives a better overview. Switching between accounts increases mental load. Quick actions are tied to the main account.</p>
+              <button type="button" data-replay class="inline-flex items-center gap-2 font-semibold rounded-full bg-elev border border-line text-ink hover:border-accent hover:bg-[#fff3b0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors"><span aria-hidden="true">↻</span> Play again</button>
             </div>
-          </div>
-          <div class="bg-card border border-line rounded-2xl p-6 md:p-8 grid lg:grid-cols-[260px_1fr] gap-6 lg:gap-10 items-center" data-anim style="--i:3">
-            <div class="phone-mock">
-              <video data-autoplay muted playsinline preload="metadata" poster="assets/n26/hyp3.png" aria-label="Concept B — Multi-select Accounts prototype recording">
-                <source src="assets/n26/hyp2.mov" type="video/mp4">
-              </video>
+          </article>
+          <article class="n26-hypo-card" data-anim style="--i:3">
+            <div class="n26-hypo-card__media">
+              <div class="phone-mock">
+                <video data-autoplay muted playsinline preload="metadata" poster="assets/n26/hyp3.png" aria-label="Concept B — Multi-select Accounts prototype recording">
+                  <source src="assets/n26/hyp2.mov" type="video/mp4">
+                </video>
+              </div>
             </div>
-            <div>
-              <p class="text-xs font-bold uppercase tracking-[0.16em] text-mute mb-1">Concept B</p>
-              <p class="font-bold text-xl md:text-2xl mb-3">Multi-select Accounts</p>
-              <p class="text-mute leading-relaxed max-w-[60ch] mb-4">Filtering between Main account and Spaces with available-balance information gives users a complete overview of their finances.</p>
-              <button type="button" data-replay class="inline-flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-full bg-elev border border-line text-ink hover:border-accent hover:bg-[#fff3b0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors"><span aria-hidden="true">↻</span> Play again</button>
+            <div class="n26-hypo-card__body">
+              <p class="n26-hypo-card__label">Concept B</p>
+              <p class="n26-hypo-card__title">Multi-select Accounts</p>
+              <p class="n26-hypo-card__p">Filtering between Main account and Spaces with available-balance information gives users a complete overview of their finances.</p>
+              <button type="button" data-replay class="inline-flex items-center gap-2 font-semibold rounded-full bg-elev border border-line text-ink hover:border-accent hover:bg-[#fff3b0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors"><span aria-hidden="true">↻</span> Play again</button>
             </div>
-          </div>
-          <div class="bg-card border border-line rounded-2xl p-6 md:p-8 grid lg:grid-cols-[260px_1fr] gap-6 lg:gap-10 items-center" data-anim style="--i:4">
-            <div class="phone-mock">
-              <video data-autoplay muted playsinline preload="metadata" poster="assets/n26/hyp-3.png" aria-label="Concept C — Switch between accounts prototype recording">
-                <source src="assets/n26/hyp3.mov" type="video/mp4">
-              </video>
+          </article>
+          <article class="n26-hypo-card" data-anim style="--i:4">
+            <div class="n26-hypo-card__media">
+              <div class="phone-mock">
+                <video data-autoplay muted playsinline preload="metadata" poster="assets/n26/hyp-3.png" aria-label="Concept C — Switch between accounts prototype recording">
+                  <source src="assets/n26/hyp3.mov" type="video/mp4">
+                </video>
+              </div>
             </div>
-            <div>
-              <p class="text-xs font-bold uppercase tracking-[0.16em] text-mute mb-1">Concept C</p>
-              <p class="font-bold text-xl md:text-2xl mb-3">Switch between accounts</p>
-              <p class="text-mute leading-relaxed max-w-[60ch] mb-4">See all accounts at once or one at a time — a simplified experience with a sense of control. Quick actions change with the selected account.</p>
-              <button type="button" data-replay class="inline-flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-full bg-elev border border-line text-ink hover:border-accent hover:bg-[#fff3b0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors"><span aria-hidden="true">↻</span> Play again</button>
+            <div class="n26-hypo-card__body">
+              <p class="n26-hypo-card__label">Concept C</p>
+              <p class="n26-hypo-card__title">Switch between accounts</p>
+              <p class="n26-hypo-card__p">See all accounts at once or one at a time — a simplified experience with a sense of control. Quick actions change with the selected account.</p>
+              <button type="button" data-replay class="inline-flex items-center gap-2 font-semibold rounded-full bg-elev border border-line text-ink hover:border-accent hover:bg-[#fff3b0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition-colors"><span aria-hidden="true">↻</span> Play again</button>
             </div>
-          </div>
+          </article>
         </div>
       </div>
     </section>
 
     <!-- ===== SLIDE 13 · Usability test · 8 customers (CS-8) ===== -->
     <section class="slide slide-scroll" data-chapter="case-study" data-title="Usability test · 8 customers">
-      <div class="slide-inner" style="justify-content:flex-start;padding-bottom:calc(5rem + env(safe-area-inset-bottom, 0px))">
+      <div class="slide-inner top">
         <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Validation</p>
         <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-8 max-w-[26ch]" data-anim style="--i:1">
           Tested the concepts for usability with <span class="hl">8 customers</span>
@@ -726,11 +786,11 @@
 
     <!-- ===== SLIDE 15 · Launch to learn + Next Steps (merged CS-10 + CS-11) ===== -->
     <section class="slide slide-scroll is-vcenter" data-chapter="case-study" data-title="Launch to learn 🚀">
-      <div class="slide-inner">
+      <div class="slide-inner top is-split">
         <div class="grid lg:grid-cols-2 gap-8 lg:gap-14 items-center deck-split-grid">
 
           <!-- Content -->
-          <div>
+          <div class="deck-split-copy">
             <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-3" data-anim style="--i:0">Outcome</p>
             <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4" data-anim style="--i:1">Launch to learn 🚀</h2>
             <p class="text-mute leading-relaxed max-w-[52ch] mb-5" data-anim style="--i:2">
@@ -810,9 +870,9 @@
 
     <!-- HIGHLIGHT · MoneyBeam Reactions -->
     <section class="slide slide-scroll is-vcenter bg-elev" data-chapter="highlights" data-title="Highlight · MoneyBeam Reactions">
-      <div class="slide-inner">
+      <div class="slide-inner top is-split">
         <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center deck-split-grid">
-          <div>
+          <div class="flex flex-col justify-center deck-split-copy">
             <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Highlight</p>
             <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4 max-w-[16ch]" data-anim style="--i:1">MoneyBeam Reactions</h2>
             <p class="mb-6" data-anim style="--i:2"><span class="chip">⚡ 1 week Hack-a-thon · On Production</span></p>
@@ -833,9 +893,9 @@
 
     <!-- HIGHLIGHT · Feed ↔ Crypto -->
     <section class="slide slide-scroll is-vcenter" data-chapter="highlights" data-title="Highlight · Feed ↔ Crypto">
-      <div class="slide-inner">
+      <div class="slide-inner top is-split">
         <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center deck-split-grid">
-          <div>
+          <div class="flex flex-col justify-center deck-split-copy">
             <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Highlight</p>
             <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4 max-w-[14ch]" data-anim style="--i:1">Feed <span class="hl">↔</span> Crypto</h2>
             <p class="mb-6" data-anim style="--i:2"><span class="chip">🗓️ 2 week design sprint · On Production</span></p>
@@ -861,7 +921,7 @@
         <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4 max-w-[20ch]" data-anim style="--i:1">Search filters & suggestions</h2>
         <p class="mb-8" data-anim style="--i:2"><span class="chip">🗓️ 4 week design sprint · On Production</span></p>
         <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-start deck-split-grid">
-          <div>
+          <div class="deck-split-copy">
             <p class="text-ink text-lg leading-relaxed max-w-[46ch] mb-8" data-anim style="--i:3">
               Improve the search experience to help users find relevant transactions with suggestions, filters, and tags — across both the mobile app and WebApp.
             </p>
@@ -1170,7 +1230,7 @@
 
   document.querySelectorAll('[data-replay]').forEach(function(btn){
     btn.addEventListener('click', function(){
-      var card = btn.closest('.grid');
+      var card = btn.closest('.n26-hypo-card') || btn.closest('.grid');
       var v = card && card.querySelector('video');
       if(!v) return;
       v.currentTime = 0;

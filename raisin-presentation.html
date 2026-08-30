@@ -2060,49 +2060,63 @@
       line-height: 1.3;
     }
     .present-slide--p4-toolkit .ai-toolkit-panel {
+      --present-toolkit-card-size: clamp(4.85rem, 9.5vw, 6.35rem);
       grid-column: 2;
       display: flex;
       flex-direction: column;
       justify-content: center;
+      align-items: center;
       gap: clamp(0.45rem, 0.9vh, 0.65rem);
-      align-self: stretch;
+      align-self: center;
       min-width: 0;
-      min-height: 0;
-      height: min(72vh, calc(var(--present-vh) - var(--present-top) - var(--present-bottom)));
+      width: 100%;
+      height: auto;
+      margin: clamp(0.35rem, 0.75vh, 0.65rem);
+      padding: clamp(0.45rem, 0.9vh, 0.7rem);
+      box-sizing: border-box;
     }
     .present-slide--p4-toolkit .ai-toolkit-grid {
-      flex: 1 1 auto;
+      flex: 0 0 auto;
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      grid-template-rows: repeat(2, minmax(0, 1fr));
-      gap: clamp(0.55rem, 1.1vw, 0.85rem);
-      align-content: stretch;
-      min-height: 0;
-      height: 100%;
+      grid-template-columns: repeat(3, var(--present-toolkit-card-size));
+      grid-template-rows: repeat(2, var(--present-toolkit-card-size));
+      gap: clamp(0.5rem, 1vw, 0.75rem);
+      width: fit-content;
+      max-width: 100%;
+      height: auto;
+      margin: 0 auto;
+      align-content: center;
+      justify-content: center;
     }
     .present-slide--p4-toolkit .ai-toolkit-card {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      align-items: flex-start;
+      align-items: center;
       gap: clamp(0.28rem, 0.55vh, 0.42rem);
-      padding: clamp(0.7rem, 1.4vh, 1rem) clamp(0.65rem, 1.15vw, 0.9rem);
-      min-height: clamp(4.5rem, 11vh, 6.25rem);
+      width: 100%;
       height: 100%;
+      min-width: 0;
+      min-height: 0;
+      padding: clamp(0.55rem, 1.05vh, 0.8rem);
+      box-sizing: border-box;
+      text-align: center;
     }
     .present-slide--p4-toolkit .ai-toolkit-card__icon-wrap {
       width: clamp(1.85rem, 3.2vw, 2.35rem);
       height: clamp(1.85rem, 3.2vw, 2.35rem);
       margin: 0;
+      flex-shrink: 0;
     }
     .present-slide--p4-toolkit .ai-toolkit-card__icon {
       width: clamp(1rem, 1.75vw, 1.25rem);
       height: clamp(1rem, 1.75vw, 1.25rem);
     }
     .present-slide--p4-toolkit .ai-toolkit-card__index {
-      font-size: var(--present-card-title-size);
+      font-size: clamp(0.72rem, 1.15vw, 0.88rem);
       margin: 0;
       line-height: 1.2;
+      max-width: 100%;
     }
     .present-slide--p4-toolkit .ai-toolkit-grid__note {
       flex: 0 0 auto;
@@ -2120,10 +2134,11 @@
       }
       .present-slide--p4-toolkit .ai-toolkit-panel {
         height: auto;
+        margin-inline: auto;
       }
       .present-slide--p4-toolkit .ai-toolkit-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        grid-template-rows: auto;
+        grid-template-columns: repeat(2, var(--present-toolkit-card-size));
+        grid-template-rows: repeat(3, var(--present-toolkit-card-size));
         height: auto;
       }
     }

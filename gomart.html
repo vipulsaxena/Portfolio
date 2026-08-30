@@ -66,7 +66,7 @@
 
     <!-- Deck styles Tailwind can't express cleanly (fixed viewport, track, transitions) -->
     <style type="text/css">
-      :root{ --deck-top:3.5rem; --ink:#262626; --muted:#6e6e6e; --line:#e7e7e7; --accent:#ffda08; --gomart:#FFDCDE; }
+      :root{ --deck-top:3.5rem; --present-inset:clamp(1.25rem,4vw,3rem); --present-top:clamp(1rem,2.5vw,2rem); --present-bottom:8%; --ink:#262626; --muted:#6e6e6e; --line:#e7e7e7; --accent:#ffda08; --gomart:#FFDCDE; }
       html,body{ height:100%; }
       body{ background:#ffffff; font-family:"Inter", system-ui, sans-serif; overflow:hidden; }
 
@@ -93,9 +93,34 @@
         display:flex; flex-direction:column; position:relative;
       }
       .slide-inner{
-        margin:0 auto; width:100%; max-width:80rem;
-        padding:clamp(1.5rem,4vw,4rem) clamp(1.25rem,5vw,4rem);
+        margin:0 auto; width:100%; max-width:100%;
+        padding-top:var(--present-top);
+        padding-inline:var(--present-inset);
+        padding-bottom:var(--present-bottom);
         flex:1 1 auto; display:flex; flex-direction:column; justify-content:center;
+        box-sizing:border-box;
+      }
+      .slide-inner.top{ justify-content:flex-start; }
+      .slide-inner.is-split{
+        max-width:100%;
+        padding:0;
+      }
+      .deck-split-grid{ width:100%; }
+      .deck-split-copy{
+        min-width:0;
+        width:100%;
+        box-sizing:border-box;
+      }
+      .slide-inner.is-split .deck-split-copy{
+        padding-top:var(--present-top);
+        padding-inline:var(--present-inset);
+        padding-bottom:var(--present-bottom);
+      }
+      .deck-split-copy :is(p, h1, h2, h3, h4, blockquote, figcaption, ul, ol){
+        max-width:100%;
+      }
+      .deck-split-copy > :is(div, figure){
+        max-width:100%;
       }
 
       /* Per-slide reveal: children fade-up only while the slide is active */
@@ -236,19 +261,11 @@
       .pw-btn{ border:0; border-radius:999px; padding:14px 28px; font-size:1.02rem; font-weight:700; cursor:pointer; background:var(--accent); color:var(--ink); transition:filter .15s, transform .15s; }
       .pw-btn:hover{ filter:brightness(1.05); transform:translateY(-1px); }
 
-      /* Slide layout helpers (olx.html patterns) */
-      .slide-inner.top{ justify-content:flex-start; padding-top:clamp(1rem,3vh,2rem); }
-      .slide-scroll > .slide-inner{ justify-content:flex-start; padding-bottom:calc(5rem + env(safe-area-inset-bottom,0px)); }
+      .slide-scroll > .slide-inner{ justify-content:flex-start; }
       .slide-scroll.slide-center > .slide-inner,
-      .slide-overlay > .slide-inner{
-        justify-content:center;
-        padding-bottom:calc(5rem + env(safe-area-inset-bottom,0px));
-      }
-      .slide-overlay-bottom > .slide-inner{
-        justify-content:flex-end;
-        padding-bottom:calc(7.5rem + env(safe-area-inset-bottom,0px));
-      }
-      .slide-highlight > .slide-inner{ justify-content:center; padding-bottom:calc(5rem + env(safe-area-inset-bottom,0px)); }
+      .slide-overlay > .slide-inner{ justify-content:center; }
+      .slide-overlay-bottom > .slide-inner{ justify-content:flex-end; }
+      .slide-highlight > .slide-inner{ justify-content:center; }
 
       /* Segmented toggle */
       .seg{ display:inline-flex; padding:4px; background:#efefef; border:1px solid #e7e7e7; border-radius:999px; gap:2px; }
@@ -290,7 +307,7 @@
       .solution-index-card.is-key{ border-color:#f0a8ad; background:#fffbfb; }
 
       /* Solution hypotheses — OLX slide-hypo pattern */
-      .slide-hypo .slide-inner{ justify-content:flex-start; padding-bottom:calc(5rem + env(safe-area-inset-bottom, 0px)); }
+      .slide-hypo .slide-inner{ justify-content:flex-start; }
       .slide-hypo .hypo-intro{ color:#262626; font-size:1rem; line-height:1.55; margin:0 0 1.25rem; max-width:80ch; position:relative; z-index:2; }
       .slide-hypo .hypo-intro strong{ color:#262626; }
       .hypo-grid{ display:flex; flex-direction:column; gap:1.5rem; width:100%; max-width:100%; }
@@ -378,8 +395,6 @@
       /* Wireframe compare — fill remaining viewport */
       .slide-compare > .slide-inner{
         justify-content:flex-start;
-        padding-top:clamp(.85rem,2vh,1.35rem);
-        padding-bottom:calc(4.5rem + env(safe-area-inset-bottom,0px));
         flex:1 1 auto;
         min-height:0;
       }
@@ -402,12 +417,30 @@
       .slide-compare .compare-copy{ color:var(--ink); }
       .slide-compare .compare-hint{ color:var(--muted); }
 
+      /* Routine Grocery Discovery — char + phone hero */
+      @media (min-width:1024px){
+        .gomart-cover-stage{
+          position:relative; width:100%; max-width:310px; min-height:360px;
+        }
+        .gomart-cover-hero .gomart-cover-char{
+          position:absolute; bottom:0; left:50%; z-index:0;
+          width:100%; max-width:310px; height:auto;
+          object-fit:contain; object-position:bottom;
+          transform:translateY(10%);
+        }
+        .gomart-cover-hero .gomart-cover-phone{
+          position:absolute; bottom:0; left:0; z-index:20;
+          max-width:285px; margin:0;
+          transform:translateY(10%);
+        }
+      }
+
       /* Mobile + tablet — desktop (1024px+) unchanged */
       @media (max-width: 1023px) {
         .slide > .slide-inner { justify-content: flex-start; }
         .slide-overlay-bottom > .slide-inner { justify-content: flex-end; }
         .slide-scroll > .slide-inner,
-        .slide-inner.top { padding-bottom: calc(5rem + env(safe-area-inset-bottom, 0px)); }
+        .slide-inner.top { justify-content: flex-start; }
         .slide-bleed { overflow-x: hidden; overflow-y: auto; }
         .deck-split-grid { height: auto !important; min-height: 0 !important; }
         .deck-split-inner { height: auto !important; }
@@ -533,9 +566,9 @@
 
     <!-- ===== HOME 01 · What is GoMart? ===== -->
     <section class="slide slide-scroll is-active bg-elev" data-chapter="case-study" data-title="What is GoMart?" data-home-slide>
-      <div class="slide-inner top !py-0 !px-0 !max-w-none" style="padding-bottom:calc(4rem + env(safe-area-inset-bottom, 0px))">
+      <div class="slide-inner top is-split deck-split-inner">
         <div class="grid lg:grid-cols-[1.35fr_1fr] lg:h-full deck-split-grid">
-          <div class="order-2 md:order-1 flex flex-col justify-center px-[clamp(1.25rem,5vw,4rem)] py-[clamp(1.5rem,4vw,3rem)]">
+          <div class="order-2 md:order-1 flex flex-col justify-center deck-split-copy">
             <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Gojek · GoMart · H1 2021</p>
             <h1 class="text-3xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6 max-w-[14ch]" data-anim style="--i:1">What is <span class="hl">GoMart</span>?</h1>
             <p class="text-ink text-lg md:text-xl leading-relaxed max-w-[46ch] mb-6" data-anim style="--i:2">
@@ -558,9 +591,9 @@
 
     <!-- ===== HOME 02 · What I did at GoMart ===== -->
     <section class="slide slide-scroll" data-chapter="case-study" data-title="What I did at GoMart" data-home-slide>
-      <div class="slide-inner top !py-0 !px-0 !max-w-none" style="padding-bottom:calc(4rem + env(safe-area-inset-bottom, 0px))">
+      <div class="slide-inner top is-split deck-split-inner">
         <div class="grid lg:grid-cols-[1.35fr_1fr] lg:h-full deck-split-grid">
-          <div class="order-2 md:order-1 flex flex-col justify-center px-[clamp(1.25rem,5vw,4rem)] py-[clamp(1.5rem,4vw,3rem)]">
+          <div class="order-2 md:order-1 flex flex-col justify-center deck-split-copy">
             <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">GoMart · Consumer Journey</p>
             <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-6 max-w-[18ch]" data-anim style="--i:1">What I did at GoMart</h2>
             <nav class="crumb mb-8" aria-label="Team placement" data-anim style="--i:2">
@@ -581,9 +614,9 @@
 
     <!-- ===== CS COVER · Routine Grocery Discovery ===== -->
     <section class="slide slide-scroll slide-center slide-bg-gomart text-accink" data-chapter="case-study" data-title="Routine Grocery Discovery">
-      <div class="slide-inner">
+      <div class="slide-inner top is-split">
         <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center deck-split-grid">
-          <div>
+          <div class="flex flex-col justify-center deck-split-copy">
             <p class="text-accink/60 text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Case study · GoMart</p>
             <h2 class="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.08] max-w-[16ch]" data-anim style="--i:1">Routine Grocery Discovery</h2>
             <p class="mt-6 text-xl md:text-2xl font-semibold max-w-[40ch]" data-anim style="--i:2">How might we help competent shoppers discover, trust, and routinely use GoMart?</p>
@@ -596,8 +629,8 @@
           </div>
           <div class="relative mx-auto w-full max-w-[620px] min-h-[280px] sm:min-h-[340px] md:min-h-[400px] gomart-cover-hero flex items-center justify-center" data-anim style="--i:3">
             <div class="gomart-cover-stage relative w-full max-w-[310px] min-h-[240px] sm:min-h-[300px] md:min-h-[360px]">
-            <img src="assets/gomart/char.png" alt="GoMart character illustration" data-lightbox class="gomart-cover-char absolute bottom-0 left-1/2 z-0 h-auto w-[min(72vw,200px)] sm:w-[min(68vw,260px)] md:w-full max-w-[310px] -translate-x-[42%] sm:-translate-x-[40%] md:translate-x-0 md:left-[50%] object-contain object-bottom cursor-zoom-in" loading="lazy">
-            <div class="phone-mock gomart-cover-phone absolute z-20 bottom-0 left-1/2 !mx-0 pointer-events-none !max-w-[min(58vw,220px)] sm:!max-w-[255px] md:!max-w-[285px] -translate-x-1/2 md:translate-x-0 md:left-[20%]">
+            <img src="assets/gomart/char.png" alt="GoMart character illustration" data-lightbox class="gomart-cover-char absolute bottom-0 z-0 h-auto w-[min(72vw,200px)] sm:w-[min(68vw,260px)] md:w-full max-w-[310px] object-contain object-bottom cursor-zoom-in" loading="lazy">
+            <div class="phone-mock gomart-cover-phone absolute z-20 bottom-0 !mx-0 pointer-events-none !max-w-[min(58vw,220px)] sm:!max-w-[255px] md:!max-w-[285px]">
               <video loop data-autoplay muted playsinline preload="metadata" tabindex="-1" aria-hidden="true" class="pointer-events-none">
                 <source src="assets/gomart/final-product.mp4" type="video/mp4">
                 <track kind="captions" src="assets/gomart/final-product-desc.vtt" srclang="en" label="English descriptions" default>
@@ -735,7 +768,7 @@
 
     <!-- ===== CS 02 · The leak (research boards) ===== -->
     <section class="slide slide-scroll bg-elev" data-chapter="case-study" data-title="The leak">
-      <div class="slide-inner top !max-w-none" style="padding-left:clamp(1rem,4vw,3rem); padding-right:clamp(1rem,4vw,3rem);">
+      <div class="slide-inner top">
         <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-2" data-anim style="--i:0">Discovery · Solo desk research, ahead of Session 1</p>
         <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-2 max-w-[32ch]" data-anim style="--i:1">The funnel was <span class="hl">leaking</span> before booking</h2>
         <p class="text-mute leading-relaxed max-w-[72ch] mb-4" data-anim style="--i:2">
@@ -767,9 +800,9 @@
 
     <!-- ===== CS 06 · Session 2 ===== -->
     <section class="slide slide-scroll slide-bleed relative" data-chapter="case-study" data-title="Session 2 · Brainstorm to bets">
-      <div class="slide-inner top !py-0 !px-0 !max-w-none deck-split-inner">
+      <div class="slide-inner top is-split deck-split-inner">
         <div class="grid lg:grid-cols-[1.15fr_0.85fr] lg:h-full deck-split-grid">
-          <div class="order-2 md:order-1 flex flex-col justify-center px-[clamp(1.25rem,5vw,4rem)] py-[clamp(1.5rem,4vw,3rem)]">
+          <div class="order-2 md:order-1 flex flex-col justify-center deck-split-copy">
             <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-3" data-anim style="--i:0">Studio Accelerator · Session 2</p>
             <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-3 max-w-[28ch]" data-anim style="--i:1">Brainstorm to <span class="hl">prioritised bets</span></h2>
             <p class="text-mute leading-relaxed max-w-[62ch] mb-4" data-anim style="--i:2">
@@ -830,9 +863,9 @@
 
     <!-- ===== CS 07a · Bottom Navigation · Research (v2) ===== -->
     <section class="slide slide-scroll slide-bleed relative" data-chapter="case-study" data-title="Bottom Navigation · Research">
-      <div class="slide-inner top !py-0 !px-0 !max-w-none deck-split-inner">
+      <div class="slide-inner top is-split deck-split-inner">
         <div class="grid lg:grid-cols-[1.15fr_0.85fr] lg:h-full deck-split-grid">
-          <div class="order-2 md:order-1 flex flex-col justify-center px-[clamp(1.25rem,5vw,4rem)] py-[clamp(1.5rem,4vw,3rem)]">
+          <div class="order-2 md:order-1 flex flex-col justify-center deck-split-copy">
             <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-3" data-anim style="--i:0">Solution 1 · Key · Design &amp; Validate</p>
             <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-3 max-w-[22ch]" data-anim style="--i:1">Bottom navigation <span class="hl">IA redesign</span></h2>
             <p class="text-xs text-mute mb-4 max-w-[58ch]" data-anim style="--i:1">Navbar Needs Exploration · R&amp;I · June 2021</p>
@@ -1016,9 +1049,9 @@
 
     <!-- ===== CS 09 · Shipped · Impact ===== -->
     <section class="slide slide-scroll slide-bleed relative" data-chapter="case-study" data-title="Shipped · Impact">
-      <div class="slide-inner top !py-0 !px-0 !max-w-none deck-split-inner">
+      <div class="slide-inner top is-split deck-split-inner">
         <div class="grid lg:grid-cols-[1.15fr_0.85fr] lg:h-full deck-split-grid">
-          <div class="order-2 md:order-1 flex flex-col justify-center px-[clamp(1.25rem,5vw,4rem)] py-[clamp(1.5rem,4vw,3rem)]">
+          <div class="order-2 md:order-1 flex flex-col justify-center deck-split-copy">
             <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Shipped · Impact</p>
             <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-6 max-w-[22ch]" data-anim style="--i:1">From Studio bets to <span class="hl">production</span></h2>
             <p class="text-mute leading-relaxed max-w-[58ch] mb-4" data-anim style="--i:2">
@@ -1050,9 +1083,9 @@
 
     <!-- HIGHLIGHT · Order-tracking widget & chat -->
     <section class="slide slide-highlight bg-elev" data-chapter="highlights" data-title="Highlight · Order-tracking widget &amp; chat">
-      <div class="slide-inner">
+      <div class="slide-inner top is-split">
         <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center lg:h-full deck-split-grid">
-          <div>
+          <div class="flex flex-col justify-center deck-split-copy">
             <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Highlight · Solution 2 · Trust · Effective Communication</p>
             <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-4 max-w-[16ch]" data-anim style="--i:1">Order-tracking widget &amp; chat</h2>
             <p class="mb-6" data-anim style="--i:2"><span class="chip">Trust · mid-order</span></p>
@@ -1069,9 +1102,9 @@
 
     <!-- HIGHLIGHT · Onboarding stories -->
     <section class="slide slide-highlight" data-chapter="highlights" data-title="Highlight · Onboarding stories">
-      <div class="slide-inner">
+      <div class="slide-inner top is-split">
         <div class="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center lg:h-full deck-split-grid">
-          <div>
+          <div class="flex flex-col justify-center deck-split-copy">
             <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Highlight · Solution 3 · Discover · Maximized Value</p>
             <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-4 max-w-[16ch]" data-anim style="--i:1">Onboarding <span class="hl">stories</span></h2>
             <p class="mb-6" data-anim style="--i:2"><span class="chip">Discover · first visit</span></p>

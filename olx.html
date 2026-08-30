@@ -73,7 +73,12 @@
 
     <!-- Deck styles (adapted from template-2.html) -->
     <style type="text/css">
-      :root{ --deck-top:3.5rem; }
+      :root{
+        --deck-top:3.5rem;
+        --present-inset:clamp(1.25rem,4vw,3rem);
+        --present-top:clamp(1rem,2.5vw,2rem);
+        --present-bottom:8%;
+      }
       html,body{ height:100%; }
       body{ background:#ffffff; font-family:"Inter", system-ui, sans-serif; overflow:hidden; }
 
@@ -86,10 +91,38 @@
         transition:transform .6s cubic-bezier(.7,0,.2,1); will-change:transform; }
       .slide{ flex:0 0 100%; height:100%; width:100%; overflow-y:auto;
         display:flex; flex-direction:column; position:relative; }
-      .slide-inner{ margin:0 auto; width:100%; max-width:80rem;
-        padding:clamp(1.5rem,4vw,4rem) clamp(1.25rem,5vw,4rem);
-        flex:1 1 auto; display:flex; flex-direction:column; justify-content:center; }
+      .slide-inner{
+        margin:0 auto; width:100%; max-width:100%;
+        padding-top:var(--present-top);
+        padding-inline:var(--present-inset);
+        padding-bottom:8%;
+        flex:1 1 auto; display:flex; flex-direction:column; justify-content:center;
+        box-sizing:border-box;
+      }
       .slide-inner.top{ justify-content:flex-start; }
+      /* Split slides — outer shell is full-bleed; copy column carries the deck inset */
+      .slide-inner.is-split{
+        max-width:100%;
+        padding:0;
+      }
+      .deck-split-grid{ width:100%; }
+      .deck-split-copy{
+        box-sizing:border-box;
+        padding-top:var(--present-top);
+        padding-inline:var(--present-inset);
+        padding-bottom:8%;
+        min-width:0;
+        width:100%;
+      }
+      /* Split copy — fill the text column; overrides arbitrary max-w-[Nch] utilities */
+      .deck-split-copy :is(p, h1, h2, h3, h4, blockquote, figcaption, ul, ol){
+        max-width:100%;
+      }
+      .deck-split-copy > :is(div, figure){
+        max-width:100%;
+      }
+      .deck-eyebrow{ margin:0 0 clamp(0.65rem, 1.2vw, 0.85rem); }
+      .deck-eyebrow + :is(h1,h2,h3){ margin-top:0; margin-bottom:clamp(0.85rem, 1.6vw, 1.25rem); }
 
       /* Per-slide reveal */
       .slide [data-anim]{ opacity:0; transform:translateY(26px); transition:opacity .6s ease, transform .6s ease; }
@@ -269,7 +302,7 @@
       }
 
       /* Desktop directions — 3 hypothesis cards (slide 11), full-width stack + scroll */
-      .slide-hypo .slide-inner{ justify-content:flex-start; padding-bottom:calc(5rem + env(safe-area-inset-bottom, 0px)); }
+      .slide-hypo .slide-inner{ justify-content:flex-start; }
       .slide-hypo .hypo-intro{ color:#262626; font-size:1rem; line-height:1.55; margin:0 0 1.25rem; max-width:72ch; position:relative; z-index:2; }
       .slide-hypo .hypo-intro strong{ color:#262626; }
       .hypo-grid{ display:flex; flex-direction:column; gap:1.5rem; width:100%; max-width:100%; }
@@ -302,10 +335,8 @@
       }
       .slide-directions .directions-content{
         position:relative; z-index:1; min-height:100%; display:flex; flex-direction:column;
-        max-width:min(96rem, 100%); width:100%;
-        padding-top:max(0.5rem, calc(clamp(1.5rem, 4vw, 4rem) - 1rem));
-        padding-left:clamp(0.75rem, 2.5vw, 2rem); padding-right:clamp(0.75rem, 2.5vw, 2rem);
-        padding-bottom:calc(4.5rem + env(safe-area-inset-bottom, 0px));
+        max-width:100%; width:100%; margin-inline:auto; box-sizing:border-box;
+        padding:var(--present-top) var(--present-inset) 8%;
       }
       .slide-directions .directions-head{ text-shadow:0 0 20px rgba(255,255,255,.95), 0 1px 2px rgba(255,255,255,.8); }
       .slide-directions .proto-hint{ margin-top:.75rem; }
@@ -404,7 +435,6 @@
       }
       .slide-audit > .slide-inner{
         flex:1 1 auto; display:flex; flex-direction:column; min-height:0;
-        padding-bottom:calc(4.5rem + env(safe-area-inset-bottom, 0px));
       }
       .slide-audit .audit-layout{
         flex:1 1 auto; min-height:0; align-items:stretch;
@@ -445,10 +475,8 @@
       }
       .hl-slide .slide-inner{
         position:relative; z-index:10; justify-content:flex-start;
-        max-width:80rem; margin-inline:auto; width:100%; box-sizing:border-box;
-        padding-inline:clamp(1.25rem,5vw,4rem);
-        padding-top:clamp(1.25rem,3vh,2rem);
-        padding-bottom:calc(4.75rem + env(safe-area-inset-bottom, 0px));
+        max-width:100%; margin-inline:auto; width:100%; box-sizing:border-box;
+        padding:var(--present-top) var(--present-inset) 8%;
       }
       .hl-overlay{
         width:100%; max-width:40rem;
@@ -487,7 +515,7 @@
       .hl-slide--3 .hl-principles-track{
         display:flex; flex-direction:row; align-items:stretch; justify-content:center;
         flex-wrap:nowrap;
-        gap:clamp(.75rem,1.4vw,1.15rem); width:100%; max-width:min(80rem,100%);
+        gap:clamp(.75rem,1.4vw,1.15rem); width:100%; max-width:100%;
         overflow-x:auto; padding:.5rem clamp(.65rem,2.5vw,1.35rem);
         scroll-snap-type:x proximity; pointer-events:auto;
         -webkit-overflow-scrolling:touch;
@@ -525,8 +553,8 @@
       .hl-slide--2 .slide-inner,
       .hl-slide--3 .slide-inner{
         display:flex; flex-direction:column; min-height:calc(100dvh - var(--deck-top));
-        padding-top:clamp(2.25rem,6vh,3.5rem);
-        padding-bottom:calc(10vh + 4.5rem + env(safe-area-inset-bottom, 0px));
+        padding-top:var(--present-top);
+        padding-bottom:8%;
         justify-content:flex-start;
       }
       .hl-slide--1 .hl-slide__sticker,
@@ -663,19 +691,15 @@
       #lightbox.open{ display:flex; }
       #lightbox img{ max-width:100%; max-height:90vh; border-radius:.75rem; box-shadow:0 24px 60px -20px rgba(0,0,0,.35); background:transparent; }
 
-      .slide-scroll > .slide-inner{ justify-content:flex-start; padding-bottom:calc(5rem + env(safe-area-inset-bottom, 0px)); }
-      .slide.is-vcenter > .slide-inner{
-        justify-content:center;
-        padding-top:clamp(1.5rem,4vw,4rem);
-        padding-bottom:calc(5rem + env(safe-area-inset-bottom, 0px));
-      }
+      .slide-scroll > .slide-inner{ justify-content:flex-start; }
+      .slide.is-vcenter > .slide-inner{ justify-content:center; }
 
       /* Mobile + tablet — desktop (1024px+) unchanged */
       @media (max-width: 1023px) {
         .slide > .slide-inner { justify-content: flex-start; }
         .slide.is-vcenter > .slide-inner { justify-content: center; }
         .slide-scroll > .slide-inner,
-        .slide-inner.top { padding-bottom: calc(5rem + env(safe-area-inset-bottom, 0px)); }
+        .slide-inner.top { justify-content: flex-start; }
         .slide-bleed,
         .hl-slide { overflow-x: hidden; overflow-y: auto; }
         .deck-split-grid { height: auto !important; min-height: 0 !important; }
@@ -698,7 +722,7 @@
         .hl-slide--2 .slide-inner,
         .hl-slide--3 .slide-inner {
           min-height: auto;
-          padding-bottom: calc(5rem + env(safe-area-inset-bottom, 0px));
+          padding-bottom: 8%;
         }
         .phone-mock--cover { width: min(100%, 20rem); max-width: 20rem; }
       }
@@ -825,11 +849,11 @@
 
     <!-- HIGHLIGHT 01 · What is OLX? -->
     <section class="slide slide-scroll is-active" data-chapter="case-study" data-title="What is OLX?" data-home-slide>
-      <div class="slide-inner top !py-0 !px-0 !max-w-none">
+      <div class="slide-inner top is-split">
         <div class="grid lg:grid-cols-[1.35fr_1fr] lg:h-full deck-split-grid">
-          <div class="order-2 md:order-1 flex flex-col justify-center px-[clamp(1.25rem,5vw,4rem)] py-[clamp(1.5rem,4vw,3rem)]">
-            <p class="text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Quick Highlights</p>
-            <h2 class="mt-5 text-navy font-extrabold tracking-tight leading-[1.05] text-4xl md:text-5xl lg:text-6xl" data-anim style="--i:1">What is OLX?</h2>
+          <div class="order-2 md:order-1 flex flex-col justify-center deck-split-copy">
+            <p class="deck-eyebrow text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Quick Highlights</p>
+            <h2 class="text-navy font-extrabold tracking-tight leading-[1.05] text-4xl md:text-5xl lg:text-6xl" data-anim style="--i:1">What is OLX?</h2>
             <p class="mt-5 text-lg md:text-xl text-navy/80 leading-snug max-w-[42ch]" data-anim style="--i:2">
               OLX is a leading marketplace ecosystem serving more than <span class="font-bold text-navy">317&nbsp;million</span> C2C and B2C users to buy and sell new / used products globally.
             </p>
@@ -874,8 +898,8 @@
     <!-- HIGHLIGHT 02 · What I do at OLX? -->
     <section class="slide slide-scroll" data-chapter="case-study" data-title="What I do at OLX?" data-home-slide>
       <div class="slide-inner top">
-        <p class="text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Quick Highlights</p>
-        <h2 class="mt-5 text-navy font-extrabold tracking-tight leading-[1.05] text-4xl md:text-5xl" data-anim style="--i:1">What I do at OLX?</h2>
+        <p class="deck-eyebrow text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Quick Highlights</p>
+        <h2 class="text-navy font-extrabold tracking-tight leading-[1.05] text-4xl md:text-5xl" data-anim style="--i:1">What I do at OLX?</h2>
         <nav class="crumb mt-4" aria-label="Team placement" data-anim style="--i:2">
           <span>OLX Group</span><span class="sep">›</span>
           <span>Horizontal</span><span class="sep">›</span>
@@ -897,11 +921,11 @@
 
     <!-- CS 01 · COVER — OLX Ad Package -->
     <section class="slide slide-cover slide-scroll slide-bg-sage" data-chapter="case-study" data-title="OLX Ad Package">
-      <div class="slide-inner top !py-0 !px-0 !max-w-none">
+      <div class="slide-inner top is-split">
         <div class="grid lg:grid-cols-[1.15fr_1fr] lg:h-full deck-split-grid">
-          <div class="order-2 md:order-1 cover-copy flex flex-col justify-center px-[clamp(1.25rem,5vw,4rem)] py-[clamp(1.5rem,4vw,3rem)]">
-            <p class="text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Case study · OLX Group</p>
-            <h1 class="mt-4 font-extrabold tracking-tight leading-[1.04] text-4xl md:text-6xl" data-anim style="--i:1">OLX Ad Package</h1>
+          <div class="order-2 md:order-1 cover-copy flex flex-col justify-center deck-split-copy">
+            <p class="deck-eyebrow text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Case study · OLX Group</p>
+            <h1 class="font-extrabold tracking-tight leading-[1.04] text-4xl md:text-6xl" data-anim style="--i:1">OLX Ad Package</h1>
             <span class="time-pill mt-5 self-start" data-anim style="--i:2">16 weeks of design timeline · In development</span>
             <p class="mt-6 text-lg text-mute leading-relaxed max-w-[52ch]" data-anim style="--i:3">
               OLX is monetised through Ad Limits, and one of the primary ways Sellers keep posting more ads is by <span class="text-ink font-semibold">buying Ad packages</span>.
@@ -929,11 +953,11 @@
 
     <!-- CS 02 · BUSINESS OBJECTIVE -->
     <section class="slide slide-scroll" data-chapter="case-study" data-title="Business Objective">
-      <div class="slide-inner top !py-0 !px-0 !max-w-none">
+      <div class="slide-inner top is-split">
         <div class="grid lg:grid-cols-[1.2fr_1fr] lg:h-full deck-split-grid">
-          <div class="order-2 md:order-1 flex flex-col justify-center px-[clamp(1.25rem,5vw,4rem)] py-[clamp(1.5rem,4vw,3rem)]">
-            <p class="text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Business</p>
-            <h2 class="mt-4 font-extrabold tracking-tight leading-[1.05] text-3xl md:text-5xl" data-anim style="--i:1">Business Objective</h2>
+          <div class="order-2 md:order-1 flex flex-col justify-center deck-split-copy">
+            <p class="deck-eyebrow text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Business</p>
+            <h2 class="font-extrabold tracking-tight leading-[1.05] text-3xl md:text-5xl" data-anim style="--i:1">Business Objective</h2>
             <p class="mt-6 text-xl md:text-2xl font-medium leading-snug max-w-[34ch]" data-anim style="--i:2">
               Grow the share of monthly paying Sellers through improvements to existing monetisation flows — while contributing to a CSAT goal of <span class="hl">+8.0</span>.
             </p>
@@ -963,8 +987,8 @@
     <!-- CS 03 · BACKGROUND — the monetisation ecosystem -->
     <section class="slide slide-scroll bg-elev" data-chapter="case-study" data-title="Background">
       <div class="slide-inner top">
-        <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-3" data-anim style="--i:0">Background</p>
-        <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4" data-anim style="--i:1">Background</h2>
+        <p class="deck-eyebrow text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Background</p>
+        <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight" data-anim style="--i:1">Background</h2>
         <div class="flex flex-wrap items-center justify-between gap-4 mb-6" data-anim style="--i:2">
           <p class="text-lg text-mute leading-relaxed max-w-[62ch]">
             As a Seller on OLX you get a few free ads until you're required to pay — with the option to promote Ads to potential Buyers on a <strong class="text-ink font-semibold">30-day Ad life-cycle</strong>.
@@ -983,11 +1007,11 @@
 
     <!-- CS 04 · INITIATE RESEARCH · JTBD -->
     <section class="slide slide-scroll" data-chapter="case-study" data-title="Initiate Research · JTBD">
-      <div class="slide-inner top !py-0 !px-0 !max-w-none">
+      <div class="slide-inner top is-split">
         <div class="grid lg:grid-cols-[1.15fr_0.85fr] lg:h-full deck-split-grid">
-          <div class="order-2 md:order-1 flex flex-col justify-center px-[clamp(1.25rem,5vw,4rem)] py-[clamp(1.5rem,4vw,3rem)]">
-            <p class="text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Research</p>
-            <h2 class="mt-3 text-2xl md:text-4xl font-extrabold tracking-tight max-w-[24ch]" data-anim style="--i:1">Initiate research — Jobs to be Done</h2>
+          <div class="order-2 md:order-1 flex flex-col justify-center deck-split-copy">
+            <p class="deck-eyebrow text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Research</p>
+            <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight max-w-[24ch]" data-anim style="--i:1">Initiate research — Jobs to be Done</h2>
             <p class="mt-4 text-base md:text-lg text-mute leading-relaxed max-w-[70ch]" data-anim style="--i:2">
               To begin, we ran <strong class="text-ink font-semibold">12 B2C &amp; C2C Seller interviews</strong> to understand their <strong class="text-ink font-semibold">Desires, Limitations and Catalysts</strong> when selling on OLX — with emphasis on the monetisation flows.
             </p>
@@ -1030,8 +1054,8 @@
     <section class="slide slide-scroll bg-elev" data-chapter="case-study" data-title="24 limitations">
       <div class="lim-bg" aria-hidden="true"></div>
       <div class="slide-inner top relative z-10">
-        <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-3" data-anim style="--i:0">Synthesis</p>
-        <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-3 max-w-[26ch]" data-anim style="--i:1">We analysed the 24 identified limitations</h2>
+        <p class="deck-eyebrow text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Synthesis</p>
+        <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight max-w-[26ch]" data-anim style="--i:1">We analysed the 24 identified limitations</h2>
         <p class="text-base text-mute leading-relaxed max-w-[72ch] mb-2" data-anim style="--i:2">Post qualitative research, findings were clustered into 24 limitations. A sample of the sharpest:</p>
         <p class="text-sm text-mute mb-8" data-anim style="--i:3">With: Research Lead, Lead PM, HOD, myself &amp; 2 Jr. Designers.</p>
         <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4" data-anim style="--i:4">
@@ -1049,11 +1073,11 @@
 
     <!-- CS 06 · QUANTIFICATION → PRIORITISATION -->
     <section class="slide slide-scroll" data-chapter="case-study" data-title="Quantification &amp; OpScore">
-      <div class="slide-inner top !py-0 !px-0 !max-w-none">
+      <div class="slide-inner top is-split">
         <div class="grid lg:grid-cols-[1.25fr_0.75fr] lg:h-full deck-split-grid">
-          <div class="order-2 md:order-1 flex flex-col justify-center px-[clamp(1.25rem,5vw,4rem)] py-[clamp(1.5rem,4vw,3rem)]">
-            <p class="text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Prioritisation</p>
-            <h2 class="mt-3 text-2xl md:text-4xl font-extrabold tracking-tight max-w-[24ch]" data-anim style="--i:1">Quantification to prioritisation</h2>
+          <div class="order-2 md:order-1 flex flex-col justify-center deck-split-copy">
+            <p class="deck-eyebrow text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Prioritisation</p>
+            <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight max-w-[24ch]" data-anim style="--i:1">Quantification to prioritisation</h2>
             <p class="mt-4 text-base md:text-lg text-mute leading-relaxed max-w-[62ch]" data-anim style="--i:2">
               I surveyed Sellers on the <strong class="text-ink font-semibold">importance</strong> &amp; <strong class="text-ink font-semibold">satisfaction</strong> of each problem area, then used <strong class="text-ink font-semibold">Opportunity Scoring</strong> to generate an OpScore.
             </p>
@@ -1072,11 +1096,11 @@
 
     <!-- CS 07 · USER PROBLEM -->
     <section class="slide slide-scroll bg-base" data-chapter="case-study" data-title="User Problem">
-      <div class="slide-inner top !py-0 !px-0 !max-w-none">
+      <div class="slide-inner top is-split">
         <div class="grid lg:grid-cols-[1.05fr_0.95fr] lg:h-full deck-split-grid">
-          <div class="order-2 md:order-1 flex flex-col justify-center px-[clamp(1.25rem,5vw,4rem)] py-[clamp(1.5rem,4vw,3rem)]">
-            <p class="text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Problem</p>
-            <h2 class="mt-3 text-3xl md:text-5xl font-extrabold tracking-tight" data-anim style="--i:1">User Problem</h2>
+          <div class="order-2 md:order-1 flex flex-col justify-center deck-split-copy">
+            <p class="deck-eyebrow text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Problem</p>
+            <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight" data-anim style="--i:1">User Problem</h2>
             <p class="mt-5 text-xl md:text-2xl font-medium leading-snug max-w-[32ch]" data-anim style="--i:2">
               Almost <span class="hl">80% of B2C and 90% of C2C Sellers</span> drop at the category-selection page of the buy-package flow.
             </p>
@@ -1097,8 +1121,8 @@
     <!-- CS 08 · UX AUDIT -->
     <section class="slide slide-scroll slide-audit" data-chapter="case-study" data-title="UX Audit">
       <div class="slide-inner top slide-audit-inner">
-        <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-3" data-anim style="--i:0">Audit</p>
-        <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight mb-6 md:mb-7 max-w-[26ch]" data-anim style="--i:1">Ran a UX audit on the buy-package flow</h2>
+        <p class="deck-eyebrow text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Audit</p>
+        <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight max-w-[26ch]" data-anim style="--i:1">Ran a UX audit on the buy-package flow</h2>
         <div class="grid lg:grid-cols-[1.72fr_0.62fr] gap-6 lg:gap-8 items-stretch audit-layout">
           <figure class="audit-figure m-0 min-w-0" data-anim style="--i:2">
             <div class="audit-stage" id="auditStage">
@@ -1124,8 +1148,8 @@
     <!-- CS 09 · DESKTOP-FIRST · 3 HYPOTHESES -->
     <section class="slide slide-scroll slide-hypo bg-elev" data-chapter="case-study" data-title="Desktop-first · Hypothesis">
       <div class="slide-inner top">
-        <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-2" data-anim style="--i:0">Explore</p>
-        <h2 class="text-xl md:text-3xl font-extrabold tracking-tight mb-3 text-ink max-w-[28ch]" data-anim style="--i:1">Designed 3 possible directions for desktop</h2>
+        <p class="deck-eyebrow text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Explore</p>
+        <h2 class="text-xl md:text-3xl font-extrabold tracking-tight text-ink max-w-[28ch]" data-anim style="--i:1">Designed 3 possible directions for desktop</h2>
         <p class="hypo-intro">
           Why desktop first? More than <strong>60% of Ad packages</strong> are purchased via the OLX website.
         </p>
@@ -1172,7 +1196,7 @@
       <div class="directions-bg" aria-hidden="true"></div>
       <div class="slide-inner top directions-content">
         <div class="directions-head" data-anim style="--i:0">
-          <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-3">Two concepts</p>
+          <p class="deck-eyebrow text-mute text-xs font-bold uppercase tracking-[0.2em]">Two concepts</p>
           <h2 class="text-2xl md:text-4xl font-extrabold tracking-tight max-w-[28ch] text-ink">Two directions, head to head</h2>
           <p class="proto-hint">
             <span class="tag-pill" style="background:#e7e7e7;color:#262626">Interactive ☝️ — tap a prototype to advance</span>
@@ -1231,9 +1255,9 @@
 
     <!-- CS 11 · USABILITY TEST -->
     <section class="slide slide-scroll" data-chapter="case-study" data-title="Usability test">
-      <div class="slide-inner" style="justify-content:flex-start;padding-bottom:calc(5rem + env(safe-area-inset-bottom, 0px))">
-        <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">Test</p>
-        <h2 class="w-full max-w-none text-2xl md:text-4xl font-extrabold tracking-tight mb-8" data-anim style="--i:1">We tested 2 concepts for usability with <span class="hl">10 users</span></h2>
+      <div class="slide-inner top">
+        <p class="deck-eyebrow text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Test</p>
+        <h2 class="w-full max-w-none text-2xl md:text-4xl font-extrabold tracking-tight" data-anim style="--i:1">We tested 2 concepts for usability with <span class="hl">10 users</span></h2>
         <!-- Each insight paired with the takeaway it drove -->
         <div class="hidden lg:grid lg:grid-cols-[1fr_2.5rem_1fr] gap-4 mb-3" data-anim style="--i:2">
           <p class="text-xs font-bold uppercase tracking-[0.18em] text-mute">Insight</p>
@@ -1280,11 +1304,11 @@
 
     <!-- CS 12 · PRODUCTION OUTCOME -->
     <section class="slide slide-scroll" data-chapter="case-study" data-title="Production outcome">
-      <div class="slide-inner top !py-0 !px-0 !max-w-none">
+      <div class="slide-inner top is-split">
         <div class="grid lg:grid-cols-[1.05fr_0.95fr] lg:h-full deck-split-grid">
-          <div class="order-2 md:order-1 flex flex-col justify-center px-[clamp(1.25rem,5vw,4rem)] py-[clamp(1.5rem,4vw,3rem)]">
-            <p class="text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Outcome</p>
-            <h2 class="mt-4 text-3xl md:text-5xl font-extrabold tracking-tight max-w-[22ch]" data-anim style="--i:1">Validated on production</h2>
+          <div class="order-2 md:order-1 flex flex-col justify-center deck-split-copy">
+            <p class="deck-eyebrow text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Outcome</p>
+            <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight max-w-[22ch]" data-anim style="--i:1">Validated on production</h2>
             <p class="mt-5 text-xl md:text-2xl font-medium leading-snug max-w-[40ch]" data-anim style="--i:2">
               Variant B went into an <span class="hl">A (Production) / B (Multi-level menu)</span> test in the Polish market — where we saw a <strong class="text-ink font-semibold">+12% upward trend</strong> in purchase conversion of Ad packages.
             </p>
@@ -1313,11 +1337,11 @@
 
     <!-- CS 12b · NEXT STEPS — repeat purchase & recommendations -->
     <section class="slide slide-scroll slide-next-steps" data-chapter="case-study" data-title="Next steps">
-      <div class="slide-inner top !py-0 !px-0 !max-w-none">
+      <div class="slide-inner top is-split">
         <div class="grid lg:grid-cols-[1.05fr_0.95fr] lg:h-full deck-split-grid">
-          <div class="order-2 md:order-1 flex flex-col justify-center px-[clamp(1.25rem,5vw,4rem)] py-[clamp(1.5rem,4vw,3rem)]">
-            <p class="text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">After launch</p>
-            <h2 class="mt-4 text-3xl md:text-5xl font-extrabold tracking-tight max-w-[22ch]" data-anim style="--i:1">Next steps</h2>
+          <div class="order-2 md:order-1 flex flex-col justify-center deck-split-copy">
+            <p class="deck-eyebrow text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">After launch</p>
+            <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight max-w-[22ch]" data-anim style="--i:1">Next steps</h2>
             <p class="mt-5 text-xl md:text-2xl font-medium leading-snug max-w-[40ch]" data-anim style="--i:2">
               A usability participant flagged <strong class="text-ink font-semibold">repeat Ad package purchases</strong> — and data showed ~<strong class="text-ink font-semibold">31% of B2C Sellers</strong> were buying again.
             </p>
@@ -1338,8 +1362,8 @@
     <!-- CS 13 · CASE-STUDY WRAP-UP -->
     <section class="slide slide-scroll is-vcenter slide-bg-sage text-ink" data-chapter="case-study" data-title="Wrap-up">
       <div class="slide-inner text-center items-center">
-        <p class="text-mute text-xs font-bold uppercase tracking-[0.2em] mb-4" data-anim style="--i:0">OLX · Pay &amp; Ship</p>
-        <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight mb-4 max-w-[24ch] mx-auto text-ink" data-anim style="--i:1">
+        <p class="deck-eyebrow text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">OLX · Pay &amp; Ship</p>
+        <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight max-w-[24ch] mx-auto text-ink" data-anim style="--i:1">
           From category drop-off to production uplift
         </h2>
         <p class="text-lg text-ink/85 leading-relaxed max-w-[62ch] mx-auto mb-10" data-anim style="--i:2">
