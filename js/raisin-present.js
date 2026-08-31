@@ -132,7 +132,7 @@
   var SLIDE_MANIFEST = [
     { id: "hero", chapter: "setup", selector: "#hero" },
     { id: "gap-01", chapter: "setup", selector: "#why .why-proof:nth-child(1)" },
-    { id: "gap-02", chapter: "setup", selector: "#why .why-proof.why-proof--zoom-full" },
+    { id: "gap-02", chapter: "setup", selector: "#why .why-proof.why-proof--gap-brand" },
     { id: "gap-03", chapter: "setup", selector: "#why .why-proof:nth-child(3)" },
     { id: "journey", chapter: "setup", selector: "#journey-intro" },
     { id: "p1-intro", chapter: "period-1", selector: "#period-1 .period__head" },

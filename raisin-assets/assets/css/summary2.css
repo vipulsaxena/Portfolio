@@ -3680,6 +3680,28 @@ html.journey-nav-scrolling {
   object-position: left center;
 }
 
+.why-proof--gap-brand .why-proof__media--video {
+  flex: 1;
+  min-width: 0;
+}
+.why-proof--gap-brand .why-proof__frame--video {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto;
+  max-height: min(70vh, 28rem);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: var(--border);
+  background: var(--dark);
+}
+.why-proof--gap-brand .why-proof__frame--video video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
+
 /* Section 01–03 — crop at rest, full aspect on hover (desktop); lightbox on touch */
 .why-proof--zoom {
   --why-proof-hover-mult: 2.13;

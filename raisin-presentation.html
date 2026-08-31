@@ -412,9 +412,30 @@
       line-height: 1.18;
       max-width: none;
     }
-    .present-slide--gap-02.why-proof--zoom-full {
+    .present-slide--gap-02.why-proof--gap-brand {
       max-width: min(100%, 72rem);
       margin-inline: auto;
+    }
+    .present-slide--gap-02 .why-proof__media--video {
+      min-width: 0;
+      align-self: center;
+    }
+    .present-slide--gap-02 .why-proof__frame--video {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      height: auto;
+      max-height: min(62vh, 34rem);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      border: var(--border);
+      background: var(--dark);
+    }
+    .present-slide--gap-02 .why-proof__frame--video video {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      object-position: center;
     }
 
     /* Shipped mobile — row fills slide */
@@ -2799,17 +2820,17 @@
           <div class="why-proof__frame" data-fm-why="2" style="--proof-ratio: 890 / 2159"><img src="raisin-assets/assets/img/proof/email.webp" alt="Transactional email — another surface, another visual language" loading="lazy"></div>
         </div>
       </article>
-      <article class="why-proof why-proof--zoom why-proof--zoom-full reveal">
+      <article class="why-proof why-proof--gap-brand reveal">
         <div class="why-proof__content">
           <p class="why-proof__num">Identified Gap 02</p>
           <h4 class="why-proof__title">A brand handed over, not built out</h4>
           <p class="why-proof__text why-proof__text--present"><strong>Diagnosis:</strong> Koto handed off a static identity — not a live, multi-market product brand.</p>
           <p class="why-proof__text"><strong>Diagnosis:</strong> Brand agency Koto delivered a static identity. After handoff, Raisin design had to scale it across product experience — guidelines existed; a live, multi-market product brand did not.</p>
         </div>
-        <div class="why-proof__media why-proof__media--trio">
-          <div class="why-proof__frame" data-fm-why="3" style="--proof-ratio: 1920 / 1080"><img src="raisin-assets/assets/img/branding/koto-41.webp" alt="Koto brand guidelines — static identity handoff" loading="lazy"></div>
-          <div class="why-proof__frame" data-fm-why="4" style="--proof-ratio: 1920 / 1080"><img src="raisin-assets/assets/img/branding/koto-32.webp" alt="Koto brand assets — not yet scaled into live product" loading="lazy"></div>
-          <div class="why-proof__frame" data-fm-why="5" style="--proof-ratio: 1920 / 1080"><img src="raisin-assets/assets/img/branding/koto-54.webp" alt="Koto brand guidelines — product application gap" loading="lazy"></div>
+        <div class="why-proof__media why-proof__media--video">
+          <div class="why-proof__frame why-proof__frame--video" data-fm-why="3">
+            <video data-src="raisin-assets/assets/video/brand/brand-motion-summary.mp4" muted loop playsinline data-autoplay-inview preload="none" title="Raisin brand motion — built out across product touchpoints"></video>
+          </div>
         </div>
       </article>
       <article class="why-proof why-proof--zoom reveal">
@@ -3868,7 +3889,7 @@
             <div class="ai-journey__toolkit reveal" aria-label="Design × Cursor toolkit">
               <div class="ai-toolkit-copy">
                 <p class="ai-section-label">Design × Cursor toolkit</p>
-                <p class="ai-toolkit-intro">The programme was mostly coaching — the toolkit supported it.</p>
+                <p class="ai-toolkit-intro">Established an infrastructure every designer could run.</p>
                 <p class="beat__stat present-p4-toolkit-stat">1 of 4 AI Champions · Kick-start Lab → Showcase + Clinic · 180 days</p>
                 <aside class="enablement-callout enablement-surface beat__enablement present-p4-toolkit-enablement" aria-label="Enablement — 180-day operating plan">
                   <p class="enablement-label">
