@@ -907,7 +907,7 @@
       "    </form>" +
       "  </div>" +
       "</div>" +
-      '<button type="button" class="gfq-badge vipul-chat-badge" aria-label="Chat with Vipul" aria-expanded="false">' +
+      '<button type="button" class="gfq-badge vipul-chat-badge" aria-label="Chat with Vipul" data-tip="Chat with Vipul" aria-expanded="false">' +
       '  <img src="images/chat-icon.svg" alt="" width="26" height="26" />' +
       "</button>";
 

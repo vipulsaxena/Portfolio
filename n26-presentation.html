@@ -53,9 +53,12 @@
       html,body{ height:100%; }
       body{ background:#ffffff; font-family:"Inter", system-ui, sans-serif; overflow:hidden; }
 
-      /* Brand yellow highlight (matches Portfolio) */
-      .hl{ background:#ffda08; color:#262626; padding:0 .1em; border-radius:.08em;
-           -webkit-box-decoration-break:clone; box-decoration-break:clone; }
+      /* Inline emphasis — no yellow fill (matches n26.html web mode) */
+      .hl{ background:none; color:inherit; padding:0; border-radius:0;
+           -webkit-box-decoration-break:unset; box-decoration-break:unset; }
+
+      /* Validation takeaway cards — light yellow fill */
+      .takeaway-card{ background:#fff3b0; color:#262626; border:1px solid rgba(244,208,0,.45); }
 
       /* Breadcrumb (consistent with olx.html) */
       .crumb{ display:inline-flex; flex-wrap:wrap; align-items:center; gap:.5rem; font-size:.95rem; color:#6e6e6e; font-weight:600; }
@@ -63,7 +66,7 @@
       .crumb .now{ color:#262626; text-decoration:underline; text-decoration-color:#ffda08; text-decoration-thickness:3px; text-underline-offset:3px; }
 
       /* Inline hover tooltip (definition of a phrase) */
-      .tip{ position:relative; cursor:help; color:#262626; text-decoration:underline; text-decoration-color:#ffda08; text-decoration-thickness:3px; text-underline-offset:3px; }
+      .tip{ position:relative; cursor:help; color:#262626; text-decoration:underline; text-decoration-color:#6e6e6e; text-decoration-thickness:3px; text-underline-offset:3px; }
       .tip::after{ content:attr(data-tip); position:absolute; left:50%; bottom:calc(100% + 10px); transform:translateX(-50%) translateY(4px);
         background:#262626; color:#fff; font-size:.82rem; font-weight:500; line-height:1.45; text-align:center; letter-spacing:0; text-transform:none;
         padding:.55rem .75rem; border-radius:.6rem; width:max-content; max-width:20rem; box-shadow:0 14px 30px -12px rgba(0,0,0,.5);
@@ -730,22 +733,22 @@
           <div class="grid lg:grid-cols-[1fr_2.5rem_1fr] gap-3 lg:gap-4 items-stretch" data-anim style="--i:3">
             <div class="bg-elev rounded-2xl p-5 flex items-center"><p class="m-0 text-mute leading-relaxed">Most users liked viewing all accounts at once, but the <strong class="text-ink">Main Account view still holds more importance</strong>.</p></div>
             <div class="hidden lg:flex items-center justify-center text-ink/30 text-2xl" aria-hidden="true">→</div>
-            <div class="bg-accent text-accink rounded-2xl p-5 flex items-center"><p class="m-0 leading-relaxed">Keep <strong>Main Account</strong> view as the default, with an option to switch between feeds.</p></div>
+            <div class="takeaway-card rounded-2xl p-5 flex items-center"><p class="m-0 leading-relaxed">Keep <strong>Main Account</strong> view as the default, with an option to switch between feeds.</p></div>
           </div>
           <div class="grid lg:grid-cols-[1fr_2.5rem_1fr] gap-3 lg:gap-4 items-stretch" data-anim style="--i:4">
             <div class="bg-elev rounded-2xl p-5 flex items-center"><p class="m-0 text-mute leading-relaxed">The option to <strong class="text-ink">multi-select Spaces</strong> is useful to some users — they prefer choosing IBAN-enabled Spaces over normal ones.</p></div>
             <div class="hidden lg:flex items-center justify-center text-ink/30 text-2xl" aria-hidden="true">→</div>
-            <div class="bg-accent text-accink rounded-2xl p-5 flex items-center"><p class="m-0 leading-relaxed">Letting users choose their preference is key — but we must balance the complexity and be sure of the feature’s usability.</p></div>
+            <div class="takeaway-card rounded-2xl p-5 flex items-center"><p class="m-0 leading-relaxed">Letting users choose their preference is key — but we must balance the complexity and be sure of the feature’s usability.</p></div>
           </div>
           <div class="grid lg:grid-cols-[1fr_2.5rem_1fr] gap-3 lg:gap-4 items-stretch" data-anim style="--i:5">
             <div class="bg-elev rounded-2xl p-5 flex items-center"><p class="m-0 text-mute leading-relaxed">Users expect <strong class="text-ink">quick actions to change</strong> with account selection; in multi-select they were rather confused.</p></div>
             <div class="hidden lg:flex items-center justify-center text-ink/30 text-2xl" aria-hidden="true">→</div>
-            <div class="bg-accent text-accink rounded-2xl p-5 flex items-center"><p class="m-0 leading-relaxed">For multi-select, we could explore letting users choose which account to action from — but this definitely adds complexity and tampers with the purpose of quick actions.</p></div>
+            <div class="takeaway-card rounded-2xl p-5 flex items-center"><p class="m-0 leading-relaxed">For multi-select, we could explore letting users choose which account to action from — but this definitely adds complexity and tampers with the purpose of quick actions.</p></div>
           </div>
           <div class="grid lg:grid-cols-[1fr_2.5rem_1fr] gap-3 lg:gap-4 items-stretch" data-anim style="--i:6">
             <div class="bg-elev rounded-2xl p-5 flex items-center"><p class="m-0 text-mute leading-relaxed"><strong class="text-ink">Swiping accounts</strong> with top overviews felt like an easy and valuable experience.</p></div>
             <div class="hidden lg:flex items-center justify-center text-ink/30 text-2xl" aria-hidden="true">→</div>
-            <div class="bg-accent text-accink rounded-2xl p-5 flex items-center"><p class="m-0 leading-relaxed">Explore a <strong>top-navigation scheme</strong> further and evolve it into something more obvious to users.</p></div>
+            <div class="takeaway-card rounded-2xl p-5 flex items-center"><p class="m-0 leading-relaxed">Explore a <strong>top-navigation scheme</strong> further and evolve it into something more obvious to users.</p></div>
           </div>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 mt-8" data-anim style="--i:7">

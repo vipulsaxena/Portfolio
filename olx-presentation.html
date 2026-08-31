@@ -118,6 +118,12 @@
       .hl{ background:#ffda08; color:#262626; padding:0 .1em; border-radius:.08em;
            -webkit-box-decoration-break:clone; box-decoration-break:clone; }
 
+      .usability-takeaway{
+        background:#fff3b0;
+        color:#262626;
+        border:1px solid rgba(255,218,8,.35);
+      }
+
       /* ---------- Deck viewport ---------- */
       .deck{ position:fixed; inset:0; top:var(--deck-top); overflow:hidden; }
       .deck-track{ display:flex; height:100%; width:100%;
@@ -396,17 +402,52 @@
         background:url("assets/olx/directions.png") center center / cover no-repeat;
       }
       .slide-directions .directions-content{
-        position:relative; z-index:1; min-height:100%; display:flex; flex-direction:column;
+        position:relative; z-index:1; min-height:0; height:100%; max-height:100%;
+        display:flex; flex-direction:column;
         max-width:100%; width:100%; margin-inline:auto; box-sizing:border-box;
         padding:var(--present-top) var(--present-inset) var(--present-bottom);
+        overflow:hidden;
       }
-      .slide-directions .directions-head{ text-shadow:0 0 20px rgba(255,255,255,.95), 0 1px 2px rgba(255,255,255,.8); }
-      .slide-directions .proto-hint{ margin-top:var(--deck-space-sm); }
-      .slide-directions .directions-foot{ margin-top:auto; width:100%; }
+      .slide-directions .directions-head{
+        flex:0 0 auto;
+        text-shadow:0 0 20px rgba(255,255,255,.95), 0 1px 2px rgba(255,255,255,.8);
+      }
+      .slide-directions .directions-head h2{
+        font-size:clamp(1.35rem,2.1vw,2rem);
+        line-height:1.12;
+        max-width:28ch;
+      }
+      .slide-directions .proto-hint{ margin-top:var(--deck-space-xs); }
+      .slide-directions .directions-foot{
+        flex:0 0 auto;
+        margin-top:var(--deck-space-sm);
+        width:100%;
+        border-radius:1rem;
+        background:#262626;
+        color:#fff;
+        padding:clamp(0.75rem,1.4vw,1rem) clamp(1rem,2vw,1.35rem);
+      }
+      .slide-directions .directions-foot__lead{
+        font-size:clamp(1rem,1.55vw,1.2rem);
+        font-weight:800;
+        letter-spacing:-.02em;
+        line-height:1.25;
+        margin:0;
+      }
+      .slide-directions .directions-foot__meta{
+        margin:0.35rem 0 0;
+        font-size:clamp(0.78rem,1.1vw,0.88rem);
+        line-height:1.45;
+        color:rgba(255,255,255,.62);
+      }
 
-      .proto-grid{ display:grid; grid-template-columns:1fr; gap:var(--deck-space-md); width:100%; margin-top:var(--deck-space-sm); flex:1 1 auto; }
-      @media (min-width:1024px){ .proto-grid{ grid-template-columns:1fr 1fr; } }
-      .proto-col{ display:flex; flex-direction:column; min-width:0; height:100%; overflow:visible; }
+      .slide-directions .proto-grid{
+        display:grid; grid-template-columns:1fr; gap:var(--deck-space-sm);
+        width:100%; margin-top:var(--deck-space-xs);
+        flex:1 1 auto; min-height:0; align-items:stretch;
+      }
+      @media (min-width:1024px){ .slide-directions .proto-grid{ grid-template-columns:1fr 1fr; } }
+      .proto-col{ display:flex; flex-direction:column; min-width:0; min-height:0; height:100%; overflow:visible; }
       .proto-col .vlabel{
         display:flex; align-items:center; justify-content:space-between; gap:.75rem;
         border-radius:14px 14px 0 0; font-size:.92rem; padding:.65rem .85rem; text-align:left;
@@ -455,9 +496,10 @@
         position:relative;
         display:flex; align-items:flex-start; justify-content:center; width:100%; margin:0; padding:0;
         border:1px solid #e7e7e7; border-top:0; border-radius:0 0 14px 14px; background:#fff;
-        overflow:visible; cursor:pointer; min-height:min(52vh, 28rem);
+        overflow:visible; cursor:pointer; min-height:0; flex:1 1 auto;
         transition:box-shadow .15s ease, border-color .15s ease;
       }
+      .slide-directions .proto-stage{ max-height:100%; }
       .proto-stage.is-magnifying{ z-index:40; }
       .proto-stage__inner{
         position:relative; width:100%; display:flex; justify-content:center; align-items:flex-start;
@@ -482,6 +524,10 @@
       .proto-stage:hover{ border-color:#ffda08; box-shadow:0 0 0 3px rgba(255,218,8,.22); }
       .proto-stage:focus-visible{ outline:none; border-color:#ffda08; box-shadow:0 0 0 3px rgba(255,218,8,.55); }
       .proto-stage img{ display:block; width:100%; height:auto; max-height:min(52vh, 28rem); object-fit:contain; object-position:center top; background:transparent; pointer-events:none; }
+      .slide-directions .proto-stage__inner{ max-height:min(34vh, 16.5rem); }
+      .slide-directions .proto-stage img{ max-height:min(34vh, 16.5rem); }
+      .slide-directions .proto-meta{ margin-top:0.3rem; }
+      .slide-directions .proto-frame{ font-size:0.72rem; }
       .proto-meta{ margin-top:.5rem; padding:0 .1rem; }
       .proto-frame{ font-size:.8rem; font-weight:700; font-variant-numeric:tabular-nums; color:#6e6e6e; }
 
@@ -1312,9 +1358,9 @@
             </div>
           </div>
         </div>
-        <div class="directions-foot rounded-2xl bg-ink text-white p-6 md:p-8 mt-5" data-anim style="--i:2">
-          <p class="text-xl md:text-2xl font-extrabold tracking-tight">Design critique to narrow it down to 2 ideas.</p>
-          <p class="mt-2 text-white/60">9 P&amp;S designers, 4 PMs across pillars, the Engineering team, the P&amp;S HOD and the Data team.</p>
+        <div class="directions-foot" data-anim style="--i:2">
+          <p class="directions-foot__lead">Design critique to narrow it down to 2 ideas.</p>
+          <p class="directions-foot__meta">9 P&amp;S designers, 4 PMs across pillars, the Engineering team, the P&amp;S HOD and the Data team.</p>
         </div>
       </div>
     </section>
@@ -1323,7 +1369,7 @@
     <section class="slide slide-scroll" data-chapter="case-study" data-title="Usability test">
       <div class="slide-inner top">
         <p class="deck-eyebrow text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Test</p>
-        <h2 class="w-full max-w-none text-2xl md:text-4xl font-extrabold tracking-tight" data-anim style="--i:1">We tested 2 concepts for usability with <span class="hl">10 users</span></h2>
+        <h2 class="w-full max-w-none text-2xl md:text-4xl font-extrabold tracking-tight" data-anim style="--i:1">We tested 2 concepts for usability with 10 users</h2>
         <!-- Each insight paired with the takeaway it drove -->
         <div class="hidden lg:grid lg:grid-cols-[1fr_2.5rem_1fr] gap-4 mb-3" data-anim style="--i:2">
           <p class="text-xs font-bold uppercase tracking-[0.18em] text-mute">Insight</p>
@@ -1334,22 +1380,22 @@
           <div class="grid lg:grid-cols-[1fr_2.5rem_1fr] gap-3 lg:gap-4 items-stretch" data-anim style="--i:3">
             <div class="bg-elev rounded-2xl p-5 flex items-center"><p class="m-0 text-mute leading-relaxed"><span class="abadge a-a inline-flex align-middle mr-2">A</span><strong class="text-ink">4/8 struggled</strong> to associate dropdown categories with the dynamic offer. Task time was <strong class="text-ink">15% lower</strong> than Production.</p></div>
             <div class="hidden lg:flex items-center justify-center text-ink/30 text-2xl" aria-hidden="true">→</div>
-            <div class="bg-accent text-accink rounded-2xl p-5 flex items-center"><p class="m-0 leading-relaxed">Primary/secondary/tertiary categories got associated with filters — adding <strong>cognitive load</strong> and failing the hypothesis.</p></div>
+            <div class="usability-takeaway rounded-2xl p-5 flex items-center"><p class="m-0 leading-relaxed">Primary/secondary/tertiary categories got associated with filters — adding <strong>cognitive load</strong> and failing the hypothesis.</p></div>
           </div>
           <div class="grid lg:grid-cols-[1fr_2.5rem_1fr] gap-3 lg:gap-4 items-stretch" data-anim style="--i:4">
             <div class="bg-elev rounded-2xl p-5 flex items-center"><p class="m-0 text-mute leading-relaxed"><span class="abadge-stack mr-2" title="Variant B — usability test winner"><img class="abadge-crown" src="assets/olx/crown.png" alt="" width="22" height="22" decoding="async" aria-hidden="true"><span class="abadge a-b">B</span></span><strong class="text-ink">7/8 were satisfied</strong> with the multi-level menu and appreciated the summary view. Task time was <strong class="text-ink">28% higher</strong> than Production.</p></div>
             <div class="hidden lg:flex items-center justify-center text-ink/30 text-2xl" aria-hidden="true">→</div>
-            <div class="bg-accent text-accink rounded-2xl p-5 flex items-center"><p class="m-0 leading-relaxed">Users found categories with <strong>ease</strong>; one suggested a <strong>shortcut to repeat</strong> the selection.</p></div>
+            <div class="usability-takeaway rounded-2xl p-5 flex items-center"><p class="m-0 leading-relaxed">Users found categories with <strong>ease</strong>; one suggested a <strong>shortcut to repeat</strong> the selection.</p></div>
           </div>
           <div class="grid lg:grid-cols-[1fr_2.5rem_1fr] gap-3 lg:gap-4 items-stretch" data-anim style="--i:5">
             <div class="bg-elev rounded-2xl p-5 flex items-center"><p class="m-0 text-mute leading-relaxed"><span class="abadge a-a inline-flex align-middle mr-2">A</span>Only <strong class="text-ink">2/8</strong> found the filter view easier to compare — and they ignored the &lsquo;see-more&rsquo; CTA while comparing packages.</p></div>
             <div class="hidden lg:flex items-center justify-center text-ink/30 text-2xl" aria-hidden="true">→</div>
-            <div class="bg-accent text-accink rounded-2xl p-5 flex items-center"><p class="m-0 leading-relaxed">Most users expect offers to carry as much <strong>upfront information</strong> as possible.</p></div>
+            <div class="usability-takeaway rounded-2xl p-5 flex items-center"><p class="m-0 leading-relaxed">Most users expect offers to carry as much <strong>upfront information</strong> as possible.</p></div>
           </div>
           <div class="grid lg:grid-cols-[1fr_2.5rem_1fr] gap-3 lg:gap-4 items-stretch" data-anim style="--i:6">
             <div class="bg-elev rounded-2xl p-5 flex items-center"><p class="m-0 text-mute leading-relaxed"><span class="abadge-stack mr-2" title="Variant B — usability test winner"><img class="abadge-crown" src="assets/olx/crown.png" alt="" width="22" height="22" decoding="async" aria-hidden="true"><span class="abadge a-b">B</span></span>With <strong class="text-ink">upfront category tags</strong>, 5/8 intuitively named categories as a variable for why price differs per package.</p></div>
             <div class="hidden lg:flex items-center justify-center text-ink/30 text-2xl" aria-hidden="true">→</div>
-            <div class="bg-accent text-accink rounded-2xl p-5 flex items-center"><p class="m-0 leading-relaxed">Users don&rsquo;t always tap see-more — a long list of category tags can also add cognitive load.</p></div>
+            <div class="usability-takeaway rounded-2xl p-5 flex items-center"><p class="m-0 leading-relaxed">Users don&rsquo;t always tap see-more — a long list of category tags can also add cognitive load.</p></div>
           </div>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 mt-8" data-anim style="--i:7">
@@ -1376,7 +1422,7 @@
             <p class="deck-eyebrow text-mute text-xs font-bold uppercase tracking-[0.2em]" data-anim style="--i:0">Outcome</p>
             <h2 class="text-3xl md:text-5xl font-extrabold tracking-tight max-w-[22ch]" data-anim style="--i:1">Validated on production</h2>
             <p class="mt-5 text-xl md:text-2xl font-medium leading-snug max-w-[40ch]" data-anim style="--i:2">
-              Variant B went into an <span class="hl">A (Production) / B (Multi-level menu)</span> test in the Polish market — where we saw a <strong class="text-ink font-semibold">+12% upward trend</strong> in purchase conversion of Ad packages.
+              Variant B went into an A (Production) / B (Multi-level menu) test in the Polish market — where we saw a <strong class="text-ink font-semibold">+12% upward trend</strong> in purchase conversion of Ad packages.
             </p>
             <p class="mt-6 text-lg text-mute leading-relaxed max-w-[52ch]" data-anim style="--i:3">
               Uplift in package conversion lifts Ads posted on the platform and translated into an <strong class="text-ink font-semibold">8% increase in paying Sellers</strong> 🍾

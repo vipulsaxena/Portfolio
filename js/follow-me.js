@@ -558,11 +558,15 @@
   }
 
   function activeScroller() {
+    var stage = document.getElementById("present-stage");
+    if (stage && global.PortfolioDeck) return stage;
     var deck = global.PortfolioDeck;
     if (deck) {
+      var active = document.querySelector(".slide.is-active");
+      if (active) return active;
       var slides = document.querySelectorAll(".slide");
       var idx = typeof deck.getIndex === "function" ? deck.getIndex() : 0;
-      return slides[idx] || document.querySelector(".slide.is-active");
+      return slides[idx] || null;
     }
     return document.scrollingElement || document.documentElement;
   }
@@ -672,7 +676,7 @@
       deck: deck,
       slide: slide,
       section: deck ? null : caseStudySection(),
-      scroll: deck ? null : readScrollRatio(),
+      scroll: readScrollRatio(),
       widgets: readWidgets(),
       highlight: isCaseStudyPage() ? lastHighlight : null,
       ts: Date.now(),
@@ -721,20 +725,20 @@
         global.PortfolioDeck.go(idx);
       }
     }
-    if (!wantDeck) {
-      if (state.section && (here === "raisin" || here === "olx")) {
-        var el = document.getElementById(state.section);
-        if (el && lastSection !== state.section) {
-          lastSection = state.section;
-          el.scrollIntoView({ behavior: "smooth", block: "start" });
-        } else if (el && state.scroll != null) {
-          writeScrollRatio(state.scroll);
-        }
+    if (!wantDeck && state.section && (here === "raisin" || here === "olx")) {
+      var el = document.getElementById(state.section);
+      if (el && lastSection !== state.section) {
+        lastSection = state.section;
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
       } else if (state.scroll != null) {
         setTimeout(function () {
           writeScrollRatio(state.scroll);
         }, slideChanged ? 80 : 0);
       }
+    } else if (state.scroll != null) {
+      setTimeout(function () {
+        writeScrollRatio(state.scroll);
+      }, slideChanged ? 120 : 0);
     }
     applyWidgets(state.widgets);
     applyHighlight(state.highlight);
@@ -895,7 +899,7 @@
     var link = document.createElement("link");
     link.id = "follow-me-css";
     link.rel = "stylesheet";
-    link.href = "/css/follow-me.css";
+    link.href = "/css/follow-me.css?v=2";
     document.head.appendChild(link);
   }
 
@@ -1115,8 +1119,10 @@
     } else {
       endedEl.innerHTML =
         '<div class="follow-ended__card">' +
-        "<h2>This presentation has ended.</h2>" +
-        '<a class="follow-chip__btn" href="/index.html">Continue exploring portfolio</a>' +
+        "<h2>Thanks for following along</h2>" +
+        '<p class="follow-ended__lead">The live presentation has ended. You’re welcome to keep exploring the portfolio at your own pace.</p>' +
+        '<p class="follow-ended__thanks">Hope you enjoyed the walkthrough — thank you for staying with me.</p>' +
+        '<a class="follow-ended__cta" href="/index.html">Explore the portfolio</a>' +
         "</div>";
     }
   }
@@ -1312,6 +1318,7 @@
       }
       setTimeout(function () {
         if (lastSent && lastSent.widgets) applyWidgets(lastSent.widgets);
+        if (lastSent && lastSent.scroll != null) writeScrollRatio(lastSent.scroll);
       }, 120);
     }
   }
@@ -1460,7 +1467,9 @@
     document.addEventListener(
       "scroll",
       function (e) {
-        if (e.target && e.target.classList && e.target.classList.contains("slide")) onScroll();
+        if (!e.target) return;
+        if (e.target.classList && e.target.classList.contains("slide")) onScroll();
+        if (e.target.id === "present-stage") onScroll();
       },
       true
     );
@@ -1474,8 +1483,9 @@
     });
     window.addEventListener("portfolio:present-slide-ready", function () {
       stampHighlightIds();
-      if (role === "audience" && following && lastSent && lastSent.widgets) {
-        applyWidgets(lastSent.widgets);
+      if (role === "audience" && following && lastSent) {
+        if (lastSent.widgets) applyWidgets(lastSent.widgets);
+        if (lastSent.scroll != null) writeScrollRatio(lastSent.scroll);
       } else if (role === "presenter") {
         broadcastLocal(true);
       }

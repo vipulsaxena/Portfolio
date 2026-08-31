@@ -569,7 +569,7 @@ body.summary-v2.has-shell .n26-journey-nav .journey-nav__btn.is-active {
   margin: 0;
 }
 
-/* Validation pairs — neutral takeaway (no yellow) */
+/* Validation pairs */
 .n26-pair-grid {
   display: grid;
   gap: var(--sp-md);
@@ -595,9 +595,10 @@ body.summary-v2.has-shell .n26-journey-nav .journey-nav__btn.is-active {
   border: 1px solid var(--line);
   color: var(--muted);
 }
+/* Validation pairs — insight neutral, takeaway light yellow */
 .n26-pair-takeaway {
-  background: var(--paper);
-  border: 1px solid var(--line-strong);
+  background: var(--accent-soft, #fff3b0);
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--line));
   color: var(--ink);
 }
 .n26-pair-arrow {
