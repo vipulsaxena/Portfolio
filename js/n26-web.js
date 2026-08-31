@@ -28,7 +28,7 @@
   /* Play again buttons */
   document.querySelectorAll("[data-replay]").forEach(function (btn) {
     btn.addEventListener("click", function () {
-      var card = btn.closest(".n26-hypo-row") || btn.closest(".n26-launch-phones") || btn.closest(".n26-outcome-visual") || btn.parentElement;
+      var card = btn.closest(".n26-hypo-card") || btn.closest(".n26-launch-phone") || btn.parentElement;
       var v = card && card.querySelector("video");
       if (!v) return;
       v.currentTime = 0;

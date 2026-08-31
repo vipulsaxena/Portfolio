@@ -2,6 +2,16 @@
 (function () {
   "use strict";
 
+  function emitWidgetChange(id, value) {
+    if (!id) return;
+    document.dispatchEvent(
+      new CustomEvent("portfolio:widget-change", {
+        bubbles: true,
+        detail: { id: id, value: String(value) },
+      })
+    );
+  }
+
   /* Background view toggle */
   (function () {
     var seg = document.getElementById("bgSeg");
@@ -15,6 +25,7 @@
       shots.forEach(function (s) {
         s.classList.toggle("active", s.dataset.bgShot === n);
       });
+      emitWidgetChange(seg.getAttribute("data-fm-widget") || "olx-bg", n);
     }
     btns.forEach(function (b) {
       b.addEventListener("click", function () { activate(b.dataset.bg); });
@@ -35,6 +46,7 @@
       shots.forEach(function (sh) {
         sh.classList.toggle("active", sh.dataset.auditShot === n);
       });
+      emitWidgetChange(list.getAttribute("data-fm-widget"), n);
     }
     items.forEach(function (it) {
       var n = it.dataset.audit;
@@ -60,7 +72,10 @@
         "Variant " + (key === "a" ? "A" : "B") + " prototype, frame " + (idx[key] + 1) + " of 5";
       if (step) step.textContent = String(idx[key] + 1);
       var stage = document.querySelector('[data-proto-cycle="' + key + '"]');
-      if (stage) stage.setAttribute("data-fm-value", String(idx[key]));
+      if (stage) {
+        stage.setAttribute("data-fm-value", String(idx[key]));
+        emitWidgetChange(stage.getAttribute("data-fm-widget"), idx[key]);
+      }
       if (stage && typeof stage._protoRefreshLens === "function") {
         stage._protoRefreshLens();
       }

@@ -632,9 +632,8 @@
           if (input.value === PASSWORD) {
             try {
               sessionStorage.setItem("olxAccessGranted", "1");
-              sessionStorage.setItem("vipulPresent", "1");
             } catch(_){}
-            window.location.href = "olx-presentation.html";
+            window.location.replace("olx.html");
           } else {
             error.hidden = false; input.focus(); input.select();
           }
@@ -677,11 +676,8 @@
         form.addEventListener("submit", function(e){
           e.preventDefault();
           if (input.value === PASSWORD) {
-            try {
-              sessionStorage.setItem("n26AccessGranted", "1");
-              sessionStorage.setItem("vipulPresent", "1");
-            } catch(_){}
-            window.location.href = "n26-presentation.html";
+            try { sessionStorage.setItem("n26AccessGranted", "1"); } catch(_){}
+            window.location.href = "n26.html";
           } else {
             error.hidden = false; input.focus(); input.select();
           }
@@ -725,11 +721,8 @@
           e.preventDefault();
           error.hidden = true;
           if (input.value === PASSWORD) {
-            try {
-              sessionStorage.setItem("gomartAccessGranted", "1");
-              sessionStorage.setItem("vipulPresent", "1");
-            } catch(_){}
-            window.location.href = "gomart-presentation.html";
+            try { sessionStorage.setItem("gomartAccessGranted", "1"); } catch(_){}
+            window.location.href = "gomart.html";
           } else {
             error.hidden = false; input.focus(); input.select();
           }

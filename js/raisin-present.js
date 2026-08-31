@@ -28,6 +28,41 @@
 
   var CHAPTER_NAV_IDS = ["setup", "period-1", "period-2", "period-3", "proof"];
 
+  function emitWidgetChange(id, value) {
+    if (!id) return;
+    document.dispatchEvent(
+      new CustomEvent("portfolio:widget-change", {
+        bubbles: true,
+        detail: { id: id, value: String(value) },
+      })
+    );
+  }
+
+  function ensureWhyWidget(root) {
+    if (!root || !root.querySelector(".why-proof__frame[data-fm-why]")) return;
+    var host = root.classList.contains("why-proof") ? root : root.querySelector(".why-proof");
+    if (!host || host.getAttribute("data-fm-kind") === "why") return;
+    host.setAttribute("data-fm-widget", "raisin-why");
+    host.setAttribute("data-fm-kind", "why");
+    if (!host.getAttribute("data-fm-value")) host.setAttribute("data-fm-value", "none");
+  }
+
+  function ensureTradeoffWidgets(root) {
+    root.querySelectorAll("[data-trade-off-switcher]").forEach(function (switchRoot) {
+      if (switchRoot.getAttribute("data-fm-widget")) return;
+      var beat = switchRoot.closest('[aria-label*="Trade-off 01"]');
+      if (beat) {
+        switchRoot.setAttribute("data-fm-widget", "raisin-tradeoff-01");
+      } else {
+        switchRoot.setAttribute("data-fm-widget", "raisin-tradeoff-02");
+      }
+      switchRoot.setAttribute("data-fm-kind", "variant");
+      if (!switchRoot.getAttribute("data-fm-value")) {
+        switchRoot.setAttribute("data-fm-value", switchRoot.getAttribute("data-default") || "b");
+      }
+    });
+  }
+
   /* Presentation trim — hide web-depth copy; thesis/body max ~2 lines in deck. */
   var PRESENT_TRIM = {
     hero: [".hero__sub:not(.hero__sub--thesis)"],
@@ -448,6 +483,7 @@
         before.style.clipPath = "inset(0 " + (100 - pct) + "% 0 0)";
         handle.style.left = pct + "%";
         el.setAttribute("data-fm-value", String(Math.round(pct)));
+        emitWidgetChange(el.getAttribute("data-fm-widget"), Math.round(pct));
       }
       var dragging = false;
       function posFromEvent(e) {
@@ -515,6 +551,8 @@
           panel.hidden = !on;
         });
       }
+      switchRoot.setAttribute("data-fm-value", v);
+      emitWidgetChange(switchRoot.getAttribute("data-fm-widget"), v);
     }
 
     root.querySelectorAll("[data-trade-off-switcher]").forEach(function (switchRoot) {
@@ -564,6 +602,8 @@
         panels.forEach(function (panel) {
           panel.hidden = panel.getAttribute("data-tab-panel") !== id;
         });
+        tabsRoot.setAttribute("data-fm-value", id || "");
+        emitWidgetChange(tabsRoot.getAttribute("data-fm-widget"), id || "");
       }
       tabs.forEach(function (tab) {
         tab.addEventListener("click", function () {
@@ -607,7 +647,10 @@
           btn.classList.toggle("prototype-persona-tab--active", isActive);
           btn.setAttribute("aria-selected", isActive ? "true" : "false");
         });
-        sendPersona(tab.getAttribute("data-persona-id"));
+        var personaId = tab.getAttribute("data-persona-id");
+        sendPersona(personaId);
+        switcher.setAttribute("data-fm-value", personaId || "");
+        emitWidgetChange(switcher.getAttribute("data-fm-widget"), personaId || "");
       }
       switcher.addEventListener("click", function (e) {
         var tab = e.target.closest("[data-persona-id]");
@@ -814,6 +857,8 @@
 
   function initPresentSlide(root) {
     if (!root) return;
+    ensureWhyWidget(root);
+    ensureTradeoffWidgets(root);
     revealAll(root);
     root.querySelectorAll("[data-trade-off-switcher]").forEach(function (el) {
       delete el.dataset.presentTradeoffInit;
@@ -846,6 +891,7 @@
     }
     if (root.querySelector("[data-count]")) animateCounters(root);
     bindLightboxInRoot(root);
+    document.dispatchEvent(new CustomEvent("portfolio:present-slide-ready", { bubbles: true }));
   }
 
   function cleanupCarousels() {

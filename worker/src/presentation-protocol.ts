@@ -14,6 +14,8 @@ export type PageId = (typeof PAGE_IDS)[number];
 
 export interface PresentationState {
   page: PageId;
+  /** True when the presenter is on *-presentation.html (slide deck), false on web scroll view. */
+  deck: boolean | null;
   slide: number | null;
   section: string | null;
   scroll: number | null;
@@ -88,6 +90,11 @@ export function sanitizeState(raw: unknown): PresentationState | null {
   if (!raw || typeof raw !== "object") return null;
   const o = raw as Record<string, unknown>;
   if (typeof o.page !== "string" || !PAGE_SET.has(o.page)) return null;
+  let deck: boolean | null = null;
+  if (o.deck !== null && o.deck !== undefined) {
+    if (typeof o.deck !== "boolean") return null;
+    deck = o.deck;
+  }
   let slide: number | null = null;
   if (o.slide !== null && o.slide !== undefined) {
     if (typeof o.slide !== "number" || !Number.isInteger(o.slide) || o.slide < 1 || o.slide > 200) {
@@ -112,7 +119,7 @@ export function sanitizeState(raw: unknown): PresentationState | null {
     highlight = o.highlight;
   }
   const ts = typeof o.ts === "number" && Number.isFinite(o.ts) ? o.ts : Date.now();
-  return { page: o.page as PageId, slide, section, scroll, widgets, highlight, ts };
+  return { page: o.page as PageId, deck, slide, section, scroll, widgets, highlight, ts };
 }
 
 export function randomToken(bytes = 24): string {

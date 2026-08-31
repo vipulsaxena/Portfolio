@@ -96,11 +96,13 @@
 .present-error{ color:#e0362f; font-size:.9rem; font-weight:600; }
 .follow-nav-badge{
   display:inline-flex; align-items:center; gap:6px;
-  margin-left:8px; padding:6px 10px; border-radius:999px;
+  margin-left:0; margin-right:8px; padding:6px 10px; border-radius:999px;
   background:#f7f7f7; color:#262626; border:0; cursor:pointer;
   font-family:"Inter", system-ui, sans-serif;
   font-size:13px; font-weight:700; line-height:1;
+  flex:0 0 auto;
 }
+.shell-header .shell-actions .follow-nav-badge{ order:-1; }
 .follow-nav-badge:hover{ background:#ffda08; }
 .follow-nav-badge:focus-visible{ outline:none; box-shadow:0 0 0 3px rgba(255,218,8,.45); }
 .follow-nav-badge__icon{ display:block; flex:0 0 auto; }

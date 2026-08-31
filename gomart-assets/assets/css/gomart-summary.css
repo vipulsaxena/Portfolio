@@ -1,5 +1,11 @@
 /* ==========================================================================
-   GoMart case study — summary-v2 overrides & web components
+   GoMart case study — summary-v2 theme + web components
+
+   Visual system follows Raisin / OLX:
+   - No decorative background images behind content. Content sits on paper,
+     paper-dim, or a single flat client tint.
+   - Layout is built from the shared .period-split primitives (50/50, 60/40).
+   - Section rhythm comes from .section / .period / .period__head / .period__story.
    ========================================================================== */
 
 html.summary-v2.gomart-theme,
@@ -8,20 +14,318 @@ body.summary-v2.gomart-theme {
   --client-ink: #262626;
   --client-soft: #fff6f6;
   --client-dim: #f0a8ad;
-  --gomart-blush: #ffdcdc;
   --gomart-green: #0b5d34;
-  --gomart-section-pad: clamp(2.5rem, 6vw, 4.5rem);
-  --gomart-beat-gap: clamp(2rem, 4vw, 3rem);
 }
 
-/* Portfolio highlight (matches deck) */
-.hl {
+/* Portfolio highlight — disabled on web page (deck-only) */
+body.gomart-theme .hl {
+  background: none;
+  color: inherit;
+  padding: 0;
+  border-radius: 0;
+  box-decoration-break: unset;
+}
+
+/* --------------------------------------------------------------------------
+   Header — title sticks left (N26 parity)
+   -------------------------------------------------------------------------- */
+body.summary-v2.gomart-theme.has-shell .shell-bar {
+  gap: var(--sp-sm);
+  min-width: 0;
+}
+body.gomart-theme .deck-title {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+  padding-inline: 0;
+  margin-right: auto;
+}
+@media (max-width: 520px) {
+  body.gomart-theme .deck-title {
+    font-size: 0.78rem;
+    white-space: normal;
+    line-height: 1.25;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Hero + My role (N26 / OLX intro pattern)
+   -------------------------------------------------------------------------- */
+.gomart-hero .hero-split--stage {
+  grid-template-columns: minmax(0, 0.44fr) minmax(0, 0.56fr);
+  gap: var(--sp-xl);
+  align-items: center;
+}
+.gomart-hero .hero__title {
+  font-size: clamp(1.5rem, 2.6vw, 2.1rem);
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+  max-width: 26ch;
+}
+.gomart-hero-visual {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.gomart-hero-img {
+  width: 80%;
+  max-width: 80%;
+  height: auto;
+  object-fit: cover;
+  object-position: center;
+  border-radius: var(--radius-md);
+  cursor: zoom-in;
+}
+.gomart-figure-plain {
+  margin: 0;
+  background: none;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+}
+.gomart-figure-plain img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: none;
+  box-shadow: none;
+  background: transparent;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  cursor: zoom-in;
+}
+.gomart-role-figure {
+  --gomart-role-size: calc(22rem / 1.6 * 1.1 * 1.15);
+  width: min(100%, var(--gomart-role-size));
+  max-width: var(--gomart-role-size);
+  aspect-ratio: 1 / 1;
+  margin-inline: auto;
+  justify-self: center;
+  align-self: center;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+}
+.gomart-role-figure img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: var(--radius-md);
+  cursor: zoom-in;
+}
+@media (min-width: 1024px) {
+  .gomart-role-figure {
+    width: min(calc(100% / 1.6 * 1.1 * 1.15), var(--gomart-role-size));
+    max-width: min(calc(100% / 1.6 * 1.1 * 1.15), var(--gomart-role-size));
+    justify-self: center;
+    margin-inline: auto;
+  }
+}
+#context-role .section-head {
+  margin-bottom: var(--sp-sm);
+  max-width: none;
+}
+#context-role .gomart-crumb {
+  margin: 0 0 var(--sp-md);
+}
+#context-role .gomart-role-split {
+  margin-top: 0;
+  gap: var(--sp-xl);
+  align-items: center;
+}
+@media (min-width: 1024px) {
+  #context-role .gomart-role-split {
+    gap: var(--sp-xl) var(--sp-2xl);
+    align-items: center;
+  }
+}
+#context-role .gomart-role-copy .beat__text {
+  max-width: none;
+  margin-top: var(--sp-md);
+}
+
+/* Case study intro — cover, impact, shoutouts, product video */
+.gomart-case-intro {
+  padding-bottom: 0;
+}
+.gomart-case-intro .rule--thick {
+  margin-top: var(--sp-2xl);
+  margin-bottom: 0;
+}
+.gomart-case-split {
+  display: grid;
+  gap: var(--sp-xl);
+  align-items: end;
+}
+@media (min-width: 1024px) {
+  .gomart-case-split {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  }
+}
+.gomart-case-thesis {
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  font-weight: 600;
+  color: var(--ink);
+  margin-top: var(--sp-sm);
+}
+.gomart-case-intro__copy .beat__text + .beat__text {
+  margin-top: var(--sp-sm);
+}
+.gomart-case-intro__copy .gomart-status-pill {
+  margin-top: var(--sp-md);
+}
+.gomart-shoutouts {
+  margin-top: var(--sp-lg);
+}
+.gomart-shoutouts__label {
+  font-size: var(--fs-2xs);
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 var(--sp-sm);
+}
+.gomart-shoutouts .beat__text {
+  margin: 0;
+}
+.gomart-case-intro__media {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  min-height: clamp(16rem, 32vw, 24rem);
+}
+.gomart-case-intro__media .gomart-cover-stage {
+  width: 100%;
+  max-width: min(100%, 19.375rem);
+}
+.phone-mock.gomart-cover-phone {
+  margin: 0;
+  margin-inline: 0;
+  pointer-events: none;
+}
+.gomart-cover-stage {
+  position: relative;
+  width: 100%;
+  max-width: 28rem;
+  min-height: clamp(16rem, 30vw, 22rem);
+  margin-inline: auto;
+}
+.gomart-cover-phone {
+  position: absolute;
+  left: 10%;
+  bottom: 0;
+  width: min(52%, 14.5rem);
+  max-width: 14.5rem;
+  margin: 0;
+  z-index: 2;
+}
+.gomart-cover-char {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 30%;
+  max-width: 11.5rem;
+  height: auto;
+  object-fit: contain;
+  object-position: bottom right;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Journey nav — pill style */
+body.summary-v2.gomart-theme.has-shell .gomart-journey-nav {
+  gap: 0.45rem;
+  padding-block: 0.75rem;
+  justify-content: center;
+  overflow-x: auto;
+}
+body.summary-v2.gomart-theme.has-shell .gomart-journey-nav .journey-nav__sep {
+  display: none;
+}
+body.summary-v2.gomart-theme.has-shell .gomart-journey-nav .journey-nav__btn {
+  flex: none;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--line);
+  background: var(--paper);
+  padding: 0.5rem 1rem;
+  min-height: 2.25rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+body.summary-v2.gomart-theme.has-shell .gomart-journey-nav .journey-nav__btn.is-active {
+  border-color: var(--accent);
   background: var(--accent);
   color: var(--accent-ink);
-  padding: 0 0.1em;
-  border-radius: 0.08em;
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
+}
+@media (max-width: 900px) {
+  .gomart-journey-nav { justify-content: flex-start; }
+  .gomart-hero .hero-split--stage { grid-template-columns: 1fr; }
+  .gomart-case-split { grid-template-columns: 1fr; align-items: start; }
+}
+
+/* --------------------------------------------------------------------------
+   Flat tint band (replaces every pattern / photo background band)
+   -------------------------------------------------------------------------- */
+
+/* components.css .chip has no display, so <p class="chip"> stretches full
+   width. Pin every chip to its content. */
+body.gomart-theme .chip {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  max-width: 100%;
+}
+
+/* components.css .beat is a 2-col grid; GoMart beats own their own splits. */
+body.gomart-theme .beat,
+body.gomart-theme .gomart-beat {
+  display: block;
+  grid-template-columns: none;
+  border-top: none;
+  padding-top: 0;
+  min-width: 0;
+}
+
+/* Divide consecutive beats with a hairline so the vertical space between them
+   reads as structure rather than a gap. */
+body.gomart-theme .period__story {
+  gap: var(--sp-xl);
+}
+body.gomart-theme .period__story > .beat + .beat {
+  padding-top: var(--sp-xl);
+  border-top: 1px solid var(--line);
+}
+
+/* Where one column is inherently taller (a tall figure, a card stack), centre
+   the pair so slack distributes above and below instead of pooling at the
+   bottom of the short column. */
+.gomart-split--center { align-items: center; }
+@media (max-width: 900px) {
+  .gomart-split--center { align-items: start; }
+}
+
+/* Keep measure honest in single-column beats, unbounded inside splits. */
+body.gomart-theme .gomart-beat > .beat__text,
+body.gomart-theme .gomart-beat > .lede {
+  max-width: 68ch;
+}
+body.gomart-theme .period-split__main .beat__text,
+body.gomart-theme .period-split__main .lede {
+  max-width: none;
 }
 
 /* Breadcrumb */
@@ -42,169 +346,43 @@ body.summary-v2.gomart-theme {
   text-decoration-thickness: 3px;
   text-underline-offset: 3px;
 }
+.gomart-crumb { margin: var(--sp-sm) 0 var(--sp-md); }
+
+/* Word kicker in place of a numeral for the unnumbered chapters. */
+.period__kicker {
+  margin: 0;
+  color: var(--ink);
+}
 
 /* --------------------------------------------------------------------------
-   Web-native layout system (OLX / N26 parity)
+   Flat tint band (replaces every pattern / photo background band)
    -------------------------------------------------------------------------- */
-.gomart-step {
-  padding-block: var(--gomart-section-pad);
-}
-.gomart-step--tight {
-  padding-block: var(--sp-xl);
-}
-.gomart-beat-gap {
-  margin-top: var(--gomart-beat-gap);
-}
-.gomart-beat-gap--rule {
-  margin-top: var(--gomart-beat-gap);
-  padding-top: var(--gomart-beat-gap);
-  border-top: var(--border);
-}
-
-/* Full-bleed bands */
-.gomart-band {
-  width: calc(100% + 2 * var(--page-inset));
-  max-width: 100vw;
-  margin-inline: calc(-1 * var(--page-inset));
-  box-sizing: border-box;
-}
-.gomart-band--blush {
+.gomart-tint {
   background: var(--client-soft);
-  padding-block: var(--gomart-section-pad);
 }
-.gomart-band__inner {
-  padding-inline: var(--page-inset);
-  box-sizing: border-box;
-}
-.gomart-band--studio {
-  position: relative;
-  padding-block: clamp(3rem, 8vw, 5rem);
-  min-height: clamp(22rem, 50vh, 32rem);
-  display: flex;
-  align-items: flex-end;
-}
-.gomart-band--studio .gomart-band__bg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-}
-.gomart-band--studio .gomart-band__inner {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-}
-.gomart-band--pattern {
-  background: #fff6f6 url("../../../assets/gomart/pattern.png") center / cover no-repeat;
-  padding-block: var(--sp-xl);
-}
-.gomart-band--pattern2 {
-  background: var(--gomart-green) url("../../../assets/gomart/Hypothisis/pattern2.png") center / cover no-repeat;
-  padding-block: var(--sp-xl);
-}
-.gomart-band--pattern3 {
-  background: #f0a0b0 url("../../../assets/gomart/Hypothisis/pattern3.png") center / cover no-repeat;
-  padding-block: var(--sp-xl);
+.gomart-tint--client {
+  background: var(--client);
 }
 
-/* Stack beats — components.css .beat is a 2-col grid */
-body.gomart-theme .beat,
-body.gomart-theme .wealth-hub-beat,
-body.gomart-theme .gomart-beat {
-  display: block;
-  grid-template-columns: none;
-  border-top: none;
-  padding-top: 0;
-}
-body.gomart-theme .why-proofs .why-proof {
-  display: grid;
-  grid-template-columns: minmax(0, 0.38fr) minmax(0, 0.62fr);
-  gap: var(--sp-xl);
-  align-items: start;
-  width: 100%;
-  padding-top: var(--sp-xl);
-  border-top: 1px solid var(--line);
-}
-body.gomart-theme .why-proofs .why-proof:first-child {
-  padding-top: 0;
-  border-top: none;
-}
-@media (max-width: 900px) {
-  body.gomart-theme .why-proofs .why-proof {
-    grid-template-columns: 1fr;
-    gap: var(--sp-lg);
-  }
-  body.gomart-theme .why-proofs .why-proof__title,
-  body.gomart-theme .why-proofs .why-proof__text {
-    max-width: none;
-  }
-}
-body.gomart-theme .why-proofs .why-proof--stacked {
-  grid-template-columns: 1fr;
-}
-body.gomart-theme .beat .beat__text,
-body.gomart-theme .gomart-beat .beat__text {
-  max-width: 68ch;
-}
-body.gomart-theme .period-split {
-  margin-top: var(--sp-lg);
-}
-
-/* Journey intro track-key — GoMart parallel tracks */
-.gomart-track-key .track-key__item {
-  border-left: 3px solid var(--client-dim);
-}
-
-/* Cover grid */
-.gomart-cover-grid {
-  display: grid;
-  gap: var(--sp-xl);
-  align-items: center;
-}
-@media (min-width: 900px) {
-  .gomart-cover-grid {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 0.95fr);
-  }
-}
-.gomart-cover-grid__copy .hero__title {
-  font-size: clamp(1.75rem, 3.5vw, 3.25rem);
-  line-height: 1.08;
-  max-width: 16ch;
-}
-.gomart-cover-grid__hmw {
-  font-size: clamp(1.05rem, 1.6vw, 1.35rem);
-  font-weight: 600;
-  line-height: 1.35;
-  max-width: 40ch;
-  margin-top: var(--sp-md);
-}
 .gomart-status-pill {
   display: inline-flex;
+  align-items: center;
+  width: fit-content;
   margin-top: var(--sp-lg);
-  padding: 0.45rem 0.85rem;
-  border-radius: 999px;
+  padding: 0.45rem 0.9rem;
+  border-radius: var(--radius-pill);
   background: var(--ink);
   color: var(--paper);
   font-size: var(--fs-xs);
   font-weight: 700;
 }
 
-/* Context splits */
-.gomart-context-split {
-  display: grid;
-  gap: var(--sp-xl);
-  align-items: center;
-}
-@media (min-width: 900px) {
-  .gomart-context-split {
-    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-  }
-}
+/* --------------------------------------------------------------------------
+   Figures
+   -------------------------------------------------------------------------- */
 .gomart-figure {
   margin: 0;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   overflow: hidden;
   border: var(--border);
   background: var(--paper);
@@ -215,428 +393,151 @@ body.gomart-theme .period-split {
   height: auto;
   cursor: zoom-in;
 }
-
-/* Studio overlay card */
-.gomart-studio-card {
-  background: color-mix(in srgb, var(--client-soft) 92%, white);
-  border: var(--border);
+.gomart-figure--contain img {
+  max-height: min(60vh, 34rem);
+  object-fit: contain;
+  background: var(--paper-dim);
+}
+/* Visible board exports — subtle frame on web page only */
+.gomart-figure--visible {
+  padding: var(--sp-sm);
+  border: 1px solid color-mix(in srgb, var(--ink) 10%, var(--line));
   border-radius: var(--radius-lg);
-  padding: var(--sp-lg);
-  box-shadow: 0 24px 48px -28px rgba(0, 0, 0, 0.35);
-  max-width: 56rem;
-}
-@media (min-width: 900px) {
-  .gomart-studio-card {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: var(--sp-xl);
-    align-items: start;
-  }
-}
-
-/* Business bet layout */
-.gomart-business-split {
-  display: grid;
-  gap: var(--sp-xl);
-  align-items: start;
-}
-@media (min-width: 900px) {
-  .gomart-business-split {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  }
-}
-.gomart-metric-hero {
-  display: inline-flex;
-  flex-direction: column;
-  gap: var(--sp-xs);
-  padding: var(--sp-md) var(--sp-lg);
-  border: 2px solid color-mix(in srgb, var(--ink) 15%, transparent);
-  border-radius: var(--radius-md);
   background: var(--paper);
-  margin-top: var(--sp-md);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
-.gomart-metric-footnote {
-  margin-top: var(--sp-lg);
-  font-size: var(--fs-2xs);
-  color: var(--muted);
-  max-width: 72ch;
-}
-
-/* Brand section */
-.gomart-brand-grid {
-  display: grid;
-  gap: var(--sp-xl);
-  align-items: start;
-}
-@media (min-width: 900px) {
-  .gomart-brand-grid {
-    grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.9fr);
-  }
-}
-
-/* Compare full-bleed breakout */
-.gomart-compare-breakout {
-  width: calc(100% + 2 * var(--page-inset));
-  margin-inline: calc(-1 * var(--page-inset));
-  padding-inline: var(--page-inset);
-  box-sizing: border-box;
-}
-
-/* Impact band cards */
-.gomart-impact-band {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-md);
-  max-width: 22rem;
-  margin-inline: auto;
-}
-.gomart-impact-card {
-  padding: var(--sp-md) var(--sp-lg);
-  border-radius: var(--radius-md);
+.gomart-figure--visible img {
+  border-radius: calc(var(--radius-lg) - 6px);
+  border: 1px solid var(--line);
   background: var(--paper);
-  border: var(--border);
-  box-shadow: 0 16px 32px -20px rgba(0, 0, 0, 0.25);
 }
-.gomart-impact-card__value {
-  font-size: clamp(1.75rem, 4vw, 2.75rem);
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  line-height: 1;
+/* Photographic figures: crop to landscape so a portrait asset doesn't tower
+   over a short copy column. Both intro sections share this treatment so they
+   mirror each other. */
+.gomart-figure--crop img {
+  aspect-ratio: 4 / 3;
+  max-height: min(46vh, 25rem);
+  object-fit: cover;
+  object-position: center;
 }
 
-/* Concept testing grid */
-.gomart-concept-grid {
-  display: grid;
-  gap: var(--sp-xl);
-  align-items: start;
-}
-@media (min-width: 960px) {
-  .gomart-concept-grid {
-    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-  }
-}
-.gomart-findings-card {
-  padding: var(--sp-md);
+/* --------------------------------------------------------------------------
+   Cards — one shared shell for every panel on the page
+   -------------------------------------------------------------------------- */
+.gomart-card {
+  padding: var(--sp-md) var(--sp-lg);
   border: var(--border);
   border-radius: var(--radius-md);
   background: var(--paper);
 }
-.gomart-findings-card.is-key {
+.gomart-card--key {
   border-color: var(--client-dim);
   background: var(--client-soft);
 }
-
-/* Quote panel — plain bordered (replaces pattern2 band for Raisin restraint) */
-.gomart-quote-panel {
-  margin: 0;
-  padding: var(--sp-lg);
-  border: var(--border);
-  border-radius: var(--radius-lg);
-  background: var(--paper);
-  max-width: 42rem;
-}
-.gomart-quote-panel .gomart-quote-card {
-  background: transparent;
-  padding: 0;
-}
-
-/* Solution commitments — in-flow panel (not full pattern band) */
-.gomart-commitments {
-  margin-top: var(--gomart-beat-gap);
-  padding: var(--sp-lg);
-  border: var(--border);
-  border-radius: var(--radius-lg);
-  background: var(--client-soft);
-}
-.gomart-commitments__label {
-  margin: 0 0 var(--sp-md);
+.gomart-card__label {
+  margin: 0 0 var(--sp-xs);
   font-size: var(--fs-2xs);
   font-weight: 800;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--muted);
 }
-
-/* Period studio band + Raisin period padding */
-body.gomart-theme .gomart-band--studio.period {
-  scroll-margin-top: var(--journey-scroll-offset, 7rem);
+.gomart-card__title {
+  margin: 0 0 var(--sp-xs);
+  font-size: var(--fs-md);
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--ink);
 }
-body.gomart-theme #journey-intro .rule--thick {
-  margin-top: var(--sp-lg);
-  margin-bottom: 0;
+.gomart-card__text {
+  margin: 0;
+  font-size: var(--fs-sm);
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+.gomart-card__text + .gomart-card__text { margin-top: var(--sp-xs); }
+.gomart-card__note {
+  margin: var(--sp-sm) 0 0;
+  padding-top: var(--sp-sm);
+  border-top: 1px solid var(--line);
+  font-size: var(--fs-xs);
+  color: var(--muted);
 }
 
-body.summary-v2.gomart-theme .tag--client,
-.gomart-chip {
-  background: var(--client);
-  color: var(--client-ink);
-  border-color: var(--client-dim);
+/* Vertical card stacks (session plan, commitments, findings) */
+.gomart-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-sm);
+}
+.gomart-stack--loose { gap: var(--sp-md); }
+
+/* Equal-column card rows */
+.gomart-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--sp-md);
+  margin-top: var(--sp-md);
+}
+@media (max-width: 900px) {
+  .gomart-grid-3 { grid-template-columns: 1fr; }
 }
 
-.gomart-callout {
-  padding: var(--sp-md) var(--sp-lg);
-  border: 2px solid color-mix(in srgb, var(--ink) 12%, transparent);
+/* Pull-quote card — replaces the pattern-filled quote panel */
+.gomart-quote {
+  margin: 0;
+  padding: var(--sp-lg);
+  border: var(--border);
+  border-left: 3px solid var(--client-dim);
   border-radius: var(--radius-md);
-  background: var(--paper);
-  max-width: 58ch;
+  background: var(--client-soft);
 }
-.gomart-mag-hint {
+.gomart-quote p {
+  margin: 0;
+  font-size: var(--fs-base);
+  line-height: 1.55;
+  color: var(--ink);
+}
+.gomart-quote footer {
+  margin: var(--sp-sm) 0 0;
   font-size: var(--fs-2xs);
   font-weight: 600;
   color: var(--muted);
 }
-.gomart-occasion-grid__note {
-  display: block;
-  font-weight: 400;
-  color: var(--muted);
-  margin-top: 0.15rem;
-}
-.gomart-brand-key-note {
-  padding-top: var(--sp-md);
-  border-top: var(--border);
-}
-.gomart-crumb {
-  margin: var(--sp-sm) 0 var(--sp-md);
-}
-.gomart-vote-block {
-  margin-top: var(--gomart-beat-gap);
-}
-.gomart-vote-block .eyebrow {
-  margin-bottom: var(--sp-md);
-}
 
-/* Hero visual — char + phone (no boxed card) */
-.gomart-hero-visual {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  min-height: clamp(16rem, 36vh, 26rem);
+/* Arrow list — shared by callouts and findings */
+.gomart-arrows {
+  list-style: none;
+  margin: var(--sp-sm) 0 0;
   padding: 0;
-  border-radius: 0;
-  background: transparent;
-}
-.gomart-hero-visual__stage {
-  position: relative;
-  width: 100%;
-  max-width: 310px;
-  min-height: clamp(14rem, 30vh, 22rem);
-  margin-inline: auto;
-}
-.gomart-hero-visual__char {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  z-index: 0;
-  width: min(72%, 240px);
-  max-width: 310px;
-  height: auto;
-  object-fit: contain;
-  object-position: bottom;
-  transform: translateX(-42%) translateY(8%);
-}
-.gomart-hero-visual__phone {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  z-index: 2;
-  max-width: min(58vw, 220px);
-  margin: 0;
-  transform: translateY(8%);
-}
-.gomart-hero-visual__phone.phone-mock {
-  position: absolute;
-  margin-inline: 0;
-}
-@media (min-width: 768px) {
-  .gomart-hero-visual__phone { max-width: 255px; }
-}
-@media (min-width: 1024px) {
-  .gomart-hero-visual__char {
-    width: 100%;
-    transform: translateX(-50%) translateY(10%);
-  }
-  .gomart-hero-visual__phone {
-    max-width: 285px;
-    transform: translateY(10%);
-  }
-}
-@media (max-width: 900px) {
-  .gomart-hero-visual {
-    min-height: clamp(14rem, 42vw, 20rem);
-    margin-top: var(--sp-md);
-  }
-}
-
-/* Stacked why-proof rows (brand + research) */
-.gomart-proof--stacked {
-  grid-template-columns: 1fr;
-  align-items: stretch;
-  gap: var(--sp-lg);
-}
-.gomart-proof--stacked .why-proof__content {
-  max-width: 72ch;
-}
-.gomart-proof--stacked .why-proof__title,
-.gomart-proof--stacked .why-proof__text {
-  max-width: none;
-}
-.gomart-proof--stacked .why-proof__media {
-  width: 100%;
-  flex-direction: column;
-}
-@media (max-width: 720px) {
-  .why-proof {
-    grid-template-columns: 1fr;
-    gap: var(--sp-lg);
-  }
-}
-.gomart-proof--metrics {
-  align-items: start;
-}
-.gomart-proof--metrics .why-proof__media {
-  align-self: stretch;
-}
-.gomart-brand-key {
-  margin: 0;
-  width: 100%;
-  border: var(--border);
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  background: var(--paper);
-}
-.gomart-brand-key img {
-  display: block;
-  width: 100%;
-  height: auto;
-  object-fit: contain;
-}
-.gomart-persona-block {
-  width: 100%;
-  padding-top: var(--sp-lg);
-  border-top: var(--border);
-}
-.gomart-persona-block .gomart-persona-tabs {
-  margin-top: 0;
-  margin-bottom: var(--sp-md);
-}
-.gomart-research-media {
-  width: 100%;
-}
-.gomart-research-media .proto-stage {
-  min-height: clamp(16rem, 42vw, 28rem);
-}
-
-/* Beat rhythm & stacked interactives */
-.gomart-beat-block {
-  margin-top: var(--sp-2xl);
-}
-.gomart-beat-block:first-child {
-  margin-top: 0;
-}
-.gomart-beat--stack {
   display: flex;
   flex-direction: column;
-  gap: var(--sp-xl);
+  gap: 0.45rem;
 }
-.gomart-beat__intro {
-  max-width: 72ch;
-}
-.gomart-beat__intro .h-3 {
-  margin-bottom: var(--sp-sm);
-}
-.gomart-vote-eyebrow {
-  margin-top: var(--sp-md);
-}
-.gomart-vote-block {
-  margin-top: var(--sp-xl);
-  padding-top: var(--sp-lg);
-  border-top: var(--border);
-}
-.gomart-vote-block .gomart-vote-eyebrow {
-  margin-top: 0;
-  margin-bottom: var(--sp-md);
-}
-.gomart-hypo-grid {
-  margin-top: var(--sp-md);
-}
-.gomart-findings-card {
-  margin-top: var(--sp-md);
-}
-.gomart-findings-list {
-  margin-top: var(--sp-sm);
-}
-.gomart-carousel-wrap,
-.gomart-compare-wrap {
-  width: 100%;
-}
-.gomart-carousel--full {
-  max-width: none;
-}
-.gomart-carousel--full .nav-carousel__slide img {
-  max-height: min(62vh, 560px);
-}
-.gomart-compare-caption {
-  text-align: center;
-  margin-top: var(--sp-sm);
-}
-
-/* Pattern panels in period splits */
-.gomart-pattern-panel {
+.gomart-arrows li {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-height: clamp(14rem, 28vw, 20rem);
-  padding: var(--sp-lg);
-  border-radius: var(--radius-lg);
-  border: var(--border);
-}
-.gomart-solution-stack {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-sm);
-  width: 100%;
-}
-.gomart-quote-card {
-  margin: 0;
-  padding: var(--sp-md);
-  background: var(--paper);
-  border-radius: var(--radius-sm);
-  color: var(--ink);
-}
-.gomart-quote-card p {
-  margin: 0 0 var(--sp-sm);
+  gap: 0.5rem;
   font-size: var(--fs-sm);
-  line-height: 1.55;
+  line-height: 1.5;
+  color: var(--ink-soft);
 }
-.gomart-quote-card__cite {
-  margin: 0;
-  font-size: var(--fs-2xs);
-  color: var(--muted);
-  font-style: normal;
-}
-
-/* Pattern panels */
-.panel-gomart-pattern {
-  background: #fff6f6 url("../../../assets/gomart/pattern.png") center / cover no-repeat;
-}
-.panel-gomart-pattern2 {
-  background: var(--gomart-green) url("../../../assets/gomart/Hypothisis/pattern2.png") center / cover no-repeat;
-  color: var(--paper);
-}
-.panel-gomart-pattern3 {
-  background: #f0a0b0 url("../../../assets/gomart/Hypothisis/pattern3.png") center / cover no-repeat;
+.gomart-arrows li::before {
+  content: "→";
+  flex: none;
+  font-weight: 700;
+  color: var(--accent-deep, var(--ink));
 }
 
-/* Metric grid (business bet) */
+/* --------------------------------------------------------------------------
+   Metric tiles + business bet
+   -------------------------------------------------------------------------- */
 .gomart-metric-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--sp-sm);
 }
-@media (min-width: 640px) {
-  .gomart-metric-grid { grid-template-columns: repeat(2, 1fr); }
+@media (max-width: 520px) {
+  .gomart-metric-grid { grid-template-columns: 1fr; }
 }
 .gomart-metric-tile {
   padding: var(--sp-md);
@@ -662,15 +563,148 @@ body.summary-v2.gomart-theme .tag--client,
 .gomart-metric-tile__note {
   margin: var(--sp-xs) 0 0;
   font-size: var(--fs-xs);
+  line-height: 1.45;
   color: var(--muted);
 }
+.gomart-metric-hero {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-xs);
+  width: 100%;
+  padding: var(--sp-md) var(--sp-lg);
+  border: 2px solid color-mix(in srgb, var(--ink) 16%, transparent);
+  border-radius: var(--radius-md);
+  background: var(--paper);
+  margin-top: var(--sp-md);
+}
+.gomart-metric-hero .gomart-metric-tile__value {
+  font-size: clamp(1.6rem, 3vw, 2.25rem);
+}
+/* Leading metric above a tile grid — no top gap, tighter join. */
+.gomart-metric-hero--lead {
+  margin-top: 0;
+  margin-bottom: var(--sp-sm);
+  border-color: var(--ink);
+  background: var(--client-soft);
+}
+.gomart-metric-hero--lead .gomart-metric-tile__value {
+  font-size: clamp(2rem, 3.6vw, 2.75rem);
+}
+.gomart-footnote {
+  margin-top: var(--sp-lg);
+  font-size: var(--fs-2xs);
+  line-height: 1.55;
+  color: var(--muted);
+  max-width: 80ch;
+}
+.gomart-footnote--tight {
+  margin-top: var(--sp-xs);
+}
+#context-business .period-split__main .beat__text:has(+ .gomart-footnote) {
+  margin-bottom: 0;
+}
 
-/* Persona tabs */
+/* Who we design for — header + persona/context grid + brand key */
+.gomart-brand-beat__head {
+  max-width: 52rem;
+  margin-bottom: var(--sp-lg);
+}
+.gomart-brand-beat__head .beat__text {
+  max-width: 62ch;
+}
+.gomart-brand-grid {
+  display: grid;
+  gap: var(--sp-lg);
+  align-items: start;
+}
+@media (min-width: 1024px) {
+  .gomart-brand-grid {
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+    gap: var(--sp-xl);
+  }
+}
+.gomart-brand-grid__persona {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-sm);
+  min-width: 0;
+}
+.gomart-brand-grid__persona .gomart-persona-tabs {
+  margin: 0;
+}
+.gomart-brand-grid__context {
+  min-width: 0;
+}
+.gomart-brand-context__synthesis {
+  margin-top: var(--sp-md);
+  padding-top: var(--sp-md);
+  border-top: 1px solid var(--line);
+}
+.gomart-brand-context__synthesis .gomart-card__label {
+  margin-bottom: var(--sp-sm);
+}
+.gomart-brand-key-split {
+  margin-top: var(--sp-xl);
+  padding-top: var(--sp-xl);
+  border-top: 1px solid var(--line);
+}
+.gomart-studio-sessions {
+  margin-top: var(--sp-xl);
+  padding-top: var(--sp-xl);
+  border-top: 1px solid var(--line);
+}
+.gomart-studio-sessions .beat__title {
+  margin-bottom: var(--sp-md);
+}
+.gomart-studio-session-single {
+  max-width: 36rem;
+}
+body.gomart-theme .gomart-media-plain {
+  margin-top: var(--sp-lg);
+  border: none;
+  background: transparent;
+  border-radius: 0;
+  overflow: visible;
+  cursor: default;
+}
+.gomart-shipped-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-sm);
+}
+.gomart-shipped-metrics > .gomart-card__label {
+  margin-bottom: var(--sp-xs);
+}
+.gomart-shipped-metric {
+  padding: var(--sp-md) var(--sp-lg);
+}
+.gomart-shipped-metric .gomart-metric-tile__value {
+  font-size: clamp(1.6rem, 3vw, 2.25rem);
+}
+
+.gomart-solution-block__label {
+  margin: 0 0 var(--sp-md);
+  padding-top: var(--sp-xl);
+  border-top: 1px solid var(--line);
+  font-size: var(--fs-2xs);
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+#solution-space .period__story > .gomart-solution-block__label:first-of-type {
+  padding-top: 0;
+  border-top: none;
+}
+
+/* --------------------------------------------------------------------------
+   Personas + occasions
+   -------------------------------------------------------------------------- */
 .gomart-persona-tabs {
   display: flex;
   flex-wrap: wrap;
   gap: var(--sp-xs);
-  margin-bottom: var(--sp-sm);
+  margin: var(--sp-md) 0;
 }
 .gomart-persona-tab {
   display: inline-flex;
@@ -680,13 +714,12 @@ body.summary-v2.gomart-theme .tag--client,
   font-weight: 700;
   font-family: inherit;
   border: var(--border);
-  border-radius: 999px;
-  background: var(--paper-dim);
+  border-radius: var(--radius-pill);
+  background: var(--paper);
   color: var(--muted);
   cursor: pointer;
-  transition: box-shadow 0.15s ease, transform 0.1s ease;
+  transition: box-shadow 0.15s ease, color 0.15s ease;
 }
-.gomart-persona-tab:hover { transform: translateY(-1px); }
 .gomart-persona-tab[aria-selected="true"] {
   box-shadow: 0 0 0 2px var(--ink) inset;
   color: var(--ink);
@@ -696,10 +729,11 @@ body.summary-v2.gomart-theme .tag--client,
   box-shadow: 0 0 0 3px rgba(255, 218, 8, 0.55);
 }
 .gomart-persona-panel {
-  padding: var(--sp-md);
+  padding: var(--sp-md) var(--sp-lg);
   border: var(--border);
-  border-radius: var(--radius-sm);
-  background: color-mix(in srgb, var(--paper-dim) 60%, transparent);
+  border-radius: var(--radius-md);
+  background: var(--paper);
+  min-height: 16.5rem;
 }
 .gomart-persona-panel__head {
   display: flex;
@@ -741,22 +775,32 @@ body.summary-v2.gomart-theme .tag--client,
 
 .gomart-occasion-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.35rem;
-  font-size: 0.68rem;
+  font-size: 0.72rem;
   font-weight: 600;
   line-height: 1.35;
+  margin-top: var(--sp-xs);
 }
 .gomart-occasion-grid__cell {
-  padding: 0.65rem;
-  background: var(--paper-dim);
+  padding: 0.7rem;
+  background: var(--paper);
+  border: var(--border);
   border-radius: var(--radius-sm);
 }
 .gomart-occasion-grid__cell--focus {
   box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--ink) 70%, transparent);
 }
+.gomart-occasion-grid__note {
+  display: block;
+  font-weight: 400;
+  color: var(--muted);
+  margin-top: 0.15rem;
+}
 
-/* Research board */
+/* --------------------------------------------------------------------------
+   Research board — segmented toggle + magnifier stage
+   -------------------------------------------------------------------------- */
 .research-board-wrap { width: 100%; }
 .research-board-head {
   display: flex;
@@ -769,35 +813,40 @@ body.summary-v2.gomart-theme .tag--client,
 .research-board-toolbar {
   display: flex;
   align-items: center;
-  gap: var(--sp-xs);
+  gap: var(--sp-sm);
   flex-wrap: wrap;
 }
 .gomart-seg {
   display: inline-flex;
   padding: 4px;
-  background: #efefef;
+  background: var(--paper-dim);
   border: var(--border);
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   gap: 2px;
 }
 .gomart-seg-btn {
   font-size: var(--fs-2xs);
   font-weight: 700;
   padding: 0.4rem 0.95rem;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   color: var(--muted);
   background: transparent;
   border: 0;
   cursor: pointer;
   font-family: inherit;
   white-space: nowrap;
-  transition: color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+  transition: color 0.15s ease, background 0.15s ease;
 }
 .gomart-seg-btn:hover { color: var(--ink); }
 .gomart-seg-btn[aria-selected="true"] {
   color: var(--ink);
   background: var(--paper);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+.gomart-mag-hint {
+  font-size: var(--fs-2xs);
+  font-weight: 600;
+  color: var(--muted);
 }
 .proto-mag-toggle {
   display: inline-flex;
@@ -816,9 +865,9 @@ body.summary-v2.gomart-theme .tag--client,
 .proto-mag-switch {
   position: relative;
   flex-shrink: 0;
-  width: 2.75rem;
-  height: 1.625rem;
-  border-radius: 999px;
+  width: 2.5rem;
+  height: 1.5rem;
+  border-radius: var(--radius-pill);
   background: #e9e9ea;
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06);
   transition: background 0.22s ease;
@@ -827,15 +876,15 @@ body.summary-v2.gomart-theme .tag--client,
   position: absolute;
   top: 2px;
   left: 2px;
-  width: 1.375rem;
-  height: 1.375rem;
+  width: 1.25rem;
+  height: 1.25rem;
   border-radius: 50%;
   background: var(--paper);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.22);
   transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .proto-mag-toggle[aria-pressed="true"] .proto-mag-switch { background: #34c759; }
-.proto-mag-toggle[aria-pressed="true"] .proto-mag-switch__thumb { transform: translateX(1.125rem); }
+.proto-mag-toggle[aria-pressed="true"] .proto-mag-switch__thumb { transform: translateX(1rem); }
 .proto-stage {
   position: relative;
   display: flex;
@@ -847,10 +896,13 @@ body.summary-v2.gomart-theme .tag--client,
   background: var(--paper);
   overflow: visible;
   cursor: pointer;
-  min-height: min(55vh, 32rem);
   transition: box-shadow 0.15s ease, border-color 0.15s ease;
 }
 .proto-stage.is-magnifying { z-index: 40; cursor: none; }
+.proto-stage:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(255, 218, 8, 0.22);
+}
 .proto-stage__inner {
   position: relative;
   width: 100%;
@@ -871,8 +923,8 @@ body.summary-v2.gomart-theme .tag--client,
 .proto-lens {
   position: absolute;
   z-index: 50;
-  width: 26.25rem;
-  height: 26.25rem;
+  width: 24rem;
+  height: 24rem;
   border-radius: 50%;
   border: 5px solid var(--paper);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.24);
@@ -891,49 +943,12 @@ body.summary-v2.gomart-theme .tag--client,
 @media (hover: none), (pointer: coarse) {
   .proto-lens { display: none !important; }
   .proto-mag-toggle { display: none; }
-}
-.proto-stage:hover {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(255, 218, 8, 0.22);
+  .gomart-mag-hint { display: none; }
 }
 
-/* Vote & solution cards */
-.gomart-vote-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--sp-sm);
-  width: 100%;
-}
-@media (max-width: 720px) {
-  .gomart-vote-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-@media (max-width: 420px) {
-  .gomart-vote-grid { grid-template-columns: 1fr; }
-}
-.vote-card {
-  border: var(--border);
-  border-radius: var(--radius-sm);
-  padding: 0.75rem 1rem;
-  background: var(--paper);
-}
-.vote-count {
-  font-size: var(--fs-md);
-  font-weight: 800;
-  color: var(--ink);
-  line-height: 1;
-}
-.solution-index-card {
-  border: var(--border);
-  border-radius: var(--radius-sm);
-  padding: 0.85rem 1rem;
-  background: var(--paper);
-}
-.solution-index-card.is-key {
-  border-color: var(--client-dim);
-  background: var(--client-soft);
-}
-
-/* Hypothesis cards */
+/* --------------------------------------------------------------------------
+   Hypothesis cards (three phased releases)
+   -------------------------------------------------------------------------- */
 .hypo-grid {
   display: flex;
   flex-direction: column;
@@ -947,68 +962,68 @@ body.summary-v2.gomart-theme .tag--client,
   border: var(--border);
   border-radius: var(--radius-md);
   overflow: hidden;
-  box-shadow: 0 8px 24px -14px rgba(0, 0, 0, 0.18);
 }
 .hypo-card.is-key {
   border-color: var(--client-dim);
   background: var(--client-soft);
-  box-shadow: 0 8px 24px -14px rgba(240, 168, 173, 0.35);
 }
 .hypo-card__media {
   flex: 0 0 auto;
-  background: linear-gradient(180deg, #fafafa 0%, #f2f2f2 100%);
+  background: var(--paper-dim);
   border-bottom: var(--border);
-  padding: var(--sp-sm) var(--sp-md);
+  padding: var(--sp-md);
 }
 .hypo-card__media img {
   display: block;
   width: 100%;
   height: auto;
-  border-radius: var(--radius-sm);
-  border: 1px solid rgba(0, 0, 0, 0.06);
+  max-height: min(46vh, 26rem);
+  object-fit: contain;
   cursor: zoom-in;
 }
 .hypo-card__body {
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: var(--sp-xs);
-  padding: var(--sp-sm) var(--sp-md) var(--sp-md);
+  padding: var(--sp-md) var(--sp-lg);
 }
 .hypo-card__eyebrow {
+  margin: 0;
   font-size: var(--fs-2xs);
   font-weight: 800;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--muted);
 }
 .hypo-card__title {
   margin: 0;
   font-size: var(--fs-md);
-  font-weight: 800;
-  letter-spacing: -0.02em;
+  font-weight: 700;
+  letter-spacing: -0.01em;
   color: var(--ink);
   line-height: 1.25;
 }
 .hypo-card__p {
   margin: 0;
-  font-size: var(--fs-xs);
+  font-size: var(--fs-sm);
   line-height: 1.5;
-  color: var(--muted);
+  color: var(--ink-soft);
 }
 .hypo-card__note {
+  margin: var(--sp-xs) 0 0;
+  padding-top: var(--sp-xs);
+  border-top: var(--border);
   font-size: var(--fs-2xs);
   font-weight: 700;
   color: var(--ink);
-  border-top: var(--border);
-  padding-top: var(--sp-xs);
-  margin-top: var(--sp-xs);
 }
 @media (min-width: 1024px) {
   .hypo-card { flex-direction: row; align-items: stretch; }
   .hypo-card__media {
-    flex: 0 0 52%;
-    max-width: 52%;
+    flex: 0 0 50%;
+    max-width: 50%;
     border-bottom: 0;
     border-right: var(--border);
     display: flex;
@@ -1017,13 +1032,18 @@ body.summary-v2.gomart-theme .tag--client,
   }
 }
 
-/* Nav carousel */
+/* --------------------------------------------------------------------------
+   Nav carousel
+   -------------------------------------------------------------------------- */
+.gomart-concept-split {
+  margin-top: var(--sp-lg);
+}
 .nav-carousel { width: 100%; }
 .nav-carousel__viewport {
   overflow: hidden;
   border-radius: var(--radius-md);
   border: var(--border);
-  background: var(--paper);
+  background: var(--paper-dim);
 }
 .nav-carousel__track {
   display: flex;
@@ -1037,35 +1057,30 @@ body.summary-v2.gomart-theme .tag--client,
   display: block;
   width: 100%;
   height: auto;
-  max-height: min(58vh, 520px);
+  max-height: min(58vh, 34rem);
   object-fit: contain;
   cursor: zoom-in;
 }
 .nav-carousel__caption {
   margin-top: var(--sp-sm);
-  min-height: 2.75rem;
+  min-height: 2.5rem;
   text-align: center;
   font-size: var(--fs-xs);
   font-weight: 600;
-  color: var(--ink);
-}
-.nav-carousel__meta {
-  text-align: center;
-  font-size: var(--fs-2xs);
-  color: var(--muted);
-  font-variant-numeric: tabular-nums;
+  color: var(--ink-soft);
 }
 .nav-carousel__controls {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: var(--sp-sm);
-  margin-top: var(--sp-sm);
+  margin-top: var(--sp-xs);
 }
+.nav-carousel__dots { display: flex; align-items: center; gap: 0.4rem; }
 .nav-carousel__dot {
   width: 9px;
   height: 9px;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: var(--line-strong);
   border: 0;
   padding: 0;
@@ -1076,6 +1091,11 @@ body.summary-v2.gomart-theme .tag--client,
   background: var(--accent);
   width: 26px;
 }
+.nav-carousel__meta {
+  font-size: var(--fs-2xs);
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
 .nav-carousel__btn {
   display: inline-flex;
   align-items: center;
@@ -1083,7 +1103,7 @@ body.summary-v2.gomart-theme .tag--client,
   width: 2.5rem;
   height: 2.5rem;
   border: var(--border);
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: var(--paper);
   color: var(--ink);
   cursor: pointer;
@@ -1095,7 +1115,9 @@ body.summary-v2.gomart-theme .tag--client,
   background: var(--accent-soft);
 }
 
-/* Compare slider */
+/* --------------------------------------------------------------------------
+   Wireframe → visual design compare
+   -------------------------------------------------------------------------- */
 .gomart-compare {
   position: relative;
   overflow: hidden;
@@ -1105,8 +1127,8 @@ body.summary-v2.gomart-theme .tag--client,
   user-select: none;
   touch-action: none;
   width: 100%;
-  max-height: min(62vh, 680px);
   aspect-ratio: 2275 / 1265;
+  max-height: min(64vh, 40rem);
   background: var(--paper);
 }
 .gomart-compare__layer {
@@ -1155,7 +1177,7 @@ body.summary-v2.gomart-theme .tag--client,
   z-index: 5;
   width: 44px;
   height: 44px;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: var(--accent);
   color: var(--accent-ink);
   display: flex;
@@ -1185,7 +1207,7 @@ body.summary-v2.gomart-theme .tag--client,
   text-transform: uppercase;
   font-weight: 700;
   padding: 4px 10px;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: var(--paper);
   color: var(--ink);
   border: var(--border);
@@ -1193,8 +1215,14 @@ body.summary-v2.gomart-theme .tag--client,
 }
 .gomart-compare__tag--before { left: 12px; }
 .gomart-compare__tag--after { right: 12px; }
+.gomart-compare-caption {
+  text-align: center;
+  margin-top: var(--sp-sm);
+}
 
-/* Phone mock */
+/* --------------------------------------------------------------------------
+   Phone mock
+   -------------------------------------------------------------------------- */
 .phone-mock {
   position: relative;
   width: 100%;
@@ -1214,53 +1242,20 @@ body.summary-v2.gomart-theme .tag--client,
   background: #000;
 }
 
-/* Studio session cards */
-.gomart-session-card {
-  padding: var(--sp-md);
-  border-radius: var(--radius-sm);
-  background: color-mix(in srgb, var(--paper) 80%, transparent);
-  border: var(--border);
-}
-.gomart-session-card + .gomart-session-card { margin-top: var(--sp-xs); }
-
-/* Brand finale */
-body.summary-v2.gomart-theme .brand-finale.gomart-finale {
-  background: var(--gomart-green);
-}
-body.summary-v2.gomart-theme .brand-finale.gomart-finale .brand-finale__scrim {
-  background: linear-gradient(180deg, rgba(11, 93, 52, 0.2) 0%, rgba(11, 93, 52, 0.75) 100%);
-}
-.gomart-finale__char {
-  width: min(40%, 180px);
-  height: auto;
-  margin-bottom: var(--sp-md);
+/* --------------------------------------------------------------------------
+   Client-tinted chip
+   -------------------------------------------------------------------------- */
+body.summary-v2.gomart-theme .tag--client,
+.gomart-chip {
+  background: var(--client);
+  color: var(--client-ink);
+  border-color: var(--client-dim);
 }
 
-/* Header nav btn (match raisin) */
+/* --------------------------------------------------------------------------
+   Deck header / shell
+   -------------------------------------------------------------------------- */
 :root { --deck-top: 3.5rem; }
-.deck-title {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--muted);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  min-width: 0;
-  flex: 1 1 auto;
-  text-align: center;
-  padding-inline: var(--sp-sm);
-}
-@media (max-width: 520px) {
-  .deck-title {
-    font-size: 0.78rem;
-    white-space: normal;
-    line-height: 1.25;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-}
 .nav-btn {
   display: inline-flex;
   align-items: center;
@@ -1291,7 +1286,9 @@ body.summary-v2.gomart-theme .brand-finale.gomart-finale .brand-finale__scrim {
   font-weight: 700;
 }
 
-/* Gate */
+/* --------------------------------------------------------------------------
+   Gate
+   -------------------------------------------------------------------------- */
 #gomartGate { display: none; }
 html.gomart-locked { overflow: hidden; }
 html.gomart-locked body > *:not(#gomartGate) { display: none !important; }

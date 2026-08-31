@@ -2,15 +2,6 @@
    OLX case study — web-page component styles (scroll layout)
    ========================================================================== */
 
-.hl {
-  background: var(--accent);
-  color: var(--accent-ink);
-  padding: 0 0.1em;
-  border-radius: 0.08em;
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
-}
-
 .olx-crumb {
   display: inline-flex;
   flex-wrap: wrap;
@@ -149,6 +140,190 @@
 #journey-intro {
   padding-bottom: 0;
 }
+#case-intro {
+  padding-bottom: 0;
+}
+#case-intro .rule--thick {
+  margin-top: var(--sp-lg);
+  margin-bottom: 0;
+}
+.olx-case-intro__copy .beat__text + .beat__text {
+  margin-top: var(--sp-sm);
+}
+@media (min-width: 1024px) {
+  .olx-split--cover { grid-template-columns: 1.15fr 1fr; }
+}
+.olx-case-intro__media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: min(18rem, 40vh);
+  border-radius: var(--radius-lg);
+  padding: var(--sp-lg);
+}
+.olx-figure-frame--plain {
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+.olx-figure-frame--plain img {
+  border-radius: var(--radius-lg);
+}
+.olx-graph-prob {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+}
+.olx-graph-prob img {
+  width: 66.67%;
+  max-width: 100%;
+  height: auto;
+  cursor: zoom-in;
+}
+.olx-problem-split {
+  align-items: start;
+}
+.olx-problem-quote {
+  margin: 0;
+}
+.olx-problem-stats {
+  margin-top: var(--sp-sm);
+  max-width: 52ch;
+}
+.olx-proto-wrap {
+  padding: var(--sp-lg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--paper-dim);
+}
+.olx-usability-cols {
+  display: none;
+  grid-template-columns: 1fr 2.5rem 1fr;
+  gap: var(--sp-md);
+  margin-top: var(--sp-md);
+}
+@media (min-width: 1024px) {
+  .olx-usability-cols { display: grid; }
+}
+.olx-usability-col-label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.olx-usability-col-label--takeaway {
+  color: var(--accent-ink);
+}
+.beat--usability .olx-insight-row {
+  align-items: stretch;
+}
+.beat--usability .olx-insight-card,
+.beat--usability .olx-takeaway-card {
+  font-size: 0.88rem;
+  line-height: 1.45;
+  padding: 1rem 1.15rem;
+  min-height: 5.5rem;
+  display: flex;
+  align-items: center;
+}
+.beat--usability .olx-takeaway-card {
+  border-radius: var(--radius-lg);
+}
+.olx-outcome-metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-md);
+}
+.olx-outcome-metric {
+  padding: var(--sp-md);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: #fff;
+}
+.olx-outcome-metric__value {
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--ink);
+}
+.olx-outcome-metric__value--text {
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+}
+.olx-outcome-metric__label {
+  font-size: var(--fs-xs);
+  color: var(--muted);
+  margin: 0.5rem 0 0;
+  line-height: 1.45;
+}
+.olx-outcome-split {
+  align-items: center;
+}
+.olx-graph-solv {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.olx-graph-solv img {
+  width: calc(100% / 1.3);
+  max-width: calc(100% / 1.3);
+  height: auto;
+}
+.olx-next-steps-split {
+  align-items: center;
+}
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.olx-next-steps-fig img {
+  width: 78%;
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line);
+  cursor: zoom-in;
+}
+.olx-highlight-row {
+  display: grid;
+  gap: var(--sp-xl);
+  align-items: center;
+  margin-top: var(--sp-xl);
+}
+@media (min-width: 1024px) {
+  .olx-highlight-row {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sp-2xl);
+  }
+  .olx-highlight-row--reverse .olx-highlight-row__media { order: 2; }
+  .olx-highlight-row--reverse .olx-highlight-row__copy { order: 1; }
+}
+.olx-highlight-row__media {
+  margin: 0;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  border: 1px solid rgba(38, 38, 38, 0.1);
+  background: var(--paper);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+.olx-highlight-row__media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  cursor: zoom-in;
+  border-radius: calc(var(--radius-xl) - 1px);
+}
+.olx-highlight-sub {
+  font-size: var(--fs-sm);
+  color: var(--muted);
+}
+.olx-principles-track--compact .olx-principle h4 {
+  font-size: 0.85rem;
+  margin: 0 0 0.35rem;
+}
 #journey-intro .rule--thick {
   margin-top: var(--sp-lg);
   margin-bottom: var(--sp-lg);
@@ -244,6 +419,18 @@
 }
 @media (min-width: 640px) {
   .jtbd-grid { grid-template-columns: repeat(3, 1fr); }
+}
+.jtbd-caption {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0 0 0.75rem;
+}
+.jtbd-label {
+  font-size: var(--fs-xs);
+  color: var(--muted);
+  text-align: center;
+  margin: 0.5rem 0 0;
 }
 
 /* Limitation cards */
@@ -471,8 +658,8 @@
 }
 @media (min-width: 1024px) {
   .hypo-card__media {
-    flex: 0 0 56%;
-    max-width: 56%;
+    flex: 0 0 60%;
+    max-width: 60%;
     border-bottom: 0;
     border-right: 1px solid var(--line);
     display: flex;
@@ -689,8 +876,9 @@
   color: var(--muted);
 }
 .olx-takeaway-card {
-  background: var(--accent);
+  background: var(--accent-soft);
   color: var(--accent-ink);
+  border: 1px solid rgba(255, 218, 8, 0.35);
   border-radius: var(--radius-xl);
   padding: 1.25rem;
   line-height: 1.5;
@@ -883,6 +1071,31 @@ body.summary-v2.has-shell .journey-nav {
   z-index: 999;
   justify-content: center;
 }
+body.summary-v2.has-shell .olx-journey-nav {
+  gap: 0.45rem;
+  padding-block: 0.75rem;
+}
+body.summary-v2.has-shell .olx-journey-nav .journey-nav__sep {
+  display: none;
+}
+body.summary-v2.has-shell .olx-journey-nav .journey-nav__btn {
+  border-radius: var(--radius-pill, 9999px);
+  border: 1px solid var(--line);
+  background: var(--paper);
+  padding: 0.5rem 1rem;
+  min-height: 2.25rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+body.summary-v2.has-shell .olx-journey-nav .journey-nav__btn:hover {
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--line));
+  background: var(--paper-dim);
+}
+body.summary-v2.has-shell .olx-journey-nav .journey-nav__btn.is-active {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--accent-ink);
+  box-shadow: 0 2px 8px -2px rgba(255, 218, 8, 0.55);
+}
 @media (max-width: 900px) {
   body.summary-v2.has-shell .journey-nav {
     justify-content: flex-start;
@@ -962,27 +1175,11 @@ body.summary-v2.has-shell .journey-nav {
   font-weight: 800;
   margin: 0 0 var(--sp-sm);
 }
-#proof {
-  padding-bottom: 0;
+#outcome {
+  padding-bottom: var(--sp-3xl);
 }
-#proof .container {
-  padding-bottom: var(--sp-xl);
-}
-#proof .proof-track--enablement {
-  margin-bottom: 0;
-}
-.olx-stakes {
-  padding-block: var(--sp-2xl);
-}
-.olx-stakes__inner {
-  position: relative;
-  z-index: 1;
-}
-.why-proof__media--single .why-proof__frame {
-  flex: 1 1 100%;
-}
-.olx-track-key {
-  margin-top: var(--sp-md);
+#highlights {
+  padding-bottom: var(--sp-3xl);
 }
 .olx-journey-impact {
   margin-top: var(--sp-lg);
@@ -1100,6 +1297,9 @@ body.summary-v2.has-shell .journey-nav {
   border: 1px solid var(--line);
   background: var(--paper-dim);
   padding: var(--sp-sm);
+}
+#context .olx-org-map-figure {
+  transform: translateY(-35%);
 }
 
 /* Journey intro cover (inside sage band) */

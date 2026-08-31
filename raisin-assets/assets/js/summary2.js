@@ -208,6 +208,18 @@
       return DESKTOP_MQ.matches && HOVER_MQ.matches && !REDUCE_MQ.matches;
     }
 
+    function syncHeroFm() {
+      var wid = grid.getAttribute("data-fm-widget");
+      if (!wid) return;
+      var val = hoverId < 0 ? "none" : String(hoverId);
+      document.dispatchEvent(
+        new CustomEvent("portfolio:widget-change", {
+          bubbles: true,
+          detail: { id: wid, value: val },
+        })
+      );
+    }
+
     function applyGrid() {
       if (!enabled()) {
         if (hoverId < 0 || !ITEM_HOVER[hoverId]) {
@@ -215,10 +227,12 @@
           grid.removeAttribute("data-hover-item");
           grid.style.removeProperty("grid-template-columns");
           grid.style.removeProperty("grid-template-rows");
+          syncHeroFm();
           return;
         }
         grid.classList.add("is-hovering");
         grid.dataset.hoverItem = String(hoverId);
+        syncHeroFm();
         return;
       }
 
@@ -227,6 +241,7 @@
         grid.removeAttribute("data-hover-item");
         grid.style.gridTemplateColumns = buildTracks(DEFAULT_COL_WEIGHTS, -1, HOVER_SIZE);
         grid.style.gridTemplateRows = buildTracks(DEFAULT_ROW_WEIGHTS, -1, HOVER_SIZE);
+        syncHeroFm();
         return;
       }
 
@@ -245,6 +260,7 @@
         config.size,
         config.squeezeRows
       );
+      syncHeroFm();
     }
 
     function onHover(id) {
@@ -278,6 +294,7 @@
 
     function onPressEnd() {
       clearPress();
+      syncHeroFm();
     }
 
     function setRemote(idStr, pressed) {
@@ -291,6 +308,7 @@
         if (on) pressedItem = item;
       });
       if (!pressed) pressedItem = null;
+      syncHeroFm();
     }
 
     items.forEach(function (item, index) {
@@ -806,7 +824,7 @@
 (function () {
   "use strict";
 
-  function activateVariant(root, variant) {
+  function activateVariant(root, variant, silent) {
     var v = variant === "b" ? "b" : "a";
     root.querySelectorAll("[data-variant]").forEach(function (tab) {
       if (!tab.matches(".trade-off-switcher__tab")) return;
@@ -827,13 +845,24 @@
         panel.hidden = !on;
       });
     }
+    root.setAttribute("data-fm-value", v);
+    if (silent) return;
+    var wid = root.getAttribute("data-fm-widget");
+    if (wid) {
+      document.dispatchEvent(
+        new CustomEvent("portfolio:widget-change", {
+          bubbles: true,
+          detail: { id: wid, value: v },
+        })
+      );
+    }
   }
 
   document.querySelectorAll("[data-trade-off-switcher]").forEach(function (root) {
     var tabs = Array.prototype.slice.call(root.querySelectorAll(".trade-off-switcher__tab"));
     if (!tabs.length) return;
 
-    activateVariant(root, root.getAttribute("data-default") || "a");
+    activateVariant(root, root.getAttribute("data-default") || "a", true);
 
     root.addEventListener("click", function (e) {
       var tab = e.target.closest(".trade-off-switcher__tab");

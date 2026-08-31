@@ -1,6 +1,7 @@
 # Temporary working folders used for Figma exports / render checks
 .screenshots/
 .screenshots-gomart/
+.tmp-shots/
 .olx-screenshots/
 .olx_tmp/
 .tpl_tmp/

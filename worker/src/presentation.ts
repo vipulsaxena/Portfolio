@@ -264,6 +264,7 @@ export class PresentationRoom {
       const scrollOnly =
         this.room.state &&
         this.room.state.page === state.page &&
+        this.room.state.deck === state.deck &&
         this.room.state.slide === state.slide &&
         this.room.state.section === state.section &&
         widgetsSignature(this.room.state.widgets) === widgetsSignature(state.widgets) &&

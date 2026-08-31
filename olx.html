@@ -2,12 +2,6 @@
 <html lang="en" class="summary-v2">
 <head>
     <meta charset="utf-8">
-    <script>
-      (function () {
-        if (/[?&]web=1(?:&|$)/.test(location.search)) return;
-        location.replace("olx-presentation.html" + location.search + location.hash);
-      })();
-    </script>
     <script src="js/gtag-init.js"></script>
     <meta http-equiv="x-ua-compatible" content="ie=edge; chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -154,9 +148,9 @@
     <a href="index.html" class="shell-brand">Home</a>
     <p class="deck-title" id="deckTitle">OLX — Ad Package</p>
     <div class="shell-actions">
-      <a class="nav-btn nav-btn--present" href="olx-presentation.html" aria-label="Enter presentation mode" title="Presentation mode" onclick="try{sessionStorage.setItem('vipulPresent','1');sessionStorage.setItem('olxAccessGranted','1')}catch(e){}">
+      <a class="nav-btn nav-btn--present" href="olx-presentation.html?present=1" aria-label="Enter presentation mode" title="Presentation mode" onclick="try{sessionStorage.setItem('olxAccessGranted','1')}catch(e){}">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h20v12H2z"/><path d="M12 15v6"/><path d="m8 21 4-3 4 3"/></svg>
-        <span>Present</span>
+        <span>Presentation mode</span>
       </a>
     </div>
   </div>
@@ -172,147 +166,84 @@
           <span class="tag tag--outline">Marketplace · Pay &amp; Ship</span>
         </div>
         <h1 class="hero__title">OLX is a leading marketplace ecosystem — monetisation at scale across 17 countries.</h1>
-        <p class="hero__sub hero__sub--thesis">OLX serves more than <strong>317&nbsp;million</strong> C2C and B2C users buying and selling new and used products globally.</p>
+        <p class="hero__sub hero__sub--thesis">OLX serves more than 317&nbsp;million C2C and B2C users buying and selling new and used products globally.</p>
         <p class="hero__sub">Our users across 17 countries don't just find good deals — they help the environment too, leaning on a circular consumption cycle rather than a linear one.</p>
         <div class="olx-stats-grid reveal-stagger">
-          <div>
+              <div>
             <div class="olx-stat__num">5.2M</div>
             <div class="olx-stat__label">Tonnes of CO₂-eq emissions avoided</div>
-          </div>
-          <div>
+              </div>
+              <div>
             <div class="olx-stat__num">3.6M</div>
             <div class="olx-stat__label">Tonnes of materials reused</div>
-          </div>
-          <div>
+              </div>
+              <div>
             <div class="olx-stat__num">645M</div>
             <div class="olx-stat__label">M³ of water saved</div>
-          </div>
-          <div>
+              </div>
+              <div>
             <div class="olx-stat__num">122M</div>
             <div class="olx-stat__label">GJ-eq of energy saved</div>
+              </div>
+            </div>
+            </div>
+      <div class="hero-split__visual reveal">
+        <img src="assets/olx/olx_planet.png" alt="Aerial view of a forest with a lake shaped like the OLX logo" width="1200" height="800" decoding="async" fetchpriority="high">
           </div>
         </div>
       </div>
-      <div class="hero-split__visual reveal">
-        <img src="assets/olx/olx_planet.png" alt="Aerial view of a forest with a lake shaped like the OLX logo" width="1200" height="800" decoding="async" fetchpriority="high">
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
 
 <!-- ============================== CONTEXT — Role at OLX ============================== -->
 <section class="section section--tight" id="context" data-period="context">
   <div class="container">
     <div class="section-head reveal">
       <p class="eyebrow">My role</p>
-      <h2 class="h-display h-2">What I do at OLX</h2>
+      <h2 class="h-display h-2">My role</h2>
       <p class="lede">I led Engagement &amp; Monetisation design in Pay &amp; Ship — payments, seller monetisation, and checkout across 17 countries on a platform used by 317M+ people.</p>
     </div>
     <nav class="olx-crumb reveal" aria-label="Team placement">
-      <span>OLX Group</span><span class="sep">›</span>
-      <span>Horizontal</span><span class="sep">›</span>
-      <span>Pay &amp; Ship</span><span class="sep">›</span>
-      <span class="now">Engagement &amp; Monetisation</span>
-    </nav>
+          <span>OLX Group</span><span class="sep">›</span>
+          <span>Horizontal</span><span class="sep">›</span>
+          <span>Pay &amp; Ship</span><span class="sep">›</span>
+          <span class="now">Engagement &amp; Monetisation</span>
+        </nav>
     <div class="olx-split olx-split--55-45 reveal olx-mt-md">
-      <p class="beat__text">I was responsible for all things design within the <strong>Engagement &amp; Monetisation</strong> packs, under the <strong>Pay &amp; Ship</strong> pillar. That scope covered monetisation flows end to end — Ad Limits, Ad packages, Seller Take Rate, and the payment gateway experience — then rolling winning patterns to more of the 17-country footprint.</p>
-      <figure class="olx-figure-frame">
+      <p class="beat__text">I was responsible for all things design within the Engagement &amp; Monetisation packs, under the Pay &amp; Ship pillar. That scope covered monetisation flows end to end — Ad Limits, Ad packages, Seller Take Rate, and the payment gateway experience — then rolling winning patterns to more of the 17-country footprint.</p>
+      <figure class="olx-figure-frame olx-org-map-figure">
         <img src="assets/olx/olx_org_map.png" alt="Org map: Opportunities, Offering and Pricing feed Engagement & Monetisation, which sits under Pay & Ship inside OLX Horizontal and the wider OLX Group" loading="lazy" data-lightbox>
-      </figure>
-    </div>
+          </figure>
+        </div>
     <hr class="rule rule--thick" aria-hidden="true">
-  </div>
-</section>
+      </div>
+    </section>
 
-<!-- ============================== THE STARTING POINT ============================== -->
-<section class="why-hero olx-stakes" id="stakes">
-  <div class="container olx-stakes__inner">
-    <p class="eyebrow">The starting point</p>
-    <h2 class="why-hero__statement">Sellers were dropping out of the buy-package flow — especially at category selection.</h2>
-
-    <div class="why-proofs olx-stakes__proofs reveal-stagger">
-      <article class="why-proof reveal">
-        <div class="why-proof__content">
-          <p class="why-proof__num">Identified friction 01</p>
-          <h4 class="why-proof__title">Extreme drop-off at category selection</h4>
-          <p class="why-proof__text"><strong>Diagnosis:</strong> Almost <strong>80% of B2C and 90% of C2C Sellers</strong> abandoned the buy-package flow at the category-selection step — before they could purchase an Ad package.</p>
-        </div>
-        <div class="why-proof__media why-proof__media--single">
-          <div class="why-proof__frame" style="--proof-ratio: 4 / 3"><img src="assets/olx/graph_prob.png" alt="Buy-package funnel — 20.55% reach package selected; category selection flagged at OpScore 13.12" loading="lazy" data-lightbox></div>
-        </div>
-      </article>
-      <article class="why-proof reveal">
-        <div class="why-proof__content">
-          <p class="why-proof__num">Identified friction 02</p>
-          <h4 class="why-proof__title">Category hierarchy didn’t match seller mental models</h4>
-          <p class="why-proof__text"><strong>Diagnosis:</strong> Long L2+ lists, non-clickable sub-category bullets, and weak links between categories and package pricing made advance package buying feel opaque.</p>
-        </div>
-        <div class="why-proof__media why-proof__media--single">
-          <div class="why-proof__frame" style="--proof-ratio: 1024 / 548"><img src="assets/olx/olx_audit_3.png" alt="UX audit — long L2 sub-category list in buy-package flow" loading="lazy" data-lightbox></div>
-        </div>
-      </article>
-      <article class="why-proof reveal">
-        <div class="why-proof__content">
-          <p class="why-proof__num">Identified friction 03</p>
-          <h4 class="why-proof__title">Monetisation opportunity buried in the flow</h4>
-          <p class="why-proof__text"><strong>Diagnosis:</strong> Opportunity Scoring surfaced category selection at <strong>OpScore 13.12</strong> — the highest-opportunity friction point across 24 mapped limitations in monetisation flows.</p>
-        </div>
-        <div class="why-proof__media why-proof__media--single">
-          <div class="why-proof__frame" style="--proof-ratio: 16 / 10"><img src="assets/olx/olx_opscore_cards.png" alt="Opportunity landscape — category selection as top opportunity" loading="lazy" data-lightbox></div>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<nav class="journey-nav" aria-label="Journey chapters">
-  <button class="journey-nav__btn" data-period-link="journey-intro">Journey</button>
-  <span class="journey-nav__sep">·</span>
+<nav class="journey-nav olx-journey-nav" aria-label="Case study chapters">
+  <button class="journey-nav__btn" data-period-link="case-intro">Journey</button>
   <button class="journey-nav__btn" data-period-link="period-1"><span class="journey-nav__n">01</span> Objective</button>
-  <span class="journey-nav__sep">·</span>
   <button class="journey-nav__btn" data-period-link="period-2"><span class="journey-nav__n">02</span> Research</button>
-  <span class="journey-nav__sep">·</span>
   <button class="journey-nav__btn" data-period-link="period-3"><span class="journey-nav__n">03</span> Problem</button>
-  <span class="journey-nav__sep">·</span>
   <button class="journey-nav__btn" data-period-link="period-4"><span class="journey-nav__n">04</span> Solution</button>
-  <span class="journey-nav__sep">·</span>
-  <button class="journey-nav__btn" data-period-link="proof">Proof</button>
+  <button class="journey-nav__btn" data-period-link="outcome">Proof</button>
 </nav>
 
-<!-- ============================== JOURNEY INTRO ============================== -->
-<section class="section section--tight" id="journey-intro" data-period="journey-intro">
+<!-- ============================== CASE STUDY INTRO ============================== -->
+<section class="section section--tight olx-case-intro" id="case-intro" data-period="case-intro">
   <div class="container">
-    <div class="section-head reveal">
-      <p class="eyebrow">Closing the case</p>
-      <h2 class="h-display h-2">Journey</h2>
-      <p class="lede lede--remit">16 weeks on the buy-package flow — from diagnosis through research, exploration, usability testing, and production validation across 17 markets.</p>
-    </div>
-    <div class="track-key reveal-stagger olx-track-key">
-      <div class="track-key__item track-key__item--practice">
-        <p class="track-key__label">Case study</p>
-        <p class="track-key__text">Ad Package — research, redesign, A/B validation, and rollout of category selection.</p>
-      </div>
-      <div class="track-key__item track-key__item--enablement enablement-surface">
-        <p class="track-key__label enablement-label">
-          <svg class="enablement-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-          DesignOps
-        </p>
-        <p class="track-key__text">Cross-pillar workshops — monetisation sprints, Figma ways of working, design principles.</p>
-      </div>
-    </div>
-    <p class="why-hero__body olx-journey-impact"><strong>Impact: +12% conversion uplift trend, 8% more paying Sellers, CSAT 7.9 — with workshops that scaled practice beyond this flow.</strong></p>
-    <hr class="rule rule--thick" aria-hidden="true">
-  </div>
-  <div class="olx-band olx-band--sage reveal">
-    <div class="container olx-cover-grid">
-      <div class="olx-cover-copy">
-        <span class="time-pill">16 weeks of design timeline · In development</span>
+    <div class="olx-split olx-split--cover reveal">
+      <div class="olx-case-intro__copy">
+        <p class="eyebrow">Case study · OLX Group</p>
+        <h2 class="h-display h-2">OLX Ad Package</h2>
+        <span class="time-pill olx-mt-sm">16 weeks of design timeline · In development</span>
+        <p class="beat__text olx-mt-md">OLX is monetised through Ad Limits, and one of the primary ways Sellers keep posting more ads is by buying Ad packages.</p>
+        <p class="beat__text">The updated Ad-package purchasing UX streamlines category selection and provides clearer guidance when buying Ad packages.</p>
+        <p class="why-hero__body olx-journey-impact">Impact: +12% conversion uplift trend, 8% more paying Sellers, CSAT 7.9 — validated in Poland and rolling out across markets.</p>
         <div class="olx-shoutouts olx-mt-md">
           <p class="olx-shoutouts__label">Shoutouts</p>
           <p class="beat__text">Lorena (UX Writer), Małgorzata (Researcher), Claude (PM), Oana (CPO), Kuba (EM), Monica &amp; Arsen (Jr. PD) — along with the Engineering &amp; BI teams.</p>
         </div>
       </div>
-      <div class="cover-tex olx-cover-video">
+      <div class="olx-case-intro__media cover-tex olx-cover-video">
         <div class="phone-mock phone-mock--cover">
           <video data-autoplay-inview muted playsinline loop preload="metadata" poster="assets/olx/olx_cover.png" aria-label="Screen recording of the redesigned OLX buy-package category selection flow">
             <source src="assets/olx/OLX_vid.mov" type="video/quicktime">
@@ -321,6 +252,7 @@
         </div>
       </div>
     </div>
+    <hr class="rule rule--thick" aria-hidden="true">
   </div>
 </section>
 
@@ -336,21 +268,21 @@
             <span class="chip">Pay &amp; Ship</span>
           </div>
         </div>
-        <h2 class="h-display h-2 period__title">Business objective &amp; context</h2>
-        <p class="lede period__thesis">Grow the share of monthly paying Sellers through improvements to existing monetisation flows — while contributing to a CSAT goal of <span class="hl">+8.0</span>.</p>
-        <p class="period__role"><strong>Even a 1% increase</strong> in paying Sellers can amount to an additional <strong>$110k–$160k</strong> in monthly revenue.</p>
+        <h2 class="h-display h-2 period__title">Business objective</h2>
+        <p class="lede period__thesis">Grow the share of monthly paying Sellers through improvements to existing monetisation flows — while contributing to a CSAT goal of +8.0.</p>
+        <p class="period__role">Even a 1% increase in paying Sellers can amount to an additional $110k–$160k in monthly revenue.</p>
         <div class="mini-card olx-csat-header-card olx-mt-md reveal">
-          <svg viewBox="0 0 120 72" width="132" height="80" aria-hidden="true">
-            <path d="M10 62 A50 50 0 0 1 110 62" fill="none" stroke="#e7e7e7" stroke-width="10" stroke-linecap="round"/>
-            <path class="csat-arc" d="M10 62 A50 50 0 0 1 93 24" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100" fill="none" stroke="#1a9e5a" stroke-width="10" stroke-linecap="round"/>
-            <text x="60" y="58" text-anchor="middle" font-size="20" font-weight="800" fill="#123b4d">7.3</text>
-          </svg>
-          <div>
+              <svg viewBox="0 0 120 72" width="132" height="80" aria-hidden="true">
+                <path d="M10 62 A50 50 0 0 1 110 62" fill="none" stroke="#e7e7e7" stroke-width="10" stroke-linecap="round"/>
+                <path class="csat-arc" d="M10 62 A50 50 0 0 1 93 24" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100" fill="none" stroke="#1a9e5a" stroke-width="10" stroke-linecap="round"/>
+                <text x="60" y="58" text-anchor="middle" font-size="20" font-weight="800" fill="#123b4d">7.3</text>
+              </svg>
+              <div>
             <p class="olx-csat-header-card__title">Customer Satisfaction</p>
             <p class="olx-csat-header-card__text">Baseline CSAT the redesign aims to lift toward +8.0.</p>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
       <figure class="period__head-visual panel-green reveal">
         <p class="olx-mission-quote">Build a profitable transactional business ensuring high retention and improving CSAT</p>
       </figure>
@@ -359,23 +291,33 @@
 
     <div class="period__story">
     <article class="beat reveal beat--background">
-      <p class="beat__eyebrow">Background</p>
-      <h3 class="beat__title">Background</h3>
-      <div class="olx-bg-intro">
-        <p class="beat__text">As a Seller on OLX you get a few free ads until you're required to pay — with the option to promote Ads to potential Buyers on a <strong>30-day Ad life-cycle</strong>. Sellers create ads, hit the paywall and promotion, run a 30-day lifecycle via the Marketplace, then OLX Delivery to Buyers.</p>
-        <div class="seg" id="bgSeg" role="tablist" aria-label="Background view" data-fm-widget="olx-bg">
-          <button type="button" class="seg-btn" data-bg="1" role="tab" aria-selected="true">Ad lifecycle</button>
-          <button type="button" class="seg-btn" data-bg="2" role="tab" aria-selected="false">Personas</button>
+      <div class="olx-split olx-split--50-50">
+        <div>
+          <p class="beat__eyebrow">Background</p>
+          <h3 class="beat__title">Understanding the domain</h3>
+          <p class="beat__text">As a Seller on OLX you get a few free ads until you're required to pay — with the option to promote Ads to potential Buyers on a 30-day Ad life-cycle. Sellers create ads, hit the paywall and promotion, run a 30-day lifecycle via the Marketplace, then OLX Delivery to Buyers.</p>
         </div>
+        <figure class="olx-figure-frame olx-figure-frame--plain reveal">
+          <img loading="lazy" src="assets/olx/case_background.png" alt="OLX monetisation ecosystem — Sellers create ads, hit the paywall and promotion, run a 30-day lifecycle via the Marketplace, then OLX Delivery to Buyers" data-lightbox>
+        </figure>
       </div>
-      <figure class="olx-bg-figure olx-figure-bleed olx-mt-md">
-        <img loading="lazy" class="bgview-shot active olx-w-full" data-bg-shot="1" data-lightbox src="assets/olx/case_background.png" alt="OLX monetisation ecosystem — Sellers create ads, hit the paywall and promotion, run a 30-day lifecycle via the Marketplace, then OLX Delivery to Buyers">
-        <img loading="lazy" class="bgview-shot olx-w-full" data-bg-shot="2" data-lightbox src="assets/olx/case_background-2.png" alt="Seller and Buyer personas — C2C Sellers, B2C Sellers and Buyer types">
-      </figure>
+    </article>
+
+    <article class="beat reveal beat--background">
+      <div class="olx-split olx-split--50-50">
+        <div>
+          <p class="beat__eyebrow">Personas</p>
+          <h3 class="beat__title">Seller &amp; Buyer types on OLX</h3>
+          <p class="beat__text">C2C Sellers (Chatterbox, Low-effort Lover, Steady Seller, Fast Earner, Busy Trader), B2C Sellers (Pro, Casual, Grey) and Buyer types (Speedy Saver, Careful Comparer, Patient Shopper, Local Speedster) — the monetisation flows serve both sides of the marketplace.</p>
+        </div>
+        <figure class="olx-figure-frame olx-figure-frame--plain reveal">
+          <img loading="lazy" src="assets/olx/case_background-2.png" alt="Seller and Buyer personas — C2C Sellers, B2C Sellers and Buyer types" data-lightbox>
+        </figure>
+      </div>
     </article>
     </div>
-  </div>
-</section>
+      </div>
+    </section>
 
 <!-- ============================== PERIOD 02 — Research ============================== -->
 <section class="section period period--olx" id="period-2" data-period="period-2">
@@ -386,43 +328,46 @@
         <div class="chip-row"><span class="chip">Research</span><span class="chip">OpScore</span></div>
       </div>
       <h2 class="h-display h-2 period__title">Research through prioritisation</h2>
-      <p class="lede period__thesis">12 Seller interviews, 24 limitations, and Opportunity Scoring — category selection emerged as the bet at OpScore <strong>13.12</strong>.</p>
+      <p class="lede period__thesis">12 Seller interviews, 24 limitations, and Opportunity Scoring — category selection emerged as the bet at OpScore 13.12.</p>
     </header>
     <hr class="rule rule--thick" aria-hidden="true">
 
     <div class="period__story">
     <article class="beat beat--research reveal">
       <div class="olx-split olx-split--50-50">
-        <div>
+                <div>
           <p class="beat__eyebrow">Jobs to be Done</p>
           <h3 class="beat__title">Initiate research — Jobs to be Done</h3>
-          <p class="beat__text">To begin, we ran <strong>12 B2C &amp; C2C Seller interviews</strong> to understand their <strong>Desires, Limitations and Catalysts</strong> when selling on OLX — with emphasis on the monetisation flows.</p>
+          <p class="beat__text">To begin, we ran 12 B2C &amp; C2C Seller interviews to understand their Desires, Limitations and Catalysts when selling on OLX — with emphasis on the monetisation flows.</p>
           <div class="jtbd-grid olx-mt-md">
             <div>
-              <p class="beat__subtitle">When</p>
+              <p class="jtbd-caption">When</p>
               <div class="note note-when">Sellers (B2C/C2C) choose OLX to sell one or multiple goods and list their Ads.</div>
+              <p class="jtbd-label">User</p>
             </div>
             <div>
-              <p class="beat__subtitle">They would like to</p>
+              <p class="jtbd-caption">They would like to</p>
               <div class="jtbd-job-stack">
                 <div class="note note-job">Determine &amp; act on how to attract Buyers to their goods.</div>
                 <div class="note note-job">Optimise the pricing of under-performing goods against the money they invest.</div>
               </div>
+              <p class="jtbd-label">Job step</p>
             </div>
             <div>
-              <p class="beat__subtitle">So that</p>
+              <p class="jtbd-caption">So that</p>
               <div class="jtbd-catalyst-stack">
                 <div class="note note-catalyst"><b>B2C/C2C</b> — they reach their desired ROI per item.</div>
                 <div class="note note-catalyst"><b>C2C</b> — they feel they're contributing to sustainability and getting rid of unwanted goods.</div>
               </div>
+              <p class="jtbd-label">Catalysts</p>
             </div>
           </div>
-        </div>
-        <figure class="olx-figure-frame reveal">
+            </div>
+        <figure class="olx-figure-frame olx-figure-frame--plain reveal">
           <img loading="lazy" src="assets/olx/olx_interviews.png" alt="Grid of 12 remote interview participants across B2C and C2C Sellers" data-lightbox>
           <figcaption class="beat__text olx-mt-sm">12 remote interviews across B2C and C2C Sellers.</figcaption>
         </figure>
-      </div>
+        </div>
     </article>
 
     <article class="beat reveal">
@@ -430,15 +375,15 @@
       <h3 class="beat__title">We analysed the 24 identified limitations</h3>
       <p class="beat__text">Post qualitative research, findings were clustered into 24 limitations. With: Research Lead, Lead PM, HOD, myself &amp; 2 Jr. Designers.</p>
       <div class="olx-prob-grid olx-mt-md beat--spaced-after">
-        <div class="prob"><b>Sellers can't relate to what personalisation does to their Ads</b><span>The personalised-page option wasn't transparent or attractive enough to users.</span></div>
-        <div class="prob"><b>Statistics feel like a free feature — why pay for it?</b><span>Sellers assume Ad statistics are always free, so the benefit of paying is unclear.</span></div>
-        <div class="prob"><b>No freedom to decide when to use Pay-if-you-sell</b><span>You first have to use up the pool of free ads to use STR — and Sellers often don't know this.</span></div>
-        <div class="prob win"><b>Hard to find the exact category when buying Ad packages</b><span>Sellers don't find the category-selection process user-friendly. <strong>OpScore 13.12 — the bet.</strong></span></div>
-        <div class="prob"><b>Sellers don't see the direct results of paying for promotions</b><span>Promotion lifts views, but that didn't clearly translate into sales versus re-posting.</span></div>
-        <div class="prob"><b>Package price is often inadequate to item price</b><span>For cheap items the package price is close to the item's value — the sale is no longer profitable.</span></div>
-        <div class="prob"><b>STR is only available for OLX Delivery listings</b><span>Users may not know STR exists, especially if their inventory doesn't match OLX Delivery.</span></div>
+          <div class="prob"><b>Sellers can't relate to what personalisation does to their Ads</b><span>The personalised-page option wasn't transparent or attractive enough to users.</span></div>
+          <div class="prob"><b>Statistics feel like a free feature — why pay for it?</b><span>Sellers assume Ad statistics are always free, so the benefit of paying is unclear.</span></div>
+          <div class="prob"><b>No freedom to decide when to use Pay-if-you-sell</b><span>You first have to use up the pool of free ads to use STR — and Sellers often don't know this.</span></div>
+        <div class="prob win"><b>Hard to find the exact category when buying Ad packages</b><span>Sellers don't find the category-selection process user-friendly. OpScore 13.12 — the bet.</span></div>
+          <div class="prob"><b>Sellers don't see the direct results of paying for promotions</b><span>Promotion lifts views, but that didn't clearly translate into sales versus re-posting.</span></div>
+          <div class="prob"><b>Package price is often inadequate to item price</b><span>For cheap items the package price is close to the item's value — the sale is no longer profitable.</span></div>
+          <div class="prob"><b>STR is only available for OLX Delivery listings</b><span>Users may not know STR exists, especially if their inventory doesn't match OLX Delivery.</span></div>
         <div class="prob prob--more"><b>…and 17 more</b><span>All 24 limitations were mapped, then quantified and scored next.</span></div>
-      </div>
+        </div>
     </article>
 
     <article class="beat reveal">
@@ -446,21 +391,21 @@
         <div>
           <p class="beat__eyebrow">Prioritisation</p>
           <h3 class="beat__title">Quantification to prioritisation</h3>
-          <p class="beat__text">I surveyed Sellers on the <strong>importance</strong> &amp; <strong>satisfaction</strong> of each problem area, then used <strong>Opportunity Scoring</strong> to generate an OpScore. Category selection was a top opportunity — the bet we chose.</p>
+          <p class="beat__text">I surveyed Sellers on the importance &amp; satisfaction of each problem area, then used Opportunity Scoring to generate an OpScore. Category selection was a top opportunity — the bet we chose.</p>
           <span class="cs-formula olx-mt-md">OpScore = Importance + max(Importance − Satisfaction, 0)</span>
           <figure class="olx-mt-md">
             <img loading="lazy" src="assets/olx/olx_opscore_cards.png" alt="Opportunity landscape plotting each feature by importance against satisfaction" data-lightbox class="olx-img-card">
-            <figcaption class="beat__text olx-mt-sm">Opportunity landscape — <span class="hl">category selection</span> was a top opportunity (OpScore <strong>13.12</strong>).</figcaption>
-          </figure>
-        </div>
+            <figcaption class="beat__text olx-mt-sm">Opportunity landscape — category selection was a top opportunity (OpScore 13.12).</figcaption>
+            </figure>
+          </div>
         <figure class="olx-figure-frame reveal">
           <img loading="lazy" src="assets/olx/survey.png" alt="SurveyMonkey questionnaire asking Sellers to rate importance and satisfaction for each problem area" data-lightbox>
         </figure>
-      </div>
+          </div>
     </article>
-    </div>
-  </div>
-</section>
+        </div>
+      </div>
+    </section>
 
 <!-- ============================== PERIOD 03 — Problem ============================== -->
 <section class="section period period--olx period--alt" id="period-3" data-period="period-3">
@@ -470,23 +415,20 @@
         <span class="period__num">03</span>
         <div class="chip-row"><span class="chip">Drop-off</span><span class="chip">UX audit</span></div>
       </div>
-      <h2 class="h-display h-2 period__title">The category-selection problem</h2>
-      <p class="lede period__thesis">Almost <span class="hl">80% of B2C and 90% of C2C Sellers</span> drop at the category-selection page of the buy-package flow.</p>
+      <h2 class="h-display h-2 period__title">Identified problem</h2>
     </header>
     <hr class="rule rule--thick" aria-hidden="true">
 
     <article class="beat reveal">
-      <div class="olx-split olx-split--50-50">
-        <div>
-          <blockquote class="mini-card olx-quote-card">
-            “I like the option to buy an Ad package in advance, but it gets tricky to find the same category in which I post multiple ads.”
-          </blockquote>
-          <p class="beat__text olx-mt-md">Funnel data showed only <strong>20.55%</strong> of users reaching package selected — with category-selection flagged at OpScore 13.12 as the highest-opportunity friction point in the buy-package journey.</p>
-        </div>
-        <figure class="olx-figure-frame reveal">
+      <div class="olx-split olx-split--50-50 olx-problem-split">
+        <blockquote class="mini-card olx-quote-card olx-problem-quote">
+          “I like the option to buy an Ad package in advance, but it gets tricky to find the same category in which I post multiple ads.”
+        </blockquote>
+        <figure class="olx-graph-prob reveal">
           <img loading="lazy" src="assets/olx/graph_prob.png" alt="Users funnel from the buy-package flow: 20.55% at package selected, with category-selection called out at OpScore 13.12" data-lightbox>
         </figure>
       </div>
+      <p class="beat__text olx-problem-stats">Almost 80% of B2C and 90% of C2C Sellers drop at the category-selection page of the buy-package flow. Funnel data showed only 20.55% of users reaching package selected — category-selection flagged at OpScore 13.12.</p>
     </article>
 
     <article class="beat reveal">
@@ -495,79 +437,70 @@
       <p class="beat__text">Five findings from Hotjar recordings, heatmaps, and flow walkthroughs — hover a finding to see the screen.</p>
       <div class="olx-audit-layout olx-audit-block">
         <figure class="olx-audit-figure">
-          <div class="audit-stage" id="auditStage">
+            <div class="audit-stage" id="auditStage">
             <img loading="lazy" class="audit-shot active" data-audit-shot="1" data-lightbox src="assets/olx/olx_audit_1.png" alt="Audit — seller account overview">
             <img loading="lazy" class="audit-shot" data-audit-shot="2" data-lightbox src="assets/olx/olx_audit_2.png" alt="Audit — category grid with click heatmap">
             <img loading="lazy" class="audit-shot" data-audit-shot="3" data-lightbox src="assets/olx/olx_audit_3.png" alt="Audit — long L2 sub-category list">
             <img loading="lazy" class="audit-shot" data-audit-shot="4" data-lightbox src="assets/olx/olx_audit_4.png" alt="Audit — package selection">
             <img loading="lazy" class="audit-shot" data-audit-shot="5" data-lightbox src="assets/olx/olx_audit_5.png" alt="Audit — mega-package details">
-          </div>
+            </div>
           <figcaption class="beat__text olx-audit-hint"><span class="tag-pill tag-pill--muted">Hover</span> a finding to see the screen · click to zoom</figcaption>
-        </figure>
+          </figure>
         <ul id="auditList" data-fm-widget="olx-audit" data-fm-kind="audit">
-          <li><button type="button" class="audit-item active" data-audit="1"><span class="audit-num">1</span><span>Beyond paywall, users already know where to buy ad-package from? ie; from <strong>Account</strong>.</span></button></li>
-          <li><button type="button" class="audit-item" data-audit="2"><span class="audit-num">2</span><span>Hotjar recordings show users <strong>trying to click sub-category bullet-points</strong> that do nothing.</span></button></li>
-          <li><button type="button" class="audit-item" data-audit="3"><span class="audit-num">3</span><span>Category lists at <strong>L2 and beyond are long and lack hierarchy</strong>.</span></button></li>
-          <li><button type="button" class="audit-item" data-audit="4"><span class="audit-num">4</span><span>Sub-categories drive package price, but that link <strong>lacks upfront discovery</strong>.</span></button></li>
-          <li><button type="button" class="audit-item" data-audit="5"><span class="audit-num">5</span><span>To see the exact categories included, user has to tap <strong>“What's included in mega-package”</strong>.</span></button></li>
-        </ul>
-      </div>
+          <li><button type="button" class="audit-item active" data-audit="1"><span class="audit-num">1</span><span>Beyond paywall, users already know where to buy ad-package from? ie; from Account.</span></button></li>
+          <li><button type="button" class="audit-item" data-audit="2"><span class="audit-num">2</span><span>Hotjar recordings show users trying to click sub-category bullet-points that do nothing.</span></button></li>
+          <li><button type="button" class="audit-item" data-audit="3"><span class="audit-num">3</span><span>Category lists at L2 and beyond are long and lack hierarchy.</span></button></li>
+          <li><button type="button" class="audit-item" data-audit="4"><span class="audit-num">4</span><span>Sub-categories drive package price, but that link lacks upfront discovery.</span></button></li>
+          <li><button type="button" class="audit-item" data-audit="5"><span class="audit-num">5</span><span>To see the exact categories included, user has to tap “What's included in mega-package”.</span></button></li>
+          </ul>
+        </div>
     </article>
-  </div>
-</section>
+      </div>
+    </section>
 
-<!-- ============================== PERIOD 04 — Solution ============================== -->
+<!-- ============================== SOLUTION (explore → test) ============================== -->
 <section class="section period period--olx" id="period-4" data-period="period-4">
   <div class="container">
-    <header class="period__head reveal">
-      <div class="period__meta">
-        <span class="period__num">04</span>
-        <div class="chip-row"><span class="chip">Explore</span><span class="chip">Test</span></div>
-      </div>
-      <h2 class="h-display h-2 period__title">Desktop-first exploration &amp; validation</h2>
-      <p class="lede period__thesis">More than <strong>60% of Ad packages</strong> are purchased via the OLX website — so we explored on desktop, narrowed to two concepts, and tested with 10 users.</p>
-    </header>
-    <hr class="rule rule--thick" aria-hidden="true">
-
     <div class="period__story">
     <article class="beat reveal">
       <p class="beat__eyebrow">Explore</p>
       <h3 class="beat__title">Designed 3 possible directions for desktop</h3>
-      <div class="hypo-grid olx-mt-md">
-        <article class="hypo-card">
-          <div class="hypo-card__media">
+      <p class="beat__text">Why desktop first? More than 60% of Ad packages are purchased via the OLX website.</p>
+      <div class="hypo-grid hypo-grid--60-40 olx-mt-md">
+          <article class="hypo-card">
+            <div class="hypo-card__media">
             <img loading="lazy" src="assets/olx/olx_direction1.png" alt="Direction 1 — real-time offer view" data-lightbox>
-          </div>
-          <div class="hypo-card__body">
-            <p class="hypo-card__eyebrow">#1 Hypothesis</p>
+            </div>
+            <div class="hypo-card__body">
+              <p class="hypo-card__eyebrow">#1 Hypothesis</p>
             <h4 class="hypo-card__title">Real-time offer view</h4>
             <p class="hypo-card__p">Users would appreciate if they can simultaneously browse Ad packages while choosing the category in which they'd like to post ads, making the overall process dynamic.</p>
-            <p class="hypo-card__p">Offers are shown based on availability. Categories are seen upfront on the offer view.</p>
-          </div>
-        </article>
-        <article class="hypo-card">
-          <div class="hypo-card__media">
+              <p class="hypo-card__p">Offers are shown based on availability. Categories are seen upfront on the offer view.</p>
+            </div>
+          </article>
+          <article class="hypo-card">
+            <div class="hypo-card__media">
             <img loading="lazy" src="assets/olx/olx_direction2.png" alt="Direction 2 — multi-level category menu" data-lightbox>
-          </div>
-          <div class="hypo-card__body">
-            <p class="hypo-card__eyebrow">#2 Hypothesis</p>
+            </div>
+            <div class="hypo-card__body">
+              <p class="hypo-card__eyebrow">#2 Hypothesis</p>
             <h4 class="hypo-card__title">Multi-level menu</h4>
-            <p class="hypo-card__p">A linear selection process should reduce cognitive load, along with the multi-level menu that should ease the selection process.</p>
+              <p class="hypo-card__p">A linear selection process should reduce cognitive load, along with the multi-level menu that should ease the selection process.</p>
             <p class="hypo-card__p">Minimum selection to see offers would be L2 selection. Selected category is marked with a '✔' at summary &amp; offer page.</p>
-          </div>
-        </article>
-        <article class="hypo-card">
-          <div class="hypo-card__media">
+            </div>
+          </article>
+          <article class="hypo-card">
+            <div class="hypo-card__media">
             <img loading="lazy" src="assets/olx/olx_direction3.png" alt="Direction 3 — multi-selection view" data-lightbox>
-          </div>
-          <div class="hypo-card__body">
-            <p class="hypo-card__eyebrow">#3 Hypothesis</p>
+            </div>
+            <div class="hypo-card__body">
+              <p class="hypo-card__eyebrow">#3 Hypothesis</p>
             <h4 class="hypo-card__title">Multi-selection view</h4>
-            <p class="hypo-card__p">OLX only offers packages in pre-set bundled categories; letting users multi-select category bundles could enable advance planning.</p>
-            <p class="hypo-card__p">Letting users multi-select categories across various L1 would require change in business logic (high effort), and so in the current state only multiple bundles can be selected.</p>
-          </div>
-        </article>
-      </div>
+              <p class="hypo-card__p">OLX only offers packages in pre-set bundled categories; letting users multi-select category bundles could enable advance planning.</p>
+              <p class="hypo-card__p">Letting users multi-select categories across various L1 would require change in business logic (high effort), and so in the current state only multiple bundles can be selected.</p>
+            </div>
+          </article>
+        </div>
     </article>
 
     <article class="beat reveal beat--proto">
@@ -575,8 +508,7 @@
       <h3 class="beat__title">Two directions, head to head</h3>
       <p class="beat__text">Design critique to narrow it down to 2 ideas — 9 P&amp;S designers, 4 PMs across pillars, the Engineering team, the P&amp;S HOD and the Data team.</p>
       <p class="beat__text olx-hint"><span class="tag-pill tag-pill--muted">Interactive</span> — tap a prototype to advance</p>
-      <div class="olx-band olx-band--directions olx-mt-md">
-        <div class="olx-band__inner">
+      <div class="olx-proto-wrap olx-mt-md">
           <div class="proto-grid">
           <div class="proto-col">
             <div class="vlabel vlabel-a">
@@ -609,194 +541,167 @@
               <span class="proto-lens" aria-hidden="true"></span>
             </button>
             <div class="proto-meta"><span class="proto-frame">Frame <span data-proto-step="b">1</span> / 5</span></div>
-          </div>
+            </div>
           </div>
         </div>
+    </article>
+
+    <article class="beat reveal beat--usability">
+      <p class="beat__eyebrow">Usability testing</p>
+      <h3 class="beat__title">We tested 2 concepts with 10 users</h3>
+      <p class="beat__text">Moderated sessions compared Variant A (real-time offer view) against Variant B (multi-level menu) — each insight paired with the takeaway it drove.</p>
+      <div class="olx-usability-cols" aria-hidden="true">
+        <span class="olx-usability-col-label">Insight</span>
+        <span></span>
+        <span class="olx-usability-col-label olx-usability-col-label--takeaway">Takeaway</span>
+      </div>
+      <div class="olx-insight-grid olx-mt-md">
+        <div class="olx-insight-row">
+          <div class="olx-insight-card"><span class="abadge a-a">A</span> 4/8 struggled to associate dropdown categories with the dynamic offer. Task time was 15% lower than Production.</div>
+          <div class="olx-insight-arrow" aria-hidden="true">→</div>
+          <div class="olx-takeaway-card">Primary/secondary/tertiary categories got associated with filters — adding cognitive load and failing the hypothesis.</div>
+        </div>
+        <div class="olx-insight-row">
+          <div class="olx-insight-card"><span class="abadge-stack"><img class="abadge-crown" src="assets/olx/crown.png" alt="" width="22" height="22" decoding="async" aria-hidden="true"><span class="abadge a-b">B</span></span> 7/8 were satisfied with the multi-level menu and appreciated the summary view. Task time was 28% higher than Production.</div>
+          <div class="olx-insight-arrow" aria-hidden="true">→</div>
+          <div class="olx-takeaway-card">Users found categories with ease; one suggested a shortcut to repeat the selection.</div>
+          </div>
+        <div class="olx-insight-row">
+          <div class="olx-insight-card"><span class="abadge a-a">A</span> Only 2/8 found the filter view easier to compare — and they ignored the 'see-more' CTA while comparing packages.</div>
+          <div class="olx-insight-arrow" aria-hidden="true">→</div>
+          <div class="olx-takeaway-card">Most users expect offers to carry as much upfront information as possible.</div>
+          </div>
+        <div class="olx-insight-row">
+          <div class="olx-insight-card"><span class="abadge-stack"><img class="abadge-crown" src="assets/olx/crown.png" alt="" width="22" height="22" decoding="async" aria-hidden="true"><span class="abadge a-b">B</span></span> With upfront category tags, 5/8 intuitively named categories as a variable for why price differs per package.</div>
+          <div class="olx-insight-arrow" aria-hidden="true">→</div>
+          <div class="olx-takeaway-card">Users don't always tap see-more — a long list of category tags can also add cognitive load.</div>
+          </div>
+          </div>
+      <div class="test-photo-grid olx-mt-lg">
+        <figure class="test-photo-fig">
+            <span class="photo-variant-badge photo-variant-badge--a" aria-hidden="true"><span class="photo-variant-badge__letter">A</span></span>
+          <img loading="lazy" src="assets/olx/olx_test_a.png" alt="Moderated session — Variant A" data-lightbox>
+          </figure>
+        <figure class="test-photo-fig test-photo-fig--winner">
+            <span class="photo-variant-badge photo-variant-badge--b photo-variant-badge--crown" title="Variant B — usability test winner">
+              <img class="abadge-crown" src="assets/olx/crown.png" alt="" width="28" height="28" decoding="async" aria-hidden="true">
+              <span class="photo-variant-badge__letter">B</span>
+            </span>
+          <img loading="lazy" src="assets/olx/olx_test_b.png" alt="Moderated session — Variant B, usability test winner" data-lightbox>
+          </figure>
+      </div>
+    </article>
+        </div>
+      </div>
+    </section>
+
+<!-- ============================== OUTCOME ============================== -->
+<section class="section period period--olx period--alt" id="outcome" data-period="outcome">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Outcome</p>
+      <h2 class="h-display h-2">Validated on production</h2>
+      <p class="lede">Variant B went into an A (Production) / B (Multi-level menu) test in Poland — with uplift rolling out across markets.</p>
+    </div>
+    <hr class="rule rule--thick" aria-hidden="true">
+
+    <article class="beat beat--impact reveal">
+      <div class="olx-split olx-split--50-50 olx-outcome-split">
+        <div class="olx-outcome-metrics reveal-stagger">
+          <div class="olx-outcome-metric">
+            <div class="olx-outcome-metric__value mono-stat">+12%</div>
+            <p class="olx-outcome-metric__label">Upward trend in package purchase conversion · Poland A/B</p>
+          </div>
+          <div class="olx-outcome-metric">
+            <div class="olx-outcome-metric__value mono-stat">8%</div>
+            <p class="olx-outcome-metric__label">Increase in paying Sellers</p>
+          </div>
+          <div class="olx-outcome-metric">
+            <div class="olx-outcome-metric__value mono-stat">7.9</div>
+            <p class="olx-outcome-metric__label">Seller CSAT · +0.6 from baseline 7.3</p>
+          </div>
+          <div class="olx-outcome-metric">
+            <div class="olx-outcome-metric__value olx-outcome-metric__value--text">Rolling out</div>
+            <p class="olx-outcome-metric__label">Winning pattern across markets · mobile aligned</p>
+          </div>
+        </div>
+        <figure class="olx-figure-frame olx-figure-frame--plain olx-graph-solv reveal">
+          <img loading="lazy" src="assets/olx/graph_solv.png" alt="Conversion uplift in the buy-package flow after Variant B — +12% trend" data-lightbox>
+        </figure>
       </div>
     </article>
 
     <article class="beat reveal">
-      <p class="beat__eyebrow">Test</p>
-      <h3 class="beat__title">We tested 2 concepts for usability with <span class="hl">10 users</span></h3>
-      <p class="beat__text">Moderated sessions compared Variant A (real-time offer view) against Variant B (multi-level menu) — each insight paired with the takeaway it drove.</p>
-      <div class="olx-insight-grid olx-mt-md">
-        <div class="olx-insight-row">
-          <div class="olx-insight-card"><span class="abadge a-a">A</span> <strong>4/8 struggled</strong> to associate dropdown categories with the dynamic offer. Task time was <strong>15% lower</strong> than Production.</div>
-          <div class="olx-insight-arrow" aria-hidden="true">→</div>
-          <div class="olx-takeaway-card">Primary/secondary/tertiary categories got associated with filters — adding <strong>cognitive load</strong> and failing the hypothesis.</div>
-        </div>
-        <div class="olx-insight-row">
-          <div class="olx-insight-card"><span class="abadge-stack"><img class="abadge-crown" src="assets/olx/crown.png" alt="" width="22" height="22" decoding="async" aria-hidden="true"><span class="abadge a-b">B</span></span> <strong>7/8 were satisfied</strong> with the multi-level menu and appreciated the summary view. Task time was <strong>28% higher</strong> than Production.</div>
-          <div class="olx-insight-arrow" aria-hidden="true">→</div>
-          <div class="olx-takeaway-card">Users found categories with <strong>ease</strong>; one suggested a <strong>shortcut to repeat</strong> the selection.</div>
-        </div>
-        <div class="olx-insight-row">
-          <div class="olx-insight-card"><span class="abadge a-a">A</span> Only <strong>2/8</strong> found the filter view easier to compare — and they ignored the 'see-more' CTA while comparing packages.</div>
-          <div class="olx-insight-arrow" aria-hidden="true">→</div>
-          <div class="olx-takeaway-card">Most users expect offers to carry as much <strong>upfront information</strong> as possible.</div>
-        </div>
-        <div class="olx-insight-row">
-          <div class="olx-insight-card"><span class="abadge-stack"><img class="abadge-crown" src="assets/olx/crown.png" alt="" width="22" height="22" decoding="async" aria-hidden="true"><span class="abadge a-b">B</span></span> With <strong>upfront category tags</strong>, 5/8 intuitively named categories as a variable for why price differs per package.</div>
-          <div class="olx-insight-arrow" aria-hidden="true">→</div>
-          <div class="olx-takeaway-card">Users don't always tap see-more — a long list of category tags can also add cognitive load.</div>
-        </div>
-      </div>
-      <div class="test-photo-grid olx-mt-lg">
-        <figure class="test-photo-fig">
-          <span class="photo-variant-badge photo-variant-badge--a" aria-hidden="true"><span class="photo-variant-badge__letter">A</span></span>
-          <img loading="lazy" src="assets/olx/olx_test_a.png" alt="Moderated session — Variant A" data-lightbox>
+      <div class="olx-split olx-split--50-50 olx-next-steps-split">
+        <figure class="olx-next-steps-fig reveal">
+          <img loading="lazy" decoding="async" src="assets/olx/comb_mob_desk.png" alt="Desktop and mobile buy-package flows — shortcut banner and aligned category selection" data-lightbox>
         </figure>
-        <figure class="test-photo-fig test-photo-fig--winner">
-          <span class="photo-variant-badge photo-variant-badge--b photo-variant-badge--crown" title="Variant B — usability test winner">
-            <img class="abadge-crown" src="assets/olx/crown.png" alt="" width="28" height="28" decoding="async" aria-hidden="true">
-            <span class="photo-variant-badge__letter">B</span>
-          </span>
-          <img loading="lazy" src="assets/olx/olx_test_b.png" alt="Moderated session — Variant B, usability test winner" data-lightbox>
-        </figure>
+        <div>
+          <p class="beat__eyebrow">After launch</p>
+          <h3 class="beat__title">Next steps</h3>
+          <p class="beat__text">A usability participant flagged repeat Ad package purchases — and data showed ~31% of B2C Sellers were buying again. We shipped a shortcut banner for their last package — the first step toward recommendations from Ad posting history.</p>
+          <p class="beat__text">Package recommendations are in moderation and live in Poland. The winning category-selection pattern is on mobile too.</p>
+        </div>
       </div>
     </article>
-    </div>
   </div>
 </section>
 
-<!-- ============================== PROOF ============================== -->
-<section class="section period period--olx period--alt" id="proof" data-period="proof">
+<!-- ============================== HIGHLIGHTS ============================== -->
+<section class="section period period--olx" id="highlights" data-period="highlights">
   <div class="container">
-    <div class="proof-intro reveal">
-      <p class="eyebrow">Proof</p>
-      <h2 class="h-display h-2 proof-intro__title">What the Ad Package work produced — measured on production.</h2>
-      <p class="lede proof-intro__lede">Variant B validated in Poland with uplift in conversion and paying Sellers — alongside cross-pillar workshops that scaled practice beyond this flow.</p>
+    <div class="section-head reveal">
+      <p class="eyebrow">Highlights</p>
+      <h2 class="h-display h-2">Beyond the case study</h2>
+      <p class="lede">Cross-pillar workshops that scaled practice across Pay &amp; Ship and the wider design org.</p>
     </div>
+    <hr class="rule rule--thick" aria-hidden="true">
 
-    <div class="proof-track proof-track--practice reveal">
-      <div class="proof-track__head">
-        <div class="proof-track__titles">
-          <p class="proof-label">Case study</p>
-          <p class="proof-track__lede">Ad Package — buy-flow outcomes.</p>
-        </div>
-        <span class="proof-track__badge proof-track__badge--practice">Practice</span>
+    <article class="olx-highlight-row reveal">
+      <figure class="olx-highlight-row__media">
+        <img src="assets/olx/OLX%20Highlights%20-%204%20-%20visible.png" alt="Design sprint workshop — Pay if you sell auto-extend" loading="lazy" decoding="async" data-lightbox>
+      </figure>
+      <div class="olx-highlight-row__copy">
+        <h3 class="beat__title">Pay if you sell — auto-extend sprint</h3>
+        <p class="beat__text">Lead a cross-pillar design-sprint resulting in auto-extend feature for &lsquo;Pay if you sell&rsquo; model.</p>
+        <p class="beat__text olx-highlight-sub">Monetisation packs · Sellers success domain</p>
       </div>
-      <div class="metric-banner metric-banner--4 reveal-stagger">
-        <div class="metric-banner__item">
-          <div class="metric-banner__value mono-stat">+12%</div>
-          <div class="metric-banner__label metric-banner__label--wide">Upward trend in package purchase conversion · Poland A/B</div>
-        </div>
-        <div class="metric-banner__item">
-          <div class="metric-banner__value mono-stat">8%</div>
-          <div class="metric-banner__label metric-banner__label--wide">Increase in paying Sellers</div>
-        </div>
-        <div class="metric-banner__item">
-          <div class="metric-banner__value mono-stat">7.9</div>
-          <div class="metric-banner__label metric-banner__label--wide">Seller CSAT · +0.6 from baseline 7.3</div>
-        </div>
-        <div class="metric-banner__item">
-          <div class="metric-banner__value mono-stat metric-banner__value--text">Rolling out</div>
-          <div class="metric-banner__label metric-banner__label--wide">Winning pattern across markets · mobile aligned</div>
-        </div>
+    </article>
+
+    <article class="olx-highlight-row olx-highlight-row--reverse reveal">
+      <figure class="olx-highlight-row__media">
+        <img src="assets/olx/OLX%20Highlights%20-%205%20-%20visible.png" alt="Figma master pages workshop with product designers" loading="lazy" decoding="async" data-lightbox>
+      </figure>
+      <div class="olx-highlight-row__copy">
+        <h3 class="beat__title">Figma master pages alignment</h3>
+        <p class="beat__text">Lead a designer group to align ways of working to create &amp; maintain master pages on Figma.</p>
+        <p class="beat__text olx-highlight-sub">12 Product designers across Pay&amp;Ship, Engagement and Core</p>
       </div>
+    </article>
 
-      <div class="period__story">
-        <article class="beat beat--impact reveal">
-          <div class="olx-split olx-split--50-50">
-            <div>
-              <p class="beat__text">Variant B went into an <span class="hl">A (Production) / B (Multi-level menu)</span> test in Poland. Uplift in package conversion lifts Ads posted on the platform. The winning version is gradually rolling out across all other markets.</p>
-              <div class="mini-card csat-outcome-card olx-mt-md">
-                <p class="olx-csat-outcome-card__title">Customer Satisfaction</p>
-                <p class="csat-outcome-q">When you think about your most recent experience with our platform, how would you rate your overall satisfaction with it? On a scale of 0 to 10</p>
-                <svg viewBox="0 0 120 72" role="img" aria-label="Customer Satisfaction score 7.9 out of 10">
-                  <path d="M10 62 A50 50 0 0 1 110 62" fill="none" stroke="#e7e7e7" stroke-width="10" stroke-linecap="round"/>
-                  <path class="csat-arc" d="M10 62 A50 50 0 0 1 99 28" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100" fill="none" stroke="#1a9e5a" stroke-width="10" stroke-linecap="round"/>
-                  <text x="60" y="58" text-anchor="middle" font-size="20" font-weight="800" fill="#123b4d">7.9</text>
-                </svg>
-              </div>
-            </div>
-            <figure class="olx-figure-frame reveal">
-              <img loading="lazy" src="assets/olx/graph_solv.png" alt="Conversion uplift in the buy-package flow after Variant B — +12% trend" data-lightbox>
-            </figure>
-          </div>
-        </article>
-
-        <article class="beat reveal">
-          <p class="beat__eyebrow">After launch</p>
-          <h3 class="beat__title">Next steps</h3>
-          <p class="beat__text">A usability participant flagged <strong>repeat Ad package purchases</strong> — and data showed ~<strong>31% of B2C Sellers</strong> were buying again. We shipped a <strong>shortcut banner</strong> for their last package — the first step toward <strong>recommendations</strong> from Ad posting history.</p>
-          <p class="beat__text">Package recommendations are <strong>in moderation</strong> and live in <strong>Poland</strong>. The winning category-selection pattern is on <strong>mobile</strong> too.</p>
-          <figure class="olx-figure-frame reveal olx-mt-md">
-            <img loading="lazy" decoding="async" src="assets/olx/comb_mob_desk.png" alt="Desktop and mobile buy-package flows — shortcut banner and aligned category selection" data-lightbox>
-          </figure>
-        </article>
-      </div>
-    </div>
-
-    <div class="proof-track proof-track--enablement reveal">
-      <div class="proof-track__head">
-        <div class="proof-track__titles">
-          <p class="proof-label">DesignOps</p>
-          <p class="proof-track__lede">Cross-pillar workshops beyond the case study.</p>
-        </div>
-        <span class="proof-track__badge proof-track__badge--enablement enablement-label">
-          <svg class="enablement-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-          DesignOps
-        </span>
-      </div>
-    </div>
-  </div>
-
-  <div class="olx-hl-slide olx-hl-slide--dock olx-band reveal">
-    <img class="olx-hl-slide__bg" src="assets/olx/OLX%20Highlights%20-%204.png" alt="" loading="lazy" decoding="async">
-    <div class="olx-hl-slide__inner container">
-      <h3 class="olx-hl-slide__title">Workshop!</h3>
-      <div class="olx-hl-overlay">
-        <p class="olx-hl-overlay__lead">Lead a cross-pillar design-sprint resulting in auto-extend feature for &lsquo;Pay if you sell&rsquo; model.</p>
-        <p class="olx-hl-overlay__sub">Monetisation packs · Sellers success domain</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="olx-hl-slide olx-hl-slide--dock olx-band reveal">
-    <img class="olx-hl-slide__bg" src="assets/olx/OLX%20Highlights%20-%205.png" alt="" loading="lazy" decoding="async">
-    <div class="olx-hl-slide__inner container">
-      <h3 class="olx-hl-slide__title">Workshop! Workshop!</h3>
-      <div class="olx-hl-overlay">
-        <p class="olx-hl-overlay__lead">Lead a designer group to align ways of working to create &amp; maintain master pages on Figma</p>
-        <p class="olx-hl-overlay__sub">12 Product designers across Pay&amp;Ship, Engagment and Core</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="olx-hl-slide olx-hl-slide--principles olx-band reveal">
-    <img class="olx-hl-slide__bg" src="assets/olx/OLX%20Highlights%20-%206.png" alt="" loading="lazy" decoding="async">
-    <div class="olx-hl-slide__inner container">
-      <h3 class="olx-hl-slide__title">Workshop! Workshop! Workshop!</h3>
-      <div class="olx-hl-principles-row">
-        <div class="olx-principles-track olx-hl-principles-track">
+    <article class="olx-highlight-row reveal">
+      <figure class="olx-highlight-row__media">
+        <img src="assets/olx/OLX%20Highlights%20-%206%20-%20visible.png" alt="Design principles workshop board" loading="lazy" decoding="async" data-lightbox>
+      </figure>
+      <div class="olx-highlight-row__copy">
+        <h3 class="beat__title">Co-leading OLX design principles</h3>
+        <p class="beat__text">Co-lead design principal workshop with 2 Heads of Design, 4 Design leads and 4 Sr. Product Designers.</p>
+        <div class="olx-principles-track olx-principles-track--compact olx-mt-md">
           <article class="olx-principle">
-            <h3><span class="olx-principle-accent olx-principle-accent--blue">Increase confidence</span> through clarity.</h3>
-            <p>At OLX, we prioritize clarity at every level – within our ecosystem and across teams. It's essential that everyone understands what's happening and why.</p>
+            <h4><span class="olx-principle-accent olx-principle-accent--blue">Increase confidence</span> through clarity.</h4>
+            <p>At OLX, we prioritize clarity at every level – within our ecosystem and across teams.</p>
           </article>
           <article class="olx-principle">
-            <h3><span class="olx-principle-accent olx-principle-accent--green">Keep it simple</span></h3>
-            <p>We embrace simplicity as the foundation of our design philosophy. When something is intuitively designed, it just feels right.</p>
+            <h4><span class="olx-principle-accent olx-principle-accent--green">Keep it simple</span></h4>
+            <p>We embrace simplicity as the foundation of our design philosophy.</p>
           </article>
           <article class="olx-principle">
-            <h3><span class="olx-principle-accent olx-principle-accent--red">Harmonious</span> Integration</h3>
-            <p>Each component is a part of a larger whole, and it should seamlessly contribute to the overall system.</p>
-          </article>
-          <article class="olx-principle">
-            <h3><span class="olx-principle-accent olx-principle-accent--pink">Takes care</span> of you</h3>
-            <p>OLX champions its users — their security, privacy, and empower trust in trade.</p>
-          </article>
-          <article class="olx-principle">
-            <h3><span class="olx-principle-accent olx-principle-accent--lime">Empower everyone through progressive discoverability</span>.</h3>
-            <p>Everyone at all levels of experience with OLX should feel like they know how to use the product.</p>
+            <h4><span class="olx-principle-accent olx-principle-accent--red">Harmonious</span> Integration</h4>
+            <p>Each component seamlessly contributes to the overall system.</p>
           </article>
         </div>
       </div>
-      <div class="olx-hl-overlay">
-        <p class="olx-hl-overlay__lead">Co-lead design principal workshop</p>
-        <p class="olx-hl-overlay__sub">2 Heads of Design, 4 Design leads and 4 Sr. Product Designers</p>
-      </div>
-    </div>
+    </article>
   </div>
 </section>
 </main>
@@ -805,8 +710,8 @@
   <div class="shell-inner">
     <div class="shell-prevnext">
       <a href="raisin.html" class="shell-card"><p class="k">← Raisin</p><p class="t">Brand Evolution</p></a>
-      <a href="n26-presentation.html" class="shell-card next"><p class="k">Next →</p><p class="t">N26 — Banking</p></a>
-    </div>
+      <a href="n26.html" class="shell-card next"><p class="k">Next →</p><p class="t">N26 — Banking</p></a>
+  </div>
   </div>
 </footer>
 
@@ -851,7 +756,7 @@
         error.hidden = false; input.focus(); input.select();
       }
     });
-  })();
+})();
 </script>
 <script defer src="js/custom-cursor.js"></script>
 <script defer src="js/portfolio-gate.js"></script>

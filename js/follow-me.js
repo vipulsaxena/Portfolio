@@ -8,13 +8,27 @@
   var PAGES = {
     index: "index.html",
     about: "about.html",
-    olx: "olx-presentation.html",
-    n26: "n26-presentation.html",
-    gomart: "gomart-presentation.html",
+    olx: "olx.html",
+    n26: "n26.html",
+    gomart: "gomart.html",
     raisin: "raisin.html",
     goplay: "goplay.html",
     instalively: "instalively.html",
     "silent-ninja": "silent-ninja-redesign.html",
+  };
+
+  var PRESENTATION_PAGES = {
+    olx: "olx-presentation.html",
+    n26: "n26-presentation.html",
+    gomart: "gomart-presentation.html",
+    raisin: "raisin-presentation.html",
+  };
+
+  var DECK_PAGE_IDS = {
+    olx: 1,
+    n26: 1,
+    gomart: 1,
+    raisin: 1,
   };
 
   var FILE_TO_PAGE = {
@@ -29,6 +43,7 @@
     "gomart.html": "gomart",
     "gomart-presentation.html": "gomart",
     "raisin.html": "raisin",
+    "raisin-presentation.html": "raisin",
     "goplay.html": "goplay",
     "instalively.html": "instalively",
     "silent-ninja-redesign.html": "silent-ninja",
@@ -42,6 +57,7 @@
 
   var FOLLOW_KEY = "vipulFollow";
   var PRESENT_KEY = "vipulPresent";
+  var PENDING_NAV_KEY = "vipulFmPending";
   var LOG_KEY = "vipulPresentLog";
   var GATES = [
     "raisinAccessGranted",
@@ -159,6 +175,7 @@
       el.getAttribute("data-persona-id") ||
       el.getAttribute("data-persona") ||
       el.getAttribute("data-research-view") ||
+      el.getAttribute("data-variant") ||
       ""
     );
   }
@@ -239,8 +256,11 @@
       var hover = root.getAttribute("data-hover-item");
       return hover != null && hover !== "" ? String(hover) : "none";
     }
-    if (kind === "why" || kind === "proto" || kind === "tip") {
+    if (kind === "why" || kind === "proto" || kind === "tip" || kind === "chips") {
       return root.getAttribute("data-fm-value") || "none";
+    }
+    if (kind === "variant") {
+      return root.getAttribute("data-fm-value") || root.getAttribute("data-default") || "a";
     }
     var stored = root.getAttribute("data-fm-value");
     if (stored) return stored;
@@ -254,7 +274,7 @@
 
   function readWidgets() {
     var out = {};
-    document.querySelectorAll("[data-fm-widget]").forEach(function (root) {
+    forEachWidget(function (root) {
       var id = root.getAttribute("data-fm-widget");
       if (!id) return;
       var val = readWidgetValue(root);
@@ -281,7 +301,8 @@
     root.querySelectorAll("[data-bg]").forEach(function (b) {
       b.setAttribute("aria-selected", String(b.getAttribute("data-bg") === want));
     });
-    document.querySelectorAll("[data-bg-shot]").forEach(function (s) {
+    var scope = root.closest(".slide") || widgetSearchRoot() || document;
+    scope.querySelectorAll("[data-bg-shot]").forEach(function (s) {
       s.classList.toggle("active", s.getAttribute("data-bg-shot") === want);
     });
   }
@@ -290,7 +311,9 @@
     root.querySelectorAll("[data-audit]").forEach(function (it) {
       it.classList.toggle("active", it.getAttribute("data-audit") === want);
     });
-    var stage = document.getElementById("auditStage");
+    var stage =
+      (root.closest(".slide") && root.closest(".slide").querySelector("#auditStage")) ||
+      document.getElementById("auditStage");
     if (!stage) return;
     stage.querySelectorAll("[data-audit-shot]").forEach(function (sh) {
       sh.classList.toggle("active", sh.getAttribute("data-audit-shot") === want);
@@ -298,13 +321,16 @@
   }
 
   function applyWhy(want) {
-    document.querySelectorAll(".why-proof__frame.is-remote-hover").forEach(function (el) {
+    var scope = widgetSearchRoot();
+    var clearRoot = scope || document;
+    clearRoot.querySelectorAll(".why-proof__frame.is-remote-hover").forEach(function (el) {
       el.classList.remove("is-remote-hover");
     });
-    var wrap = document.querySelector('[data-fm-kind="why"]');
+    var wrap = findWidget("raisin-why") || clearRoot.querySelector('[data-fm-kind="why"]');
     if (wrap) wrap.setAttribute("data-fm-value", want || "none");
     if (!want || want === "none") return;
-    var frame = document.querySelector('.why-proof__frame[data-fm-why="' + want + '"]');
+    var frameHost = wrap || clearRoot;
+    var frame = frameHost.querySelector('.why-proof__frame[data-fm-why="' + want + '"]');
     if (frame) frame.classList.add("is-remote-hover");
   }
 
@@ -318,12 +344,23 @@
     if (chip) chip.classList.add("is-remote-hover");
   }
 
+  function applyTradeOff(root, want) {
+    var switchRoot = root.hasAttribute("data-trade-off-switcher")
+      ? root
+      : root.querySelector("[data-trade-off-switcher]");
+    if (!switchRoot) return;
+    var v = want === "b" ? "b" : "a";
+    var tab = switchRoot.querySelector('.trade-off-switcher__tab[data-variant="' + v + '"]');
+    if (tab) tab.click();
+    switchRoot.setAttribute("data-fm-value", v);
+  }
+
   function applyWidgets(widgets) {
     if (!widgets) return;
     holdRemote(400);
     Object.keys(widgets).forEach(function (id) {
       if (id.slice(-6) === "-press") return;
-      var root = document.querySelector('[data-fm-widget="' + id + '"]');
+      var root = findWidget(id);
       if (!root) return;
       var want = widgets[id];
       var kind = root.getAttribute("data-fm-kind") || "";
@@ -346,8 +383,12 @@
         root.setAttribute("data-fm-value", want);
         return;
       }
-      if (kind === "tip") {
+      if (kind === "tip" || kind === "chips") {
         applyTip(root, want);
+        return;
+      }
+      if (kind === "variant" || root.hasAttribute("data-trade-off-switcher")) {
+        applyTradeOff(root, want);
         return;
       }
       if (kind === "proto") {
@@ -380,12 +421,21 @@
 
   function stampHighlightIds() {
     if (!isCaseStudyPage()) return;
+    var scope = widgetSearchRoot();
+    var nodes;
+    if (scope) {
+      nodes = scope.querySelectorAll(
+        "a, button, [data-lightbox], [data-audit], .why-proof__frame, [role='tab'], .audit-item"
+      );
+    } else {
+      nodes = document.querySelectorAll(
+        "a, button, [data-lightbox], [data-audit], .why-proof__frame, [role='tab'], .audit-item"
+      );
+    }
     var n = 0;
-    var nodes = document.querySelectorAll(
-      "a, button, [data-lightbox], [data-audit], .why-proof__frame, [role='tab'], .audit-item"
-    );
     for (var i = 0; i < nodes.length; i++) {
       var el = nodes[i];
+      if (isHiddenWidgetSource(el)) continue;
       if (el.closest(".follow-chip, .follow-ended, .shell-header, .vipul-chat, .gfq-root, [data-fm-skip]")) {
         continue;
       }
@@ -419,10 +469,92 @@
     }, 1400);
   }
 
-  function hrefFor(page, slide) {
-    var file = PAGES[page] || "index.html";
+  function isDeckPage() {
+    var path = location.pathname.replace(/\/+$/, "");
+    var file = path.split("/").pop() || "";
+    return /-presentation\.html$/.test(file);
+  }
+
+  function presentSourceEl() {
+    return document.getElementById("present-source");
+  }
+
+  /** Limit widget I/O to the visible slide (deck or Raisin present-stage). */
+  function widgetSearchRoot() {
+    var stage = document.getElementById("present-stage");
+    if (stage && stage.children.length) return stage;
+    if (isDeckPage() && global.PortfolioDeck) {
+      var slide = document.querySelector(".slide.is-active");
+      if (slide) return slide;
+    }
+    return null;
+  }
+
+  function isHiddenWidgetSource(el) {
+    var source = presentSourceEl();
+    return !!(source && source.contains(el));
+  }
+
+  function findWidget(id) {
+    var scope = widgetSearchRoot();
+    if (scope) return scope.querySelector('[data-fm-widget="' + id + '"]');
+    var nodes = document.querySelectorAll('[data-fm-widget="' + id + '"]');
+    for (var i = 0; i < nodes.length; i++) {
+      if (!isHiddenWidgetSource(nodes[i])) return nodes[i];
+    }
+    return null;
+  }
+
+  function forEachWidget(cb) {
+    var scope = widgetSearchRoot();
+    if (scope) {
+      scope.querySelectorAll("[data-fm-widget]").forEach(cb);
+      return;
+    }
+    document.querySelectorAll("[data-fm-widget]").forEach(function (root) {
+      if (!isHiddenWidgetSource(root)) cb(root);
+    });
+  }
+
+  function deckModeForPage(page) {
+    if (!DECK_PAGE_IDS[page]) return null;
+    return isDeckPage();
+  }
+
+  /** Resolve deck vs web when the relay omits `deck` (older worker build). */
+  function wantDeckMode(state) {
+    if (!state || !DECK_PAGE_IDS[state.page]) return false;
+    if (state.deck === true) return true;
+    if (state.deck === false) return false;
+    if (state.slide != null && state.slide >= 1) return true;
+    if (state.section) return false;
+    return false;
+  }
+
+  function persistPendingNav(state) {
+    if (!state) return;
+    try {
+      sessionStorage.setItem(PENDING_NAV_KEY, JSON.stringify(state));
+    } catch (e) {}
+  }
+
+  function consumePendingNav() {
+    try {
+      var raw = sessionStorage.getItem(PENDING_NAV_KEY);
+      if (!raw) return null;
+      sessionStorage.removeItem(PENDING_NAV_KEY);
+      return JSON.parse(raw);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function hrefFor(page, slide, deck) {
+    var useDeck = !!deck && PRESENTATION_PAGES[page];
+    var file = useDeck ? PRESENTATION_PAGES[page] : PAGES[page] || "index.html";
+    var qs = useDeck && page === "olx" ? "?present=1" : "";
     var hash = slide ? "#" + slide : "";
-    return "/" + file + hash;
+    return "/" + file + qs + hash;
   }
 
   function activeScroller() {
@@ -495,13 +627,13 @@
     var ids = [
       "hero",
       "context",
-      "stakes",
-      "journey-intro",
+      "case-intro",
       "period-1",
       "period-2",
       "period-3",
       "period-4",
-      "proof",
+      "outcome",
+      "highlights",
       "contact",
     ];
     var mid = window.innerHeight * 0.4;
@@ -534,11 +666,13 @@
     if (global.PortfolioDeck && typeof global.PortfolioDeck.getIndex === "function") {
       slide = global.PortfolioDeck.getIndex() + 1;
     }
+    var deck = deckModeForPage(page);
     return {
       page: page,
+      deck: deck,
       slide: slide,
-      section: caseStudySection(),
-      scroll: readScrollRatio(),
+      section: deck ? null : caseStudySection(),
+      scroll: deck ? null : readScrollRatio(),
       widgets: readWidgets(),
       highlight: isCaseStudyPage() ? lastHighlight : null,
       ts: Date.now(),
@@ -549,6 +683,7 @@
     if (!a || !b) return false;
     return (
       a.page === b.page &&
+      wantDeckMode(a) === wantDeckMode(b) &&
       a.slide === b.slide &&
       a.section === b.section &&
       widgetsKey(a.widgets) === widgetsKey(b.widgets) &&
@@ -565,34 +700,41 @@
     var here = currentPageId();
     if (here === "present" || here === "admin") return;
 
-    if (state.page && state.page !== here) {
+    var wantDeck = wantDeckMode(state);
+    var onDeck = isDeckPage();
+    if (state.page !== here || wantDeck !== onDeck) {
       grantGates();
       applyingRemote = true;
-      location.assign(hrefFor(state.page, state.slide));
+      lastSection = null;
+      lastHighlight = null;
+      persistPendingNav(state);
+      location.assign(hrefFor(state.page, state.slide, wantDeck));
       return;
     }
 
     holdRemote(1000);
     var slideChanged = false;
-    if (state.slide && global.PortfolioDeck && typeof global.PortfolioDeck.go === "function") {
+    if (wantDeck && state.slide && global.PortfolioDeck && typeof global.PortfolioDeck.go === "function") {
       var idx = state.slide - 1;
       if (global.PortfolioDeck.getIndex() !== idx) {
         slideChanged = true;
         global.PortfolioDeck.go(idx);
       }
     }
-    if (state.section && (here === "raisin" || here === "olx")) {
-      var el = document.getElementById(state.section);
-      if (el && lastSection !== state.section) {
-        lastSection = state.section;
-        el.scrollIntoView({ behavior: "smooth", block: "start" });
-      } else if (el && state.scroll != null) {
-        writeScrollRatio(state.scroll);
+    if (!wantDeck) {
+      if (state.section && (here === "raisin" || here === "olx")) {
+        var el = document.getElementById(state.section);
+        if (el && lastSection !== state.section) {
+          lastSection = state.section;
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+        } else if (el && state.scroll != null) {
+          writeScrollRatio(state.scroll);
+        }
+      } else if (state.scroll != null) {
+        setTimeout(function () {
+          writeScrollRatio(state.scroll);
+        }, slideChanged ? 80 : 0);
       }
-    } else if (state.scroll != null) {
-      setTimeout(function () {
-        writeScrollRatio(state.scroll);
-      }, slideChanged ? 80 : 0);
     }
     applyWidgets(state.widgets);
     applyHighlight(state.highlight);
@@ -804,6 +946,15 @@
   var USER_ICON =
     '<svg class="follow-nav-badge__icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>';
 
+  function navBadgeHost() {
+    return (
+      document.querySelector(".shell-header .shell-actions") ||
+      document.querySelector(".shell-actions") ||
+      document.querySelector(".shell-header .shell-bar") ||
+      document.querySelector(".shell-bar")
+    );
+  }
+
   function updateNavBadge() {
     if (role !== "presenter" || ended) {
       var old = document.getElementById("follow-nav-badge");
@@ -813,13 +964,13 @@
     ensureCss();
     var el = document.getElementById("follow-nav-badge");
     if (!el) {
-      var host = document.querySelector(".shell-actions") || document.querySelector(".shell-bar");
+      var host = navBadgeHost();
       if (!host) return;
       el = document.createElement("button");
       el.id = "follow-nav-badge";
       el.type = "button";
-      el.className = "follow-nav-badge";
-      host.appendChild(el);
+      el.className = "follow-nav-badge nav-btn";
+      host.insertBefore(el, host.firstChild);
     }
     var n = counts.following;
     var c = counts.connected;
@@ -1075,8 +1226,9 @@
       reconnectDelay = 500;
       if (role === "presenter") {
         send({ type: "HELLO", role: "presenter", presenterToken: presenterToken });
-        var st = localState();
-        if (st) send({ type: "STATE", state: st });
+        setTimeout(function () {
+          broadcastWhenReady(true);
+        }, 0);
       } else {
         send({
           type: "HELLO",
@@ -1117,6 +1269,17 @@
     }, reconnectDelay);
   }
 
+  function broadcastWhenReady(immediate) {
+    if (role !== "presenter" || ended || isPrivatePage()) return;
+    if (isDeckPage() && (!global.PortfolioDeck || typeof global.PortfolioDeck.getIndex !== "function")) {
+      setTimeout(function () {
+        broadcastWhenReady(immediate);
+      }, 60);
+      return;
+    }
+    broadcastLocal(!!immediate);
+  }
+
   function broadcastLocal(immediate) {
     if (role !== "presenter" || ended) return;
     if (isPrivatePage()) return;
@@ -1130,7 +1293,27 @@
   }
 
   function onDeckChange() {
-    if (role === "presenter") broadcastLocal(true);
+    if (role === "presenter") {
+      broadcastLocal(true);
+      return;
+    }
+    if (role === "audience" && following && lastSent && !applyingRemote) {
+      stampHighlightIds();
+      if (
+        wantDeckMode(lastSent) &&
+        lastSent.slide &&
+        global.PortfolioDeck &&
+        typeof global.PortfolioDeck.go === "function"
+      ) {
+        var idx = lastSent.slide - 1;
+        if (global.PortfolioDeck.getIndex() !== idx) {
+          global.PortfolioDeck.go(idx);
+        }
+      }
+      setTimeout(function () {
+        if (lastSent && lastSent.widgets) applyWidgets(lastSent.widgets);
+      }, 120);
+    }
   }
 
   function onScroll() {
@@ -1200,7 +1383,7 @@
     if (role !== "presenter" || ended || applyingRemote) return;
     if (!e.target || !e.target.closest) return;
     var chip = e.target.closest(".chip--tip");
-    var tips = e.target.closest('[data-fm-kind="tip"]');
+    var tips = e.target.closest('[data-fm-kind="tip"], [data-fm-kind="chips"]');
     if (chip && tips) {
       var tipVal = chip.getAttribute("data-fm-tip") || "none";
       if (tips.getAttribute("data-fm-value") !== tipVal) {
@@ -1219,7 +1402,7 @@
       }
       return;
     }
-    if (e.target.closest("[data-audit], [data-fm-kind=hero], [data-fm-kind=audit]")) {
+    if (e.target.closest("[data-audit], [data-fm-kind=hero], [data-fm-kind=audit], [data-fm-kind=variant], [data-trade-off-switcher]")) {
       setTimeout(function () {
         broadcastLocal(true);
       }, 0);
@@ -1229,7 +1412,7 @@
   function onPresenterHoverOut(e) {
     if (role !== "presenter" || ended || applyingRemote) return;
     if (!e.target || !e.target.closest) return;
-    var tips = e.target.closest('[data-fm-kind="tip"]');
+    var tips = e.target.closest('[data-fm-kind="tip"], [data-fm-kind="chips"]');
     if (tips) {
       var nextTip = e.relatedTarget;
       if (nextTip && tips.contains(nextTip)) return;
@@ -1287,6 +1470,14 @@
     window.addEventListener("portfolio:carousel-ready", function () {
       if (role === "audience" && following && lastSent && lastSent.widgets) {
         applyWidgets(lastSent.widgets);
+      }
+    });
+    window.addEventListener("portfolio:present-slide-ready", function () {
+      stampHighlightIds();
+      if (role === "audience" && following && lastSent && lastSent.widgets) {
+        applyWidgets(lastSent.widgets);
+      } else if (role === "presenter") {
+        broadcastLocal(true);
       }
     });
     document.addEventListener("click", onUserNavigate, true);
@@ -1367,6 +1558,12 @@
     persistAudience();
     renderChip();
     connect();
+    var pending = consumePendingNav();
+    if (pending && following) {
+      setTimeout(function () {
+        applyState(pending);
+      }, 120);
+    }
   }
 
   function captureQueryFollow() {
@@ -1507,9 +1704,28 @@
     }
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", boot);
-  } else {
+  function bootFollow() {
     boot();
+    window.addEventListener("pageshow", function () {
+      if (role === "presenter") broadcastWhenReady(true);
+      else if (role === "audience" && following && lastSent) {
+        setTimeout(function () {
+          applyState(lastSent);
+        }, 120);
+      }
+    });
+    window.addEventListener("load", function () {
+      if (role === "presenter") broadcastWhenReady(false);
+      else if (role === "audience" && following) renderChip();
+    });
+    window.addEventListener("portfolio:deck-change", function () {
+      if (role === "presenter") renderChip();
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", bootFollow);
+  } else {
+    bootFollow();
   }
 })(window);

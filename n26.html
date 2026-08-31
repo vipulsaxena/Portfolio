@@ -28,6 +28,7 @@
     <link rel="shortcut icon" href="fav.png" type="image/png">
     <meta name="theme-color" content="#ffffff">
     <link rel="canonical" href="https://vipulsaxena.com/n26.html">
+    <link rel="preload" as="image" href="assets/n26/overview.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap">
@@ -69,7 +70,7 @@
       })();
     </script>
 </head>
-<body class="summary-v2 has-shell">
+<body class="summary-v2 has-shell n26-web">
 
 <div id="n26Gate" role="dialog" aria-modal="true" aria-labelledby="n26GateTitle">
   <div class="pw-card pw-card--preview" role="document">
@@ -114,9 +115,9 @@
     <a href="index.html" class="shell-brand">Home</a>
     <p class="deck-title" id="deckTitle">N26 — Multi-activity Feed</p>
     <div class="shell-actions">
-      <a class="nav-btn nav-btn--present" href="n26-presentation.html" aria-label="Enter presentation mode" title="Presentation mode" onclick="try{sessionStorage.setItem('vipulPresent','1');sessionStorage.setItem('n26AccessGranted','1')}catch(e){}">
+      <a class="nav-btn nav-btn--present" href="n26-presentation.html" aria-label="Enter presentation mode" title="Presentation mode" onclick="try{sessionStorage.setItem('n26AccessGranted','1')}catch(e){}">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h20v12H2z"/><path d="M12 15v6"/><path d="m8 21 4-3 4 3"/></svg>
-        <span>Present</span>
+        <span>Presentation mode</span>
       </a>
     </div>
   </div>
@@ -125,148 +126,115 @@
 <main>
 
 <!-- ============================== HERO ============================== -->
-<section class="why-hero why-hero--split" id="hero">
+<section class="why-hero why-hero--split n26-hero" id="hero">
   <div class="hero-stage">
     <div class="container hero-split hero-split--stage">
       <div class="hero-split__content">
         <div class="hero__kicker">
           <span class="tag tag--outline">Fintech · N26 · March 2022</span>
         </div>
-        <h1 class="hero__title">What is <span class="hl">N26</span>?</h1>
-        <p class="hero__sub hero__sub--thesis">N26 is a mobile banking solution based out of Germany that serves <strong>7 million customers</strong> across <strong>25 countries</strong>.</p>
+        <h1 class="hero__title">N26 is a mobile banking solution based out of Germany that serves <strong>7 million customers</strong> across <strong>25 countries</strong>.</h1>
         <p class="hero__sub">With features like Spaces, round-ups, automations, cashback, and statistics, N26 helps users manage spending to reach financial goals. It provides a free basic current account with a debit card, overdraft, investment products, and premium accounts for a monthly fee.</p>
-        <p class="hero__sub">This case study follows one project on the Home-feed team — evolving the Main Account Feed into an All-Activity view — alongside other shipped work from my time there.</p>
       </div>
       <figure class="n26-hero-visual reveal">
-        <img src="assets/n26/overview.png" alt="N26 mobile app — Home feed with balance and recent transactions" data-lightbox loading="lazy">
+        <img src="assets/n26/overview.png" alt="N26 mobile app — Home feed with balance and recent transactions" width="820" height="834" decoding="async" fetchpriority="high" data-lightbox class="n26-hero-img">
       </figure>
     </div>
   </div>
 </section>
 
-<!-- ============================== CONTEXT ============================== -->
-<section class="why-hero" id="context" style="padding-block:var(--sp-2xl);">
+<!-- ============================== MY ROLE ============================== -->
+<section class="section section--tight" id="context" data-period="context">
   <div class="container">
-    <p class="eyebrow">N26 Highlights</p>
-    <h2 class="why-hero__statement">What I did at N26</h2>
+    <div class="section-head reveal">
+      <p class="eyebrow">N26 Highlights</p>
+      <h2 class="h-display h-2">My role</h2>
+    </div>
     <nav class="crumb reveal n26-crumb" aria-label="Team placement">
       <span>N26</span><span class="sep" aria-hidden="true">›</span>
       <span>Engagement Segment</span><span class="sep" aria-hidden="true">›</span>
       <span class="now">👨‍💻 Home-feed Team</span>
     </nav>
-
-    <div class="period-split period-split--50-50 reveal">
-      <div class="period-split__main">
-        <p class="lede">The Home-feed team has the most cross-collaboration across N26 — be it launching Crypto, kicking off Trading products, or Overdraft. My secondary objective was to help increase discoverability of such products through the Home section of the app.</p>
-        <p class="lede">Beyond the feed, I contributed to how the design team measured and researched product quality at scale across 25 European markets.</p>
-        <p class="beat__subtitle n26-resp-heading">Other responsibilities</p>
+    <div class="n26-split n26-split--50-50 reveal n26-mt-md">
+      <div>
+        <p class="beat__text">The Home-feed team has the most cross-collaboration across N26 — be it launching Crypto, kicking off Trading products, or Overdraft. My secondary objective was to help increase discoverability of such products through the Home section of the app.</p>
+        <p class="beat__text n26-resp-heading"><strong>My other responsibilities in the design team included:</strong></p>
         <ul class="n26-check-list">
           <li><span class="n26-check-list__icon" aria-hidden="true">✓</span><span><strong>Measuring UX</strong> — analyse, communicate and follow up on monthly CSAT results, tracking the right UX metrics.</span></li>
           <li><span class="n26-check-list__icon" aria-hidden="true">✓</span><span><strong>Research Lab volunteer</strong> — helping designers set up user research and launch tests across research platforms.</span></li>
         </ul>
       </div>
-      <figure class="period-split__visual">
-        <img src="assets/n26/illust-1.png" alt="Illustration of a cross-functional team building a brick house together" loading="lazy">
+      <figure class="n26-figure-plain n26-role-figure reveal">
+        <img src="assets/n26/illust-1.png" alt="Illustration of a cross-functional team building a brick house together" loading="lazy" decoding="async">
       </figure>
     </div>
+    <hr class="rule rule--thick" aria-hidden="true">
   </div>
 </section>
 
 <!-- ============================== JOURNEY NAV ============================== -->
-<nav class="journey-nav" aria-label="Journey chapters">
-  <button class="journey-nav__btn" data-period-link="journey-intro">Journey</button>
-  <span class="journey-nav__sep" aria-hidden="true">·</span>
-  <button class="journey-nav__btn" data-period-link="period-1"><span class="journey-nav__n">01</span> Multi-activity Feed</button>
-  <span class="journey-nav__sep" aria-hidden="true">·</span>
-  <button class="journey-nav__btn" data-period-link="period-2"><span class="journey-nav__n">02</span> Highlights</button>
-  <span class="journey-nav__sep" aria-hidden="true">·</span>
-  <button class="journey-nav__btn" data-period-link="proof">Proof</button>
+<nav class="journey-nav n26-journey-nav" aria-label="Case study chapters">
+  <button class="journey-nav__btn" data-period-link="case-intro">Case study</button>
+  <button class="journey-nav__btn" data-period-link="problem">Problem</button>
+  <button class="journey-nav__btn" data-period-link="research">Research</button>
+  <button class="journey-nav__btn" data-period-link="concepts">Concepts</button>
+  <button class="journey-nav__btn" data-period-link="outcome">Outcome</button>
+  <button class="journey-nav__btn" data-period-link="highlights">Highlights</button>
 </nav>
 
-<!-- ============================== JOURNEY INTRO ============================== -->
-<section class="section section--tight" id="journey-intro" data-period="journey-intro">
+<!-- ============================== CASE STUDY INTRO ============================== -->
+<section class="section section--tight n26-case-intro" id="case-intro" data-period="case-intro">
   <div class="container">
-    <div class="section-head reveal">
-      <p class="eyebrow">The case study</p>
-      <h2 class="h-display h-2">Journey</h2>
-      <p class="lede">One flagship feed project — research-led, cross-functional, shipped to production.</p>
-      <p class="lede lede--present-short"><strong>Practice</strong> = the feed shipped · <strong>Enablement</strong> = how the team measured UX quality at scale.</p>
-      <p class="lede lede--remit">My remit on the Home-feed team: evolve the Main Account Feed into an All-Activity view as Spaces gained IBANs — and, in parallel, help the design org track CSAT and run research across <strong>25 European markets</strong>. <strong>Practice</strong> = customer outcomes on the feed. <strong>Enablement</strong> = team capability. <strong>I</strong> where I owned design; <strong>we</strong> at squad and segment scale.</p>
-    </div>
-    <div class="track-key reveal-stagger">
-      <div class="track-key__item track-key__item--practice">
-        <p class="track-key__label">Practice</p>
-        <p class="track-key__text">Discovery interviews, three concept hypotheses, usability validation, and Concept C shipped to 25 markets.</p>
+    <div class="n26-split n26-split--cover reveal">
+      <div class="n26-case-intro__copy">
+        <p class="eyebrow">Case study · Multi-activity Feed</p>
+        <h2 class="h-display h-2">Multi-activity Feed</h2>
+        <p class="beat__text n26-case-thesis">Evolving the Main Account Feed into an All-Activity Feed.</p>
+        <p class="beat__text">With the evolution of Spaces into fully functioning accounts with IBANs — and later also cards — we wanted to help users feel in control of their activity across all their accounts through their Feed.</p>
+        <span class="n26-time-pill">🌐 12-week design timeline · On Production</span>
+        <p class="why-hero__body n26-journey-impact"><strong>Impact: +2.5% MAU activity &amp; retention, 28% Spaces users on All-Activity, +4.5% CSAT uplift — rolled out to 25 countries.</strong></p>
+        <div class="n26-shoutouts n26-mt-md">
+          <p class="n26-shoutouts__label">Shoutouts</p>
+          <p class="beat__text">Rubin (Illustrator), Katie (UX Writer), Mireia (Researcher), Lea (PM), Dan (CPO), Engineering (FE &amp; QE — most collaborated with) and the Data Science team.</p>
+        </div>
       </div>
-      <div class="track-key__item track-key__item--enablement enablement-surface">
-        <p class="track-key__label enablement-label">
-          <svg class="enablement-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-          Enablement
-        </p>
-        <p class="track-key__text">Monthly CSAT analysis across markets and Research Lab support — helping designers set up and launch tests.</p>
+      <div class="n26-case-intro__media reveal">
+        <div class="phone-mock phone-mock--cover">
+          <video loop muted playsinline preload="metadata" data-autoplay-inview aria-hidden="true" tabindex="-1">
+            <source src="assets/n26/final.mov" type="video/mp4">
+          </video>
+        </div>
       </div>
     </div>
-    <p class="why-hero__body"><strong>Impact: MAU activity, Spaces adoption of All-Activity, CSAT uplift, and a Europe-wide rollout — alongside CSAT rituals and research support the team adopted. Measured in Proof.</strong></p>
     <hr class="rule rule--thick" aria-hidden="true">
   </div>
 </section>
 
-<!-- ============================== PERIOD 01 ============================== -->
-<section class="section period" id="period-1" data-period="period-1">
+<!-- ============================== PROBLEM ============================== -->
+<section class="section n26-feed-section" id="problem" data-period="problem">
   <div class="container">
-    <header class="period__head period__head--split period__head--thick-rule reveal">
-      <div class="period__head-copy">
-        <div class="period__meta">
-          <span class="period__num">01</span>
-          <div class="chip-row">
-            <span class="chip">Home feed</span>
-            <span class="chip">25 markets</span>
-          </div>
-        </div>
-        <h2 class="h-display h-2 period__title">Multi-activity Feed</h2>
-        <p class="lede period__thesis period__thesis--present">Spaces spending was invisible on the Feed. Research → three concepts → Concept C shipped across 25 markets.</p>
-        <p class="lede period__thesis">With Spaces evolving into fully functioning accounts with IBANs — and later cards — we needed users to feel in control of activity across all accounts through their Home feed.</p>
-        <p class="period__role"><strong>I led</strong> feed design, research synthesis, and concept validation. <strong>We shipped</strong> Concept C across 25 markets.</p>
-        <p class="n26-shoutouts"><strong>Shoutouts:</strong> Rubin (Illustrator), Katie (UX Writer), Mireia (Researcher), Lea (PM), Dan (CPO), Engineering (FE &amp; QE — most collaborated with) and the Data Science team.</p>
-      </div>
-      <figure class="period__head-visual period__head-visual--mobile-mocks reveal">
-        <div class="n26-cover-stack">
-          <img src="assets/n26/N26-Infocard.png" alt="Illustration of an N26 customer checking their multi-activity feed notifications on their phone" data-lightbox class="n26-cover-char" loading="lazy">
-          <div class="phone-mock">
-            <video loop muted playsinline preload="metadata" data-autoplay-inview aria-hidden="true" tabindex="-1">
-              <source src="assets/n26/final.mov" type="video/mp4">
-            </video>
-          </div>
-        </div>
-      </figure>
-    </header>
-    <hr class="rule rule--thick" aria-hidden="true">
-
-    <div class="period__story">
-
-    <div class="n26-story-warm">
-    <article class="beat reveal" id="problem">
-      <div class="period-split period-split--50-50">
-        <div class="period-split__main">
+    <article class="beat reveal">
+      <div class="n26-split n26-split--50-50">
+        <div>
           <p class="beat__eyebrow">The Problem</p>
-          <h3 class="beat__title">Spending in Spaces was <span class="hl">invisible</span> on the Feed</h3>
+          <h3 class="beat__title">Spending in Spaces was invisible on the Feed</h3>
           <p class="beat__text">Users with spending Spaces (Spaces with IBANs) don't see their outgoing transactions in the Feed when they log in — making it hard to stay on top of their spending.</p>
           <p class="beat__text">Spaces now supports up to 10 IBANs across personal &amp; shared Spaces, with Virtual (and potentially Physical) cards in development — plus plans for Crypto, Overdraft and Instalments. Activity from all these spending Spaces needs a unified view on the Home feed.</p>
         </div>
-        <figure class="period-split__visual">
-          <img src="assets/n26/n26-problem.png" alt="N26 Home feed with a transfer flagged as failed for insufficient funds, beside a customer asking why a transfer from a savings space isn't visible on the home feed" data-lightbox loading="lazy">
+        <figure class="n26-figure-plain n26-figure-plain--contain reveal">
+          <img src="assets/n26/n26-problem.png" alt="N26 Home feed with a transfer flagged as failed for insufficient funds, beside a customer asking why a transfer from a savings space isn't visible on the home feed" data-lightbox loading="lazy" decoding="async">
         </figure>
       </div>
     </article>
 
     <article class="beat reveal" id="hmw">
       <p class="beat__eyebrow">How Might We?</p>
-      <h3 class="beat__title">How might we help users who have a Space with IBAN <span class="hl">view the activity on their home-feed, at a glance</span>?</h3>
-      <div class="period-split period-split--50-50 n26-split--after-title">
-        <div class="period-split__main">
+      <h3 class="beat__title">How might we help users who have a Space with IBAN view the activity on their home-feed, at a glance?</h3>
+      <div class="n26-split n26-split--55-45 n26-mt-md">
+        <div>
           <div class="n26-bet-badge">🍋 Prioritised bet</div>
           <p class="beat__text">Provide a Feed experience with <span class="tip" tabindex="0" data-tip="Updates &amp; actions on the latest big transactions, security alerts, etc.">relevant</span> information <span class="tip" tabindex="0" data-tip="Overviews in a digestible manner; easily identify any aspect that needs attention.">at a glance</span> that enables <span class="tip" tabindex="0" data-tip="Actionable; show &amp; hide based on relevancy; customise notifications &amp; updates.">confident decision making</span> and creates <span class="tip" tabindex="0" data-tip="Avoiding negative figures or surprises.">peace of mind</span>.</p>
-          <p class="beat__subtitle">Success Metrics</p>
+          <p class="n26-label">Success Metrics</p>
           <ul class="n26-metrics-list">
             <li>% increase in MAU activity and retention</li>
             <li>% of Spaces users churned to the All-Activity view</li>
@@ -275,21 +243,26 @@
             <li>% of users upgrading to the next membership tier</li>
           </ul>
         </div>
-        <figure class="period-split__visual">
-          <img src="assets/n26/effort-impact-matric.png" alt="Effort–Impact matrix mapping ideas across Quick-wins, Big bets, Maybe and Time-sink quadrants" data-lightbox loading="lazy">
-          <figcaption class="period-split__caption">Effort–Impact matrix we used to prioritise ideas and land on the bet.</figcaption>
+        <figure class="n26-figure-plain n26-figure-plain--contain reveal">
+          <img src="assets/n26/effort-impact-matric.png" alt="Effort–Impact matrix mapping ideas across Quick-wins, Big bets, Maybe and Time-sink quadrants" data-lightbox loading="lazy" decoding="async">
+          <figcaption class="n26-figure-caption">Effort–Impact matrix we used to prioritise ideas and land on the bet.</figcaption>
         </figure>
       </div>
     </article>
+    <hr class="rule rule--thick" aria-hidden="true">
+  </div>
+</section>
 
-    <article class="beat reveal" id="research">
+<!-- ============================== RESEARCH ============================== -->
+<section class="section n26-feed-section" id="research" data-period="research">
+  <div class="container">
+    <article class="beat reveal">
       <p class="beat__eyebrow">Discovery · Research</p>
-      <h3 class="beat__title">We ran <span class="hl">six customer interviews</span> to learn more about user needs</h3>
+      <h3 class="beat__title">We ran six customer interviews to learn more about user needs</h3>
       <p class="beat__text">The goal: understand users' mental model when keeping track of transactions across their different accounts.</p>
-      <p class="beat__stat">Sample set · <strong>6 moderated interviews</strong> · mental model across Main account &amp; Spaces</p>
-      <div class="period-split period-split--50-50 n26-split--after-title">
-        <div class="period-split__main">
-          <p class="beat__subtitle">Our learnings</p>
+      <div class="n26-split n26-split--50-50 n26-mt-md">
+        <div>
+          <p class="n26-label">Our learnings</p>
           <div class="n26-quote-stack">
             <div class="n26-quote-card">
               <blockquote>
@@ -313,9 +286,9 @@
             </div>
           </div>
         </div>
-        <figure class="period-split__visual">
-          <img src="assets/n26/internview.png" alt="Moderated customer interviews mapping how users think about transactions across their accounts" data-lightbox loading="lazy">
-          <figcaption class="period-split__caption">Six moderated interviews to map the mental model: what they pay for → which account → where they expect to see it.</figcaption>
+        <figure class="n26-figure-plain n26-figure-plain--contain reveal">
+          <img src="assets/n26/internview.png" alt="Moderated customer interviews mapping how users think about transactions across their accounts" data-lightbox loading="lazy" decoding="async">
+          <figcaption class="n26-figure-caption">Six moderated interviews to map the mental model: what they pay for → which account → where they expect to see it.</figcaption>
         </figure>
       </div>
       <div class="n26-insight-grid reveal-stagger">
@@ -325,86 +298,82 @@
         <div class="n26-insight-card"><div class="n26-insight-card__icon" aria-hidden="true">🎛️</div><p class="n26-insight-card__title">In control</p><p class="n26-insight-card__text">Actionable; show &amp; hide based on relevancy; customise notifications &amp; updates.</p></div>
       </div>
     </article>
-    </div><!-- /.n26-story-warm -->
+    <hr class="rule rule--thick" aria-hidden="true">
+  </div>
+</section>
 
+<!-- ============================== CONCEPTS ============================== -->
+<section class="section n26-feed-section" id="concepts" data-period="concepts">
+  <div class="container">
     <article class="beat reveal" id="workshop">
-      <p class="beat__eyebrow">Ideation</p>
-      <h3 class="beat__title">Design-led cross-functional workshop to ideate on possible solutions</h3>
-      <p class="beat__text">Agenda included reviewing existing research, assessing competitive solutions, and a sketching session with "How Might We" prompts to generate divergent concepts.</p>
-      <p class="beat__stat">Cross-functional · design-led workshop · competitive benchmark + divergent sketching</p>
-      <figure class="n26-inline-figure">
-        <img src="assets/n26/slide11.png" alt="Cross-functional workshop board — use cases, considerations, competitor benchmark, brainstorming and next steps" data-lightbox loading="lazy">
-        <figcaption>Workshop board — research recap, competitive benchmark, and divergent sketching.</figcaption>
-      </figure>
+      <div class="n26-split n26-split--50-50">
+        <div>
+          <p class="beat__eyebrow">Ideation</p>
+          <h3 class="beat__title">Next step was a design-led cross-functional workshop to ideate on possible solutions</h3>
+          <p class="beat__text">Agenda included reviewing existing research, assessing competitive solutions, and a sketching session with "How Might We" prompts to generate divergent concepts.</p>
+        </div>
+        <figure class="n26-figure-plain n26-figure-plain--contain n26-figure-plain--board reveal">
+          <img src="assets/n26/slide11-visible.png" alt="Cross-functional workshop board — use cases, considerations, competitor benchmark, brainstorming and next steps" data-lightbox loading="lazy" decoding="async">
+        </figure>
+      </div>
     </article>
 
-    <article class="beat reveal" id="concepts">
+    <article class="beat reveal">
       <p class="beat__eyebrow">Concepts</p>
       <h3 class="beat__title">Designed three possible hypotheses</h3>
-      <div class="n26-hypo-stack">
-        <article class="n26-hypo-row">
-          <div class="n26-hypo-row__media">
+      <div class="n26-hypo-grid">
+        <article class="n26-hypo-card">
+          <div class="n26-hypo-card__media">
             <div class="phone-mock">
               <video muted playsinline loop preload="metadata" data-autoplay-inview aria-label="Concept A — All Accounts view prototype recording">
                 <source src="assets/n26/hyp1.mov" type="video/mp4">
               </video>
             </div>
           </div>
-          <div class="n26-hypo-row__copy">
-            <p class="n26-hypo-row__label">Concept A</p>
-            <p class="n26-hypo-row__title">All Accounts view</p>
-            <p class="n26-hypo-row__p">Seeing all accounts together gives a better overview. Switching between accounts increases mental load. Quick actions are tied to the main account.</p>
+          <div class="n26-hypo-card__body">
+            <p class="n26-hypo-card__label">Concept A</p>
+            <p class="n26-hypo-card__title">All Accounts view</p>
+            <p class="n26-hypo-card__p">Seeing all accounts together gives a better overview. Switching between accounts increases mental load. Quick actions are tied to the main account.</p>
             <button type="button" class="n26-replay-btn" data-replay><span aria-hidden="true">↻</span> Play again</button>
           </div>
         </article>
-        <article class="n26-hypo-row">
-          <div class="n26-hypo-row__media">
+        <article class="n26-hypo-card">
+          <div class="n26-hypo-card__media">
             <div class="phone-mock">
               <video muted playsinline loop preload="metadata" data-autoplay-inview aria-label="Concept B — Multi-select Accounts prototype recording">
                 <source src="assets/n26/hyp2.mov" type="video/mp4">
               </video>
             </div>
           </div>
-          <div class="n26-hypo-row__copy">
-            <p class="n26-hypo-row__label">Concept B</p>
-            <p class="n26-hypo-row__title">Multi-select Accounts</p>
-            <p class="n26-hypo-row__p">Filtering between Main account and Spaces with available-balance information gives users a complete overview of their finances.</p>
+          <div class="n26-hypo-card__body">
+            <p class="n26-hypo-card__label">Concept B</p>
+            <p class="n26-hypo-card__title">Multi-select Accounts</p>
+            <p class="n26-hypo-card__p">Filtering between Main account and Spaces with available-balance information gives users a complete overview of their finances.</p>
             <button type="button" class="n26-replay-btn" data-replay><span aria-hidden="true">↻</span> Play again</button>
           </div>
         </article>
-        <article class="n26-hypo-row">
-          <div class="n26-hypo-row__media">
+        <article class="n26-hypo-card">
+          <div class="n26-hypo-card__media">
             <div class="phone-mock">
               <video muted playsinline loop preload="metadata" data-autoplay-inview aria-label="Concept C — Switch between accounts prototype recording">
                 <source src="assets/n26/hyp3.mov" type="video/mp4">
               </video>
             </div>
           </div>
-          <div class="n26-hypo-row__copy">
-            <p class="n26-hypo-row__label">Concept C</p>
-            <p class="n26-hypo-row__title">Switch between accounts</p>
-            <p class="n26-hypo-row__p">See all accounts at once or one at a time — a simplified experience with a sense of control. Quick actions change with the selected account.</p>
+          <div class="n26-hypo-card__body">
+            <p class="n26-hypo-card__label">Concept C</p>
+            <p class="n26-hypo-card__title">Switch between accounts</p>
+            <p class="n26-hypo-card__p">See all accounts at once or one at a time — a simplified experience with a sense of control. Quick actions change with the selected account.</p>
             <button type="button" class="n26-replay-btn" data-replay><span aria-hidden="true">↻</span> Play again</button>
           </div>
         </article>
       </div>
     </article>
 
-    <article class="beat reveal">
-      <p class="beat__eyebrow">Iteration</p>
-      <h3 class="beat__title">Design reviews with cross-functional teams</h3>
-      <p class="beat__text">Participants included Engagement-team designers, Lead designers from different segments, PMs, Engineering, and the Head of Product — iterating on usability insights together.</p>
-      <figure class="n26-inline-figure">
-        <img src="assets/n26/slide14.png" alt="Design-review board — Visual Design Exploration of tab designs, feed designs and UX writing" data-lightbox loading="lazy">
-        <figcaption>Design-review board — tab designs, feed layouts, and UX writing exploration.</figcaption>
-      </figure>
-    </article>
-
     <article class="beat reveal" id="validation">
       <p class="beat__eyebrow">Validation</p>
-      <h3 class="beat__title">Tested the concepts for usability with <span class="hl">8 customers</span></h3>
+      <h3 class="beat__title">Tested the concepts for usability with 8 customers</h3>
       <p class="beat__text">Each insight from testing was paired with the takeaway it drove in the next iteration.</p>
-      <p class="beat__stat">Sample set · <strong>8 remote usability sessions</strong> · 3 concept prototypes · moderated over video</p>
       <div class="n26-pair-grid">
         <div class="n26-pair-row">
           <div class="n26-pair-insight">Most users liked viewing all accounts at once, but the <strong>Main Account view still holds more importance</strong>.</div>
@@ -429,87 +398,109 @@
       </div>
       <div class="n26-photo-strip reveal">
         <figure class="n26-photo-strip__item">
-          <img src="assets/n26/usa-1.png" alt="Moderated remote usability session testing a concept prototype over video call" data-lightbox loading="lazy">
+          <img src="assets/n26/usa-1.png" alt="Moderated remote usability session testing a concept prototype over video call" data-lightbox loading="lazy" decoding="async">
         </figure>
         <figure class="n26-photo-strip__item">
-          <img src="assets/n26/usa-2.png" alt="Moderated remote usability session testing a concept prototype over video call" data-lightbox loading="lazy">
+          <img src="assets/n26/usa-2.png" alt="Moderated remote usability session testing a concept prototype over video call" data-lightbox loading="lazy" decoding="async">
         </figure>
       </div>
       <p class="n26-photo-strip__caption">8 moderated remote usability sessions run over video call.</p>
     </article>
 
-    <article class="beat reveal" id="outcome">
-      <p class="beat__eyebrow">Outcome</p>
-      <h3 class="beat__title">Launch to learn 🚀</h3>
-      <p class="beat__text">Shipped <strong>Concept C</strong> — launching only the <strong>Home</strong> and <strong>"All activity" feed</strong> to a first monitored cohort. The experiment was a success.</p>
-      <p class="beat__stat">12-week design timeline · monitored cohort → <strong>25-country rollout</strong> (Germany first) · refining v1 from in-app feedback</p>
-      <div class="n26-outcome-visual">
-        <div class="n26-launch-phones">
-          <div class="phone-mock phone-mock--back">
-            <img src="assets/n26/next-steps.png" alt="In-app survey asking which transactions to filter from the all-activity feed" data-lightbox loading="lazy">
-          </div>
-          <div class="phone-mock phone-mock--front">
-            <video muted playsinline loop preload="metadata" data-autoplay-inview aria-label="Final Concept C visuals — Home and All activity feed prototype recording">
-              <source src="assets/n26/final.mov" type="video/mp4">
-            </video>
-          </div>
+    <article class="beat reveal">
+      <div class="n26-split n26-split--50-50">
+        <div>
+          <p class="beat__eyebrow">Iteration</p>
+          <h3 class="beat__title">Led design reviews with cross-functional teams to iterate on the insights</h3>
+          <p class="beat__text">Participants included Engagement-team designers, Lead designers from different segments, PMs, Engineering, and the Head of Product.</p>
         </div>
-        <button type="button" class="n26-replay-btn n26-replay-btn--outcome" data-replay><span aria-hidden="true">↻</span> Play again</button>
+        <figure class="n26-figure-plain n26-figure-plain--contain n26-figure-plain--board reveal">
+          <img src="assets/n26/slide14-visible.png" alt="Design-review board — Visual Design Exploration of tab designs, feed designs and UX writing" data-lightbox loading="lazy" decoding="async">
+        </figure>
       </div>
     </article>
-
-    </div><!-- /.period__story -->
+    <hr class="rule rule--thick" aria-hidden="true">
   </div>
 </section>
 
-<!-- ============================== PERIOD 02 ============================== -->
-<section class="section period period--alt" id="period-2" data-period="period-2">
+<!-- ============================== OUTCOME ============================== -->
+<section class="section n26-feed-section" id="outcome" data-period="outcome">
   <div class="container">
-    <header class="period__head reveal">
-      <div class="period__meta">
-        <span class="period__num">02</span>
-        <div class="chip-row">
-          <span class="chip">Home-feed team</span>
-          <span class="chip">On production</span>
-        </div>
-      </div>
-      <h2 class="h-display h-2 period__title">Highlights</h2>
-      <p class="lede period__thesis period__thesis--present">Other shipped work from the Home-feed team and adjacent sprints — each on production.</p>
-    </header>
-    <hr class="rule rule--thick" aria-hidden="true">
-
-    <div class="period__story">
     <article class="beat reveal">
-      <div class="period-split period-split--50-50">
-        <div class="period-split__main">
+      <p class="beat__eyebrow">Outcome</p>
+      <h3 class="beat__title">Launch to learn 🚀</h3>
+      <p class="beat__text">Shipped <strong>Concept C</strong> — launching only the <strong>Home</strong> and <strong>"All activity" feed</strong> to a first monitored cohort. The experiment was a success.</p>
+      <div class="n26-outcome-metrics">
+        <div><div class="n26-metric__value">+2.5%</div><div class="n26-metric__label">MAU activity &amp; retention</div></div>
+        <div><div class="n26-metric__value">28%</div><div class="n26-metric__label">Spaces users moved to All-Activity</div></div>
+        <div><div class="n26-metric__value">3:7</div><div class="n26-metric__label">Main : All-Activity usage ratio</div></div>
+        <div><div class="n26-metric__value">+4.5%</div><div class="n26-metric__label">CSAT uplift, measured via post-launch survey</div></div>
+      </div>
+      <p class="beat__text n26-mt-md"><strong>Rolled out</strong> to 25 countries (Germany first) — now refining v1 from in-app feedback.</p>
+
+      <div class="n26-outcome-wrap reveal">
+        <p class="beat__eyebrow">Case study · wrap-up</p>
+        <h3 class="beat__title">Researched, shipped, and measured</h3>
+        <p class="beat__text">The Multi-activity Feed launched into production and rolled out across Europe — grounded in research, validated in testing, and shaped with the whole team.</p>
+      </div>
+
+      <div class="n26-launch-phones reveal-stagger">
+        <figure class="n26-launch-phone">
+          <div class="phone-mock">
+            <video muted playsinline loop preload="metadata" data-autoplay-inview aria-label="Final Concept C build — Home and All activity feed recording">
+              <source src="assets/n26/final.mov" type="video/mp4">
+            </video>
+          </div>
+          <figcaption class="n26-launch-phone__caption">Shipped build — Home and “All activity” feed</figcaption>
+          <button type="button" class="n26-replay-btn" data-replay><span aria-hidden="true">↻</span> Play again</button>
+        </figure>
+        <figure class="n26-launch-phone">
+          <div class="phone-mock">
+            <img src="assets/n26/next-steps.png" alt="In-app survey asking which transactions to filter from the all-activity feed" data-lightbox loading="lazy" decoding="async">
+          </div>
+          <figcaption class="n26-launch-phone__caption">In-app survey feeding the v1 refinements</figcaption>
+        </figure>
+      </div>
+    </article>
+    <hr class="rule rule--thick" aria-hidden="true">
+  </div>
+</section>
+
+<!-- ============================== HIGHLIGHTS ============================== -->
+<section class="section n26-feed-section" id="highlights" data-period="highlights">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">More from N26</p>
+      <h2 class="h-display h-2">Highlights</h2>
+    </div>
+
+    <article class="beat reveal">
+      <div class="n26-split n26-split--50-50 n26-split--flip">
+        <div>
           <p class="beat__eyebrow">Highlight</p>
           <h3 class="beat__title">MoneyBeam Reactions</h3>
           <p class="n26-chip-row"><span class="n26-chip">⚡ 1 week Hack-a-thon · On Production</span></p>
           <p class="beat__text">Allow users to express "thanks" to their friends for a MoneyBeam (N26-to-N26) transaction while confirming receipt of payment.</p>
           <p class="beat__text">A delightful interaction incentivizes users to send thanks to their peers; acknowledgement from the recipient helps the sender gain confidence. Time was limited, but to expand the idea we explored more expressions, notes, and gifs to make it more customisable.</p>
         </div>
-        <div class="period-split__visual">
-          <div class="n26-dual-screens">
-            <figure class="n26-dual-screens__item">
-              <img src="assets/n26/moneybeam-receiver.png" alt="MoneyBeam receiver screen — Myles sent thanks" data-lightbox loading="lazy">
-              <figcaption class="period-split__caption">Receiver side</figcaption>
-            </figure>
-            <figure class="n26-dual-screens__item">
-              <img src="assets/n26/moneybeam-sender.png" alt="MoneyBeam sender screen — Send thanks action" data-lightbox loading="lazy">
-              <figcaption class="period-split__caption">Sender side</figcaption>
-            </figure>
-          </div>
+        <div class="n26-dual-screens">
+          <figure class="n26-dual-screens__item n26-figure-plain">
+            <img src="assets/n26/moneybeam-receiver.png" alt="MoneyBeam receiver screen — Myles sent thanks" data-lightbox loading="lazy" decoding="async">
+            <figcaption class="n26-figure-caption">Receiver side</figcaption>
+          </figure>
+          <figure class="n26-dual-screens__item n26-figure-plain">
+            <img src="assets/n26/moneybeam-sender.png" alt="MoneyBeam sender screen — Send thanks action" data-lightbox loading="lazy" decoding="async">
+            <figcaption class="n26-figure-caption">Sender side</figcaption>
+          </figure>
         </div>
       </div>
     </article>
 
-    <hr class="rule" aria-hidden="true">
-
     <article class="beat reveal">
-      <div class="period-split period-split--50-50">
-        <div class="period-split__main">
+      <div class="n26-split n26-split--50-50">
+        <div>
           <p class="beat__eyebrow">Highlight</p>
-          <h3 class="beat__title">Feed <span class="hl">↔</span> Crypto</h3>
+          <h3 class="beat__title">Feed ↔ Crypto</h3>
           <p class="n26-chip-row"><span class="n26-chip">🗓️ 2 week design sprint · On Production</span></p>
           <p class="beat__text">Surface crypto activity within the Home feed so users can track their trades alongside everyday transactions — increasing discoverability of a new product right where people already look.</p>
           <ul class="n26-check-list">
@@ -517,17 +508,15 @@
             <li><span class="n26-check-list__icon" aria-hidden="true">↑</span><span>Consistent activity model across all product lines</span></li>
           </ul>
         </div>
-        <figure class="period-split__visual">
-          <img src="assets/n26/feed-crypto.png" alt="N26 Home feed surfacing Bitcoin activity alongside a crypto transaction detail screen" data-lightbox loading="lazy">
+        <figure class="n26-figure-plain n26-figure-plain--contain reveal">
+          <img src="assets/n26/feed-crypto.png" alt="N26 Home feed surfacing Bitcoin activity alongside a crypto transaction detail screen" data-lightbox loading="lazy" decoding="async">
         </figure>
       </div>
     </article>
 
-    <hr class="rule" aria-hidden="true">
-
     <article class="beat reveal">
-      <div class="period-split period-split--50-50">
-        <div class="period-split__main">
+      <div class="n26-split n26-split--50-50 n26-split--flip">
+        <div>
           <p class="beat__eyebrow">Highlight</p>
           <h3 class="beat__title">Search filters &amp; suggestions</h3>
           <p class="n26-chip-row"><span class="n26-chip">🗓️ 4 week design sprint · On Production</span></p>
@@ -537,96 +526,11 @@
             <div><div class="n26-metric__value">−12%</div><div class="n26-metric__label">reduction in "no search results"</div></div>
           </div>
         </div>
-        <figure class="period-split__visual">
-          <img src="assets/n26/search.png" alt="Search filters and suggestions across the N26 desktop WebApp and mobile app" data-lightbox loading="lazy">
+        <figure class="n26-figure-plain n26-figure-plain--contain reveal">
+          <img src="assets/n26/search.png" alt="Search filters and suggestions across the N26 desktop WebApp and mobile app" data-lightbox loading="lazy" decoding="async">
         </figure>
       </div>
     </article>
-    </div><!-- /.period__story -->
-  </div>
-</section>
-
-<!-- ============================== PROOF ============================== -->
-<section class="section" id="proof" data-period="proof">
-  <div class="container">
-    <div class="proof-intro reveal">
-      <p class="eyebrow">Proof</p>
-      <h2 class="h-display h-2 proof-intro__title">What it produced — measured on the feed and across the team.</h2>
-      <p class="lede proof-intro__lede proof-intro__lede--present">The All-Activity feed moved engagement and satisfaction — alongside CSAT rituals the org adopted.</p>
-      <p class="lede proof-intro__lede">Feed metrics came from a monitored launch cohort before the Europe-wide rollout. Enablement work — monthly CSAT analysis and Research Lab support — ran in parallel across 25 markets.</p>
-    </div>
-
-    <div class="proof-track proof-track--practice reveal">
-      <div class="proof-track__head">
-        <div class="proof-track__titles">
-          <p class="proof-label">Practice</p>
-          <p class="proof-track__lede">Customer outcomes on the Multi-activity Feed.</p>
-        </div>
-        <span class="proof-track__badge proof-track__badge--practice">Practice</span>
-      </div>
-      <div class="metric-banner metric-banner--4 reveal-stagger">
-        <div class="metric-banner__item">
-          <div class="metric-banner__value mono-stat metric-banner__value--text">+2.5%</div>
-          <div class="metric-banner__label metric-banner__label--wide">MAU activity &amp; retention — monitored launch cohort before Europe-wide rollout</div>
-        </div>
-        <div class="metric-banner__item">
-          <div class="metric-banner__value mono-stat"><span data-count="28" data-suffix="%">0</span></div>
-          <div class="metric-banner__label metric-banner__label--wide">Spaces users moved to the All-Activity view</div>
-        </div>
-        <div class="metric-banner__item">
-          <div class="metric-banner__value mono-stat metric-banner__value--text">3 : 7</div>
-          <div class="metric-banner__label metric-banner__label--wide">Main Account vs All-Activity usage ratio after launch</div>
-        </div>
-        <div class="metric-banner__item">
-          <div class="metric-banner__value mono-stat metric-banner__value--text">+4.5%</div>
-          <div class="metric-banner__label metric-banner__label--wide">CSAT uplift — measured via post-launch survey</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="proof-track proof-track--enablement reveal">
-      <div class="proof-track__head">
-        <div class="proof-track__titles">
-          <p class="proof-label">Enablement</p>
-          <p class="proof-track__lede">Team capability at segment scale.</p>
-        </div>
-        <span class="proof-track__badge proof-track__badge--enablement enablement-label">
-          <svg class="enablement-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-          Enablement
-        </span>
-      </div>
-      <div class="metric-banner metric-banner--4 reveal-stagger">
-        <div class="metric-banner__item">
-          <div class="metric-banner__value mono-stat"><span data-count="25">0</span> markets</div>
-          <div class="metric-banner__label metric-banner__label--wide">Feed rolled out across Europe — Germany first, then market by market</div>
-        </div>
-        <div class="metric-banner__item">
-          <div class="metric-banner__value mono-stat metric-banner__value--text">Monthly CSAT</div>
-          <div class="metric-banner__label metric-banner__label--wide">Analysed, communicated, and followed up on UX metrics across European markets</div>
-        </div>
-        <div class="metric-banner__item">
-          <div class="metric-banner__value mono-stat metric-banner__value--text">Research Lab</div>
-          <div class="metric-banner__label metric-banner__label--wide">Volunteer — helping designers set up user research and launch tests across platforms</div>
-        </div>
-        <div class="metric-banner__item">
-          <div class="metric-banner__value mono-stat metric-banner__value--text">+10% · −12%</div>
-          <div class="metric-banner__label metric-banner__label--wide">Search filters sprint — transaction search up, "no results" down (separate highlight project)</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================== BRAND FINALE ============================== -->
-<section class="brand-finale n26-brand-finale" aria-label="N26 in context">
-  <div class="brand-finale__media" aria-hidden="true">
-    <video data-src="assets/n26/final.mov" muted loop playsinline data-autoplay-inview preload="none" title=""></video>
-  </div>
-  <div class="brand-finale__scrim" aria-hidden="true"></div>
-  <div class="container brand-finale__content reveal">
-    <p class="n26-brand-finale__wordmark" aria-label="N26">N26</p>
-    <p class="eyebrow brand-finale__eyebrow">Shipped to production</p>
-    <p class="brand-finale__line text-on-dark">One feed for all activity<br>— across 25 markets customers actually use.</p>
   </div>
 </section>
 
@@ -635,8 +539,8 @@
 <footer class="shell-footer" id="contact">
   <div class="shell-inner">
     <div class="shell-prevnext">
-      <a href="index.html" class="shell-card"><p class="k">← Home</p><p class="t">Portfolio</p></a>
-      <a href="olx-presentation.html" class="shell-card next"><p class="k">Next →</p><p class="t">OLX — Ad Package</p></a>
+      <a href="olx.html" class="shell-card"><p class="k">← OLX</p><p class="t">Ad Package</p></a>
+      <a href="gomart.html" class="shell-card next"><p class="k">Next →</p><p class="t">GoMart — Instant Grocery</p></a>
     </div>
   </div>
 </footer>
@@ -644,7 +548,7 @@
 <div class="lightbox lightbox--gallery" role="dialog" aria-modal="true" aria-label="Media viewer">
   <button class="lightbox__close" type="button" aria-label="Close">✕</button>
   <div class="lightbox__stage">
-    <img class="lightbox__img" alt="">
+    <img decoding="async" class="lightbox__img" alt="">
   </div>
 </div>
 

@@ -4,6 +4,34 @@
 <head>
     <!-- Priority tags. These must come first. -->
     <meta charset="utf-8">
+    <script>
+      (function () {
+        if (/[?&]present=1(?:&|$)/.test(location.search)) return;
+        try {
+          if (sessionStorage.getItem("vipulFollow")) return;
+          if (sessionStorage.getItem("vipulPresent") || localStorage.getItem("vipulPresent")) return;
+          var nav = performance.getEntriesByType && performance.getEntriesByType("navigation");
+          var navType = nav && nav.length ? nav[0].type : "navigate";
+          if (navType === "reload" || navType === "back_forward") return;
+          var ref = document.referrer;
+          if (ref) {
+            var refUrl = new URL(ref, location.href);
+            if (refUrl.origin === location.origin) {
+              var file = refUrl.pathname.replace(/\/+$/, "").split("/").pop() || "";
+              if (
+                file === "index.html" ||
+                file === "" ||
+                file === "olx.html" ||
+                /-presentation\.html$/.test(file)
+              ) {
+                return;
+              }
+            }
+          }
+        } catch (_) {}
+        location.replace("olx.html");
+      })();
+    </script>
     <!-- Analytics (GA + Clarity) — skipped on localhost; see js/gtag-init.js -->
     <script src="js/gtag-init.js"></script>
     <meta http-equiv="x-ua-compatible" content="ie=edge; chrome=1">
@@ -20,10 +48,10 @@
     <!-- For SEO -->
     <meta name="google-site-verification" content="_Pw468vxdtRMyLByV9sPOX9VYJasRQnTRz_-iD-x_e8" />
     <meta name="majestic-site-verification" content="MJ12_bd697943-0265-4d5f-9db4-60760044d91b" />
-    <meta name="robots" content="index, follow">
+    <meta name="robots" content="noindex, nofollow">
 
     <!-- Social -->
-    <meta property="og:url" content="https://vipulsaxena.com/olx-presentation.html" />
+    <meta property="og:url" content="https://vipulsaxena.com/olx.html" />
     <meta property="og:title" content="OLX Ad Package — Fixing an 80–90% Seller Drop-off · Vipul Saxena" />
     <meta property="og:description" content="Diagnosed an 80–90% seller drop-off in OLX's Ad Package flow and led a redesign that delivered +12% conversion uplift and 8% more paying sellers." />
     <meta property="og:locale" content="en_US" />
@@ -35,14 +63,14 @@
     <meta name='twitter:site' content='@vipulsaxena_fc' />
     <meta name='twitter:title' content='OLX Ad Package — Fixing an 80–90% Seller Drop-off · Vipul Saxena' />
     <meta name='twitter:description' content='Diagnosed an 80–90% seller drop-off in OLX&apos;s Ad Package flow and led a redesign that delivered +12% conversion uplift and 8% more paying sellers.' />
-    <meta name="twitter:url" content="https://vipulsaxena.com/olx-presentation.html" />
+    <meta name="twitter:url" content="https://vipulsaxena.com/olx.html" />
     <meta name='twitter:image' content="https://vipulsaxena.com/assets/olx/olx_cover.png" />
 
     <!-- Favicon Meta Tags.  -->
     <link rel="icon" href="fav.png" sizes="32x32" type="image/png">
     <link rel="shortcut icon" href="fav.png" type="image/png">
     <meta name="theme-color" content="#ffffff">
-    <link rel="canonical" href="https://vipulsaxena.com/olx-presentation.html">
+    <link rel="canonical" href="https://vipulsaxena.com/olx.html">
 
     <!-- Fonts (match Portfolio: Inter) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -77,7 +105,12 @@
         --deck-top:3.5rem;
         --present-inset:clamp(1.25rem,4vw,3rem);
         --present-top:clamp(1rem,2.5vw,2rem);
-        --present-bottom:8%;
+        --present-bottom:clamp(2rem,8vw,5rem);
+        --deck-space-xs:clamp(0.5rem,0.9vw,0.65rem);
+        --deck-space-sm:clamp(0.75rem,1.4vw,1rem);
+        --deck-space-md:clamp(1.25rem,2.2vw,1.75rem);
+        --deck-space-lg:clamp(1.75rem,3vw,2.5rem);
+        --deck-space-xl:clamp(2.25rem,4vw,3.25rem);
       }
       html,body{ height:100%; }
       body{ background:#ffffff; font-family:"Inter", system-ui, sans-serif; overflow:hidden; }
@@ -95,7 +128,7 @@
         margin:0 auto; width:100%; max-width:100%;
         padding-top:var(--present-top);
         padding-inline:var(--present-inset);
-        padding-bottom:8%;
+        padding-bottom:var(--present-bottom);
         flex:1 1 auto; display:flex; flex-direction:column; justify-content:center;
         box-sizing:border-box;
       }
@@ -105,12 +138,14 @@
         max-width:100%;
         padding:0;
       }
-      .deck-split-grid{ width:100%; }
+      .deck-split-grid{ width:100%; gap:var(--deck-space-md); }
+      @media (min-width:1024px){ .deck-split-grid{ gap:var(--deck-space-lg); } }
+      .olx-org-map-figure{ transform:translateY(-35%); }
       .deck-split-copy{
         box-sizing:border-box;
         padding-top:var(--present-top);
         padding-inline:var(--present-inset);
-        padding-bottom:8%;
+        padding-bottom:var(--present-bottom);
         min-width:0;
         width:100%;
       }
@@ -121,8 +156,35 @@
       .deck-split-copy > :is(div, figure){
         max-width:100%;
       }
-      .deck-eyebrow{ margin:0 0 clamp(0.65rem, 1.2vw, 0.85rem); }
-      .deck-eyebrow + :is(h1,h2,h3){ margin-top:0; margin-bottom:clamp(0.85rem, 1.6vw, 1.25rem); }
+      .deck-eyebrow{ margin:0 0 var(--deck-space-sm); }
+      .deck-eyebrow + :is(h1,h2,h3){
+        margin-top:0;
+        margin-bottom:var(--deck-space-md);
+      }
+      .deck .crumb{ margin-top:var(--deck-space-md); }
+
+      /* Normalize Tailwind vertical spacing to deck scale */
+      .deck .mt-1{ margin-top:var(--deck-space-xs) !important; }
+      .deck .mt-2{ margin-top:var(--deck-space-sm) !important; }
+      .deck .mb-2{ margin-bottom:var(--deck-space-sm) !important; }
+      .deck .mt-3{ margin-top:var(--deck-space-sm) !important; }
+      .deck .mb-3{ margin-bottom:var(--deck-space-sm) !important; }
+      .deck .mt-4{ margin-top:var(--deck-space-md) !important; }
+      .deck .mt-5,
+      .deck .mt-6{ margin-top:var(--deck-space-md) !important; }
+      .deck .mb-6{ margin-bottom:var(--deck-space-md) !important; }
+      .deck .mt-8,
+      .deck .mb-8{ margin-top:var(--deck-space-lg) !important; margin-bottom:var(--deck-space-lg) !important; }
+      .deck .mt-10,
+      .deck .mb-10{ margin-top:var(--deck-space-lg) !important; margin-bottom:var(--deck-space-lg) !important; }
+      .deck .mt-14{ margin-top:var(--deck-space-xl) !important; }
+      .deck .gap-4,
+      .deck .gap-6{ gap:var(--deck-space-md) !important; }
+      .deck .gap-10{ gap:var(--deck-space-lg) !important; }
+      .deck .space-y-4 > :not([hidden]) ~ :not([hidden]){ margin-top:var(--deck-space-md) !important; }
+      @media (min-width:768px){
+        .deck .md\:mt-2{ margin-top:var(--deck-space-sm) !important; }
+      }
 
       /* Per-slide reveal */
       .slide [data-anim]{ opacity:0; transform:translateY(26px); transition:opacity .6s ease, transform .6s ease; }
@@ -303,9 +365,9 @@
 
       /* Desktop directions — 3 hypothesis cards (slide 11), full-width stack + scroll */
       .slide-hypo .slide-inner{ justify-content:flex-start; }
-      .slide-hypo .hypo-intro{ color:#262626; font-size:1rem; line-height:1.55; margin:0 0 1.25rem; max-width:72ch; position:relative; z-index:2; }
+      .slide-hypo .hypo-intro{ color:#262626; font-size:1rem; line-height:1.55; margin:0 0 var(--deck-space-md); max-width:72ch; position:relative; z-index:2; }
       .slide-hypo .hypo-intro strong{ color:#262626; }
-      .hypo-grid{ display:flex; flex-direction:column; gap:1.5rem; width:100%; max-width:100%; }
+      .hypo-grid{ display:flex; flex-direction:column; gap:var(--deck-space-md); width:100%; max-width:100%; }
       .hypo-card{ display:flex; flex-direction:column; width:100%; max-width:100%; height:auto; background:#fff; border:1px solid #e7e7e7; border-radius:16px; overflow:hidden;
         box-shadow:0 8px 24px -14px rgba(0,0,0,.18); }
       .hypo-card__media{ flex:0 0 auto; background:linear-gradient(180deg, #fafafa 0%, #f2f2f2 100%); border-bottom:1px solid #e7e7e7; padding:1rem 1.25rem; }
@@ -336,15 +398,14 @@
       .slide-directions .directions-content{
         position:relative; z-index:1; min-height:100%; display:flex; flex-direction:column;
         max-width:100%; width:100%; margin-inline:auto; box-sizing:border-box;
-        padding:var(--present-top) var(--present-inset) 8%;
+        padding:var(--present-top) var(--present-inset) var(--present-bottom);
       }
       .slide-directions .directions-head{ text-shadow:0 0 20px rgba(255,255,255,.95), 0 1px 2px rgba(255,255,255,.8); }
-      .slide-directions .proto-hint{ margin-top:.75rem; }
+      .slide-directions .proto-hint{ margin-top:var(--deck-space-sm); }
       .slide-directions .directions-foot{ margin-top:auto; width:100%; }
 
-      .proto-grid{ display:grid; grid-template-columns:1fr; gap:1.5rem; width:100%; margin-top:.75rem; flex:1 1 auto; }
-      @media (min-width:1024px){ .proto-grid{ grid-template-columns:1fr 1fr; gap:1.25rem; } }
-      @media (min-width:1200px){ .proto-grid{ gap:1.5rem; } }
+      .proto-grid{ display:grid; grid-template-columns:1fr; gap:var(--deck-space-md); width:100%; margin-top:var(--deck-space-sm); flex:1 1 auto; }
+      @media (min-width:1024px){ .proto-grid{ grid-template-columns:1fr 1fr; } }
       .proto-col{ display:flex; flex-direction:column; min-width:0; height:100%; overflow:visible; }
       .proto-col .vlabel{
         display:flex; align-items:center; justify-content:space-between; gap:.75rem;
@@ -476,7 +537,7 @@
       .hl-slide .slide-inner{
         position:relative; z-index:10; justify-content:flex-start;
         max-width:100%; margin-inline:auto; width:100%; box-sizing:border-box;
-        padding:var(--present-top) var(--present-inset) 8%;
+        padding:var(--present-top) var(--present-inset) var(--present-bottom);
       }
       .hl-overlay{
         width:100%; max-width:40rem;
@@ -554,7 +615,7 @@
       .hl-slide--3 .slide-inner{
         display:flex; flex-direction:column; min-height:calc(100dvh - var(--deck-top));
         padding-top:var(--present-top);
-        padding-bottom:8%;
+        padding-bottom:var(--present-bottom);
         justify-content:flex-start;
       }
       .hl-slide--1 .hl-slide__sticker,
@@ -723,7 +784,7 @@
         .hl-slide--2 .slide-inner,
         .hl-slide--3 .slide-inner {
           min-height: auto;
-          padding-bottom: 8%;
+          padding-bottom: var(--present-bottom);
         }
         .phone-mock--cover { width: min(100%, 20rem); max-width: 20rem; }
       }
@@ -820,7 +881,7 @@
       <input type="password" id="olxGateInput" class="pw-input" placeholder="Password" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Password">
       <p class="pw-error" id="olxGateError" role="alert" hidden>Incorrect password. Please try again.</p>
       <div class="pw-actions">
-        <a class="pw-back" href="index.html">&larr; Back home</a>
+        <a class="pw-back" href="olx.html" onclick="try{sessionStorage.setItem('olxAccessGranted','1')}catch(e){}">&larr; Web mode</a>
         <button type="submit" class="pw-btn">Unlock</button>
       </div>
     </form>
@@ -833,10 +894,10 @@
     <a href="index.html" class="shell-brand">Home</a>
     <p class="deck-title" id="deckTitle">OLX Ad Package</p>
     <div class="shell-actions">
-      <button type="button" class="nav-btn nav-btn--exit" disabled aria-label="Web page mode (not available yet)" title="Web page mode — not available yet">
+      <a class="nav-btn nav-btn--exit" href="olx.html" aria-label="Exit to web page mode" title="Exit to web page mode" onclick="try{sessionStorage.setItem('olxAccessGranted','1')}catch(e){}">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
         <span>Web mode</span>
-      </button>
+      </a>
       <button type="button" class="nav-btn" data-fullscreen aria-label="Toggle fullscreen" title="Fullscreen">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3m13-5v3a2 2 0 0 1-2 2h-3"/></svg>
       </button>
@@ -915,7 +976,7 @@
           <p class="text-lg md:text-xl text-mute leading-relaxed max-w-[36ch] md:order-1 order-2 md:pb-12" data-anim style="--i:3">
             I was responsible for all things design within the <span class="text-ink font-semibold">Engagement &amp; Monetisation</span> packs, under the <span class="text-ink font-semibold">Pay &amp; Ship</span> pillar.
           </p>
-          <figure class="md:order-2 order-1" data-anim style="--i:2">
+          <figure class="olx-org-map-figure md:order-2 order-1" data-anim style="--i:2">
             <img loading="lazy" decoding="async" src="assets/olx/olx_org_map.png" alt="Org map: Opportunities, Offering and Pricing feed Engagement & Monetisation, which sits under Pay & Ship inside OLX Horizontal and the wider OLX Group" data-lightbox class="w-full max-h-[68vh] object-contain cursor-zoom-in">
           </figure>
         </div>
@@ -1460,7 +1521,7 @@
         <div class="mt-10 flex flex-wrap items-center justify-center gap-4" data-anim style="--i:2">
           <a class="nav-btn !w-auto !px-5 !text-white !bg-white/10 !border-white/20 hover:!bg-white/20 hover:!border-white/40" href="raisin.html">← Raisin</a>
           <a class="nav-btn !w-auto !px-5 !text-white !bg-white/10 !border-white/20 hover:!bg-white/20 hover:!border-white/40" href="index.html">Back to home</a>
-          <a class="nav-btn !w-auto !px-5 !text-white !bg-white/10 !border-white/20 hover:!bg-white/20 hover:!border-white/40" href="n26-presentation.html">N26 →</a>
+          <a class="nav-btn !w-auto !px-5 !text-white !bg-white/10 !border-white/20 hover:!bg-white/20 hover:!border-white/40" href="n26.html">N26 →</a>
         </div>
         <p class="mt-14 text-white/40 text-sm" data-anim style="--i:3">© 2023 · Vipul Saxena · OLX Ad Package · Product Design Portfolio</p>
       </div>
@@ -1717,6 +1778,13 @@
     function activate(n) {
       btns.forEach((b) => b.setAttribute("aria-selected", String(b.dataset.bg === n)));
       shots.forEach((s) => s.classList.toggle("active", s.dataset.bgShot === n));
+      seg.setAttribute("data-fm-value", n);
+      document.dispatchEvent(
+        new CustomEvent("portfolio:widget-change", {
+          bubbles: true,
+          detail: { id: seg.getAttribute("data-fm-widget"), value: n },
+        })
+      );
     }
     btns.forEach((b) => b.addEventListener("click", () => activate(b.dataset.bg)));
   })();
@@ -1731,6 +1799,13 @@
     function activate(n) {
       items.forEach((it) => it.classList.toggle("active", it.dataset.audit === n));
       shots.forEach((sh) => sh.classList.toggle("active", sh.dataset.auditShot === n));
+      list.setAttribute("data-fm-value", n);
+      document.dispatchEvent(
+        new CustomEvent("portfolio:widget-change", {
+          bubbles: true,
+          detail: { id: list.getAttribute("data-fm-widget"), value: n },
+        })
+      );
     }
     items.forEach((it) => {
       const n = it.dataset.audit;
@@ -1759,6 +1834,14 @@
       if (stage) stage.setAttribute("data-fm-value", String(idx[key]));
       if (stage && typeof stage._protoRefreshLens === "function") {
         stage._protoRefreshLens();
+      }
+      if (stage) {
+        document.dispatchEvent(
+          new CustomEvent("portfolio:widget-change", {
+            bubbles: true,
+            detail: { id: stage.getAttribute("data-fm-widget"), value: String(idx[key]) },
+          })
+        );
       }
     }
     function next(key) {
