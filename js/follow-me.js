@@ -895,12 +895,15 @@
   }
 
   function ensureCss() {
-    if (document.getElementById("follow-me-css")) return;
-    var link = document.createElement("link");
-    link.id = "follow-me-css";
-    link.rel = "stylesheet";
-    link.href = "/css/follow-me.css?v=2";
-    document.head.appendChild(link);
+    var href = "/css/follow-me.css?v=4";
+    var link = document.getElementById("follow-me-css");
+    if (!link) {
+      link = document.createElement("link");
+      link.id = "follow-me-css";
+      link.rel = "stylesheet";
+      (document.body || document.head).appendChild(link);
+    }
+    if (link.getAttribute("href") !== href) link.href = href;
   }
 
   function setChipHtml(html) {
@@ -1099,7 +1102,7 @@
       var peakF = stats && stats.peakFollowing != null ? stats.peakFollowing : followingN;
       endedEl.innerHTML =
         '<div class="follow-ended__card">' +
-        "<h2>Presentation ended</h2>" +
+        '<h1 class="follow-ended__title">Presentation ended</h1>' +
         '<ul class="follow-ended__stats">' +
         "<li><span>Session time</span><strong>" +
         duration +
@@ -1119,10 +1122,9 @@
     } else {
       endedEl.innerHTML =
         '<div class="follow-ended__card">' +
-        "<h2>Thanks for following along</h2>" +
-        '<p class="follow-ended__lead">The live presentation has ended. You’re welcome to keep exploring the portfolio at your own pace.</p>' +
-        '<p class="follow-ended__thanks">Hope you enjoyed the walkthrough — thank you for staying with me.</p>' +
-        '<a class="follow-ended__cta" href="/index.html">Explore the portfolio</a>' +
+        '<h1 class="follow-ended__title">The live presentation has ended.</h1>' +
+        '<p class="follow-ended__body">Hope you enjoyed the walkthrough — thank you for staying with me.</p>' +
+        '<a class="follow-chip__btn follow-ended__cta" href="/index.html">Explore the portfolio</a>' +
         "</div>";
     }
   }

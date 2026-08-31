@@ -17,15 +17,6 @@ body.summary-v2.gomart-theme {
   --gomart-green: #0b5d34;
 }
 
-/* Portfolio highlight — disabled on web page (deck-only) */
-body.gomart-theme .hl {
-  background: none;
-  color: inherit;
-  padding: 0;
-  border-radius: 0;
-  box-decoration-break: unset;
-}
-
 /* --------------------------------------------------------------------------
    Header — title sticks left (N26 parity)
    -------------------------------------------------------------------------- */

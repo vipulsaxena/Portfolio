@@ -15,10 +15,12 @@
   border: none;
   padding: 0;
   border-radius: 100%;
+  /* Elevation shadow only — no inset outline (cards use inset; FAB stays clean) */
   box-shadow:
-    inset 0 0 0 1px rgba(0, 0, 0, 0.08),
-    0 4px 14px rgba(0, 0, 0, 0.12);
-  transition: box-shadow 1.45s cubic-bezier(0.16, 1, 0.3, 1);
+    0 10px 30px rgba(0, 0, 0, 0),
+    0 14px 40px rgba(0, 0, 0, 0);
+  -webkit-transition: box-shadow 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: box-shadow 0.38s cubic-bezier(0.4, 0, 0.2, 1);
   float: right;
   cursor: pointer;
   overflow: visible;
@@ -27,9 +29,10 @@
 .gfq-badge:hover,
 .gfq-badge:focus-visible {
   box-shadow:
-    inset 0 0 0 1px rgba(0, 0, 0, 0.04),
     0 10px 30px rgba(0, 0, 0, 0.08),
     0 14px 40px rgba(0, 0, 0, 0.10);
+  -webkit-transition: box-shadow 1.45s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: box-shadow 1.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .gfq-badge:focus-visible {
@@ -40,9 +43,9 @@
 .gfq-badge::after {
   content: attr(data-tip);
   position: absolute;
-  right: calc(100% + 12px);
-  top: 50%;
-  transform: translateY(-50%) translateX(4px);
+  left: 50%;
+  bottom: calc(100% + 12px);
+  transform: translateX(-50%) translateY(4px);
   background: #262626;
   color: #fff;
   font-family: "Inter", system-ui, sans-serif;
@@ -62,11 +65,11 @@
 .gfq-badge::before {
   content: "";
   position: absolute;
-  right: calc(100% + 4px);
-  top: 50%;
-  transform: translateY(-50%) translateX(4px);
+  left: 50%;
+  bottom: calc(100% + 7px);
+  transform: translateX(-50%) translateY(4px);
   border: 5px solid transparent;
-  border-left-color: #262626;
+  border-top-color: #262626;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.14s ease, transform 0.14s ease;
@@ -78,7 +81,7 @@
 .gfq-badge:hover::before,
 .gfq-badge:focus-visible::before {
   opacity: 1;
-  transform: translateY(-50%) translateX(0);
+  transform: translateX(-50%) translateY(0);
 }
 
 .gfq-wrap.is-open .gfq-badge::before,

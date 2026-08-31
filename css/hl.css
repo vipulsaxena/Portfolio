@@ -1,0 +1,10 @@
+/* Text emphasis (.hl) — inherit surrounding typography; no yellow fill */
+.hl,
+.present-thanks__hl {
+  background: none;
+  color: inherit;
+  padding: 0;
+  border-radius: 0;
+  -webkit-box-decoration-break: unset;
+  box-decoration-break: unset;
+}
