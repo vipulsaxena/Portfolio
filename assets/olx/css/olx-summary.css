@@ -208,29 +208,28 @@
 }
 .beat--proto .proto-grid {
   gap: clamp(1.25rem, 2.5vw, 2rem);
+  align-items: start;
+}
+.beat--proto .proto-col {
+  height: auto;
 }
 .beat--proto .proto-stage {
+  display: block;
+  height: auto;
   min-height: 0;
-  height: min(48vh, 26rem);
-  max-height: min(48vh, 26rem);
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
+  line-height: 0;
 }
 .beat--proto .proto-stage__inner {
-  flex: 1 1 auto;
-  min-height: 0;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: stretch;
+  display: block;
+  width: 100%;
 }
 .beat--proto .proto-stage img {
   width: 100%;
-  height: 100%;
+  height: auto;
+  display: block;
+  max-height: none;
   object-fit: contain;
   object-position: center top;
-  display: block;
 }
 .olx-proto-foot {
   border-radius: var(--radius-lg);
@@ -1545,3 +1544,18 @@ body.summary-v2.has-shell .olx-journey-nav .journey-nav__btn.is-active {
 
 /* Outcome CSAT */
 .csat-outcome-card { margin-top: var(--sp-md); }
+
+/* Variant A/B prototypes — shrink-wrap stage to image (wins over base .proto-stage) */
+.beat--proto .proto-stage {
+  display: block;
+  min-height: 0;
+  height: auto;
+}
+.beat--proto .proto-stage__inner {
+  display: block;
+}
+.beat--proto .proto-stage img {
+  width: 100%;
+  height: auto;
+  max-height: none;
+}
