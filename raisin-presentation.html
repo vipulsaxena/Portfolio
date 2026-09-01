@@ -881,7 +881,12 @@
       overflow: hidden;
       border-radius: inherit;
     }
-    .present-slide--p1-outcomes .compare--dashboard .compare__after img,
+    .present-slide--p1-outcomes .compare--dashboard .compare__after img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: top center;
+    }
     .present-slide--p1-outcomes .compare--dashboard .compare__before img {
       width: 100%;
       height: 100%;
@@ -948,6 +953,35 @@
     }
     .present-slide--p1-baseline .chip-row {
       margin: 0;
+      overflow: visible;
+    }
+    .present-slide--p1-baseline .period-split__main {
+      overflow: visible;
+    }
+    /* Persona pill tooltips — left-aligned to pill to avoid slide-edge overflow */
+    .present-slide--p1-baseline .chip-row[data-fm-widget="raisin-personas"] .chip-tip,
+    .present-slide--p1-tradeoff-01 .chip-row[data-fm-widget="raisin-tradeoff-personas"] .chip-tip {
+      left: 0;
+      transform: translateY(0.25rem);
+    }
+    .present-slide--p1-baseline .chip-row[data-fm-widget="raisin-personas"] .chip--tip:hover .chip-tip,
+    .present-slide--p1-baseline .chip-row[data-fm-widget="raisin-personas"] .chip--tip:focus-visible .chip-tip,
+    .present-slide--p1-baseline .chip-row[data-fm-widget="raisin-personas"] .chip--tip.is-remote-hover .chip-tip,
+    .present-slide--p1-tradeoff-01 .chip-row[data-fm-widget="raisin-tradeoff-personas"] .chip--tip:hover .chip-tip,
+    .present-slide--p1-tradeoff-01 .chip-row[data-fm-widget="raisin-tradeoff-personas"] .chip--tip:focus-visible .chip-tip,
+    .present-slide--p1-tradeoff-01 .chip-row[data-fm-widget="raisin-tradeoff-personas"] .chip--tip.is-remote-hover .chip-tip {
+      transform: translateY(0);
+    }
+    .present-slide--p1-baseline .chip-row[data-fm-widget="raisin-personas"] .chip-tip::after,
+    .present-slide--p1-tradeoff-01 .chip-row[data-fm-widget="raisin-tradeoff-personas"] .chip-tip::after {
+      left: 1.25rem;
+      transform: none;
+    }
+    .present-slide--p1-tradeoff-01 .trade-off-switcher__left {
+      overflow: visible;
+    }
+    .present-slide--p1-tradeoff-01 .chip-row[data-fm-widget="raisin-tradeoff-personas"] {
+      overflow: visible;
     }
     .present-slide--p1-baseline .period-split__visual {
       display: flex;
@@ -960,6 +994,80 @@
       object-fit: contain;
       transform: scale(1.2);
       transform-origin: center center;
+    }
+
+    /* Co-creation — JTBD + design principle cards */
+    .present-slide--p1-co-creation .period-split__main {
+      gap: clamp(0.35rem, 0.65vh, 0.5rem);
+      max-height: calc(var(--present-vh) - var(--present-bottom) - var(--present-top));
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .present-slide--p1-co-creation .beat__subtitle {
+      margin-top: clamp(0.35rem, 0.65vh, 0.5rem);
+      margin-bottom: 0;
+      font-size: var(--present-eyebrow-size);
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--muted);
+      line-height: 1.25;
+    }
+    .present-slide--p1-co-creation .beat__needs--jtbd {
+      margin: 0;
+      font-size: clamp(0.78rem, 1.15vw, 0.88rem);
+      line-height: 1.4;
+    }
+    .wealth-hub-principles {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(0.35rem, 0.65vw, 0.5rem);
+      margin: clamp(0.25rem, 0.5vh, 0.4rem) 0 0;
+    }
+    .wealth-hub-principle-card {
+      margin: 0;
+      padding: clamp(0.45rem, 0.85vw, 0.6rem);
+      border: var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--paper-dim);
+    }
+    .wealth-hub-principle-card__label {
+      margin: 0 0 0.2rem;
+      font-size: clamp(0.62rem, 0.95vw, 0.72rem);
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      line-height: 1.2;
+    }
+    .wealth-hub-principle-card__title {
+      margin: 0 0 0.25rem;
+      font-size: clamp(0.78rem, 1.15vw, 0.9rem);
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1.25;
+    }
+    .wealth-hub-principle-card__text {
+      margin: 0;
+      font-size: clamp(0.68rem, 1vw, 0.78rem);
+      line-height: 1.35;
+      color: var(--ink-soft);
+    }
+    .present-slide--p1-co-creation .research-stickies {
+      margin: 0;
+      gap: clamp(0.35rem, 0.65vw, 0.5rem);
+    }
+    .present-slide--p1-co-creation .research-sticky {
+      padding: clamp(0.4rem, 0.75vw, 0.55rem);
+    }
+    .present-slide--p1-co-creation .research-sticky p {
+      font-size: clamp(0.65rem, 0.98vw, 0.76rem);
+      line-height: 1.32;
+    }
+    @media (max-width: 900px) {
+      .wealth-hub-principles {
+        grid-template-columns: 1fr;
+      }
     }
 
     /* Colour map — viewport split, centered visual */
@@ -1754,6 +1862,14 @@
       height: auto;
       max-height: min(58vh, 32rem);
       overflow: visible;
+    }
+    .present-slide--p3-maze .mobile-journey__visual--maze img {
+      width: 100%;
+      height: auto;
+      max-height: min(58vh, 32rem);
+      object-fit: contain;
+      transform: scale(1.2);
+      transform-origin: center center;
     }
     /* Desk research — interaction data visual (~1.33×) */
     .present-slide--p3-desk-research .mobile-journey__visual--research {
@@ -2901,6 +3017,7 @@
           <div class="chip-row">
             <span class="chip">B2C</span>
             <span class="chip">Growth tribe</span>
+            <span class="chip">~5 months</span>
           </div>
         </div>
         <h2 class="h-display h-2 period__title">A home for their wealth</h2>
@@ -2980,8 +3097,26 @@
                   <span class="workflow-strip__arrow" aria-hidden="true">→</span>
                   <span class="workflow-strip__step">One concept</span>
                 </div>
-                <p class="beat__text beat__text--present">Two weeks — HMW statements, stakeholder workshops, one converged Wealth Hub concept.</p>
-                <p class="beat__text">We spent two weeks turning the research into How-Might-We statements. I then ran stakeholder workshops on shared boards — Head of Design, PM, Director, and designers from other tribes — everyone ideating against the same insights and data points, not opinion.</p>
+                <p class="beat__subtitle">Jobs to be done</p>
+                <p class="beat__needs beat__needs--jtbd"><strong>Orient</strong> — consolidated view across asset classes · <strong>Monitor</strong> — total wealth at a glance · <strong>Act</strong> — maturities and pending tasks surfaced</p>
+                <div class="wealth-hub-principles" aria-label="Wealth Hub design principles">
+                  <article class="wealth-hub-principle-card">
+                    <p class="wealth-hub-principle-card__label">Principle 01</p>
+                    <p class="wealth-hub-principle-card__title">Holdings-first</p>
+                    <p class="wealth-hub-principle-card__text">Structure by what customers hold — savings, investments, retirement — not a product catalogue.</p>
+                  </article>
+                  <article class="wealth-hub-principle-card">
+                    <p class="wealth-hub-principle-card__label">Principle 02</p>
+                    <p class="wealth-hub-principle-card__title">Overview-first</p>
+                    <p class="wealth-hub-principle-card__text">Total wealth and allocation at a glance; detail on drill-down, not on landing.</p>
+                  </article>
+                  <article class="wealth-hub-principle-card">
+                    <p class="wealth-hub-principle-card__label">Principle 03</p>
+                    <p class="wealth-hub-principle-card__title">One coherent home</p>
+                    <p class="wealth-hub-principle-card__text">One landing that orients, monitors, and surfaces actions across every asset class.</p>
+                  </article>
+                </div>
+                <p class="beat__subtitle">Key How might we items</p>
                 <div class="research-stickies" aria-label="How-Might-We statements from the sprint">
                   <blockquote class="research-sticky">
                     <p>“How might we create a personalized view that adapts to individual user needs?”</p>
@@ -2993,6 +3128,7 @@
                     <p>“How might we surface maturities and due dates before customers go looking?”</p>
                   </blockquote>
                 </div>
+                <p class="beat__text">We spent two weeks turning the research into How-Might-We statements. I then ran stakeholder workshops on shared boards — Head of Design, PM, Director, and designers from other tribes — everyone ideating against the same insights and data points, not opinion.</p>
                 <p class="beat__text">The sessions produced far more ideas than one release could carry. I facilitated the convergence — compiling them into a single coherent concept: one Wealth Hub, organised around what customers hold.</p>
               </div>
             </div>
@@ -3004,11 +3140,32 @@
                   <h3 class="beat__title">User research · treemap vs donut — how much detail on landing?</h3>
                   <p class="beat__text present-evidence-line"><strong>Evidence:</strong> Donut beat treemap — allocation legible at a glance; route into account actions.</p>
                   <p class="beat__text">Several landing decisions still needed customer evidence — not critique. I led Raisin’s first international study on allocation visualization: treemap vs donut.</p>
-                  <p class="beat__stat">Sample set · 12 participants · 2 prototypes · PRE + POST-KYC · 🇩🇪 🇳🇱</p>
-                  <div class="chip-row" aria-label="Sample set — Raisin B2C archetypes">
-                    <span class="chip chip--muted">Affluent Core</span>
-                    <span class="chip chip--muted">High Net Worth Core</span>
-                    <span class="chip chip--muted">Affluent Young</span>
+                  <p class="beat__stat">Sample set · 12 participants · 2 prototypes · PRE + POST-KYC · 🇩🇪 🇳🇱 🇪🇸 🇬🇧 🇫🇷</p>
+                  <div class="chip-row" data-fm-widget="raisin-tradeoff-personas" data-fm-kind="chips" aria-label="Sample set — Raisin B2C archetypes">
+                    <span class="chip chip--muted chip--tip" tabindex="0" data-fm-tip="affluent-core" aria-describedby="tradeoff1-tip-affluent-core">
+                      Affluent Core
+                      <span class="chip-tip" id="tradeoff1-tip-affluent-core" role="tooltip">
+                        <strong class="chip-tip__title">Affluent Core</strong>
+                        <span class="chip-tip__need">Maintains wealth simply — retirement comfort, travel, supporting family.</span>
+                        <span class="chip-tip__facts">Included in international study sample</span>
+                      </span>
+                    </span>
+                    <span class="chip chip--muted chip--tip" tabindex="0" data-fm-tip="hnw-core" aria-describedby="tradeoff1-tip-hnw-core">
+                      High Net Worth Core
+                      <span class="chip-tip" id="tradeoff1-tip-hnw-core" role="tooltip">
+                        <strong class="chip-tip__title">High Net Worth Core</strong>
+                        <span class="chip-tip__need">Wants evidence Raisin can optimize liquidity without manual effort.</span>
+                        <span class="chip-tip__facts">Included in international study sample</span>
+                      </span>
+                    </span>
+                    <span class="chip chip--muted chip--tip" tabindex="0" data-fm-tip="affluent-young" aria-describedby="tradeoff1-tip-affluent-young">
+                      Affluent Young
+                      <span class="chip-tip" id="tradeoff1-tip-affluent-young" role="tooltip">
+                        <strong class="chip-tip__title">Affluent Young</strong>
+                        <span class="chip-tip__need">Builds financial peace of mind toward early retirement without cutting living standards.</span>
+                        <span class="chip-tip__facts">Included in international study sample</span>
+                      </span>
+                    </span>
                   </div>
                   <div class="trade-off trade-off--compact" aria-label="Trade-off — treemap vs donut">
                     <p class="trade-off__label">Key trade-off</p>
@@ -3133,7 +3290,7 @@
                       <svg class="enablement-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
                       Enablement
                     </p>
-                    <p class="enablement-surface__title">I established · design critique culture</p>
+                    <p class="enablement-surface__title">I established · design critique culture and design reviews</p>
                     <p class="enablement-surface__text">Showed designers how to present a clear problem statement and collect feedback productively — not ad-hoc taste. Now a recurring ritual.</p>
                     <p class="enablement-surface__stat">First on Wealth Hub · team ritual</p>
                   </aside>
@@ -3185,12 +3342,7 @@
               <div class="period-split__main">
                 <p class="beat__eyebrow">After MVP launch · against targets declared before design</p>
                 <h3 class="beat__title">Both bets held at scale.</h3>
-                <div class="chip-row present-target-chips" aria-label="Success targets">
-                  <span class="chip">80% adoption · met at 3 months</span>
-                  <span class="chip">90% task completion · not measured pre-ship</span>
-                  <span class="chip">NPS +23 → +53 · 4 markets</span>
-                </div>
-                <p class="beat__text">Customers used Wealth Hub as a home for their wealth, not a product catalogue.</p>
+                <p class="beat__text beat__text--present">Customers used Wealth Hub as a home for their wealth, not a product catalogue.</p>
                 <ul class="wealth-hub-constraints" aria-label="Constraints declared before design">
                   <li>Fixed API surface — design within existing endpoints, not a new data model</li>
                   <li>12 markets · 3 product types — all products, savings + investment, savings-only</li>
@@ -3224,6 +3376,15 @@
                   <p>“Everything works great. I especially like the drill-down graphics — Overview → Fixed deposit → individual bank. That’s how every website should work.”</p>
                   <footer class="wealth-hub-impact__quote-source">🇩🇪 Germany · Brand Evolution survey</footer>
                 </blockquote>
+                <aside class="enablement-callout enablement-surface beat__enablement present-p1-measurement" aria-label="Enablement — UX measurement framework">
+                  <p class="enablement-label">
+                    <svg class="enablement-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                    Enablement
+                  </p>
+                  <p class="enablement-surface__title">I authored · UX measurement framework</p>
+                  <p class="enablement-surface__text">Business KPIs, product adoption, and experience metrics — one pyramid so every release could be measured on its own terms.</p>
+                  <p class="enablement-surface__stat">Business · Product · Experience · still in use</p>
+                </aside>
               </div>
             </div>
 
@@ -3692,6 +3853,14 @@
                       <blockquote class="wealth-hub-impact__quote mobile-shipped-reviews__quote">
                         <p>“Easy to invest and move money between products and my linked account — best way to stay in control of savings.”</p>
                         <footer class="wealth-hub-impact__quote-source">🇪🇸 Spain · App Store · 5/5</footer>
+                      </blockquote>
+                      <blockquote class="wealth-hub-impact__quote mobile-shipped-reviews__quote">
+                        <p>“Finally a dashboard that shows my full portfolio in one place — much clearer than before.”</p>
+                        <footer class="wealth-hub-impact__quote-source">🇫🇷 France · App Store · 5/5</footer>
+                      </blockquote>
+                      <blockquote class="wealth-hub-impact__quote mobile-shipped-reviews__quote">
+                        <p>“Love the new layout — I can see all my savings and investments without switching screens.”</p>
+                        <footer class="wealth-hub-impact__quote-source">🇬🇧 UK · App Store · 5/5</footer>
                       </blockquote>
                     </div>
                   </div>

@@ -110,7 +110,7 @@
     "p3-maze": [".device-story__text:not(.device-story__text--present):not(.device-story__text--present-risk)"],
     "p3-shipped": [
       ".device-story__text:not(.device-story__text--present)",
-      ".mobile-shipped-reviews__quote:nth-child(n+3)"
+      ".mobile-shipped-reviews__quote:nth-child(n+5)"
     ],
     "p3-cura": [".beat__text", ".beat__enablement"],
     "p4-intro": [
