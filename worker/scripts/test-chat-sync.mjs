@@ -4,7 +4,11 @@
  */
 const API = process.env.API_BASE_URL || "https://portfolio-chat.vipul-saxena01.workers.dev";
 const ORIGIN = process.env.ORIGIN || "https://vipulsaxena.com";
-const ADMIN_PASS = process.env.ADMIN_PASSWORD || "vipulknows26";
+const ADMIN_PASS = process.env.ADMIN_PASSWORD;
+if (!ADMIN_PASS) {
+  console.error("Set ADMIN_PASSWORD to run sync tests.");
+  process.exit(1);
+}
 
 async function request(path, options = {}) {
   const res = await fetch(`${API}${path}`, {

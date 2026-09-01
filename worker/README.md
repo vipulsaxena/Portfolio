@@ -20,14 +20,13 @@ npm run db:migrate
 npm run db:migrate:local
 ```
 
-5. Set the admin password secret (recommended for production):
+5. Set the admin password secret (required):
 
 ```bash
 npx wrangler secret put ADMIN_PASSWORD
-# enter: vipulknows26
 ```
 
-For local dev without secrets, the worker falls back to `vipulknows26` only when `ADMIN_PASSWORD` is unset — set the secret before deploying.
+Admin login is disabled until `ADMIN_PASSWORD` is set — there is no default password in code.
 
 6. Deploy:
 

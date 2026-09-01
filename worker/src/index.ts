@@ -302,7 +302,10 @@ async function handleAdminLogin(
   env: Env
 ): Promise<Response> {
   const body = (await request.json()) as { password?: string };
-  const password = env.ADMIN_PASSWORD || "vipulknows26";
+  const password = env.ADMIN_PASSWORD;
+  if (!password) {
+    return json({ error: "Admin not configured" }, 503, request, env);
+  }
 
   if (!body.password || body.password !== password) {
     return json({ error: "Invalid password" }, 401, request, env);

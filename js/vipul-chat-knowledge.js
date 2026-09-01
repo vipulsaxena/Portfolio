@@ -109,7 +109,7 @@
       id: "who",
       patterns: [/\bwho are you\b/i, /\bwhat do you do\b/i, /\babout you\b/i, /\babout vipul\b/i],
       answer:
-        "I'm Vipul Saxena — product designer and design enablement leader, Berlin-based, currently at Raisin. I make complex B2C products clearer for customers and easier for teams to build well. 12 years across fintech, marketplaces, streaming, and social.",
+        "I'm Vipul Saxena — Senior Product Designer, Berlin-based, currently at Raisin. I've spent 12 years designing B2C products across fintech, marketplaces, streaming, and social — from €80bn in savings and 317M marketplace users to a 38M-user super-app in Southeast Asia. I design products, and how the teams behind them work.",
     },
     {
       id: "password_how",
@@ -280,17 +280,17 @@
     origin:
       "I'm based in Berlin. I grew up and studied in India — Computer Science Engineering — then worked across Asia before moving to Europe for global-scale product work.",
     engineering_background:
-      "Yes — I started as a CS Engineering graduate and did design engineering and mobile game UI early on (inoXapps). That background helps me prototype in code, speak fluently with engineers, and reason about feasibility.",
+      "Yes — I started as a CS Engineering graduate and did design engineering and mobile game UI early on at inoXapps — an Android games studio with over 35M downloads on Google Play. That background helps me prototype in code, speak fluently with engineers, and reason about feasibility.",
     years_experience:
       "12 years in product design — from mobile game UI and early startups in India to lead roles at Gojek, N26, OLX, and now Raisin in Berlin.",
     why_berlin:
-      "I moved to Berlin to work at global scale. Here I've designed for tens of millions of users across dozens of markets — N26 across 25 countries, OLX across 17, Raisin across nine in Europe, the UK, and the US.",
+      "I moved to Berlin to work at global scale. Here I've designed for tens of millions of users — N26's home feed for 8M customers across 24 markets, OLX for 317M users across 17 countries, and Raisin for over a million investors holding €80bn across the EU, UK, and US.",
     mentoring:
       "Yes — I mentor on ADPList. I help with product design craft, career navigation, portfolio reviews, and design team practices.",
     timeline:
       "2024–present: Raisin (Senior Product Designer, Berlin). 2022–2024: OLX Group. 2021–2022: N26. 2018–2021: Gojek (Lead PD, Jakarta). 2017–2018: Hike. 2014–2017: InstaLively. Started in mobile game UI at inoXapps.",
     fintech:
-      "Most of my recent work is fintech: Raisin (wealth management, EU/UK/US), N26 (home feed across 25 markets), OLX Pay & Ship (monetisation, payments). I like making regulated, complex money products feel clear and trustworthy.",
+      "Most of my recent work is fintech: Raisin (wealth management for 1M+ investors, €80bn in assets, EU/UK/US), N26 (home feed for 8M customers across 24 markets), OLX Pay & Ship (monetisation for 317M users). I like making regulated, complex money products feel clear and trustworthy.",
     enablement:
       "I design products — and how the teams behind them work. At Raisin I've built research practice, AI workflows, quality standards, and coaching rituals alongside shipping product.",
     tools:
@@ -308,17 +308,17 @@
     
     // PUBLIC CASE STUDIES (answer in chat — no links)
     goplay:
-      "I led product design for GoPlay — Gojek's OTT platform in Indonesia — from MVP to nationwide streaming across mobile, web, and Smart TV. I designed the core video playback experience, content discovery, localized UI/UX for low and high bandwidth conditions, and Smart TV navigation patterns.",
+      "I led product design for GoPlay — Gojek's OTT platform in Indonesia — within a super-app with 38M monthly active users in Southeast Asia. I designed the core video playback experience, content discovery, localized UI/UX for low and high bandwidth conditions, and Smart TV navigation patterns across iOS, Android, and Smart TV.",
     instalively:
       "I was the first hire at InstaLively, designing live video streaming software optimized for low-bandwidth environments in India. I designed real-time low-latency streaming interfaces, streamer onboarding, and live audience interaction (chat and donations). The product grew to 50k+ active users before acquisition by Hike.",
     ninja:
       "Silent Ninja Redesign was a mobile game UI/UX redesign focused on stealth action mechanics. I refined HUD clarity, touch control ergonomics, menu navigation, and reduced interface clutter during active gameplay to maximize player immersion.",
     hike:
-      "At Hike I authored a two-part UX case study on the camera-first messaging overhaul — 'Camera Is The New Keyboard.' The work focused on transitioning users from text-first to visual communication: Hikemoji avatar creation and customization, LiveDraw's real-time interactive canvas, and camera creation interfaces.",
+      "At Hike I redesigned the AR camera and content experiences for a 100M+ user base with 8M actives, and filed my first patent on a media recommendation engine. I also authored a two-part UX case study on the camera-first messaging overhaul — Hikemoji avatars, LiveDraw, and Hike Discover.",
 
     // LOCKED CASE STUDIES - TEASERS & FULL CONTENT
     raisin_public:
-      "At Raisin I'm simplifying wealth management across EU, UK, and US — leading brand evolution across dashboard, mobile, email, and marketing for savers in nine markets.",
+      "At Raisin I lead Growth and Engagement design for a platform holding €80bn in assets from over a million investors across the EU, UK, and US. My focus is the Wealth Hub — bringing savings, investments and retirement into one place, live across 12 markets.",
     raisin:
       "I led Raisin's brand evolution across dashboard, mobile app, email, and marketing — translating a global brand refresh into cohesive experiences. I ran two parallel tracks: shipping the Wealth Hub MVP across 12 markets, and building design enablement — research practice, AI workflows, governed email system, mobile alignment, and team rituals. Customers had faced fragmented surfaces; we turned static Koto guidelines into a living product system.",
     raisin_impact:
@@ -334,18 +334,18 @@
       "At OLX, impact came from tightening monetisation flows at scale: reducing Ad Package drop-off through research and A/B tests, shipping Seller Take Rate AutoExtend, and improving the payment gateway experience — then rolling winning patterns across more of the 17-country footprint.",
 
     n26_public:
-      "At N26 I evolved the home feed and transaction experience across 25 European markets — making multi-account activity easier to scan and act on.",
+      "At N26 I evolved the home feed and transaction experience across 24 European markets — the first screen for 8M customers, making multi-account activity easier to scan and act on.",
     n26:
-      "At N26 I evolved the home feed into a multi-activity view across 25 European markets — surfacing activity across Spaces, IBANs, and cards. Research-led: customer interviews, cross-functional workshops, usability tests, launch-to-learn. Also shipped MoneyBeam reactions, feed↔crypto connections, and transaction search improvements.",
+      "At N26 I evolved the home feed into a multi-activity view across 24 European markets — the first screen for 8M customers, surfacing activity across Spaces, IBANs, and cards. Research-led: customer interviews, cross-functional workshops, usability tests, launch-to-learn. Also shipped MoneyBeam reactions, feed↔crypto connections, and transaction search improvements.",
     n26_impact:
-      "At N26 the home feed work made multi-activity banking legible across 25 markets — fewer dead ends between Spaces, IBANs, and cards. Research, workshops, and launch-to-learn cycles informed MoneyBeam reactions, feed↔crypto connections, and transaction search improvements.",
+      "At N26 the home feed work made multi-activity banking legible across 24 markets for 8M customers — fewer dead ends between Spaces, IBANs, and cards. Research, workshops, and launch-to-learn cycles informed MoneyBeam reactions, feed↔crypto connections, and transaction search improvements.",
     n26_problem:
-      "At N26 the user problem was a home feed that didn't make multi-account activity easy to scan or act on across Spaces, IBANs, and cards. We used customer interviews, cross-functional workshops, usability tests, and launch-to-learn — I don't list the 25 European market names here.",
+      "At N26 the user problem was a home feed that didn't make multi-account activity easy to scan or act on across Spaces, IBANs, and cards. We used customer interviews, cross-functional workshops, usability tests, and launch-to-learn — I don't list the 24 European market names here.",
 
     gomart_public:
-      "On Gojek I led grocery design at Indonesia scale — GoMart, GoFresh, and the operational tools behind reliable nationwide fulfillment.",
+      "On Gojek I led grocery design at Indonesia scale — GoMart, GoFresh, and the operational tools behind reliable nationwide fulfillment — within a super-app with 38M monthly active users in Southeast Asia.",
     gomart:
-      "On Gojek I led grocery design at Indonesia scale — GoMart (B2C), GoFresh (B2B), plus shopper and driver tools. Studio Accelerator design sprints for fast, reliable fulfillment nationwide. Part of a broader on-demand and entertainment portfolio where I led a team of six.",
+      "On Gojek I led grocery design at Indonesia scale — GoMart (B2C), GoFresh (B2B), plus shopper and driver tools — within a super-app with 38M monthly active users in Southeast Asia. Studio Accelerator design sprints for fast, reliable fulfillment nationwide. Part of a broader on-demand and entertainment portfolio where I led a team of six.",
     gomart_impact:
       "GoMart impact was about reliable fulfillment at Indonesia scale — Studio Accelerator sprints across GoMart, GoFresh, and shopper/driver tools so discovery, trust, and operations held up under real-world load.",
     gomart_problem:
