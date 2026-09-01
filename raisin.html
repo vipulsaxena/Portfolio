@@ -279,6 +279,7 @@
           <div class="chip-row">
             <span class="chip">B2C</span>
             <span class="chip">Growth tribe</span>
+            <span class="chip">~5 months</span>
           </div>
         </div>
         <h2 class="h-display h-2 period__title">A home for their wealth</h2>
@@ -357,7 +358,26 @@
                   <span class="workflow-strip__arrow" aria-hidden="true">→</span>
                   <span class="workflow-strip__step">One concept</span>
                 </div>
-                <p class="beat__text">We spent two weeks turning the research into How-Might-We statements. I then ran stakeholder workshops on shared boards — Head of Design, PM, Director, and designers from other tribes — everyone ideating against the same insights and data points, not opinion.</p>
+                <p class="beat__subtitle">Jobs to be done</p>
+                <p class="beat__needs beat__needs--jtbd"><strong>Orient</strong> — consolidated view across asset classes · <strong>Monitor</strong> — total wealth at a glance · <strong>Act</strong> — maturities and pending tasks surfaced</p>
+                <div class="wealth-hub-principles" aria-label="Wealth Hub design principles">
+                  <article class="wealth-hub-principle-card">
+                    <p class="wealth-hub-principle-card__label">Principle 01</p>
+                    <p class="wealth-hub-principle-card__title">Holdings-first</p>
+                    <p class="wealth-hub-principle-card__text">Structure by what customers hold — savings, investments, retirement — not a product catalogue.</p>
+                  </article>
+                  <article class="wealth-hub-principle-card">
+                    <p class="wealth-hub-principle-card__label">Principle 02</p>
+                    <p class="wealth-hub-principle-card__title">Overview-first</p>
+                    <p class="wealth-hub-principle-card__text">Total wealth and allocation at a glance; detail on drill-down, not on landing.</p>
+                  </article>
+                  <article class="wealth-hub-principle-card">
+                    <p class="wealth-hub-principle-card__label">Principle 03</p>
+                    <p class="wealth-hub-principle-card__title">One coherent home</p>
+                    <p class="wealth-hub-principle-card__text">One landing that orients, monitors, and surfaces actions across every asset class.</p>
+                  </article>
+                </div>
+                <p class="beat__subtitle">Key How might we items</p>
                 <div class="research-stickies" aria-label="How-Might-We statements from the sprint">
                   <blockquote class="research-sticky">
                     <p>“How might we create a personalized view that adapts to individual user needs?”</p>
@@ -369,6 +389,7 @@
                     <p>“How might we surface maturities and due dates before customers go looking?”</p>
                   </blockquote>
                 </div>
+                <p class="beat__text">We spent two weeks turning the research into How-Might-We statements. I then ran stakeholder workshops on shared boards — Head of Design, PM, Director, and designers from other tribes — everyone ideating against the same insights and data points, not opinion.</p>
                 <p class="beat__text">The sessions produced far more ideas than one release could carry. I facilitated the convergence — compiling them into a single coherent concept: one Wealth Hub, organised around what customers hold.</p>
               </div>
             </div>
@@ -379,11 +400,32 @@
                   <p class="beat__eyebrow">Product design strategy · trade-off 01 · validated with customers</p>
                   <h3 class="beat__title">User research · treemap vs donut — how much detail on landing?</h3>
                   <p class="beat__text">Several landing decisions still needed customer evidence — not critique. I led Raisin’s first international study on allocation visualization: treemap vs donut.</p>
-                  <p class="beat__stat">Sample set · 12 participants · 2 prototypes · PRE + POST-KYC · 🇩🇪 🇳🇱</p>
-                  <div class="chip-row" aria-label="Sample set — Raisin B2C archetypes">
-                    <span class="chip chip--muted">Affluent Core</span>
-                    <span class="chip chip--muted">High Net Worth Core</span>
-                    <span class="chip chip--muted">Affluent Young</span>
+                  <p class="beat__stat">Sample set · 12 participants · 2 prototypes · PRE + POST-KYC · 🇩🇪 🇳🇱 🇪🇸 🇬🇧 🇫🇷</p>
+                  <div class="chip-row" data-fm-widget="raisin-tradeoff-personas" data-fm-kind="chips" aria-label="Sample set — Raisin B2C archetypes">
+                    <span class="chip chip--muted chip--tip" tabindex="0" data-fm-tip="affluent-core" aria-describedby="tradeoff1-tip-affluent-core">
+                      Affluent Core
+                      <span class="chip-tip" id="tradeoff1-tip-affluent-core" role="tooltip">
+                        <strong class="chip-tip__title">Affluent Core</strong>
+                        <span class="chip-tip__need">Maintains wealth simply — retirement comfort, travel, supporting family.</span>
+                        <span class="chip-tip__facts">Included in international study sample</span>
+                      </span>
+                    </span>
+                    <span class="chip chip--muted chip--tip" tabindex="0" data-fm-tip="hnw-core" aria-describedby="tradeoff1-tip-hnw-core">
+                      High Net Worth Core
+                      <span class="chip-tip" id="tradeoff1-tip-hnw-core" role="tooltip">
+                        <strong class="chip-tip__title">High Net Worth Core</strong>
+                        <span class="chip-tip__need">Wants evidence Raisin can optimize liquidity without manual effort.</span>
+                        <span class="chip-tip__facts">Included in international study sample</span>
+                      </span>
+                    </span>
+                    <span class="chip chip--muted chip--tip" tabindex="0" data-fm-tip="affluent-young" aria-describedby="tradeoff1-tip-affluent-young">
+                      Affluent Young
+                      <span class="chip-tip" id="tradeoff1-tip-affluent-young" role="tooltip">
+                        <strong class="chip-tip__title">Affluent Young</strong>
+                        <span class="chip-tip__need">Builds financial peace of mind toward early retirement without cutting living standards.</span>
+                        <span class="chip-tip__facts">Included in international study sample</span>
+                      </span>
+                    </span>
                   </div>
                   <div class="trade-off trade-off--compact" aria-label="Trade-off — treemap vs donut">
                     <p class="trade-off__label">Key trade-off</p>
@@ -507,7 +549,7 @@
                       <svg class="enablement-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
                       Enablement
                     </p>
-                    <p class="enablement-surface__title">I established · design critique culture</p>
+                    <p class="enablement-surface__title">I established · design critique culture and design reviews</p>
                     <p class="enablement-surface__text">Showed designers how to present a clear problem statement and collect feedback productively — not ad-hoc taste. Now a recurring ritual.</p>
                     <p class="enablement-surface__stat">First on Wealth Hub · team ritual</p>
                   </aside>

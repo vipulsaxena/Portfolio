@@ -1801,6 +1801,46 @@ html.journey-nav-scrolling {
     grid-template-columns: 1fr;
   }
 }
+.wealth-hub-principles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--sp-sm);
+  margin-top: var(--sp-sm);
+}
+.wealth-hub-principle-card {
+  margin: 0;
+  padding: var(--sp-sm) var(--sp-md);
+  border: var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--paper-dim);
+}
+.wealth-hub-principle-card__label {
+  margin: 0 0 0.25rem;
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  line-height: 1.2;
+}
+.wealth-hub-principle-card__title {
+  margin: 0 0 0.35rem;
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.25;
+}
+.wealth-hub-principle-card__text {
+  margin: 0;
+  font-size: var(--fs-xs);
+  line-height: 1.4;
+  color: var(--ink-soft);
+}
+@media (max-width: 900px) {
+  .wealth-hub-principles {
+    grid-template-columns: 1fr;
+  }
+}
 .wealth-hub-bets {
   display: flex;
   flex-direction: column;
