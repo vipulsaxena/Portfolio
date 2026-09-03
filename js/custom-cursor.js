@@ -38,6 +38,7 @@
   ensureLiquidGlassFilter();
 
   var visible = false;
+  var pressing = false;
   var iframePauseDepth = 0;
 
   function clampByte(v) {
@@ -313,8 +314,8 @@
   }
 
   function setPosition(clientX, clientY) {
-    cursor.style.transform =
-      "translate3d(" + clientX + "px," + clientY + "px,0) translate(-50%, -50%)";
+    cursor.style.left = clientX + "px";
+    cursor.style.top = clientY + "px";
   }
 
   function updateMediaBlend(target) {
@@ -344,7 +345,10 @@
     clearHoverClasses();
     iframePauseDepth = 0;
     root.classList.remove("custom-cursor-native");
-    cursor.classList.remove("is-native", "is-over-media", "is-selecting");
+    cursor.classList.remove("is-native", "is-over-media");
+    if (!pressing) {
+      cursor.classList.remove("is-selecting");
+    }
   }
 
   function setNative(on) {
@@ -384,6 +388,8 @@
   }
 
   function classify(target) {
+    if (pressing) return;
+
     updateMediaBlend(target);
 
     if (!target || !(target instanceof Element)) {
@@ -481,18 +487,19 @@
   document.addEventListener(
     "pointerdown",
     function () {
+      pressing = true;
       cursor.classList.add("is-selecting");
     },
     { passive: true }
   );
 
-  document.addEventListener(
-    "pointerup",
-    function () {
-      cursor.classList.remove("is-selecting");
-    },
-    { passive: true }
-  );
+  function onPointerRelease() {
+    pressing = false;
+    cursor.classList.remove("is-selecting");
+  }
+
+  document.addEventListener("pointerup", onPointerRelease, { passive: true });
+  document.addEventListener("pointercancel", onPointerRelease, { passive: true });
 
   bindAllIframes(document);
 
