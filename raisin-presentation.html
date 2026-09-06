@@ -116,7 +116,7 @@
     .present-slide.is-active { opacity: 1; }
     .present-slide.is-leaving { opacity: 0; }
     /* Unified horizontal inset — slides that don't manage their own padding */
-    body.summary-v2 .present-slide.container:not(.present-slide--p2-wow):not(.present-slide--p3-cura):not(.present-slide--p4-toolkit):not(.present-slide--p4-coaching):not(.present-slide--proof):not(.present-beat-proof):not(.present-beat-coaching):not(.period__head--split):not(.present-slide--p1-outcomes):not(.present-slide--p1-colour-map):not(.present-slide--p3-prototype):not(.present-slide--hero):not(.present-thanks) {
+    body.summary-v2 .present-slide.container:not(.present-slide--p4-cura):not(.present-slide--p4-toolkit):not(.present-slide--p4-coaching):not(.present-slide--proof):not(.present-beat-proof):not(.present-beat-coaching):not(.period__head--split):not(.present-slide--p1-outcomes):not(.present-slide--p1-colour-map):not(.present-slide--p3-prototype):not(.present-slide--hero):not(.present-thanks) {
       width: 100%;
       max-width: 100%;
       margin-inline: auto;
@@ -226,7 +226,6 @@
       color: var(--ink-soft);
       max-width: none;
     }
-    .present-slide .period__thesis--present,
     .present-slide .lede--present-short,
     .present-slide .device-story__text--present,
     .present-slide .why-proof__text--present,
@@ -240,6 +239,11 @@
       -webkit-box-orient: vertical;
       -webkit-line-clamp: 2;
       overflow: hidden;
+    }
+    .present-slide .period__thesis--present {
+      display: block;
+      -webkit-line-clamp: unset;
+      overflow: visible;
     }
     .present-slide .why-proof__text strong {
       color: var(--ink);
@@ -313,7 +317,6 @@
     }
     .present-slide .lede--present-short,
     .present-slide .device-story__text--present,
-    .present-slide .period__thesis--present,
     .present-slide .why-proof__text--present,
     .present-slide .proof-intro__lede--present {
       display: -webkit-box;
@@ -344,7 +347,7 @@
       font-size: var(--present-display-size);
       line-height: 1.12;
       letter-spacing: -0.02em;
-      margin: 0 0 var(--present-copy-gap);
+      margin: 0;
     }
     .present-slide--journey .track-key__label {
       font-size: var(--present-eyebrow-size);
@@ -412,15 +415,18 @@
       line-height: 1.18;
       max-width: none;
     }
-    .present-slide--gap-02.why-proof--gap-brand {
+    .present-slide--gap-02.why-proof--gap-brand,
+    .present-slide--gaps .why-proof--gap-brand {
       max-width: min(100%, 72rem);
       margin-inline: auto;
     }
-    .present-slide--gap-02 .why-proof__media--video {
+    .present-slide--gap-02 .why-proof__media--video,
+    .present-slide--gaps .why-proof__media--video {
       min-width: 0;
-      align-self: center;
+      align-self: flex-start;
     }
-    .present-slide--gap-02 .why-proof__frame--video {
+    .present-slide--gap-02 .why-proof__frame--video,
+    .present-slide--gaps .why-proof__frame--video {
       width: 100%;
       aspect-ratio: 16 / 9;
       height: auto;
@@ -430,7 +436,14 @@
       border: var(--border);
       background: var(--dark);
     }
-    .present-slide--gap-02 .why-proof__frame--video video {
+    .present-slide--gaps .why-proof__frame--video {
+      aspect-ratio: unset;
+      width: 70%;
+      height: var(--gaps-visual-h);
+      max-height: var(--gaps-visual-h);
+    }
+    .present-slide--gap-02 .why-proof__frame--video video,
+    .present-slide--gaps .why-proof__frame--video video {
       width: 100%;
       height: 100%;
       display: block;
@@ -509,7 +522,7 @@
       justify-content: center;
     }
     .present-slide--p1-intro.period__head--split .period__head-visual--problem img {
-      transform: scale(1.3);
+      transform: scale(1.3) translateY(7%);
       transform-origin: center center;
     }
     .present-slide.period__head--split .period__head-visual--mobile-mocks {
@@ -521,6 +534,22 @@
     .present-slide.period__head--split .period__head-visual--mobile-mocks img {
       max-height: min(64vh, 36rem);
       object-position: center;
+    }
+    .present-slide--p3-intro .period__head-visual--legacy-mobile {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: visible;
+    }
+    .present-slide--p3-intro .period__head-visual--legacy-mobile img {
+      width: auto;
+      max-width: min(100%, 14rem);
+      max-height: min(62vh, 34rem);
+      height: auto;
+      object-fit: contain;
+      object-position: center;
+      transform: scale(1.3) translateY(7%);
+      transform-origin: center center;
     }
     .present-slide.period__head--split .period__head-visual--ai img {
       object-position: center;
@@ -562,6 +591,9 @@
       max-width: none;
     }
     #present-stage:has(.present-slide--hero.is-active) {
+      overflow: hidden;
+    }
+    #present-stage:has(.present-slide--gaps.is-active) {
       overflow: hidden;
     }
     .present-slide--hero.why-hero--split {
@@ -607,10 +639,22 @@
     }
     .present-slide--hero .hero__kicker {
       margin-bottom: clamp(0.75rem, 2vh, 1.25rem);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5rem;
     }
     .present-slide--hero .hero__sub {
       margin: clamp(0.5rem, 1.2vh, 0.85rem) 0 0;
       max-width: 36ch;
+    }
+    .present-slide--hero .hero__role {
+      margin: clamp(0.5rem, 1.2vh, 0.85rem) 0 0;
+      max-width: none;
+      width: 100%;
+      font-size: var(--present-body-size, 1rem);
+      line-height: 1.45;
+      color: var(--muted);
     }
     @media (min-width: 901px) {
       .present-slide--hero .hero-split--stage {
@@ -689,8 +733,34 @@
     .present-slide--journey .section-head .lede--present-short {
       max-width: none;
     }
+    .present-slide--journey .section-head {
+      margin-bottom: clamp(0.6rem, 1.4vh, 0.9rem);
+    }
     .present-slide--journey .track-key {
       width: 100%;
+    }
+    .present-slide--journey .present-pullquote {
+      margin: 0;
+      padding: clamp(0.75rem, 1.5vh, 1rem) clamp(1rem, 2vw, 1.25rem);
+      border-left: 3px solid var(--accent, #ffda08);
+      background: color-mix(in srgb, var(--accent, #ffda08) 8%, transparent);
+      width: 100%;
+      max-width: none;
+      box-sizing: border-box;
+    }
+    .present-slide--journey .present-pullquote p {
+      margin: 0;
+      font-size: clamp(1.05rem, 2.2vh, 1.25rem);
+      font-weight: 500;
+      line-height: 1.35;
+      max-width: none;
+      width: 100%;
+    }
+    .present-slide--journey .present-pullquote footer {
+      margin: 0.5rem 0 0;
+      font-size: var(--present-eyebrow-size, 0.75rem);
+      color: var(--muted);
+      font-style: normal;
     }
     .present-slide--journey .why-hero__body {
       max-width: none;
@@ -1126,6 +1196,146 @@
 
     .present-slide--gaps {
       padding: 0;
+      box-sizing: border-box;
+      --gaps-visual-h: min(34vh, 22rem);
+      overflow: hidden;
+      max-height: var(--present-vh);
+    }
+    .present-slide--gaps.why-hero {
+      padding-block: 0 !important;
+    }
+    .present-slide--gaps.present-slide--layout-viewport {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: calc(var(--present-vh) - var(--present-bottom));
+      overflow: hidden;
+      max-height: var(--present-vh);
+    }
+    .present-slide--gaps .container {
+      width: 100%;
+      max-width: 100%;
+      padding-top: var(--present-top);
+      padding-bottom: var(--present-bottom);
+      padding-inline: var(--present-inset);
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+    .present-slide--gaps .present-gaps__kicker {
+      margin-bottom: clamp(0.5rem, 1.2vh, 0.75rem);
+    }
+    .present-slide--gaps .present-gaps__title {
+      margin: 0 0 clamp(0.75rem, 2vh, 1.25rem);
+      font-size: var(--present-title-size);
+      font-weight: 600;
+      line-height: 1.18;
+      max-width: none;
+      width: 100%;
+    }
+    .present-slide--gaps .present-gaps__grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: clamp(2rem, 4.5vw, 3.5rem);
+      align-items: stretch;
+    }
+    .present-slide--gaps .present-gaps__card {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      column-gap: clamp(0.65rem, 1.5vw, 1rem);
+      row-gap: clamp(0.65rem, 1.5vh, 1rem);
+      min-width: 0;
+      border: none;
+      padding: 0;
+      margin: 0;
+    }
+    .present-slide--gaps .present-gaps__card-head {
+      display: contents;
+    }
+    .present-slide--gaps .present-gaps__num {
+      grid-column: 1;
+      grid-row: 1;
+      font-family: var(--font-display);
+      font-size: clamp(2.75rem, 6.5vh, 4.25rem);
+      font-weight: 600;
+      line-height: 0.92;
+      letter-spacing: -0.03em;
+      color: var(--line-strong);
+      display: flex;
+      align-items: center;
+      align-self: center;
+      margin: 0;
+    }
+    .present-slide--gaps .why-proof__content {
+      grid-column: 2;
+      grid-row: 1;
+      display: flex;
+      flex-direction: column;
+      gap: clamp(0.35rem, 0.8vh, 0.5rem);
+      justify-content: center;
+      min-width: 0;
+    }
+    .present-slide--gaps .why-proof__title {
+      margin: 0;
+      font-size: clamp(0.95rem, 1.8vh, 1.1rem);
+      font-weight: 600;
+      line-height: 1.2;
+    }
+    .present-slide--gaps .why-proof__text {
+      margin: 0;
+      font-size: clamp(0.8rem, 1.5vh, 0.9rem);
+      line-height: 1.4;
+    }
+    .present-slide--gaps .why-proof__media {
+      grid-column: 1 / -1;
+      grid-row: 2;
+      margin-top: clamp(0.35rem, 0.9vh, 0.65rem);
+      min-width: 0;
+      align-self: start;
+      justify-self: start;
+      width: 100%;
+      display: block;
+    }
+    .present-slide--gaps .why-proof__media--trio {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.35rem;
+      align-items: start;
+    }
+    .present-slide--gaps .why-proof__media--solo {
+      display: block;
+      width: 100%;
+      text-align: left;
+    }
+    .present-slide--gaps .why-proof__media--solo .why-proof__frame {
+      display: block;
+      flex: none;
+      width: fit-content;
+      max-width: 100%;
+      height: auto;
+      line-height: 0;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      border: var(--border);
+      background: var(--paper-dim);
+    }
+    .present-slide--gaps .why-proof__media--solo .why-proof__frame img {
+      width: auto;
+      height: var(--gaps-visual-h);
+      max-width: 100%;
+      max-height: var(--gaps-visual-h);
+      display: block;
+      object-fit: contain;
+      object-position: left top;
+    }
+    .present-slide--gaps .why-proof__media--trio .why-proof__frame img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
+    @media (max-width: 900px) {
+      .present-slide--gaps .present-gaps__grid {
+        grid-template-columns: 1fr;
+      }
     }
     .present-beat-gaps {
       max-width: 100%;
@@ -1564,9 +1774,8 @@
       padding-inline: 0;
     }
 
-    /* Filmstrip / marquee beats — strict full-viewport (WoW + Cura) */
-    .present-slide--p2-wow.beat--wow,
-    .present-slide--p3-cura.beat--cura {
+    /* Design vision — Cura filmstrip edge-to-edge in viewport */
+    .present-slide--p4-cura.beat--cura {
       width: 100% !important;
       max-width: 100% !important;
       margin: 0 !important;
@@ -1579,167 +1788,21 @@
       box-sizing: border-box;
       position: relative;
       display: block;
-    }
-    .present-slide--p3-cura.beat--cura {
       margin-top: -30px !important;
     }
-    #present-stage:has(.present-slide--p2-wow.is-active),
-    #present-stage:has(.present-slide--p3-cura.is-active) {
+    #present-stage:has(.present-slide--p4-cura.is-active) {
       overflow: hidden;
       height: 100%;
     }
-
-    /* Filmstrip copy band — shared typography + text position (WoW + Cura) */
-    .present-slide--p2-wow,
-    .present-slide--p3-cura {
+    .present-slide--p4-cura {
       --present-filmstrip-copy-lift: 15%;
       --present-filmstrip-copy-band: calc(var(--present-bottom) + clamp(12rem, 38vh, 20rem));
       --present-filmstrip-title-size: clamp(calc(3.68rem / 2.25), calc(7.6vw / 2.25), calc(4.4rem / 2.25));
       --present-filmstrip-stat-size: clamp(calc(2.56rem / 2.25), calc(4.4vw / 2.25), calc(2.96rem / 2.25));
       --present-filmstrip-eyebrow-size: clamp(calc(2.56rem / 3.375), calc(4.4vw / 3.375), calc(2.96rem / 3.375));
-    }
-
-    /* Ways of Working — edge-to-edge marquees, copy band pinned to bottom */
-    .present-slide--p2-wow {
-      --wow-copy-lift: var(--present-filmstrip-copy-lift);
-      --wow-copy-band: var(--present-filmstrip-copy-band);
-      --wow-carousel-lift: 15%;
-    }
-    .present-slide--p2-wow > .wow-beat {
-      position: absolute;
-      inset: 0;
-      height: 100% !important;
-      min-height: 0 !important;
-      max-height: 100%;
-      width: 100%;
-      max-width: none;
-      display: block;
-      overflow: hidden;
-      background: var(--dark);
-    }
-    .present-slide--p2-wow .wow-beat__carousel {
-      position: absolute;
-      z-index: 1;
-      left: 0;
-      right: 0;
-      top: 0;
-      bottom: var(--wow-carousel-lift);
-      width: 100%;
-      height: auto;
-      margin: 0;
-      padding-block: 0;
-      box-sizing: border-box;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      pointer-events: none;
-    }
-    .present-slide--p2-wow .wow-beat__scrim {
-      position: absolute;
-      z-index: 2;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      top: auto;
-      height: 100%;
-      pointer-events: none;
-    }
-    .present-slide--p2-wow .wow-beat__rows {
-      flex: 1 1 0;
-      width: 100%;
-      height: 100%;
-      min-height: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      gap: 10%;
-    }
-    .present-slide--p2-wow .wow-beat__row {
-      flex: 1 1 0;
-      width: 100%;
-      min-height: 0;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      gap: 0.2rem;
-    }
-    .present-slide--p2-wow .wow-beat__row-label {
-      flex: 0 0 auto;
-      margin: 0;
-      padding-inline: clamp(0.75rem, 3vw, var(--present-inset));
-      font-size: clamp(0.58rem, 1vw, 0.68rem);
-    }
-    .present-slide--p2-wow .wow-beat__row .wow-beat__marquee-track {
-      flex: 1 1 0;
-      min-height: 0;
-      overflow: hidden;
-    }
-    .present-slide--p2-wow .wow-beat__marquee-track {
-      width: max-content;
-      min-width: 100%;
-      height: 100%;
-      max-height: 100%;
-    }
-    .present-slide--p2-wow .wow-beat__marquee-set {
-      height: 100%;
-      align-items: stretch;
-    }
-    .present-slide--p2-wow .wow-beat__slide {
-      height: 100%;
-      max-height: 100%;
-    }
-    .present-slide--p2-wow .wow-beat__frame {
-      height: 100%;
-      max-height: 100%;
-      width: auto;
-      max-width: none;
-    }
-    .present-slide--p2-wow .wow-beat__frame img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .present-slide--p2-wow .wow-beat__content {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: var(--wow-copy-lift);
-      z-index: 3;
-      height: var(--wow-copy-band);
-      max-width: none;
-      width: 100%;
-      margin: 0;
-      padding: clamp(0.45rem, 1.2vh, 0.75rem) var(--present-inset);
-      padding-bottom: var(--present-bottom);
-      box-sizing: border-box;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      overflow: visible;
-      opacity: 1 !important;
-      transform: none !important;
-    }
-    .present-slide--p2-wow .beat__eyebrow,
-    .present-slide--p2-wow .enablement-label.beat__eyebrow {
-      font-size: var(--present-filmstrip-eyebrow-size);
-      line-height: 1.25;
-      margin: 0 0 0.35rem;
-      max-width: none;
-      color: var(--on-dark);
-    }
-    .present-slide--p2-wow .beat__title {
-      font-size: var(--present-filmstrip-title-size);
-      line-height: 1.15;
-      margin: 0 0 0.5rem;
-      max-width: none;
-      color: var(--on-dark);
-    }
-    .present-slide--p2-wow .beat__stat {
-      margin: 0;
-      font-size: var(--present-filmstrip-stat-size);
-      line-height: 1.25;
-      max-width: none;
-      color: rgba(244, 242, 236, 0.78);
+      --cura-copy-band: var(--present-filmstrip-copy-band);
+      --cura-filmstrip-top: 30%;
+      --cura-copy-lift: var(--present-filmstrip-copy-lift);
     }
 
     /* Mobile IA prototype — iframe fits viewport height */
@@ -1902,17 +1965,11 @@
       width: 100%;
       max-width: min(100%, 44rem);
       height: auto;
-      transform: scale(1.3);
+      transform: scale(1.3) translateY(5%);
       transform-origin: center center;
     }
 
-    /* Design vision — Cura filmstrip edge-to-edge in viewport */
-    .present-slide--p3-cura {
-      --cura-copy-band: var(--present-filmstrip-copy-band);
-      --cura-filmstrip-top: 30%;
-      --cura-copy-lift: var(--present-filmstrip-copy-lift);
-    }
-    .present-slide--p3-cura > .cura-beat {
+    .present-slide--p4-cura > .cura-beat {
       position: absolute;
       inset: 0;
       height: 100% !important;
@@ -1924,7 +1981,7 @@
       isolation: isolate;
       --cura-slide-h: min(38vh, 24rem);
     }
-    .present-slide--p3-cura .cura-beat__bg {
+    .present-slide--p4-cura .cura-beat__bg {
       position: absolute !important;
       inset: 0 !important;
       top: 0 !important;
@@ -1942,7 +1999,7 @@
       line-height: 0;
       overflow: hidden;
     }
-    .present-slide--p3-cura .cura-beat__bg img {
+    .present-slide--p4-cura .cura-beat__bg img {
       display: block;
       width: 100%;
       height: 100%;
@@ -1954,7 +2011,7 @@
       object-position: center center;
     }
     /* Stack: bg (0) → filmstrip (1) → scrim (2) → text (3) */
-    .present-slide--p3-cura .cura-beat__scrim {
+    .present-slide--p4-cura .cura-beat__scrim {
       position: absolute !important;
       inset: 0 !important;
       top: 0 !important;
@@ -1967,7 +2024,7 @@
       margin: 0;
       pointer-events: none;
     }
-    .present-slide--p3-cura .cura-filmstrip {
+    .present-slide--p4-cura .cura-filmstrip {
       position: absolute !important;
       z-index: 1;
       top: auto !important;
@@ -1985,7 +2042,7 @@
       align-items: flex-end;
       pointer-events: none;
     }
-    .present-slide--p3-cura .cura-filmstrip__slide {
+    .present-slide--p4-cura .cura-filmstrip__slide {
       flex: none;
       height: var(--cura-slide-h) !important;
       min-height: 0;
@@ -1993,12 +2050,12 @@
       display: flex;
       align-items: stretch;
     }
-    .present-slide--p3-cura .cura-filmstrip__frame {
+    .present-slide--p4-cura .cura-filmstrip__frame {
       height: 100%;
       display: block;
       width: fit-content;
     }
-    .present-slide--p3-cura .cura-filmstrip__frame img {
+    .present-slide--p4-cura .cura-filmstrip__frame img {
       display: block;
       height: 100%;
       width: auto;
@@ -2006,7 +2063,7 @@
       object-fit: contain;
       object-position: center;
     }
-    .present-slide--p3-cura .cura-beat__stage {
+    .present-slide--p4-cura .cura-beat__stage {
       position: absolute;
       z-index: 3;
       inset: auto 0 var(--cura-copy-lift) 0 !important;
@@ -2023,7 +2080,7 @@
       pointer-events: none;
       box-sizing: border-box;
     }
-    .present-slide--p3-cura .cura-beat__inner {
+    .present-slide--p4-cura .cura-beat__inner {
       position: relative;
       left: 0;
       right: 0;
@@ -2033,7 +2090,7 @@
       width: 100%;
       pointer-events: auto;
     }
-    .present-slide--p3-cura .cura-beat__copy {
+    .present-slide--p4-cura .cura-beat__copy {
       width: 100%;
       max-width: none;
       margin-inline: 0;
@@ -2042,21 +2099,21 @@
       box-sizing: border-box;
       overflow: hidden;
     }
-    .present-slide--p3-cura .beat__eyebrow {
+    .present-slide--p4-cura .beat__eyebrow {
       font-size: var(--present-filmstrip-eyebrow-size);
       line-height: 1.25;
       margin: 0 0 0.35rem;
       max-width: none;
       color: var(--on-dark);
     }
-    .present-slide--p3-cura .beat__title {
+    .present-slide--p4-cura .beat__title {
       font-size: var(--present-filmstrip-title-size);
       line-height: 1.15;
       margin: 0 0 0.5rem;
       max-width: none;
       color: var(--on-dark);
     }
-    .present-slide--p3-cura .beat__stat {
+    .present-slide--p4-cura .beat__stat {
       font-size: var(--present-filmstrip-stat-size);
       line-height: 1.25;
       margin: 0;
@@ -2064,13 +2121,13 @@
       color: rgba(244, 242, 236, 0.78);
     }
     @media (max-width: 900px) {
-      .present-slide--p3-cura > .cura-beat {
+      .present-slide--p4-cura > .cura-beat {
         display: block !important;
         flex-direction: unset !important;
         min-height: 0 !important;
         --cura-slide-h: clamp(8.5rem, 26vw, 12.5rem);
       }
-      .present-slide--p3-cura .cura-beat__stage {
+      .present-slide--p4-cura .cura-beat__stage {
         position: absolute !important;
         inset: auto 0 var(--cura-copy-lift) 0 !important;
         top: auto !important;
@@ -2079,7 +2136,7 @@
         min-height: 0 !important;
         height: var(--cura-copy-band);
       }
-      .present-slide--p3-cura .cura-filmstrip {
+      .present-slide--p4-cura .cura-filmstrip {
         top: var(--cura-filmstrip-top) !important;
         bottom: calc(var(--cura-copy-band) + var(--cura-copy-lift)) !important;
       }
@@ -2696,22 +2753,14 @@
       gap: 0.45rem;
       flex-shrink: 0;
       min-width: 2.35rem;
+      width: 2.35rem;
       height: 2.35rem;
       padding: 0;
       overflow: hidden;
       transition:
-        max-width 0.28s ease,
-        padding 0.28s ease,
         background 0.15s ease,
         border-color 0.15s ease,
         color 0.15s ease;
-      max-width: 2.35rem;
-    }
-    .chapter-tab:not([aria-current="true"])::before {
-      content: "";
-      position: absolute;
-      inset: -6px -4px;
-      border-radius: inherit;
     }
     .chapter-tab .ct-label,
     .chapter-tab .ct-dots { display: none; }
@@ -2724,8 +2773,9 @@
       color: var(--ink);
       background: var(--accent-soft);
       border-color: var(--accent);
-      max-width: min(28rem, 72vw);
+      width: auto;
       min-width: auto;
+      max-width: min(28rem, 72vw);
       height: auto;
       padding: 0.4rem 0.75rem;
     }
@@ -2736,13 +2786,8 @@
       .chapter-tab:not([aria-current="true"]):hover {
         color: var(--ink);
         background: #f2f2f2;
-        max-width: min(24rem, 65vw);
-        min-width: auto;
-        height: auto;
-        padding: 0.4rem 0.75rem;
+        border-color: #d4d4d4;
       }
-      .chapter-tab:not([aria-current="true"]):hover .ct-num { display: none; }
-      .chapter-tab:not([aria-current="true"]):hover .ct-label { display: inline; }
     }
     .chapter-tab:focus-visible {
       outline: none;
@@ -2805,7 +2850,7 @@
     .pw-btn { border: 0; border-radius: 999px; padding: 14px 28px; font-size: 1.02rem; font-weight: 700; cursor: pointer; background: var(--accent); color: var(--ink); }
     @media (max-width: 640px) {
       .chapter-tab:not([aria-current="true"]) {
-        max-width: 2.35rem;
+        width: 2.35rem;
         padding: 0;
       }
       .chapter-tab[aria-current="true"] {
@@ -2897,12 +2942,13 @@
       <div class="hero-split__content">
         <div class="hero__kicker">
           <span class="tag tag--outline">Brand evolution</span>
+          <span class="chip">Lead Designer</span>
         </div>
         <div class="hero__brand-lockup">
           <img class="hero__title-logo" src="raisin-assets/assets/img/branding/raisin-logo-white.svg" alt="Raisin" width="908" height="211">
-          <h1 class="hero__title">Raisin was evolving its brand across product, mobile, and email — without an operating model to make that evolution stick.</h1>
+          <h1 class="hero__title">Raisin is a European savings and investment marketplace — with ~€80bn in assets under management.</h1>
         </div>
-        <p class="hero__sub hero__sub--thesis">Raisin is a European savings and investment marketplace — with ~€80bn in assets under management.</p>
+        <p class="hero__role">Solo designer embedded in the B2C Growth tribe — reporting to VP Design, taking project brief from Head of Product.</p>
         <p class="hero__sub">I lead B2C design in Growth &amp; Engagement — evolving Raisin’s brand across web and mobile, and the practice that makes multi-market change stick.</p>
       </div>
       <div class="hero-bento" aria-hidden="true" data-fm-widget="raisin-hero" data-fm-kind="hero">
@@ -2918,30 +2964,20 @@
 
 <!-- ============================== THE STARTING POINT ============================== -->
 <section class="why-hero" id="why" style="padding-block:var(--sp-2xl);">
-  <div class="container" style="position:relative; z-index:1;">
-    <p class="eyebrow">The starting point</p>
-    <h2 class="why-hero__statement">Raisin was evolving its brand across product, mobile, and email — without an operating model to make that evolution stick.</h2>
+    <div class="container" style="position:relative; z-index:1;">
+    <div class="present-gaps__kicker">
+      <span class="chip">Identified gaps</span>
+    </div>
+    <h2 class="why-hero__statement present-gaps__title">Raisin was evolving its brand — but the product, the practice, and the team hadn't caught up.</h2>
 
-    <div class="why-proofs" data-fm-widget="raisin-why" data-fm-kind="why" data-fm-value="none">
-      <article class="why-proof why-proof--zoom why-proof--crop-top reveal">
-        <div class="why-proof__content">
-          <p class="why-proof__num">Identified Gap 01</p>
-          <h4 class="why-proof__title">A fragmented product experience</h4>
-          <p class="why-proof__text why-proof__text--present"><strong>Diagnosis:</strong> Web showed a catalogue, not holdings. Mobile and email were different products — no single home for wealth.</p>
-          <p class="why-proof__text"><strong>Diagnosis:</strong> On web, customers met a catalogue — not their holdings across categories. On mobile, the same job met a different product and the emails didn't match visual language. One customer, no single home for their wealth.</p>
-        </div>
-        <div class="why-proof__media why-proof__media--trio">
-          <div class="why-proof__frame" data-fm-why="0" style="--proof-ratio: 884 / 1014"><img src="raisin-assets/assets/img/proof/old-dashboard.jpg.webp" alt="Legacy web dashboard — separate savings cockpit" loading="lazy"></div>
-          <div class="why-proof__frame" data-fm-why="1" style="--proof-ratio: 828 / 1800"><img src="raisin-assets/assets/img/proof/pull-to-refresh.webp" alt="Legacy mobile app — disconnected from web" loading="lazy"></div>
-          <div class="why-proof__frame" data-fm-why="2" style="--proof-ratio: 890 / 2159"><img src="raisin-assets/assets/img/proof/email.webp" alt="Transactional email — another surface, another visual language" loading="lazy"></div>
-        </div>
-      </article>
-      <article class="why-proof why-proof--gap-brand reveal">
-        <div class="why-proof__content">
-          <p class="why-proof__num">Identified Gap 02</p>
-          <h4 class="why-proof__title">A brand handed over, not built out</h4>
-          <p class="why-proof__text why-proof__text--present"><strong>Diagnosis:</strong> Koto handed off a static identity — not a live, multi-market product brand.</p>
-          <p class="why-proof__text"><strong>Diagnosis:</strong> Brand agency Koto delivered a static identity. After handoff, Raisin design had to scale it across product experience — guidelines existed; a live, multi-market product brand did not.</p>
+    <div class="present-gaps__grid why-proofs" data-fm-widget="raisin-why" data-fm-kind="why" data-fm-value="none">
+      <article class="why-proof why-proof--gap-card why-proof--gap-brand present-gaps__card">
+        <div class="present-gaps__card-head">
+          <span class="present-gaps__num" aria-hidden="true">01</span>
+          <div class="why-proof__content">
+            <h4 class="why-proof__title">A brand handed over, not built out</h4>
+            <p class="why-proof__text why-proof__text--present">Koto delivered a static identity. The product still said Weltsparen. Web, mobile, and email each spoke a different visual language.</p>
+          </div>
         </div>
         <div class="why-proof__media why-proof__media--video">
           <div class="why-proof__frame why-proof__frame--video" data-fm-why="3">
@@ -2949,16 +2985,15 @@
           </div>
         </div>
       </article>
-      <article class="why-proof why-proof--zoom reveal">
-        <div class="why-proof__content">
-          <p class="why-proof__num">Identified Gap 03</p>
-          <h4 class="why-proof__title">A design practice without shared conventions</h4>
-          <p class="why-proof__text why-proof__text--present"><strong>Diagnosis:</strong> Ad hoc craft and weak research rhythm — every initiative paid a tax.</p>
-          <p class="why-proof__text"><strong>Diagnosis:</strong> The rebuild needed a team that could move as one system. What existed was ad hoc — loosely shared craft conventions, a weak research rhythm, and siloed workflows — so every initiative paid a tax, including later work on AI.</p>
+      <article class="why-proof why-proof--gap-card present-gaps__card">
+        <div class="present-gaps__card-head">
+          <span class="present-gaps__num" aria-hidden="true">02</span>
+          <div class="why-proof__content">
+            <h4 class="why-proof__title">A design practice without shared conventions</h4>
+            <p class="why-proof__text why-proof__text--present">User studies were rare. Critiques weren't happening. Every handoff paid a tax for it.</p>
+          </div>
         </div>
-        <div class="why-proof__media why-proof__media--trio">
-          <div class="why-proof__frame" data-fm-why="6" style="--proof-ratio: 1049 / 1044"><img src="raisin-assets/assets/img/proof/sketch-to-figma.webp" alt="Sketch to Figma — tools in transition, no shared foundation yet" loading="lazy"></div>
-          <div class="why-proof__frame" data-fm-why="7" style="--proof-ratio: 1600 / 1600"><img src="raisin-assets/assets/img/proof/scramble.webp" alt="Chaotic Figma files — every designer's own structure" loading="lazy"></div>
+        <div class="why-proof__media why-proof__media--solo">
           <div class="why-proof__frame" data-fm-why="8" style="--proof-ratio: 746 / 743"><img src="raisin-assets/assets/img/proof/solo.webp" alt="Designers wearing every hat alone — no shared rituals or critique" loading="lazy"></div>
         </div>
       </article>
@@ -2986,9 +3021,12 @@
       <p class="eyebrow">Closing the gaps</p>
       <h2 class="h-display h-2">Journey</h2>
       <p class="lede">Two programmes, run in parallel — not one tidy sequence.</p>
-      <p class="lede lede--present-short"><strong>Practice</strong> = outcomes · <strong>Enablement</strong> = capability. Brand evolution and team rituals — in parallel.</p>
       <p class="lede lede--remit">My remit: close the three gaps — <strong>brand evolution</strong> into live product (absorb the agency handoff and carry it into the surfaces customers use; redesign web, mobile, and communication into one home for their wealth), and <strong>enablement</strong> in parallel (ways of working, research and critique rituals, craft standards, and the AI programme) so the team could sustain it. <strong>Practice</strong> = customer outcomes. <strong>Enablement</strong> = team capability. <strong>I</strong> where I owned it; <strong>we</strong> at tribe scale.</p>
     </div>
+    <blockquote class="present-pullquote reveal">
+      <p>&ldquo;Redesign the dashboard experience. Make Raisin feel like one product.&rdquo;</p>
+      <footer>&mdash; Head of Product brief</footer>
+    </blockquote>
     <div class="track-key reveal-stagger">
       <div class="track-key__item track-key__item--practice">
         <p class="track-key__label">Practice</p>
@@ -3021,9 +3059,8 @@
           </div>
         </div>
         <h2 class="h-display h-2 period__title">A home for their wealth</h2>
-        <p class="lede period__thesis period__thesis--present">Catalogue landing, not a home for wealth. Foundation fix — not polish; returns cut from MVP scope.</p>
-        <p class="lede period__thesis">The web dashboard still behaved like a product catalogue — deposits first, not the customer’s holdings. This chapter turns that surface into a single home for wealth across savings, investments, and retirement, and carries the new brand into a live, multi-market product.</p>
-        <p class="period__role"><strong>I led</strong> Wealth Hub research, IA, and the design bets. <strong>We shipped</strong> MVP across 12 markets.</p>
+        <p class="lede period__thesis period__thesis--present"><strong>I planned</strong> the research programme and ran customer interviews with the design team. <strong>We synthesized</strong> the findings collaboratively, <strong>I facilitated</strong> co-creation workshops, designed the concepts, and validated the hypotheses — then with product and engineering, <strong>We shipped</strong> the MVP across 12 markets.</p>
+        <p class="lede period__thesis"><strong>I planned</strong> the research programme and ran customer interviews with the design team. <strong>We synthesized</strong> the findings collaboratively, <strong>I facilitated</strong> co-creation workshops, designed the concepts, and validated the hypotheses — then with product and engineering, <strong>We shipped</strong> the MVP across 12 markets.</p>
       </div>
       <figure class="period__head-visual period__head-visual--problem">
         <img src="raisin-assets/assets/img/dashboard-web/problem.webp" alt="Frustrated customer at the legacy Raisin dashboard — too much product catalogue, not enough of their wealth" loading="lazy" data-lightbox>
@@ -3522,7 +3559,7 @@
           </div>
         </article>
 
-        <article class="beat beat--wow beat--craft reveal" aria-label="Ways of Working and Principles of Prototyping">
+        <article class="beat beat--wow beat--craft reveal" hidden aria-label="Ways of Working and Principles of Prototyping">
           <div class="wow-beat">
             <div class="wow-beat__carousel" aria-hidden="true">
               <div class="wow-beat__rows">
@@ -3715,12 +3752,11 @@
           </div>
         </div>
         <h2 class="h-display h-2 period__title">Mobile and the horizon</h2>
-        <p class="lede period__thesis period__thesis--present">Mobile stalled after the tribe split. Desk research → prototype → Maze → ship — plus Cura, the horizon.</p>
-        <p class="lede period__thesis">The tribe split in two, the mobile redesign had stalled for months, and nobody had written down where the product was going. I took mobile end-to-end — desk research, in-flow prototyping, Maze validation, Cura vision — and raised the team's prototyping bar.</p>
-        <p class="period__role"><strong>I led</strong> mobile IA + Maze validation. <strong>I built</strong> the in-flow prototype with One Data. Shipping now.</p>
+        <p class="lede period__thesis period__thesis--present"><strong>I monitored</strong> and synthesized Wealth Hub launch feedback, <strong>I designed</strong> the new mobile IA and visual system, <strong>I led</strong> Maze validation, and <strong>I built</strong> the in-flow prototype with One Data — with product and engineering, <strong>We shipped</strong> the solution.</p>
+        <p class="lede period__thesis"><strong>I monitored</strong> and synthesized Wealth Hub launch feedback, <strong>I designed</strong> the new mobile IA and visual system, <strong>I led</strong> Maze validation, and <strong>I built</strong> the in-flow prototype with One Data — with product and engineering, <strong>We shipped</strong> the solution.</p>
       </div>
-      <figure class="period__head-visual period__head-visual--mobile-mocks">
-        <img src="raisin-assets/assets/img/dashboard-mobile/multi-mocks.webp" alt="The redesigned mobile dashboard across nine core screens" loading="lazy" data-lightbox>
+      <figure class="period__head-visual period__head-visual--legacy-mobile">
+        <img src="raisin-assets/assets/img/proof/mobile-problem.webp" alt="Legacy mobile app — disconnected from web" loading="lazy" data-lightbox>
       </figure>
     </header>
     <hr class="rule rule--thick" aria-hidden="true">
@@ -3925,80 +3961,6 @@
           </div>
         </article>
 
-        <article class="beat beat--cura reveal">
-          <div class="cura-beat">
-            <figure class="cura-beat__bg" aria-hidden="true">
-              <img src="raisin-assets/assets/img/vision/cura-bg.webp" alt="" width="1920" height="1080" loading="lazy" decoding="async">
-            </figure>
-            <div class="cura-filmstrip reveal-stagger" aria-label="Cura concept narrative — 8 slides">
-            <div class="cura-filmstrip__track cura-filmstrip__track--rtl">
-              <div class="cura-filmstrip__set">
-                <div class="cura-filmstrip__slide">
-                  <div class="cura-filmstrip__frame"><img src="raisin-assets/assets/img/vision/cura-slide-1.jpg" alt="Cura narrative slide 1" width="1800" height="1012" loading="lazy"></div>
-                </div>
-                <div class="cura-filmstrip__slide">
-                  <div class="cura-filmstrip__frame"><img src="raisin-assets/assets/img/vision/cura-slide-2.jpg" alt="Cura narrative slide 2" width="1800" height="1012" loading="lazy"></div>
-                </div>
-                <div class="cura-filmstrip__slide">
-                  <div class="cura-filmstrip__frame"><img src="raisin-assets/assets/img/vision/cura-slide-3.jpg" alt="Cura narrative slide 3" width="1800" height="1012" loading="lazy"></div>
-                </div>
-                <div class="cura-filmstrip__slide">
-                  <div class="cura-filmstrip__frame"><img src="raisin-assets/assets/img/vision/cura-slide-4.jpg" alt="Cura narrative slide 4" width="1800" height="1012" loading="lazy"></div>
-                </div>
-                <div class="cura-filmstrip__slide">
-                  <div class="cura-filmstrip__frame"><img src="raisin-assets/assets/img/vision/cura-slide-5.jpg" alt="Cura narrative slide 5" width="1800" height="1012" loading="lazy"></div>
-                </div>
-                <div class="cura-filmstrip__slide">
-                  <div class="cura-filmstrip__frame"><img src="raisin-assets/assets/img/vision/cura-slide-6.jpg" alt="Cura narrative slide 6" width="1800" height="1012" loading="lazy"></div>
-                </div>
-                <div class="cura-filmstrip__slide">
-                  <div class="cura-filmstrip__frame"><img src="raisin-assets/assets/img/vision/cura-slide-7.jpg" alt="Cura narrative slide 7" width="1800" height="1012" loading="lazy"></div>
-                </div>
-                <div class="cura-filmstrip__slide">
-                  <div class="cura-filmstrip__frame"><img src="raisin-assets/assets/img/vision/cura-slide-8.jpg" alt="Cura narrative slide 8" width="1800" height="1012" loading="lazy"></div>
-                </div>
-              </div>
-              <div class="cura-filmstrip__set" aria-hidden="true">
-                <div class="cura-filmstrip__slide">
-                  <div class="cura-filmstrip__frame"><img src="raisin-assets/assets/img/vision/cura-slide-1.jpg" alt="" width="1800" height="1012" loading="lazy"></div>
-                </div>
-                <div class="cura-filmstrip__slide">
-                  <div class="cura-filmstrip__frame"><img src="raisin-assets/assets/img/vision/cura-slide-2.jpg" alt="" width="1800" height="1012" loading="lazy"></div>
-                </div>
-                <div class="cura-filmstrip__slide">
-                  <div class="cura-filmstrip__frame"><img src="raisin-assets/assets/img/vision/cura-slide-3.jpg" alt="" width="1800" height="1012" loading="lazy"></div>
-                </div>
-                <div class="cura-filmstrip__slide">
-                  <div class="cura-filmstrip__frame"><img src="raisin-assets/assets/img/vision/cura-slide-4.jpg" alt="" width="1800" height="1012" loading="lazy"></div>
-                </div>
-                <div class="cura-filmstrip__slide">
-                  <div class="cura-filmstrip__frame"><img src="raisin-assets/assets/img/vision/cura-slide-5.jpg" alt="" width="1800" height="1012" loading="lazy"></div>
-                </div>
-                <div class="cura-filmstrip__slide">
-                  <div class="cura-filmstrip__frame"><img src="raisin-assets/assets/img/vision/cura-slide-6.jpg" alt="" width="1800" height="1012" loading="lazy"></div>
-                </div>
-                <div class="cura-filmstrip__slide">
-                  <div class="cura-filmstrip__frame"><img src="raisin-assets/assets/img/vision/cura-slide-7.jpg" alt="" width="1800" height="1012" loading="lazy"></div>
-                </div>
-                <div class="cura-filmstrip__slide">
-                  <div class="cura-filmstrip__frame"><img src="raisin-assets/assets/img/vision/cura-slide-8.jpg" alt="" width="1800" height="1012" loading="lazy"></div>
-                </div>
-              </div>
-            </div>
-            </div>
-            <div class="cura-beat__scrim" aria-hidden="true"></div>
-            <div class="cura-beat__stage">
-            <div class="cura-beat__inner">
-              <div class="cura-beat__copy reveal">
-                <p class="beat__eyebrow">Design vision · VP mandate · I authored the narrative</p>
-                <h3 class="beat__title">Design vision for where Raisin must evolve.</h3>
-                <p class="beat__text">VP initiated the vision exercise. I owned the work inside it — Gather, Envision, Plan — and authored the 8-slide Cura deck: from reporting the past to helping savers decide next.</p>
-                <p class="beat__stat">Gather → Envision → Plan · 8-slide narrative authored solo</p>
-              </div>
-            </div>
-            </div>
-          </div>
-        </article>
 
     </div>
   </div>
@@ -4018,9 +3980,8 @@
           </div>
         </div>
         <h2 class="h-display h-2 period__title">Design × AI</h2>
-        <p class="lede period__thesis period__thesis--present">Workshop to 180-day plan. Four production tools, eight designers coached — Showcase + Clinic until it stuck.</p>
-        <p class="lede period__thesis">What started as a prototyping workshop became design's 180-day operating plan. As one of four org-wide AI Champions, I built four tools for daily production use, championed the operating plan, and led Showcase and Clinic until the workflows stuck.</p>
-        <p class="period__role"><strong>I built</strong> the toolkit. <strong>We</strong> ran the programme; <strong>I championed</strong> design's slice.</p>
+        <p class="lede period__thesis period__thesis--present">On a VP mandate for design, <strong>I built</strong> the Cursor toolkit, <strong>I facilitated</strong> the enablement programme, and <strong>I championed</strong> coaching and training as one of four org-wide AI Champions — and <strong>I co-authored</strong> the design vision for an AI-first wealth OS.</p>
+        <p class="lede period__thesis">On a VP mandate for design, <strong>I built</strong> the Cursor toolkit, <strong>I facilitated</strong> the enablement programme, and <strong>I championed</strong> coaching and training as one of four org-wide AI Champions — and <strong>I co-authored</strong> the design vision for an AI-first wealth OS.</p>
       </div>
       <figure class="period__head-visual period__head-visual--ai">
         <img src="raisin-assets/assets/img/ai-enablement/program-overview.webp" alt="Design × AI programme overview" width="1600" height="1067" loading="lazy" data-lightbox>
@@ -4196,6 +4157,81 @@
           </div>
         </article>
 
+        <article class="beat beat--cura reveal">
+          <div class="cura-beat">
+            <figure class="cura-beat__bg" aria-hidden="true">
+              <img src="raisin-assets/assets/img/vision/cura-bg.webp" alt="" width="1920" height="1080" loading="lazy" decoding="async">
+            </figure>
+            <div class="cura-filmstrip reveal-stagger" aria-label="Cura concept narrative — 8 slides">
+            <div class="cura-filmstrip__track cura-filmstrip__track--rtl">
+              <div class="cura-filmstrip__set">
+                <div class="cura-filmstrip__slide">
+                  <div class="cura-filmstrip__frame"><img src="raisin-assets/assets/img/vision/cura-slide-1.jpg" alt="Cura narrative slide 1" width="1800" height="1012" loading="lazy"></div>
+                </div>
+                <div class="cura-filmstrip__slide">
+                  <div class="cura-filmstrip__frame"><img src="raisin-assets/assets/img/vision/cura-slide-2.jpg" alt="Cura narrative slide 2" width="1800" height="1012" loading="lazy"></div>
+                </div>
+                <div class="cura-filmstrip__slide">
+                  <div class="cura-filmstrip__frame"><img src="raisin-assets/assets/img/vision/cura-slide-3.jpg" alt="Cura narrative slide 3" width="1800" height="1012" loading="lazy"></div>
+                </div>
+                <div class="cura-filmstrip__slide">
+                  <div class="cura-filmstrip__frame"><img src="raisin-assets/assets/img/vision/cura-slide-4.jpg" alt="Cura narrative slide 4" width="1800" height="1012" loading="lazy"></div>
+                </div>
+                <div class="cura-filmstrip__slide">
+                  <div class="cura-filmstrip__frame"><img src="raisin-assets/assets/img/vision/cura-slide-5.jpg" alt="Cura narrative slide 5" width="1800" height="1012" loading="lazy"></div>
+                </div>
+                <div class="cura-filmstrip__slide">
+                  <div class="cura-filmstrip__frame"><img src="raisin-assets/assets/img/vision/cura-slide-6.jpg" alt="Cura narrative slide 6" width="1800" height="1012" loading="lazy"></div>
+                </div>
+                <div class="cura-filmstrip__slide">
+                  <div class="cura-filmstrip__frame"><img src="raisin-assets/assets/img/vision/cura-slide-7.jpg" alt="Cura narrative slide 7" width="1800" height="1012" loading="lazy"></div>
+                </div>
+                <div class="cura-filmstrip__slide">
+                  <div class="cura-filmstrip__frame"><img src="raisin-assets/assets/img/vision/cura-slide-8.jpg" alt="Cura narrative slide 8" width="1800" height="1012" loading="lazy"></div>
+                </div>
+              </div>
+              <div class="cura-filmstrip__set" aria-hidden="true">
+                <div class="cura-filmstrip__slide">
+                  <div class="cura-filmstrip__frame"><img src="raisin-assets/assets/img/vision/cura-slide-1.jpg" alt="" width="1800" height="1012" loading="lazy"></div>
+                </div>
+                <div class="cura-filmstrip__slide">
+                  <div class="cura-filmstrip__frame"><img src="raisin-assets/assets/img/vision/cura-slide-2.jpg" alt="" width="1800" height="1012" loading="lazy"></div>
+                </div>
+                <div class="cura-filmstrip__slide">
+                  <div class="cura-filmstrip__frame"><img src="raisin-assets/assets/img/vision/cura-slide-3.jpg" alt="" width="1800" height="1012" loading="lazy"></div>
+                </div>
+                <div class="cura-filmstrip__slide">
+                  <div class="cura-filmstrip__frame"><img src="raisin-assets/assets/img/vision/cura-slide-4.jpg" alt="" width="1800" height="1012" loading="lazy"></div>
+                </div>
+                <div class="cura-filmstrip__slide">
+                  <div class="cura-filmstrip__frame"><img src="raisin-assets/assets/img/vision/cura-slide-5.jpg" alt="" width="1800" height="1012" loading="lazy"></div>
+                </div>
+                <div class="cura-filmstrip__slide">
+                  <div class="cura-filmstrip__frame"><img src="raisin-assets/assets/img/vision/cura-slide-6.jpg" alt="" width="1800" height="1012" loading="lazy"></div>
+                </div>
+                <div class="cura-filmstrip__slide">
+                  <div class="cura-filmstrip__frame"><img src="raisin-assets/assets/img/vision/cura-slide-7.jpg" alt="" width="1800" height="1012" loading="lazy"></div>
+                </div>
+                <div class="cura-filmstrip__slide">
+                  <div class="cura-filmstrip__frame"><img src="raisin-assets/assets/img/vision/cura-slide-8.jpg" alt="" width="1800" height="1012" loading="lazy"></div>
+                </div>
+              </div>
+            </div>
+            </div>
+            <div class="cura-beat__scrim" aria-hidden="true"></div>
+            <div class="cura-beat__stage">
+            <div class="cura-beat__inner">
+              <div class="cura-beat__copy reveal">
+                <p class="beat__eyebrow">Design vision · VP mandate · I authored the narrative</p>
+                <h3 class="beat__title">Design vision for where Raisin must evolve.</h3>
+                <p class="beat__text">VP initiated the vision exercise. I owned the work inside it — Gather, Envision, Plan — and authored the 8-slide Cura deck: from reporting the past to helping savers decide next.</p>
+                <p class="beat__stat">Gather → Envision → Plan · 8-slide narrative authored solo</p>
+              </div>
+            </div>
+            </div>
+          </div>
+        </article>
+
     </div>
   </div>
 </section>
@@ -4318,7 +4354,7 @@
   <div class="shell-inner shell-bar">
   <div class="chapter-tabs" id="chapters" aria-label="Chapters"></div>
   <div class="ctrl-end">
-    <span class="counter"><span id="curNum">01</span> <span class="sep">/</span> <span id="totNum">26</span></span>
+    <span class="counter"><span id="curNum">01</span> <span class="sep">/</span> <span id="totNum">23</span></span>
     <button type="button" class="nav-btn" data-prev aria-label="Previous slide">←</button>
     <button type="button" class="nav-btn" data-next aria-label="Next slide">→</button>
     <a href="raisin.html" class="nav-btn nav-btn--text is-hidden" id="backToCase" aria-label="Back to case study">Back to case study</a>

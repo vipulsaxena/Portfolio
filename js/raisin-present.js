@@ -66,9 +66,6 @@
   /* Presentation trim — hide web-depth copy; thesis/body max ~2 lines in deck. */
   var PRESENT_TRIM = {
     hero: [".hero__sub:not(.hero__sub--thesis)"],
-    "gap-01": [".why-proof__text:not(.why-proof__text--present)"],
-    "gap-02": [".why-proof__text:not(.why-proof__text--present)"],
-    "gap-03": [".why-proof__text:not(.why-proof__text--present)"],
     journey: [".lede--remit", ".why-hero__body:not(.why-hero__body--present)", ".rule--thick", ".lede:not(.lede--present-short)"],
     "p1-intro": [".period__thesis:not(.period__thesis--present)", ".present-constraint-chips"],
     "p1-baseline": [
@@ -98,7 +95,7 @@
       ".beat__text",
       ".beat__caption:not(.present-outcomes-chip)"
     ],
-    "p2-wow": [".wow-beat__content .beat__text", ".wow-beat__content .enablement-label", ".wow-beat__content .beat__stat + .beat__stat"],
+    "p4-cura": [".beat__text", ".beat__enablement"],
     "p3-intro": [".period__thesis:not(.period__thesis--present)"],
     "p3-desk-research": [".device-story__text:not(.device-story__text--present)"],
     "p3-parity": [".device-story__text:not(.device-story__text--present)"],
@@ -112,7 +109,6 @@
       ".device-story__text:not(.device-story__text--present)",
       ".mobile-shipped-reviews__quote:nth-child(n+5)"
     ],
-    "p3-cura": [".beat__text", ".beat__enablement"],
     "p4-intro": [
       ".period__thesis:not(.period__thesis--present)",
       ".present-p4-enablement",
@@ -131,9 +127,7 @@
 
   var SLIDE_MANIFEST = [
     { id: "hero", chapter: "setup", selector: "#hero" },
-    { id: "gap-01", chapter: "setup", selector: "#why .why-proof:nth-child(1)" },
-    { id: "gap-02", chapter: "setup", selector: "#why .why-proof.why-proof--gap-brand" },
-    { id: "gap-03", chapter: "setup", selector: "#why .why-proof:nth-child(3)" },
+    { id: "gaps", chapter: "setup", selector: "#why" },
     { id: "journey", chapter: "setup", selector: "#journey-intro" },
     { id: "p1-intro", chapter: "period-1", selector: "#period-1 .period__head" },
     { id: "p1-baseline", chapter: "period-1", selector: '[aria-label="Baseline research"]' },
@@ -148,7 +142,6 @@
     { id: "p3-prototype", chapter: "period-2", selector: "#period-3 .mobile-journey__row--prototype" },
     { id: "p3-maze", chapter: "period-2", selector: "#period-3 .mobile-journey__row:nth-child(4)" },
     { id: "p3-shipped", chapter: "period-2", selector: "#period-3 .mobile-journey__shipped" },
-    { id: "p3-cura", chapter: "period-2", selector: "#period-3 .beat--cura" },
     { id: "p4-intro", chapter: "period-3", selector: "#period-4 .period__head" },
     { id: "p4-toolkit", chapter: "period-3", selector: "#period-4 .ai-journey__toolkit" },
     { id: "p4-lab-tools", chapter: "period-3", selector: "#period-4 .ai-journey__tools" },
@@ -161,7 +154,7 @@
         "#period-4 .ai-cadence"
       ]
     },
-    { id: "p2-wow", chapter: "period-3", selector: "#period-2 .beat--wow" },
+    { id: "p4-cura", chapter: "period-3", selector: "#period-4 .beat--cura" },
     {
       id: "proof",
       chapter: "proof",
@@ -203,14 +196,11 @@
   }
 
   var FULL_BLEED_SLIDES = {
-    "p2-wow": true,
-    "p3-cura": true
+    "p4-cura": true
   };
 
   var SLIDE_LAYOUT = {
-    "gap-01": "viewport",
-    "gap-02": "viewport",
-    "gap-03": "viewport",
+    gaps: "viewport",
     journey: "viewport",
     "p1-intro": "viewport",
     "p1-baseline": "viewport",
@@ -225,12 +215,11 @@
     "p3-prototype": "viewport-split",
     "p3-maze": "viewport",
     "p3-shipped": "viewport",
-    "p3-cura": "viewport",
-    "p2-wow": "viewport",
     "p4-intro": "viewport",
     "p4-toolkit": "viewport",
     "p4-lab-tools": "viewport",
     "p4-coaching": "viewport",
+    "p4-cura": "viewport",
     proof: "viewport"
   };
 
@@ -878,10 +867,10 @@
       }
       if (window.initHeroBento) window.initHeroBento(bento);
     }
-    if (root.classList.contains("present-slide--p2-wow") || root.classList.contains("present-slide--p3-cura")) {
+    if (root.classList.contains("present-slide--p4-cura")) {
       requestAnimationFrame(function () {
         requestAnimationFrame(function () {
-          root.querySelectorAll(".wow-beat__marquee-track, .cura-filmstrip__track").forEach(syncMarqueeSpeed);
+          root.querySelectorAll(".cura-filmstrip__track").forEach(syncMarqueeSpeed);
         });
       });
     }
@@ -1162,6 +1151,7 @@
         dotsHtml +
         "</span>";
       b.setAttribute("aria-label", ch.label);
+      b.title = ch.label;
       b.addEventListener("click", function (e) {
         if (e.target.closest(".ct-dot")) return;
         go(ch.slides[0]);
