@@ -352,6 +352,17 @@
     .present-slide--journey .track-key__label {
       font-size: var(--present-eyebrow-size);
     }
+    .present-slide--journey .track-key__impact {
+      margin: clamp(0.5rem, 1vh, 0.75rem) 0 0;
+      font-size: clamp(0.78rem, 1.45vh, 0.88rem);
+      line-height: 1.4;
+      color: var(--ink-soft);
+      max-width: none;
+    }
+    .present-slide--journey .track-key__impact strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
     .present-slide--journey .track-key__title {
       font-size: var(--present-title-size);
     }
@@ -761,6 +772,23 @@
       font-size: var(--present-eyebrow-size, 0.75rem);
       color: var(--muted);
       font-style: normal;
+    }
+    .present-slide--p1-intro .period__role,
+    .present-slide--p3-intro .period__role,
+    .present-slide--p4-intro .period__role {
+      margin: clamp(0.5rem, 1vh, 0.75rem) 0 0;
+      padding-left: clamp(0.75rem, 1.5vw, 1rem);
+      border-left: 3px solid var(--line-strong);
+      font-size: clamp(0.75rem, 1.15vh, 0.875rem);
+      line-height: 1.5;
+      color: var(--ink-soft);
+      max-width: none;
+    }
+    .present-slide--p1-intro .period__role strong,
+    .present-slide--p3-intro .period__role strong,
+    .present-slide--p4-intro .period__role strong {
+      color: var(--ink);
+      font-weight: 600;
     }
     .present-slide--journey .why-hero__body {
       max-width: none;
@@ -1286,7 +1314,7 @@
       line-height: 1.4;
     }
     .present-slide--gaps .why-proof__media {
-      grid-column: 1 / -1;
+      grid-column: 2;
       grid-row: 2;
       margin-top: clamp(0.35rem, 0.9vh, 0.65rem);
       min-width: 0;
@@ -2948,7 +2976,7 @@
           <img class="hero__title-logo" src="raisin-assets/assets/img/branding/raisin-logo-white.svg" alt="Raisin" width="908" height="211">
           <h1 class="hero__title">Raisin is a European savings and investment marketplace — with ~€80bn in assets under management.</h1>
         </div>
-        <p class="hero__role">Solo designer embedded in the B2C Growth tribe — reporting to VP Design, taking project brief from Head of Product.</p>
+        <p class="hero__role">Solo designer embedded in the B2C Growth and Engagement tribes — reporting to VP Design, taking project brief from Head of Product.</p>
         <p class="hero__sub">I lead B2C design in Growth &amp; Engagement — evolving Raisin’s brand across web and mobile, and the practice that makes multi-market change stick.</p>
       </div>
       <div class="hero-bento" aria-hidden="true" data-fm-widget="raisin-hero" data-fm-kind="hero">
@@ -2966,7 +2994,7 @@
 <section class="why-hero" id="why" style="padding-block:var(--sp-2xl);">
     <div class="container" style="position:relative; z-index:1;">
     <div class="present-gaps__kicker">
-      <span class="chip">Identified gaps</span>
+      <span class="chip">Identified overarching gaps</span>
     </div>
     <h2 class="why-hero__statement present-gaps__title">Raisin was evolving its brand — but the product, the practice, and the team hadn't caught up.</h2>
 
@@ -2990,7 +3018,7 @@
           <span class="present-gaps__num" aria-hidden="true">02</span>
           <div class="why-proof__content">
             <h4 class="why-proof__title">A design practice without shared conventions</h4>
-            <p class="why-proof__text why-proof__text--present">User studies were rare. Critiques weren't happening. Every handoff paid a tax for it.</p>
+            <p class="why-proof__text why-proof__text--present">User studies were rare. Critiques weren't happening, and design impact wasn't measured and reported. Every project paid a tax for it.</p>
           </div>
         </div>
         <div class="why-proof__media why-proof__media--solo">
@@ -3031,6 +3059,7 @@
       <div class="track-key__item track-key__item--practice">
         <p class="track-key__label">Practice</p>
         <p class="track-key__text">Research-led decisions, shipped screens, measured outcomes.</p>
+        <p class="track-key__impact track-key__impact--present"><strong>Impact:</strong> NPS, task success, adoption, AuM, and retention all moved on the customer side. Measured honestly in Proof; not everything lifted.</p>
       </div>
       <div class="track-key__item track-key__item--enablement enablement-surface">
         <p class="track-key__label enablement-label">
@@ -3038,9 +3067,9 @@
           Enablement
         </p>
         <p class="track-key__text">Rituals, research OS, docs, tooling, coaching — I built; the org adopted.</p>
+        <p class="track-key__impact track-key__impact--present"><strong>Impact:</strong> Research rituals, playbooks, AI workflows, and coaching the org adopted.</p>
       </div>
     </div>
-    <p class="why-hero__body why-hero__body--present"><strong>Impact: NPS, task success, adoption, AuM, and retention all moved on the customer side — alongside research rituals, playbooks, AI workflows, and coaching the org adopted. Measured honestly in Proof; not everything lifted.</strong></p>
     <hr class="rule rule--thick" aria-hidden="true">
   </div>
 </section>
@@ -3059,8 +3088,9 @@
           </div>
         </div>
         <h2 class="h-display h-2 period__title">A home for their wealth</h2>
-        <p class="lede period__thesis period__thesis--present"><strong>I planned</strong> the research programme and ran customer interviews with the design team. <strong>We synthesized</strong> the findings collaboratively, <strong>I facilitated</strong> co-creation workshops, designed the concepts, and validated the hypotheses — then with product and engineering, <strong>We shipped</strong> the MVP across 12 markets.</p>
-        <p class="lede period__thesis"><strong>I planned</strong> the research programme and ran customer interviews with the design team. <strong>We synthesized</strong> the findings collaboratively, <strong>I facilitated</strong> co-creation workshops, designed the concepts, and validated the hypotheses — then with product and engineering, <strong>We shipped</strong> the MVP across 12 markets.</p>
+        <p class="lede period__thesis period__thesis--present">The web dashboard still behaved like a product catalogue — deposits first, not the customer’s holdings. This chapter turns that surface into a single home for wealth across savings, investments, and retirement, and carries the new brand into a live, multi-market product.</p>
+        <p class="lede period__thesis">The web dashboard still behaved like a product catalogue — deposits first, not the customer’s holdings. This chapter turns that surface into a single home for wealth across savings, investments, and retirement, and carries the new brand into a live, multi-market product.</p>
+        <p class="period__role"><strong>I planned</strong> the research and ran interviews with the design team, <strong>I facilitated</strong> co-creation workshops, and validated the hypotheses. <strong>I synthesized</strong> findings and designed solutions — then <strong>We shipped</strong> the MVP with product and engineering across 12 markets.</p>
       </div>
       <figure class="period__head-visual period__head-visual--problem">
         <img src="raisin-assets/assets/img/dashboard-web/problem.webp" alt="Frustrated customer at the legacy Raisin dashboard — too much product catalogue, not enough of their wealth" loading="lazy" data-lightbox>
@@ -3752,8 +3782,9 @@
           </div>
         </div>
         <h2 class="h-display h-2 period__title">Mobile and the horizon</h2>
-        <p class="lede period__thesis period__thesis--present"><strong>I monitored</strong> and synthesized Wealth Hub launch feedback, <strong>I designed</strong> the new mobile IA and visual system, <strong>I led</strong> Maze validation, and <strong>I built</strong> the in-flow prototype with One Data — with product and engineering, <strong>We shipped</strong> the solution.</p>
-        <p class="lede period__thesis"><strong>I monitored</strong> and synthesized Wealth Hub launch feedback, <strong>I designed</strong> the new mobile IA and visual system, <strong>I led</strong> Maze validation, and <strong>I built</strong> the in-flow prototype with One Data — with product and engineering, <strong>We shipped</strong> the solution.</p>
+        <p class="lede period__thesis period__thesis--present">The tribe split in two, the mobile redesign had stalled for months, and nobody had written down where the product was going. I took mobile end-to-end — desk research, in-flow prototyping, Maze validation, Cura vision — and raised the team's prototyping bar.</p>
+        <p class="lede period__thesis">The tribe split in two, the mobile redesign had stalled for months, and nobody had written down where the product was going. I took mobile end-to-end — desk research, in-flow prototyping, Maze validation, Cura vision — and raised the team's prototyping bar.</p>
+        <p class="period__role"><strong>I monitored</strong> Wealth Hub launch feedback and <strong>I designed</strong> the new mobile IA and visual system. <strong>I led</strong> Maze validation and <strong>I built</strong> the in-flow prototype with One Data — then <strong>We shipped</strong> with product and engineering.</p>
       </div>
       <figure class="period__head-visual period__head-visual--legacy-mobile">
         <img src="raisin-assets/assets/img/proof/mobile-problem.webp" alt="Legacy mobile app — disconnected from web" loading="lazy" data-lightbox>
@@ -3980,8 +4011,9 @@
           </div>
         </div>
         <h2 class="h-display h-2 period__title">Design × AI</h2>
-        <p class="lede period__thesis period__thesis--present">On a VP mandate for design, <strong>I built</strong> the Cursor toolkit, <strong>I facilitated</strong> the enablement programme, and <strong>I championed</strong> coaching and training as one of four org-wide AI Champions — and <strong>I co-authored</strong> the design vision for an AI-first wealth OS.</p>
-        <p class="lede period__thesis">On a VP mandate for design, <strong>I built</strong> the Cursor toolkit, <strong>I facilitated</strong> the enablement programme, and <strong>I championed</strong> coaching and training as one of four org-wide AI Champions — and <strong>I co-authored</strong> the design vision for an AI-first wealth OS.</p>
+        <p class="lede period__thesis period__thesis--present">What started as a prototyping workshop became design's 180-day operating plan. As one of four org-wide AI Champions, I built four tools for daily production use, championed the operating plan, and led Showcase and Clinic until the workflows stuck.</p>
+        <p class="lede period__thesis">What started as a prototyping workshop became design's 180-day operating plan. As one of four org-wide AI Champions, I built four tools for daily production use, championed the operating plan, and led Showcase and Clinic until the workflows stuck.</p>
+        <p class="period__role">On a VP mandate for design, <strong>I built</strong> the Cursor toolkit and <strong>I facilitated</strong> the enablement programme. <strong>I championed</strong> coaching as one of four AI Champions — and <strong>I co-authored</strong> the design vision for an AI-first wealth OS.</p>
       </div>
       <figure class="period__head-visual period__head-visual--ai">
         <img src="raisin-assets/assets/img/ai-enablement/program-overview.webp" alt="Design × AI programme overview" width="1600" height="1067" loading="lazy" data-lightbox>

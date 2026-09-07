@@ -66,7 +66,7 @@
   /* Presentation trim — hide web-depth copy; thesis/body max ~2 lines in deck. */
   var PRESENT_TRIM = {
     hero: [".hero__sub:not(.hero__sub--thesis)"],
-    journey: [".lede--remit", ".why-hero__body:not(.why-hero__body--present)", ".rule--thick", ".lede:not(.lede--present-short)"],
+    journey: [".lede--remit", ".rule--thick", ".lede:not(.lede--present-short)"],
     "p1-intro": [".period__thesis:not(.period__thesis--present)", ".present-constraint-chips"],
     "p1-baseline": [
       ".beat__text:not(.beat__text--problem):not(.beat__text--present)",
