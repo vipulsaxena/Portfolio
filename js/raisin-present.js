@@ -97,7 +97,10 @@
     ],
     "p4-cura": [".beat__text", ".beat__enablement"],
     "p3-intro": [".period__thesis:not(.period__thesis--present)"],
-    "p3-desk-research": [".device-story__text:not(.device-story__text--present)"],
+    "p3-desk-research": [
+      ".device-story__text:not(.device-story__text--present)",
+      ".beat__text:not(.beat__text--problem)"
+    ],
     "p3-parity": [".device-story__text:not(.device-story__text--present)"],
     "p3-prototype": [
       ".device-story__text:not(.device-story__text--present)",

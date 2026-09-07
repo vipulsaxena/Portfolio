@@ -1029,7 +1029,8 @@
     .present-slide--p1-baseline .period-split__main > * {
       margin: 0;
     }
-    .present-slide--p1-baseline .beat__subtitle {
+    .present-slide--p1-baseline .beat__subtitle,
+    .present-slide--p3-desk-research .beat__subtitle {
       margin-top: clamp(0.45rem, 1vh, 0.75rem);
       margin-bottom: calc(-1 * clamp(0.1rem, 0.22vh, 0.18rem));
       font-size: var(--present-eyebrow-size);
@@ -1040,10 +1041,19 @@
       line-height: 1.25;
       max-width: none;
     }
-    .present-slide--p1-baseline .beat__text--problem {
+    .present-slide--p1-baseline .beat__problem,
+    .present-slide--p3-desk-research .beat__problem {
+      margin: 0;
+      padding: clamp(0.75rem, 1.5vh, 1rem) clamp(1rem, 2vw, 1.25rem);
+      border-left: 3px solid var(--line-strong);
+      background: color-mix(in srgb, var(--ink) 4%, transparent);
+    }
+    .present-slide--p1-baseline .beat__text--problem,
+    .present-slide--p3-desk-research .beat__text--problem {
       display: block;
       -webkit-line-clamp: unset;
       overflow: visible;
+      margin: 0;
       font-size: var(--present-lede-size);
       font-weight: 600;
       color: var(--ink);
@@ -3088,8 +3098,8 @@
           </div>
         </div>
         <h2 class="h-display h-2 period__title">A home for their wealth</h2>
-        <p class="lede period__thesis period__thesis--present">The web dashboard still behaved like a product catalogue — deposits first, not the customer’s holdings. This chapter turns that surface into a single home for wealth across savings, investments, and retirement, and carries the new brand into a live, multi-market product.</p>
-        <p class="lede period__thesis">The web dashboard still behaved like a product catalogue — deposits first, not the customer’s holdings. This chapter turns that surface into a single home for wealth across savings, investments, and retirement, and carries the new brand into a live, multi-market product.</p>
+        <p class="lede period__thesis period__thesis--present">This chapter turns the web dashboard into a single home for wealth across savings, investments, and retirement, and carries the new brand into a live, multi-market product.</p>
+        <p class="lede period__thesis">This chapter turns the web dashboard into a single home for wealth across savings, investments, and retirement, and carries the new brand into a live, multi-market product.</p>
         <p class="period__role"><strong>I planned</strong> the research and ran interviews with the design team, <strong>I facilitated</strong> co-creation workshops, and validated the hypotheses. <strong>I synthesized</strong> findings and designed solutions — then <strong>We shipped</strong> the MVP with product and engineering across 12 markets.</p>
       </div>
       <figure class="period__head-visual period__head-visual--problem">
@@ -3136,7 +3146,9 @@
                   </span>
                 </div>
                 <p class="beat__subtitle">Customer problem</p>
-                <p class="beat__text beat__text--problem">A catalogue landing, not a home for their money. Savers couldn’t orient to what they held across savings, investments, and retirement.</p>
+                <div class="beat__problem">
+                  <p class="beat__text beat__text--problem">The web dashboard still behaved like a product catalogue — deposits first, not the customer’s holdings.</p>
+                </div>
                 <p class="beat__text beat__text--present">Next: co-creation — turn scattered insights into one Wealth Hub concept.</p>
                 <p class="beat__needs"><strong>Orient</strong> — consolidated view across asset classes · <strong>Monitor</strong> — total wealth at a glance · <strong>Act</strong> — maturities and pending tasks surfaced</p>
               </div>
@@ -3781,8 +3793,8 @@
           </div>
         </div>
         <h2 class="h-display h-2 period__title">Mobile and the horizon</h2>
-        <p class="lede period__thesis period__thesis--present">The tribe split in two and the mobile redesign had stalled for months. I took mobile end-to-end — desk research, in-flow prototyping, Maze validation — and raised the team's prototyping bar until we shipped.</p>
-        <p class="lede period__thesis">The tribe split in two, the mobile redesign had stalled for months, and mobile had no agreed direction. I took mobile end-to-end — desk research, in-flow prototyping, Maze validation — and raised the team's prototyping bar until we shipped with product and engineering.</p>
+        <p class="lede period__thesis period__thesis--present">After the tribe split stalled the redesign, I took mobile end-to-end — desk research, in-flow prototyping, Maze validation — and raised the team's prototyping bar until we shipped.</p>
+        <p class="lede period__thesis">After the tribe split stalled the redesign, I took mobile end-to-end — desk research, in-flow prototyping, Maze validation — and raised the team's prototyping bar until we shipped with product and engineering.</p>
         <p class="period__role"><strong>I monitored</strong> Wealth Hub launch feedback and <strong>I designed</strong> the new mobile IA and visual system. <strong>I led</strong> Maze validation and <strong>I built</strong> the in-flow prototype with One Data — then <strong>We shipped</strong> with product and engineering.</p>
       </div>
       <figure class="period__head-visual period__head-visual--legacy-mobile">
@@ -3799,9 +3811,13 @@
               <div class="device-story__copy">
                 <p class="device-story__eyebrow">Desk research</p>
                 <h4 class="device-story__title">Read the stall before redesigning.</h4>
-                <p class="device-story__text device-story__text--present">Legacy mobile: <strong>42% / 25% / 33%</strong> interaction split — no pattern worth copying from web.</p>
                 <p class="device-story__text">Web Wealth Hub earned its structure through customer research. Mobile didn’t have that yet — only a stalled redesign and pressure to copy across. Desk research on <strong>legacy interaction patterns</strong> (<strong>42% / 25% / 33%</strong>) showed why that shortcut failed: real usage didn’t match web’s model, and no single mobile pattern had won.</p>
                 <p class="beat__stat">Legacy mobile · interaction data · pre-ideation baseline</p>
+                <p class="beat__subtitle">Customer problem</p>
+                <div class="beat__problem">
+                  <p class="beat__text beat__text--problem">Web had become a home for their wealth. On mobile, the same customer still met a disconnected surface — no consolidated view of what they held.</p>
+                </div>
+                <p class="device-story__text device-story__text--present">Legacy mobile: <strong>42% / 25% / 33%</strong> interaction split — no pattern worth copying from web.</p>
               </div>
               <figure class="mobile-journey__visual mobile-journey__visual--research">
                 <img src="raisin-assets/assets/img/dashboard-mobile/mobile-research.webp" alt="Mobile dashboard desk research — interaction data" loading="lazy" data-lightbox>
