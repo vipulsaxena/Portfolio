@@ -1346,21 +1346,21 @@ html.journey-nav-scrolling {
   background: transparent;
   object-fit: contain;
 }
-.period__head-visual--mobile-mocks {
-  overflow: hidden;
+.period__head-visual--legacy-mobile {
+  overflow: visible;
   background: none;
-  width: 140%;
-  margin-inline-end: calc(-1 * var(--page-inset));
-  justify-content: flex-start;
+  justify-content: center;
   align-items: flex-start;
 }
-.period__head-visual--mobile-mocks img {
-  width: 100%;
+.period__head-visual--legacy-mobile img {
+  width: auto;
+  max-width: 100%;
   max-height: min(72vh, 42rem);
   border-radius: 0;
   background: none;
   object-fit: contain;
-  object-position: top left;
+  object-position: top center;
+  transform: translateX(15%);
 }
 
 /* ------------------------ Period 1 — dashboard compare ------------------------ */
@@ -1425,12 +1425,13 @@ html.journey-nav-scrolling {
   .period__head-visual--video video {
     max-height: min(48vh, 24rem);
   }
-  .period__head-visual--mobile-mocks {
+  .period__head-visual--legacy-mobile {
     width: 100%;
-    margin-inline-end: 0;
+    justify-content: center;
   }
-  .period__head-visual--mobile-mocks img {
+  .period__head-visual--legacy-mobile img {
     max-height: none;
+    max-width: min(100%, 20rem);
   }
   .period-compare {
     width: calc(100% + 2.75rem);
