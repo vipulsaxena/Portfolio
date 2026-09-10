@@ -27,25 +27,25 @@ const MAPPING = {
     maxEdge: 2400,
     quality: 96,
   },
-  "Resource/Extracts/Free MacBook Pro mockup on round table (Mockuuups Studio).jpg": {
-    out: "assets/img/hero-bento/macbook-round-table.webp",
-    action: "process",
-    maxEdge: 2400,
-    quality: 96,
-  },
   "Resource/Extracts/Free Rock iPhone 15 Pro Mockup (Mockuuups Studio).png": {
     out: "assets/img/hero-bento/rock-iphone-15.webp",
     action: "process",
     maxEdge: 2400,
     quality: 96,
   },
-  "Resource/Extracts/Free Clean desk with Dell display mockup (Mockuuups Studio).jpg": {
+  "assets/img/hero-bento/dell-desk.png": {
     out: "assets/img/hero-bento/dell-desk.webp",
     action: "process",
     maxEdge: 2400,
     quality: 96,
   },
-  "Resource/Extracts/Free mockup of man pointing on iPad (Mockuuups Studio).jpg": {
+  "assets/img/hero-bento/macbook-round-table.png": {
+    out: "assets/img/hero-bento/macbook-round-table.webp",
+    action: "process",
+    maxEdge: 2400,
+    quality: 96,
+  },
+  "assets/img/hero-bento/ipad-pointing.png": {
     out: "assets/img/hero-bento/ipad-pointing.webp",
     action: "process",
     maxEdge: 2400,
@@ -370,6 +370,10 @@ const MAPPING = {
 };
 
 function resourcePath(resourceKey) {
+  if (resourceKey.startsWith("assets/")) {
+    const siteAbs = path.join(SITE_ROOT, resourceKey);
+    if (fs.existsSync(siteAbs)) return siteAbs;
+  }
   const rel = resourceKey.replace(/^Resource\//, "");
   const viaSymlink = path.join(SITE_ROOT, "Resource", rel);
   const direct = path.join(RESOURCE_ROOT, rel);

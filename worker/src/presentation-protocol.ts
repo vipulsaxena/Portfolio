@@ -21,6 +21,8 @@ export interface PresentationState {
   scroll: number | null;
   widgets: Record<string, string> | null;
   highlight: string | null;
+  /** data-fm-id of the asset open in the page lightbox, or null when closed */
+  lightbox: string | null;
   ts: number;
 }
 
@@ -118,8 +120,13 @@ export function sanitizeState(raw: unknown): PresentationState | null {
     if (typeof o.highlight !== "string" || !WIDGET_VAL_RE.test(o.highlight)) return null;
     highlight = o.highlight;
   }
+  let lightbox: string | null = null;
+  if (o.lightbox !== null && o.lightbox !== undefined) {
+    if (typeof o.lightbox !== "string" || !WIDGET_VAL_RE.test(o.lightbox)) return null;
+    lightbox = o.lightbox;
+  }
   const ts = typeof o.ts === "number" && Number.isFinite(o.ts) ? o.ts : Date.now();
-  return { page: o.page as PageId, deck, slide, section, scroll, widgets, highlight, ts };
+  return { page: o.page as PageId, deck, slide, section, scroll, widgets, highlight, lightbox, ts };
 }
 
 export function randomToken(bytes = 24): string {

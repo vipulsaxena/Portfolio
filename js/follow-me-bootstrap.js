@@ -66,7 +66,12 @@
   if (hasSession()) grant();
   if (!presentPage && !hasSession()) return;
 
+  if (!window.PortfolioLightbox) {
+    var lb = document.createElement("script");
+    lb.src = "/js/portfolio-lightbox.js?v=6";
+    (document.body || document.head).appendChild(lb);
+  }
   var s = document.createElement("script");
-  s.src = "/js/follow-me.js?v=29";
+  s.src = "/js/follow-me.js?v=30";
   (document.body || document.head).appendChild(s);
 })();

@@ -425,11 +425,11 @@
     var nodes;
     if (scope) {
       nodes = scope.querySelectorAll(
-        "a, button, [data-lightbox], [data-audit], .why-proof__frame, [role='tab'], .audit-item"
+        "a, button, [data-lightbox], video[data-lightbox], .why-proof__media img, .filmstrip__item img, [data-audit], .why-proof__frame, [role='tab'], .audit-item"
       );
     } else {
       nodes = document.querySelectorAll(
-        "a, button, [data-lightbox], [data-audit], .why-proof__frame, [role='tab'], .audit-item"
+        "a, button, [data-lightbox], video[data-lightbox], .why-proof__media img, .filmstrip__item img, [data-audit], .why-proof__frame, [role='tab'], .audit-item"
       );
     }
     var n = 0;
@@ -444,6 +444,22 @@
       }
       n++;
     }
+  }
+
+  function readLightbox() {
+    if (!global.PortfolioLightbox) return null;
+    return global.PortfolioLightbox.getState();
+  }
+
+  function applyLightbox(id, deferMs) {
+    if (!global.PortfolioLightbox) return;
+    if (id === undefined) return;
+    var run = function () {
+      holdRemote(500);
+      global.PortfolioLightbox.apply(id || null);
+    };
+    if (deferMs) setTimeout(run, deferMs);
+    else run();
   }
 
   function applyHighlight(id) {
@@ -679,6 +695,7 @@
       scroll: readScrollRatio(),
       widgets: readWidgets(),
       highlight: isCaseStudyPage() ? lastHighlight : null,
+      lightbox: readLightbox(),
       ts: Date.now(),
     };
   }
@@ -691,7 +708,8 @@
       a.slide === b.slide &&
       a.section === b.section &&
       widgetsKey(a.widgets) === widgetsKey(b.widgets) &&
-      (a.highlight || "") === (b.highlight || "")
+      (a.highlight || "") === (b.highlight || "") &&
+      (a.lightbox || "") === (b.lightbox || "")
     );
   }
 
@@ -742,6 +760,7 @@
     }
     applyWidgets(state.widgets);
     applyHighlight(state.highlight);
+    applyLightbox(state.lightbox, slideChanged ? 160 : 0);
   }
 
   function wsUrl() {
@@ -1321,6 +1340,7 @@
       setTimeout(function () {
         if (lastSent && lastSent.widgets) applyWidgets(lastSent.widgets);
         if (lastSent && lastSent.scroll != null) writeScrollRatio(lastSent.scroll);
+        if (lastSent) applyLightbox(lastSent.lightbox, 0);
       }, 120);
     }
   }
@@ -1369,6 +1389,7 @@
 
   function onPresenterPointer(e) {
     if (role !== "presenter" || ended || applyingRemote) return;
+    if (global.PortfolioLightbox && global.PortfolioLightbox.isApplyingRemote()) return;
     if (!isCaseStudyPage()) return;
     if (e.target && e.target.closest && e.target.closest(".follow-chip, .follow-ended, .shell-header, .vipul-chat")) {
       return;
@@ -1478,6 +1499,11 @@
     window.addEventListener("portfolio:widget-change", function () {
       if (role === "presenter") broadcastLocal(true);
     });
+    document.addEventListener("portfolio:lightbox-change", function () {
+      if (role !== "presenter") return;
+      if (global.PortfolioLightbox && global.PortfolioLightbox.isApplyingRemote()) return;
+      broadcastLocal(true);
+    });
     window.addEventListener("portfolio:carousel-ready", function () {
       if (role === "audience" && following && lastSent && lastSent.widgets) {
         applyWidgets(lastSent.widgets);
@@ -1488,6 +1514,7 @@
       if (role === "audience" && following && lastSent) {
         if (lastSent.widgets) applyWidgets(lastSent.widgets);
         if (lastSent.scroll != null) writeScrollRatio(lastSent.scroll);
+        applyLightbox(lastSent.lightbox, 80);
       } else if (role === "presenter") {
         broadcastLocal(true);
       }

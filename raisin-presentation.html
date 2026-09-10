@@ -77,6 +77,10 @@
       --present-stat-size: clamp(0.9rem, 1.38vw, 1.08rem);
       --present-display-size: clamp(1.55rem, 2.85vw, 2.2rem);
       --present-lede-size: clamp(0.92rem, 1.42vw, 1.12rem);
+      --present-support-size: clamp(0.88rem, 1.35vw, 1.05rem);
+      --present-split-stack-gap: clamp(1rem, 1.85vh, 1.4rem);
+      --present-split-stack-gap-tight: clamp(0.45rem, 0.85vh, 0.65rem);
+      --present-split-stack-gap-before-supporting: clamp(0.65rem, 1.2vh, 1rem);
       --present-metric-value-size: clamp(1.25rem, 2.2vw, 1.7rem);
       --present-metric-label-size: clamp(0.8rem, 1.22vw, 0.96rem);
       --present-card-title-size: clamp(0.98rem, 1.58vw, 1.18rem);
@@ -101,22 +105,23 @@
     }
     #present-stage {
       height: 100%;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
+      overflow: hidden;
     }
     #present-source { display: none !important; }
     /* Horizontal inset — --present-inset on all slides except full-bleed WoW + Cura */
     .present-slide {
       min-height: 100%;
+      max-height: 100%;
       box-sizing: border-box;
       padding: 0;
       opacity: 0;
       transition: opacity var(--fade-ms) ease;
+      overflow: hidden;
     }
     .present-slide.is-active { opacity: 1; }
     .present-slide.is-leaving { opacity: 0; }
     /* Unified horizontal inset — slides that don't manage their own padding */
-    body.summary-v2 .present-slide.container:not(.present-slide--p4-cura):not(.present-slide--p4-toolkit):not(.present-slide--p4-coaching):not(.present-slide--proof):not(.present-beat-proof):not(.present-beat-coaching):not(.period__head--split):not(.present-slide--p1-outcomes):not(.present-slide--p1-colour-map):not(.present-slide--p3-prototype):not(.present-slide--hero):not(.present-thanks) {
+    body.summary-v2 .present-slide.container:not(.present-slide--p4-cura):not(.present-slide--p4-toolkit):not(.present-slide--p4-coaching):not(.present-slide--proof):not(.present-beat-proof):not(.present-beat-coaching):not(.period__head--split):not(.present-slide--p1-outcomes):not(.present-slide--p1-visual-system):not(.present-slide--p3-prototype):not(.present-slide--hero):not(.present-thanks) {
       width: 100%;
       max-width: 100%;
       margin-inline: auto;
@@ -135,14 +140,15 @@
     .present-slide--layout-viewport-scroll {
       min-height: var(--present-vh);
       max-height: var(--present-vh);
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
+      overflow: hidden;
       padding: 0;
       padding-bottom: var(--present-bottom);
       box-sizing: border-box;
     }
     .present-slide--layout-viewport {
       min-height: var(--present-vh);
+      max-height: var(--present-vh);
+      overflow: hidden;
       padding-bottom: var(--present-bottom);
       box-sizing: border-box;
     }
@@ -188,6 +194,98 @@
       align-self: center;
       min-width: 0;
       max-width: none;
+    }
+    /* Equal 50/50 tracks — copy columns fill their half (all split beats) */
+    .present-slide.period__head--split.present-slide--layout-viewport {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+    .present-slide.period__head--split .period__head-copy,
+    .present-slide.period-split .period-split__main,
+    .present-slide .device-story__copy,
+    .present-slide .trade-off-switcher__left,
+    .present-slide.ai-journey__toolkit .ai-toolkit-copy,
+    .present-slide.ai-journey__tools .ai-journey__tools-head,
+    .present-slide.present-beat-coaching .present-coaching__left {
+      width: 100%;
+      max-width: none;
+      min-width: 0;
+      box-sizing: border-box;
+    }
+    .present-slide .device-story__text,
+    .present-slide .device-story__copy .beat__text,
+    .present-slide .track-key__text,
+    .present-slide .ai-toolkit-intro,
+    .present-slide .enablement-surface__text,
+    .present-slide .trade-off-switcher__left .beat__text,
+    .present-slide .trade-off__option-text {
+      max-width: none;
+    }
+    .present-slide .trade-off-switcher--split {
+      width: 100%;
+      max-width: 100%;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: var(--present-split-gap);
+      align-items: center;
+      box-sizing: border-box;
+    }
+    /* 50/50 columns — hug content height, vertically centered as a pair */
+    .present-slide--layout-viewport.period-split,
+    .present-slide--layout-viewport.device-story__row,
+    .present-slide--layout-viewport.mobile-journey__row,
+    .present-slide--layout-viewport.ai-journey__row,
+    .present-slide.period__head--split.present-slide--layout-viewport,
+    .present-slide--p4-toolkit.ai-journey__toolkit,
+    .present-slide--p4-lab-tools.ai-journey__tools,
+    .present-slide--p4-coaching.present-beat-coaching,
+    .present-slide--p3-shipped .device-story__row {
+      align-items: center;
+    }
+    .present-slide.period-split .period-split__main,
+    .present-slide.period-split .period-split__visual,
+    .present-slide.period-split .craft-grid-wrap,
+    .present-slide.period__head--split .period__head-copy,
+    .present-slide.period__head--split .period__head-visual,
+    .present-slide .device-story__copy,
+    .present-slide .device-story__visual,
+    .present-slide .mobile-journey__visual,
+    .present-slide .ai-journey__visual,
+    .present-slide .ai-journey__prototype,
+    .present-slide .mobile-journey__prototype,
+    .present-slide .tabs-compare,
+    .present-slide .trade-off-switcher__left,
+    .present-slide .trade-off-switcher__right,
+    .present-slide.ai-journey__toolkit .ai-toolkit-copy,
+    .present-slide.ai-journey__toolkit .ai-toolkit-panel,
+    .present-slide.ai-journey__tools .ai-journey__tools-head,
+    .present-slide.ai-journey__tools .ai-tools-grid,
+    .present-slide.present-beat-coaching .present-coaching__left,
+    .present-slide.present-beat-coaching .present-coaching__visual {
+      align-self: center;
+      height: auto;
+      min-height: 0;
+    }
+    .present-slide .trade-off-switcher__left,
+    .present-slide .trade-off-switcher__right,
+    .present-slide.period-split .period-split__visual,
+    .present-slide .device-story__visual,
+    .present-slide .mobile-journey__visual,
+    .present-slide .ai-journey__visual,
+    .present-slide .ai-journey__prototype,
+    .present-slide .mobile-journey__prototype,
+    .present-slide .tabs-compare,
+    .present-slide.ai-journey__toolkit .ai-toolkit-panel,
+    .present-slide.ai-journey__tools .ai-tools-grid,
+    .present-slide.present-beat-coaching .present-coaching__visual {
+      min-width: 0;
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+    .present-slide--p1-tradeoff-01 > .trade-off-switcher,
+    .present-slide--p1-exploration > .trade-off-switcher,
+    .present-slide--p1-visual-system > .trade-off-switcher {
+      width: 100%;
+      max-width: 100%;
     }
     .present-slide .device-story__eyebrow,
     .present-slide .beat__eyebrow {
@@ -260,12 +358,198 @@
       overflow: hidden;
     }
     .present-slide--p1-tradeoff-01 .trade-off--compact,
-    .present-slide--p1-tradeoff-02 .trade-off--compact {
+    .present-slide--p1-tradeoff-02 .trade-off--compact,
+    .present-slide--p1-exploration .ideate-conflict-tradeoff,
+    .present-slide--p1-tradeoff-01 .ideate-conflict-tradeoff {
       margin: 0;
       padding: 0;
       border: none;
       background: none;
       gap: 0;
+    }
+    .present-slide .present-block-label {
+      margin: 0 0 clamp(0.55rem, 1vh, 0.75rem);
+      font-size: var(--present-support-size);
+      font-weight: 500;
+      line-height: 1.35;
+      color: var(--ink);
+      letter-spacing: normal;
+      text-transform: none;
+    }
+    .present-slide--p1-co-creation .hmw-prior-strip--present,
+    .present-slide--p1-exploration .ideate-conflict-tradeoff,
+    .present-slide--p1-tradeoff-01 .ideate-conflict-tradeoff {
+      width: 100%;
+      min-width: 0;
+      padding-top: clamp(0.35rem, 0.75vh, 0.65rem);
+      gap: 0;
+    }
+    .present-slide--p1-exploration .ideate-conflict-tradeoff .trade-off__options,
+    .present-slide--p1-tradeoff-01 .ideate-conflict-tradeoff .trade-off__options {
+      gap: clamp(0.45rem, 0.85vh, 0.65rem);
+      margin-bottom: 0;
+    }
+    .present-slide--p1-exploration .ideate-conflict-tradeoff .trade-off__option,
+    .present-slide--p1-tradeoff-01 .ideate-conflict-tradeoff .trade-off__option {
+      position: relative;
+      padding: clamp(0.75rem, 1.25vh, 0.95rem) clamp(0.85rem, 1.35vw, 1.05rem);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm, 0.35rem);
+      background: transparent;
+      box-shadow: none;
+    }
+    .present-slide--p1-exploration .ideate-conflict-tradeoff .trade-off__option--chosen,
+    .present-slide--p1-tradeoff-01 .ideate-conflict-tradeoff .trade-off__option--chosen {
+      border-color: var(--line);
+      border-width: 1px;
+      background: color-mix(in srgb, var(--ink) 7%, var(--paper));
+      box-shadow: none;
+    }
+    .present-slide--p1-exploration .ideate-conflict-tradeoff .trade-off__option-label,
+    .present-slide--p1-tradeoff-01 .ideate-conflict-tradeoff .trade-off__option-label {
+      margin: 0;
+      font-size: clamp(0.88rem, 1.55vh, 1rem);
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .present-slide--p1-exploration .ideate-conflict-tradeoff .trade-off__option-text,
+    .present-slide--p1-tradeoff-01 .ideate-conflict-tradeoff .trade-off__option-text {
+      font-size: clamp(0.82rem, 1.45vh, 0.94rem);
+      line-height: 1.38;
+      margin: 0.35rem 0 0;
+      color: var(--ink-soft);
+    }
+    .present-slide--p1-exploration .ideate-conflict-tradeoff .trade-off__chosen-flag,
+    .present-slide--p1-tradeoff-01 .ideate-conflict-tradeoff .trade-off__chosen-flag,
+    .present-slide--p1-tradeoff-01 .trade-off-switcher__tab-flag {
+      display: none !important;
+    }
+    .present-slide--p1-exploration .ideate-conflict-tradeoff__check,
+    .present-slide--p1-tradeoff-01 .ideate-conflict-tradeoff__check {
+      position: absolute;
+      top: clamp(0.45rem, 0.8vh, 0.6rem);
+      right: clamp(0.45rem, 0.8vh, 0.6rem);
+      width: 1rem;
+      height: 1rem;
+      color: var(--ink-soft);
+      pointer-events: none;
+    }
+    .present-slide--p1-exploration .exploration-wizard__asset-slot--wireframe-compare {
+      position: relative;
+      display: block;
+      padding: 0;
+    }
+    .present-slide--p1-exploration .exploration-wizard__variant-switcher {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+    }
+    .present-slide--p1-exploration .exploration-wizard__variant-tabs--overlay {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 5;
+      flex: none;
+      display: flex;
+      flex-direction: column;
+      gap: clamp(0.85rem, 1.45vh, 1.1rem);
+      align-items: flex-start;
+      pointer-events: auto;
+    }
+    .present-slide--p1-exploration .exploration-wizard__variant-tabs--overlay.trade-off-switcher__tabs {
+      flex-wrap: nowrap;
+    }
+    .present-slide--p1-exploration .exploration-wizard__variant-tabs--overlay .trade-off-switcher__tab {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      flex: 0 0 auto;
+      min-width: 2.25rem;
+      width: 2.25rem;
+      height: 2.25rem;
+      padding: 0;
+      font-size: clamp(0.72rem, 1.35vh, 0.84rem);
+      text-align: center;
+      justify-content: center;
+      pointer-events: auto;
+      z-index: 1;
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: var(--radius-pill, 999px);
+      color: var(--ink-soft);
+      font-weight: 400;
+      box-shadow: 0 0 0 1px color-mix(in srgb, var(--ink) 12%, var(--line));
+      box-sizing: border-box;
+    }
+    .present-slide--p1-exploration .exploration-wizard__variant-tabs--overlay .trade-off-switcher__tab:not(.trade-off-switcher__tab--active):not([aria-selected="true"]):hover {
+      background: transparent;
+      color: var(--ink-soft);
+      box-shadow: 0 0 0 1px color-mix(in srgb, var(--ink) 22%, var(--line));
+    }
+    .present-slide--p1-exploration .exploration-wizard__variant-tabs--overlay .trade-off-switcher__tab--active,
+    .present-slide--p1-exploration .exploration-wizard__variant-tabs--overlay .trade-off-switcher__tab[aria-selected="true"] {
+      background: transparent;
+      color: var(--ink);
+      border-color: transparent;
+      font-weight: 700;
+      box-shadow: 0 0 0 2px color-mix(in srgb, var(--ink) 32%, var(--line));
+    }
+    .present-slide--p1-exploration .exploration-wizard__variant-tabs--overlay .trade-off-switcher__tab--active:hover,
+    .present-slide--p1-exploration .exploration-wizard__variant-tabs--overlay .trade-off-switcher__tab[aria-selected="true"]:hover {
+      background: transparent;
+      color: var(--ink);
+      box-shadow: 0 0 0 2px color-mix(in srgb, var(--ink) 40%, var(--line));
+    }
+    .present-slide--p1-exploration .exploration-wizard__variant-media {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .present-slide--p1-exploration .exploration-wizard__variant-media .wealth-hub-video-frame,
+    .present-slide--p1-exploration .exploration-wizard__variant-media video[data-lightbox] {
+      pointer-events: auto;
+    }
+    .present-slide--p1-exploration .exploration-wizard__variant-tab--chosen {
+      height: auto;
+      min-height: 2.25rem;
+      padding: 0.28rem 0 0.22rem;
+      flex-direction: column;
+      gap: 0.08rem;
+      line-height: 1;
+    }
+    .present-slide--p1-exploration .exploration-wizard__variant-tab-check {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 0.65rem;
+      height: 0.65rem;
+      color: var(--ink-soft);
+      pointer-events: none;
+      flex-shrink: 0;
+    }
+    .present-slide--p1-exploration .exploration-wizard__variant-media > .trade-off-switcher__media {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      max-height: none;
+    }
+    .present-slide--p1-exploration .exploration-wizard__variant-media .wealth-hub-video-frame {
+      height: 100%;
+      width: 100%;
+    }
+    .present-slide--p1-exploration .exploration-wizard__variant-media .wealth-hub-video-frame video {
+      height: 100%;
+      width: 100%;
+      object-fit: contain;
     }
     /* Compact enablement — title + stat only in deck */
     .present-slide .beat__enablement .enablement-surface__text,
@@ -283,7 +567,9 @@
     .present-slide .present-evidence-line,
     .present-slide .present-org-decision,
     .present-slide .device-story__text--present-risk,
-    .present-slide .beat__text--present {
+    .present-slide .beat__text--present,
+    .present-slide .beat__support--present,
+    .present-slide .hmw-prior-strip--present {
       display: block;
       -webkit-line-clamp: unset;
       overflow: visible;
@@ -304,6 +590,8 @@
     #present-source .why-proof__text--present,
     #present-source .proof-intro__lede--present,
     #present-source .beat__text--present,
+    #present-source .beat__stat--present,
+    #present-source .beat__support--present,
     #present-source .present-constraint-chips,
     #present-source .present-target-chips,
     #present-source .present-p4-intro-chips,
@@ -312,7 +600,9 @@
     #present-source .present-p4-toolkit-stat,
     #present-source .present-p4-toolkit-enablement,
     #present-source .present-evidence-line,
-    #present-source .present-org-decision {
+    #present-source .present-org-decision,
+    #present-source .present-darci,
+    #present-source .hmw-prior-strip--present {
       display: none;
     }
     .present-slide .lede--present-short,
@@ -366,15 +656,31 @@
     .present-slide--journey .track-key__title {
       font-size: var(--present-title-size);
     }
-    .present-slide.device-story__row--reverse:not(.present-slide--p3-parity) .device-story__copy,
-    .present-slide.mobile-journey__row--reverse:not(.present-slide--p3-parity) .device-story__copy {
-      order: 1;
+    /* Chapters 01–03 inner beats — visual left · copy right (intros + full-bleed exceptions unchanged) */
+    .present-slide.mobile-journey__row:not(.present-slide--p3-prototype) > .device-story__copy,
+    .present-slide.ai-journey__row > .device-story__copy,
+    .present-slide.device-story__row:not(.present-slide--p3-prototype) > .device-story__copy {
+      grid-column: 2;
+      order: unset;
     }
-    .present-slide.device-story__row--reverse:not(.present-slide--p3-parity) .device-story__visual,
-    .present-slide.device-story__row--reverse:not(.present-slide--p3-parity) .mobile-journey__visual,
-    .present-slide.device-story__row--reverse:not(.present-slide--p3-parity) .ai-journey__visual,
-    .present-slide.device-story__row--reverse:not(.present-slide--p3-parity) .tabs-compare {
-      order: 2;
+    .present-slide.mobile-journey__row:not(.present-slide--p3-prototype) > .device-story__visual,
+    .present-slide.mobile-journey__row:not(.present-slide--p3-prototype) > .mobile-journey__visual,
+    .present-slide.mobile-journey__row:not(.present-slide--p3-prototype) > .tabs-compare,
+    .present-slide.mobile-journey__row:not(.present-slide--p3-prototype) > .ai-journey__prototype,
+    .present-slide.mobile-journey__row:not(.present-slide--p3-prototype) > .mobile-journey__prototype,
+    .present-slide.ai-journey__row > .ai-journey__visual,
+    .present-slide.device-story__row:not(.present-slide--p3-prototype) > .device-story__visual {
+      grid-column: 1;
+      order: unset;
+    }
+    .present-slide--p3-shipped .device-story__row > .device-story__copy {
+      grid-column: 2;
+      order: unset;
+    }
+    .present-slide--p3-shipped .device-story__row > .tabs-compare,
+    .present-slide--p3-shipped .device-story__row > .mobile-journey__visual {
+      grid-column: 1;
+      order: unset;
     }
     .present-slide.ai-journey__row .ai-journey__visual--image,
     .present-slide.ai-journey__row .ai-journey__visual {
@@ -393,6 +699,7 @@
     .present-slide .device-story__visual,
     .present-slide .mobile-journey__visual:not(.mobile-journey__visual--tabs) {
       height: auto;
+      min-height: 0;
       max-height: min(58vh, 32rem);
       overflow: visible;
     }
@@ -491,7 +798,7 @@
     }
     .present-slide.period__head--split.present-slide--layout-viewport {
       display: grid;
-      grid-template-columns: minmax(0, 0.42fr) minmax(0, 0.58fr);
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
       gap: var(--present-split-gap);
       align-items: center;
       width: 100%;
@@ -506,7 +813,7 @@
       min-width: 0;
       display: flex;
       flex-direction: column;
-      gap: var(--present-copy-gap);
+      gap: var(--present-split-stack-gap);
     }
     .present-slide.period__head--split .period__head-visual {
       grid-column: 2;
@@ -684,7 +991,7 @@
     @media (max-width: 900px) {
       .present-slide--hero .hero-stage {
         align-items: stretch;
-        overflow-y: auto;
+        overflow: hidden;
       }
       .present-slide--hero .hero-split--stage {
         height: auto;
@@ -790,6 +1097,48 @@
       color: var(--ink);
       font-weight: 600;
     }
+    .present-slide--p1-intro .period__head-copy > .period__thesis--present + .present-darci {
+      margin-top: calc(var(--present-split-stack-gap-before-supporting) - var(--present-split-stack-gap));
+    }
+    .present-slide--p1-intro .present-darci {
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: clamp(0.42rem, 0.75vh, 0.58rem);
+      border: none;
+    }
+    .present-slide--p1-intro .present-darci__row {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 0.6rem;
+      align-items: baseline;
+      margin: 0;
+    }
+    .present-slide--p1-intro .present-darci__letter {
+      margin: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 1.65rem;
+      height: 1.65rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      line-height: 1;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--ink) 10%, transparent);
+      color: var(--ink-soft);
+    }
+    .present-slide--p1-intro .present-darci__body {
+      margin: 0;
+      font-size: var(--present-support-size);
+      line-height: 1.45;
+      color: var(--ink);
+    }
+    .present-slide--p1-intro .present-darci__label {
+      font-weight: 600;
+      color: var(--ink);
+      margin-right: 0.35rem;
+    }
     .present-slide--journey .why-hero__body {
       max-width: none;
     }
@@ -828,12 +1177,14 @@
       flex-direction: column;
       min-width: 0;
     }
-    .present-slide--p1-tradeoff-01 .trade-off-switcher__left,
     .present-slide--p1-tradeoff-01 .trade-off-switcher__right,
     .present-slide--p1-tradeoff-02 .trade-off-switcher__left,
     .present-slide--p1-tradeoff-02 .trade-off-switcher__right {
       gap: clamp(0.5rem, 1.1vh, 0.75rem);
       justify-content: flex-start;
+    }
+    .present-slide--p1-tradeoff-01 .trade-off-switcher__left.present-split__copy {
+      gap: var(--present-split-stack-gap);
     }
     .present-slide--p1-tradeoff-01 .trade-off-switcher__left .beat__eyebrow,
     .present-slide--p1-tradeoff-01 .trade-off-switcher__left .beat__title,
@@ -916,6 +1267,848 @@
       }
     }
 
+    /* Wealth Hub — journey pills (match trade-off / wizard tab styling) */
+    .present-slide--p1-baseline,
+    .present-slide--p1-co-creation,
+    .present-slide--p1-exploration,
+    .present-slide--p1-tradeoff-01,
+    .present-slide--p1-visual-system,
+    .present-slide--p1-outcomes {
+      --present-baseline-gap: var(--present-split-stack-gap);
+      --wh-journey-pill-fs: clamp(0.72rem, 1.35vh, 0.84rem);
+      --wh-journey-pill-pad-y: 0.4rem;
+      --wh-journey-pill-pad-x: 0.55rem;
+    }
+    .wealth-hub-journey {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.35rem;
+      margin: 0;
+      max-width: none;
+    }
+    .present-slide--p1-baseline .wealth-hub-journey,
+    .present-slide--p1-co-creation .wealth-hub-journey,
+    .present-slide--p1-exploration .wealth-hub-journey,
+    .present-slide--p1-tradeoff-01 .wealth-hub-journey,
+    .present-slide--p1-visual-system .wealth-hub-journey,
+    .present-slide--p1-outcomes .wealth-hub-journey {
+      margin: 0 0 clamp(0.35rem, 0.65vh, 0.5rem);
+    }
+
+    /* 50/50 slides — shared copy-column stack (Wealth Hub, period intros, mobile story) */
+    .present-split__copy,
+    .present-slide.period__head--split .period__head-copy,
+    .present-slide.mobile-journey__row:not(.present-slide--p3-prototype) > .device-story__copy,
+    .present-slide.device-story__row:not(.present-slide--p3-prototype) > .device-story__copy {
+      display: flex;
+      flex-direction: column;
+      gap: var(--present-split-stack-gap);
+      min-width: 0;
+    }
+    .present-split__copy > .beat__eyebrow,
+    .present-split__copy > .beat__title,
+    .present-split__copy > .beat__support,
+    .present-split__copy > .workflow-strip,
+    .present-split__copy > .beat__text,
+    .present-split__copy > .beat__stat,
+    .present-split__copy > .wh-phase-breakdown,
+    .present-split__copy > .device-story__eyebrow,
+    .present-split__copy > .device-story__title {
+      margin: 0;
+    }
+    .present-split__copy > .beat__title + .beat__support,
+    .present-split__copy > .device-story__title + .device-story__text--present {
+      margin-top: calc(var(--present-split-stack-gap-tight) - var(--present-split-stack-gap));
+    }
+    .present-slide .present-split__copy .beat__support {
+      font-size: var(--present-support-size);
+      font-weight: 500;
+      line-height: 1.45;
+      color: var(--ink);
+      letter-spacing: normal;
+      text-transform: none;
+      max-width: none;
+    }
+    .present-slide .present-split__copy .beat__support strong {
+      font-weight: 600;
+      color: var(--ink);
+    }
+    .present-split__copy > .chip-row,
+    .present-split__copy > .research-stickies,
+    .present-split__copy > .wh-phase-breakdown,
+    .present-split__copy > .wealth-hub-impact,
+    .present-split__copy > .wealth-hub-impact__quotes,
+    .present-split__copy > .wealth-hub-constraints,
+    .present-split__copy > .beat__enablement,
+    .present-split__copy > .trade-off--compact,
+    .present-split__copy > .beat__caption,
+    .present-split__copy > .tabs-compare,
+    .present-split__copy > .post-mvp-carousel,
+    .present-split__copy > .hmw-prior-strip--present {
+      margin-top: var(--present-split-stack-gap-before-supporting, clamp(0.65rem, 1.2vh, 1rem));
+    }
+    .present-slide--p1-co-creation .present-split__copy > .hmw-prior-strip--present,
+    .present-slide--p1-exploration .trade-off-switcher__left.present-split__copy > .ideate-conflict-tradeoff,
+    .present-slide--p1-tradeoff-01 .trade-off-switcher__left.present-split__copy > .ideate-conflict-tradeoff {
+      margin-top: clamp(0.75rem, 1.35vh, 1.1rem);
+    }
+    .wh-phase-breakdown {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 0.35rem;
+      font-size: clamp(0.75rem, 1.1vw, 0.86rem);
+      line-height: 1.35;
+      color: var(--ink-soft);
+    }
+    .wh-phase-breakdown__item {
+      display: flex;
+      align-items: baseline;
+      gap: 0.35rem;
+      padding: 0.2rem 0;
+      cursor: pointer;
+      border-radius: var(--radius-sm);
+    }
+    .wh-phase-breakdown__item--active {
+      color: var(--ink);
+      font-weight: 600;
+    }
+    .wh-phase-breakdown__n {
+      font-variant-numeric: tabular-nums;
+      font-weight: 700;
+      color: var(--muted);
+      flex-shrink: 0;
+    }
+    .wh-phase-breakdown__item--active .wh-phase-breakdown__n {
+      color: var(--accent-ink);
+    }
+    .wealth-hub-journey .workflow-strip__arrow {
+      font-size: 0.7rem;
+      color: var(--muted);
+      line-height: 1;
+      flex: 0 0 auto;
+    }
+    .wealth-hub-journey .workflow-strip__step {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      margin: 0;
+      padding: var(--wh-journey-pill-pad-y) var(--wh-journey-pill-pad-x);
+      border: var(--border);
+      border-radius: var(--radius-pill);
+      background: var(--paper);
+      font-family: inherit;
+      font-size: var(--wh-journey-pill-fs);
+      font-weight: 600;
+      line-height: 1.2;
+      color: var(--ink-soft);
+      white-space: nowrap;
+      transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    }
+    .wealth-hub-journey .workflow-strip__n {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 1.25rem;
+      height: 1.25rem;
+      padding: 0;
+      font-size: 0.65em;
+      font-weight: 700;
+      line-height: 1;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--ink) 10%, transparent);
+      color: var(--ink-soft);
+      flex-shrink: 0;
+    }
+    .wealth-hub-journey .workflow-strip__step--upcoming {
+      color: var(--ink-soft);
+      background: var(--paper);
+    }
+    .wealth-hub-journey .workflow-strip__step--done {
+      color: var(--accent-ink);
+      border-color: color-mix(in srgb, var(--accent) 40%, var(--line));
+      background: color-mix(in srgb, var(--accent-wash) 50%, var(--paper));
+    }
+    .wealth-hub-journey .workflow-strip__step--done .workflow-strip__n {
+      background: var(--accent-ink);
+      color: var(--accent);
+    }
+    .wealth-hub-journey .workflow-strip__step--active {
+      background: var(--accent);
+      color: var(--accent-ink);
+      border-color: var(--accent);
+      font-weight: 600;
+    }
+    .wealth-hub-journey .workflow-strip__step--active .workflow-strip__n {
+      background: var(--accent-ink);
+      color: var(--paper);
+    }
+
+    /* Wealth Hub beats — visual left · copy right (intro keeps head split as-is) */
+    .present-slide--p1-tradeoff-01 .trade-off-switcher--split.trade-off-switcher--visual-left .trade-off-switcher__right {
+      grid-column: 1;
+      grid-row: 1;
+    }
+    .present-slide--p1-tradeoff-01 .trade-off-switcher--split.trade-off-switcher--visual-left .trade-off-switcher__left {
+      grid-column: 2;
+      grid-row: 1;
+    }
+    .present-slide--p1-exploration .trade-off-switcher--split.trade-off-switcher--visual-left .exploration-wizard__right,
+    .present-slide--p1-exploration .trade-off-switcher--split.trade-off-switcher--visual-left .trade-off-switcher__right {
+      grid-column: 1;
+      grid-row: 1;
+    }
+    .present-slide--p1-exploration .trade-off-switcher--split.trade-off-switcher--visual-left .trade-off-switcher__left,
+    .present-slide--p1-visual-system .trade-off-switcher--split.trade-off-switcher--visual-left .trade-off-switcher__left {
+      grid-column: 2;
+      grid-row: 1;
+    }
+    .present-slide--p1-visual-system .trade-off-switcher--split.trade-off-switcher--visual-left .exploration-wizard__right,
+    .present-slide--p1-visual-system .trade-off-switcher--split.trade-off-switcher--visual-left .trade-off-switcher__right {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    /* Exploration / visual-system wizards */
+    .present-slide--p1-exploration.container,
+    .present-slide--p1-visual-system.container {
+      padding-top: 0;
+    }
+    .present-slide--p1-exploration.present-slide--layout-viewport,
+    .present-slide--p1-visual-system.present-slide--layout-viewport {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: calc(var(--present-vh) - var(--present-bottom));
+    }
+    .present-slide--p1-exploration .exploration-wizard--split,
+    .present-slide--p1-exploration .trade-off-switcher--split,
+    .present-slide--p1-visual-system .trade-off-switcher--split {
+      align-items: start;
+      gap: var(--present-split-gap);
+      width: 100%;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+    .present-slide--p1-exploration .exploration-wizard__right,
+    .present-slide--p1-visual-system .exploration-wizard__right {
+      align-self: start;
+    }
+    .present-slide--p1-exploration .trade-off-switcher--split.trade-off-switcher--visual-left .exploration-wizard__right,
+    .present-slide--p1-visual-system .trade-off-switcher--split.trade-off-switcher--visual-left .exploration-wizard__right {
+      margin-top: 7%;
+    }
+    .present-slide--p1-exploration .trade-off-switcher__left,
+    .present-slide--p1-visual-system .trade-off-switcher__left {
+      align-self: center;
+    }
+    .present-slide--p1-exploration .trade-off-switcher__left,
+    .present-slide--p1-visual-system .trade-off-switcher__left,
+    .present-slide--p1-tradeoff-01 .trade-off-switcher__left.present-split__copy {
+      justify-content: flex-start;
+      max-height: calc(var(--present-vh) - var(--present-bottom) - var(--present-top));
+      overflow: hidden;
+    }
+    .present-slide--p1-exploration .trade-off-switcher__left .beat__eyebrow,
+    .present-slide--p1-visual-system .trade-off-switcher__left .beat__eyebrow,
+    .present-slide--p1-exploration .trade-off-switcher__left .beat__title,
+    .present-slide--p1-visual-system .trade-off-switcher__left .beat__title,
+    .present-slide--p1-exploration .trade-off-switcher__left .chip-row,
+    .present-slide--p1-visual-system .trade-off-switcher__left .chip-row,
+    .present-slide--p1-exploration .trade-off-switcher__left .beat__subtitle,
+    .present-slide--p1-visual-system .trade-off-switcher__left .beat__subtitle,
+    .present-slide--p1-exploration .trade-off-switcher__left .workflow-strip,
+    .present-slide--p1-visual-system .trade-off-switcher__left .workflow-strip,
+    .present-slide--p1-exploration .trade-off-switcher__left .wealth-hub-principles,
+    .present-slide--p1-visual-system .trade-off-switcher__left .wealth-hub-principles {
+      margin: 0;
+    }
+    .present-slide--p1-exploration .trade-off-switcher__left .beat__title,
+    .present-slide--p1-visual-system .trade-off-switcher__left .beat__title,
+    .present-slide--p1-tradeoff-01 .trade-off-switcher__left .beat__title {
+      max-width: none;
+      line-height: 1.18;
+      font-size: var(--present-title-size);
+    }
+    .present-slide--p1-exploration .trade-off-switcher__left .beat__subtitle,
+    .present-slide--p1-visual-system .trade-off-switcher__left .beat__subtitle {
+      margin-top: clamp(0.25rem, 0.5vh, 0.4rem);
+      font-size: var(--present-eyebrow-size);
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--muted);
+      line-height: 1.25;
+    }
+    .present-slide--p1-exploration .trade-off-switcher__left .beat__needs--jtbd,
+    .present-slide--p1-visual-system .trade-off-switcher__left .beat__needs--jtbd {
+      margin: 0;
+      font-size: clamp(0.72rem, 1.05vh, 0.82rem);
+      line-height: 1.35;
+    }
+    .present-slide--p1-exploration .trade-off-switcher__left .wealth-hub-principles,
+    .present-slide--p1-visual-system .trade-off-switcher__left .wealth-hub-principles {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(0.25rem, 0.5vw, 0.4rem);
+    }
+    .present-slide--p1-exploration .trade-off-switcher__left .wealth-hub-principle-card,
+    .present-slide--p1-visual-system .trade-off-switcher__left .wealth-hub-principle-card {
+      padding: clamp(0.35rem, 0.65vw, 0.5rem);
+    }
+    .present-slide--p1-exploration .trade-off-switcher__left .wealth-hub-principle-card__text,
+    .present-slide--p1-visual-system .trade-off-switcher__left .wealth-hub-principle-card__text {
+      font-size: clamp(0.65rem, 0.95vh, 0.72rem);
+      line-height: 1.3;
+    }
+    .present-slide--p1-exploration .exploration-wizard__right,
+    .present-slide--p1-visual-system .exploration-wizard__right {
+      display: flex;
+      flex-direction: column;
+      gap: clamp(0.5rem, 1vh, 0.75rem);
+      min-width: 0;
+    }
+    .present-slide--p1-exploration .exploration-wizard__controls,
+    .present-slide--p1-visual-system .exploration-wizard__controls {
+      width: 100%;
+      flex: 0 0 auto;
+      flex-shrink: 0;
+    }
+    .present-slide--p1-exploration .exploration-wizard__stepper,
+    .present-slide--p1-visual-system .exploration-wizard__stepper {
+      display: flex;
+      align-items: center;
+      gap: 0.15rem;
+      width: 100%;
+    }
+    .present-slide--p1-exploration .exploration-wizard__stepper .trade-off-switcher__tab,
+    .present-slide--p1-visual-system .exploration-wizard__stepper .trade-off-switcher__tab {
+      flex: 1 1 0;
+      min-width: 0;
+      font-size: var(--wh-journey-pill-fs, clamp(0.72rem, 1.35vh, 0.84rem));
+      padding: var(--wh-journey-pill-pad-y, 0.4rem) 0.35rem;
+      pointer-events: auto;
+      cursor: pointer;
+      text-align: center;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.25rem;
+    }
+    .present-slide--p1-exploration .exploration-wizard__tab-n,
+    .present-slide--p1-visual-system .exploration-wizard__tab-n {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 1.25rem;
+      height: 1.25rem;
+      font-size: 0.65em;
+      font-weight: 700;
+      line-height: 1;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--ink) 10%, transparent);
+      color: var(--ink-soft);
+      flex-shrink: 0;
+    }
+    .present-slide--p1-exploration .exploration-wizard__stepper .trade-off-switcher__tab--active .exploration-wizard__tab-n,
+    .present-slide--p1-visual-system .exploration-wizard__stepper .trade-off-switcher__tab--active .exploration-wizard__tab-n,
+    .present-slide--p1-exploration .exploration-wizard__stepper .trade-off-switcher__tab[aria-selected="true"] .exploration-wizard__tab-n,
+    .present-slide--p1-visual-system .exploration-wizard__stepper .trade-off-switcher__tab[aria-selected="true"] .exploration-wizard__tab-n {
+      background: var(--accent-ink);
+      color: var(--paper);
+    }
+    .present-slide--p1-exploration .exploration-wizard__panel-principles,
+    .present-slide--p1-visual-system .exploration-wizard__panel-principles {
+      display: flex;
+      flex-direction: column;
+      gap: clamp(0.35rem, 0.7vh, 0.5rem);
+      height: 100%;
+      min-height: var(--exploration-asset-h, min(40vh, 22rem));
+      overflow: hidden;
+    }
+    .present-slide--p1-exploration .exploration-wizard__panel-principles .beat__needs--jtbd,
+    .present-slide--p1-visual-system .exploration-wizard__panel-principles .beat__needs--jtbd {
+      margin: 0;
+      font-size: clamp(0.72rem, 1.05vh, 0.82rem);
+      line-height: 1.35;
+    }
+    .present-slide--p1-exploration .exploration-wizard__panel-principles .wealth-hub-principles,
+    .present-slide--p1-visual-system .exploration-wizard__panel-principles .wealth-hub-principles {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(0.25rem, 0.5vw, 0.4rem);
+      margin: 0;
+    }
+    .present-slide--p1-exploration .exploration-wizard__panel-principles .wealth-hub-principle-card,
+    .present-slide--p1-visual-system .exploration-wizard__panel-principles .wealth-hub-principle-card {
+      padding: clamp(0.35rem, 0.65vw, 0.5rem);
+    }
+    .present-slide--p1-exploration .exploration-wizard__panel-principles .wealth-hub-principle-card__text,
+    .present-slide--p1-visual-system .exploration-wizard__panel-principles .wealth-hub-principle-card__text {
+      font-size: clamp(0.62rem, 0.9vh, 0.7rem);
+      line-height: 1.28;
+    }
+    .present-slide--p1-exploration .exploration-wizard__asset-slot--stack,
+    .present-slide--p1-visual-system .exploration-wizard__asset-slot--stack {
+      display: flex;
+      flex-direction: column;
+      gap: clamp(0.35rem, 0.65vh, 0.5rem);
+      height: var(--exploration-asset-h, min(40vh, 22rem));
+    }
+    .present-slide--p1-exploration .exploration-wizard__asset-slot--stack .exploration-wizard__asset,
+    .present-slide--p1-visual-system .exploration-wizard__asset-slot--stack .exploration-wizard__asset {
+      flex: 1 1 0;
+      min-height: 0;
+    }
+    .present-slide--p1-exploration .exploration-wizard__panel-principles .beat__subtitle,
+    .present-slide--p1-visual-system .exploration-wizard__panel-principles .beat__subtitle {
+      margin: 0;
+      font-size: var(--present-eyebrow-size);
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .present-slide--p1-exploration .exploration-wizard__arrow-static,
+    .present-slide--p1-visual-system .exploration-wizard__arrow-static {
+      flex: 0 0 auto;
+      color: var(--muted);
+      font-size: clamp(0.7rem, 1.2vh, 0.8rem);
+      line-height: 1;
+      user-select: none;
+    }
+    .present-slide--p1-exploration .exploration-wizard__stage,
+    .present-slide--p1-visual-system .exploration-wizard__stage {
+      position: relative;
+      width: 100%;
+      --exploration-asset-h: min(40vh, 22rem);
+      --exploration-caption-block: clamp(2.75rem, 5.5vh, 3.5rem);
+      flex: 0 0 auto;
+      flex-shrink: 0;
+    }
+    .present-slide--p1-exploration .exploration-wizard__step,
+    .present-slide--p1-visual-system .exploration-wizard__step {
+      display: none;
+      flex-direction: column;
+      gap: clamp(0.35rem, 0.7vh, 0.5rem);
+    }
+    .present-slide--p1-exploration .exploration-wizard__step.is-active,
+    .present-slide--p1-visual-system .exploration-wizard__step.is-active {
+      display: flex;
+    }
+    .present-slide--p1-exploration .exploration-wizard__step[hidden],
+    .present-slide--p1-visual-system .exploration-wizard__step[hidden] {
+      display: none !important;
+    }
+    .present-slide--p1-exploration .exploration-wizard__caption,
+    .present-slide--p1-visual-system .exploration-wizard__caption {
+      margin: 0;
+      font-size: clamp(0.78rem, 1.45vh, 0.88rem);
+      line-height: 1.35;
+      color: var(--ink-soft);
+    }
+    .present-slide--p1-exploration .phase-wizard__stepper--secondary .exploration-wizard__tab-n,
+    .present-slide--p1-visual-system .phase-wizard__stepper--secondary .exploration-wizard__tab-n {
+      display: none !important;
+    }
+    .present-slide--p1-exploration .phase-wizard__stepper--secondary,
+    .present-slide--p1-visual-system .phase-wizard__stepper--secondary {
+      gap: 0.15rem;
+      background: transparent;
+      color: inherit;
+    }
+    .present-slide--p1-exploration .phase-wizard__stepper--secondary .trade-off-switcher__tab,
+    .present-slide--p1-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab {
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: var(--radius-pill, 999px);
+      color: var(--ink-soft);
+      font-weight: 400;
+      box-shadow: 0 0 0 1px color-mix(in srgb, var(--ink) 12%, var(--line));
+      box-sizing: border-box;
+      min-height: calc(var(--wh-journey-pill-pad-y, 0.4rem) * 2 + 1.35em);
+    }
+    .present-slide--p1-exploration .phase-wizard__stepper--secondary .trade-off-switcher__tab:not(.trade-off-switcher__tab--active):not([aria-selected="true"]):hover,
+    .present-slide--p1-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab:not(.trade-off-switcher__tab--active):not([aria-selected="true"]):hover {
+      background: transparent;
+      color: var(--ink-soft);
+      box-shadow: 0 0 0 1px color-mix(in srgb, var(--ink) 22%, var(--line));
+    }
+    .present-slide--p1-exploration .phase-wizard__stepper--secondary .trade-off-switcher__tab--active,
+    .present-slide--p1-exploration .phase-wizard__stepper--secondary .trade-off-switcher__tab[aria-selected="true"],
+    .present-slide--p1-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab--active,
+    .present-slide--p1-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab[aria-selected="true"] {
+      background: transparent;
+      color: var(--ink);
+      border-color: transparent;
+      font-weight: 700;
+      box-shadow: 0 0 0 2px color-mix(in srgb, var(--ink) 32%, var(--line));
+    }
+    .present-slide--p1-exploration .phase-wizard__stepper--secondary .trade-off-switcher__tab--active:hover,
+    .present-slide--p1-exploration .phase-wizard__stepper--secondary .trade-off-switcher__tab[aria-selected="true"]:hover,
+    .present-slide--p1-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab--active:hover,
+    .present-slide--p1-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab[aria-selected="true"]:hover {
+      background: transparent;
+      color: var(--ink);
+      box-shadow: 0 0 0 2px color-mix(in srgb, var(--ink) 40%, var(--line));
+    }
+    .present-slide--p1-exploration .phase-wizard__stepper--secondary .trade-off-switcher__tab:focus-visible,
+    .present-slide--p1-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+    .present-slide--p1-exploration .phase-wizard__stepper--secondary .trade-off-switcher__tab--active:focus-visible,
+    .present-slide--p1-exploration .phase-wizard__stepper--secondary .trade-off-switcher__tab[aria-selected="true"]:focus-visible,
+    .present-slide--p1-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab--active:focus-visible,
+    .present-slide--p1-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab[aria-selected="true"]:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+    .present-slide--p1-exploration .exploration-wizard__variant-tabs--overlay.phase-wizard__stepper--secondary {
+      flex-direction: column;
+      flex-wrap: nowrap;
+      align-items: flex-start;
+      gap: clamp(0.85rem, 1.45vh, 1.1rem);
+    }
+
+    /* Trade-off 01 — concept tabs (visual column) match ideate step-wizard */
+    .present-slide--p1-tradeoff-01 .tradeoff-01__concept-stepper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(0.85rem, 1.45vh, 1.1rem);
+      width: 100%;
+      background: transparent;
+      color: inherit;
+    }
+    .present-slide--p1-tradeoff-01 .tradeoff-01__concept-stepper.phase-wizard__stepper--secondary {
+      gap: clamp(0.85rem, 1.45vh, 1.1rem);
+    }
+    .present-slide--p1-tradeoff-01 .tradeoff-01__concept-stepper .trade-off-switcher__tab {
+      position: relative;
+      flex: 1 1 0;
+      min-width: 0;
+      font-size: var(--wh-journey-pill-fs, clamp(0.72rem, 1.35vh, 0.84rem));
+      padding: var(--wh-journey-pill-pad-y, 0.4rem) clamp(0.65rem, 1.1vw, 0.85rem);
+      pointer-events: auto;
+      cursor: pointer;
+      text-align: center;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.25rem;
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: var(--radius-pill, 999px);
+      color: var(--ink-soft);
+      font-weight: 400;
+      box-shadow: 0 0 0 1px color-mix(in srgb, var(--ink) 12%, var(--line));
+      box-sizing: border-box;
+    }
+    .present-slide--p1-tradeoff-01 .tradeoff-01__concept-stepper .trade-off-switcher__tab:not(.trade-off-switcher__tab--active):not([aria-selected="true"]):hover {
+      background: transparent;
+      color: var(--ink-soft);
+      box-shadow: 0 0 0 1px color-mix(in srgb, var(--ink) 22%, var(--line));
+    }
+    .present-slide--p1-tradeoff-01 .tradeoff-01__concept-stepper .trade-off-switcher__tab--active,
+    .present-slide--p1-tradeoff-01 .tradeoff-01__concept-stepper .trade-off-switcher__tab[aria-selected="true"] {
+      background: transparent;
+      color: var(--ink);
+      border-color: transparent;
+      font-weight: 700;
+      box-shadow: 0 0 0 2px color-mix(in srgb, var(--ink) 32%, var(--line));
+    }
+    .present-slide--p1-tradeoff-01 .tradeoff-01__concept-stepper .trade-off-switcher__tab--active:hover,
+    .present-slide--p1-tradeoff-01 .tradeoff-01__concept-stepper .trade-off-switcher__tab[aria-selected="true"]:hover {
+      background: transparent;
+      color: var(--ink);
+      box-shadow: 0 0 0 2px color-mix(in srgb, var(--ink) 40%, var(--line));
+    }
+    .present-slide--p1-tradeoff-01 .tradeoff-01__concept-stepper .trade-off-switcher__tab:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+    .present-slide--p1-tradeoff-01 .tradeoff-01__concept-tab-check {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 0.875rem;
+      height: 0.875rem;
+      margin-left: 0.12rem;
+      flex-shrink: 0;
+      color: var(--ink-soft);
+      pointer-events: none;
+    }
+
+    .present-slide--p1-exploration .exploration-wizard__stage {
+      --exploration-wireframe-h: min(55.2vh, 30.36rem);
+      --exploration-stage-block-h: calc(
+        var(--exploration-wireframe-h) + var(--exploration-caption-block) + clamp(0.35rem, 0.7vh, 0.5rem)
+      );
+      min-height: var(--exploration-stage-block-h);
+      height: var(--exploration-stage-block-h);
+      margin-top: 0;
+    }
+    .present-slide--p1-visual-system .exploration-wizard__stage {
+      --exploration-stage-block-h: calc(
+        var(--exploration-asset-h) + var(--exploration-caption-block) + clamp(0.35rem, 0.7vh, 0.5rem)
+      );
+      min-height: var(--exploration-stage-block-h);
+      height: var(--exploration-stage-block-h);
+      margin-top: 0;
+    }
+    .present-slide--p1-exploration .exploration-wizard__step--stacked-caption,
+    .present-slide--p1-visual-system .exploration-wizard__step--stacked-caption {
+      position: absolute;
+      inset: 0;
+      align-items: center;
+      width: 100%;
+      min-height: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+    .present-slide--p1-exploration .exploration-wizard__step--stacked-caption.is-active,
+    .present-slide--p1-visual-system .exploration-wizard__step--stacked-caption.is-active {
+      z-index: 1;
+    }
+    .present-slide--p1-exploration .exploration-wizard__step--stacked-caption .exploration-wizard__asset-slot,
+    .present-slide--p1-visual-system .exploration-wizard__step--stacked-caption .exploration-wizard__asset-slot {
+      flex: 0 0 var(--exploration-asset-h);
+      width: 100%;
+      height: var(--exploration-asset-h);
+      min-height: var(--exploration-asset-h);
+      max-height: var(--exploration-asset-h);
+    }
+    /* Wireframes step — 20% larger video area, top-aligned, centered */
+    .present-slide--p1-exploration .exploration-wizard__step[data-step-panel="4"] .exploration-wizard__asset-slot--wireframe-compare {
+      --exploration-wireframe-h: min(55.2vh, 30.36rem);
+      flex: 0 0 var(--exploration-wireframe-h);
+      height: var(--exploration-wireframe-h);
+      min-height: var(--exploration-wireframe-h);
+      max-height: var(--exploration-wireframe-h);
+      overflow: visible;
+    }
+    .present-slide--p1-exploration .exploration-wizard__step[data-step-panel="4"] .exploration-wizard__variant-media {
+      align-items: flex-start;
+      justify-content: center;
+    }
+    .present-slide--p1-exploration .exploration-wizard__step[data-step-panel="4"] .exploration-wizard__variant-media > .trade-off-switcher__media {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+    }
+    .present-slide--p1-exploration .exploration-wizard__step[data-step-panel="4"] .exploration-wizard__variant-media > .trade-off-switcher__media {
+      width: 100%;
+      height: 100%;
+    }
+    .present-slide--p1-exploration .exploration-wizard__step[data-step-panel="4"] .exploration-wizard__variant-media .wealth-hub-video-frame.exploration-wizard__asset {
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      max-height: var(--exploration-wireframe-h);
+      margin-inline: auto;
+      overflow: visible;
+      align-items: flex-start;
+      justify-content: center;
+    }
+    .present-slide--p1-exploration .exploration-wizard__step[data-step-panel="4"] .exploration-wizard__variant-media .wealth-hub-video-frame video {
+      display: block;
+      width: 100%;
+      height: 100%;
+      max-height: var(--exploration-wireframe-h);
+      object-fit: contain;
+      object-position: top center;
+    }
+    .present-slide--p1-exploration .exploration-wizard__variant-media .trade-off-switcher__media[hidden] {
+      display: none !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
+    }
+    .present-slide--p1-exploration .exploration-wizard__step--stacked-caption .exploration-wizard__panel-principles {
+      width: 100%;
+      flex: 0 0 var(--exploration-asset-h);
+      height: var(--exploration-asset-h);
+      min-height: var(--exploration-asset-h);
+      max-height: var(--exploration-asset-h);
+      overflow: hidden;
+    }
+    .present-slide--p1-exploration .exploration-wizard__caption--below,
+    .present-slide--p1-visual-system .exploration-wizard__caption--below {
+      text-align: center;
+      width: 100%;
+      max-width: none;
+      margin-top: 0;
+      flex: 0 0 var(--exploration-caption-block);
+      min-height: var(--exploration-caption-block);
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      box-sizing: border-box;
+      padding-inline: 0;
+    }
+    .present-slide--p1-exploration .exploration-wizard__asset.wealth-hub-video-frame {
+      border: none;
+      background: transparent;
+      border-radius: 0;
+    }
+    .present-slide--p1-exploration .exploration-wizard__asset--img,
+    .present-slide--p1-visual-system .exploration-wizard__asset--img,
+    .present-slide--p1-visual-system .exploration-wizard__asset--colour-map {
+      object-fit: contain;
+      object-position: center;
+      height: 100%;
+      width: 100%;
+      max-height: var(--exploration-asset-h, min(40vh, 22rem));
+    }
+    .present-slide--p1-exploration .exploration-wizard__asset-slot:has([data-lightbox]),
+    .present-slide--p1-visual-system .exploration-wizard__asset-slot:has([data-lightbox]) {
+      cursor: zoom-in;
+    }
+    .present-slide--p1-exploration .exploration-wizard__asset img[data-lightbox],
+    .present-slide--p1-exploration .exploration-wizard__asset video[data-lightbox],
+    .present-slide--p1-exploration .exploration-wizard__asset-slot--wireframe-compare .exploration-wizard__variant-media {
+      cursor: default;
+      pointer-events: none;
+    }
+    .present-slide--p1-exploration .exploration-wizard__asset-slot--wireframe-compare .exploration-wizard__variant-media video[data-lightbox] {
+      cursor: zoom-in;
+      pointer-events: auto;
+    }
+    .present-slide--p1-exploration .exploration-wizard__asset-slot img[data-lightbox],
+    .present-slide--p1-exploration .exploration-wizard__asset-slot video[data-lightbox] {
+      pointer-events: auto;
+    }
+    .present-slide--p1-exploration .exploration-wizard__asset-slot,
+    .present-slide--p1-visual-system .exploration-wizard__asset-slot {
+      width: 100%;
+      height: var(--exploration-asset-h);
+      min-height: var(--exploration-asset-h);
+    }
+    .present-slide--p1-exploration .exploration-wizard__asset,
+    .present-slide--p1-visual-system .exploration-wizard__asset {
+      width: 100%;
+      height: 100%;
+      min-height: var(--exploration-asset-h);
+      max-height: var(--exploration-asset-h);
+      margin: 0;
+      aspect-ratio: auto;
+    }
+    .present-slide--p1-exploration .exploration-wizard__step[data-step-panel="4"] .exploration-wizard__variant-media .exploration-wizard__asset {
+      min-height: 0;
+      max-height: var(--exploration-wireframe-h);
+      height: var(--exploration-wireframe-h);
+    }
+    .present-slide--p1-exploration .exploration-wizard__asset.placeholder-image,
+    .present-slide--p1-visual-system .exploration-wizard__asset.placeholder-image {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .present-slide--p1-exploration .exploration-wizard__asset.wealth-hub-video-frame,
+    .present-slide--p1-visual-system .exploration-wizard__asset.wealth-hub-video-frame {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .present-slide--p1-exploration .exploration-wizard__asset video,
+    .present-slide--p1-visual-system .exploration-wizard__asset video {
+      width: 100%;
+      height: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+    .placeholder-image {
+      background: #f5f5f5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: min(40vh, 22rem);
+      aspect-ratio: 16 / 10;
+      color: var(--muted);
+      font-size: clamp(0.68rem, 1.2vh, 0.78rem);
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-align: center;
+      border: 1px dashed var(--line);
+      border-radius: var(--radius-sm);
+    }
+
+    /* Craft grid — 2×2 visual execution */
+    .present-slide--p1-craft.period-split {
+      align-items: center;
+      gap: var(--present-split-gap);
+    }
+    .present-slide--p1-craft .period-split__main {
+      gap: clamp(0.5rem, 1.1vh, 0.75rem);
+    }
+    .present-slide--p1-craft .craft-grid-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 0;
+    }
+    .present-slide--p1-craft .craft-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(0.45rem, 0.9vw, 0.65rem);
+      width: 100%;
+      max-width: min(100%, 36.4rem);
+      transform: scale(1.3);
+      transform-origin: center center;
+    }
+    .present-slide--p1-craft .craft-grid__cell {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      min-width: 0;
+    }
+    .present-slide--p1-craft .craft-grid__label {
+      margin: 0;
+      font-size: clamp(0.58rem, 0.95vh, 0.68rem);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      line-height: 1.2;
+    }
+    .present-slide--p1-craft .craft-grid__sublabel {
+      margin: 0;
+      font-size: clamp(0.58rem, 0.9vh, 0.65rem);
+      color: var(--ink-soft);
+      line-height: 1.2;
+    }
+    .present-slide--p1-craft .placeholder-image {
+      min-height: min(23.4vh, 12.35rem);
+      aspect-ratio: 4 / 3;
+      font-size: clamp(0.55rem, 0.9vh, 0.65rem);
+    }
+    @media (max-width: 900px) {
+      .present-slide--p1-exploration.present-slide--layout-viewport,
+      .present-slide--p1-craft.present-slide--layout-viewport {
+        justify-content: flex-start;
+        padding-top: var(--present-top);
+      }
+      .present-slide--p1-exploration .trade-off-switcher--split {
+        grid-template-columns: 1fr;
+      }
+      .present-slide--p1-exploration .trade-off-switcher--split.trade-off-switcher--visual-left .exploration-wizard__right,
+      .present-slide--p1-exploration .trade-off-switcher--split.trade-off-switcher--visual-left .trade-off-switcher__right,
+      .present-slide--p1-tradeoff-01 .trade-off-switcher--split.trade-off-switcher--visual-left .trade-off-switcher__right {
+        grid-column: 1;
+        grid-row: 1;
+      }
+      .present-slide--p1-exploration .trade-off-switcher--split.trade-off-switcher--visual-left .trade-off-switcher__left,
+      .present-slide--p1-tradeoff-01 .trade-off-switcher--split.trade-off-switcher--visual-left .trade-off-switcher__left {
+        grid-column: 1;
+        grid-row: 2;
+      }
+      .present-slide--p1-craft.period-split {
+        grid-template-columns: 1fr;
+      }
+    }
+
     /* After MVP launch — before/after compare fills available height */
     .present-slide--p1-outcomes {
       --compare-v-margin: var(--present-v-margin);
@@ -942,10 +2135,10 @@
     .present-slide--p1-outcomes.period-split {
       width: 100%;
       min-height: 0;
-      height: 100%;
+      height: auto;
       align-items: center;
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      gap: clamp(1rem, 2vw, var(--sp-xl));
+      gap: var(--present-split-gap);
     }
     .present-slide--p1-outcomes .period-split__visual {
       display: flex;
@@ -991,16 +2184,33 @@
       object-fit: cover;
       object-position: top center;
     }
+    .present-slide--p1-outcomes .wealth-hub-impact__quotes {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(0.35rem, 0.65vh, 0.55rem);
+      margin-top: clamp(0.25rem, 0.5vh, 0.4rem);
+    }
+    .present-slide--p1-outcomes .wealth-hub-impact__quote {
+      margin: 0;
+      padding: clamp(0.35rem, 0.65vh, 0.5rem);
+    }
+    .present-slide--p1-outcomes .wealth-hub-impact__quote p {
+      font-size: clamp(0.72rem, 1.05vw, 0.84rem);
+      line-height: 1.36;
+      font-weight: 500;
+    }
+    .present-slide--p1-outcomes .period-split__main,
+    .present-slide--p1-outcomes .period-split__visual {
+      align-self: center;
+      height: auto;
+    }
     .present-slide--p1-outcomes .period-split__main {
       min-height: 0;
       max-height: var(--compare-fit-h);
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-      align-self: center;
+      overflow: hidden;
     }
     @media (max-width: 900px) {
       .present-slide--p1-outcomes {
-        overflow-y: auto;
+        overflow: hidden;
         align-items: flex-start;
       }
       .present-slide--p1-outcomes.period-split {
@@ -1022,9 +2232,13 @@
       }
     }
 
-    .present-slide--p1-baseline .period-split__main {
-      --present-baseline-gap: clamp(0.38rem, 0.7vh, 0.55rem);
-      gap: var(--present-baseline-gap);
+    .present-slide--p1-baseline .period-split__main.present-split__copy,
+    .present-slide--p1-co-creation .period-split__main.present-split__copy,
+    .present-slide--p1-outcomes .period-split__main.present-split__copy {
+      gap: var(--present-split-stack-gap);
+    }
+    .present-slide--p1-outcomes .period-split__main.present-split__copy > .beat__title + .beat__support {
+      margin-top: calc(var(--present-split-stack-gap-tight) - var(--present-split-stack-gap));
     }
     .present-slide--p1-baseline .period-split__main > * {
       margin: 0;
@@ -1104,15 +2318,17 @@
       transform-origin: center center;
     }
 
-    /* Co-creation — JTBD + design principle cards */
+    /* Co-creation — synthesis stickies */
     .present-slide--p1-co-creation .period-split__main {
-      gap: clamp(0.35rem, 0.65vh, 0.5rem);
+      align-self: center;
       max-height: calc(var(--present-vh) - var(--present-bottom) - var(--present-top));
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
+      overflow: hidden;
+    }
+    .present-slide--p1-co-creation .period-split__visual {
+      align-self: center;
     }
     .present-slide--p1-co-creation .beat__subtitle {
-      margin-top: clamp(0.35rem, 0.65vh, 0.5rem);
+      margin-top: clamp(0.25rem, 0.45vh, 0.4rem);
       margin-bottom: 0;
       font-size: var(--present-eyebrow-size);
       font-weight: 600;
@@ -1161,9 +2377,20 @@
       line-height: 1.35;
       color: var(--ink-soft);
     }
+    .present-slide--p1-co-creation .period-split__visual {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .present-slide--p1-co-creation .period-split__visual img {
+      width: 100%;
+      max-height: min(58vh, 32rem);
+      object-fit: contain;
+    }
     .present-slide--p1-co-creation .research-stickies {
       margin: 0;
-      gap: clamp(0.35rem, 0.65vw, 0.5rem);
+      gap: clamp(0.4rem, 0.75vw, 0.55rem);
     }
     .present-slide--p1-co-creation .research-sticky {
       padding: clamp(0.4rem, 0.75vw, 0.55rem);
@@ -1172,52 +2399,73 @@
       font-size: clamp(0.65rem, 0.98vw, 0.76rem);
       line-height: 1.32;
     }
+
+    /* Co-creation — prioritised HMW row (present) */
+    .present-slide--p1-co-creation .research-stickies--hmw-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(0.55rem, 1vw, 0.75rem);
+      margin: 0;
+      align-items: stretch;
+    }
+    .present-slide--p1-co-creation .research-stickies--hmw-row .research-sticky {
+      height: 100%;
+      padding: clamp(0.65rem, 1.1vh, 0.85rem) clamp(0.55rem, 0.9vw, 0.7rem);
+    }
+    .present-slide--p1-co-creation .research-stickies--hmw-row .research-sticky p {
+      font-size: clamp(0.72rem, 1.05vw, 0.84rem);
+      line-height: 1.36;
+      font-weight: 500;
+    }
     @media (max-width: 900px) {
       .wealth-hub-principles {
         grid-template-columns: 1fr;
       }
     }
 
-    /* Colour map — viewport split, centered visual */
-    .present-slide--p1-colour-map {
-      min-height: var(--present-vh);
-      max-height: var(--present-vh);
-      overflow: hidden;
-      padding-block: var(--present-top);
-      padding-inline: var(--present-inset);
-      padding-bottom: var(--present-bottom);
-      box-sizing: border-box;
-      display: flex;
-      align-items: center;
+    .present-slide--p1-visual-system .exploration-wizard__asset--colour-map {
+      border-radius: var(--radius-sm);
     }
-    .present-slide--p1-colour-map.period-split {
+    .present-slide--p1-visual-system .exploration-wizard__right,
+    .present-slide--p1-visual-system .exploration-wizard__stage,
+    .present-slide--p1-visual-system .exploration-wizard__step--stacked-caption {
       width: 100%;
-      min-height: 0;
-      height: 100%;
-      align-items: center;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      gap: var(--present-split-gap);
+      max-width: 100%;
     }
-    .present-slide--p1-colour-map .period-split__visual {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0;
-      padding-left: 5%;
-      box-sizing: border-box;
+    .present-slide--p1-visual-system .exploration-wizard__step--stacked-caption {
+      align-items: stretch;
     }
-    .present-slide--p1-colour-map .period-split__visual img {
-      width: 100%;
-      max-height: min(62vh, 34rem);
-      object-fit: contain;
-    }
-    .present-slide--p1-colour-map .period-split__main {
-      min-height: 0;
-      max-height: calc(var(--present-vh) - var(--present-bottom) - var(--present-top));
-      overflow-y: auto;
+    .present-slide--p1-visual-system .exploration-wizard__step--stacked-caption .exploration-wizard__asset-slot {
       display: flex;
       flex-direction: column;
-      gap: var(--present-copy-gap);
+      align-items: stretch;
+      justify-content: flex-start;
+      width: 100%;
+      max-width: 100%;
+      align-self: stretch;
+    }
+    .present-slide--p1-visual-system .exploration-wizard__step--stacked-caption .exploration-wizard__asset-slot .exploration-wizard__asset--img {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      min-height: 0;
+      max-height: var(--exploration-asset-h);
+      object-fit: contain;
+      object-position: top center;
+      box-sizing: border-box;
+    }
+    .present-slide--p1-visual-system .trade-off-switcher__left.present-split__copy {
+      justify-content: flex-start;
+      max-height: calc(var(--present-vh) - var(--present-bottom) - var(--present-top));
+      overflow: hidden;
+    }
+    .present-slide--p1-visual-system .trade-off-switcher__left {
+      max-height: calc(var(--present-vh) - var(--present-bottom) - var(--present-top));
+      overflow: visible;
+    }
+    .present-slide--p1-visual-system .beat__enablement {
+      margin: 0;
     }
 
     .present-slide--gap-01,
@@ -1893,8 +3141,7 @@
       grid-column: 2;
       min-height: 0;
       max-height: var(--proto-fit-h);
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
+      overflow: hidden;
       align-self: center;
       width: 100%;
     }
@@ -1922,7 +3169,7 @@
     }
     @media (max-width: 900px) {
       .present-slide--p3-prototype {
-        overflow-y: auto;
+        overflow: hidden;
         align-items: flex-start;
       }
       .present-slide--p3-prototype.mobile-journey__row {
@@ -1944,8 +3191,8 @@
         margin-inline: auto;
       }
       .present-slide--p3-prototype .device-story__copy {
-        max-height: none;
-        overflow: visible;
+        max-height: var(--proto-fit-h);
+        overflow: hidden;
       }
     }
 
@@ -2192,6 +3439,7 @@
       box-sizing: border-box;
     }
     .present-slide--p4-lab-tools .ai-journey__tools-head {
+      grid-column: 2;
       margin-bottom: 0;
       max-width: none;
       align-self: center;
@@ -2201,6 +3449,7 @@
       gap: var(--present-copy-gap);
     }
     .present-slide--p4-lab-tools .ai-tools-grid {
+      grid-column: 1;
       align-self: center;
       width: 100%;
       display: grid;
@@ -2224,6 +3473,14 @@
       .present-slide--p4-lab-tools.ai-journey__tools {
         grid-template-columns: 1fr;
         align-items: center;
+      }
+      .present-slide--p4-lab-tools .ai-tools-grid {
+        order: 1;
+        grid-column: 1;
+      }
+      .present-slide--p4-lab-tools .ai-journey__tools-head {
+        order: 2;
+        grid-column: 1;
       }
     }
 
@@ -2255,7 +3512,7 @@
       color: var(--ink);
     }
     .present-slide--p4-toolkit .ai-toolkit-copy {
-      grid-column: 1;
+      grid-column: 2;
       --present-toolkit-gap: clamp(0.38rem, 0.7vh, 0.55rem);
       display: flex;
       flex-direction: column;
@@ -2298,7 +3555,7 @@
     }
     .present-slide--p4-toolkit .ai-toolkit-panel {
       --present-toolkit-card-size: clamp(4.85rem, 9.5vw, 6.35rem);
-      grid-column: 2;
+      grid-column: 1;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -2370,8 +3627,12 @@
         grid-column: 1;
       }
       .present-slide--p4-toolkit .ai-toolkit-panel {
+        order: 1;
         height: auto;
         margin-inline: auto;
+      }
+      .present-slide--p4-toolkit .ai-toolkit-copy {
+        order: 2;
       }
       .present-slide--p4-toolkit .ai-toolkit-grid {
         grid-template-columns: repeat(2, var(--present-toolkit-card-size));
@@ -2380,13 +3641,12 @@
       }
     }
 
-    /* Coaching — copy + cadence left · full-height image right */
+    /* Coaching — visual left · copy + cadence right */
     .present-slide--p4-coaching.present-beat-coaching {
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      grid-template-rows: minmax(0, 1fr);
       gap: var(--present-split-gap);
-      align-items: stretch;
+      align-items: center;
       width: 100%;
       max-width: none;
       min-height: calc(var(--present-vh) - var(--present-bottom));
@@ -2396,7 +3656,7 @@
       overflow: hidden;
     }
     .present-slide--p4-coaching .present-coaching__left {
-      grid-column: 1;
+      grid-column: 2;
       grid-row: 1;
       display: flex;
       flex-direction: column;
@@ -2407,20 +3667,21 @@
       align-self: center;
     }
     .present-slide--p4-coaching .present-coaching__visual {
-      grid-column: 2;
+      grid-column: 1;
       grid-row: 1;
       display: flex;
       align-items: center;
       justify-content: center;
       min-width: 0;
       min-height: 0;
-      height: 100%;
+      height: auto;
       margin: 0;
       padding: 0;
     }
     .present-slide--p4-coaching .device-story__copy {
       flex: 0 0 auto;
-      align-self: stretch;
+      align-self: center;
+      width: 100%;
       min-width: 0;
       gap: var(--present-copy-gap);
     }
@@ -2498,7 +3759,7 @@
       .present-slide--p4-coaching.present-beat-coaching {
         grid-template-columns: 1fr;
         grid-template-rows: auto auto auto;
-        overflow-y: auto;
+        overflow: hidden;
       }
       .present-slide--p4-coaching .present-coaching__left {
         grid-column: 1;
@@ -2722,9 +3983,7 @@
     }
     .present-slide--thanks {
       padding: 0;
-      overflow-x: hidden;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
+      overflow: hidden;
       max-width: none;
       width: 100%;
     }
@@ -3088,7 +4347,7 @@
 <section class="section period" id="period-1" data-period="period-1">
   <div class="container">
     <header class="period__head period__head--split period__head--thick-rule reveal">
-      <div class="period__head-copy">
+      <div class="period__head-copy present-split__copy">
         <div class="period__meta">
           <span class="period__num">01</span>
           <div class="chip-row">
@@ -3101,6 +4360,28 @@
         <p class="lede period__thesis period__thesis--present">This chapter turns the web dashboard into a single home for wealth across savings, investments, and retirement, and carries the new brand into a live, multi-market product.</p>
         <p class="lede period__thesis">This chapter turns the web dashboard into a single home for wealth across savings, investments, and retirement, and carries the new brand into a live, multi-market product.</p>
         <p class="period__role"><strong>I planned</strong> the research and ran interviews with the design team, <strong>I facilitated</strong> co-creation workshops, and validated the hypotheses. <strong>I synthesized</strong> findings and designed solutions — then <strong>We shipped</strong> the MVP with product and engineering across 12 markets.</p>
+        <dl class="present-darci" aria-label="DARCI — programme governance">
+          <div class="present-darci__row">
+            <dt class="present-darci__letter" title="Decision-Maker">D</dt>
+            <dd class="present-darci__body"><span class="present-darci__label">Decision</span> CEO · Director · Head of Product</dd>
+          </div>
+          <div class="present-darci__row">
+            <dt class="present-darci__letter" title="Accountable">A</dt>
+            <dd class="present-darci__body"><span class="present-darci__label">Accountable</span> PM · Design lead</dd>
+          </div>
+          <div class="present-darci__row">
+            <dt class="present-darci__letter" title="Responsible">R</dt>
+            <dd class="present-darci__body"><span class="present-darci__label">Responsible</span> Design lead · Engineering · Design team (collaboration)</dd>
+          </div>
+          <div class="present-darci__row">
+            <dt class="present-darci__letter" title="Consulted">C</dt>
+            <dd class="present-darci__body"><span class="present-darci__label">Consulted</span> VP Design</dd>
+          </div>
+          <div class="present-darci__row">
+            <dt class="present-darci__letter" title="Informed">I</dt>
+            <dd class="present-darci__body"><span class="present-darci__label">Informed</span> CRO · CPO</dd>
+          </div>
+        </dl>
       </div>
       <figure class="period__head-visual period__head-visual--problem">
         <img src="raisin-assets/assets/img/dashboard-web/problem.webp" alt="Frustrated customer at the legacy Raisin dashboard — too much product catalogue, not enough of their wealth" loading="lazy" data-lightbox>
@@ -3113,11 +4394,18 @@
         <article class="beat beat--wealth-hub reveal">
           <div class="wealth-hub-story" aria-label="Wealth Hub — presentation narrative">
 
-            <div class="wealth-hub-beat period-split period-split--50-50 reveal" aria-label="Baseline research">
-              <div class="period-split__main">
-                <p class="beat__eyebrow">Baseline research · 🇩🇪 · One week · 4× designers</p>
+            <div class="wealth-hub-beat period-split period-split--50-50 period-split--visual-left reveal" aria-label="Baseline research">
+              <figure class="period-split__visual">
+                <img src="raisin-assets/assets/img/dashboard-web/quotes.webp" alt="Baseline research — customer quotes from qualitative interviews" loading="lazy" data-lightbox>
+              </figure>
+              <div class="period-split__main wealth-hub-story__copy present-split__copy">
+                <nav class="workflow-strip wealth-hub-journey" aria-label="Wealth Hub journey" data-journey-step="1"></nav>
                 <h3 class="beat__title">Qualitative baseline: Weltsparen through customers’ eyes.</h3>
-                <p class="beat__text">We sat with B2C customers and asked what Weltsparen actually felt like after login — what they needed, what was missing. Not a polish brief; a test of whether a redesign was justified.</p>
+                <p class="beat__support beat__support--present"><strong>8 interviews</strong> (±2) · 12 German customers across segments · 2 weeks · 3× product designers</p>
+                <p class="beat__eyebrow">Baseline research · 🇩🇪 · One week · 4× designers</p>
+                <p class="beat__text beat__text--present">Sat with B2C customers and asked them what Weltsparen felt like after login: what they needed, what was missing, and how they experienced the dashboard overall.</p>
+                <p class="beat__text">A collaborative qualitative sprint — four designers, one week, traditional research methods. We sat with B2C customers in Germany and asked what Weltsparen felt like after login: what they needed, what was missing, and whether a redesign was justified.</p>
+                <p class="beat__text">We ran paired interviews, synthesis sessions, and archetype mapping together — not a handoff from research to design, but one team building the evidence base.</p>
                 <p class="beat__stat">Sample set · <strong>8 interviews</strong> (±2) · Raisin’s existing B2C archetypes</p>
                 <div class="chip-row" data-fm-widget="raisin-personas" data-fm-kind="chips" aria-label="Sample set — Raisin B2C archetypes">
                   <span class="chip chip--muted chip--tip" tabindex="0" data-fm-tip="affluent-core" aria-describedby="persona-tip-affluent-core">
@@ -3145,16 +4433,7 @@
                     </span>
                   </span>
                 </div>
-                <p class="beat__subtitle">Customer problem</p>
-                <div class="beat__problem">
-                  <p class="beat__text beat__text--problem">The web dashboard still behaved like a product catalogue — deposits first, not the customer’s holdings.</p>
-                </div>
-                <p class="beat__text beat__text--present">Next: co-creation — turn scattered insights into one Wealth Hub concept.</p>
-                <p class="beat__needs"><strong>Orient</strong> — consolidated view across asset classes · <strong>Monitor</strong> — total wealth at a glance · <strong>Act</strong> — maturities and pending tasks surfaced</p>
               </div>
-              <figure class="period-split__visual">
-                <img src="raisin-assets/assets/img/dashboard-web/quotes.webp" alt="Baseline research — customer quotes from qualitative interviews" loading="lazy" data-lightbox>
-              </figure>
             </div>
 
             <div class="wealth-hub-beat period-split period-split--50-50 period-split--visual-left reveal" aria-label="Co-creation sprint">
@@ -3162,62 +4441,145 @@
                 <img src="raisin-assets/assets/img/dashboard-web/round1-synthesis.webp" alt="Co-creation synthesis — sticky notes on glass clustering research themes into How-Might-We statements" loading="lazy" data-lightbox>
                 <figcaption class="period-split__caption">Synthesis wall — research themes clustered into How-Might-We statements</figcaption>
               </figure>
-              <div class="period-split__main">
-                <p class="beat__eyebrow">Co-creation · two-week sprint · design + product + cross-tribe stakeholders</p>
-                <h3 class="beat__title">From scattered insights to one Wealth Hub concept.</h3>
-                <div class="workflow-strip" aria-label="Co-creation workflow">
-                  <span class="workflow-strip__step">Synthesise</span>
-                  <span class="workflow-strip__arrow" aria-hidden="true">→</span>
-                  <span class="workflow-strip__step">HMW</span>
-                  <span class="workflow-strip__arrow" aria-hidden="true">→</span>
-                  <span class="workflow-strip__step">Stakeholder workshops</span>
-                  <span class="workflow-strip__arrow" aria-hidden="true">→</span>
-                  <span class="workflow-strip__step">Converge</span>
-                  <span class="workflow-strip__arrow" aria-hidden="true">→</span>
-                  <span class="workflow-strip__step">One concept</span>
+              <div class="period-split__main wealth-hub-story__copy present-split__copy">
+                <nav class="workflow-strip wealth-hub-journey" aria-label="Wealth Hub journey" data-journey-step="2"></nav>
+                <h3 class="beat__title">Synthesising research into How-Might-We statements.</h3>
+                <p class="beat__support beat__support--present">3× designers collaboration · 1 week</p>
+                <p class="beat__eyebrow">Co-creation · synthesis · two-week sprint</p>
+                <p class="beat__text beat__text--present">We spent one week clustering baseline findings into themes — then translating each theme into How-Might-We statements the whole tribe could ideate against.</p>
+                <p class="beat__text">Head of Design, PM, Director, and designers from other tribes worked from the same synthesis wall — shared insights and data points, not opinion.</p>
+                <div class="hmw-prior-strip hmw-prior-strip--present" aria-label="Prioritised How-Might-We statements">
+                  <p class="hmw-prior-strip__label present-block-label">Most desirable · Most feasible</p>
+                  <div class="research-stickies research-stickies--hmw-row">
+                    <blockquote class="research-sticky">
+                      <p>How might we make what’s held at each bank — and how much — visible at a glance?</p>
+                    </blockquote>
+                    <blockquote class="research-sticky">
+                      <p>How might we bring ease in navigating across active and available products?</p>
+                    </blockquote>
+                    <blockquote class="research-sticky">
+                      <p>How might we balance clarity in one view for what’s invested vs transactional?</p>
+                    </blockquote>
+                  </div>
                 </div>
-                <p class="beat__subtitle">Jobs to be done</p>
-                <p class="beat__needs beat__needs--jtbd"><strong>Orient</strong> — consolidated view across asset classes · <strong>Monitor</strong> — total wealth at a glance · <strong>Act</strong> — maturities and pending tasks surfaced</p>
-                <div class="wealth-hub-principles" aria-label="Wealth Hub design principles">
-                  <article class="wealth-hub-principle-card">
-                    <p class="wealth-hub-principle-card__label">Principle 01</p>
-                    <p class="wealth-hub-principle-card__title">Holdings-first</p>
-                    <p class="wealth-hub-principle-card__text">Structure by what customers hold — savings, investments, retirement — not a product catalogue.</p>
-                  </article>
-                  <article class="wealth-hub-principle-card">
-                    <p class="wealth-hub-principle-card__label">Principle 02</p>
-                    <p class="wealth-hub-principle-card__title">Overview-first</p>
-                    <p class="wealth-hub-principle-card__text">Total wealth and allocation at a glance; detail on drill-down, not on landing.</p>
-                  </article>
-                  <article class="wealth-hub-principle-card">
-                    <p class="wealth-hub-principle-card__label">Principle 03</p>
-                    <p class="wealth-hub-principle-card__title">One coherent home</p>
-                    <p class="wealth-hub-principle-card__text">One landing that orients, monitors, and surfaces actions across every asset class.</p>
-                  </article>
-                </div>
-                <p class="beat__subtitle">Key How might we items</p>
+                <p class="beat__subtitle">Prioritised for ideation</p>
                 <div class="research-stickies" aria-label="How-Might-We statements from the sprint">
-                  <blockquote class="research-sticky">
-                    <p>“How might we create a personalized view that adapts to individual user needs?”</p>
-                  </blockquote>
                   <blockquote class="research-sticky">
                     <p>“How might we make what’s held at each bank — and how much — visible at a glance?”</p>
                   </blockquote>
                   <blockquote class="research-sticky">
-                    <p>“How might we surface maturities and due dates before customers go looking?”</p>
+                    <p>“How might we bring ease in navigating across active and available products?”</p>
+                  </blockquote>
+                  <blockquote class="research-sticky">
+                    <p>“How might we balance clarity in one view for what’s invested vs transactional?”</p>
                   </blockquote>
                 </div>
-                <p class="beat__text">We spent two weeks turning the research into How-Might-We statements. I then ran stakeholder workshops on shared boards — Head of Design, PM, Director, and designers from other tribes — everyone ideating against the same insights and data points, not opinion.</p>
-                <p class="beat__text">The sessions produced far more ideas than one release could carry. I facilitated the convergence — compiling them into a single coherent concept: one Wealth Hub, organised around what customers hold.</p>
+              </div>
+            </div>
+
+            <div class="wealth-hub-beat reveal" aria-label="Wealth Hub — ideate">
+              <div class="trade-off-switcher trade-off-switcher--split trade-off-switcher--visual-left exploration-wizard" data-phase-wizard data-journey-anchor="3" data-default="1" aria-label="Ideate — competitive analysis to stakeholder review">
+                <div class="trade-off-switcher__right exploration-wizard__right">
+                  <div class="exploration-wizard__controls">
+                    <div class="exploration-wizard__stepper phase-wizard__stepper phase-wizard__stepper--secondary" role="tablist" aria-label="Ideate sub-steps">
+                      <button type="button" class="trade-off-switcher__tab trade-off-switcher__tab--active" role="tab" aria-selected="true" data-step="1" tabindex="0">Competitive analysis</button>
+                      <span class="exploration-wizard__arrow-static" aria-hidden="true">→</span>
+                      <button type="button" class="trade-off-switcher__tab" role="tab" aria-selected="false" data-step="2" tabindex="-1">Principals &amp; JTBD</button>
+                      <span class="exploration-wizard__arrow-static" aria-hidden="true">→</span>
+                      <button type="button" class="trade-off-switcher__tab" role="tab" aria-selected="false" data-step="3" tabindex="-1">Stakeholder Interviews</button>
+                      <span class="exploration-wizard__arrow-static" aria-hidden="true">→</span>
+                      <button type="button" class="trade-off-switcher__tab" role="tab" aria-selected="false" data-step="4" tabindex="-1">Wireframes</button>
+                    </div>
+                  </div>
+                  <div class="exploration-wizard__stage">
+                    <div class="exploration-wizard__step exploration-wizard__step--stacked-caption is-active" data-step-panel="1">
+                      <div class="exploration-wizard__asset-slot">
+                        <img class="exploration-wizard__asset exploration-wizard__asset--img" src="raisin-assets/assets/img/dashboard-web/comp.png" alt="Competitive analysis — landing and drill-down patterns from peer products" loading="lazy" data-lightbox>
+                      </div>
+                      <p class="exploration-wizard__caption exploration-wizard__caption--below">Competitive patterns — what peers showed on landing vs drill-down.</p>
+                    </div>
+                    <div class="exploration-wizard__step exploration-wizard__step--stacked-caption" data-step-panel="2" hidden>
+                      <div class="exploration-wizard__asset-slot">
+                        <img class="exploration-wizard__asset exploration-wizard__asset--img" src="raisin-assets/assets/img/dashboard-web/principal.png" alt="Jobs to be done and design principles from the brief" loading="lazy" data-lightbox>
+                      </div>
+                      <p class="exploration-wizard__caption exploration-wizard__caption--below">Jobs to be done and design principles from the brief.</p>
+                    </div>
+                    <div class="exploration-wizard__step exploration-wizard__step--stacked-caption" data-step-panel="3" hidden>
+                      <div class="exploration-wizard__asset-slot">
+                        <img class="exploration-wizard__asset exploration-wizard__asset--img" src="raisin-assets/assets/img/dashboard-web/stake.png" alt="Stakeholder review — hierarchy taken to research" loading="lazy" data-lightbox>
+                      </div>
+                      <p class="exploration-wizard__caption exploration-wizard__caption--below">Critique with PM, HoD, and engineering — one hierarchy taken to research.</p>
+                    </div>
+                    <div class="exploration-wizard__step exploration-wizard__step--stacked-caption" data-step-panel="4" hidden>
+                      <div class="exploration-wizard__asset-slot exploration-wizard__asset-slot--wireframe-compare">
+                        <div class="exploration-wizard__variant-switcher" data-trade-off-switcher data-trade-off-visual-only data-default="b" aria-label="Flat list vs structured hierarchy">
+                          <div class="exploration-wizard__variant-tabs trade-off-switcher__tabs phase-wizard__stepper phase-wizard__stepper--secondary exploration-wizard__variant-tabs--overlay" role="tablist" aria-label="Wireframe hierarchy — A or B">
+                            <button type="button" class="trade-off-switcher__tab" role="tab" aria-selected="false" data-variant="a" tabindex="-1">A</button>
+                            <button type="button" class="trade-off-switcher__tab trade-off-switcher__tab--active exploration-wizard__variant-tab--chosen" role="tab" aria-selected="true" data-variant="b" tabindex="0" aria-label="B — chosen">
+                              B
+                              <span class="exploration-wizard__variant-tab-check" aria-hidden="true">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                              </span>
+                            </button>
+                          </div>
+                          <div class="exploration-wizard__variant-media">
+                            <div class="trade-off-switcher__media exploration-wizard__asset" data-variant-img="a" hidden>
+                              <div class="wealth-hub-video-frame exploration-wizard__asset">
+                                <video data-src="raisin-assets/assets/video/dashboard-web/flat-list.mp4" muted loop playsinline data-autoplay-inview data-lightbox preload="none" title="Variation A — flat product list"></video>
+                              </div>
+                            </div>
+                            <div class="trade-off-switcher__media exploration-wizard__asset is-active" data-variant-img="b">
+                              <div class="wealth-hub-video-frame exploration-wizard__asset">
+                                <video data-src="raisin-assets/assets/video/proof/wireframe-solution.mp4" muted loop playsinline data-autoplay-inview data-lightbox preload="none" title="Variation B — asset-class hierarchy with level in/out"></video>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <p class="exploration-wizard__caption exploration-wizard__caption--below">Variation A explored in critique · B — overview → asset class → bank</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="trade-off-switcher__left wealth-hub-story__copy present-split__copy">
+                  <nav class="workflow-strip wealth-hub-journey" aria-label="Wealth Hub journey" data-journey-step="3"></nav>
+                  <h3 class="beat__title">From brief to one testable direction.</h3>
+                  <p class="beat__support beat__support--present">Facilitation · Collaboration · Data analysis · Ideation · Prototyping</p>
+                  <p class="beat__eyebrow">WEALTH HUB · IDEATE</p>
+                  <p class="beat__text beat__text--present">I facilitated ideation from competitive reads through wireframe critique — aligning the tribe on one holdings-first hierarchy for concept validation.</p>
+                  <div class="trade-off trade-off--compact ideate-conflict-tradeoff" aria-label="Design conflict — flat list vs hierarchy">
+                    <p class="trade-off__label present-block-label">Design conflict · Product vs Design</p>
+                    <div class="trade-off__options">
+                      <div class="trade-off__option">
+                        <p class="trade-off__option-label">A · Flat list</p>
+                        <p class="trade-off__option-text">Faster to build · reads as a product catalogue</p>
+                      </div>
+                      <div class="trade-off__option trade-off__option--chosen">
+                        <span class="ideate-conflict-tradeoff__check" aria-hidden="true">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                        </span>
+                        <p class="trade-off__option-label">B · Structured hierarchy</p>
+                        <p class="trade-off__option-text">Savings · investments · retirement — by what customers hold</p>
+                      </div>
+                    </div>
+                  </div>
+                  <ol class="wh-phase-breakdown" aria-label="Ideate sub-steps">
+                    <li class="wh-phase-breakdown__item wh-phase-breakdown__item--active" data-step="1"><span class="wh-phase-breakdown__n">3.1</span> Competitive analysis</li>
+                    <li class="wh-phase-breakdown__item" data-step="2"><span class="wh-phase-breakdown__n">3.2</span> Principals &amp; JTBD</li>
+                    <li class="wh-phase-breakdown__item" data-step="3"><span class="wh-phase-breakdown__n">3.3</span> Stakeholder Interviews</li>
+                    <li class="wh-phase-breakdown__item" data-step="4"><span class="wh-phase-breakdown__n">3.4</span> Wireframes</li>
+                  </ol>
+                </div>
               </div>
             </div>
 
             <div class="wealth-hub-beat reveal" aria-label="Trade-off 01 — user research, treemap vs donut">
-              <div class="trade-off-switcher trade-off-switcher--split" data-trade-off-switcher data-trade-off-visual-only data-default="b" aria-label="Visualization trade-off — prototype compare">
-                <div class="trade-off-switcher__left">
-                  <p class="beat__eyebrow">TRADE-OFF · VALIDATED WITH CUSTOMERS · 12 PARTICIPANTS · DE + NL</p>
-                  <h3 class="beat__title">User research · treemap vs donut — how much detail on landing?</h3>
-                  <p class="beat__text present-evidence-line"><strong>Evidence:</strong> Donut beat treemap — allocation legible at a glance; route into account actions.</p>
+              <div class="trade-off-switcher trade-off-switcher--split trade-off-switcher--visual-left" data-trade-off-switcher data-trade-off-visual-only data-default="b" aria-label="Visualization trade-off — prototype compare">
+                <div class="trade-off-switcher__left wealth-hub-story__copy present-split__copy">
+                  <nav class="workflow-strip wealth-hub-journey" aria-label="Wealth Hub journey" data-journey-step="4"></nav>
+                  <h3 class="beat__title">Concept validation: modular landing vs integrated overview.</h3>
+                  <p class="beat__support beat__support--present">12 customers across segments · Multi-market 🇩🇪 🇳🇱 🇪🇸 🇬🇧 🇫🇷 · AI Synthesis using transcripts · 1 week</p>
+                  <p class="beat__eyebrow">Concept validation · customer research · 12 participants · DE + NL</p>
+                  <p class="beat__text beat__text--present">Landing still needed customer evidence — not critique. I led Raisin’s first international concept test on two full-fidelity landing prototypes — modular vs integrated — with AI-assisted synthesis across five markets.</p>
                   <p class="beat__text">Several landing decisions still needed customer evidence — not critique. I led Raisin’s first international study on allocation visualization: treemap vs donut.</p>
                   <p class="beat__stat">Sample set · 12 participants · 2 prototypes · PRE + POST-KYC · 🇩🇪 🇳🇱 🇪🇸 🇬🇧 🇫🇷</p>
                   <div class="chip-row" data-fm-widget="raisin-tradeoff-personas" data-fm-kind="chips" aria-label="Sample set — Raisin B2C archetypes">
@@ -3246,16 +4608,19 @@
                       </span>
                     </span>
                   </div>
-                  <div class="trade-off trade-off--compact" aria-label="Trade-off — treemap vs donut">
-                    <p class="trade-off__label">Key trade-off</p>
+                  <div class="trade-off trade-off--compact ideate-conflict-tradeoff" aria-label="Concept validation — prototype A vs B">
+                    <p class="trade-off__label present-block-label">Concept validation · Concept A vs B</p>
                     <div class="trade-off__options">
                       <div class="trade-off__option">
-                        <p class="trade-off__option-label">A · Treemap</p>
-                        <p class="trade-off__option-text">All holdings on landing · performance per product · Raisin account as separate module</p>
+                        <p class="trade-off__option-label">A · Upfront &amp; modular</p>
+                        <p class="trade-off__option-text">Top-level actions · separate performance, account, and recommendations · pending work in the portfolio</p>
                       </div>
                       <div class="trade-off__option trade-off__option--chosen">
-                        <p class="trade-off__option-label">B · Donut <span class="trade-off__chosen-flag">Chosen</span></p>
-                        <p class="trade-off__option-text">Allocation at a glance · account reached through the chart</p>
+                        <span class="ideate-conflict-tradeoff__check" aria-hidden="true">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                        </span>
+                        <p class="trade-off__option-label">B · Integrated overview</p>
+                        <p class="trade-off__option-text">Glanceable allocation · condensed action rail · needs-attention and recommendations in one flow</p>
                       </div>
                     </div>
                     <p class="trade-off__position"><strong>Position:</strong> Overview-first landing — detail on drill-down.</p>
@@ -3273,9 +4638,14 @@
                   </aside>
                 </div>
                 <div class="trade-off-switcher__right">
-                  <div class="trade-off-switcher__tabs" role="tablist" aria-label="Visualization bet — prototype A or B">
-                    <button type="button" class="trade-off-switcher__tab" role="tab" id="trade-off-1-tab-a" aria-selected="false" aria-controls="trade-off-1-visual-a" data-variant="a" tabindex="-1">A · Treemap</button>
-                    <button type="button" class="trade-off-switcher__tab trade-off-switcher__tab--chosen trade-off-switcher__tab--active" role="tab" id="trade-off-1-tab-b" aria-selected="true" aria-controls="trade-off-1-visual-b" data-variant="b">B · Donut <span class="trade-off-switcher__tab-flag">Chosen</span></button>
+                  <div class="trade-off-switcher__tabs phase-wizard__stepper phase-wizard__stepper--secondary tradeoff-01__concept-stepper" role="tablist" aria-label="Visualization bet — prototype A or B">
+                    <button type="button" class="trade-off-switcher__tab" role="tab" id="trade-off-1-tab-a" aria-selected="false" aria-controls="trade-off-1-visual-a" data-variant="a" tabindex="-1">Concept A</button>
+                    <button type="button" class="trade-off-switcher__tab trade-off-switcher__tab--active tradeoff-01__concept-tab--chosen" role="tab" id="trade-off-1-tab-b" aria-selected="true" aria-controls="trade-off-1-visual-b" data-variant="b">
+                      Concept B
+                      <span class="tradeoff-01__concept-tab-check" aria-hidden="true">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                      </span>
+                    </button>
                   </div>
                   <div class="trade-off-switcher__media" data-variant-img="a" id="trade-off-1-visual-a" hidden>
                     <div class="wealth-hub-video-frame">
@@ -3325,79 +4695,57 @@
               </div>
             </div>
 
-            <div class="wealth-hub-beat reveal" aria-label="Trade-off 02 — catalogue list vs asset-class hierarchy">
-              <div class="trade-off-switcher trade-off-switcher--split" data-trade-off-switcher data-trade-off-visual-only data-default="b" aria-label="Hierarchy trade-off — prototype compare">
-                <div class="trade-off-switcher__right">
-                  <div class="trade-off-switcher__tabs" role="tablist" aria-label="Hierarchy bet — prototype A or B">
-                    <button type="button" class="trade-off-switcher__tab" role="tab" id="trade-off-2-tab-a" aria-selected="false" aria-controls="trade-off-2-visual-a" data-variant="a" tabindex="-1">A · Flat list</button>
-                    <button type="button" class="trade-off-switcher__tab trade-off-switcher__tab--chosen trade-off-switcher__tab--active" role="tab" id="trade-off-2-tab-b" aria-selected="true" aria-controls="trade-off-2-visual-b" data-variant="b">B · Hierarchy <span class="trade-off-switcher__tab-flag">Chosen</span></button>
-                  </div>
-                  <div class="trade-off-switcher__media" data-variant-img="a" id="trade-off-2-visual-a" hidden>
-                    <div class="wealth-hub-video-frame">
-                      <video data-src="raisin-assets/assets/video/dashboard-web/flat-list.mp4" muted loop playsinline data-autoplay-inview preload="none" title="Variation A — flat product list"></video>
+            <div class="wealth-hub-beat reveal" aria-label="Wealth Hub visual system">
+              <div class="trade-off-switcher trade-off-switcher--split trade-off-switcher--visual-left exploration-wizard visual-system-wizard" data-phase-wizard data-journey-anchor="5" data-default="1" aria-label="Visual design — colour map, listing anatomy, final interface">
+                <div class="trade-off-switcher__right exploration-wizard__right">
+                  <div class="exploration-wizard__controls">
+                    <div class="exploration-wizard__stepper phase-wizard__stepper phase-wizard__stepper--secondary" role="tablist" aria-label="Visual system sub-steps">
+                      <button type="button" class="trade-off-switcher__tab trade-off-switcher__tab--active" role="tab" aria-selected="true" data-step="1" tabindex="0">Product color map</button>
+                      <span class="exploration-wizard__arrow-static" aria-hidden="true">→</span>
+                      <button type="button" class="trade-off-switcher__tab" role="tab" aria-selected="false" data-step="2" tabindex="-1">Listing component anatomy</button>
+                      <span class="exploration-wizard__arrow-static" aria-hidden="true">→</span>
+                      <button type="button" class="trade-off-switcher__tab" role="tab" aria-selected="false" data-step="3" tabindex="-1">Final Interface</button>
                     </div>
                   </div>
-                  <div class="trade-off-switcher__media is-active" data-variant-img="b" id="trade-off-2-visual-b">
-                    <div class="wealth-hub-video-frame">
-                      <video data-src="raisin-assets/assets/video/proof/wireframe-solution.mp4" muted loop playsinline data-autoplay-inview preload="none" title="Variation B — asset-class hierarchy with level in/out"></video>
+                  <div class="exploration-wizard__stage">
+                    <div class="exploration-wizard__step exploration-wizard__step--stacked-caption is-active" data-step-panel="1">
+                      <div class="exploration-wizard__asset-slot">
+                        <img class="exploration-wizard__asset exploration-wizard__asset--img exploration-wizard__asset--colour-map" src="raisin-assets/assets/img/dashboard-web/color_map.png" alt="Product colour map — market types, hierarchy, and landing-page application" loading="lazy" data-lightbox>
+                      </div>
+                      <p class="exploration-wizard__caption exploration-wizard__caption--below">Asset-class hues · savings-only remaps · donut child shades — 12 markets, light + dark.</p>
+                    </div>
+                    <div class="exploration-wizard__step exploration-wizard__step--stacked-caption" data-step-panel="2" hidden>
+                      <div class="exploration-wizard__asset-slot">
+                        <img class="exploration-wizard__asset exploration-wizard__asset--img" src="raisin-assets/assets/img/dashboard-web/anatomy.png" alt="Listing component anatomy — structure, labels, and hierarchy on dashboard rows" loading="lazy" data-lightbox>
+                      </div>
+                      <p class="exploration-wizard__caption exploration-wizard__caption--below">Listing row anatomy — hierarchy, metadata, and actions aligned to the component library.</p>
+                    </div>
+                    <div class="exploration-wizard__step exploration-wizard__step--stacked-caption" data-step-panel="3" hidden>
+                      <div class="exploration-wizard__asset-slot">
+                        <img class="exploration-wizard__asset exploration-wizard__asset--img" src="raisin-assets/assets/img/dashboard-web/final_vd.png" alt="Final Wealth Hub interface — validated visual design in product context" loading="lazy" data-lightbox>
+                      </div>
+                      <p class="exploration-wizard__caption exploration-wizard__caption--below">Final interface — colour map and components applied across the landing experience.</p>
                     </div>
                   </div>
-                  <p class="period-split__caption">Variation A explored in critique · B shipped — overview → asset class → bank</p>
                 </div>
-                <div class="trade-off-switcher__left">
-                  <p class="beat__eyebrow">TRADE-OFF · DESIGN CRITIQUE · RESEARCH CASE PRESENTED INTERNALLY</p>
-                  <h3 class="beat__title">Catalogue list vs asset-class hierarchy</h3>
-                  <p class="beat__text present-org-decision"><strong>Org decision:</strong> Hierarchy won — flat catalogue list rejected in critique.</p>
-                  <p class="beat__text">Organisation was the call critique couldn’t settle. Engineering favoured a flat list to ship faster; I argued for hierarchy by what customers hold.</p>
-                  <div class="trade-off trade-off--compact" aria-label="Trade-off — flat list vs hierarchy">
-                    <p class="trade-off__label">Key trade-off</p>
-                    <div class="trade-off__options">
-                      <div class="trade-off__option">
-                        <p class="trade-off__option-label">A · Flat list</p>
-                        <p class="trade-off__option-text">Faster to ship · no asset-class grouping · detail upfront</p>
-                      </div>
-                      <div class="trade-off__option trade-off__option--chosen">
-                        <p class="trade-off__option-label">B · Hierarchy <span class="trade-off__chosen-flag">Chosen</span></p>
-                        <p class="trade-off__option-text">Savings · Investments · Retirement — by what customers hold</p>
-                      </div>
-                    </div>
-                    <p class="trade-off__position"><strong>Position:</strong> A flat list reads as a catalogue — the problem customers named. Hierarchy orients by what they hold.</p>
-                    <p class="trade-off__settled"><strong>Settled:</strong> Design critique — hierarchy won over flat catalogue list.</p>
-                  </div>
-                  <aside class="enablement-callout enablement-surface beat__enablement" aria-label="Enablement — design critique culture">
+                <div class="trade-off-switcher__left wealth-hub-story__copy present-split__copy">
+                  <nav class="workflow-strip wealth-hub-journey" aria-label="Wealth Hub journey" data-journey-step="5"></nav>
+                  <h3 class="beat__title">The system behind the surface.</h3>
+                  <p class="beat__support beat__support--present">Product colour map · Listing anatomy · Final interface · 12 markets</p>
+                  <p class="beat__eyebrow">WEALTH HUB · VISUAL DESIGN</p>
+                  <p class="beat__text beat__text--present">Type, colour, layout, and components — one system for twelve markets. The colour map settled brand debate; typography, spacing, and components shipped in parallel with Foundation-fix.</p>
+                  <p class="beat__text">12 markets · 3 market-type rules · light + dark token specs · web component library built from scratch.</p>
+                  <aside class="enablement-callout enablement-surface beat__enablement" aria-label="Enablement — product colour map">
                     <p class="enablement-label">
                       <svg class="enablement-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
                       Enablement
                     </p>
-                    <p class="enablement-surface__title">I established · design critique culture and design reviews</p>
-                    <p class="enablement-surface__text">Showed designers how to present a clear problem statement and collect feedback productively — not ad-hoc taste. Now a recurring ritual.</p>
-                    <p class="enablement-surface__stat">First on Wealth Hub · team ritual</p>
+                    <p class="enablement-surface__title">Turned a brand debate into a decision record.</p>
+                    <p class="enablement-surface__text">Product, markets, and engineering disagreed on hue meaning. I documented the rules in Confluence — one source for design, engineering, and markets.</p>
+                    <p class="enablement-surface__stat">Confluence · Figma colour maps · reused across tribes</p>
                   </aside>
                 </div>
               </div>
-            </div>
-
-            <div class="wealth-hub-beat wealth-hub-systemized period-split period-split--50-50 reveal" aria-label="Product colour map">
-              <div class="period-split__main">
-                <p class="beat__eyebrow">Wealth Hub · systems</p>
-                <h3 class="beat__title">A colour map for light, dark, and twelve markets.</h3>
-                <p class="beat__text beat__text--present">Distinct asset-class hues across 12 markets — one source for design, engineering, and markets.</p>
-                <p class="beat__text">The hierarchy needed a colour system, not just a layout. I gave each asset class a distinct, accessible identity across 12 markets and both themes — savings blue, investments amber, retirement green — with rules for savings-only markets, documented so design, engineering, and markets shipped from one source.</p>
-                <p class="beat__stat">12 markets · 3 market-type rules · light + dark token specs</p>
-                <aside class="enablement-callout enablement-surface beat__enablement" aria-label="Enablement — product colour map">
-                  <p class="enablement-label">
-                    <svg class="enablement-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-                    Enablement
-                  </p>
-                  <p class="enablement-surface__title">Turned a brand debate into a decision record.</p>
-                    <p class="enablement-surface__text">Product, markets, and engineering disagreed on hue meaning. I documented the rules in Confluence — one source for design, engineering, and markets.</p>
-                  <p class="enablement-surface__stat">Confluence · Figma colour maps · reused across tribes</p>
-                </aside>
-              </div>
-              <figure class="period-split__visual">
-                <img src="raisin-assets/assets/img/dashboard-web/color-map-light.webp" alt="Product colour map — market types, hierarchy, and landing-page application (light theme)" loading="lazy" data-lightbox>
-                <figcaption class="period-split__caption">Asset-class hues · savings-only remaps · donut child shades</figcaption>
-              </figure>
             </div>
 
             <div class="wealth-hub-beat period-split period-split--50-50 period-split--visual-left reveal" aria-label="After MVP launch — outcomes">
@@ -3418,9 +4766,11 @@
                   </div>
                 </div>
               </figure>
-              <div class="period-split__main">
+              <div class="period-split__main wealth-hub-story__copy present-split__copy">
+                <nav class="workflow-strip wealth-hub-journey" aria-label="Wealth Hub journey" data-journey-step="6"></nav>
+                <h3 class="beat__title">Launch proof: adoption held, customers felt the structure.</h3>
+                <p class="beat__support beat__support--present">After MVP launch · against targets declared before design</p>
                 <p class="beat__eyebrow">After MVP launch · against targets declared before design</p>
-                <h3 class="beat__title">Both bets held at scale.</h3>
                 <p class="beat__text beat__text--present">Customers used Wealth Hub as a home for their wealth, not a product catalogue.</p>
                 <ul class="wealth-hub-constraints" aria-label="Constraints declared before design">
                   <li>Fixed API surface — design within existing endpoints, not a new data model</li>
@@ -3428,7 +4778,6 @@
                   <li>PRE + POST-KYC — one experience, two customer states</li>
                   <li>Success targets set before design — 80% adoption · 90% task completion · NPS</li>
                 </ul>
-                <p class="beat__caption present-outcomes-chip">Brand Evolution survey · ~1,900 respondents · DE / NL / ES / PL</p>
                 <div class="wealth-hub-impact" aria-label="Measured against targets declared before design">
                   <div class="wealth-hub-impact__metrics">
                     <div class="wealth-hub-impact__item">
@@ -3451,10 +4800,16 @@
                 </div>
                 <p class="beat__text">Business context: AuM reached ~€77bn by end 2024; the dashboard migration protected NPS and HNW loyalty through the rebrand.</p>
                 <p class="beat__text">What customers praised wasn’t polish — it was the structure:</p>
-                <blockquote class="wealth-hub-impact__quote">
-                  <p>“Everything works great. I especially like the drill-down graphics — Overview → Fixed deposit → individual bank. That’s how every website should work.”</p>
-                  <footer class="wealth-hub-impact__quote-source">🇩🇪 Germany · Brand Evolution survey</footer>
-                </blockquote>
+                <div class="wealth-hub-impact__quotes" aria-label="Customer quotes — Brand Evolution survey">
+                  <blockquote class="wealth-hub-impact__quote">
+                    <p>“Everything works great. I especially like the drill-down graphics — Overview → Fixed deposit → individual bank. That’s how every website should work.”</p>
+                    <footer class="wealth-hub-impact__quote-source">🇩🇪 Germany · Brand Evolution survey</footer>
+                  </blockquote>
+                  <blockquote class="wealth-hub-impact__quote">
+                    <p>“Finally a dashboard that shows my full portfolio in one place — much clearer than before.”</p>
+                    <footer class="wealth-hub-impact__quote-source">🇫🇷 France · Brand Evolution survey</footer>
+                  </blockquote>
+                </div>
                 <aside class="enablement-callout enablement-surface beat__enablement present-p1-measurement" aria-label="Enablement — UX measurement framework">
                   <p class="enablement-label">
                     <svg class="enablement-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
@@ -3462,6 +4817,7 @@
                   </p>
                   <p class="enablement-surface__title">I authored · UX measurement framework</p>
                   <p class="enablement-surface__text">Business KPIs, product adoption, and experience metrics — one pyramid so every release could be measured on its own terms.</p>
+                  <p class="enablement-surface__stat">Brand Evolution survey · ~1,900 respondents · DE / NL / ES / PL</p>
                   <p class="enablement-surface__stat">Business · Product · Experience · still in use</p>
                 </aside>
               </div>
@@ -3478,7 +4834,7 @@
 <section class="section period period--alt" id="period-2" data-period="period-2">
   <div class="container">
     <header class="period__head period__head--split period__head--thick-rule reveal">
-      <div class="period__head-copy">
+      <div class="period__head-copy present-split__copy">
         <div class="period__meta">
           <span class="period__num">02</span>
           <div class="chip-row">
@@ -3783,7 +5139,7 @@
 <section class="section period" id="period-3" data-period="period-3">
   <div class="container">
     <header class="period__head period__head--split period__head--split-start period__head--thick-rule reveal">
-      <div class="period__head-copy">
+      <div class="period__head-copy present-split__copy">
         <div class="period__meta">
           <span class="period__num">02</span>
           <div class="chip-row">
@@ -3807,8 +5163,8 @@
 
         <article class="beat beat--mobile-journey reveal">
           <div class="device-story mobile-journey" aria-label="Mobile dashboard redesign journey">
-            <div class="device-story__row mobile-journey__row">
-              <div class="device-story__copy">
+            <div class="device-story__row device-story__row--visual-left mobile-journey__row">
+              <div class="device-story__copy present-split__copy">
                 <p class="device-story__eyebrow">Desk research</p>
                 <h4 class="device-story__title">Read the stall before redesigning.</h4>
                 <p class="device-story__text">Web Wealth Hub earned its structure through customer research. Mobile didn’t have that yet — only a stalled redesign and pressure to copy across. Desk research on <strong>legacy interaction patterns</strong> (<strong>42% / 25% / 33%</strong>) showed why that shortcut failed: real usage didn’t match web’s model, and no single mobile pattern had won.</p>
@@ -3824,8 +5180,8 @@
               </figure>
             </div>
 
-            <div class="device-story__row device-story__row--reverse mobile-journey__row">
-              <div class="device-story__copy">
+            <div class="device-story__row device-story__row--visual-left mobile-journey__row">
+              <div class="device-story__copy present-split__copy">
                 <p class="device-story__eyebrow">Web ↔ mobile parity</p>
                 <h4 class="device-story__title">Re-ground, don't restart.</h4>
                 <p class="device-story__text device-story__text--present">Inherit the Wealth Hub system. Redesign the mobile surface — don’t redo twelve markets of research.</p>
@@ -3837,8 +5193,8 @@
               </figure>
             </div>
 
-            <div class="device-story__row device-story__row--reverse mobile-journey__row mobile-journey__row--prototype">
-              <div class="device-story__copy">
+            <div class="device-story__row device-story__row--visual-left mobile-journey__row mobile-journey__row--prototype">
+              <div class="device-story__copy present-split__copy">
                 <p class="device-story__eyebrow">New mobile IA · asset on platform · insight on Home</p>
                 <h4 class="device-story__title">Four tabs, one visual idea</h4>
                 <p class="device-story__text device-story__text--present">Four tabs — Overview, Portfolio, Products, Wallet. One Data wired into a live prototype.</p>
@@ -3887,8 +5243,8 @@
               </figure>
             </div>
 
-            <div class="device-story__row mobile-journey__row">
-              <div class="device-story__copy">
+            <div class="device-story__row device-story__row--visual-left mobile-journey__row">
+              <div class="device-story__copy present-split__copy">
                 <p class="device-story__eyebrow">Maze validation · Unmoderated study · Two-week</p>
                 <h4 class="device-story__title">Pressure-test the IA</h4>
                 <p class="device-story__text device-story__text--present device-story__text--present-risk">Tabbed IA won — <strong>92.9%</strong> vs <strong>71.4%</strong> task success. Open risk: locating pending products — only <strong>42.9%</strong> success; flagged before ship.</p>
@@ -3909,8 +5265,8 @@
             </div>
 
             <div class="mobile-journey__shipped reveal" aria-label="Shipped mobile dashboard">
-              <div class="device-story__row device-story__row--reverse mobile-journey__row mobile-journey__row--shipped">
-                <div class="device-story__copy">
+              <div class="device-story__row device-story__row--visual-left mobile-journey__row mobile-journey__row--shipped">
+                <div class="device-story__copy present-split__copy">
                   <p class="device-story__eyebrow">Shipped · mobile dashboard</p>
                   <h4 class="device-story__title">Four tabs, light and dark — rolling out across markets.</h4>
                   <p class="device-story__text device-story__text--present">Maze-validated IA — rolling out light and dark across core B2C markets.</p>
@@ -4016,7 +5372,7 @@
 <section class="section period period--alt" id="period-4" data-period="period-4">
   <div class="container">
     <header class="period__head period__head--split period__head--split-start period__head--thick-rule reveal">
-      <div class="period__head-copy">
+      <div class="period__head-copy present-split__copy">
         <div class="period__meta">
           <span class="period__num">03</span>
           <div class="chip-row">
@@ -4039,8 +5395,8 @@
         <article class="beat beat--ai-journey reveal">
           <div class="device-story ai-journey" aria-label="Design × AI enablement journey">
 
-            <div class="device-story__row ai-journey__row">
-              <div class="device-story__copy">
+            <div class="device-story__row device-story__row--visual-left ai-journey__row">
+              <div class="device-story__copy present-split__copy">
                 <p class="device-story__eyebrow">Origin</p>
                 <h4 class="device-story__title">A 180-day programme to match engineering velocity.</h4>
                 <p class="device-story__text device-story__text--present">One of four Champions — Lab, Showcase, Clinic, 180 days.</p>
@@ -4160,8 +5516,8 @@
               </div>
             </div>
 
-            <div class="device-story__row device-story__row--reverse ai-journey__row">
-              <div class="device-story__copy">
+            <div class="device-story__row device-story__row--visual-left ai-journey__row">
+              <div class="device-story__copy present-split__copy">
                 <p class="device-story__eyebrow">Coaching · applied</p>
                 <h4 class="device-story__title">Coached 8 designers on Cursor.</h4>
                 <p class="device-story__text device-story__text--present">Eight designers — Cursor foundations to shipping on live work.</p>
@@ -4419,6 +5775,7 @@
 </div>
 
 <script src="raisin-assets/assets/js/main.js"></script>
+<script src="js/portfolio-lightbox.js?v=6"></script>
 <script src="raisin-assets/assets/js/summary2.js"></script>
 <script src="js/raisin-present.js"></script>
 <script src="js/portfolio-gate-previews.js"></script>

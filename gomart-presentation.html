@@ -1168,6 +1168,7 @@
 
 <!-- Lightbox overlay -->
 <div id="lightbox" aria-hidden="true"><img alt="Expanded view"></div>
+<script src="js/portfolio-lightbox.js?v=1"></script>
 
 <!-- ===================== Password gate validation ===================== -->
 <script src="js/portfolio-gate-previews.js"></script>
@@ -1318,6 +1319,7 @@
   }
 
   function go(n) {
+    if (window.PortfolioLightbox) window.PortfolioLightbox.close();
     i = Math.max(0, Math.min(N - 1, n));
     render();
   }
@@ -1328,18 +1330,8 @@
   nextBtns.forEach((b) => b.addEventListener("click", next));
   document.querySelectorAll("[data-home]").forEach((b) => b.addEventListener("click", () => go(0)));
 
-  /* ---------- lightbox (click any [data-lightbox] image to expand) ---------- */
-  const lb = document.getElementById("lightbox");
-  const lbImg = lb ? lb.querySelector("img") : null;
-  const lbOpen = () => lb && lb.classList.contains("open");
-  const closeLb = () => { if (lb) { lb.classList.remove("open"); lb.setAttribute("aria-hidden", "true"); } };
-  if (lb && lbImg) {
-    document.addEventListener("click", (e) => {
-      const t = e.target.closest("[data-lightbox]");
-      if (t && t.tagName === "IMG") { lbImg.src = t.currentSrc || t.src; lbImg.alt = t.alt || ""; lb.classList.add("open"); lb.setAttribute("aria-hidden", "false"); }
-      else if (e.target === lb || e.target === lbImg) { closeLb(); }
-    });
-  }
+  const lbOpen = () => window.PortfolioLightbox && window.PortfolioLightbox.isOpen();
+  const closeLb = () => window.PortfolioLightbox && window.PortfolioLightbox.close();
 
   /* ---------- keyboard ---------- */
   document.addEventListener("keydown", (e) => {
@@ -1430,14 +1422,8 @@
 
     const openLightbox = (idx) => {
       const img = slides[idx].querySelector("img[data-lightbox]");
-      if (!img) return;
-      const lb = document.getElementById("lightbox");
-      const lbImg = lb && lb.querySelector("img");
-      if (!lb || !lbImg) return;
-      lbImg.src = img.currentSrc || img.src;
-      lbImg.alt = img.alt || "";
-      lb.classList.add("open");
-      lb.setAttribute("aria-hidden", "false");
+      if (!img || !window.PortfolioLightbox) return;
+      window.PortfolioLightbox.openFromElement(img);
     };
 
     const go = (n) => {
@@ -1689,13 +1675,7 @@
   }
 
   stage.addEventListener("click", function() {
-    var lb = document.getElementById("lightbox");
-    var lbImg = lb && lb.querySelector("img");
-    if (!lb || !lbImg) return;
-    lbImg.src = img.currentSrc || img.src;
-    lbImg.alt = img.alt || "";
-    lb.classList.add("open");
-    lb.setAttribute("aria-hidden", "false");
+    if (img && window.PortfolioLightbox) window.PortfolioLightbox.openFromElement(img);
   });
   stage.addEventListener("keydown", function(e) {
     if (e.key === "Enter" || e.key === " ") { e.preventDefault(); stage.click(); }

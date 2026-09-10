@@ -4096,8 +4096,15 @@ html.journey-nav-scrolling {
   gap: var(--sp-xl);
   align-items: center;
 }
-.device-story__row--reverse .device-story__copy { order: 2; }
-.device-story__row--reverse .device-story__visual { order: 1; }
+.device-story__row--reverse .device-story__copy,
+.device-story__row--visual-left .device-story__copy { order: 2; }
+.device-story__row--reverse .device-story__visual,
+.device-story__row--visual-left .device-story__visual,
+.device-story__row--visual-left .mobile-journey__visual,
+.device-story__row--visual-left .ai-journey__visual,
+.device-story__row--visual-left .tabs-compare,
+.device-story__row--visual-left .ai-journey__prototype,
+.device-story__row--visual-left .mobile-journey__prototype { order: 1; }
 .device-story__eyebrow {
   font-size: var(--fs-2xs);
   text-transform: uppercase;
@@ -4134,7 +4141,14 @@ html.journey-nav-scrolling {
     grid-template-columns: 1fr;
   }
   .device-story__row--reverse .device-story__copy,
-  .device-story__row--reverse .device-story__visual { order: unset; }
+  .device-story__row--reverse .device-story__visual,
+  .device-story__row--visual-left .device-story__copy,
+  .device-story__row--visual-left .device-story__visual,
+  .device-story__row--visual-left .mobile-journey__visual,
+  .device-story__row--visual-left .ai-journey__visual,
+  .device-story__row--visual-left .tabs-compare,
+  .device-story__row--visual-left .ai-journey__prototype,
+  .device-story__row--visual-left .mobile-journey__prototype { order: unset; }
   .device-story__visual { height: clamp(14rem, 62vw, 20rem); }
 }
 
@@ -4667,11 +4681,15 @@ html.journey-nav-scrolling {
 .ai-journey .device-story__row {
   align-items: start;
 }
-.ai-journey .device-story__row--reverse .ai-journey__visual { order: 1; }
-.ai-journey .device-story__row--reverse .device-story__copy { order: 2; }
+.ai-journey .device-story__row--reverse .ai-journey__visual,
+.ai-journey .device-story__row--visual-left .ai-journey__visual { order: 1; }
+.ai-journey .device-story__row--reverse .device-story__copy,
+.ai-journey .device-story__row--visual-left .device-story__copy { order: 2; }
 @media (max-width: 780px) {
   .ai-journey .device-story__row--reverse .ai-journey__visual,
-  .ai-journey .device-story__row--reverse .device-story__copy { order: unset; }
+  .ai-journey .device-story__row--reverse .device-story__copy,
+  .ai-journey .device-story__row--visual-left .ai-journey__visual,
+  .ai-journey .device-story__row--visual-left .device-story__copy { order: unset; }
 }
 .ai-journey__row .device-story__copy {
   max-width: none;

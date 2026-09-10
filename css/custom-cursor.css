@@ -65,6 +65,15 @@
   transform: translate(-50%, -50%) scale(0.64);
 }
 
+/* Case studies — default dot on hover (no glass lens); same shrink as press */
+.custom-cursor-case-study #custom-cursor.is-hover-compact {
+  transform: translate(-50%, -50%) scale(0.64);
+}
+
+.custom-cursor-case-study #custom-cursor.is-hover-compact.is-selecting {
+  transform: translate(-50%, -50%) scale(0.64);
+}
+
 /* Interactive hover — liquid glass lens on ::before; dark icon on ::after */
 #custom-cursor.is-hover {
   width: 44px;

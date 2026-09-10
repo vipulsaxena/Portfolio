@@ -28,6 +28,22 @@
 
   var CHAPTER_NAV_IDS = ["setup", "period-1", "period-2", "period-3", "proof"];
 
+  /** Persist wizard step / A·B variant when leaving and re-entering a slide. */
+  var presentInteractiveState = {};
+
+  function presentSlideIdFromNode(node) {
+    if (!node) return "";
+    var slide = node.closest ? node.closest(".present-slide[data-slide-id]") : null;
+    return slide ? slide.getAttribute("data-slide-id") || "" : "";
+  }
+
+  function tradeoffSwitcherStateKey(switchRoot, slideId) {
+    if (!slideId) return "";
+    if (switchRoot.closest(".exploration-wizard__variant-switcher")) return slideId + ":wireframe-variant";
+    if (slideId === "p1-tradeoff-01") return slideId + ":concept-variant";
+    return slideId + ":tradeoff-variant";
+  }
+
   function emitWidgetChange(id, value) {
     if (!id) return;
     document.dispatchEvent(
@@ -50,6 +66,7 @@
   function ensureTradeoffWidgets(root) {
     root.querySelectorAll("[data-trade-off-switcher]").forEach(function (switchRoot) {
       if (switchRoot.getAttribute("data-fm-widget")) return;
+      if (switchRoot.closest(".exploration-wizard__variant-switcher")) return;
       var beat = switchRoot.closest('[aria-label*="Trade-off 01"]');
       if (beat) {
         switchRoot.setAttribute("data-fm-widget", "raisin-tradeoff-01");
@@ -67,33 +84,56 @@
   var PRESENT_TRIM = {
     hero: [".hero__sub:not(.hero__sub--thesis)"],
     journey: [".lede--remit", ".rule--thick", ".lede:not(.lede--present-short)"],
-    "p1-intro": [".period__thesis:not(.period__thesis--present)", ".present-constraint-chips"],
-    "p1-baseline": [
-      ".beat__text:not(.beat__text--problem):not(.beat__text--present)",
-      ".beat__needs"
+    "p1-intro": [
+      ".period__thesis:not(.period__thesis--present)",
+      ".period__role",
+      ".present-constraint-chips"
     ],
-    "p1-co-creation": [".beat__text:not(.beat__text--present)", ".period-split__caption"],
+    "p1-baseline": [
+      ".beat__text:not(.beat__text--present)",
+      ".beat__support:not(.beat__support--present)",
+      ".beat__stat",
+      ".beat__eyebrow"
+    ],
+    "p1-co-creation": [
+      ".beat__text:not(.beat__text--present)",
+      ".beat__support:not(.beat__support--present)",
+      ".beat__eyebrow",
+      ".beat__subtitle",
+      ".period-split__caption",
+      ".research-stickies:not(.research-stickies--hmw-row)"
+    ],
+    "p1-exploration": [
+      ".beat__text:not(.beat__text--present)",
+      ".beat__support:not(.beat__support--present)",
+      ".beat__eyebrow",
+      ".wh-phase-breakdown"
+    ],
     "p1-tradeoff-01": [
-      ".trade-off__label",
-      ".trade-off__options",
+      ".beat__text:not(.beat__text--present)",
+      ".beat__support:not(.beat__support--present)",
+      ".beat__eyebrow",
+      ".beat__stat",
+      ".trade-off-switcher__left > .chip-row",
       ".trade-off__position",
       ".trade-off__outcome",
+      ".trade-off__settled",
+      ".beat__enablement",
       ".trade-off-switcher__scope",
-      ".period-split__caption",
-      ".beat__text:not(.present-evidence-line)"
+      ".trade-off-switcher__right .period-split__caption"
     ],
-    "p1-tradeoff-02": [
-      ".trade-off__label",
-      ".trade-off__options",
-      ".trade-off__position",
-      ".period-split__caption",
-      ".beat__text:not(.present-org-decision)"
+    "p1-visual-system": [
+      ".beat__text:not(.beat__text--present)",
+      ".beat__support:not(.beat__support--present)",
+      ".beat__eyebrow",
+      ".wh-phase-breakdown"
     ],
-    "p1-colour-map": [".beat__text:not(.beat__text--present)", ".period-split__caption"],
     "p1-outcomes": [
       ".wealth-hub-constraints",
       ".beat__text",
-      ".beat__caption:not(.present-outcomes-chip)"
+      ".beat__caption",
+      ".beat__support:not(.beat__support--present)",
+      ".beat__eyebrow"
     ],
     "p4-cura": [".beat__text", ".beat__enablement"],
     "p3-intro": [".period__thesis:not(.period__thesis--present)"],
@@ -135,9 +175,9 @@
     { id: "p1-intro", chapter: "period-1", selector: "#period-1 .period__head" },
     { id: "p1-baseline", chapter: "period-1", selector: '[aria-label="Baseline research"]' },
     { id: "p1-co-creation", chapter: "period-1", selector: '[aria-label="Co-creation sprint"]' },
+    { id: "p1-exploration", chapter: "period-1", selector: '[aria-label="Wealth Hub — ideate"]' },
     { id: "p1-tradeoff-01", chapter: "period-1", selector: '[aria-label="Trade-off 01 — user research, treemap vs donut"]' },
-    { id: "p1-tradeoff-02", chapter: "period-1", selector: '[aria-label="Trade-off 02 — catalogue list vs asset-class hierarchy"]' },
-    { id: "p1-colour-map", chapter: "period-1", selector: '[aria-label="Product colour map"]' },
+    { id: "p1-visual-system", chapter: "period-1", selector: '[aria-label="Wealth Hub visual system"]' },
     { id: "p1-outcomes", chapter: "period-1", selector: '[aria-label="After MVP launch — outcomes"]' },
     { id: "p3-intro", chapter: "period-2", selector: "#period-3 .period__head" },
     { id: "p3-desk-research", chapter: "period-2", selector: "#period-3 .mobile-journey__row:first-child" },
@@ -208,9 +248,9 @@
     "p1-intro": "viewport",
     "p1-baseline": "viewport",
     "p1-co-creation": "viewport",
+    "p1-exploration": "viewport",
     "p1-tradeoff-01": "viewport",
-    "p1-tradeoff-02": "viewport",
-    "p1-colour-map": "viewport-split",
+    "p1-visual-system": "viewport",
     "p1-outcomes": "viewport-split",
     "p3-intro": "viewport",
     "p3-desk-research": "viewport",
@@ -508,59 +548,246 @@
     });
   }
 
-  function initTradeOffSwitchers(root) {
-    function activateVariant(switchRoot, variant) {
-      var v = variant === "b" ? "b" : "a";
-      switchRoot.querySelectorAll("[data-variant]").forEach(function (tab) {
-        if (!tab.matches(".trade-off-switcher__tab")) return;
-        var on = tab.getAttribute("data-variant") === v;
-        tab.classList.toggle("trade-off-switcher__tab--active", on);
-        tab.setAttribute("aria-selected", on ? "true" : "false");
-        tab.tabIndex = on ? 0 : -1;
-      });
-      switchRoot.querySelectorAll("[data-variant-img]").forEach(function (media) {
-        var on = media.getAttribute("data-variant-img") === v;
-        media.classList.toggle("is-active", on);
-        media.hidden = !on;
-        media.querySelectorAll("video").forEach(function (video) {
-          if (on) {
-            var dataSrc = video.getAttribute("data-src");
-            if (dataSrc && !video.getAttribute("src")) {
-              video.src = dataSrc;
-              video.removeAttribute("data-src");
-            }
-            var p = video.play();
-            if (p && p.catch) p.catch(function () {});
-          } else {
-            video.pause();
+  function activateTradeoffVariant(switchRoot, variant) {
+    if (!switchRoot) return;
+    var v = variant === "b" ? "b" : "a";
+    switchRoot.querySelectorAll(".trade-off-switcher__tab[data-variant]").forEach(function (tab) {
+      var on = tab.getAttribute("data-variant") === v;
+      tab.classList.toggle("trade-off-switcher__tab--active", on);
+      tab.setAttribute("aria-selected", on ? "true" : "false");
+      tab.tabIndex = on ? 0 : -1;
+    });
+    switchRoot.querySelectorAll("[data-variant-img]").forEach(function (media) {
+      var on = media.getAttribute("data-variant-img") === v;
+      media.classList.toggle("is-active", on);
+      if (on) media.removeAttribute("hidden");
+      else media.setAttribute("hidden", "");
+      media.querySelectorAll("video").forEach(function (video) {
+        if (on) {
+          var dataSrc = video.getAttribute("data-src");
+          if (dataSrc && !video.getAttribute("src")) {
+            video.src = dataSrc;
+            video.removeAttribute("data-src");
           }
-        });
+          var p = video.play();
+          if (p && p.catch) p.catch(function () {});
+        } else {
+          video.pause();
+        }
       });
-      if (!switchRoot.hasAttribute("data-trade-off-visual-only")) {
-        switchRoot.querySelectorAll("[data-variant-panel]").forEach(function (panel) {
-          var on = panel.getAttribute("data-variant-panel") === v;
+    });
+    if (!switchRoot.hasAttribute("data-trade-off-visual-only")) {
+      switchRoot.querySelectorAll("[data-variant-panel]").forEach(function (panel) {
+        var on = panel.getAttribute("data-variant-panel") === v;
+        panel.classList.toggle("is-active", on);
+        panel.hidden = !on;
+      });
+    }
+    switchRoot.setAttribute("data-fm-value", v);
+    emitWidgetChange(switchRoot.getAttribute("data-fm-widget"), v);
+    var slideId = presentSlideIdFromNode(switchRoot);
+    var stateKey = tradeoffSwitcherStateKey(switchRoot, slideId);
+    if (stateKey) presentInteractiveState[stateKey] = v;
+  }
+
+  function bindTradeOffSwitcher(switchRoot) {
+    if (!switchRoot || switchRoot.dataset.presentTradeoffInit) return;
+    var tabs = Array.prototype.slice.call(
+      switchRoot.querySelectorAll(".trade-off-switcher__tab[data-variant]")
+    );
+    if (!tabs.length) return;
+    switchRoot.dataset.presentTradeoffInit = "1";
+    var slideId = presentSlideIdFromNode(switchRoot);
+    var stateKey = tradeoffSwitcherStateKey(switchRoot, slideId);
+    var initial =
+      (stateKey && presentInteractiveState[stateKey]) || switchRoot.getAttribute("data-default") || "a";
+    activateTradeoffVariant(switchRoot, initial);
+    switchRoot.addEventListener("click", function (e) {
+      var tab = e.target.closest(".trade-off-switcher__tab[data-variant]");
+      if (!tab || !switchRoot.contains(tab)) return;
+      e.preventDefault();
+      e.stopPropagation();
+      activateTradeoffVariant(switchRoot, tab.getAttribute("data-variant"));
+    });
+    switchRoot.addEventListener("keydown", function (e) {
+      var tab = e.target.closest(".trade-off-switcher__tab[data-variant]");
+      if (!tab || !switchRoot.contains(tab)) return;
+      var idx = tabs.indexOf(tab);
+      if (idx < 0) return;
+      var next = null;
+      if (e.key === "ArrowRight" || e.key === "ArrowDown") next = tabs[(idx + 1) % tabs.length];
+      else if (e.key === "ArrowLeft" || e.key === "ArrowUp") next = tabs[(idx - 1 + tabs.length) % tabs.length];
+      else if (e.key === "Home") next = tabs[0];
+      else if (e.key === "End") next = tabs[tabs.length - 1];
+      if (!next) return;
+      e.preventDefault();
+      activateTradeoffVariant(switchRoot, next.getAttribute("data-variant"));
+      next.focus();
+    });
+  }
+
+  function initTradeOffSwitchers(root) {
+    if (!root) return;
+    root.querySelectorAll("[data-trade-off-switcher]").forEach(bindTradeOffSwitcher);
+  }
+
+  function syncWireframeVariantSwitcher(wizardRoot) {
+    if (!wizardRoot) return;
+    var switchRoot = wizardRoot.querySelector(".exploration-wizard__variant-switcher[data-trade-off-switcher]");
+    if (!switchRoot) return;
+    bindTradeOffSwitcher(switchRoot);
+    var slideId = presentSlideIdFromNode(wizardRoot);
+    var stateKey = slideId ? slideId + ":wireframe-variant" : "";
+    var initial =
+      (stateKey && presentInteractiveState[stateKey]) || switchRoot.getAttribute("data-default") || "b";
+    activateTradeoffVariant(switchRoot, initial);
+  }
+
+  var WEALTH_HUB_JOURNEY_STEPS = [
+    { n: 1, label: "Listen" },
+    { n: 2, label: "Synthesise" },
+    { n: 3, label: "Ideate" },
+    { n: 4, label: "Validation" },
+    { n: 5, label: "Visual design" },
+    { n: 6, label: "Launch" }
+  ];
+
+  function applyWealthHubJourneyStrip(strip) {
+    if (!strip) return;
+    var current = parseInt(strip.getAttribute("data-journey-step"), 10) || 1;
+    strip.querySelectorAll(".workflow-strip__step[data-journey-index]").forEach(function (el) {
+      var n = parseInt(el.getAttribute("data-journey-index"), 10);
+      el.classList.remove("workflow-strip__step--done", "workflow-strip__step--active", "workflow-strip__step--upcoming");
+      if (n < current) el.classList.add("workflow-strip__step--done");
+      else if (n === current) el.classList.add("workflow-strip__step--active");
+      else el.classList.add("workflow-strip__step--upcoming");
+    });
+  }
+
+  function renderWealthHubJourneyStrip(strip) {
+    if (!strip || strip.dataset.journeyBuilt) return;
+    strip.dataset.journeyBuilt = "1";
+    strip.classList.add("wealth-hub-journey");
+    strip.setAttribute("role", "navigation");
+    if (!strip.getAttribute("aria-label")) strip.setAttribute("aria-label", "Wealth Hub journey");
+    strip.textContent = "";
+    WEALTH_HUB_JOURNEY_STEPS.forEach(function (step, idx) {
+      if (idx > 0) {
+        var arrow = document.createElement("span");
+        arrow.className = "workflow-strip__arrow";
+        arrow.setAttribute("aria-hidden", "true");
+        arrow.textContent = "→";
+        strip.appendChild(arrow);
+      }
+      var pill = document.createElement("span");
+      pill.className = "workflow-strip__step";
+      pill.setAttribute("data-journey-index", String(step.n));
+      var num = document.createElement("span");
+      num.className = "workflow-strip__n";
+      num.setAttribute("aria-hidden", "true");
+      num.textContent = String(step.n);
+      pill.appendChild(num);
+      pill.appendChild(document.createTextNode(" " + step.label));
+      strip.appendChild(pill);
+    });
+    applyWealthHubJourneyStrip(strip);
+  }
+
+  function initWealthHubJourneys(root) {
+    root.querySelectorAll(".wealth-hub-journey[data-journey-step]").forEach(function (strip) {
+      renderWealthHubJourneyStrip(strip);
+      applyWealthHubJourneyStrip(strip);
+    });
+  }
+
+  function initPhaseWizards(root) {
+    root.querySelectorAll("[data-phase-wizard]").forEach(function (wizardRoot) {
+      if (wizardRoot.dataset.presentPhaseWizardInit) return;
+      wizardRoot.dataset.presentPhaseWizardInit = "1";
+      var tabs = Array.prototype.slice.call(
+        wizardRoot.querySelectorAll(
+          ".phase-wizard__stepper .trade-off-switcher__tab[data-step], .exploration-wizard__stepper .trade-off-switcher__tab[data-step]"
+        )
+      );
+      var panels = Array.prototype.slice.call(wizardRoot.querySelectorAll("[data-step-panel]"));
+      if (!tabs.length || !panels.length) return;
+
+      function activateStep(step) {
+        var s = String(step);
+        tabs.forEach(function (tab) {
+          var on = tab.getAttribute("data-step") === s;
+          tab.classList.toggle("trade-off-switcher__tab--active", on);
+          tab.setAttribute("aria-selected", on ? "true" : "false");
+          tab.tabIndex = on ? 0 : -1;
+        });
+        panels.forEach(function (panel) {
+          var on = panel.getAttribute("data-step-panel") === s;
           panel.classList.toggle("is-active", on);
           panel.hidden = !on;
+          panel.querySelectorAll("video").forEach(function (video) {
+            if (on) {
+              var dataSrc = video.getAttribute("data-src");
+              if (dataSrc && !video.getAttribute("src")) {
+                video.src = dataSrc;
+                video.removeAttribute("data-src");
+              }
+              var p = video.play();
+              if (p && p.catch) p.catch(function () {});
+            } else {
+              video.pause();
+            }
+          });
         });
+        wizardRoot.querySelectorAll(".wh-phase-breakdown__item").forEach(function (item) {
+          var on = item.getAttribute("data-step") === s;
+          item.classList.toggle("wh-phase-breakdown__item--active", on);
+        });
+        if (wizardRoot.classList.contains("exploration-wizard") || wizardRoot.classList.contains("visual-system-wizard")) {
+          var slide = wizardRoot.closest(".present-slide");
+          if (slide) bindLightboxInRoot(slide);
+        }
+        var slideId = presentSlideIdFromNode(wizardRoot);
+        if (slideId) presentInteractiveState[slideId + ":phase-step"] = s;
+        if (s === "4" && wizardRoot.classList.contains("exploration-wizard")) {
+          syncWireframeVariantSwitcher(wizardRoot);
+        }
       }
-      switchRoot.setAttribute("data-fm-value", v);
-      emitWidgetChange(switchRoot.getAttribute("data-fm-widget"), v);
-    }
 
-    root.querySelectorAll("[data-trade-off-switcher]").forEach(function (switchRoot) {
-      if (switchRoot.dataset.presentTradeoffInit) return;
-      switchRoot.dataset.presentTradeoffInit = "1";
-      var tabs = Array.prototype.slice.call(switchRoot.querySelectorAll(".trade-off-switcher__tab"));
-      if (!tabs.length) return;
-      activateVariant(switchRoot, switchRoot.getAttribute("data-default") || "a");
-      switchRoot.addEventListener("click", function (e) {
-        var tab = e.target.closest(".trade-off-switcher__tab");
-        if (!tab || !switchRoot.contains(tab)) return;
-        activateVariant(switchRoot, tab.getAttribute("data-variant"));
+      var slideId = presentSlideIdFromNode(wizardRoot);
+      var savedStep =
+        slideId && presentInteractiveState[slideId + ":phase-step"]
+          ? presentInteractiveState[slideId + ":phase-step"]
+          : null;
+      activateStep(savedStep || wizardRoot.getAttribute("data-default") || "1");
+
+      wizardRoot.addEventListener("click", function (e) {
+        var variantTab = e.target.closest(
+          ".exploration-wizard__variant-switcher .trade-off-switcher__tab[data-variant]"
+        );
+        if (variantTab && wizardRoot.contains(variantTab)) {
+          var variantRoot = variantTab.closest("[data-trade-off-switcher]");
+          if (variantRoot) {
+            e.preventDefault();
+            e.stopPropagation();
+            bindTradeOffSwitcher(variantRoot);
+            activateTradeoffVariant(variantRoot, variantTab.getAttribute("data-variant"));
+          }
+          return;
+        }
+        var tab = e.target.closest(".trade-off-switcher__tab[data-step]");
+        if (tab && wizardRoot.contains(tab)) {
+          activateStep(tab.getAttribute("data-step"));
+          return;
+        }
+        var breakdown = e.target.closest(".wh-phase-breakdown__item[data-step]");
+        if (breakdown && wizardRoot.contains(breakdown)) {
+          activateStep(breakdown.getAttribute("data-step"));
+        }
       });
-      switchRoot.addEventListener("keydown", function (e) {
-        var tab = e.target.closest(".trade-off-switcher__tab");
-        if (!tab || !switchRoot.contains(tab)) return;
+
+      wizardRoot.addEventListener("keydown", function (e) {
+        var tab = e.target.closest(".trade-off-switcher__tab[data-step]");
+        if (!tab || !wizardRoot.contains(tab)) return;
         var idx = tabs.indexOf(tab);
         if (idx < 0) return;
         var next = null;
@@ -570,10 +797,18 @@
         else if (e.key === "End") next = tabs[tabs.length - 1];
         if (!next) return;
         e.preventDefault();
-        activateVariant(switchRoot, next.getAttribute("data-variant"));
+        activateStep(next.getAttribute("data-step"));
         next.focus();
       });
     });
+  }
+
+  function initExplorationWizards(root) {
+    root.querySelectorAll("[data-exploration-wizard]").forEach(function (el) {
+      if (!el.hasAttribute("data-phase-wizard")) el.setAttribute("data-phase-wizard", "");
+      if (!el.getAttribute("data-journey-anchor")) el.setAttribute("data-journey-anchor", "3");
+    });
+    initPhaseWizards(root);
   }
 
   function initTabsCompare(root) {
@@ -855,7 +1090,12 @@
     root.querySelectorAll("[data-trade-off-switcher]").forEach(function (el) {
       delete el.dataset.presentTradeoffInit;
     });
+    root.querySelectorAll("[data-exploration-wizard]").forEach(function (el) {
+      delete el.dataset.presentExplorationInit;
+    });
     initTradeOffSwitchers(root);
+    initExplorationWizards(root);
+    initWealthHubJourneys(root);
     promoteMedia(root);
     initCompareSliders(root);
     initTabsCompare(root);
@@ -893,166 +1133,43 @@
     carouselCleanups = [];
   }
 
-  var GALLERY_CONTAINERS =
-    ".beat__media, .findings-visuals, .why-proof__media, .mock-panel, .research-banner__img, .post-mvp-card__visual, .post-mvp-carousel, .period-split__visual, .ai-tools-grid";
-
-  function imagesInContainer(container) {
-    if (container.classList.contains("why-proof__media")) {
-      return Array.prototype.slice.call(container.querySelectorAll("img"));
-    }
-    return Array.prototype.slice.call(container.querySelectorAll("img[data-lightbox]"));
-  }
-
-  function getGalleryImages(img) {
-    var strip = img.closest(".filmstrip");
-    if (strip) return Array.prototype.slice.call(strip.querySelectorAll(".filmstrip__item img"));
-    var container = img.closest(GALLERY_CONTAINERS);
-    if (container) {
-      var scoped = imagesInContainer(container);
-      if (scoped.length > 1) return scoped;
-    }
-    return [img];
-  }
+  var presentLightboxApi = null;
 
   function closePresentLightbox() {
-    var lightbox = document.querySelector(".lightbox");
-    if (!lightbox || !lightbox.classList.contains("is-open")) return;
-    var lbVideo = lightbox.querySelector(".lightbox__video");
-    lightbox.classList.remove("is-open", "is-gallery", "is-video");
-    document.body.style.overflow = "";
-    if (lbVideo) {
-      lbVideo.pause();
-      lbVideo.hidden = true;
-      lbVideo.removeAttribute("src");
-    }
+    if (presentLightboxApi) presentLightboxApi.close();
+    else if (window.PortfolioLightbox) window.PortfolioLightbox.close();
   }
 
-  function openPresentLightbox(imgs, startIndex) {
+  function resetLightboxBindings(root) {
+    if (!root) return;
+    root.querySelectorAll("[data-lightbox]").forEach(function (el) {
+      delete el.dataset.portfolioLbInit;
+    });
+    root.querySelectorAll(".exploration-wizard__asset-slot, .ai-tools-grid__frame").forEach(function (el) {
+      delete el.dataset.portfolioLbSlotInit;
+      delete el.dataset.portfolioLbInit;
+    });
+  }
+
+  function ensurePresentLightboxApi() {
+    if (presentLightboxApi) return presentLightboxApi;
+    var PL = window.PortfolioLightbox;
     var lightbox = document.querySelector(".lightbox");
-    if (!lightbox) return;
-    var lbImg = lightbox.querySelector(".lightbox__img");
-    var lbVideo = lightbox.querySelector(".lightbox__video");
-    var prevBtn = lightbox.querySelector(".lightbox__prev");
-    var nextBtn = lightbox.querySelector(".lightbox__next");
-    var counter = lightbox.querySelector(".lightbox__counter");
-    if (!lbImg) return;
-
-    var gallery = imgs;
-    var galleryIndex = startIndex;
-
-    function isVideoSlide(slide) {
-      return slide && slide.tagName === "VIDEO";
-    }
-
-    function updateNav() {
-      var multi = gallery.length > 1;
-      lightbox.classList.toggle("is-gallery", multi);
-      if (counter) {
-        counter.hidden = !multi;
-        if (multi) counter.textContent = galleryIndex + 1 + " / " + gallery.length;
-      }
-      if (prevBtn) {
-        prevBtn.hidden = !multi;
-        prevBtn.disabled = false;
-      }
-      if (nextBtn) {
-        nextBtn.hidden = !multi;
-        nextBtn.disabled = false;
-      }
-    }
-
-    function showSlide() {
-      var slide = gallery[galleryIndex];
-      if (isVideoSlide(slide) && lbVideo) {
-        lightbox.classList.add("is-video");
-        lbImg.hidden = true;
-        lbVideo.hidden = false;
-        lbVideo.src = slide.currentSrc || slide.getAttribute("src") || slide.getAttribute("data-src") || "";
-        lbVideo.play().catch(function () {});
-      } else {
-        lightbox.classList.remove("is-video");
-        if (lbVideo) {
-          lbVideo.pause();
-          lbVideo.hidden = true;
-          lbVideo.removeAttribute("src");
-        }
-        lbImg.hidden = false;
-        lbImg.src = slide.getAttribute("data-full") || slide.src;
-        lbImg.alt = slide.alt || "";
-      }
-      updateNav();
-    }
-
-    function step(delta) {
-      if (gallery.length <= 1) return;
-      galleryIndex = (galleryIndex + delta + gallery.length) % gallery.length;
-      showSlide();
-    }
-
-    if (lightbox._presentLbStep) {
-      prevBtn && prevBtn.removeEventListener("click", lightbox._presentLbPrev);
-      nextBtn && nextBtn.removeEventListener("click", lightbox._presentLbNext);
-    }
-    lightbox._presentLbPrev = function () {
-      step(-1);
-    };
-    lightbox._presentLbNext = function () {
-      step(1);
-    };
-    lightbox._presentLbStep = step;
-    if (prevBtn) prevBtn.addEventListener("click", lightbox._presentLbPrev);
-    if (nextBtn) nextBtn.addEventListener("click", lightbox._presentLbNext);
-
-    showSlide();
-    lightbox.classList.add("is-open");
-    document.body.style.overflow = "hidden";
+    if (!PL || !lightbox) return null;
+    presentLightboxApi = PL.mountGallery(lightbox, { wrapGallery: true });
+    return presentLightboxApi;
   }
 
   function bindLightboxInRoot(root) {
-    root.querySelectorAll("img[data-lightbox]").forEach(function (img) {
-      if (img.dataset.presentLbInit) return;
-      img.dataset.presentLbInit = "1";
-      img.style.cursor = "pointer";
-      img.addEventListener("click", function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        var imgs = getGalleryImages(img);
-        var index = Math.max(0, imgs.indexOf(img));
-        openPresentLightbox(imgs, index);
-      });
-    });
-    root.querySelectorAll(".ai-tools-grid__frame").forEach(function (frame) {
-      if (frame.dataset.presentLbInit) return;
-      var img = frame.querySelector("img[data-lightbox]");
-      if (!img || img.dataset.presentLbInit) return;
-      frame.dataset.presentLbInit = "1";
-      frame.style.cursor = "pointer";
-      frame.addEventListener("click", function (e) {
-        if (e.target === img) return;
-        e.preventDefault();
-        e.stopPropagation();
-        var grid = frame.closest(".ai-tools-grid");
-        var imgs = grid
-          ? Array.prototype.slice.call(grid.querySelectorAll("img[data-lightbox]"))
-          : [img];
-        var index = Math.max(0, imgs.indexOf(img));
-        openPresentLightbox(imgs, index);
-      });
-    });
-    root.querySelectorAll("video[data-lightbox]").forEach(function (video) {
-      if (video.dataset.presentLbInit) return;
-      video.dataset.presentLbInit = "1";
-      video.addEventListener("click", function (e) {
-        e.preventDefault();
-        var dataSrc = video.getAttribute("data-src");
-        if (dataSrc && !video.getAttribute("src")) {
-          video.src = dataSrc;
-          video.removeAttribute("data-src");
-        }
-        openPresentLightbox([video], 0);
-      });
-    });
+    var api = ensurePresentLightboxApi();
+    if (!api) return;
+    resetLightboxBindings(root);
+    api.bindRoot(root, { force: true });
   }
+
+  (function initPresentLightbox() {
+    ensurePresentLightboxApi();
+  })();
 
   function renderSlide(index) {
     var entry = SLIDE_MANIFEST[index];
@@ -1213,6 +1330,7 @@
   function go(n) {
     var nextIdx = Math.max(0, Math.min(N - 1, n));
     if (nextIdx === i && currentSlideEl) return;
+    closePresentLightbox();
     i = nextIdx;
     renderSlide(i);
     updateChrome();
@@ -1242,12 +1360,12 @@
       }
       if (e.key === "ArrowLeft") {
         e.preventDefault();
-        if (lightbox._presentLbStep) lightbox._presentLbStep(-1);
+        if (lightbox._portfolioLbStep) lightbox._portfolioLbStep(-1);
         return;
       }
       if (e.key === "ArrowRight") {
         e.preventDefault();
-        if (lightbox._presentLbStep) lightbox._presentLbStep(1);
+        if (lightbox._portfolioLbStep) lightbox._portfolioLbStep(1);
         return;
       }
       return;
@@ -1332,23 +1450,6 @@
 
   var start = parseInt((location.hash || "").replace("#", ""), 10);
   if (!isNaN(start) && start >= 1 && start <= N) i = start - 1;
-
-  (function initPresentLightboxChrome() {
-    var lightboxEl = document.querySelector(".lightbox");
-    if (!lightboxEl || lightboxEl.dataset.presentLbChromeInit) return;
-    lightboxEl.dataset.presentLbChromeInit = "1";
-    var closeBtn = lightboxEl.querySelector(".lightbox__close");
-    if (closeBtn) {
-      closeBtn.addEventListener("click", function () {
-        closePresentLightbox();
-      });
-    }
-    lightboxEl.addEventListener("click", function (e) {
-      if (e.target === lightboxEl || e.target.classList.contains("lightbox__stage")) {
-        closePresentLightbox();
-      }
-    });
-  })();
 
   go(i);
 })();

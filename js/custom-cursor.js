@@ -20,6 +20,28 @@
   var DISP_CHROMA = 0.08;
   var FILTER_ID = "cursor-liquid-glass";
 
+  var CASE_STUDY_FILES = {
+    "olx.html": 1,
+    "olx-presentation.html": 1,
+    "n26.html": 1,
+    "n26-presentation.html": 1,
+    "gomart.html": 1,
+    "gomart-presentation.html": 1,
+    "raisin.html": 1,
+    "raisin-presentation.html": 1,
+    "goplay.html": 1,
+    "instalively.html": 1,
+    "silent-ninja-redesign.html": 1,
+  };
+
+  function isCaseStudyPage() {
+    var file = location.pathname.replace(/\/+$/, "").split("/").pop() || "";
+    if (!file || file === "/") file = "index.html";
+    return !!CASE_STUDY_FILES[file];
+  }
+
+  var caseStudyCursor = isCaseStudyPage();
+
   var INTERACTIVE =
     'a[href], button:not([disabled]), [role="button"], summary';
   var NATIVE =
@@ -35,7 +57,11 @@
   // dialog, which would hide the cursor while cursor:none stays active.
   root.appendChild(cursor);
   root.classList.add("has-custom-cursor");
-  ensureLiquidGlassFilter();
+  if (caseStudyCursor) {
+    root.classList.add("custom-cursor-case-study");
+  } else {
+    ensureLiquidGlassFilter();
+  }
 
   var visible = false;
   var pressing = false;
@@ -279,7 +305,8 @@
       "is-external",
       "is-locked",
       "is-close",
-      "is-chat"
+      "is-chat",
+      "is-hover-compact"
     );
   }
 
@@ -409,6 +436,11 @@
     var interactive = target.closest(INTERACTIVE);
     if (!interactive) {
       clearHoverClasses();
+      return;
+    }
+
+    if (caseStudyCursor) {
+      cursor.classList.add("is-hover-compact");
       return;
     }
 

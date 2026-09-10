@@ -268,7 +268,8 @@ export class PresentationRoom {
         this.room.state.slide === state.slide &&
         this.room.state.section === state.section &&
         widgetsSignature(this.room.state.widgets) === widgetsSignature(state.widgets) &&
-        (this.room.state.highlight || null) === (state.highlight || null);
+        (this.room.state.highlight || null) === (state.highlight || null) &&
+        (this.room.state.lightbox || null) === (state.lightbox || null);
       if (scrollOnly && now - this.room.lastScrollAt < SCROLL_MIN_INTERVAL_MS) {
         this.room.state = state;
         return;
