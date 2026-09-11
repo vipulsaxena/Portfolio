@@ -118,7 +118,6 @@
       ".trade-off__position",
       ".trade-off__outcome",
       ".trade-off__settled",
-      ".beat__enablement",
       ".trade-off-switcher__scope",
       ".trade-off-switcher__right .period-split__caption"
     ],
@@ -136,21 +135,46 @@
       ".beat__eyebrow"
     ],
     "p4-cura": [".beat__text", ".beat__enablement"],
-    "p3-intro": [".period__thesis:not(.period__thesis--present)"],
+    "p3-intro": [".period__thesis:not(.period__thesis--present)", ".period__role"],
     "p3-desk-research": [
-      ".device-story__text:not(.device-story__text--present)",
-      ".beat__text:not(.beat__text--problem)"
+      ".device-story__eyebrow",
+      ".device-story__title",
+      ".device-story__text:not(.device-story__text--present):not(.beat__text--present)",
+      ".device-story__text.device-story__text--present",
+      ".beat__stat",
+      ".beat__subtitle",
+      ".beat__problem"
     ],
-    "p3-parity": [".device-story__text:not(.device-story__text--present)"],
-    "p3-prototype": [
-      ".device-story__text:not(.device-story__text--present)",
-      ".trade-off--compact",
-      ".period-split__caption"
+    "p3-parity": [
+      ".device-story__eyebrow",
+      ".device-story__title",
+      ".device-story__text:not(.device-story__text--present):not(.beat__text--present)",
+      ".device-story__text.device-story__text--present",
+      ".beat__stat"
     ],
-    "p3-maze": [".device-story__text:not(.device-story__text--present):not(.device-story__text--present-risk)"],
+    "p3-ideation": [
+      ".beat__text:not(.beat__text--present)",
+      ".beat__support:not(.beat__support--present)",
+      ".beat__eyebrow"
+    ],
+    "p3-maze": [
+      ".beat__text:not(.beat__text--present)",
+      ".beat__support:not(.beat__support--present)",
+      ".beat__eyebrow",
+      ".beat__stat",
+      ".trade-off__position"
+    ],
+    "p3-visual-system": [
+      ".beat__text:not(.beat__text--present)",
+      ".beat__support:not(.beat__support--present)",
+      ".beat__eyebrow"
+    ],
     "p3-shipped": [
-      ".device-story__text:not(.device-story__text--present)",
-      ".mobile-shipped-reviews__quote:nth-child(n+5)"
+      ".device-story__eyebrow",
+      ".device-story__title",
+      ".device-story__text:not(.beat__text--present)",
+      ".device-story__text.device-story__text--present",
+      ".beat__stat"
     ],
     "p4-intro": [
       ".period__thesis:not(.period__thesis--present)",
@@ -180,11 +204,12 @@
     { id: "p1-visual-system", chapter: "period-1", selector: '[aria-label="Wealth Hub visual system"]' },
     { id: "p1-outcomes", chapter: "period-1", selector: '[aria-label="After MVP launch — outcomes"]' },
     { id: "p3-intro", chapter: "period-2", selector: "#period-3 .period__head" },
-    { id: "p3-desk-research", chapter: "period-2", selector: "#period-3 .mobile-journey__row:first-child" },
-    { id: "p3-parity", chapter: "period-2", selector: "#period-3 .mobile-journey__row:nth-child(2)" },
-    { id: "p3-prototype", chapter: "period-2", selector: "#period-3 .mobile-journey__row--prototype" },
-    { id: "p3-maze", chapter: "period-2", selector: "#period-3 .mobile-journey__row:nth-child(4)" },
-    { id: "p3-shipped", chapter: "period-2", selector: "#period-3 .mobile-journey__shipped" },
+    { id: "p3-desk-research", chapter: "period-2", selector: '[aria-label="Mobile — research"]' },
+    { id: "p3-parity", chapter: "period-2", selector: '[aria-label="Mobile — parity"]' },
+    { id: "p3-ideation", chapter: "period-2", selector: '[aria-label="Mobile — ideate"]' },
+    { id: "p3-maze", chapter: "period-2", selector: '[aria-label="Mobile — validation"]' },
+    { id: "p3-visual-system", chapter: "period-2", selector: '[aria-label="Mobile — visual design"]' },
+    { id: "p3-shipped", chapter: "period-2", selector: '[aria-label="Mobile — launch"]' },
     { id: "p4-intro", chapter: "period-3", selector: "#period-4 .period__head" },
     { id: "p4-toolkit", chapter: "period-3", selector: "#period-4 .ai-journey__toolkit" },
     { id: "p4-lab-tools", chapter: "period-3", selector: "#period-4 .ai-journey__tools" },
@@ -193,7 +218,7 @@
       chapter: "period-3",
       compositeLayout: "coaching",
       composite: [
-        "#period-4 .device-story__row--reverse.ai-journey__row",
+        "#period-4 .ai-journey__row[aria-label='Coaching on Cursor']",
         "#period-4 .ai-cadence"
       ]
     },
@@ -255,8 +280,9 @@
     "p3-intro": "viewport",
     "p3-desk-research": "viewport",
     "p3-parity": "viewport",
-    "p3-prototype": "viewport-split",
+    "p3-ideation": "viewport",
     "p3-maze": "viewport",
+    "p3-visual-system": "viewport",
     "p3-shipped": "viewport",
     "p4-intro": "viewport",
     "p4-toolkit": "viewport",
@@ -285,8 +311,7 @@
       FULL_BLEED_SLIDES[entry.id] ||
       entry.id === "hero" ||
       entry.id === "thanks" ||
-      entry.id === "p1-outcomes" ||
-      entry.id === "p3-prototype"
+      entry.id === "p1-outcomes"
     ) {
       return;
     }
@@ -652,6 +677,54 @@
     { n: 6, label: "Launch" }
   ];
 
+  var WEALTH_HUB_JOURNEY_SLIDE_IDS = {
+    1: "p1-baseline",
+    2: "p1-co-creation",
+    3: "p1-exploration",
+    4: "p1-tradeoff-01",
+    5: "p1-visual-system",
+    6: "p1-outcomes"
+  };
+
+  var MOBILE_JOURNEY_STEPS = [
+    { n: 1, label: "Research" },
+    { n: 2, label: "Parity" },
+    { n: 3, label: "Ideate" },
+    { n: 4, label: "Validation" },
+    { n: 5, label: "Visual design" },
+    { n: 6, label: "Launch" }
+  ];
+
+  var MOBILE_JOURNEY_SLIDE_IDS = {
+    1: "p3-desk-research",
+    2: "p3-parity",
+    3: "p3-ideation",
+    4: "p3-maze",
+    5: "p3-visual-system",
+    6: "p3-shipped"
+  };
+
+  function journeyManifestIndex(slideIdsMap, stepN) {
+    var slideId = slideIdsMap[stepN];
+    if (!slideId) return -1;
+    for (var j = 0; j < SLIDE_MANIFEST.length; j++) {
+      if (SLIDE_MANIFEST[j].id === slideId) return j;
+    }
+    return -1;
+  }
+
+  function wealthHubJourneyManifestIndex(stepN) {
+    return journeyManifestIndex(WEALTH_HUB_JOURNEY_SLIDE_IDS, stepN);
+  }
+
+  function mobileJourneyManifestIndex(stepN) {
+    return journeyManifestIndex(MOBILE_JOURNEY_SLIDE_IDS, stepN);
+  }
+
+  function journeyProgramFromStrip(strip) {
+    return strip.getAttribute("data-journey-program") === "mobile" ? "mobile" : "wealth";
+  }
+
   function applyWealthHubJourneyStrip(strip) {
     if (!strip) return;
     var current = parseInt(strip.getAttribute("data-journey-step"), 10) || 1;
@@ -666,12 +739,16 @@
 
   function renderWealthHubJourneyStrip(strip) {
     if (!strip || strip.dataset.journeyBuilt) return;
+    var program = journeyProgramFromStrip(strip);
+    var steps = program === "mobile" ? MOBILE_JOURNEY_STEPS : WEALTH_HUB_JOURNEY_STEPS;
+    var slideIds = program === "mobile" ? MOBILE_JOURNEY_SLIDE_IDS : WEALTH_HUB_JOURNEY_SLIDE_IDS;
+    var defaultLabel = program === "mobile" ? "Mobile journey" : "Wealth Hub journey";
     strip.dataset.journeyBuilt = "1";
     strip.classList.add("wealth-hub-journey");
     strip.setAttribute("role", "navigation");
-    if (!strip.getAttribute("aria-label")) strip.setAttribute("aria-label", "Wealth Hub journey");
+    if (!strip.getAttribute("aria-label")) strip.setAttribute("aria-label", defaultLabel);
     strip.textContent = "";
-    WEALTH_HUB_JOURNEY_STEPS.forEach(function (step, idx) {
+    steps.forEach(function (step, idx) {
       if (idx > 0) {
         var arrow = document.createElement("span");
         arrow.className = "workflow-strip__arrow";
@@ -679,9 +756,21 @@
         arrow.textContent = "→";
         strip.appendChild(arrow);
       }
-      var pill = document.createElement("span");
+      var pill = document.createElement("button");
+      pill.type = "button";
       pill.className = "workflow-strip__step";
       pill.setAttribute("data-journey-index", String(step.n));
+      var targetIdx = journeyManifestIndex(slideIds, step.n);
+      if (targetIdx >= 0) {
+        pill.setAttribute("data-journey-slide-index", String(targetIdx));
+        var targetTitle = SLIDE_MANIFEST[targetIdx].title;
+        pill.setAttribute(
+          "aria-label",
+          "Go to step " + step.n + ": " + step.label + (targetTitle ? " — " + targetTitle : "")
+        );
+      } else {
+        pill.setAttribute("aria-label", step.label);
+      }
       var num = document.createElement("span");
       num.className = "workflow-strip__n";
       num.setAttribute("aria-hidden", "true");
@@ -697,6 +786,27 @@
     root.querySelectorAll(".wealth-hub-journey[data-journey-step]").forEach(function (strip) {
       renderWealthHubJourneyStrip(strip);
       applyWealthHubJourneyStrip(strip);
+    });
+  }
+
+  function bindWealthHubJourneyNavigation() {
+    if (stage.dataset.wealthHubJourneyNavBound) return;
+    stage.dataset.wealthHubJourneyNavBound = "1";
+    stage.addEventListener("click", function (e) {
+      var pill = e.target.closest(".wealth-hub-journey[data-journey-step] .workflow-strip__step[data-journey-index]");
+      if (!pill || !stage.contains(pill)) return;
+      var idxAttr = pill.getAttribute("data-journey-slide-index");
+      var strip = pill.closest(".wealth-hub-journey[data-journey-step]");
+      var program = strip ? journeyProgramFromStrip(strip) : "wealth";
+      var slideIds = program === "mobile" ? MOBILE_JOURNEY_SLIDE_IDS : WEALTH_HUB_JOURNEY_SLIDE_IDS;
+      var idx =
+        idxAttr !== null && idxAttr !== ""
+          ? parseInt(idxAttr, 10)
+          : journeyManifestIndex(slideIds, parseInt(pill.getAttribute("data-journey-index"), 10));
+      if (idx >= 0) {
+        e.preventDefault();
+        go(idx);
+      }
     });
   }
 
@@ -748,7 +858,8 @@
         }
         var slideId = presentSlideIdFromNode(wizardRoot);
         if (slideId) presentInteractiveState[slideId + ":phase-step"] = s;
-        if (s === "4" && wizardRoot.classList.contains("exploration-wizard")) {
+        var activePanel = wizardRoot.querySelector('[data-step-panel="' + s + '"]');
+        if (activePanel && activePanel.querySelector(".exploration-wizard__variant-switcher")) {
           syncWireframeVariantSwitcher(wizardRoot);
         }
       }
@@ -823,6 +934,9 @@
         tabs.forEach(function (t) {
           var selected = t === tab;
           t.classList.toggle("is-active", selected);
+          if (t.classList.contains("trade-off-switcher__tab")) {
+            t.classList.toggle("trade-off-switcher__tab--active", selected);
+          }
           t.setAttribute("aria-selected", selected ? "true" : "false");
           t.tabIndex = selected ? 0 : -1;
         });
@@ -930,27 +1044,33 @@
     var dotsWrap;
     var prevBtn;
     var nextBtn;
+    var dotsOnly = carouselRoot.hasAttribute("data-carousel-dots-only");
 
     if (!nav) {
       nav = document.createElement("div");
       nav.className = "post-mvp-carousel__nav";
+      if (dotsOnly) nav.classList.add("post-mvp-carousel__nav--dots-only");
 
-      prevBtn = document.createElement("button");
-      prevBtn.type = "button";
-      prevBtn.className = "post-mvp-carousel__prev";
-      prevBtn.setAttribute("aria-label", "Previous slide");
-      prevBtn.textContent = "←";
+      if (!dotsOnly) {
+        prevBtn = document.createElement("button");
+        prevBtn.type = "button";
+        prevBtn.className = "post-mvp-carousel__prev";
+        prevBtn.setAttribute("aria-label", "Previous slide");
+        prevBtn.textContent = "←";
+      }
 
       dotsWrap = document.createElement("div");
       dotsWrap.className = "post-mvp-carousel__dots";
       dotsWrap.setAttribute("role", "tablist");
       dotsWrap.setAttribute("aria-label", carouselRoot.getAttribute("aria-label") || "Carousel slides");
 
-      nextBtn = document.createElement("button");
-      nextBtn.type = "button";
-      nextBtn.className = "post-mvp-carousel__next";
-      nextBtn.setAttribute("aria-label", "Next slide");
-      nextBtn.textContent = "→";
+      if (!dotsOnly) {
+        nextBtn = document.createElement("button");
+        nextBtn.type = "button";
+        nextBtn.className = "post-mvp-carousel__next";
+        nextBtn.setAttribute("aria-label", "Next slide");
+        nextBtn.textContent = "→";
+      }
 
       slides.forEach(function (_slide, slideIndex) {
         var dot = document.createElement("button");
@@ -964,9 +1084,9 @@
         dotsWrap.appendChild(dot);
       });
 
-      nav.appendChild(prevBtn);
+      if (prevBtn) nav.appendChild(prevBtn);
       nav.appendChild(dotsWrap);
-      nav.appendChild(nextBtn);
+      if (nextBtn) nav.appendChild(nextBtn);
       carouselRoot.appendChild(nav);
     } else {
       dotsWrap = nav.querySelector(".post-mvp-carousel__dots");
@@ -1184,7 +1304,7 @@
       } else if (entry.compositeLayout === "proof") {
         empty = !clone.querySelector(".proof-intro");
       } else if (entry.compositeLayout === "coaching") {
-        empty = !clone.querySelector(".device-story__copy") || !clone.querySelector(".ai-cadence");
+        empty = !clone.querySelector(".device-story__copy");
       } else {
         empty = !clone.querySelector(".post-mvp-card");
       }
@@ -1447,6 +1567,8 @@
       else document.exitFullscreen?.();
     });
   }
+
+  bindWealthHubJourneyNavigation();
 
   var start = parseInt((location.hash || "").replace("#", ""), 10);
   if (!isNaN(start) && start >= 1 && start <= N) i = start - 1;

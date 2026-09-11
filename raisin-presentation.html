@@ -121,7 +121,7 @@
     .present-slide.is-active { opacity: 1; }
     .present-slide.is-leaving { opacity: 0; }
     /* Unified horizontal inset — slides that don't manage their own padding */
-    body.summary-v2 .present-slide.container:not(.present-slide--p4-cura):not(.present-slide--p4-toolkit):not(.present-slide--p4-coaching):not(.present-slide--proof):not(.present-beat-proof):not(.present-beat-coaching):not(.period__head--split):not(.present-slide--p1-outcomes):not(.present-slide--p1-visual-system):not(.present-slide--p3-prototype):not(.present-slide--hero):not(.present-thanks) {
+    body.summary-v2 .present-slide.container:not(.present-slide--p4-cura):not(.present-slide--p4-toolkit):not(.present-slide--p4-coaching):not(.present-slide--proof):not(.present-beat-proof):not(.present-beat-coaching):not(.period__head--split):not(.present-slide--p1-outcomes):not(.present-slide--p1-visual-system):not(.present-slide--p3-visual-system):not(.present-slide--hero):not(.present-thanks) {
       width: 100%;
       max-width: 100%;
       margin-inline: auto;
@@ -162,8 +162,8 @@
     .present-slide--layout-viewport.period__head--split,
     .present-slide--layout-viewport.period-split,
     .present-slide--layout-viewport.why-proof,
-    .present-slide--layout-viewport.mobile-journey__row,
-    .present-slide--layout-viewport.device-story__row,
+    .present-slide--layout-viewport.mobile-journey__row:not(.present-slide--p3-desk-research):not(.present-slide--p3-parity),
+    .present-slide--layout-viewport.device-story__row:not(.present-slide--p3-desk-research):not(.present-slide--p3-parity),
     .present-slide--layout-viewport.ai-journey__row,
     .present-slide--layout-viewport.ai-journey__toolkit,
     .present-slide--layout-viewport.ai-journey__tools,
@@ -230,8 +230,8 @@
     }
     /* 50/50 columns — hug content height, vertically centered as a pair */
     .present-slide--layout-viewport.period-split,
-    .present-slide--layout-viewport.device-story__row,
-    .present-slide--layout-viewport.mobile-journey__row,
+    .present-slide--layout-viewport.device-story__row:not(.present-slide--p3-desk-research):not(.present-slide--p3-parity),
+    .present-slide--layout-viewport.mobile-journey__row:not(.present-slide--p3-desk-research):not(.present-slide--p3-parity),
     .present-slide--layout-viewport.ai-journey__row,
     .present-slide.period__head--split.present-slide--layout-viewport,
     .present-slide--p4-toolkit.ai-journey__toolkit,
@@ -282,10 +282,16 @@
       box-sizing: border-box;
     }
     .present-slide--p1-tradeoff-01 > .trade-off-switcher,
+    .present-slide--p3-maze > .trade-off-switcher,
     .present-slide--p1-exploration > .trade-off-switcher,
-    .present-slide--p1-visual-system > .trade-off-switcher {
+    .present-slide--p3-ideation > .trade-off-switcher,
+    .present-slide--p1-visual-system > .trade-off-switcher,
+    .present-slide--p3-visual-system > .trade-off-switcher {
       width: 100%;
       max-width: 100%;
+      flex: 1 1 auto;
+      min-height: 0;
+      max-height: calc(var(--present-vh) - var(--present-bottom) - var(--present-top));
     }
     .present-slide .device-story__eyebrow,
     .present-slide .beat__eyebrow {
@@ -358,9 +364,12 @@
       overflow: hidden;
     }
     .present-slide--p1-tradeoff-01 .trade-off--compact,
+    .present-slide--p3-maze .trade-off--compact,
     .present-slide--p1-tradeoff-02 .trade-off--compact,
     .present-slide--p1-exploration .ideate-conflict-tradeoff,
-    .present-slide--p1-tradeoff-01 .ideate-conflict-tradeoff {
+    .present-slide--p3-ideation .ideate-conflict-tradeoff,
+    .present-slide--p1-tradeoff-01 .ideate-conflict-tradeoff,
+    .present-slide--p3-maze .ideate-conflict-tradeoff {
       margin: 0;
       padding: 0;
       border: none;
@@ -378,19 +387,25 @@
     }
     .present-slide--p1-co-creation .hmw-prior-strip--present,
     .present-slide--p1-exploration .ideate-conflict-tradeoff,
-    .present-slide--p1-tradeoff-01 .ideate-conflict-tradeoff {
+    .present-slide--p3-ideation .ideate-conflict-tradeoff,
+    .present-slide--p1-tradeoff-01 .ideate-conflict-tradeoff,
+    .present-slide--p3-maze .ideate-conflict-tradeoff {
       width: 100%;
       min-width: 0;
       padding-top: clamp(0.35rem, 0.75vh, 0.65rem);
       gap: 0;
     }
     .present-slide--p1-exploration .ideate-conflict-tradeoff .trade-off__options,
-    .present-slide--p1-tradeoff-01 .ideate-conflict-tradeoff .trade-off__options {
+    .present-slide--p3-ideation .ideate-conflict-tradeoff .trade-off__options,
+    .present-slide--p1-tradeoff-01 .ideate-conflict-tradeoff .trade-off__options,
+    .present-slide--p3-maze .ideate-conflict-tradeoff .trade-off__options {
       gap: clamp(0.45rem, 0.85vh, 0.65rem);
       margin-bottom: 0;
     }
     .present-slide--p1-exploration .ideate-conflict-tradeoff .trade-off__option,
-    .present-slide--p1-tradeoff-01 .ideate-conflict-tradeoff .trade-off__option {
+    .present-slide--p3-ideation .ideate-conflict-tradeoff .trade-off__option,
+    .present-slide--p1-tradeoff-01 .ideate-conflict-tradeoff .trade-off__option,
+    .present-slide--p3-maze .ideate-conflict-tradeoff .trade-off__option {
       position: relative;
       padding: clamp(0.75rem, 1.25vh, 0.95rem) clamp(0.85rem, 1.35vw, 1.05rem);
       border: 1px solid var(--line);
@@ -399,33 +414,44 @@
       box-shadow: none;
     }
     .present-slide--p1-exploration .ideate-conflict-tradeoff .trade-off__option--chosen,
-    .present-slide--p1-tradeoff-01 .ideate-conflict-tradeoff .trade-off__option--chosen {
+    .present-slide--p3-ideation .ideate-conflict-tradeoff .trade-off__option--chosen,
+    .present-slide--p1-tradeoff-01 .ideate-conflict-tradeoff .trade-off__option--chosen,
+    .present-slide--p3-maze .ideate-conflict-tradeoff .trade-off__option--chosen {
       border-color: var(--line);
       border-width: 1px;
       background: color-mix(in srgb, var(--ink) 7%, var(--paper));
       box-shadow: none;
     }
     .present-slide--p1-exploration .ideate-conflict-tradeoff .trade-off__option-label,
-    .present-slide--p1-tradeoff-01 .ideate-conflict-tradeoff .trade-off__option-label {
+    .present-slide--p3-ideation .ideate-conflict-tradeoff .trade-off__option-label,
+    .present-slide--p1-tradeoff-01 .ideate-conflict-tradeoff .trade-off__option-label,
+    .present-slide--p3-maze .ideate-conflict-tradeoff .trade-off__option-label {
       margin: 0;
       font-size: clamp(0.88rem, 1.55vh, 1rem);
       font-weight: 700;
       color: var(--ink);
     }
     .present-slide--p1-exploration .ideate-conflict-tradeoff .trade-off__option-text,
-    .present-slide--p1-tradeoff-01 .ideate-conflict-tradeoff .trade-off__option-text {
+    .present-slide--p3-ideation .ideate-conflict-tradeoff .trade-off__option-text,
+    .present-slide--p1-tradeoff-01 .ideate-conflict-tradeoff .trade-off__option-text,
+    .present-slide--p3-maze .ideate-conflict-tradeoff .trade-off__option-text {
       font-size: clamp(0.82rem, 1.45vh, 0.94rem);
       line-height: 1.38;
       margin: 0.35rem 0 0;
       color: var(--ink-soft);
     }
     .present-slide--p1-exploration .ideate-conflict-tradeoff .trade-off__chosen-flag,
+    .present-slide--p3-ideation .ideate-conflict-tradeoff .trade-off__chosen-flag,
     .present-slide--p1-tradeoff-01 .ideate-conflict-tradeoff .trade-off__chosen-flag,
-    .present-slide--p1-tradeoff-01 .trade-off-switcher__tab-flag {
+    .present-slide--p3-maze .ideate-conflict-tradeoff .trade-off__chosen-flag,
+    .present-slide--p1-tradeoff-01 .trade-off-switcher__tab-flag,
+    .present-slide--p3-maze .trade-off-switcher__tab-flag {
       display: none !important;
     }
     .present-slide--p1-exploration .ideate-conflict-tradeoff__check,
-    .present-slide--p1-tradeoff-01 .ideate-conflict-tradeoff__check {
+    .present-slide--p3-ideation .ideate-conflict-tradeoff__check,
+    .present-slide--p1-tradeoff-01 .ideate-conflict-tradeoff__check,
+    .present-slide--p3-maze .ideate-conflict-tradeoff__check {
       position: absolute;
       top: clamp(0.45rem, 0.8vh, 0.6rem);
       right: clamp(0.45rem, 0.8vh, 0.6rem);
@@ -434,18 +460,21 @@
       color: var(--ink-soft);
       pointer-events: none;
     }
-    .present-slide--p1-exploration .exploration-wizard__asset-slot--wireframe-compare {
+    .present-slide--p1-exploration .exploration-wizard__asset-slot--wireframe-compare,
+    .present-slide--p3-ideation .exploration-wizard__asset-slot--wireframe-compare {
       position: relative;
       display: block;
       padding: 0;
     }
-    .present-slide--p1-exploration .exploration-wizard__variant-switcher {
+    .present-slide--p1-exploration .exploration-wizard__variant-switcher,
+    .present-slide--p3-ideation .exploration-wizard__variant-switcher {
       position: relative;
       width: 100%;
       height: 100%;
       min-height: 0;
     }
-    .present-slide--p1-exploration .exploration-wizard__variant-tabs--overlay {
+    .present-slide--p1-exploration .exploration-wizard__variant-tabs--overlay,
+    .present-slide--p3-ideation .exploration-wizard__variant-tabs--overlay {
       position: absolute;
       left: 0;
       top: 50%;
@@ -458,10 +487,12 @@
       align-items: flex-start;
       pointer-events: auto;
     }
-    .present-slide--p1-exploration .exploration-wizard__variant-tabs--overlay.trade-off-switcher__tabs {
+    .present-slide--p1-exploration .exploration-wizard__variant-tabs--overlay.trade-off-switcher__tabs,
+    .present-slide--p3-ideation .exploration-wizard__variant-tabs--overlay.trade-off-switcher__tabs {
       flex-wrap: nowrap;
     }
-    .present-slide--p1-exploration .exploration-wizard__variant-tabs--overlay .trade-off-switcher__tab {
+    .present-slide--p1-exploration .exploration-wizard__variant-tabs--overlay .trade-off-switcher__tab,
+    .present-slide--p3-ideation .exploration-wizard__variant-tabs--overlay .trade-off-switcher__tab {
       position: relative;
       display: inline-flex;
       align-items: center;
@@ -483,13 +514,16 @@
       box-shadow: 0 0 0 1px color-mix(in srgb, var(--ink) 12%, var(--line));
       box-sizing: border-box;
     }
-    .present-slide--p1-exploration .exploration-wizard__variant-tabs--overlay .trade-off-switcher__tab:not(.trade-off-switcher__tab--active):not([aria-selected="true"]):hover {
+    .present-slide--p1-exploration .exploration-wizard__variant-tabs--overlay .trade-off-switcher__tab:not(.trade-off-switcher__tab--active):not([aria-selected="true"]):hover,
+    .present-slide--p3-ideation .exploration-wizard__variant-tabs--overlay .trade-off-switcher__tab:not(.trade-off-switcher__tab--active):not([aria-selected="true"]):hover {
       background: transparent;
       color: var(--ink-soft);
       box-shadow: 0 0 0 1px color-mix(in srgb, var(--ink) 22%, var(--line));
     }
     .present-slide--p1-exploration .exploration-wizard__variant-tabs--overlay .trade-off-switcher__tab--active,
-    .present-slide--p1-exploration .exploration-wizard__variant-tabs--overlay .trade-off-switcher__tab[aria-selected="true"] {
+    .present-slide--p3-ideation .exploration-wizard__variant-tabs--overlay .trade-off-switcher__tab--active,
+    .present-slide--p1-exploration .exploration-wizard__variant-tabs--overlay .trade-off-switcher__tab[aria-selected="true"],
+    .present-slide--p3-ideation .exploration-wizard__variant-tabs--overlay .trade-off-switcher__tab[aria-selected="true"] {
       background: transparent;
       color: var(--ink);
       border-color: transparent;
@@ -497,12 +531,15 @@
       box-shadow: 0 0 0 2px color-mix(in srgb, var(--ink) 32%, var(--line));
     }
     .present-slide--p1-exploration .exploration-wizard__variant-tabs--overlay .trade-off-switcher__tab--active:hover,
-    .present-slide--p1-exploration .exploration-wizard__variant-tabs--overlay .trade-off-switcher__tab[aria-selected="true"]:hover {
+    .present-slide--p3-ideation .exploration-wizard__variant-tabs--overlay .trade-off-switcher__tab--active:hover,
+    .present-slide--p1-exploration .exploration-wizard__variant-tabs--overlay .trade-off-switcher__tab[aria-selected="true"]:hover,
+    .present-slide--p3-ideation .exploration-wizard__variant-tabs--overlay .trade-off-switcher__tab[aria-selected="true"]:hover {
       background: transparent;
       color: var(--ink);
       box-shadow: 0 0 0 2px color-mix(in srgb, var(--ink) 40%, var(--line));
     }
-    .present-slide--p1-exploration .exploration-wizard__variant-media {
+    .present-slide--p1-exploration .exploration-wizard__variant-media,
+    .present-slide--p3-ideation .exploration-wizard__variant-media {
       position: absolute;
       inset: 0;
       display: flex;
@@ -513,10 +550,13 @@
       pointer-events: none;
     }
     .present-slide--p1-exploration .exploration-wizard__variant-media .wealth-hub-video-frame,
-    .present-slide--p1-exploration .exploration-wizard__variant-media video[data-lightbox] {
+    .present-slide--p3-ideation .exploration-wizard__variant-media .wealth-hub-video-frame,
+    .present-slide--p1-exploration .exploration-wizard__variant-media video[data-lightbox],
+    .present-slide--p3-ideation .exploration-wizard__variant-media video[data-lightbox] {
       pointer-events: auto;
     }
-    .present-slide--p1-exploration .exploration-wizard__variant-tab--chosen {
+    .present-slide--p1-exploration .exploration-wizard__variant-tab--chosen,
+    .present-slide--p3-ideation .exploration-wizard__variant-tab--chosen {
       height: auto;
       min-height: 2.25rem;
       padding: 0.28rem 0 0.22rem;
@@ -524,7 +564,8 @@
       gap: 0.08rem;
       line-height: 1;
     }
-    .present-slide--p1-exploration .exploration-wizard__variant-tab-check {
+    .present-slide--p1-exploration .exploration-wizard__variant-tab-check,
+    .present-slide--p3-ideation .exploration-wizard__variant-tab-check {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -534,7 +575,8 @@
       pointer-events: none;
       flex-shrink: 0;
     }
-    .present-slide--p1-exploration .exploration-wizard__variant-media > .trade-off-switcher__media {
+    .present-slide--p1-exploration .exploration-wizard__variant-media > .trade-off-switcher__media,
+    .present-slide--p3-ideation .exploration-wizard__variant-media > .trade-off-switcher__media {
       position: absolute;
       inset: 0;
       width: 100%;
@@ -542,11 +584,13 @@
       min-height: 0;
       max-height: none;
     }
-    .present-slide--p1-exploration .exploration-wizard__variant-media .wealth-hub-video-frame {
+    .present-slide--p1-exploration .exploration-wizard__variant-media .wealth-hub-video-frame,
+    .present-slide--p3-ideation .exploration-wizard__variant-media .wealth-hub-video-frame {
       height: 100%;
       width: 100%;
     }
-    .present-slide--p1-exploration .exploration-wizard__variant-media .wealth-hub-video-frame video {
+    .present-slide--p1-exploration .exploration-wizard__variant-media .wealth-hub-video-frame video,
+    .present-slide--p3-ideation .exploration-wizard__variant-media .wealth-hub-video-frame video {
       height: 100%;
       width: 100%;
       object-fit: contain;
@@ -657,19 +701,19 @@
       font-size: var(--present-title-size);
     }
     /* Chapters 01–03 inner beats — visual left · copy right (intros + full-bleed exceptions unchanged) */
-    .present-slide.mobile-journey__row:not(.present-slide--p3-prototype) > .device-story__copy,
+    .present-slide.mobile-journey__row > .device-story__copy,
     .present-slide.ai-journey__row > .device-story__copy,
-    .present-slide.device-story__row:not(.present-slide--p3-prototype) > .device-story__copy {
+    .present-slide.device-story__row > .device-story__copy {
       grid-column: 2;
       order: unset;
     }
-    .present-slide.mobile-journey__row:not(.present-slide--p3-prototype) > .device-story__visual,
-    .present-slide.mobile-journey__row:not(.present-slide--p3-prototype) > .mobile-journey__visual,
-    .present-slide.mobile-journey__row:not(.present-slide--p3-prototype) > .tabs-compare,
-    .present-slide.mobile-journey__row:not(.present-slide--p3-prototype) > .ai-journey__prototype,
-    .present-slide.mobile-journey__row:not(.present-slide--p3-prototype) > .mobile-journey__prototype,
+    .present-slide.mobile-journey__row > .device-story__visual,
+    .present-slide.mobile-journey__row > .mobile-journey__visual,
+    .present-slide.mobile-journey__row > .tabs-compare,
+    .present-slide.mobile-journey__row > .ai-journey__prototype,
+    .present-slide.mobile-journey__row > .mobile-journey__prototype,
     .present-slide.ai-journey__row > .ai-journey__visual,
-    .present-slide.device-story__row:not(.present-slide--p3-prototype) > .device-story__visual {
+    .present-slide.device-story__row > .device-story__visual {
       grid-column: 1;
       order: unset;
     }
@@ -769,10 +813,13 @@
       object-position: center;
     }
 
-    /* Shipped mobile — row fills slide */
-    .present-slide--p3-shipped.mobile-journey__shipped {
-      display: block;
+    /* Shipped mobile — centre row in viewport (wrapper is the slide root) */
+    .present-slide--p3-shipped.mobile-journey__shipped.present-slide--layout-viewport {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
       width: 100%;
+      min-height: calc(var(--present-vh) - var(--present-bottom));
       padding-bottom: var(--present-bottom);
       box-sizing: border-box;
     }
@@ -780,7 +827,7 @@
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
       gap: var(--present-split-gap);
-      align-items: center;
+      align-items: stretch;
       width: 100%;
       margin: 0;
     }
@@ -1097,24 +1144,28 @@
       color: var(--ink);
       font-weight: 600;
     }
-    .present-slide--p1-intro .period__head-copy > .period__thesis--present + .present-darci {
+    .present-slide--p1-intro .period__head-copy > .period__thesis--present + .present-darci,
+    .present-slide--p3-intro .period__head-copy > .period__thesis--present + .present-darci {
       margin-top: calc(var(--present-split-stack-gap-before-supporting) - var(--present-split-stack-gap));
     }
-    .present-slide--p1-intro .present-darci {
+    .present-slide--p1-intro .present-darci,
+    .present-slide--p3-intro .present-darci {
       margin: 0;
       padding: 0;
       display: grid;
       gap: clamp(0.42rem, 0.75vh, 0.58rem);
       border: none;
     }
-    .present-slide--p1-intro .present-darci__row {
+    .present-slide--p1-intro .present-darci__row,
+    .present-slide--p3-intro .present-darci__row {
       display: grid;
       grid-template-columns: auto minmax(0, 1fr);
       gap: 0.6rem;
       align-items: baseline;
       margin: 0;
     }
-    .present-slide--p1-intro .present-darci__letter {
+    .present-slide--p1-intro .present-darci__letter,
+    .present-slide--p3-intro .present-darci__letter {
       margin: 0;
       display: inline-flex;
       align-items: center;
@@ -1128,13 +1179,15 @@
       background: color-mix(in srgb, var(--ink) 10%, transparent);
       color: var(--ink-soft);
     }
-    .present-slide--p1-intro .present-darci__body {
+    .present-slide--p1-intro .present-darci__body,
+    .present-slide--p3-intro .present-darci__body {
       margin: 0;
       font-size: var(--present-support-size);
       line-height: 1.45;
       color: var(--ink);
     }
-    .present-slide--p1-intro .present-darci__label {
+    .present-slide--p1-intro .present-darci__label,
+    .present-slide--p3-intro .present-darci__label {
       font-weight: 600;
       color: var(--ink);
       margin-right: 0.35rem;
@@ -1148,10 +1201,14 @@
 
     /* Trade-off 01 & 02 — copy + prototype split, viewport-centred */
     .present-slide--p1-tradeoff-01.container,
+    .present-slide--p3-maze.container,
+    .present-slide--p3-visual-system.container,
     .present-slide--p1-tradeoff-02.container {
       padding-top: 0;
     }
     .present-slide--p1-tradeoff-01.present-slide--layout-viewport,
+    .present-slide--p3-maze.present-slide--layout-viewport,
+    .present-slide--p3-visual-system.present-slide--layout-viewport,
     .present-slide--p1-tradeoff-02.present-slide--layout-viewport {
       display: flex;
       flex-direction: column;
@@ -1161,6 +1218,12 @@
     .present-slide--p1-tradeoff-01 .trade-off-switcher--split,
     .present-slide--p1-tradeoff-02 .trade-off-switcher--split {
       align-items: center;
+      gap: var(--present-split-gap);
+      width: 100%;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+    .present-slide--p3-maze .trade-off-switcher--split,
+    .present-slide--p3-visual-system .trade-off-switcher--split {
       gap: var(--present-split-gap);
       width: 100%;
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -1178,18 +1241,24 @@
       min-width: 0;
     }
     .present-slide--p1-tradeoff-01 .trade-off-switcher__right,
+    .present-slide--p3-maze .trade-off-switcher__right,
     .present-slide--p1-tradeoff-02 .trade-off-switcher__left,
     .present-slide--p1-tradeoff-02 .trade-off-switcher__right {
       gap: clamp(0.5rem, 1.1vh, 0.75rem);
       justify-content: flex-start;
     }
-    .present-slide--p1-tradeoff-01 .trade-off-switcher__left.present-split__copy {
+    .present-slide--p1-tradeoff-01 .trade-off-switcher__left.present-split__copy,
+    .present-slide--p3-maze .trade-off-switcher__left.present-split__copy {
       gap: var(--present-split-stack-gap);
     }
     .present-slide--p1-tradeoff-01 .trade-off-switcher__left .beat__eyebrow,
+    .present-slide--p3-maze .trade-off-switcher__left .beat__eyebrow,
     .present-slide--p1-tradeoff-01 .trade-off-switcher__left .beat__title,
+    .present-slide--p3-maze .trade-off-switcher__left .beat__title,
     .present-slide--p1-tradeoff-01 .trade-off-switcher__left .beat__stat,
+    .present-slide--p3-maze .trade-off-switcher__left .beat__stat,
     .present-slide--p1-tradeoff-01 .trade-off-switcher__left .chip-row,
+    .present-slide--p3-maze .trade-off-switcher__left .chip-row,
     .present-slide--p1-tradeoff-02 .trade-off-switcher__left .beat__eyebrow,
     .present-slide--p1-tradeoff-02 .trade-off-switcher__left .beat__title,
     .present-slide--p1-tradeoff-02 .trade-off-switcher__left .beat__stat,
@@ -1197,22 +1266,26 @@
       margin: 0;
     }
     .present-slide--p1-tradeoff-01 .trade-off-switcher__left .beat__title,
+    .present-slide--p3-maze .trade-off-switcher__left .beat__title,
     .present-slide--p1-tradeoff-02 .trade-off-switcher__left .beat__title {
       max-width: none;
       line-height: 1.18;
       font-size: var(--present-title-size);
     }
     .present-slide--p1-tradeoff-01 .trade-off-switcher__right .trade-off-switcher__tabs,
+    .present-slide--p3-maze .trade-off-switcher__right .trade-off-switcher__tabs,
     .present-slide--p1-tradeoff-02 .trade-off-switcher__right .trade-off-switcher__tabs {
       margin: 0;
     }
     .present-slide--p1-tradeoff-01 .trade-off-switcher__media:not([hidden]),
+    .present-slide--p3-maze .trade-off-switcher__media:not([hidden]),
     .present-slide--p1-tradeoff-02 .trade-off-switcher__media:not([hidden]) {
       display: flex;
       justify-content: center;
       width: 100%;
     }
     .present-slide--p1-tradeoff-01 .trade-off-switcher__media[hidden],
+    .present-slide--p3-maze .trade-off-switcher__media[hidden],
     .present-slide--p1-tradeoff-02 .trade-off-switcher__media[hidden] {
       display: none !important;
       height: 0 !important;
@@ -1223,15 +1296,18 @@
       visibility: hidden !important;
     }
     .present-slide--p1-tradeoff-01 .trade-off-switcher__tab,
+    .present-slide--p3-maze .trade-off-switcher__tab,
     .present-slide--p1-tradeoff-02 .trade-off-switcher__tab {
       pointer-events: auto;
       cursor: pointer;
     }
     .present-slide--p1-tradeoff-01 .wealth-hub-video-frame,
+    .present-slide--p3-maze .wealth-hub-video-frame,
     .present-slide--p1-tradeoff-02 .wealth-hub-video-frame {
       width: 100%;
     }
     .present-slide--p1-tradeoff-01 .wealth-hub-video-frame video,
+    .present-slide--p3-maze .wealth-hub-video-frame video,
     .present-slide--p1-tradeoff-02 .wealth-hub-video-frame video {
       width: 100%;
       height: auto;
@@ -1239,16 +1315,20 @@
       object-fit: contain;
     }
     .present-slide--p1-tradeoff-01 .period-split__caption,
+    .present-slide--p3-maze .period-split__caption,
+    .present-slide--p3-visual-system .period-split__caption,
     .present-slide--p1-tradeoff-02 .period-split__caption {
       margin: 0;
     }
     @media (max-width: 900px) {
       .present-slide--p1-tradeoff-01.present-slide--layout-viewport,
+      .present-slide--p3-maze.present-slide--layout-viewport,
       .present-slide--p1-tradeoff-02.present-slide--layout-viewport {
         justify-content: flex-start;
         padding-top: var(--present-top);
       }
       .present-slide--p1-tradeoff-01 .trade-off-switcher--split,
+      .present-slide--p3-maze .trade-off-switcher--split,
       .present-slide--p1-tradeoff-02 .trade-off-switcher--split {
         align-items: stretch;
         grid-template-columns: 1fr;
@@ -1262,18 +1342,114 @@
         grid-row: 2;
       }
       .present-slide--p1-tradeoff-01 .wealth-hub-video-frame video,
+      .present-slide--p3-maze .wealth-hub-video-frame video,
       .present-slide--p1-tradeoff-02 .wealth-hub-video-frame video {
         max-height: min(57vh, 30rem);
       }
+    }
+
+    /* Chapter 02 — phone recordings are portrait; size the frame to the video, not the column */
+    .present-slide--p3-maze .wealth-hub-video-frame,
+    .present-slide--p3-ideation .wealth-hub-video-frame,
+    .present-slide--p3-ideation .exploration-wizard__variant-media .wealth-hub-video-frame {
+      width: auto;
+      max-width: 100%;
+      margin-inline: auto;
+    }
+    .present-slide--p3-maze .wealth-hub-video-frame video,
+    .present-slide--p3-ideation .wealth-hub-video-frame video,
+    .present-slide--p3-ideation .exploration-wizard__variant-media .wealth-hub-video-frame video {
+      width: auto;
+      max-width: 100%;
+      height: min(69vh, 36rem);
+      max-height: min(69vh, 36rem);
+      object-fit: contain;
+    }
+    @media (max-width: 900px) {
+      .present-slide--p3-maze .wealth-hub-video-frame video,
+      .present-slide--p3-ideation .wealth-hub-video-frame video,
+      .present-slide--p3-ideation .exploration-wizard__variant-media .wealth-hub-video-frame video {
+        height: min(57vh, 30rem);
+        max-height: min(57vh, 30rem);
+      }
+    }
+    .present-slide--p3-ideation .trade-off-switcher__right {
+      gap: clamp(0.5rem, 1.1vh, 0.75rem);
+      justify-content: center;
+      align-items: center;
+    }
+    .present-slide--p3-ideation .trade-off-switcher__right .trade-off-switcher__tabs {
+      margin: 0;
+    }
+    .present-slide--p3-ideation .trade-off-switcher__media:not([hidden]) {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
+    .present-slide--p3-ideation .wealth-hub-video-frame {
+      width: fit-content;
+      max-width: 100%;
+      margin-inline: auto;
+    }
+    .present-slide--p3-ideation .wealth-hub-video-frame video {
+      width: auto;
+      display: block;
+      margin-inline: auto;
+    }
+    .present-slide--p3-ideation .trade-off-switcher__right .tradeoff-01__concept-stepper.phase-wizard__stepper--secondary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(1rem, 2.25vw, 1.5rem);
+      width: 100%;
+      background: transparent;
+    }
+    .present-slide--p3-ideation .tradeoff-01__concept-stepper .trade-off-switcher__tab {
+      flex: 0 1 auto;
+      min-width: 0;
+    }
+    .present-slide--p3-ideation .trade-off-switcher__left.present-split__copy,
+    .present-slide--p3-visual-system .trade-off-switcher__left.present-split__copy {
+      gap: var(--present-split-stack-gap);
+    }
+    .present-slide--p3-maze .mobile-validation-maze__visual {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(0.5rem, 1.1vh, 0.75rem);
+      width: 100%;
+      min-height: 0;
+    }
+    .present-slide--p3-maze .mobile-journey__visual--maze {
+      margin: 0;
+      padding-inline: 0;
+      max-width: 100%;
+      width: 100%;
+      overflow: visible;
+    }
+    .present-slide--p3-maze .mobile-journey__visual--maze img {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: min(65vh, 34rem);
+      object-fit: contain;
     }
 
     /* Wealth Hub — journey pills (match trade-off / wizard tab styling) */
     .present-slide--p1-baseline,
     .present-slide--p1-co-creation,
     .present-slide--p1-exploration,
+    .present-slide--p3-ideation,
     .present-slide--p1-tradeoff-01,
+    .present-slide--p3-maze,
     .present-slide--p1-visual-system,
-    .present-slide--p1-outcomes {
+    .present-slide--p3-visual-system,
+    .present-slide--p1-outcomes,
+    .present-slide--p3-desk-research,
+    .present-slide--p3-parity,
+    .present-slide--p3-shipped {
       --present-baseline-gap: var(--present-split-stack-gap);
       --wh-journey-pill-fs: clamp(0.72rem, 1.35vh, 0.84rem);
       --wh-journey-pill-pad-y: 0.4rem;
@@ -1299,8 +1475,10 @@
     /* 50/50 slides — shared copy-column stack (Wealth Hub, period intros, mobile story) */
     .present-split__copy,
     .present-slide.period__head--split .period__head-copy,
-    .present-slide.mobile-journey__row:not(.present-slide--p3-prototype) > .device-story__copy,
-    .present-slide.device-story__row:not(.present-slide--p3-prototype) > .device-story__copy {
+    .present-slide.mobile-journey__row > .device-story__copy,
+    .present-slide.device-story__row > .device-story__copy,
+    .present-slide--p4-toolkit .ai-toolkit-copy,
+    .present-slide--p4-lab-tools .ai-journey__tools-head {
       display: flex;
       flex-direction: column;
       gap: var(--present-split-stack-gap);
@@ -1341,6 +1519,7 @@
     .present-split__copy > .wealth-hub-impact__quotes,
     .present-split__copy > .wealth-hub-constraints,
     .present-split__copy > .beat__enablement,
+    .present-split__copy > .beat__discovery,
     .present-split__copy > .trade-off--compact,
     .present-split__copy > .beat__caption,
     .present-split__copy > .tabs-compare,
@@ -1350,7 +1529,10 @@
     }
     .present-slide--p1-co-creation .present-split__copy > .hmw-prior-strip--present,
     .present-slide--p1-exploration .trade-off-switcher__left.present-split__copy > .ideate-conflict-tradeoff,
-    .present-slide--p1-tradeoff-01 .trade-off-switcher__left.present-split__copy > .ideate-conflict-tradeoff {
+    .present-slide--p3-ideation .trade-off-switcher__left.present-split__copy > .ideate-conflict-tradeoff,
+    .present-slide--p1-tradeoff-01 .trade-off-switcher__left.present-split__copy > .ideate-conflict-tradeoff,
+    .present-slide--p3-maze .trade-off-switcher__left.present-split__copy > .ideate-conflict-tradeoff,
+    .present-slide--p3-visual-system .trade-off-switcher__left.present-split__copy > .beat__discovery {
       margin-top: clamp(0.75rem, 1.35vh, 1.1rem);
     }
     .wh-phase-breakdown {
@@ -1405,7 +1587,19 @@
       line-height: 1.2;
       color: var(--ink-soft);
       white-space: nowrap;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      text-align: inherit;
       transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    }
+    .wealth-hub-journey .workflow-strip__step:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+    .wealth-hub-journey .workflow-strip__step:not(.workflow-strip__step--active):hover {
+      border-color: color-mix(in srgb, var(--ink) 22%, var(--line));
+      color: var(--ink);
     }
     .wealth-hub-journey .workflow-strip__n {
       display: inline-flex;
@@ -1447,44 +1641,61 @@
     }
 
     /* Wealth Hub beats — visual left · copy right (intro keeps head split as-is) */
-    .present-slide--p1-tradeoff-01 .trade-off-switcher--split.trade-off-switcher--visual-left .trade-off-switcher__right {
+    .present-slide--p1-tradeoff-01 .trade-off-switcher--split.trade-off-switcher--visual-left .trade-off-switcher__right,
+    .present-slide--p3-maze .trade-off-switcher--split.trade-off-switcher--visual-left .trade-off-switcher__right {
       grid-column: 1;
       grid-row: 1;
     }
-    .present-slide--p1-tradeoff-01 .trade-off-switcher--split.trade-off-switcher--visual-left .trade-off-switcher__left {
+    .present-slide--p1-tradeoff-01 .trade-off-switcher--split.trade-off-switcher--visual-left .trade-off-switcher__left,
+    .present-slide--p3-maze .trade-off-switcher--split.trade-off-switcher--visual-left .trade-off-switcher__left {
       grid-column: 2;
       grid-row: 1;
     }
     .present-slide--p1-exploration .trade-off-switcher--split.trade-off-switcher--visual-left .exploration-wizard__right,
-    .present-slide--p1-exploration .trade-off-switcher--split.trade-off-switcher--visual-left .trade-off-switcher__right {
+    .present-slide--p3-ideation .trade-off-switcher--split.trade-off-switcher--visual-left .exploration-wizard__right,
+    .present-slide--p1-exploration .trade-off-switcher--split.trade-off-switcher--visual-left .trade-off-switcher__right,
+    .present-slide--p3-ideation .trade-off-switcher--split.trade-off-switcher--visual-left .trade-off-switcher__right {
       grid-column: 1;
       grid-row: 1;
     }
     .present-slide--p1-exploration .trade-off-switcher--split.trade-off-switcher--visual-left .trade-off-switcher__left,
-    .present-slide--p1-visual-system .trade-off-switcher--split.trade-off-switcher--visual-left .trade-off-switcher__left {
+    .present-slide--p3-ideation .trade-off-switcher--split.trade-off-switcher--visual-left .trade-off-switcher__left,
+    .present-slide--p1-visual-system .trade-off-switcher--split.trade-off-switcher--visual-left .trade-off-switcher__left,
+    .present-slide--p3-visual-system .trade-off-switcher--split.trade-off-switcher--visual-left .trade-off-switcher__left {
       grid-column: 2;
       grid-row: 1;
     }
     .present-slide--p1-visual-system .trade-off-switcher--split.trade-off-switcher--visual-left .exploration-wizard__right,
-    .present-slide--p1-visual-system .trade-off-switcher--split.trade-off-switcher--visual-left .trade-off-switcher__right {
+    .present-slide--p3-visual-system .trade-off-switcher--split.trade-off-switcher--visual-left .exploration-wizard__right,
+    .present-slide--p1-visual-system .trade-off-switcher--split.trade-off-switcher--visual-left .trade-off-switcher__right,
+    .present-slide--p3-visual-system .trade-off-switcher--split.trade-off-switcher--visual-left .trade-off-switcher__right {
       grid-column: 1;
       grid-row: 1;
     }
 
     /* Exploration / visual-system wizards */
     .present-slide--p1-exploration.container,
-    .present-slide--p1-visual-system.container {
+    .present-slide--p3-ideation.container,
+    .present-slide--p1-visual-system.container,
+    .present-slide--p3-visual-system.container {
       padding-top: 0;
     }
     .present-slide--p1-exploration.present-slide--layout-viewport,
-    .present-slide--p1-visual-system.present-slide--layout-viewport {
+    .present-slide--p3-ideation.present-slide--layout-viewport,
+    .present-slide--p1-visual-system.present-slide--layout-viewport,
+    .present-slide--p3-visual-system.present-slide--layout-viewport {
       display: flex;
       flex-direction: column;
       justify-content: center;
       min-height: calc(var(--present-vh) - var(--present-bottom));
+      max-height: var(--present-vh);
+      overflow: hidden;
+      box-sizing: border-box;
     }
     .present-slide--p1-exploration .exploration-wizard--split,
+    .present-slide--p3-ideation .exploration-wizard--split,
     .present-slide--p1-exploration .trade-off-switcher--split,
+    .present-slide--p3-ideation .trade-off-switcher--split,
     .present-slide--p1-visual-system .trade-off-switcher--split {
       align-items: start;
       gap: var(--present-split-gap);
@@ -1492,47 +1703,70 @@
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     }
     .present-slide--p1-exploration .exploration-wizard__right,
-    .present-slide--p1-visual-system .exploration-wizard__right {
+    .present-slide--p3-ideation .exploration-wizard__right,
+    .present-slide--p1-visual-system .exploration-wizard__right,
+    .present-slide--p3-visual-system .exploration-wizard__right {
       align-self: start;
     }
     .present-slide--p1-exploration .trade-off-switcher--split.trade-off-switcher--visual-left .exploration-wizard__right,
+    .present-slide--p3-ideation .trade-off-switcher--split.trade-off-switcher--visual-left .exploration-wizard__right,
     .present-slide--p1-visual-system .trade-off-switcher--split.trade-off-switcher--visual-left .exploration-wizard__right {
       margin-top: 7%;
     }
     .present-slide--p1-exploration .trade-off-switcher__left,
+    .present-slide--p3-ideation .trade-off-switcher__left,
     .present-slide--p1-visual-system .trade-off-switcher__left {
       align-self: center;
     }
     .present-slide--p1-exploration .trade-off-switcher__left,
+    .present-slide--p3-ideation .trade-off-switcher__left,
     .present-slide--p1-visual-system .trade-off-switcher__left,
-    .present-slide--p1-tradeoff-01 .trade-off-switcher__left.present-split__copy {
+    .present-slide--p1-tradeoff-01 .trade-off-switcher__left.present-split__copy,
+    .present-slide--p3-maze .trade-off-switcher__left.present-split__copy {
       justify-content: flex-start;
       max-height: calc(var(--present-vh) - var(--present-bottom) - var(--present-top));
       overflow: hidden;
     }
     .present-slide--p1-exploration .trade-off-switcher__left .beat__eyebrow,
+    .present-slide--p3-ideation .trade-off-switcher__left .beat__eyebrow,
     .present-slide--p1-visual-system .trade-off-switcher__left .beat__eyebrow,
+    .present-slide--p3-visual-system .trade-off-switcher__left .beat__eyebrow,
     .present-slide--p1-exploration .trade-off-switcher__left .beat__title,
+    .present-slide--p3-ideation .trade-off-switcher__left .beat__title,
     .present-slide--p1-visual-system .trade-off-switcher__left .beat__title,
+    .present-slide--p3-visual-system .trade-off-switcher__left .beat__title,
     .present-slide--p1-exploration .trade-off-switcher__left .chip-row,
+    .present-slide--p3-ideation .trade-off-switcher__left .chip-row,
     .present-slide--p1-visual-system .trade-off-switcher__left .chip-row,
+    .present-slide--p3-visual-system .trade-off-switcher__left .chip-row,
     .present-slide--p1-exploration .trade-off-switcher__left .beat__subtitle,
+    .present-slide--p3-ideation .trade-off-switcher__left .beat__subtitle,
     .present-slide--p1-visual-system .trade-off-switcher__left .beat__subtitle,
+    .present-slide--p3-visual-system .trade-off-switcher__left .beat__subtitle,
     .present-slide--p1-exploration .trade-off-switcher__left .workflow-strip,
+    .present-slide--p3-ideation .trade-off-switcher__left .workflow-strip,
     .present-slide--p1-visual-system .trade-off-switcher__left .workflow-strip,
+    .present-slide--p3-visual-system .trade-off-switcher__left .workflow-strip,
     .present-slide--p1-exploration .trade-off-switcher__left .wealth-hub-principles,
-    .present-slide--p1-visual-system .trade-off-switcher__left .wealth-hub-principles {
+    .present-slide--p3-ideation .trade-off-switcher__left .wealth-hub-principles,
+    .present-slide--p1-visual-system .trade-off-switcher__left .wealth-hub-principles,
+    .present-slide--p3-visual-system .trade-off-switcher__left .wealth-hub-principles {
       margin: 0;
     }
     .present-slide--p1-exploration .trade-off-switcher__left .beat__title,
+    .present-slide--p3-ideation .trade-off-switcher__left .beat__title,
     .present-slide--p1-visual-system .trade-off-switcher__left .beat__title,
-    .present-slide--p1-tradeoff-01 .trade-off-switcher__left .beat__title {
+    .present-slide--p3-visual-system .trade-off-switcher__left .beat__title,
+    .present-slide--p1-tradeoff-01 .trade-off-switcher__left .beat__title,
+    .present-slide--p3-maze .trade-off-switcher__left .beat__title {
       max-width: none;
       line-height: 1.18;
       font-size: var(--present-title-size);
     }
     .present-slide--p1-exploration .trade-off-switcher__left .beat__subtitle,
-    .present-slide--p1-visual-system .trade-off-switcher__left .beat__subtitle {
+    .present-slide--p3-ideation .trade-off-switcher__left .beat__subtitle,
+    .present-slide--p1-visual-system .trade-off-switcher__left .beat__subtitle,
+    .present-slide--p3-visual-system .trade-off-switcher__left .beat__subtitle {
       margin-top: clamp(0.25rem, 0.5vh, 0.4rem);
       font-size: var(--present-eyebrow-size);
       font-weight: 600;
@@ -1542,47 +1776,63 @@
       line-height: 1.25;
     }
     .present-slide--p1-exploration .trade-off-switcher__left .beat__needs--jtbd,
-    .present-slide--p1-visual-system .trade-off-switcher__left .beat__needs--jtbd {
+    .present-slide--p3-ideation .trade-off-switcher__left .beat__needs--jtbd,
+    .present-slide--p1-visual-system .trade-off-switcher__left .beat__needs--jtbd,
+    .present-slide--p3-visual-system .trade-off-switcher__left .beat__needs--jtbd {
       margin: 0;
       font-size: clamp(0.72rem, 1.05vh, 0.82rem);
       line-height: 1.35;
     }
     .present-slide--p1-exploration .trade-off-switcher__left .wealth-hub-principles,
-    .present-slide--p1-visual-system .trade-off-switcher__left .wealth-hub-principles {
+    .present-slide--p3-ideation .trade-off-switcher__left .wealth-hub-principles,
+    .present-slide--p1-visual-system .trade-off-switcher__left .wealth-hub-principles,
+    .present-slide--p3-visual-system .trade-off-switcher__left .wealth-hub-principles {
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: clamp(0.25rem, 0.5vw, 0.4rem);
     }
     .present-slide--p1-exploration .trade-off-switcher__left .wealth-hub-principle-card,
-    .present-slide--p1-visual-system .trade-off-switcher__left .wealth-hub-principle-card {
+    .present-slide--p3-ideation .trade-off-switcher__left .wealth-hub-principle-card,
+    .present-slide--p1-visual-system .trade-off-switcher__left .wealth-hub-principle-card,
+    .present-slide--p3-visual-system .trade-off-switcher__left .wealth-hub-principle-card {
       padding: clamp(0.35rem, 0.65vw, 0.5rem);
     }
     .present-slide--p1-exploration .trade-off-switcher__left .wealth-hub-principle-card__text,
-    .present-slide--p1-visual-system .trade-off-switcher__left .wealth-hub-principle-card__text {
+    .present-slide--p3-ideation .trade-off-switcher__left .wealth-hub-principle-card__text,
+    .present-slide--p1-visual-system .trade-off-switcher__left .wealth-hub-principle-card__text,
+    .present-slide--p3-visual-system .trade-off-switcher__left .wealth-hub-principle-card__text {
       font-size: clamp(0.65rem, 0.95vh, 0.72rem);
       line-height: 1.3;
     }
     .present-slide--p1-exploration .exploration-wizard__right,
-    .present-slide--p1-visual-system .exploration-wizard__right {
+    .present-slide--p3-ideation .exploration-wizard__right,
+    .present-slide--p1-visual-system .exploration-wizard__right,
+    .present-slide--p3-visual-system .exploration-wizard__right {
       display: flex;
       flex-direction: column;
       gap: clamp(0.5rem, 1vh, 0.75rem);
       min-width: 0;
     }
     .present-slide--p1-exploration .exploration-wizard__controls,
-    .present-slide--p1-visual-system .exploration-wizard__controls {
+    .present-slide--p3-ideation .exploration-wizard__controls,
+    .present-slide--p1-visual-system .exploration-wizard__controls,
+    .present-slide--p3-visual-system .exploration-wizard__controls {
       width: 100%;
       flex: 0 0 auto;
       flex-shrink: 0;
     }
     .present-slide--p1-exploration .exploration-wizard__stepper,
-    .present-slide--p1-visual-system .exploration-wizard__stepper {
+    .present-slide--p3-ideation .exploration-wizard__stepper,
+    .present-slide--p1-visual-system .exploration-wizard__stepper,
+    .present-slide--p3-visual-system .exploration-wizard__stepper {
       display: flex;
       align-items: center;
       gap: 0.15rem;
       width: 100%;
     }
     .present-slide--p1-exploration .exploration-wizard__stepper .trade-off-switcher__tab,
-    .present-slide--p1-visual-system .exploration-wizard__stepper .trade-off-switcher__tab {
+    .present-slide--p3-ideation .exploration-wizard__stepper .trade-off-switcher__tab,
+    .present-slide--p1-visual-system .exploration-wizard__stepper .trade-off-switcher__tab,
+    .present-slide--p3-visual-system .exploration-wizard__stepper .trade-off-switcher__tab {
       flex: 1 1 0;
       min-width: 0;
       font-size: var(--wh-journey-pill-fs, clamp(0.72rem, 1.35vh, 0.84rem));
@@ -1596,7 +1846,9 @@
       gap: 0.25rem;
     }
     .present-slide--p1-exploration .exploration-wizard__tab-n,
-    .present-slide--p1-visual-system .exploration-wizard__tab-n {
+    .present-slide--p3-ideation .exploration-wizard__tab-n,
+    .present-slide--p1-visual-system .exploration-wizard__tab-n,
+    .present-slide--p3-visual-system .exploration-wizard__tab-n {
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -1611,14 +1863,20 @@
       flex-shrink: 0;
     }
     .present-slide--p1-exploration .exploration-wizard__stepper .trade-off-switcher__tab--active .exploration-wizard__tab-n,
+    .present-slide--p3-ideation .exploration-wizard__stepper .trade-off-switcher__tab--active .exploration-wizard__tab-n,
     .present-slide--p1-visual-system .exploration-wizard__stepper .trade-off-switcher__tab--active .exploration-wizard__tab-n,
+    .present-slide--p3-visual-system .exploration-wizard__stepper .trade-off-switcher__tab--active .exploration-wizard__tab-n,
     .present-slide--p1-exploration .exploration-wizard__stepper .trade-off-switcher__tab[aria-selected="true"] .exploration-wizard__tab-n,
-    .present-slide--p1-visual-system .exploration-wizard__stepper .trade-off-switcher__tab[aria-selected="true"] .exploration-wizard__tab-n {
+    .present-slide--p3-ideation .exploration-wizard__stepper .trade-off-switcher__tab[aria-selected="true"] .exploration-wizard__tab-n,
+    .present-slide--p1-visual-system .exploration-wizard__stepper .trade-off-switcher__tab[aria-selected="true"] .exploration-wizard__tab-n,
+    .present-slide--p3-visual-system .exploration-wizard__stepper .trade-off-switcher__tab[aria-selected="true"] .exploration-wizard__tab-n {
       background: var(--accent-ink);
       color: var(--paper);
     }
     .present-slide--p1-exploration .exploration-wizard__panel-principles,
-    .present-slide--p1-visual-system .exploration-wizard__panel-principles {
+    .present-slide--p3-ideation .exploration-wizard__panel-principles,
+    .present-slide--p1-visual-system .exploration-wizard__panel-principles,
+    .present-slide--p3-visual-system .exploration-wizard__panel-principles {
       display: flex;
       flex-direction: column;
       gap: clamp(0.35rem, 0.7vh, 0.5rem);
@@ -1627,40 +1885,54 @@
       overflow: hidden;
     }
     .present-slide--p1-exploration .exploration-wizard__panel-principles .beat__needs--jtbd,
-    .present-slide--p1-visual-system .exploration-wizard__panel-principles .beat__needs--jtbd {
+    .present-slide--p3-ideation .exploration-wizard__panel-principles .beat__needs--jtbd,
+    .present-slide--p1-visual-system .exploration-wizard__panel-principles .beat__needs--jtbd,
+    .present-slide--p3-visual-system .exploration-wizard__panel-principles .beat__needs--jtbd {
       margin: 0;
       font-size: clamp(0.72rem, 1.05vh, 0.82rem);
       line-height: 1.35;
     }
     .present-slide--p1-exploration .exploration-wizard__panel-principles .wealth-hub-principles,
-    .present-slide--p1-visual-system .exploration-wizard__panel-principles .wealth-hub-principles {
+    .present-slide--p3-ideation .exploration-wizard__panel-principles .wealth-hub-principles,
+    .present-slide--p1-visual-system .exploration-wizard__panel-principles .wealth-hub-principles,
+    .present-slide--p3-visual-system .exploration-wizard__panel-principles .wealth-hub-principles {
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: clamp(0.25rem, 0.5vw, 0.4rem);
       margin: 0;
     }
     .present-slide--p1-exploration .exploration-wizard__panel-principles .wealth-hub-principle-card,
-    .present-slide--p1-visual-system .exploration-wizard__panel-principles .wealth-hub-principle-card {
+    .present-slide--p3-ideation .exploration-wizard__panel-principles .wealth-hub-principle-card,
+    .present-slide--p1-visual-system .exploration-wizard__panel-principles .wealth-hub-principle-card,
+    .present-slide--p3-visual-system .exploration-wizard__panel-principles .wealth-hub-principle-card {
       padding: clamp(0.35rem, 0.65vw, 0.5rem);
     }
     .present-slide--p1-exploration .exploration-wizard__panel-principles .wealth-hub-principle-card__text,
-    .present-slide--p1-visual-system .exploration-wizard__panel-principles .wealth-hub-principle-card__text {
+    .present-slide--p3-ideation .exploration-wizard__panel-principles .wealth-hub-principle-card__text,
+    .present-slide--p1-visual-system .exploration-wizard__panel-principles .wealth-hub-principle-card__text,
+    .present-slide--p3-visual-system .exploration-wizard__panel-principles .wealth-hub-principle-card__text {
       font-size: clamp(0.62rem, 0.9vh, 0.7rem);
       line-height: 1.28;
     }
     .present-slide--p1-exploration .exploration-wizard__asset-slot--stack,
-    .present-slide--p1-visual-system .exploration-wizard__asset-slot--stack {
+    .present-slide--p3-ideation .exploration-wizard__asset-slot--stack,
+    .present-slide--p1-visual-system .exploration-wizard__asset-slot--stack,
+    .present-slide--p3-visual-system .exploration-wizard__asset-slot--stack {
       display: flex;
       flex-direction: column;
       gap: clamp(0.35rem, 0.65vh, 0.5rem);
       height: var(--exploration-asset-h, min(40vh, 22rem));
     }
     .present-slide--p1-exploration .exploration-wizard__asset-slot--stack .exploration-wizard__asset,
-    .present-slide--p1-visual-system .exploration-wizard__asset-slot--stack .exploration-wizard__asset {
+    .present-slide--p3-ideation .exploration-wizard__asset-slot--stack .exploration-wizard__asset,
+    .present-slide--p1-visual-system .exploration-wizard__asset-slot--stack .exploration-wizard__asset,
+    .present-slide--p3-visual-system .exploration-wizard__asset-slot--stack .exploration-wizard__asset {
       flex: 1 1 0;
       min-height: 0;
     }
     .present-slide--p1-exploration .exploration-wizard__panel-principles .beat__subtitle,
-    .present-slide--p1-visual-system .exploration-wizard__panel-principles .beat__subtitle {
+    .present-slide--p3-ideation .exploration-wizard__panel-principles .beat__subtitle,
+    .present-slide--p1-visual-system .exploration-wizard__panel-principles .beat__subtitle,
+    .present-slide--p3-visual-system .exploration-wizard__panel-principles .beat__subtitle {
       margin: 0;
       font-size: var(--present-eyebrow-size);
       font-weight: 600;
@@ -1669,7 +1941,9 @@
       color: var(--muted);
     }
     .present-slide--p1-exploration .exploration-wizard__arrow-static,
-    .present-slide--p1-visual-system .exploration-wizard__arrow-static {
+    .present-slide--p3-ideation .exploration-wizard__arrow-static,
+    .present-slide--p1-visual-system .exploration-wizard__arrow-static,
+    .present-slide--p3-visual-system .exploration-wizard__arrow-static {
       flex: 0 0 auto;
       color: var(--muted);
       font-size: clamp(0.7rem, 1.2vh, 0.8rem);
@@ -1677,7 +1951,9 @@
       user-select: none;
     }
     .present-slide--p1-exploration .exploration-wizard__stage,
-    .present-slide--p1-visual-system .exploration-wizard__stage {
+    .present-slide--p3-ideation .exploration-wizard__stage,
+    .present-slide--p1-visual-system .exploration-wizard__stage,
+    .present-slide--p3-visual-system .exploration-wizard__stage {
       position: relative;
       width: 100%;
       --exploration-asset-h: min(40vh, 22rem);
@@ -1686,38 +1962,51 @@
       flex-shrink: 0;
     }
     .present-slide--p1-exploration .exploration-wizard__step,
-    .present-slide--p1-visual-system .exploration-wizard__step {
+    .present-slide--p3-ideation .exploration-wizard__step,
+    .present-slide--p1-visual-system .exploration-wizard__step,
+    .present-slide--p3-visual-system .exploration-wizard__step {
       display: none;
       flex-direction: column;
       gap: clamp(0.35rem, 0.7vh, 0.5rem);
     }
     .present-slide--p1-exploration .exploration-wizard__step.is-active,
-    .present-slide--p1-visual-system .exploration-wizard__step.is-active {
+    .present-slide--p3-ideation .exploration-wizard__step.is-active,
+    .present-slide--p1-visual-system .exploration-wizard__step.is-active,
+    .present-slide--p3-visual-system .exploration-wizard__step.is-active {
       display: flex;
     }
     .present-slide--p1-exploration .exploration-wizard__step[hidden],
-    .present-slide--p1-visual-system .exploration-wizard__step[hidden] {
+    .present-slide--p3-ideation .exploration-wizard__step[hidden],
+    .present-slide--p1-visual-system .exploration-wizard__step[hidden],
+    .present-slide--p3-visual-system .exploration-wizard__step[hidden] {
       display: none !important;
     }
     .present-slide--p1-exploration .exploration-wizard__caption,
-    .present-slide--p1-visual-system .exploration-wizard__caption {
+    .present-slide--p3-ideation .exploration-wizard__caption,
+    .present-slide--p1-visual-system .exploration-wizard__caption,
+    .present-slide--p3-visual-system .exploration-wizard__caption {
       margin: 0;
       font-size: clamp(0.78rem, 1.45vh, 0.88rem);
       line-height: 1.35;
       color: var(--ink-soft);
     }
     .present-slide--p1-exploration .phase-wizard__stepper--secondary .exploration-wizard__tab-n,
-    .present-slide--p1-visual-system .phase-wizard__stepper--secondary .exploration-wizard__tab-n {
+    .present-slide--p3-ideation .phase-wizard__stepper--secondary .exploration-wizard__tab-n,
+    .present-slide--p1-visual-system .phase-wizard__stepper--secondary .exploration-wizard__tab-n,
+    .present-slide--p3-visual-system .phase-wizard__stepper--secondary .exploration-wizard__tab-n {
       display: none !important;
     }
-    .present-slide--p1-exploration .phase-wizard__stepper--secondary,
-    .present-slide--p1-visual-system .phase-wizard__stepper--secondary {
+    .present-slide--p1-exploration .phase-wizard__stepper--secondary:not(.tradeoff-01__concept-stepper):not(.visual-tabs__stepper),
+    .present-slide--p1-visual-system .phase-wizard__stepper--secondary:not(.tradeoff-01__concept-stepper):not(.visual-tabs__stepper),
+    .present-slide--p3-visual-system .phase-wizard__stepper--secondary:not(.tradeoff-01__concept-stepper):not(.visual-tabs__stepper) {
       gap: 0.15rem;
       background: transparent;
       color: inherit;
     }
     .present-slide--p1-exploration .phase-wizard__stepper--secondary .trade-off-switcher__tab,
-    .present-slide--p1-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab {
+    .present-slide--p3-ideation .phase-wizard__stepper--secondary .trade-off-switcher__tab,
+    .present-slide--p1-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab,
+    .present-slide--p3-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab {
       background: transparent;
       border: 1px solid transparent;
       border-radius: var(--radius-pill, 999px);
@@ -1728,15 +2017,21 @@
       min-height: calc(var(--wh-journey-pill-pad-y, 0.4rem) * 2 + 1.35em);
     }
     .present-slide--p1-exploration .phase-wizard__stepper--secondary .trade-off-switcher__tab:not(.trade-off-switcher__tab--active):not([aria-selected="true"]):hover,
-    .present-slide--p1-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab:not(.trade-off-switcher__tab--active):not([aria-selected="true"]):hover {
+    .present-slide--p3-ideation .phase-wizard__stepper--secondary .trade-off-switcher__tab:not(.trade-off-switcher__tab--active):not([aria-selected="true"]):hover,
+    .present-slide--p1-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab:not(.trade-off-switcher__tab--active):not([aria-selected="true"]):hover,
+    .present-slide--p3-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab:not(.trade-off-switcher__tab--active):not([aria-selected="true"]):hover {
       background: transparent;
       color: var(--ink-soft);
       box-shadow: 0 0 0 1px color-mix(in srgb, var(--ink) 22%, var(--line));
     }
     .present-slide--p1-exploration .phase-wizard__stepper--secondary .trade-off-switcher__tab--active,
+    .present-slide--p3-ideation .phase-wizard__stepper--secondary .trade-off-switcher__tab--active,
     .present-slide--p1-exploration .phase-wizard__stepper--secondary .trade-off-switcher__tab[aria-selected="true"],
+    .present-slide--p3-ideation .phase-wizard__stepper--secondary .trade-off-switcher__tab[aria-selected="true"],
     .present-slide--p1-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab--active,
-    .present-slide--p1-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab[aria-selected="true"] {
+    .present-slide--p3-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab--active,
+    .present-slide--p1-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab[aria-selected="true"],
+    .present-slide--p3-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab[aria-selected="true"] {
       background: transparent;
       color: var(--ink);
       border-color: transparent;
@@ -1744,26 +2039,37 @@
       box-shadow: 0 0 0 2px color-mix(in srgb, var(--ink) 32%, var(--line));
     }
     .present-slide--p1-exploration .phase-wizard__stepper--secondary .trade-off-switcher__tab--active:hover,
+    .present-slide--p3-ideation .phase-wizard__stepper--secondary .trade-off-switcher__tab--active:hover,
     .present-slide--p1-exploration .phase-wizard__stepper--secondary .trade-off-switcher__tab[aria-selected="true"]:hover,
+    .present-slide--p3-ideation .phase-wizard__stepper--secondary .trade-off-switcher__tab[aria-selected="true"]:hover,
     .present-slide--p1-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab--active:hover,
-    .present-slide--p1-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab[aria-selected="true"]:hover {
+    .present-slide--p3-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab--active:hover,
+    .present-slide--p1-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab[aria-selected="true"]:hover,
+    .present-slide--p3-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab[aria-selected="true"]:hover {
       background: transparent;
       color: var(--ink);
       box-shadow: 0 0 0 2px color-mix(in srgb, var(--ink) 40%, var(--line));
     }
     .present-slide--p1-exploration .phase-wizard__stepper--secondary .trade-off-switcher__tab:focus-visible,
-    .present-slide--p1-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab:focus-visible {
+    .present-slide--p3-ideation .phase-wizard__stepper--secondary .trade-off-switcher__tab:focus-visible,
+    .present-slide--p1-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab:focus-visible,
+    .present-slide--p3-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab:focus-visible {
       outline: 2px solid var(--accent);
       outline-offset: 2px;
     }
     .present-slide--p1-exploration .phase-wizard__stepper--secondary .trade-off-switcher__tab--active:focus-visible,
+    .present-slide--p3-ideation .phase-wizard__stepper--secondary .trade-off-switcher__tab--active:focus-visible,
     .present-slide--p1-exploration .phase-wizard__stepper--secondary .trade-off-switcher__tab[aria-selected="true"]:focus-visible,
+    .present-slide--p3-ideation .phase-wizard__stepper--secondary .trade-off-switcher__tab[aria-selected="true"]:focus-visible,
     .present-slide--p1-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab--active:focus-visible,
-    .present-slide--p1-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab[aria-selected="true"]:focus-visible {
+    .present-slide--p3-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab--active:focus-visible,
+    .present-slide--p1-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab[aria-selected="true"]:focus-visible,
+    .present-slide--p3-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab[aria-selected="true"]:focus-visible {
       outline: 2px solid var(--accent);
       outline-offset: 2px;
     }
-    .present-slide--p1-exploration .exploration-wizard__variant-tabs--overlay.phase-wizard__stepper--secondary {
+    .present-slide--p1-exploration .exploration-wizard__variant-tabs--overlay.phase-wizard__stepper--secondary,
+    .present-slide--p3-ideation .exploration-wizard__variant-tabs--overlay.phase-wizard__stepper--secondary {
       flex-direction: column;
       flex-wrap: nowrap;
       align-items: flex-start;
@@ -1771,7 +2077,8 @@
     }
 
     /* Trade-off 01 — concept tabs (visual column) match ideate step-wizard */
-    .present-slide--p1-tradeoff-01 .tradeoff-01__concept-stepper {
+    .present-slide--p1-tradeoff-01 .tradeoff-01__concept-stepper,
+    .present-slide--p3-maze .tradeoff-01__concept-stepper {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1780,10 +2087,12 @@
       background: transparent;
       color: inherit;
     }
-    .present-slide--p1-tradeoff-01 .tradeoff-01__concept-stepper.phase-wizard__stepper--secondary {
+    .present-slide--p1-tradeoff-01 .tradeoff-01__concept-stepper.phase-wizard__stepper--secondary,
+    .present-slide--p3-maze .tradeoff-01__concept-stepper.phase-wizard__stepper--secondary {
       gap: clamp(0.85rem, 1.45vh, 1.1rem);
     }
-    .present-slide--p1-tradeoff-01 .tradeoff-01__concept-stepper .trade-off-switcher__tab {
+    .present-slide--p1-tradeoff-01 .tradeoff-01__concept-stepper .trade-off-switcher__tab,
+    .present-slide--p3-maze .tradeoff-01__concept-stepper .trade-off-switcher__tab {
       position: relative;
       flex: 1 1 0;
       min-width: 0;
@@ -1804,13 +2113,16 @@
       box-shadow: 0 0 0 1px color-mix(in srgb, var(--ink) 12%, var(--line));
       box-sizing: border-box;
     }
-    .present-slide--p1-tradeoff-01 .tradeoff-01__concept-stepper .trade-off-switcher__tab:not(.trade-off-switcher__tab--active):not([aria-selected="true"]):hover {
+    .present-slide--p1-tradeoff-01 .tradeoff-01__concept-stepper .trade-off-switcher__tab:not(.trade-off-switcher__tab--active):not([aria-selected="true"]):hover,
+    .present-slide--p3-maze .tradeoff-01__concept-stepper .trade-off-switcher__tab:not(.trade-off-switcher__tab--active):not([aria-selected="true"]):hover {
       background: transparent;
       color: var(--ink-soft);
       box-shadow: 0 0 0 1px color-mix(in srgb, var(--ink) 22%, var(--line));
     }
     .present-slide--p1-tradeoff-01 .tradeoff-01__concept-stepper .trade-off-switcher__tab--active,
-    .present-slide--p1-tradeoff-01 .tradeoff-01__concept-stepper .trade-off-switcher__tab[aria-selected="true"] {
+    .present-slide--p3-maze .tradeoff-01__concept-stepper .trade-off-switcher__tab--active,
+    .present-slide--p1-tradeoff-01 .tradeoff-01__concept-stepper .trade-off-switcher__tab[aria-selected="true"],
+    .present-slide--p3-maze .tradeoff-01__concept-stepper .trade-off-switcher__tab[aria-selected="true"] {
       background: transparent;
       color: var(--ink);
       border-color: transparent;
@@ -1818,16 +2130,20 @@
       box-shadow: 0 0 0 2px color-mix(in srgb, var(--ink) 32%, var(--line));
     }
     .present-slide--p1-tradeoff-01 .tradeoff-01__concept-stepper .trade-off-switcher__tab--active:hover,
-    .present-slide--p1-tradeoff-01 .tradeoff-01__concept-stepper .trade-off-switcher__tab[aria-selected="true"]:hover {
+    .present-slide--p3-maze .tradeoff-01__concept-stepper .trade-off-switcher__tab--active:hover,
+    .present-slide--p1-tradeoff-01 .tradeoff-01__concept-stepper .trade-off-switcher__tab[aria-selected="true"]:hover,
+    .present-slide--p3-maze .tradeoff-01__concept-stepper .trade-off-switcher__tab[aria-selected="true"]:hover {
       background: transparent;
       color: var(--ink);
       box-shadow: 0 0 0 2px color-mix(in srgb, var(--ink) 40%, var(--line));
     }
-    .present-slide--p1-tradeoff-01 .tradeoff-01__concept-stepper .trade-off-switcher__tab:focus-visible {
+    .present-slide--p1-tradeoff-01 .tradeoff-01__concept-stepper .trade-off-switcher__tab:focus-visible,
+    .present-slide--p3-maze .tradeoff-01__concept-stepper .trade-off-switcher__tab:focus-visible {
       outline: 2px solid var(--accent);
       outline-offset: 2px;
     }
-    .present-slide--p1-tradeoff-01 .tradeoff-01__concept-tab-check {
+    .present-slide--p1-tradeoff-01 .tradeoff-01__concept-tab-check,
+    .present-slide--p3-maze .tradeoff-01__concept-tab-check {
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -1839,7 +2155,8 @@
       pointer-events: none;
     }
 
-    .present-slide--p1-exploration .exploration-wizard__stage {
+    .present-slide--p1-exploration .exploration-wizard__stage,
+    .present-slide--p3-ideation .exploration-wizard__stage {
       --exploration-wireframe-h: min(55.2vh, 30.36rem);
       --exploration-stage-block-h: calc(
         var(--exploration-wireframe-h) + var(--exploration-caption-block) + clamp(0.35rem, 0.7vh, 0.5rem)
@@ -1848,7 +2165,8 @@
       height: var(--exploration-stage-block-h);
       margin-top: 0;
     }
-    .present-slide--p1-visual-system .exploration-wizard__stage {
+    .present-slide--p1-visual-system .exploration-wizard__stage,
+    .present-slide--p3-visual-system .exploration-wizard__stage {
       --exploration-stage-block-h: calc(
         var(--exploration-asset-h) + var(--exploration-caption-block) + clamp(0.35rem, 0.7vh, 0.5rem)
       );
@@ -1857,7 +2175,9 @@
       margin-top: 0;
     }
     .present-slide--p1-exploration .exploration-wizard__step--stacked-caption,
-    .present-slide--p1-visual-system .exploration-wizard__step--stacked-caption {
+    .present-slide--p3-ideation .exploration-wizard__step--stacked-caption,
+    .present-slide--p1-visual-system .exploration-wizard__step--stacked-caption,
+    .present-slide--p3-visual-system .exploration-wizard__step--stacked-caption {
       position: absolute;
       inset: 0;
       align-items: center;
@@ -1867,11 +2187,15 @@
       box-sizing: border-box;
     }
     .present-slide--p1-exploration .exploration-wizard__step--stacked-caption.is-active,
-    .present-slide--p1-visual-system .exploration-wizard__step--stacked-caption.is-active {
+    .present-slide--p3-ideation .exploration-wizard__step--stacked-caption.is-active,
+    .present-slide--p1-visual-system .exploration-wizard__step--stacked-caption.is-active,
+    .present-slide--p3-visual-system .exploration-wizard__step--stacked-caption.is-active {
       z-index: 1;
     }
     .present-slide--p1-exploration .exploration-wizard__step--stacked-caption .exploration-wizard__asset-slot,
-    .present-slide--p1-visual-system .exploration-wizard__step--stacked-caption .exploration-wizard__asset-slot {
+    .present-slide--p3-ideation .exploration-wizard__step--stacked-caption .exploration-wizard__asset-slot,
+    .present-slide--p1-visual-system .exploration-wizard__step--stacked-caption .exploration-wizard__asset-slot,
+    .present-slide--p3-visual-system .exploration-wizard__step--stacked-caption .exploration-wizard__asset-slot {
       flex: 0 0 var(--exploration-asset-h);
       width: 100%;
       height: var(--exploration-asset-h);
@@ -1879,7 +2203,8 @@
       max-height: var(--exploration-asset-h);
     }
     /* Wireframes step — 20% larger video area, top-aligned, centered */
-    .present-slide--p1-exploration .exploration-wizard__step[data-step-panel="4"] .exploration-wizard__asset-slot--wireframe-compare {
+    .present-slide--p1-exploration .exploration-wizard__step[data-step-panel="4"] .exploration-wizard__asset-slot--wireframe-compare,
+    .present-slide--p3-ideation .exploration-wizard__step[data-step-panel="4"] .exploration-wizard__asset-slot--wireframe-compare {
       --exploration-wireframe-h: min(55.2vh, 30.36rem);
       flex: 0 0 var(--exploration-wireframe-h);
       height: var(--exploration-wireframe-h);
@@ -1887,20 +2212,24 @@
       max-height: var(--exploration-wireframe-h);
       overflow: visible;
     }
-    .present-slide--p1-exploration .exploration-wizard__step[data-step-panel="4"] .exploration-wizard__variant-media {
+    .present-slide--p1-exploration .exploration-wizard__step[data-step-panel="4"] .exploration-wizard__variant-media,
+    .present-slide--p3-ideation .exploration-wizard__step[data-step-panel="4"] .exploration-wizard__variant-media {
       align-items: flex-start;
       justify-content: center;
     }
-    .present-slide--p1-exploration .exploration-wizard__step[data-step-panel="4"] .exploration-wizard__variant-media > .trade-off-switcher__media {
+    .present-slide--p1-exploration .exploration-wizard__step[data-step-panel="4"] .exploration-wizard__variant-media > .trade-off-switcher__media,
+    .present-slide--p3-ideation .exploration-wizard__step[data-step-panel="4"] .exploration-wizard__variant-media > .trade-off-switcher__media {
       display: flex;
       align-items: flex-start;
       justify-content: center;
     }
-    .present-slide--p1-exploration .exploration-wizard__step[data-step-panel="4"] .exploration-wizard__variant-media > .trade-off-switcher__media {
+    .present-slide--p1-exploration .exploration-wizard__step[data-step-panel="4"] .exploration-wizard__variant-media > .trade-off-switcher__media,
+    .present-slide--p3-ideation .exploration-wizard__step[data-step-panel="4"] .exploration-wizard__variant-media > .trade-off-switcher__media {
       width: 100%;
       height: 100%;
     }
-    .present-slide--p1-exploration .exploration-wizard__step[data-step-panel="4"] .exploration-wizard__variant-media .wealth-hub-video-frame.exploration-wizard__asset {
+    .present-slide--p1-exploration .exploration-wizard__step[data-step-panel="4"] .exploration-wizard__variant-media .wealth-hub-video-frame.exploration-wizard__asset,
+    .present-slide--p3-ideation .exploration-wizard__step[data-step-panel="4"] .exploration-wizard__variant-media .wealth-hub-video-frame.exploration-wizard__asset {
       width: 100%;
       height: 100%;
       min-height: 0;
@@ -1910,7 +2239,8 @@
       align-items: flex-start;
       justify-content: center;
     }
-    .present-slide--p1-exploration .exploration-wizard__step[data-step-panel="4"] .exploration-wizard__variant-media .wealth-hub-video-frame video {
+    .present-slide--p1-exploration .exploration-wizard__step[data-step-panel="4"] .exploration-wizard__variant-media .wealth-hub-video-frame video,
+    .present-slide--p3-ideation .exploration-wizard__step[data-step-panel="4"] .exploration-wizard__variant-media .wealth-hub-video-frame video {
       display: block;
       width: 100%;
       height: 100%;
@@ -1918,12 +2248,14 @@
       object-fit: contain;
       object-position: top center;
     }
-    .present-slide--p1-exploration .exploration-wizard__variant-media .trade-off-switcher__media[hidden] {
+    .present-slide--p1-exploration .exploration-wizard__variant-media .trade-off-switcher__media[hidden],
+    .present-slide--p3-ideation .exploration-wizard__variant-media .trade-off-switcher__media[hidden] {
       display: none !important;
       visibility: hidden !important;
       pointer-events: none !important;
     }
-    .present-slide--p1-exploration .exploration-wizard__step--stacked-caption .exploration-wizard__panel-principles {
+    .present-slide--p1-exploration .exploration-wizard__step--stacked-caption .exploration-wizard__panel-principles,
+    .present-slide--p3-ideation .exploration-wizard__step--stacked-caption .exploration-wizard__panel-principles {
       width: 100%;
       flex: 0 0 var(--exploration-asset-h);
       height: var(--exploration-asset-h);
@@ -1932,7 +2264,9 @@
       overflow: hidden;
     }
     .present-slide--p1-exploration .exploration-wizard__caption--below,
-    .present-slide--p1-visual-system .exploration-wizard__caption--below {
+    .present-slide--p3-ideation .exploration-wizard__caption--below,
+    .present-slide--p1-visual-system .exploration-wizard__caption--below,
+    .present-slide--p3-visual-system .exploration-wizard__caption--below {
       text-align: center;
       width: 100%;
       max-width: none;
@@ -1945,14 +2279,18 @@
       box-sizing: border-box;
       padding-inline: 0;
     }
-    .present-slide--p1-exploration .exploration-wizard__asset.wealth-hub-video-frame {
+    .present-slide--p1-exploration .exploration-wizard__asset.wealth-hub-video-frame,
+    .present-slide--p3-ideation .exploration-wizard__asset.wealth-hub-video-frame {
       border: none;
       background: transparent;
       border-radius: 0;
     }
     .present-slide--p1-exploration .exploration-wizard__asset--img,
+    .present-slide--p3-ideation .exploration-wizard__asset--img,
     .present-slide--p1-visual-system .exploration-wizard__asset--img,
-    .present-slide--p1-visual-system .exploration-wizard__asset--colour-map {
+    .present-slide--p3-visual-system .exploration-wizard__asset--img,
+    .present-slide--p1-visual-system .exploration-wizard__asset--colour-map,
+    .present-slide--p3-visual-system .exploration-wizard__asset--colour-map {
       object-fit: contain;
       object-position: center;
       height: 100%;
@@ -1960,31 +2298,43 @@
       max-height: var(--exploration-asset-h, min(40vh, 22rem));
     }
     .present-slide--p1-exploration .exploration-wizard__asset-slot:has([data-lightbox]),
-    .present-slide--p1-visual-system .exploration-wizard__asset-slot:has([data-lightbox]) {
+    .present-slide--p3-ideation .exploration-wizard__asset-slot:has([data-lightbox]),
+    .present-slide--p1-visual-system .exploration-wizard__asset-slot:has([data-lightbox]),
+    .present-slide--p3-visual-system .exploration-wizard__asset-slot:has([data-lightbox]) {
       cursor: zoom-in;
     }
     .present-slide--p1-exploration .exploration-wizard__asset img[data-lightbox],
+    .present-slide--p3-ideation .exploration-wizard__asset img[data-lightbox],
     .present-slide--p1-exploration .exploration-wizard__asset video[data-lightbox],
-    .present-slide--p1-exploration .exploration-wizard__asset-slot--wireframe-compare .exploration-wizard__variant-media {
+    .present-slide--p3-ideation .exploration-wizard__asset video[data-lightbox],
+    .present-slide--p1-exploration .exploration-wizard__asset-slot--wireframe-compare .exploration-wizard__variant-media,
+    .present-slide--p3-ideation .exploration-wizard__asset-slot--wireframe-compare .exploration-wizard__variant-media {
       cursor: default;
       pointer-events: none;
     }
-    .present-slide--p1-exploration .exploration-wizard__asset-slot--wireframe-compare .exploration-wizard__variant-media video[data-lightbox] {
+    .present-slide--p1-exploration .exploration-wizard__asset-slot--wireframe-compare .exploration-wizard__variant-media video[data-lightbox],
+    .present-slide--p3-ideation .exploration-wizard__asset-slot--wireframe-compare .exploration-wizard__variant-media video[data-lightbox] {
       cursor: zoom-in;
       pointer-events: auto;
     }
     .present-slide--p1-exploration .exploration-wizard__asset-slot img[data-lightbox],
-    .present-slide--p1-exploration .exploration-wizard__asset-slot video[data-lightbox] {
+    .present-slide--p3-ideation .exploration-wizard__asset-slot img[data-lightbox],
+    .present-slide--p1-exploration .exploration-wizard__asset-slot video[data-lightbox],
+    .present-slide--p3-ideation .exploration-wizard__asset-slot video[data-lightbox] {
       pointer-events: auto;
     }
     .present-slide--p1-exploration .exploration-wizard__asset-slot,
-    .present-slide--p1-visual-system .exploration-wizard__asset-slot {
+    .present-slide--p3-ideation .exploration-wizard__asset-slot,
+    .present-slide--p1-visual-system .exploration-wizard__asset-slot,
+    .present-slide--p3-visual-system .exploration-wizard__asset-slot {
       width: 100%;
       height: var(--exploration-asset-h);
       min-height: var(--exploration-asset-h);
     }
     .present-slide--p1-exploration .exploration-wizard__asset,
-    .present-slide--p1-visual-system .exploration-wizard__asset {
+    .present-slide--p3-ideation .exploration-wizard__asset,
+    .present-slide--p1-visual-system .exploration-wizard__asset,
+    .present-slide--p3-visual-system .exploration-wizard__asset {
       width: 100%;
       height: 100%;
       min-height: var(--exploration-asset-h);
@@ -1992,26 +2342,33 @@
       margin: 0;
       aspect-ratio: auto;
     }
-    .present-slide--p1-exploration .exploration-wizard__step[data-step-panel="4"] .exploration-wizard__variant-media .exploration-wizard__asset {
+    .present-slide--p1-exploration .exploration-wizard__step[data-step-panel="4"] .exploration-wizard__variant-media .exploration-wizard__asset,
+    .present-slide--p3-ideation .exploration-wizard__step[data-step-panel="4"] .exploration-wizard__variant-media .exploration-wizard__asset {
       min-height: 0;
       max-height: var(--exploration-wireframe-h);
       height: var(--exploration-wireframe-h);
     }
     .present-slide--p1-exploration .exploration-wizard__asset.placeholder-image,
-    .present-slide--p1-visual-system .exploration-wizard__asset.placeholder-image {
+    .present-slide--p3-ideation .exploration-wizard__asset.placeholder-image,
+    .present-slide--p1-visual-system .exploration-wizard__asset.placeholder-image,
+    .present-slide--p3-visual-system .exploration-wizard__asset.placeholder-image {
       display: flex;
       align-items: center;
       justify-content: center;
     }
     .present-slide--p1-exploration .exploration-wizard__asset.wealth-hub-video-frame,
-    .present-slide--p1-visual-system .exploration-wizard__asset.wealth-hub-video-frame {
+    .present-slide--p3-ideation .exploration-wizard__asset.wealth-hub-video-frame,
+    .present-slide--p1-visual-system .exploration-wizard__asset.wealth-hub-video-frame,
+    .present-slide--p3-visual-system .exploration-wizard__asset.wealth-hub-video-frame {
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
     }
     .present-slide--p1-exploration .exploration-wizard__asset video,
-    .present-slide--p1-visual-system .exploration-wizard__asset video {
+    .present-slide--p3-ideation .exploration-wizard__asset video,
+    .present-slide--p1-visual-system .exploration-wizard__asset video,
+    .present-slide--p3-visual-system .exploration-wizard__asset video {
       width: 100%;
       height: 100%;
       max-height: 100%;
@@ -2086,21 +2443,28 @@
     }
     @media (max-width: 900px) {
       .present-slide--p1-exploration.present-slide--layout-viewport,
+      .present-slide--p3-ideation.present-slide--layout-viewport,
       .present-slide--p1-craft.present-slide--layout-viewport {
         justify-content: flex-start;
         padding-top: var(--present-top);
       }
-      .present-slide--p1-exploration .trade-off-switcher--split {
+      .present-slide--p1-exploration .trade-off-switcher--split,
+      .present-slide--p3-ideation .trade-off-switcher--split {
         grid-template-columns: 1fr;
       }
       .present-slide--p1-exploration .trade-off-switcher--split.trade-off-switcher--visual-left .exploration-wizard__right,
+      .present-slide--p3-ideation .trade-off-switcher--split.trade-off-switcher--visual-left .exploration-wizard__right,
       .present-slide--p1-exploration .trade-off-switcher--split.trade-off-switcher--visual-left .trade-off-switcher__right,
-      .present-slide--p1-tradeoff-01 .trade-off-switcher--split.trade-off-switcher--visual-left .trade-off-switcher__right {
+      .present-slide--p3-ideation .trade-off-switcher--split.trade-off-switcher--visual-left .trade-off-switcher__right,
+      .present-slide--p1-tradeoff-01 .trade-off-switcher--split.trade-off-switcher--visual-left .trade-off-switcher__right,
+      .present-slide--p3-maze .trade-off-switcher--split.trade-off-switcher--visual-left .trade-off-switcher__right {
         grid-column: 1;
         grid-row: 1;
       }
       .present-slide--p1-exploration .trade-off-switcher--split.trade-off-switcher--visual-left .trade-off-switcher__left,
-      .present-slide--p1-tradeoff-01 .trade-off-switcher--split.trade-off-switcher--visual-left .trade-off-switcher__left {
+      .present-slide--p3-ideation .trade-off-switcher--split.trade-off-switcher--visual-left .trade-off-switcher__left,
+      .present-slide--p1-tradeoff-01 .trade-off-switcher--split.trade-off-switcher--visual-left .trade-off-switcher__left,
+      .present-slide--p3-maze .trade-off-switcher--split.trade-off-switcher--visual-left .trade-off-switcher__left {
         grid-column: 1;
         grid-row: 2;
       }
@@ -2282,7 +2646,8 @@
     }
     /* Persona pill tooltips — left-aligned to pill to avoid slide-edge overflow */
     .present-slide--p1-baseline .chip-row[data-fm-widget="raisin-personas"] .chip-tip,
-    .present-slide--p1-tradeoff-01 .chip-row[data-fm-widget="raisin-tradeoff-personas"] .chip-tip {
+    .present-slide--p1-tradeoff-01 .chip-row[data-fm-widget="raisin-tradeoff-personas"] .chip-tip,
+    .present-slide--p3-maze .chip-row[data-fm-widget="raisin-tradeoff-personas"] .chip-tip {
       left: 0;
       transform: translateY(0.25rem);
     }
@@ -2290,19 +2655,25 @@
     .present-slide--p1-baseline .chip-row[data-fm-widget="raisin-personas"] .chip--tip:focus-visible .chip-tip,
     .present-slide--p1-baseline .chip-row[data-fm-widget="raisin-personas"] .chip--tip.is-remote-hover .chip-tip,
     .present-slide--p1-tradeoff-01 .chip-row[data-fm-widget="raisin-tradeoff-personas"] .chip--tip:hover .chip-tip,
+    .present-slide--p3-maze .chip-row[data-fm-widget="raisin-tradeoff-personas"] .chip--tip:hover .chip-tip,
     .present-slide--p1-tradeoff-01 .chip-row[data-fm-widget="raisin-tradeoff-personas"] .chip--tip:focus-visible .chip-tip,
-    .present-slide--p1-tradeoff-01 .chip-row[data-fm-widget="raisin-tradeoff-personas"] .chip--tip.is-remote-hover .chip-tip {
+    .present-slide--p3-maze .chip-row[data-fm-widget="raisin-tradeoff-personas"] .chip--tip:focus-visible .chip-tip,
+    .present-slide--p1-tradeoff-01 .chip-row[data-fm-widget="raisin-tradeoff-personas"] .chip--tip.is-remote-hover .chip-tip,
+    .present-slide--p3-maze .chip-row[data-fm-widget="raisin-tradeoff-personas"] .chip--tip.is-remote-hover .chip-tip {
       transform: translateY(0);
     }
     .present-slide--p1-baseline .chip-row[data-fm-widget="raisin-personas"] .chip-tip::after,
-    .present-slide--p1-tradeoff-01 .chip-row[data-fm-widget="raisin-tradeoff-personas"] .chip-tip::after {
+    .present-slide--p1-tradeoff-01 .chip-row[data-fm-widget="raisin-tradeoff-personas"] .chip-tip::after,
+    .present-slide--p3-maze .chip-row[data-fm-widget="raisin-tradeoff-personas"] .chip-tip::after {
       left: 1.25rem;
       transform: none;
     }
-    .present-slide--p1-tradeoff-01 .trade-off-switcher__left {
+    .present-slide--p1-tradeoff-01 .trade-off-switcher__left,
+    .present-slide--p3-maze .trade-off-switcher__left {
       overflow: visible;
     }
-    .present-slide--p1-tradeoff-01 .chip-row[data-fm-widget="raisin-tradeoff-personas"] {
+    .present-slide--p1-tradeoff-01 .chip-row[data-fm-widget="raisin-tradeoff-personas"],
+    .present-slide--p3-maze .chip-row[data-fm-widget="raisin-tradeoff-personas"] {
       overflow: visible;
     }
     .present-slide--p1-baseline .period-split__visual {
@@ -2423,19 +2794,25 @@
       }
     }
 
-    .present-slide--p1-visual-system .exploration-wizard__asset--colour-map {
+    .present-slide--p1-visual-system .exploration-wizard__asset--colour-map,
+    .present-slide--p3-visual-system .exploration-wizard__asset--colour-map {
       border-radius: var(--radius-sm);
     }
     .present-slide--p1-visual-system .exploration-wizard__right,
+    .present-slide--p3-visual-system .exploration-wizard__right,
     .present-slide--p1-visual-system .exploration-wizard__stage,
-    .present-slide--p1-visual-system .exploration-wizard__step--stacked-caption {
+    .present-slide--p3-visual-system .exploration-wizard__stage,
+    .present-slide--p1-visual-system .exploration-wizard__step--stacked-caption,
+    .present-slide--p3-visual-system .exploration-wizard__step--stacked-caption {
       width: 100%;
       max-width: 100%;
     }
-    .present-slide--p1-visual-system .exploration-wizard__step--stacked-caption {
+    .present-slide--p1-visual-system .exploration-wizard__step--stacked-caption,
+    .present-slide--p3-visual-system .exploration-wizard__step--stacked-caption {
       align-items: stretch;
     }
-    .present-slide--p1-visual-system .exploration-wizard__step--stacked-caption .exploration-wizard__asset-slot {
+    .present-slide--p1-visual-system .exploration-wizard__step--stacked-caption .exploration-wizard__asset-slot,
+    .present-slide--p3-visual-system .exploration-wizard__step--stacked-caption .exploration-wizard__asset-slot {
       display: flex;
       flex-direction: column;
       align-items: stretch;
@@ -2444,7 +2821,8 @@
       max-width: 100%;
       align-self: stretch;
     }
-    .present-slide--p1-visual-system .exploration-wizard__step--stacked-caption .exploration-wizard__asset-slot .exploration-wizard__asset--img {
+    .present-slide--p1-visual-system .exploration-wizard__step--stacked-caption .exploration-wizard__asset-slot .exploration-wizard__asset--img,
+    .present-slide--p3-visual-system .exploration-wizard__step--stacked-caption .exploration-wizard__asset-slot .exploration-wizard__asset--img {
       display: block;
       width: 100%;
       max-width: 100%;
@@ -2464,8 +2842,48 @@
       max-height: calc(var(--present-vh) - var(--present-bottom) - var(--present-top));
       overflow: visible;
     }
-    .present-slide--p1-visual-system .beat__enablement {
+    .present-slide--p1-visual-system .beat__enablement,
+    .present-slide--p3-visual-system .beat__enablement,
+    .present-slide--p3-visual-system .beat__discovery {
       margin: 0;
+    }
+    .present-slide--p3-visual-system .discovery-callout {
+      padding: clamp(0.75rem, 1.25vh, 0.95rem) clamp(0.85rem, 1.35vw, 1.05rem);
+      background: var(--paper-dim);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm, 0.35rem);
+      box-sizing: border-box;
+    }
+    .present-slide--p3-visual-system .discovery-callout__label {
+      margin: 0;
+      font-size: clamp(0.88rem, 1.55vh, 1rem);
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: normal;
+      text-transform: none;
+      line-height: 1.3;
+    }
+    .present-slide--p3-visual-system .discovery-callout__text {
+      margin: 0.35rem 0 0;
+      font-size: clamp(0.82rem, 1.45vh, 0.94rem);
+      line-height: 1.38;
+      color: var(--ink-soft);
+    }
+    .present-slide--p3-visual-system .discovery-callout__meta {
+      margin: 0.35rem 0 0;
+      font-size: clamp(0.68rem, 0.95vw, 0.76rem);
+      line-height: 1.35;
+      color: var(--muted);
+    }
+    .present-slide--p3-visual-system .discovery-callout__meta a {
+      color: inherit;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .present-slide--p3-visual-system .discovery-callout__meta a:hover,
+    .present-slide--p3-visual-system .discovery-callout__meta a:focus-visible {
+      color: var(--ink);
+      text-decoration: none;
     }
 
     .present-slide--gap-01,
@@ -3091,167 +3509,367 @@
       --cura-copy-lift: var(--present-filmstrip-copy-lift);
     }
 
-    /* Mobile IA prototype — iframe fits viewport height */
-    .present-slide--p3-prototype {
-      --proto-v-margin: var(--present-v-margin);
-      --proto-fit-h: calc(
-        var(--present-vh) - var(--present-bottom) - (2 * var(--proto-v-margin))
-      );
-      --proto-phone-h: min(
-        calc(var(--proto-fit-h) - 3.5rem),
-        calc((100vw - (2 * var(--present-inset)) - clamp(1rem, 2vw, var(--sp-xl))) / 2 * 800 / 415)
-      );
-      min-height: var(--present-vh);
-      max-height: var(--present-vh);
-      overflow: hidden;
-      padding-bottom: var(--present-bottom);
-      box-sizing: border-box;
-      display: flex;
-      align-items: center;
-    }
-    .present-slide--p3-prototype.container {
-      padding-top: var(--proto-v-margin);
-    }
-    #present-stage:has(.present-slide--p3-prototype.is-active) {
-      overflow: hidden;
-    }
-    .present-slide--p3-prototype.mobile-journey__row {
-      width: 100%;
-      min-height: 0;
-      height: 100%;
-      align-items: center;
+    /* Chapter 02 — Research & Parity: pane wrappers so each 50% column can centre (not pair-hug) */
+    .present-slide.present-slide--layout-viewport.present-slide--p3-desk-research,
+    .present-slide.present-slide--layout-viewport.present-slide--p3-parity {
+      display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      gap: clamp(1rem, 2vw, var(--sp-xl));
+      gap: var(--present-split-gap);
+      align-items: stretch;
+      align-content: stretch;
+      min-height: calc(var(--present-vh) - var(--present-bottom));
+      height: 100%;
+      max-height: 100%;
+      box-sizing: border-box;
     }
-    .present-slide--p3-prototype .mobile-journey__prototype,
-    .present-slide--p3-prototype .ai-journey__prototype {
-      grid-column: 1;
-      width: 100%;
-      max-width: 100%;
-      height: auto;
-      margin: 0;
-      align-self: center;
-      justify-self: stretch;
+    .present-slide--p3-desk-research > .present-split-pane,
+    .present-slide--p3-parity > .present-split-pane {
       display: flex;
       flex-direction: column;
+      justify-content: center;
       align-items: center;
-      max-height: var(--proto-fit-h);
-    }
-    .present-slide--p3-prototype .device-story__copy {
-      grid-column: 2;
       min-height: 0;
-      max-height: var(--proto-fit-h);
-      overflow: hidden;
-      align-self: center;
-      width: 100%;
-    }
-    .present-slide--p3-prototype .prototype-persona-switcher {
-      flex: none;
-      width: calc(var(--proto-phone-h) * 415 / 800);
-      max-width: 100%;
-    }
-    .present-slide--p3-prototype .ai-journey__visual.ai-journey__visual--prototype {
-      flex: none;
-      height: var(--proto-phone-h) !important;
-      width: calc(var(--proto-phone-h) * 415 / 800) !important;
-      min-height: 0 !important;
-      max-height: var(--proto-phone-h) !important;
-      max-width: 100% !important;
-      aspect-ratio: 415 / 800;
-      margin-inline: auto;
-    }
-    .present-slide--p3-prototype .period-split__caption {
-      flex: none;
-      width: calc(var(--proto-phone-h) * 415 / 800);
-      max-width: 100%;
-      margin-top: var(--sp-xs);
-      text-align: center;
-    }
-    @media (max-width: 900px) {
-      .present-slide--p3-prototype {
-        overflow: hidden;
-        align-items: flex-start;
-      }
-      .present-slide--p3-prototype.mobile-journey__row {
-        grid-template-columns: 1fr;
-        height: auto;
-      }
-      .present-slide--p3-prototype .mobile-journey__prototype,
-      .present-slide--p3-prototype .ai-journey__prototype,
-      .present-slide--p3-prototype .device-story__copy {
-        grid-column: auto;
-      }
-      .present-slide--p3-prototype .ai-journey__visual.ai-journey__visual--prototype {
-        width: min(100%, calc(var(--proto-phone-h) * 415 / 800)) !important;
-        margin-inline: auto;
-      }
-      .present-slide--p3-prototype .prototype-persona-switcher,
-      .present-slide--p3-prototype .period-split__caption {
-        width: min(100%, calc(var(--proto-phone-h) * 415 / 800));
-        margin-inline: auto;
-      }
-      .present-slide--p3-prototype .device-story__copy {
-        max-height: var(--proto-fit-h);
-        overflow: hidden;
-      }
-    }
-
-    /* Maze validation — image vertically aligned with copy */
-    .present-slide--p3-maze.mobile-journey__row,
-    .present-slide--p3-desk-research.mobile-journey__row,
-    .present-slide--p3-parity.mobile-journey__row {
-      align-items: center;
-    }
-    .present-slide--p3-maze .mobile-journey__visual--maze,
-    .present-slide--p3-desk-research .mobile-journey__visual,
-    .present-slide--p3-parity .mobile-journey__visual {
-      align-self: center;
-      margin-inline: auto;
-      height: auto;
-      max-height: min(58vh, 32rem);
+      min-width: 0;
       overflow: visible;
     }
-    .present-slide--p3-maze .mobile-journey__visual--maze img {
-      width: 100%;
-      height: auto;
-      max-height: min(58vh, 32rem);
-      object-fit: contain;
-      transform: scale(1.2);
-      transform-origin: center center;
+    .present-slide--p3-desk-research > .present-split-pane--visual,
+    .present-slide--p3-parity > .present-split-pane--visual {
+      grid-column: 1;
     }
-    /* Desk research — interaction data visual (~1.33×) */
-    .present-slide--p3-desk-research .mobile-journey__visual--research {
-      max-width: none;
+    .present-slide--p3-desk-research > .present-split-pane--copy,
+    .present-slide--p3-parity > .present-split-pane--copy {
+      grid-column: 2;
+      align-items: stretch;
+      justify-content: center;
+    }
+    .present-slide--p3-desk-research .present-split-pane--copy .device-story__copy,
+    .present-slide--p3-parity .present-split-pane--copy .device-story__copy {
+      align-self: stretch;
+      height: auto;
       width: 100%;
+      justify-content: flex-start;
+      flex: 0 0 auto;
+    }
+    .present-slide--p3-shipped .device-story__copy {
+      align-self: stretch;
+      justify-content: center;
+    }
+    .present-slide--p3-ideation .trade-off-switcher--split,
+    .present-slide--p3-visual-system .trade-off-switcher--split,
+    .present-slide--p3-maze .trade-off-switcher--split {
+      align-items: stretch;
+      min-height: 0;
+      height: 100%;
+    }
+    .present-slide--p3-ideation .trade-off-switcher__left,
+    .present-slide--p3-ideation .trade-off-switcher__right,
+    .present-slide--p3-ideation .exploration-wizard__right,
+    .present-slide--p3-visual-system .trade-off-switcher__left,
+    .present-slide--p3-visual-system .trade-off-switcher__right,
+    .present-slide--p3-visual-system .exploration-wizard__right,
+    .present-slide--p3-maze .trade-off-switcher__left,
+    .present-slide--p3-maze .trade-off-switcher__right {
+      align-self: stretch;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .present-slide--p3-ideation .trade-off-switcher--split.trade-off-switcher--visual-left .exploration-wizard__right,
+    .present-slide--p3-visual-system .trade-off-switcher--split.trade-off-switcher--visual-left .exploration-wizard__right {
+      margin-top: 0;
+    }
+    .present-slide--p3-ideation .trade-off-switcher__left,
+    .present-slide--p3-visual-system .trade-off-switcher__left,
+    .present-slide--p3-maze .trade-off-switcher__left.present-split__copy {
+      justify-content: center;
+    }
+    .present-slide--p3-shipped .device-story__row {
+      align-items: stretch;
+    }
+    .present-slide--p3-visual-system .tabs-compare,
+    .present-slide--p3-shipped .tabs-compare,
+    .present-slide--p3-shipped .mobile-journey__visual {
+      align-self: stretch;
+    }
+    .present-slide--p3-shipped .tabs-compare {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 100%;
+      max-height: none;
+      overflow: visible;
+    }
+    .present-slide--p3-visual-system .tabs-compare {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
+    .present-slide--p3-visual-system .trade-off-switcher__right {
+      min-width: 0;
+      width: 100%;
+      min-height: 0;
+      max-height: 100%;
+      height: 100%;
+    }
+    .present-slide--p3-visual-system .trade-off-switcher--split.trade-off-switcher--visual-left .trade-off-switcher__right {
+      margin-top: 0;
+      padding-top: 5%;
+      box-sizing: border-box;
+      justify-content: flex-start;
+      align-items: center;
+      align-self: stretch;
+      gap: 0;
+      overflow: visible;
+      min-height: 0;
+      max-height: 100%;
+    }
+    .present-slide--p3-visual-system .trade-off-switcher__left.present-split__copy {
+      gap: var(--present-split-stack-gap);
+      justify-content: center;
+      align-self: stretch;
+      max-height: none;
+      overflow: visible;
+    }
+    .present-slide--p3-visual-system .trade-off-switcher__left.present-split__copy > .beat__eyebrow,
+    .present-slide--p3-visual-system .trade-off-switcher__left.present-split__copy > .beat__title,
+    .present-slide--p3-visual-system .trade-off-switcher__left.present-split__copy > .beat__support,
+    .present-slide--p3-visual-system .trade-off-switcher__left.present-split__copy > .beat__text,
+    .present-slide--p3-visual-system .trade-off-switcher__left.present-split__copy > .beat__discovery,
+    .present-slide--p3-visual-system .trade-off-switcher__left.present-split__copy > .workflow-strip {
+      margin: 0;
+    }
+    .present-slide--p3-visual-system .trade-off-switcher__left.present-split__copy > .beat__discovery {
+      margin-top: clamp(0.75rem, 1.35vh, 1.1rem);
+    }
+    .present-slide--p3-visual-system .tabs-compare {
+      flex: 1 1 0;
+      min-height: 0;
+      max-height: 100%;
+      width: 100%;
+      overflow: visible;
+      gap: clamp(1rem, 1.85vh, 1.35rem);
+    }
+    .present-slide--p3-visual-system .tabs-compare__nav.visual-tabs__stepper {
+      flex: 0 0 auto;
+      flex-shrink: 0;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(1rem, 2.25vw, 1.5rem);
+      width: 100%;
+      margin: 0;
+      margin-bottom: 0;
+      overflow: visible;
+      position: relative;
+      z-index: 1;
+    }
+    .present-slide--p3-visual-system .tabs-compare__nav.visual-tabs__stepper .trade-off-switcher__tab {
+      flex: 0 1 auto;
+      min-width: 0;
+    }
+    .present-slide--p3-visual-system .tabs-compare__tab.tabs-compare__tab {
+      border: none;
+      background: transparent;
+    }
+    .present-slide--p3-visual-system .tabs-compare__tab.is-active,
+    .present-slide--p3-visual-system .tabs-compare__tab[aria-selected="true"] {
+      background: transparent;
+      color: var(--ink);
+      border-color: transparent;
+    }
+    .present-slide--p3-visual-system .tabs-compare > .period-split__caption,
+    .present-slide--p3-visual-system .mobile-journey__tabs-caption {
+      flex: 0 0 auto;
+      text-align: center;
+      margin: 0;
+      padding-bottom: clamp(0.65rem, 1.35vh, 1rem);
+    }
+    .present-slide--p3-visual-system .tabs-compare__panels {
+      flex: 1 1 0;
+      min-height: 0;
+      max-height: 100%;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      container-type: size;
+      container-name: p3-visual-tabs;
+    }
+    .present-slide--p3-visual-system .tabs-compare__panel:not([hidden]) {
+      position: absolute;
+      inset: 0;
       display: flex;
       align-items: center;
       justify-content: center;
+      min-height: 0;
+      margin: 0;
+    }
+    .present-slide--p3-visual-system .tabs-compare .compare--tabs {
+      aspect-ratio: 552 / 1140;
+      width: min(100cqw, 20.5rem, calc(100cqh * 552 / 1140));
+      height: auto;
+      max-height: 100cqh;
+      max-width: min(100%, 20.5rem);
+      margin-inline: auto;
+      flex-shrink: 0;
+    }
+    @supports not (container-type: size) {
+      .present-slide--p3-visual-system .tabs-compare .compare--tabs {
+        width: min(100%, 20.5rem);
+        max-height: calc(var(--present-vh) - var(--present-bottom) - var(--present-top) - 12rem);
+        height: auto;
+      }
+    }
+    .present-slide--p3-shipped .mobile-journey__visual--launch-carousel {
+      grid-column: 1;
+      min-height: 0;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      max-height: min(calc(var(--present-vh) - var(--present-bottom) - var(--present-top) - 2rem), 40rem);
+      overflow: visible;
+    }
+    .present-slide--p3-shipped .mobile-launch-carousel {
+      width: 100%;
+      max-width: min(100%, 26.4rem);
+      margin: 0 auto;
+    }
+    .present-slide--p3-shipped .mobile-launch-carousel .post-mvp-carousel__viewport {
+      max-height: min(calc((var(--present-vh) - var(--present-bottom) - var(--present-top) - 5rem) * 1.2), 40.8rem);
+      overflow: hidden;
+      border-radius: var(--radius-sm);
+    }
+    .present-slide--p3-shipped .mobile-launch-carousel .post-mvp-carousel__slide img {
+      width: 100%;
+      height: auto;
+      max-height: min(calc((var(--present-vh) - var(--present-bottom) - var(--present-top) - 5rem) * 1.2), 40.8rem);
+      object-fit: contain;
+      object-position: center top;
+      border-radius: var(--radius-sm);
+    }
+    .present-slide--p3-shipped .mobile-launch-carousel .post-mvp-carousel__nav {
+      margin-top: clamp(0.75rem, 1.35vh, 1.05rem);
+    }
+    .present-slide--p3-shipped .mobile-launch-carousel .post-mvp-carousel__nav--dots-only,
+    .present-slide--p3-shipped .mobile-launch-carousel .post-mvp-carousel__nav {
+      justify-content: center;
+    }
+    .present-slide--p3-shipped .mobile-launch-carousel .post-mvp-carousel__dots {
+      gap: clamp(0.6rem, 1.15vh, 0.9rem);
+    }
+    .present-slide--p3-shipped .mobile-launch-carousel .post-mvp-carousel__prev,
+    .present-slide--p3-shipped .mobile-launch-carousel .post-mvp-carousel__next {
+      display: none !important;
+    }
+    .present-slide--p3-shipped .device-story__copy .mobile-shipped-reviews {
+      margin-top: clamp(0.75rem, 1.35vh, 1.1rem);
+    }
+    .present-slide--p3-shipped .mobile-shipped-reviews__lead {
+      margin: 0 0 clamp(0.45rem, 0.85vh, 0.65rem);
+      font-size: clamp(0.72rem, 1.25vh, 0.84rem);
+      line-height: 1.35;
+    }
+    .present-slide--p3-shipped .mobile-shipped-reviews__grid {
+      gap: clamp(0.45rem, 0.85vh, 0.65rem);
+    }
+    .present-slide--p3-shipped .mobile-shipped-reviews__quote p {
+      font-size: clamp(0.72rem, 1.2vh, 0.84rem);
+      line-height: 1.38;
+    }
+    .present-slide--p3-shipped .mobile-shipped-reviews__quote .wealth-hub-impact__quote-source {
+      font-size: clamp(0.65rem, 1.05vh, 0.74rem);
+    }
+    .present-slide--p3-desk-research .device-story__copy .beat__title,
+    .present-slide--p3-parity .device-story__copy .beat__title,
+    .present-slide--p3-visual-system .trade-off-switcher__left .beat__title,
+    .present-slide--p3-shipped .device-story__copy .beat__title {
+      font-size: var(--present-title-size);
+      font-weight: 600;
+      line-height: 1.18;
+      letter-spacing: -0.01em;
+      max-width: none;
+    }
+    /* Mobile journey (6 slides) — timeline · title · support · body */
+    .present-slide--p3-desk-research .device-story__copy.present-split__copy,
+    .present-slide--p3-parity .device-story__copy.present-split__copy,
+    .present-slide--p3-ideation .trade-off-switcher__left.present-split__copy,
+    .present-slide--p3-maze .trade-off-switcher__left.present-split__copy,
+    .present-slide--p3-visual-system .trade-off-switcher__left.present-split__copy,
+    .present-slide--p3-shipped .device-story__copy.present-split__copy {
+      gap: var(--present-split-stack-gap);
+    }
+    .present-slide--p3-desk-research .device-story__copy.present-split__copy > .wealth-hub-journey,
+    .present-slide--p3-parity .device-story__copy.present-split__copy > .wealth-hub-journey,
+    .present-slide--p3-ideation .trade-off-switcher__left.present-split__copy > .wealth-hub-journey,
+    .present-slide--p3-maze .trade-off-switcher__left.present-split__copy > .wealth-hub-journey,
+    .present-slide--p3-visual-system .trade-off-switcher__left.present-split__copy > .wealth-hub-journey,
+    .present-slide--p3-shipped .device-story__copy.present-split__copy > .wealth-hub-journey,
+    .present-slide--p3-desk-research .device-story__copy.present-split__copy > .beat__title,
+    .present-slide--p3-parity .device-story__copy.present-split__copy > .beat__title,
+    .present-slide--p3-ideation .trade-off-switcher__left.present-split__copy > .beat__title,
+    .present-slide--p3-maze .trade-off-switcher__left.present-split__copy > .beat__title,
+    .present-slide--p3-visual-system .trade-off-switcher__left.present-split__copy > .beat__title,
+    .present-slide--p3-shipped .device-story__copy.present-split__copy > .beat__title,
+    .present-slide--p3-desk-research .device-story__copy.present-split__copy > .beat__support,
+    .present-slide--p3-parity .device-story__copy.present-split__copy > .beat__support,
+    .present-slide--p3-ideation .trade-off-switcher__left.present-split__copy > .beat__support,
+    .present-slide--p3-maze .trade-off-switcher__left.present-split__copy > .beat__support,
+    .present-slide--p3-visual-system .trade-off-switcher__left.present-split__copy > .beat__support,
+    .present-slide--p3-shipped .device-story__copy.present-split__copy > .beat__support,
+    .present-slide--p3-desk-research .device-story__copy.present-split__copy > .beat__text.beat__text--present,
+    .present-slide--p3-parity .device-story__copy.present-split__copy > .beat__text.beat__text--present,
+    .present-slide--p3-ideation .trade-off-switcher__left.present-split__copy > .beat__text.beat__text--present,
+    .present-slide--p3-maze .trade-off-switcher__left.present-split__copy > .beat__text.beat__text--present,
+    .present-slide--p3-visual-system .trade-off-switcher__left.present-split__copy > .beat__text.beat__text--present,
+    .present-slide--p3-shipped .device-story__copy.present-split__copy > .beat__text.beat__text--present {
+      margin: 0;
+    }
+    .present-slide--p3-desk-research .device-story__copy > .beat__title + .beat__support,
+    .present-slide--p3-parity .device-story__copy > .beat__title + .beat__support,
+    .present-slide--p3-ideation .trade-off-switcher__left.present-split__copy > .beat__title + .beat__support,
+    .present-slide--p3-maze .trade-off-switcher__left.present-split__copy > .beat__title + .beat__support,
+    .present-slide--p3-visual-system .trade-off-switcher__left.present-split__copy > .beat__title + .beat__support,
+    .present-slide--p3-shipped .device-story__copy > .beat__title + .beat__support {
+      margin-top: calc(var(--present-split-stack-gap-tight) - var(--present-split-stack-gap));
+    }
+    .present-slide--p3-desk-research .present-split-pane--visual .mobile-journey__visual,
+    .present-slide--p3-parity .present-split-pane--visual .mobile-journey__visual {
+      margin: 0;
+      padding-inline: 0;
+      max-width: 100%;
+      width: 100%;
+      height: auto;
+      max-height: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: visible;
+    }
+    .present-slide--p3-desk-research .mobile-journey__visual img,
+    .present-slide--p3-parity .mobile-journey__visual img {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: min(calc(var(--present-vh) - var(--present-bottom) - var(--present-top) - 2rem), 36rem);
+      object-fit: contain;
     }
     .present-slide--p3-desk-research .mobile-journey__visual--research img {
-      width: 100%;
-      max-width: min(100%, 33rem);
-      height: auto;
-      transform: scale(1.333);
-      transform-origin: center center;
-    }
-    /* Web ↔ mobile parity — compare visual at 1.3× (visual-left layout) */
-    .present-slide--p3-parity.mobile-journey__row {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    }
-    .present-slide--p3-parity .mobile-journey__visual--compare {
-      max-width: none;
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-sizing: border-box;
+      max-width: min(100%, 44rem);
     }
     .present-slide--p3-parity .mobile-journey__visual--compare img {
-      width: 100%;
-      max-width: min(100%, 44rem);
-      height: auto;
-      transform: scale(1.3) translateY(5%);
-      transform-origin: center center;
+      max-width: min(100%, 57rem);
+    }
+    /* Case study: panes inherit row grid; no extra layout in scroll view */
+    .present-mobile-split.device-story__row {
+      align-items: stretch;
+    }
+    #present-source .present-mobile-split .present-split-pane {
+      display: contents;
     }
 
     .present-slide--p4-cura > .cura-beat {
@@ -3433,20 +4051,22 @@
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
       gap: var(--present-split-gap);
       align-items: center;
+      align-content: center;
       width: 100%;
       min-height: calc(var(--present-vh) - var(--present-bottom));
-      padding-bottom: var(--present-bottom);
+      padding: var(--present-top) var(--present-inset) var(--present-bottom);
       box-sizing: border-box;
+      overflow: hidden;
     }
     .present-slide--p4-lab-tools .ai-journey__tools-head {
       grid-column: 2;
       margin-bottom: 0;
       max-width: none;
       align-self: center;
-      display: flex;
-      flex-direction: column;
       justify-content: center;
-      gap: var(--present-copy-gap);
+    }
+    .present-slide--p4-lab-tools .device-story__title + .device-story__text--present {
+      margin-top: calc(var(--present-split-stack-gap-tight) - var(--present-split-stack-gap));
     }
     .present-slide--p4-lab-tools .ai-tools-grid {
       grid-column: 1;
@@ -3454,7 +4074,20 @@
       width: 100%;
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: clamp(0.5rem, 1vh, 0.85rem);
+      gap: clamp(0.45rem, 0.85vh, 0.7rem);
+      max-height: min(calc(var(--present-vh) - var(--present-top) - var(--present-bottom) - 1rem), 38rem);
+    }
+    .present-slide--p4-lab-tools .ai-tools-grid__frame {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 0;
+    }
+    .present-slide--p4-lab-tools .ai-tools-grid__frame img {
+      width: 100%;
+      height: auto;
+      max-height: min(21vh, 13.5rem);
+      object-fit: contain;
     }
     .present-slide--p4-lab-tools .ai-tools-grid__caption {
       margin: clamp(0.25rem, 0.5vh, 0.4rem) 0 0;
@@ -3490,6 +4123,7 @@
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
       gap: var(--present-split-gap);
       align-items: center;
+      align-content: center;
       width: 100%;
       max-width: none;
       min-height: calc(var(--present-vh) - var(--present-bottom));
@@ -3497,33 +4131,19 @@
       box-sizing: border-box;
       overflow: hidden;
     }
-    .present-slide--p4-toolkit .ai-section-label {
-      margin: 0;
-      font-size: var(--present-eyebrow-size);
-    }
-    .present-slide--p4-toolkit .ai-toolkit-intro {
-      margin: 0;
-      max-width: none;
-      font-family: var(--font-display);
-      font-size: var(--present-display-size);
-      font-weight: 600;
-      line-height: 1.22;
-      letter-spacing: -0.02em;
-      color: var(--ink);
-    }
     .present-slide--p4-toolkit .ai-toolkit-copy {
       grid-column: 2;
-      --present-toolkit-gap: clamp(0.38rem, 0.7vh, 0.55rem);
-      display: flex;
-      flex-direction: column;
       justify-content: center;
       align-self: center;
       min-width: 0;
       padding-right: 0;
-      gap: var(--present-toolkit-gap);
     }
     .present-slide--p4-toolkit .ai-toolkit-copy > * {
       margin: 0;
+    }
+    .present-slide--p4-toolkit .device-story__title + .device-story__text--present,
+    .present-slide--p4-toolkit .device-story__title + .present-p4-toolkit-stat {
+      margin-top: calc(var(--present-split-stack-gap-tight) - var(--present-split-stack-gap));
     }
     .present-slide--p4-toolkit .present-p4-toolkit-stat {
       margin: 0;
@@ -4353,7 +4973,7 @@
           <div class="chip-row">
             <span class="chip">B2C</span>
             <span class="chip">Growth tribe</span>
-            <span class="chip">~5 months</span>
+            <span class="chip">7 months</span>
           </div>
         </div>
         <h2 class="h-display h-2 period__title">A home for their wealth</h2>
@@ -4363,11 +4983,11 @@
         <dl class="present-darci" aria-label="DARCI — programme governance">
           <div class="present-darci__row">
             <dt class="present-darci__letter" title="Decision-Maker">D</dt>
-            <dd class="present-darci__body"><span class="present-darci__label">Decision</span> CEO · Director · Head of Product</dd>
+            <dd class="present-darci__body"><span class="present-darci__label">Decision</span> CEO · B2C Director · Head of Product</dd>
           </div>
           <div class="present-darci__row">
             <dt class="present-darci__letter" title="Accountable">A</dt>
-            <dd class="present-darci__body"><span class="present-darci__label">Accountable</span> PM · Design lead</dd>
+            <dd class="present-darci__body"><span class="present-darci__label">Accountable</span> EM · PM · Design lead</dd>
           </div>
           <div class="present-darci__row">
             <dt class="present-darci__letter" title="Responsible">R</dt>
@@ -4379,7 +4999,7 @@
           </div>
           <div class="present-darci__row">
             <dt class="present-darci__letter" title="Informed">I</dt>
-            <dd class="present-darci__body"><span class="present-darci__label">Informed</span> CRO · CPO</dd>
+            <dd class="present-darci__body"><span class="present-darci__label">Informed</span> VP Marketing · DACH Country Head · CRO · CPO</dd>
           </div>
         </dl>
       </div>
@@ -4494,19 +5114,19 @@
                   <div class="exploration-wizard__stage">
                     <div class="exploration-wizard__step exploration-wizard__step--stacked-caption is-active" data-step-panel="1">
                       <div class="exploration-wizard__asset-slot">
-                        <img class="exploration-wizard__asset exploration-wizard__asset--img" src="raisin-assets/assets/img/dashboard-web/comp.png" alt="Competitive analysis — landing and drill-down patterns from peer products" loading="lazy" data-lightbox>
+                        <img class="exploration-wizard__asset exploration-wizard__asset--img" src="raisin-assets/assets/img/dashboard-web/comp.webp" alt="Competitive analysis — landing and drill-down patterns from peer products" loading="lazy" data-lightbox>
                       </div>
                       <p class="exploration-wizard__caption exploration-wizard__caption--below">Competitive patterns — what peers showed on landing vs drill-down.</p>
                     </div>
                     <div class="exploration-wizard__step exploration-wizard__step--stacked-caption" data-step-panel="2" hidden>
                       <div class="exploration-wizard__asset-slot">
-                        <img class="exploration-wizard__asset exploration-wizard__asset--img" src="raisin-assets/assets/img/dashboard-web/principal.png" alt="Jobs to be done and design principles from the brief" loading="lazy" data-lightbox>
+                        <img class="exploration-wizard__asset exploration-wizard__asset--img" src="raisin-assets/assets/img/dashboard-web/principal.webp" alt="Jobs to be done and design principles from the brief" loading="lazy" data-lightbox>
                       </div>
                       <p class="exploration-wizard__caption exploration-wizard__caption--below">Jobs to be done and design principles from the brief.</p>
                     </div>
                     <div class="exploration-wizard__step exploration-wizard__step--stacked-caption" data-step-panel="3" hidden>
                       <div class="exploration-wizard__asset-slot">
-                        <img class="exploration-wizard__asset exploration-wizard__asset--img" src="raisin-assets/assets/img/dashboard-web/stake.png" alt="Stakeholder review — hierarchy taken to research" loading="lazy" data-lightbox>
+                        <img class="exploration-wizard__asset exploration-wizard__asset--img" src="raisin-assets/assets/img/dashboard-web/stake.webp" alt="Stakeholder review — hierarchy taken to research" loading="lazy" data-lightbox>
                       </div>
                       <p class="exploration-wizard__caption exploration-wizard__caption--below">Critique with PM, HoD, and engineering — one hierarchy taken to research.</p>
                     </div>
@@ -4710,19 +5330,19 @@
                   <div class="exploration-wizard__stage">
                     <div class="exploration-wizard__step exploration-wizard__step--stacked-caption is-active" data-step-panel="1">
                       <div class="exploration-wizard__asset-slot">
-                        <img class="exploration-wizard__asset exploration-wizard__asset--img exploration-wizard__asset--colour-map" src="raisin-assets/assets/img/dashboard-web/color_map.png" alt="Product colour map — market types, hierarchy, and landing-page application" loading="lazy" data-lightbox>
+                        <img class="exploration-wizard__asset exploration-wizard__asset--img exploration-wizard__asset--colour-map" src="raisin-assets/assets/img/dashboard-web/color_map.webp" alt="Product colour map — market types, hierarchy, and landing-page application" loading="lazy" data-lightbox>
                       </div>
                       <p class="exploration-wizard__caption exploration-wizard__caption--below">Asset-class hues · savings-only remaps · donut child shades — 12 markets, light + dark.</p>
                     </div>
                     <div class="exploration-wizard__step exploration-wizard__step--stacked-caption" data-step-panel="2" hidden>
                       <div class="exploration-wizard__asset-slot">
-                        <img class="exploration-wizard__asset exploration-wizard__asset--img" src="raisin-assets/assets/img/dashboard-web/anatomy.png" alt="Listing component anatomy — structure, labels, and hierarchy on dashboard rows" loading="lazy" data-lightbox>
+                        <img class="exploration-wizard__asset exploration-wizard__asset--img" src="raisin-assets/assets/img/dashboard-web/anatomy.webp" alt="Listing component anatomy — structure, labels, and hierarchy on dashboard rows" loading="lazy" data-lightbox>
                       </div>
                       <p class="exploration-wizard__caption exploration-wizard__caption--below">Listing row anatomy — hierarchy, metadata, and actions aligned to the component library.</p>
                     </div>
                     <div class="exploration-wizard__step exploration-wizard__step--stacked-caption" data-step-panel="3" hidden>
                       <div class="exploration-wizard__asset-slot">
-                        <img class="exploration-wizard__asset exploration-wizard__asset--img" src="raisin-assets/assets/img/dashboard-web/final_vd.png" alt="Final Wealth Hub interface — validated visual design in product context" loading="lazy" data-lightbox>
+                        <img class="exploration-wizard__asset exploration-wizard__asset--img" src="raisin-assets/assets/img/dashboard-web/final_vd.webp" alt="Final Wealth Hub interface — validated visual design in product context" loading="lazy" data-lightbox>
                       </div>
                       <p class="exploration-wizard__caption exploration-wizard__caption--below">Final interface — colour map and components applied across the landing experience.</p>
                     </div>
@@ -4815,9 +5435,8 @@
                     <svg class="enablement-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
                     Enablement
                   </p>
-                  <p class="enablement-surface__title">I authored · UX measurement framework</p>
+                  <p class="enablement-surface__title">Multi-market qualitative &amp; quantitative reporting · UX measurement framework</p>
                   <p class="enablement-surface__text">Business KPIs, product adoption, and experience metrics — one pyramid so every release could be measured on its own terms.</p>
-                  <p class="enablement-surface__stat">Brand Evolution survey · ~1,900 respondents · DE / NL / ES / PL</p>
                   <p class="enablement-surface__stat">Business · Product · Experience · still in use</p>
                 </aside>
               </div>
@@ -5145,13 +5764,36 @@
           <div class="chip-row">
             <span class="chip">B2C</span>
             <span class="chip">Customer engagement tribe</span>
-            <span class="chip">~6 months</span>
+            <span class="chip">5 months</span>
           </div>
         </div>
         <h2 class="h-display h-2 period__title">Mobile and the horizon</h2>
-        <p class="lede period__thesis period__thesis--present">After the tribe split stalled the redesign, I took mobile end-to-end — desk research, in-flow prototyping, Maze validation — and raised the team's prototyping bar until we shipped.</p>
-        <p class="lede period__thesis">After the tribe split stalled the redesign, I took mobile end-to-end — desk research, in-flow prototyping, Maze validation — and raised the team's prototyping bar until we shipped with product and engineering.</p>
-        <p class="period__role"><strong>I monitored</strong> Wealth Hub launch feedback and <strong>I designed</strong> the new mobile IA and visual system. <strong>I led</strong> Maze validation and <strong>I built</strong> the in-flow prototype with One Data — then <strong>We shipped</strong> with product and engineering.</p>
+        <p class="lede period__thesis period__thesis--present">This chapter is about taking mobile from a stalled redesign to a shipped Wealth Hub — without redoing twelve markets of web research.</p>
+        <p class="lede period__thesis period__thesis--present">Desk research, web parity, in-flow prototyping, and Maze validation on the path to a four-tab experience with product and engineering.</p>
+        <p class="lede period__thesis">This chapter is about taking mobile from a stalled redesign to a shipped Wealth Hub — without redoing twelve markets of web research.</p>
+        <p class="lede period__thesis">Desk research, web parity, in-flow prototyping, and Maze validation on the path to a four-tab experience with product and engineering.</p>
+        <dl class="present-darci" aria-label="DARCI — programme governance">
+          <div class="present-darci__row">
+            <dt class="present-darci__letter" title="Decision-Maker">D</dt>
+            <dd class="present-darci__body"><span class="present-darci__label">Decision</span> CEO · B2C Director · Head of Product</dd>
+          </div>
+          <div class="present-darci__row">
+            <dt class="present-darci__letter" title="Accountable">A</dt>
+            <dd class="present-darci__body"><span class="present-darci__label">Accountable</span> EM · PM · Design lead</dd>
+          </div>
+          <div class="present-darci__row">
+            <dt class="present-darci__letter" title="Responsible">R</dt>
+            <dd class="present-darci__body"><span class="present-darci__label">Responsible</span> Design lead · Engineering · Design team (collaboration)</dd>
+          </div>
+          <div class="present-darci__row">
+            <dt class="present-darci__letter" title="Consulted">C</dt>
+            <dd class="present-darci__body"><span class="present-darci__label">Consulted</span> VP Design</dd>
+          </div>
+          <div class="present-darci__row">
+            <dt class="present-darci__letter" title="Informed">I</dt>
+            <dd class="present-darci__body"><span class="present-darci__label">Informed</span> VP Marketing · DACH Country Head · CRO · CPO</dd>
+          </div>
+        </dl>
       </div>
       <figure class="period__head-visual period__head-visual--legacy-mobile">
         <img src="raisin-assets/assets/img/proof/mobile-problem.webp" alt="Legacy mobile app — disconnected from web" loading="lazy" data-lightbox>
@@ -5163,118 +5805,245 @@
 
         <article class="beat beat--mobile-journey reveal">
           <div class="device-story mobile-journey" aria-label="Mobile dashboard redesign journey">
-            <div class="device-story__row device-story__row--visual-left mobile-journey__row">
-              <div class="device-story__copy present-split__copy">
-                <p class="device-story__eyebrow">Desk research</p>
-                <h4 class="device-story__title">Read the stall before redesigning.</h4>
-                <p class="device-story__text">Web Wealth Hub earned its structure through customer research. Mobile didn’t have that yet — only a stalled redesign and pressure to copy across. Desk research on <strong>legacy interaction patterns</strong> (<strong>42% / 25% / 33%</strong>) showed why that shortcut failed: real usage didn’t match web’s model, and no single mobile pattern had won.</p>
-                <p class="beat__stat">Legacy mobile · interaction data · pre-ideation baseline</p>
-                <p class="beat__subtitle">Customer problem</p>
-                <div class="beat__problem">
-                  <p class="beat__text beat__text--problem">Web had become a home for their wealth. On mobile, the same customer still met a disconnected surface — no consolidated view of what they held.</p>
+            <div class="device-story__row device-story__row--visual-left mobile-journey__row present-mobile-split" aria-label="Mobile — research">
+              <div class="present-split-pane present-split-pane--visual">
+                <figure class="mobile-journey__visual mobile-journey__visual--research">
+                  <img src="raisin-assets/assets/img/dashboard-mobile/mobile-research.webp" alt="Mobile dashboard desk research — interaction data" loading="lazy" data-lightbox>
+                </figure>
+              </div>
+              <div class="present-split-pane present-split-pane--copy">
+                <div class="device-story__copy present-split__copy">
+                  <nav class="workflow-strip wealth-hub-journey" aria-label="Mobile journey" data-journey-program="mobile" data-journey-step="1"></nav>
+                  <h3 class="beat__title">Read the stall before redesigning.</h3>
+                  <p class="beat__support beat__support--present">Launch survey · Frontend event tracking · Segment composition</p>
+                  <p class="device-story__eyebrow">Desk research</p>
+                  <p class="beat__text beat__text--present">I combined the survey, click data, and segments in one read — on legacy mobile, taps split between tabs, the donut, and the portfolio card, with no clear home.</p>
+                  <p class="device-story__text">Web Wealth Hub earned its structure through customer research. Mobile didn’t have that yet — only a stalled redesign and pressure to copy across. I gathered new evidence instead: <strong>recorded sessions</strong> from the live web dashboard and <strong>survey responses</strong> from customers, alongside <strong>legacy mobile interaction patterns</strong> (<strong>42% / 25% / 33%</strong>). Together they showed why the shortcut failed: real usage didn’t match web’s model, and no single mobile pattern had won.</p>
+                  <p class="beat__stat">Legacy mobile · interaction data · pre-ideation baseline</p>
+                  <p class="beat__subtitle">Customer problem</p>
+                  <div class="beat__problem">
+                    <p class="beat__text beat__text--problem">Web had become a home for their wealth. On mobile, the same customer still met a disconnected surface — no consolidated view of what they held.</p>
+                  </div>
+                  <p class="device-story__text device-story__text--present">Legacy mobile: <strong>42% / 25% / 33%</strong> interaction split — no pattern worth copying from web.</p>
                 </div>
-                <p class="device-story__text device-story__text--present">Legacy mobile: <strong>42% / 25% / 33%</strong> interaction split — no pattern worth copying from web.</p>
               </div>
-              <figure class="mobile-journey__visual mobile-journey__visual--research">
-                <img src="raisin-assets/assets/img/dashboard-mobile/mobile-research.webp" alt="Mobile dashboard desk research — interaction data" loading="lazy" data-lightbox>
-              </figure>
             </div>
 
-            <div class="device-story__row device-story__row--visual-left mobile-journey__row">
-              <div class="device-story__copy present-split__copy">
-                <p class="device-story__eyebrow">Web ↔ mobile parity</p>
-                <h4 class="device-story__title">Re-ground, don't restart.</h4>
-                <p class="device-story__text device-story__text--present">Inherit the Wealth Hub system. Redesign the mobile surface — don’t redo twelve markets of research.</p>
-                <p class="device-story__text">Web had earned its structure through research and shipped across 12 markets. Mobile’s job wasn’t to repeat that work — it was to <strong>translate</strong> it. After desk research ruled out replication, I aligned the tribe on a simple rule: inherit the <strong>Wealth Hub concept and system</strong>, redesign the <strong>mobile surface</strong>. That unblocked ideation without discarding what was already validated.</p>
-                <p class="beat__stat">Inherited: hierarchy + colour system · Redesigned: tabs + Home</p>
+            <div class="device-story__row device-story__row--visual-left mobile-journey__row present-mobile-split" aria-label="Mobile — parity">
+              <div class="present-split-pane present-split-pane--visual">
+                <figure class="mobile-journey__visual mobile-journey__visual--compare">
+                  <img src="raisin-assets/assets/img/dashboard-mobile/compare.webp" alt="Web and mobile dashboard parity comparison" loading="lazy" data-lightbox>
+                </figure>
               </div>
-              <figure class="mobile-journey__visual mobile-journey__visual--compare">
-                <img src="raisin-assets/assets/img/dashboard-mobile/compare.webp" alt="Web and mobile dashboard parity comparison" loading="lazy" data-lightbox>
-              </figure>
+              <div class="present-split-pane present-split-pane--copy">
+                <div class="device-story__copy present-split__copy">
+                  <nav class="workflow-strip wealth-hub-journey" aria-label="Mobile journey" data-journey-program="mobile" data-journey-step="2"></nav>
+                  <h3 class="beat__title">Re-ground, don't restart.</h3>
+                  <p class="beat__support beat__support--present">Web · mWeb · legacy app compared · inherit the system, redesign the surface</p>
+                  <p class="device-story__eyebrow">Web ↔ mobile parity</p>
+                  <p class="beat__text beat__text--present">I compared the new evidence against web, mWeb, and the legacy app — then set the rule: inherit the system, redesign the surface.</p>
+                  <p class="device-story__text">Web had earned its structure through research and shipped across 12 markets. Mobile’s job wasn’t to repeat that work — it was to <strong>translate</strong> it. I put the new data side by side with the <strong>web dashboard</strong>, <strong>mWeb</strong>, and the <strong>current mobile app</strong> to see what carried and what broke. That comparison set a simple rule the tribe could align on: inherit the <strong>Wealth Hub concept and system</strong>, redesign the <strong>mobile surface</strong> — unblocking ideation without discarding what was already validated.</p>
+                  <p class="beat__stat">Inherited: hierarchy + colour system · Redesigned: tabs + Home</p>
+                </div>
+              </div>
             </div>
 
-            <div class="device-story__row device-story__row--visual-left mobile-journey__row mobile-journey__row--prototype">
-              <div class="device-story__copy present-split__copy">
-                <p class="device-story__eyebrow">New mobile IA · asset on platform · insight on Home</p>
-                <h4 class="device-story__title">Four tabs, one visual idea</h4>
-                <p class="device-story__text device-story__text--present">Four tabs — Overview, Portfolio, Products, Wallet. One Data wired into a live prototype.</p>
-                <p class="device-story__text">Overview, Portfolio, Products, and Wallet — parity with the web Wealth Hub. Home surfaces total assets and performance; Portfolio holds active products. I wired <strong>One Data</strong> personas into a live prototype so reviews ran on realistic mobile, not flat mocks.</p>
-                <div class="trade-off trade-off--compact" aria-label="Trade-off — insight on Home">
-                  <p class="trade-off__label">Key trade-off · insight</p>
-                  <div class="trade-off__options">
-                    <div class="trade-off__option">
-                      <p class="trade-off__option-label">A · Standalone analytics tab</p>
-                      <p class="trade-off__option-text">Dedicated performance surface, separate from holdings</p>
-                    </div>
-                    <div class="trade-off__option trade-off__option--chosen">
-                      <p class="trade-off__option-label">B · Embedded insight</p>
-                      <p class="trade-off__option-text">Total assets + performance on Home; owned products on Portfolio</p>
+            <div class="mobile-journey__beat reveal" aria-label="Mobile — ideate">
+              <div class="trade-off-switcher trade-off-switcher--split trade-off-switcher--visual-left mobile-ideation-concepts" data-trade-off-switcher data-trade-off-visual-only data-default="a" aria-label="Ideate — two home-screen concepts">
+                <div class="trade-off-switcher__right">
+                  <div class="trade-off-switcher__tabs phase-wizard__stepper phase-wizard__stepper--secondary tradeoff-01__concept-stepper" role="tablist" aria-label="Ideate — hypothesis A or B">
+                    <button type="button" class="trade-off-switcher__tab trade-off-switcher__tab--active" role="tab" aria-selected="true" data-variant="a" tabindex="0">Hypothesis A</button>
+                    <button type="button" class="trade-off-switcher__tab" role="tab" aria-selected="false" data-variant="b" tabindex="-1">Hypothesis B</button>
+                  </div>
+                  <div class="trade-off-switcher__media is-active" data-variant-img="a">
+                    <div class="wealth-hub-video-frame">
+                      <video data-src="raisin-assets/assets/video/dashboard-mobile/hypothesis-a.mp4" muted loop playsinline data-autoplay-inview data-lightbox preload="none" title="Hypothesis A — tabbed information architecture"></video>
                     </div>
                   </div>
-                  <p class="trade-off__position"><strong>Position:</strong> Thin analytics as a primary tab erodes trust on mobile — show wealth and performance where people land; put active holdings on Portfolio.</p>
+                  <div class="trade-off-switcher__media" data-variant-img="b" hidden>
+                    <div class="wealth-hub-video-frame">
+                      <video data-src="raisin-assets/assets/video/dashboard-mobile/hypothesis-b.mp4" muted loop playsinline data-autoplay-inview data-lightbox preload="none" title="Hypothesis B — portfolio-card home"></video>
+                    </div>
+                  </div>
+                  <p class="period-split__caption">Two clickable prototypes — same wealth jobs, different home structure</p>
                 </div>
-                <aside class="enablement-callout enablement-surface beat__enablement" aria-label="Enablement — One Data program">
-                  <p class="enablement-label">
-                    <svg class="enablement-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-                    Enablement
-                  </p>
-                  <p class="enablement-surface__title">One Data — from mobile prototype to org data standard</p>
-                  <p class="enablement-surface__text">What started as persona-matched dummy data for mobile demos became the shared simulation layer — consistent figures across tabs, themes, and markets. Published to Confluence; adopted beyond mobile as Raisin’s user-centric data standard.</p>
-                  <p class="enablement-surface__stat">4 persona modes · Figma variables · Confluence · org-wide</p>
-                </aside>
+                <div class="trade-off-switcher__left wealth-hub-story__copy present-split__copy">
+                  <nav class="workflow-strip wealth-hub-journey" aria-label="Mobile journey" data-journey-program="mobile" data-journey-step="3"></nav>
+                  <h3 class="beat__title">Two concepts for the mobile home dashboard.</h3>
+                  <p class="beat__support beat__support--present">High-fidelity prototypes · 4th iteration</p>
+                  <p class="beat__eyebrow">MOBILE · IDEATE</p>
+                  <p class="beat__text beat__text--present">Recognizing the constraints of limited mobile screen real estate, I restructured and redistributed key dashboard sections to create a more focused, mobile-first experience tailored to user needs and context.</p>
+                  <p class="beat__text">Grounded in the <a href="https://raisin-jira.atlassian.net/wiki/spaces/Design/pages/5093687339/Mobile+app+dashboard+Maze+Study" target="_blank" rel="noopener">Mobile app dashboard Maze Study</a> brief: asset-on-platform clarity, Portfolio for owned products, and legible primary sections. Neither concept was pre-selected — both went into validation as Hypothesis A and B.</p>
+                  <div class="trade-off trade-off--compact ideate-conflict-tradeoff" aria-label="Concept validation — hypothesis A vs B">
+                    <p class="trade-off__label present-block-label">Concept validation · Hypothesis A vs B</p>
+                    <div class="trade-off__options">
+                      <div class="trade-off__option">
+                        <p class="trade-off__option-label">A · Tabbed IA</p>
+                        <p class="trade-off__option-text">Overview split across tabs — customers hop between sections to build the picture</p>
+                      </div>
+                      <div class="trade-off__option">
+                        <p class="trade-off__option-label">B · Portfolio-card home</p>
+                        <p class="trade-off__option-text">Total assets and performance on landing — products and detail one level in</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <figure class="ai-journey__prototype mobile-journey__prototype" data-prototype-shell>
-                <div class="prototype-persona-switcher" data-prototype-personas data-fm-widget="raisin-persona" role="tablist" aria-label="Switch One Data persona">
-                  <button type="button" class="prototype-persona-tab" role="tab" aria-selected="false" data-persona-id="retail-young">Retail Young</button>
-                  <button type="button" class="prototype-persona-tab" role="tab" aria-selected="false" data-persona-id="affluent-core">Affluent</button>
-                  <button type="button" class="prototype-persona-tab" role="tab" aria-selected="false" data-persona-id="hnw-core">HNW</button>
-                  <button type="button" class="prototype-persona-tab prototype-persona-tab--active" role="tab" aria-selected="true" data-persona-id="uhnw-core">UHNW</button>
-                </div>
-                <div class="ai-journey__visual ai-journey__visual--prototype">
-                  <iframe
-                    data-prototype-frame
-                    data-src="raisin-assets/prototypes/mobile-dashboard-ideation/index.html?embed=portfolio"
-                    title="Mobile dashboard ideation — interactive prototype"
-                    loading="lazy"
-                    tabindex="-1"
-                  ></iframe>
-                </div>
-                <figcaption class="period-split__caption">Working prototype — tabs, search, realistic One Data personas</figcaption>
-              </figure>
             </div>
 
-            <div class="device-story__row device-story__row--visual-left mobile-journey__row">
-              <div class="device-story__copy present-split__copy">
-                <p class="device-story__eyebrow">Maze validation · Unmoderated study · Two-week</p>
-                <h4 class="device-story__title">Pressure-test the IA</h4>
-                <p class="device-story__text device-story__text--present device-story__text--present-risk">Tabbed IA won — <strong>92.9%</strong> vs <strong>71.4%</strong> task success. Open risk: locating pending products — only <strong>42.9%</strong> success; flagged before ship.</p>
-                <p class="device-story__text">Two-week unmoderated study on the live prototype — portfolio-card vs tabbed IA. <strong>Research goal:</strong> confirm asset-on-platform Home improves wealth clarity, the Portfolio tab still works for owned products, and primary sections stay legible. Portfolio-card won — <strong>92.9%</strong> task success vs <strong>71.4%</strong>. Open risk: locating pending products <strong>42.9%</strong>.</p>
-                <aside class="enablement-callout enablement-surface beat__enablement" aria-label="Enablement — research operating model">
-                  <p class="enablement-label">
-                    <svg class="enablement-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-                    Enablement
-                  </p>
-                  <p class="enablement-surface__title">Brought Maze into Raisin — validation loops matter</p>
-                  <p class="enablement-surface__text">IPP tribe ran research with Maze after I introduced it — proof that unmoderated validation scales. This study ran on the same prototype stack we used in ideation.</p>
-                  <p class="enablement-surface__stat">Maze · IPP tribe · research playbook in use</p>
-                </aside>
+            <div class="mobile-journey__beat reveal" aria-label="Mobile — validation">
+              <div class="trade-off-switcher trade-off-switcher--split trade-off-switcher--visual-left mobile-validation-maze" aria-label="Validation — Maze study outcome">
+                <div class="trade-off-switcher__right mobile-validation-maze__visual">
+                  <figure class="mobile-journey__visual mobile-journey__visual--maze">
+                    <img src="raisin-assets/assets/img/dashboard-mobile/maze-report.webp" alt="Maze usability study — validation report" loading="lazy" data-lightbox>
+                  </figure>
+                  <p class="period-split__caption">Two-week unmoderated Maze study — full report in Confluence</p>
+                </div>
+                <div class="trade-off-switcher__left wealth-hub-story__copy present-split__copy">
+                  <nav class="workflow-strip wealth-hub-journey" aria-label="Mobile journey" data-journey-program="mobile" data-journey-step="4"></nav>
+                  <h3 class="beat__title">Portfolio-card home won validation.</h3>
+                  <p class="beat__support beat__support--present">Maze · two weeks unmoderated · <strong>92.9%</strong> vs <strong>71.4%</strong> task success</p>
+                  <p class="beat__eyebrow">MOBILE · VALIDATION</p>
+                  <p class="beat__text beat__text--present">Once the hypotheses were set, I documented what we needed to learn, started automated recruitment through the live web dashboard, and brought Maze into Raisin to run Voice-AI–hosted, unmoderated concept testing on both prototypes.</p>
+                  <p class="beat__text">Full setup and results are in Confluence — <a href="https://raisin-jira.atlassian.net/wiki/spaces/Design/pages/5093687339/Mobile+app+dashboard+Maze+Study" target="_blank" rel="noopener">Mobile app dashboard Maze Study</a>. The web dashboard was the recruitment surface; Maze carried the two-week, unmoderated Voice-AI study after I introduced it as Raisin’s research tool for this program.</p>
+                  <div class="trade-off trade-off--compact ideate-conflict-tradeoff" aria-label="Validation outcome — hypothesis B selected">
+                    <p class="trade-off__label present-block-label">Selected concept · Hypothesis B</p>
+                    <div class="trade-off__options">
+                      <div class="trade-off__option">
+                        <p class="trade-off__option-label">A · Tabbed IA</p>
+                        <p class="trade-off__option-text"><strong>71.4%</strong> task success — workable, but more navigation to feel “at home”</p>
+                      </div>
+                      <div class="trade-off__option trade-off__option--chosen">
+                        <span class="ideate-conflict-tradeoff__check" aria-hidden="true">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                        </span>
+                        <p class="trade-off__option-label">B · Portfolio-card home</p>
+                        <p class="trade-off__option-text"><strong>92.9%</strong> task success — wealth clarity at landing; taken into visual design</p>
+                      </div>
+                    </div>
+                  </div>
+                  <aside class="enablement-callout enablement-surface beat__enablement" aria-label="Enablement — research operating model">
+                    <p class="enablement-label">
+                      <svg class="enablement-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                      Enablement
+                    </p>
+                    <p class="enablement-surface__title">Brought Maze into Raisin — validation loops matter</p>
+                    <p class="enablement-surface__text">IPP tribe ran research with Maze after I introduced it — proof that unmoderated validation scales beyond one study.</p>
+                    <p class="enablement-surface__stat">Maze · IPP tribe · research playbook in use</p>
+                  </aside>
+                </div>
               </div>
-              <figure class="mobile-journey__visual mobile-journey__visual--maze">
-                <img src="raisin-assets/assets/img/dashboard-mobile/maze-report.webp" alt="Maze usability study — validation report" loading="lazy" data-lightbox>
-              </figure>
             </div>
 
-            <div class="mobile-journey__shipped reveal" aria-label="Shipped mobile dashboard">
+            <div class="mobile-journey__beat reveal" aria-label="Mobile — visual design">
+              <div class="trade-off-switcher trade-off-switcher--split trade-off-switcher--visual-left mobile-visual-tabs" aria-label="Visual design — four tabs light and dark">
+                <div class="trade-off-switcher__right">
+                  <div class="tabs-compare mobile-journey__visual mobile-journey__visual--tabs" data-tabs-compare data-fm-widget="raisin-tabs" aria-label="Mobile dashboard visual design — light and dark compare">
+                    <div class="tabs-compare__nav trade-off-switcher__tabs phase-wizard__stepper phase-wizard__stepper--secondary visual-tabs__stepper" role="tablist" aria-label="Dashboard tabs">
+                      <button type="button" class="tabs-compare__tab trade-off-switcher__tab trade-off-switcher__tab--active is-active" role="tab" id="visual-tabs-tab-0" aria-selected="true" aria-controls="visual-tabs-panel-0" data-tab="0">Overview</button>
+                      <button type="button" class="tabs-compare__tab trade-off-switcher__tab" role="tab" id="visual-tabs-tab-1" aria-selected="false" aria-controls="visual-tabs-panel-1" data-tab="1" tabindex="-1">Portfolio</button>
+                      <button type="button" class="tabs-compare__tab trade-off-switcher__tab" role="tab" id="visual-tabs-tab-2" aria-selected="false" aria-controls="visual-tabs-panel-2" data-tab="2" tabindex="-1">Products</button>
+                      <button type="button" class="tabs-compare__tab trade-off-switcher__tab" role="tab" id="visual-tabs-tab-3" aria-selected="false" aria-controls="visual-tabs-panel-3" data-tab="3" tabindex="-1">Wallet</button>
+                    </div>
+                    <div class="tabs-compare__panels">
+                      <div class="tabs-compare__panel" role="tabpanel" id="visual-tabs-panel-0" aria-labelledby="visual-tabs-tab-0" data-tab-panel="0">
+                        <div class="compare compare--tabs" data-fm-widget="raisin-tab-0" data-fm-kind="compare">
+                          <div class="compare__after">
+                            <img src="raisin-assets/assets/img/dashboard-mobile/tabs/d1.webp" alt="Overview — dark mode" loading="lazy">
+                          </div>
+                          <div class="compare__before">
+                            <img src="raisin-assets/assets/img/dashboard-mobile/tabs/l1.webp" alt="Overview — light mode" loading="lazy">
+                          </div>
+                          <div class="compare__handle" aria-hidden="true"></div>
+                        </div>
+                      </div>
+                      <div class="tabs-compare__panel" role="tabpanel" id="visual-tabs-panel-1" aria-labelledby="visual-tabs-tab-1" data-tab-panel="1" hidden>
+                        <div class="compare compare--tabs" data-fm-widget="raisin-tab-1" data-fm-kind="compare">
+                          <div class="compare__after">
+                            <img src="raisin-assets/assets/img/dashboard-mobile/tabs/d2.webp" alt="Portfolio — dark mode" loading="lazy">
+                          </div>
+                          <div class="compare__before">
+                            <img src="raisin-assets/assets/img/dashboard-mobile/tabs/l2.webp" alt="Portfolio — light mode" loading="lazy">
+                          </div>
+                          <div class="compare__handle" aria-hidden="true"></div>
+                        </div>
+                      </div>
+                      <div class="tabs-compare__panel" role="tabpanel" id="visual-tabs-panel-2" aria-labelledby="visual-tabs-tab-2" data-tab-panel="2" hidden>
+                        <div class="compare compare--tabs" data-fm-widget="raisin-tab-2" data-fm-kind="compare">
+                          <div class="compare__after">
+                            <img src="raisin-assets/assets/img/dashboard-mobile/tabs/d3.webp" alt="Products — dark mode" loading="lazy">
+                          </div>
+                          <div class="compare__before">
+                            <img src="raisin-assets/assets/img/dashboard-mobile/tabs/l3.webp" alt="Products — light mode" loading="lazy">
+                          </div>
+                          <div class="compare__handle" aria-hidden="true"></div>
+                        </div>
+                      </div>
+                      <div class="tabs-compare__panel" role="tabpanel" id="visual-tabs-panel-3" aria-labelledby="visual-tabs-tab-3" data-tab-panel="3" hidden>
+                        <div class="compare compare--tabs" data-fm-widget="raisin-tab-3" data-fm-kind="compare">
+                          <div class="compare__after">
+                            <img src="raisin-assets/assets/img/dashboard-mobile/tabs/d4.webp" alt="Wallet — dark mode" loading="lazy">
+                          </div>
+                          <div class="compare__before">
+                            <img src="raisin-assets/assets/img/dashboard-mobile/tabs/l4.webp" alt="Wallet — light mode" loading="lazy">
+                          </div>
+                          <div class="compare__handle" aria-hidden="true"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <p class="period-split__caption mobile-journey__tabs-caption">Four-tab IA — drag to compare light and dark · switch tabs</p>
+                  </div>
+                </div>
+                <div class="trade-off-switcher__left wealth-hub-story__copy present-split__copy">
+                  <nav class="workflow-strip wealth-hub-journey" aria-label="Mobile journey" data-journey-program="mobile" data-journey-step="5"></nav>
+                  <h3 class="beat__title">Paired on the mobile design system.</h3>
+                  <p class="beat__support beat__support--present">Freelance designer · foundation tokens · core components</p>
+                  <p class="beat__eyebrow">MOBILE · VISUAL DESIGN</p>
+                  <p class="beat__text beat__text--present">I ran the final visual-design pass with a freelance designer — together we revised foundational mobile design-system tokens and the components themselves, so the shipped UI sat on the library instead of one-off screens.</p>
+                  <p class="beat__text">That pairing covered token updates and component work in Figma: light and dark on the Wealth Hub colour map, four-tab IA from validation, and patterns other squads could reuse — not a separate mobile skin.</p>
+                  <aside class="discovery-callout beat__discovery" aria-label="Products tab — parallel discovery">
+                    <p class="discovery-callout__label trade-off__option-label">Parallel discovery · Products tab · 2 weeks</p>
+                    <p class="discovery-callout__text beat__text--present">Legacy Explore tab with static cards turned into intuitive product-discovery to order new savings and investments while A/B testing different cataloging models.</p>
+                  </aside>
+                </div>
+              </div>
+            </div>
+
+            <div class="mobile-journey__shipped reveal" aria-label="Mobile — launch">
               <div class="device-story__row device-story__row--visual-left mobile-journey__row mobile-journey__row--shipped">
+                <div class="mobile-journey__visual mobile-journey__visual--launch-carousel">
+                  <div class="post-mvp-carousel mobile-launch-carousel" data-post-mvp-carousel data-carousel-dots-only data-interval="4500" aria-roledescription="carousel" aria-label="In-app feature discovery — launch screens">
+                    <div class="post-mvp-carousel__viewport">
+                      <div class="post-mvp-carousel__track">
+                        <figure class="post-mvp-carousel__slide">
+                          <img src="raisin-assets/assets/img/dashboard-mobile/Feature-discovery_%20slide-1@2x.png" alt="In-app feature discovery — screen 1" loading="lazy" data-lightbox>
+                        </figure>
+                        <figure class="post-mvp-carousel__slide">
+                          <img src="raisin-assets/assets/img/dashboard-mobile/Feature-discovery_%20slide-2@2x.png" alt="In-app feature discovery — screen 2" loading="lazy" data-lightbox>
+                        </figure>
+                        <figure class="post-mvp-carousel__slide">
+                          <img src="raisin-assets/assets/img/dashboard-mobile/Feature-discovery_%20slide-3@2x.png" alt="In-app feature discovery — screen 3" loading="lazy" data-lightbox>
+                        </figure>
+                        <figure class="post-mvp-carousel__slide">
+                          <img src="raisin-assets/assets/img/dashboard-mobile/Feature-discovery_%20slide-4@2x.png" alt="In-app feature discovery — screen 4" loading="lazy" data-lightbox>
+                        </figure>
+                        <figure class="post-mvp-carousel__slide">
+                          <img src="raisin-assets/assets/img/dashboard-mobile/Feature-discovery_%20slide-5@2x.png" alt="In-app feature discovery — screen 5" loading="lazy" data-lightbox>
+                        </figure>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <div class="device-story__copy present-split__copy">
+                  <nav class="workflow-strip wealth-hub-journey" aria-label="Mobile journey" data-journey-program="mobile" data-journey-step="6"></nav>
+                  <h3 class="beat__title">A clearer mental model for wealth on mobile.</h3>
+                  <p class="beat__support beat__support--present"><strong>12 B2C markets</strong> · four-tab IA · light and dark</p>
                   <p class="device-story__eyebrow">Shipped · mobile dashboard</p>
-                  <h4 class="device-story__title">Four tabs, light and dark — rolling out across markets.</h4>
-                  <p class="device-story__text device-story__text--present">Maze-validated IA — rolling out light and dark across core B2C markets.</p>
-                  <p class="device-story__text">The IA that survived Maze is the mobile dashboard: Overview, Portfolio, Products, and Wallet — one system on the Wealth Hub colour map, light and dark, aligned with web. Launching across core B2C markets on the same spine we validated there.</p>
-                  <p class="device-story__text">Early signal is strong — app-store reviews are already positive. Design NPS and structured task metrics are still being recorded; this is fresh post-launch, not a closed impact story.</p>
+                  <p class="beat__text beat__text--present">The new mobile dashboard isn’t a visual refresh alone — it gives customers a clearer way to understand their assets on platform: what they hold, how it’s performing, and where to act next across Overview, Portfolio, Products, and Wallet. Same Wealth Hub spine we validated on web and in Maze, rolling out market by market.</p>
+                  <p class="device-story__text">Early App Store signal backs the structure — reviewers call out overview and clarity before polish. Design NPS and task metrics are still being recorded post-launch.</p>
                   <p class="beat__stat">Maze-validated · shipping now · early reviews 5/5</p>
                   <div class="mobile-shipped-reviews reveal-stagger" aria-label="Early app-store reviews">
-                    <p class="mobile-shipped-reviews__lead">What reviewers praise first isn’t polish — it’s structure and overview:</p>
+                    <p class="mobile-shipped-reviews__lead">What customers say first:</p>
                     <div class="mobile-shipped-reviews__grid">
                       <blockquote class="wealth-hub-impact__quote mobile-shipped-reviews__quote">
                         <p>“Clear and informative — exactly what I need at a glance.”</p>
@@ -5285,10 +6054,6 @@
                         <footer class="wealth-hub-impact__quote-source">🇳🇱 Netherlands · App Store · 5/5</footer>
                       </blockquote>
                       <blockquote class="wealth-hub-impact__quote mobile-shipped-reviews__quote">
-                        <p>“Simple setup, easy deposits, and a good overview of my money and the returns I’ve earned.”</p>
-                        <footer class="wealth-hub-impact__quote-source">🇩🇪 Germany · App Store · 5/5</footer>
-                      </blockquote>
-                      <blockquote class="wealth-hub-impact__quote mobile-shipped-reviews__quote">
                         <p>“Easy to invest and move money between products and my linked account — best way to stay in control of savings.”</p>
                         <footer class="wealth-hub-impact__quote-source">🇪🇸 Spain · App Store · 5/5</footer>
                       </blockquote>
@@ -5296,67 +6061,8 @@
                         <p>“Finally a dashboard that shows my full portfolio in one place — much clearer than before.”</p>
                         <footer class="wealth-hub-impact__quote-source">🇫🇷 France · App Store · 5/5</footer>
                       </blockquote>
-                      <blockquote class="wealth-hub-impact__quote mobile-shipped-reviews__quote">
-                        <p>“Love the new layout — I can see all my savings and investments without switching screens.”</p>
-                        <footer class="wealth-hub-impact__quote-source">🇬🇧 UK · App Store · 5/5</footer>
-                      </blockquote>
                     </div>
                   </div>
-                </div>
-                <div class="tabs-compare mobile-journey__visual mobile-journey__visual--tabs" data-tabs-compare data-fm-widget="raisin-tabs" aria-label="Shipped mobile IA — light and dark compare">
-                  <div class="tabs-compare__nav" role="tablist" aria-label="Dashboard tabs">
-                    <button type="button" class="tabs-compare__tab is-active" role="tab" id="tabs-compare-tab-0" aria-selected="true" aria-controls="tabs-compare-panel-0" data-tab="0">Overview</button>
-                    <button type="button" class="tabs-compare__tab" role="tab" id="tabs-compare-tab-1" aria-selected="false" aria-controls="tabs-compare-panel-1" data-tab="1" tabindex="-1">Portfolio</button>
-                    <button type="button" class="tabs-compare__tab" role="tab" id="tabs-compare-tab-2" aria-selected="false" aria-controls="tabs-compare-panel-2" data-tab="2" tabindex="-1">Products</button>
-                    <button type="button" class="tabs-compare__tab" role="tab" id="tabs-compare-tab-3" aria-selected="false" aria-controls="tabs-compare-panel-3" data-tab="3" tabindex="-1">Wallet</button>
-                  </div>
-                  <div class="tabs-compare__panels">
-                    <div class="tabs-compare__panel" role="tabpanel" id="tabs-compare-panel-0" aria-labelledby="tabs-compare-tab-0" data-tab-panel="0">
-                      <div class="compare compare--tabs" data-fm-widget="raisin-tab-0" data-fm-kind="compare">
-                        <div class="compare__after">
-                          <img src="raisin-assets/assets/img/dashboard-mobile/tabs/d1.webp" alt="Overview — dark mode" loading="lazy">
-                        </div>
-                        <div class="compare__before">
-                          <img src="raisin-assets/assets/img/dashboard-mobile/tabs/l1.webp" alt="Overview — light mode" loading="lazy">
-                        </div>
-                        <div class="compare__handle" aria-hidden="true"></div>
-                      </div>
-                    </div>
-                    <div class="tabs-compare__panel" role="tabpanel" id="tabs-compare-panel-1" aria-labelledby="tabs-compare-tab-1" data-tab-panel="1" hidden>
-                      <div class="compare compare--tabs" data-fm-widget="raisin-tab-1" data-fm-kind="compare">
-                        <div class="compare__after">
-                          <img src="raisin-assets/assets/img/dashboard-mobile/tabs/d2.webp" alt="Portfolio — dark mode" loading="lazy">
-                        </div>
-                        <div class="compare__before">
-                          <img src="raisin-assets/assets/img/dashboard-mobile/tabs/l2.webp" alt="Portfolio — light mode" loading="lazy">
-                        </div>
-                        <div class="compare__handle" aria-hidden="true"></div>
-                      </div>
-                    </div>
-                    <div class="tabs-compare__panel" role="tabpanel" id="tabs-compare-panel-2" aria-labelledby="tabs-compare-tab-2" data-tab-panel="2" hidden>
-                      <div class="compare compare--tabs" data-fm-widget="raisin-tab-2" data-fm-kind="compare">
-                        <div class="compare__after">
-                          <img src="raisin-assets/assets/img/dashboard-mobile/tabs/d3.webp" alt="Products — dark mode" loading="lazy">
-                        </div>
-                        <div class="compare__before">
-                          <img src="raisin-assets/assets/img/dashboard-mobile/tabs/l3.webp" alt="Products — light mode" loading="lazy">
-                        </div>
-                        <div class="compare__handle" aria-hidden="true"></div>
-                      </div>
-                    </div>
-                    <div class="tabs-compare__panel" role="tabpanel" id="tabs-compare-panel-3" aria-labelledby="tabs-compare-tab-3" data-tab-panel="3" hidden>
-                      <div class="compare compare--tabs" data-fm-widget="raisin-tab-3" data-fm-kind="compare">
-                        <div class="compare__after">
-                          <img src="raisin-assets/assets/img/dashboard-mobile/tabs/d4.webp" alt="Wallet — dark mode" loading="lazy">
-                        </div>
-                        <div class="compare__before">
-                          <img src="raisin-assets/assets/img/dashboard-mobile/tabs/l4.webp" alt="Wallet — light mode" loading="lazy">
-                        </div>
-                        <div class="compare__handle" aria-hidden="true"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <p class="period-split__caption mobile-journey__tabs-caption">Shipped IA — drag to compare light and dark · switch tabs</p>
                 </div>
               </div>
             </div>
@@ -5418,9 +6124,9 @@
             </div>
 
             <div class="ai-journey__toolkit reveal" aria-label="Design × Cursor toolkit">
-              <div class="ai-toolkit-copy">
-                <p class="ai-section-label">Design × Cursor toolkit</p>
-                <p class="ai-toolkit-intro">Established an infrastructure every designer could run.</p>
+              <div class="ai-toolkit-copy present-split__copy">
+                <p class="device-story__eyebrow">Design × Cursor toolkit</p>
+                <h4 class="device-story__title">Established an infrastructure every designer could run.</h4>
                 <p class="beat__stat present-p4-toolkit-stat">1 of 4 AI Champions · Kick-start Lab → Showcase + Clinic · 180 days</p>
                 <aside class="enablement-callout enablement-surface beat__enablement present-p4-toolkit-enablement" aria-label="Enablement — 180-day operating plan">
                   <p class="enablement-label">
@@ -5482,7 +6188,7 @@
             </div>
 
             <div class="ai-journey__tools">
-              <div class="device-story__copy ai-journey__tools-head">
+              <div class="device-story__copy present-split__copy ai-journey__tools-head">
                 <p class="device-story__eyebrow">Lab · 4-week sprint</p>
                 <h4 class="device-story__title">Four tools the team uses every day.</h4>
                 <p class="device-story__text device-story__text--present">Design QA, copy, typography, annotation — four tools in daily production.</p>
@@ -5516,7 +6222,7 @@
               </div>
             </div>
 
-            <div class="device-story__row device-story__row--visual-left ai-journey__row">
+            <div class="device-story__row device-story__row--reverse ai-journey__row" aria-label="Coaching on Cursor">
               <div class="device-story__copy present-split__copy">
                 <p class="device-story__eyebrow">Coaching · applied</p>
                 <h4 class="device-story__title">Coached 8 designers on Cursor.</h4>
