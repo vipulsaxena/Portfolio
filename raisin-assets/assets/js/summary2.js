@@ -674,6 +674,22 @@
         panel.hidden = !on;
       });
     }
+    root.querySelectorAll("[data-variant-img]").forEach(function (media) {
+      var on = media.getAttribute("data-variant-img") === v;
+      media.querySelectorAll("video").forEach(function (video) {
+        if (on) {
+          var dataSrc = video.getAttribute("data-src");
+          if (dataSrc && !video.getAttribute("src")) {
+            video.src = dataSrc;
+            video.removeAttribute("data-src");
+          }
+          var p = video.play();
+          if (p && p.catch) p.catch(function () {});
+        } else {
+          video.pause();
+        }
+      });
+    });
     root.setAttribute("data-fm-value", v);
     if (silent) return;
     var wid = root.getAttribute("data-fm-widget");
@@ -696,6 +712,7 @@
     root.addEventListener("click", function (e) {
       var tab = e.target.closest(".trade-off-switcher__tab");
       if (!tab || !root.contains(tab)) return;
+      if (tab.hasAttribute("data-step")) return;
       activateVariant(root, tab.getAttribute("data-variant"));
     });
 
@@ -876,5 +893,99 @@
     }
 
     REDUCE_MQ.addEventListener("change", start);
+  });
+})();
+
+/* ==========================================================================
+   Phase wizards (exploration / visual-system steppers)
+   ========================================================================== */
+(function () {
+  "use strict";
+
+  function playVideoInPanel(video) {
+    var dataSrc = video.getAttribute("data-src");
+    if (dataSrc && !video.getAttribute("src")) {
+      video.src = dataSrc;
+      video.removeAttribute("data-src");
+    }
+    var p = video.play();
+    if (p && p.catch) p.catch(function () {});
+  }
+
+  document.querySelectorAll("[data-phase-wizard]").forEach(function (wizardRoot) {
+    if (wizardRoot.dataset.phaseWizardInit) return;
+    wizardRoot.dataset.phaseWizardInit = "1";
+
+    var tabs = Array.prototype.slice.call(
+      wizardRoot.querySelectorAll(
+        ".phase-wizard__stepper .trade-off-switcher__tab[data-step], .exploration-wizard__stepper .trade-off-switcher__tab[data-step]"
+      )
+    );
+    var panels = Array.prototype.slice.call(wizardRoot.querySelectorAll("[data-step-panel]"));
+    if (!tabs.length || !panels.length) return;
+
+    function activateStep(step) {
+      var s = String(step);
+      tabs.forEach(function (tab) {
+        var on = tab.getAttribute("data-step") === s;
+        tab.classList.toggle("trade-off-switcher__tab--active", on);
+        tab.setAttribute("aria-selected", on ? "true" : "false");
+        tab.tabIndex = on ? 0 : -1;
+      });
+      panels.forEach(function (panel) {
+        var on = panel.getAttribute("data-step-panel") === s;
+        panel.classList.toggle("is-active", on);
+        panel.hidden = !on;
+        panel.querySelectorAll("video").forEach(function (video) {
+          if (on) playVideoInPanel(video);
+          else video.pause();
+        });
+      });
+      wizardRoot.querySelectorAll(".wh-phase-breakdown__item").forEach(function (item) {
+        var on = item.getAttribute("data-step") === s;
+        item.classList.toggle("wh-phase-breakdown__item--active", on);
+      });
+    }
+
+    activateStep(wizardRoot.getAttribute("data-default") || "1");
+
+    tabs.forEach(function (tab) {
+      tab.addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        activateStep(tab.getAttribute("data-step"));
+      });
+    });
+
+    wizardRoot.addEventListener("click", function (e) {
+      if (e.target.closest(".exploration-wizard__variant-switcher .trade-off-switcher__tab[data-variant]")) {
+        return;
+      }
+      var tab = e.target.closest(".trade-off-switcher__tab[data-step]");
+      if (tab && wizardRoot.contains(tab)) {
+        activateStep(tab.getAttribute("data-step"));
+        return;
+      }
+      var breakdown = e.target.closest(".wh-phase-breakdown__item[data-step]");
+      if (breakdown && wizardRoot.contains(breakdown)) {
+        activateStep(breakdown.getAttribute("data-step"));
+      }
+    });
+
+    wizardRoot.addEventListener("keydown", function (e) {
+      var tab = e.target.closest(".trade-off-switcher__tab[data-step]");
+      if (!tab || !wizardRoot.contains(tab)) return;
+      var idx = tabs.indexOf(tab);
+      if (idx < 0) return;
+      var next = null;
+      if (e.key === "ArrowRight" || e.key === "ArrowDown") next = tabs[(idx + 1) % tabs.length];
+      else if (e.key === "ArrowLeft" || e.key === "ArrowUp") next = tabs[(idx - 1 + tabs.length) % tabs.length];
+      else if (e.key === "Home") next = tabs[0];
+      else if (e.key === "End") next = tabs[tabs.length - 1];
+      if (!next) return;
+      e.preventDefault();
+      activateStep(next.getAttribute("data-step"));
+      next.focus();
+    });
   });
 })();

@@ -432,6 +432,7 @@
       border-width: 1px;
       background: color-mix(in srgb, var(--ink) 7%, var(--paper));
       box-shadow: none;
+      padding-right: clamp(2rem, 3.5vw, 2.35rem);
     }
     .present-slide--p1-exploration .ideate-conflict-tradeoff .trade-off__option-label,
     .present-slide--p3-ideation .ideate-conflict-tradeoff .trade-off__option-label,
@@ -464,8 +465,13 @@
     .present-slide--p1-tradeoff-01 .ideate-conflict-tradeoff__check,
     .present-slide--p3-maze .ideate-conflict-tradeoff__check {
       position: absolute;
-      top: clamp(0.45rem, 0.8vh, 0.6rem);
-      right: clamp(0.45rem, 0.8vh, 0.6rem);
+      top: 50%;
+      right: clamp(0.65rem, 1.1vw, 0.85rem);
+      left: auto;
+      transform: translateY(-50%);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       width: 1rem;
       height: 1rem;
       color: var(--ink-soft);
