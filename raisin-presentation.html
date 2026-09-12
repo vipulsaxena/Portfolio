@@ -1739,32 +1739,39 @@
     .present-slide--p1-exploration .exploration-wizard--split,
     .present-slide--p3-ideation .exploration-wizard--split,
     .present-slide--p1-exploration .trade-off-switcher--split,
-    .present-slide--p3-ideation .trade-off-switcher--split,
-    .present-slide--p1-visual-system .trade-off-switcher--split {
+    .present-slide--p3-ideation .trade-off-switcher--split {
       align-items: start;
       gap: var(--present-split-gap);
       width: 100%;
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     }
+    .present-slide--p1-visual-system .trade-off-switcher--split {
+      align-items: stretch;
+      gap: var(--present-split-gap);
+      width: 100%;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      min-height: 0;
+    }
     .present-slide--p1-exploration .exploration-wizard__right,
-    .present-slide--p3-ideation .exploration-wizard__right,
-    .present-slide--p1-visual-system .exploration-wizard__right,
+    .present-slide--p3-ideation .exploration-wizard__right {
+      align-self: start;
+    }
     .present-slide--p3-visual-system .exploration-wizard__right {
       align-self: start;
     }
     .present-slide--p1-exploration .trade-off-switcher--split.trade-off-switcher--visual-left .exploration-wizard__right,
-    .present-slide--p3-ideation .trade-off-switcher--split.trade-off-switcher--visual-left .exploration-wizard__right,
-    .present-slide--p1-visual-system .trade-off-switcher--split.trade-off-switcher--visual-left .exploration-wizard__right {
+    .present-slide--p3-ideation .trade-off-switcher--split.trade-off-switcher--visual-left .exploration-wizard__right {
       margin-top: 7%;
     }
     .present-slide--p1-exploration .trade-off-switcher__left,
-    .present-slide--p3-ideation .trade-off-switcher__left,
-    .present-slide--p1-visual-system .trade-off-switcher__left {
+    .present-slide--p3-ideation .trade-off-switcher__left {
       align-self: center;
+    }
+    .present-slide--p1-visual-system .trade-off-switcher__left {
+      align-self: stretch;
     }
     .present-slide--p1-exploration .trade-off-switcher__left,
     .present-slide--p3-ideation .trade-off-switcher__left,
-    .present-slide--p1-visual-system .trade-off-switcher__left,
     .present-slide--p3-maze .trade-off-switcher__left.present-split__copy {
       justify-content: flex-start;
       max-height: calc(var(--present-vh) - var(--present-bottom) - var(--present-top));
@@ -1859,12 +1866,31 @@
       gap: var(--present-tabs-to-content-gap);
       min-width: 0;
     }
-    .present-slide--p1-visual-system .exploration-wizard__right,
     .present-slide--p3-visual-system .exploration-wizard__right {
       display: flex;
       flex-direction: column;
       gap: clamp(0.5rem, 1vh, 0.75rem);
       min-width: 0;
+    }
+    .present-slide--p1-visual-system .trade-off-switcher__right.exploration-wizard__right,
+    .present-slide--p1-visual-system .visual-system-wizard .exploration-wizard__right {
+      display: flex;
+      flex-direction: column;
+      align-self: stretch;
+      justify-content: center;
+      min-height: 0;
+      min-width: 0;
+      margin-top: 0;
+      --present-tabs-to-content-gap: clamp(
+        calc(var(--sp-sm) * 1.1),
+        calc(1.45vh * 1.1),
+        calc(1.1rem * 1.1)
+      );
+      gap: clamp(0.35rem, 0.7vh, 0.5rem);
+    }
+    .present-slide--p1-visual-system .exploration-wizard__controls {
+      margin-bottom: var(--present-tabs-to-content-gap);
+      flex-shrink: 0;
     }
     .present-slide--p1-exploration .exploration-wizard__controls,
     .present-slide--p3-ideation .exploration-wizard__controls,
@@ -2948,9 +2974,17 @@
       box-sizing: border-box;
     }
     .present-slide--p1-visual-system .trade-off-switcher__left.present-split__copy {
-      justify-content: flex-start;
+      align-self: stretch;
+      justify-content: center;
       max-height: calc(var(--present-vh) - var(--present-bottom) - var(--present-top));
       overflow: hidden;
+    }
+    .present-slide--p1-visual-system.present-slide--layout-viewport > .trade-off-switcher.trade-off-switcher--split {
+      flex: 1 1 0;
+      min-height: 0;
+      max-height: calc(var(--present-vh) - var(--present-bottom) - var(--present-top));
+      align-self: stretch;
+      width: 100%;
     }
     .present-slide--p1-visual-system .trade-off-switcher__left {
       max-height: calc(var(--present-vh) - var(--present-bottom) - var(--present-top));
