@@ -5160,14 +5160,16 @@ html.journey-nav-scrolling {
 }
 .prototype-persona-switcher {
   display: flex;
-  gap: 0.375rem;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
   width: 100%;
   margin-bottom: var(--sp-sm);
-  padding: 0.375rem;
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--paper) 92%, transparent);
-  border: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
-  box-shadow: 0 0.5rem 1.5rem rgba(15, 23, 42, 0.08);
+  padding: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
 }
 .prototype-persona-switcher::-webkit-scrollbar {
   display: none;
@@ -5181,35 +5183,50 @@ html.journey-nav-scrolling {
   background: transparent;
   font-family: inherit;
   font-size: 0.8125rem;
-  font-weight: 500;
-  color: var(--muted);
+  font-weight: 400;
+  line-height: 1.25;
+  color: var(--ink-soft);
   cursor: pointer;
   text-align: center;
   white-space: nowrap;
-  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  box-sizing: border-box;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--ink) 12%, var(--line));
+  transition: color 0.15s, box-shadow 0.15s;
+}
+.prototype-persona-tab:not(.prototype-persona-tab--active):hover {
+  color: var(--ink-soft);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--ink) 22%, var(--line));
 }
 .prototype-persona-tab:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
-.prototype-persona-tab--active {
-  background: var(--ink);
-  border-color: var(--ink);
-  color: var(--paper);
+.prototype-persona-tab--active,
+.prototype-persona-tab[aria-selected="true"] {
+  background: transparent;
+  border-color: transparent;
+  color: var(--ink);
+  font-weight: 700;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--ink) 32%, var(--line));
+}
+.prototype-persona-tab--active:hover,
+.prototype-persona-tab[aria-selected="true"]:hover {
+  color: var(--ink);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--ink) 40%, var(--line));
 }
 
-/* Secondary segmented tabs — same shell as prototype persona switcher */
+/* Secondary tabs — ring pills in a row (no outer shell; matches One Data persona) */
 .phase-wizard__stepper--secondary {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 0.375rem;
   width: 100%;
-  padding: 0.375rem;
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--paper) 92%, transparent);
-  border: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
-  box-shadow: 0 0.5rem 1.5rem rgba(15, 23, 42, 0.08);
+  padding: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
   box-sizing: border-box;
 }
 .phase-wizard__stepper--secondary .trade-off-switcher__tab,
@@ -5222,35 +5239,39 @@ html.journey-nav-scrolling {
   background: transparent;
   font-family: inherit;
   font-size: 0.8125rem;
-  font-weight: 500;
+  font-weight: 400;
   line-height: 1.25;
-  color: var(--muted);
+  color: var(--ink-soft);
   text-align: center;
   cursor: pointer;
-  box-shadow: none;
-  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  box-sizing: border-box;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--ink) 12%, var(--line));
+  transition: color 0.15s, box-shadow 0.15s;
 }
 .phase-wizard__stepper--secondary .trade-off-switcher__tab:not(.trade-off-switcher__tab--active):not([aria-selected="true"]):hover,
 .phase-wizard__stepper--secondary .tabs-compare__tab:not(.is-active):not([aria-selected="true"]):hover {
-  color: var(--ink);
-  background: color-mix(in srgb, var(--ink) 6%, transparent);
+  color: var(--ink-soft);
+  background: transparent;
   border-color: transparent;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--ink) 22%, var(--line));
 }
 .phase-wizard__stepper--secondary .trade-off-switcher__tab--active,
 .phase-wizard__stepper--secondary .trade-off-switcher__tab[aria-selected="true"],
 .phase-wizard__stepper--secondary .tabs-compare__tab.is-active,
 .phase-wizard__stepper--secondary .tabs-compare__tab[aria-selected="true"] {
-  background: var(--ink);
-  border-color: var(--ink);
-  color: var(--paper);
+  background: transparent;
+  border-color: transparent;
+  color: var(--ink);
+  font-weight: 700;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--ink) 32%, var(--line));
 }
 .phase-wizard__stepper--secondary .trade-off-switcher__tab--active:hover,
 .phase-wizard__stepper--secondary .trade-off-switcher__tab[aria-selected="true"]:hover,
 .phase-wizard__stepper--secondary .tabs-compare__tab.is-active:hover,
 .phase-wizard__stepper--secondary .tabs-compare__tab[aria-selected="true"]:hover {
-  background: var(--ink);
-  border-color: var(--ink);
-  color: var(--paper);
+  background: transparent;
+  color: var(--ink);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--ink) 40%, var(--line));
 }
 .phase-wizard__stepper--secondary .trade-off-switcher__tab--active:focus-visible,
 .phase-wizard__stepper--secondary .trade-off-switcher__tab[aria-selected="true"]:focus-visible,
@@ -5260,12 +5281,13 @@ html.journey-nav-scrolling {
 }
 .phase-wizard__stepper--secondary .trade-off-switcher__tab--active .trade-off-switcher__tab-flag,
 .phase-wizard__stepper--secondary .trade-off-switcher__tab[aria-selected="true"] .trade-off-switcher__tab-flag {
-  background: color-mix(in srgb, var(--paper) 22%, transparent);
-  color: var(--paper);
+  background: color-mix(in srgb, var(--ink) 10%, transparent);
+  color: var(--ink);
 }
 .phase-wizard__stepper--secondary .trade-off-switcher__tab--chosen:not(.trade-off-switcher__tab--active):not([aria-selected="true"]) {
   border-color: transparent;
-  color: var(--muted);
+  color: var(--ink-soft);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--ink) 12%, var(--line));
 }
 .exploration-wizard__stepper.phase-wizard__stepper--secondary .exploration-wizard__arrow-static {
   flex: 0 0 auto;

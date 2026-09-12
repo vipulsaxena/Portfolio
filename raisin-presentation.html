@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="raisin-assets/assets/css/base.css">
   <link rel="stylesheet" href="raisin-assets/assets/css/components.css">
   <link rel="stylesheet" href="raisin-assets/assets/css/summary.css">
-  <link rel="stylesheet" href="raisin-assets/assets/css/summary2.css">
+  <link rel="stylesheet" href="raisin-assets/assets/css/summary2.css?v=15">
   <link rel="stylesheet" href="css/shell.css">
   <link rel="stylesheet" href="css/hl.css">
   <link rel="stylesheet" href="css/custom-cursor.css">
@@ -2086,6 +2086,15 @@
     .present-slide--p1-visual-system .phase-wizard__stepper--secondary .exploration-wizard__tab-n,
     .present-slide--p3-visual-system .phase-wizard__stepper--secondary .exploration-wizard__tab-n {
       display: none !important;
+    }
+    /* Secondary tabs — no outer track; ring pills match One Data persona (summary2.css) */
+    .present-slide .phase-wizard__stepper--secondary,
+    .present-slide .prototype-persona-switcher {
+      padding: 0;
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      border-radius: 0;
     }
     .present-slide--p1-exploration .phase-wizard__stepper--secondary:not(.tradeoff-01__concept-stepper):not(.visual-tabs__stepper),
     .present-slide--p3-ideation .phase-wizard__stepper--secondary:not(.tradeoff-01__concept-stepper):not(.visual-tabs__stepper) {
