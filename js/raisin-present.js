@@ -178,16 +178,25 @@
     ],
     "p4-intro": [
       ".period__thesis:not(.period__thesis--present)",
+      ".period__role",
       ".present-p4-enablement",
       ".present-p4-intro-stat",
       ".present-p4-intro-chips",
       ".period__meta .chip-row"
     ],
-    "p4-toolkit": [".ai-toolkit-card__text", ".ai-toolkit-grid__note"],
+    "p4-toolkit": [
+      ".ai-toolkit-card__text",
+      ".ai-toolkit-grid__note",
+      ".device-story__text:not(.device-story__text--present)"
+    ],
+    "p4-one-data": [
+      ".device-story__text:not(.device-story__text--present)",
+      ".period-split__caption"
+    ],
     "p4-lab-tools": [".device-story__text:not(.device-story__text--present)"],
     "p4-coaching": [
       ".device-story__text:not(.device-story__text--present)",
-      ".ai-cadence-card__text"
+      ".beat__stat"
     ],
     proof: [".proof-intro__lede:not(.proof-intro__lede--present)"]
   };
@@ -212,6 +221,7 @@
     { id: "p3-shipped", chapter: "period-2", selector: '[aria-label="Mobile — launch"]' },
     { id: "p4-intro", chapter: "period-3", selector: "#period-4 .period__head" },
     { id: "p4-toolkit", chapter: "period-3", selector: "#period-4 .ai-journey__toolkit" },
+    { id: "p4-one-data", chapter: "period-3", selector: "#period-4 .ai-journey__one-data" },
     { id: "p4-lab-tools", chapter: "period-3", selector: "#period-4 .ai-journey__tools" },
     {
       id: "p4-coaching",
@@ -286,6 +296,7 @@
     "p3-shipped": "viewport",
     "p4-intro": "viewport",
     "p4-toolkit": "viewport",
+    "p4-one-data": "viewport",
     "p4-lab-tools": "viewport",
     "p4-coaching": "viewport",
     "p4-cura": "viewport",
@@ -986,7 +997,9 @@
         tabs.forEach(function (btn) {
           var isActive = btn === tab;
           btn.classList.toggle("prototype-persona-tab--active", isActive);
+          btn.classList.toggle("trade-off-switcher__tab--active", isActive);
           btn.setAttribute("aria-selected", isActive ? "true" : "false");
+          btn.tabIndex = isActive ? 0 : -1;
         });
         var personaId = tab.getAttribute("data-persona-id");
         sendPersona(personaId);
@@ -1094,11 +1107,54 @@
       nextBtn = nav.querySelector(".post-mvp-carousel__next");
     }
 
+    var dots = Array.prototype.slice.call(dotsWrap.querySelectorAll(".post-mvp-carousel__dot"));
+    ensurePostMvpCarouselDotFills(dots);
     return {
-      dots: Array.prototype.slice.call(dotsWrap.querySelectorAll(".post-mvp-carousel__dot")),
+      dots: dots,
       prev: prevBtn,
       next: nextBtn
     };
+  }
+
+  function ensurePostMvpCarouselDotFills(dots) {
+    dots.forEach(function (dot) {
+      if (dot.querySelector(".post-mvp-carousel__dot-fill")) return;
+      var fill = document.createElement("span");
+      fill.className = "post-mvp-carousel__dot-fill";
+      fill.setAttribute("aria-hidden", "true");
+      dot.appendChild(fill);
+    });
+  }
+
+  function setPostMvpCarouselDotFillProgress(dots, activeIndex, ratio) {
+    var clamped = Math.max(0, Math.min(1, ratio));
+    dots.forEach(function (dot, dotIndex) {
+      var fill = dot.querySelector(".post-mvp-carousel__dot-fill");
+      if (!fill) return;
+      fill.style.animation = "none";
+      if (dotIndex === activeIndex) {
+        fill.style.width = clamped * 100 + "%";
+      } else {
+        fill.style.width = "0%";
+      }
+    });
+  }
+
+  function registerPresentPostMvpCarousel(carouselRoot, goToRemote) {
+    window.PortfolioCarousel = window.PortfolioCarousel || {
+      _fn: [],
+      go: function (el, n) {
+        this._fn.forEach(function (entry) {
+          if (entry.el === el) entry.go(n);
+        });
+      }
+    };
+    window.PortfolioCarousel._fn.push({
+      el: carouselRoot,
+      go: function (n) {
+        goToRemote(n);
+      }
+    });
   }
 
   function syncPostMvpCarouselDots(dots, activeIndex) {
@@ -1125,55 +1181,158 @@
       if (!track || slides.length < 2) return;
       var index = 0;
       var intervalMs = parseInt(carouselRoot.getAttribute("data-interval") || "4500", 10);
-      var timer = null;
+      carouselRoot.style.setProperty("--carousel-interval", intervalMs + "ms");
+      var slideId = presentSlideIdFromNode(carouselRoot);
+      if (slideId && !carouselRoot.getAttribute("data-fm-widget")) {
+        carouselRoot.setAttribute("data-fm-widget", slideId + "-carousel");
+        carouselRoot.setAttribute("data-fm-kind", "carousel");
+        carouselRoot.setAttribute("data-fm-value", "0");
+      }
+      var autoEnabled = false;
+      var cyclePaused = false;
+      var cycleElapsed = 0;
+      var cycleResumeAt = 0;
+      var rafId = null;
+      var reduceTimer = null;
       var controls = buildPostMvpCarouselControls(carouselRoot, slides, function (nextIndex) {
         goTo(nextIndex);
-        start();
       });
       var dots = controls.dots;
       if (controls.prev) {
         controls.prev.addEventListener("click", function () {
           goTo(index - 1);
-          start();
         });
       }
       if (controls.next) {
         controls.next.addEventListener("click", function () {
           goTo(index + 1);
-          start();
         });
       }
-      function goTo(nextIndex) {
-        index = (nextIndex + slides.length) % slides.length;
+      function cancelCycleRaf() {
+        if (rafId) {
+          cancelAnimationFrame(rafId);
+          rafId = null;
+        }
+      }
+      function cycleTick() {
+        rafId = null;
+        if (!autoEnabled || cyclePaused) return;
+        if (REDUCE_MQ.matches || carouselRoot.classList.contains("is-animation-paused")) {
+          pauseAutoCycle();
+          return;
+        }
+        var elapsed = cycleElapsed + (Date.now() - cycleResumeAt);
+        setPostMvpCarouselDotFillProgress(dots, index, elapsed / intervalMs);
+        if (elapsed >= intervalMs) {
+          goTo(index + 1);
+          return;
+        }
+        rafId = requestAnimationFrame(cycleTick);
+      }
+      function resetAutoCycle() {
+        cycleElapsed = 0;
+        cycleResumeAt = Date.now();
+        setPostMvpCarouselDotFillProgress(dots, index, 0);
+        cancelCycleRaf();
+        if (autoEnabled && !cyclePaused && !REDUCE_MQ.matches && !carouselRoot.classList.contains("is-animation-paused")) {
+          rafId = requestAnimationFrame(cycleTick);
+        }
+      }
+      function clearReduceAdvanceTimer() {
+        if (reduceTimer) {
+          clearTimeout(reduceTimer);
+          reduceTimer = null;
+        }
+      }
+      function scheduleReduceAdvance() {
+        clearReduceAdvanceTimer();
+        var remaining = Math.max(0, intervalMs - cycleElapsed);
+        reduceTimer = setTimeout(function () {
+          reduceTimer = null;
+          goTo(index + 1);
+        }, remaining);
+      }
+      function pauseAutoCycle() {
+        if (!autoEnabled) return;
+        if (!cyclePaused) {
+          cycleElapsed += Date.now() - cycleResumeAt;
+          cyclePaused = true;
+        }
+        carouselRoot.classList.add("is-auto-advance-paused");
+        cancelCycleRaf();
+        clearReduceAdvanceTimer();
+        setPostMvpCarouselDotFillProgress(
+          dots,
+          index,
+          REDUCE_MQ.matches ? 1 : Math.min(1, cycleElapsed / intervalMs)
+        );
+      }
+      function resumeAutoCycle() {
+        if (!autoEnabled || !cyclePaused) return;
+        if (carouselRoot.classList.contains("is-animation-paused")) return;
+        cyclePaused = false;
+        carouselRoot.classList.remove("is-auto-advance-paused");
+        cycleResumeAt = Date.now();
+        if (REDUCE_MQ.matches) {
+          setPostMvpCarouselDotFillProgress(dots, index, 1);
+          scheduleReduceAdvance();
+          return;
+        }
+        rafId = requestAnimationFrame(cycleTick);
+      }
+      function enableAutoAdvance() {
+        autoEnabled = true;
+        cyclePaused = false;
+        cycleElapsed = 0;
+        cycleResumeAt = Date.now();
+        carouselRoot.classList.remove("is-auto-advance-paused");
+        cancelCycleRaf();
+        clearReduceAdvanceTimer();
+        if (REDUCE_MQ.matches) {
+          setPostMvpCarouselDotFillProgress(dots, index, 1);
+          scheduleReduceAdvance();
+          return;
+        }
+        if (!carouselRoot.classList.contains("is-animation-paused")) {
+          rafId = requestAnimationFrame(cycleTick);
+        }
+      }
+      function disableAutoAdvance() {
+        autoEnabled = false;
+        pauseAutoCycle();
+      }
+      function goTo(nextIndex, opts) {
+        opts = opts || {};
+        var newIndex = (nextIndex + slides.length) % slides.length;
+        var changed = newIndex !== index;
+        index = newIndex;
         track.style.transform = "translate3d(-" + index * 100 + "%, 0, 0)";
         slides.forEach(function (slide, si) {
           slide.classList.toggle("is-active", si === index);
         });
         syncPostMvpCarouselDots(dots, index);
         carouselRoot.setAttribute("data-slide-index", String(index + 1));
-      }
-      function stop() {
-        if (timer) {
-          clearInterval(timer);
-          timer = null;
+        if (!opts.remote) {
+          carouselRoot.setAttribute("data-fm-value", String(index));
+          var widgetId = carouselRoot.getAttribute("data-fm-widget");
+          if (widgetId) emitWidgetChange(widgetId, index);
+        }
+        if (changed || !opts.remote) {
+          if (autoEnabled) resetAutoCycle();
         }
       }
-      function start() {
-        stop();
-        if (REDUCE_MQ.matches || carouselRoot.classList.contains("is-animation-paused")) return;
-        timer = setInterval(function () {
-          goTo(index + 1);
-        }, intervalMs);
-      }
+      registerPresentPostMvpCarousel(carouselRoot, function (n) {
+        goTo(n, { remote: true });
+      });
       carouselRoot.classList.remove("is-animation-paused");
       goTo(0);
-      start();
-      carouselRoot.addEventListener("mouseenter", stop);
-      carouselRoot.addEventListener("mouseleave", start);
-      carouselRoot.addEventListener("focusin", stop);
-      carouselRoot.addEventListener("focusout", start);
-      carouselCleanups.push(stop);
-      carouselRoot._presentCarouselStop = stop;
+      enableAutoAdvance();
+      carouselRoot.addEventListener("mouseenter", pauseAutoCycle);
+      carouselRoot.addEventListener("mouseleave", resumeAutoCycle);
+      carouselRoot.addEventListener("focusin", pauseAutoCycle);
+      carouselRoot.addEventListener("focusout", resumeAutoCycle);
+      carouselCleanups.push(disableAutoAdvance);
+      carouselRoot._presentCarouselStop = disableAutoAdvance;
     });
   }
 

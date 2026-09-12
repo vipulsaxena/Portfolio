@@ -211,9 +211,9 @@
 
   function readCarouselIndex(root) {
     var stored = root.getAttribute("data-fm-value");
-    if (stored) return stored;
+    if (stored != null && stored !== "") return stored;
     var dots = root.querySelectorAll(
-      "[data-carousel-dots] button, [data-nav-carousel-dots] button, .dot, .nav-carousel__dot"
+      "[data-carousel-dots] button, [data-nav-carousel-dots] button, .dot, .nav-carousel__dot, .post-mvp-carousel__dot"
     );
     for (var i = 0; i < dots.length; i++) {
       if (dots[i].getAttribute("aria-current") === "true") return String(i);
@@ -224,19 +224,32 @@
   function applyCarousel(root, want) {
     var n = parseInt(want, 10);
     if (!Number.isFinite(n)) return;
-    var track = root.querySelector("[data-carousel-track], [data-nav-carousel-track]");
+    var track = root.querySelector(
+      "[data-carousel-track], [data-nav-carousel-track], .post-mvp-carousel__track"
+    );
     var slides = track ? track.children.length : 0;
     if (slides > 0) {
       n = ((n % slides) + slides) % slides;
-      track.style.transform = "translateX(-" + n * 100 + "%)";
+      if (root.hasAttribute("data-post-mvp-carousel")) {
+        track.style.transform = "translate3d(-" + n * 100 + "%, 0, 0)";
+      } else {
+        track.style.transform = "translateX(-" + n * 100 + "%)";
+      }
       root.setAttribute("data-fm-value", String(n));
       var dots = root.querySelectorAll(
-        "[data-carousel-dots] button, [data-nav-carousel-dots] button, .dot, .nav-carousel__dot"
+        "[data-carousel-dots] button, [data-nav-carousel-dots] button, .dot, .nav-carousel__dot, .post-mvp-carousel__dot"
       );
       for (var d = 0; d < dots.length; d++) {
         var on = d === n;
-        dots[d].setAttribute("aria-current", String(on));
+        dots[d].setAttribute("aria-current", on ? "true" : "false");
         dots[d].setAttribute("aria-selected", String(on));
+        dots[d].classList.toggle("is-active", on);
+      }
+      if (root.hasAttribute("data-post-mvp-carousel")) {
+        var slideEls = root.querySelectorAll(".post-mvp-carousel__slide");
+        for (var s = 0; s < slideEls.length; s++) {
+          slideEls[s].classList.toggle("is-active", s === n);
+        }
       }
     }
     if (global.PortfolioCarousel && typeof global.PortfolioCarousel.go === "function") {
@@ -249,7 +262,12 @@
     if (kind === "compare" || root.classList.contains("compare") || root.hasAttribute("data-compare")) {
       return readComparePct(root);
     }
-    if (kind === "carousel" || root.hasAttribute("data-carousel") || root.hasAttribute("data-nav-carousel")) {
+    if (
+      kind === "carousel" ||
+      root.hasAttribute("data-carousel") ||
+      root.hasAttribute("data-nav-carousel") ||
+      root.hasAttribute("data-post-mvp-carousel")
+    ) {
       return readCarouselIndex(root);
     }
     if (kind === "hero") {
@@ -368,7 +386,12 @@
         applyCompare(root, want);
         return;
       }
-      if (kind === "carousel" || root.hasAttribute("data-carousel") || root.hasAttribute("data-nav-carousel")) {
+      if (
+        kind === "carousel" ||
+        root.hasAttribute("data-carousel") ||
+        root.hasAttribute("data-nav-carousel") ||
+        root.hasAttribute("data-post-mvp-carousel")
+      ) {
         applyCarousel(root, want);
         return;
       }

@@ -121,7 +121,7 @@
     .present-slide.is-active { opacity: 1; }
     .present-slide.is-leaving { opacity: 0; }
     /* Unified horizontal inset — slides that don't manage their own padding */
-    body.summary-v2 .present-slide.container:not(.present-slide--p4-cura):not(.present-slide--p4-toolkit):not(.present-slide--p4-coaching):not(.present-slide--proof):not(.present-beat-proof):not(.present-beat-coaching):not(.period__head--split):not(.present-slide--p1-outcomes):not(.present-slide--p1-visual-system):not(.present-slide--p3-visual-system):not(.present-slide--hero):not(.present-thanks) {
+    body.summary-v2 .present-slide.container:not(.present-slide--p4-cura):not(.present-slide--p4-toolkit):not(.present-slide--p4-one-data):not(.present-slide--p4-coaching):not(.present-slide--proof):not(.present-beat-proof):not(.present-beat-coaching):not(.period__head--split):not(.present-slide--p1-outcomes):not(.present-slide--p1-visual-system):not(.present-slide--p3-visual-system):not(.present-slide--hero):not(.present-thanks) {
       width: 100%;
       max-width: 100%;
       margin-inline: auto;
@@ -204,6 +204,7 @@
     .present-slide .device-story__copy,
     .present-slide .trade-off-switcher__left,
     .present-slide.ai-journey__toolkit .ai-toolkit-copy,
+    .present-slide.ai-journey__toolkit .ai-toolkit-right,
     .present-slide.ai-journey__tools .ai-journey__tools-head,
     .present-slide.present-beat-coaching .present-coaching__left {
       width: 100%;
@@ -235,7 +236,7 @@
     .present-slide--layout-viewport.ai-journey__row,
     .present-slide.period__head--split.present-slide--layout-viewport,
     .present-slide--p4-toolkit.ai-journey__toolkit,
-    .present-slide--p4-lab-tools.ai-journey__tools,
+    .present-slide--p4-one-data.ai-journey__one-data,
     .present-slide--p4-coaching.present-beat-coaching,
     .present-slide--p3-shipped .device-story__row {
       align-items: center;
@@ -256,13 +257,21 @@
     .present-slide .trade-off-switcher__right,
     .present-slide.ai-journey__toolkit .ai-toolkit-copy,
     .present-slide.ai-journey__toolkit .ai-toolkit-panel,
+    .present-slide.ai-journey__toolkit .ai-toolkit-visual,
+    .present-slide.ai-journey__toolkit .ai-toolkit-right,
     .present-slide.ai-journey__tools .ai-journey__tools-head,
+    .present-slide.ai-journey__tools .ai-lab-tools-carousel,
     .present-slide.ai-journey__tools .ai-tools-grid,
     .present-slide.present-beat-coaching .present-coaching__left,
     .present-slide.present-beat-coaching .present-coaching__visual {
       align-self: center;
       height: auto;
       min-height: 0;
+    }
+    .present-slide--p4-lab-tools.ai-journey__tools .ai-journey__tools-head {
+      align-self: stretch;
+      height: 100%;
+      min-height: 100%;
     }
     .present-slide .trade-off-switcher__left,
     .present-slide .trade-off-switcher__right,
@@ -274,6 +283,8 @@
     .present-slide .mobile-journey__prototype,
     .present-slide .tabs-compare,
     .present-slide.ai-journey__toolkit .ai-toolkit-panel,
+    .present-slide.ai-journey__toolkit .ai-toolkit-visual,
+    .present-slide.ai-journey__tools .ai-lab-tools-carousel,
     .present-slide.ai-journey__tools .ai-tools-grid,
     .present-slide.present-beat-coaching .present-coaching__visual {
       min-width: 0;
@@ -1215,7 +1226,12 @@
       justify-content: center;
       min-height: calc(var(--present-vh) - var(--present-bottom));
     }
-    .present-slide--p1-tradeoff-01 .trade-off-switcher--split,
+    .present-slide--p1-tradeoff-01 .trade-off-switcher--split {
+      align-items: stretch;
+      gap: var(--present-split-gap);
+      width: 100%;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
     .present-slide--p1-tradeoff-02 .trade-off-switcher--split {
       align-items: center;
       gap: var(--present-split-gap);
@@ -1240,12 +1256,40 @@
       flex-direction: column;
       min-width: 0;
     }
-    .present-slide--p1-tradeoff-01 .trade-off-switcher__right,
     .present-slide--p3-maze .trade-off-switcher__right,
     .present-slide--p1-tradeoff-02 .trade-off-switcher__left,
     .present-slide--p1-tradeoff-02 .trade-off-switcher__right {
-      gap: clamp(0.5rem, 1.1vh, 0.75rem);
+      --present-tabs-to-content-gap: clamp(
+        calc(var(--sp-sm) * 1.1),
+        calc(1.45vh * 1.1),
+        calc(1.1rem * 1.1)
+      );
+      gap: var(--present-tabs-to-content-gap);
       justify-content: flex-start;
+    }
+    .present-slide--p1-tradeoff-01 .trade-off-switcher--split.trade-off-switcher--visual-left .trade-off-switcher__right {
+      --present-tabs-to-content-gap: clamp(
+        calc(var(--sp-sm) * 1.55),
+        calc(1.45vh * 1.55),
+        calc(1.1rem * 1.55)
+      );
+      align-self: stretch;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: stretch;
+      min-height: 0;
+      gap: clamp(0.35rem, 0.7vh, 0.5rem);
+    }
+    .present-slide--p1-tradeoff-01 .trade-off-switcher__right > .tradeoff-01__concept-stepper {
+      margin-bottom: var(--present-tabs-to-content-gap);
+      flex-shrink: 0;
+    }
+    .present-slide--p1-tradeoff-01 .trade-off-switcher__left.present-split__copy {
+      align-self: stretch;
+      justify-content: center;
+      max-height: calc(var(--present-vh) - var(--present-bottom) - var(--present-top));
+      overflow: hidden;
     }
     .present-slide--p1-tradeoff-01 .trade-off-switcher__left.present-split__copy,
     .present-slide--p3-maze .trade-off-switcher__left.present-split__copy {
@@ -1373,7 +1417,7 @@
         max-height: min(57vh, 30rem);
       }
     }
-    .present-slide--p3-ideation .trade-off-switcher__right {
+    .present-slide--p3-ideation .trade-off-switcher__right:not(.exploration-wizard__right) {
       gap: clamp(0.5rem, 1.1vh, 0.75rem);
       justify-content: center;
       align-items: center;
@@ -1721,7 +1765,6 @@
     .present-slide--p1-exploration .trade-off-switcher__left,
     .present-slide--p3-ideation .trade-off-switcher__left,
     .present-slide--p1-visual-system .trade-off-switcher__left,
-    .present-slide--p1-tradeoff-01 .trade-off-switcher__left.present-split__copy,
     .present-slide--p3-maze .trade-off-switcher__left.present-split__copy {
       justify-content: flex-start;
       max-height: calc(var(--present-vh) - var(--present-bottom) - var(--present-top));
@@ -1804,7 +1847,18 @@
       line-height: 1.3;
     }
     .present-slide--p1-exploration .exploration-wizard__right,
-    .present-slide--p3-ideation .exploration-wizard__right,
+    .present-slide--p3-ideation .exploration-wizard__right {
+      display: flex;
+      flex-direction: column;
+      --present-tabs-to-content-gap: clamp(
+        calc(var(--sp-sm) * 1.1),
+        calc(1.45vh * 1.1),
+        calc(1.1rem * 1.1)
+      );
+      --exploration-wizard-tabs-stage-gap: var(--present-tabs-to-content-gap);
+      gap: var(--present-tabs-to-content-gap);
+      min-width: 0;
+    }
     .present-slide--p1-visual-system .exploration-wizard__right,
     .present-slide--p3-visual-system .exploration-wizard__right {
       display: flex;
@@ -1821,7 +1875,12 @@
       flex-shrink: 0;
     }
     .present-slide--p1-exploration .exploration-wizard__stepper,
-    .present-slide--p3-ideation .exploration-wizard__stepper,
+    .present-slide--p3-ideation .exploration-wizard__stepper {
+      display: flex;
+      align-items: center;
+      gap: calc(0.15rem * 1.1);
+      width: 100%;
+    }
     .present-slide--p1-visual-system .exploration-wizard__stepper,
     .present-slide--p3-visual-system .exploration-wizard__stepper {
       display: flex;
@@ -1997,6 +2056,11 @@
       display: none !important;
     }
     .present-slide--p1-exploration .phase-wizard__stepper--secondary:not(.tradeoff-01__concept-stepper):not(.visual-tabs__stepper),
+    .present-slide--p3-ideation .phase-wizard__stepper--secondary:not(.tradeoff-01__concept-stepper):not(.visual-tabs__stepper) {
+      gap: calc(0.15rem * 1.1);
+      background: transparent;
+      color: inherit;
+    }
     .present-slide--p1-visual-system .phase-wizard__stepper--secondary:not(.tradeoff-01__concept-stepper):not(.visual-tabs__stepper),
     .present-slide--p3-visual-system .phase-wizard__stepper--secondary:not(.tradeoff-01__concept-stepper):not(.visual-tabs__stepper) {
       gap: 0.15rem;
@@ -2006,7 +2070,8 @@
     .present-slide--p1-exploration .phase-wizard__stepper--secondary .trade-off-switcher__tab,
     .present-slide--p3-ideation .phase-wizard__stepper--secondary .trade-off-switcher__tab,
     .present-slide--p1-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab,
-    .present-slide--p3-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab {
+    .present-slide--p3-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab,
+    .present-slide--p4-one-data .prototype-persona-switcher.visual-tabs__stepper .trade-off-switcher__tab {
       background: transparent;
       border: 1px solid transparent;
       border-radius: var(--radius-pill, 999px);
@@ -2019,7 +2084,8 @@
     .present-slide--p1-exploration .phase-wizard__stepper--secondary .trade-off-switcher__tab:not(.trade-off-switcher__tab--active):not([aria-selected="true"]):hover,
     .present-slide--p3-ideation .phase-wizard__stepper--secondary .trade-off-switcher__tab:not(.trade-off-switcher__tab--active):not([aria-selected="true"]):hover,
     .present-slide--p1-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab:not(.trade-off-switcher__tab--active):not([aria-selected="true"]):hover,
-    .present-slide--p3-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab:not(.trade-off-switcher__tab--active):not([aria-selected="true"]):hover {
+    .present-slide--p3-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab:not(.trade-off-switcher__tab--active):not([aria-selected="true"]):hover,
+    .present-slide--p4-one-data .prototype-persona-switcher.visual-tabs__stepper .trade-off-switcher__tab:not(.trade-off-switcher__tab--active):not([aria-selected="true"]):hover {
       background: transparent;
       color: var(--ink-soft);
       box-shadow: 0 0 0 1px color-mix(in srgb, var(--ink) 22%, var(--line));
@@ -2031,7 +2097,9 @@
     .present-slide--p1-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab--active,
     .present-slide--p3-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab--active,
     .present-slide--p1-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab[aria-selected="true"],
-    .present-slide--p3-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab[aria-selected="true"] {
+    .present-slide--p3-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab[aria-selected="true"],
+    .present-slide--p4-one-data .prototype-persona-switcher.visual-tabs__stepper .trade-off-switcher__tab--active,
+    .present-slide--p4-one-data .prototype-persona-switcher.visual-tabs__stepper .trade-off-switcher__tab[aria-selected="true"] {
       background: transparent;
       color: var(--ink);
       border-color: transparent;
@@ -2045,7 +2113,9 @@
     .present-slide--p1-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab--active:hover,
     .present-slide--p3-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab--active:hover,
     .present-slide--p1-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab[aria-selected="true"]:hover,
-    .present-slide--p3-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab[aria-selected="true"]:hover {
+    .present-slide--p3-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab[aria-selected="true"]:hover,
+    .present-slide--p4-one-data .prototype-persona-switcher.visual-tabs__stepper .trade-off-switcher__tab--active:hover,
+    .present-slide--p4-one-data .prototype-persona-switcher.visual-tabs__stepper .trade-off-switcher__tab[aria-selected="true"]:hover {
       background: transparent;
       color: var(--ink);
       box-shadow: 0 0 0 2px color-mix(in srgb, var(--ink) 40%, var(--line));
@@ -2053,7 +2123,8 @@
     .present-slide--p1-exploration .phase-wizard__stepper--secondary .trade-off-switcher__tab:focus-visible,
     .present-slide--p3-ideation .phase-wizard__stepper--secondary .trade-off-switcher__tab:focus-visible,
     .present-slide--p1-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab:focus-visible,
-    .present-slide--p3-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab:focus-visible {
+    .present-slide--p3-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab:focus-visible,
+    .present-slide--p4-one-data .prototype-persona-switcher.visual-tabs__stepper .trade-off-switcher__tab:focus-visible {
       outline: 2px solid var(--accent);
       outline-offset: 2px;
     }
@@ -2064,7 +2135,9 @@
     .present-slide--p1-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab--active:focus-visible,
     .present-slide--p3-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab--active:focus-visible,
     .present-slide--p1-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab[aria-selected="true"]:focus-visible,
-    .present-slide--p3-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab[aria-selected="true"]:focus-visible {
+    .present-slide--p3-visual-system .phase-wizard__stepper--secondary .trade-off-switcher__tab[aria-selected="true"]:focus-visible,
+    .present-slide--p4-one-data .prototype-persona-switcher.visual-tabs__stepper .trade-off-switcher__tab--active:focus-visible,
+    .present-slide--p4-one-data .prototype-persona-switcher.visual-tabs__stepper .trade-off-switcher__tab[aria-selected="true"]:focus-visible {
       outline: 2px solid var(--accent);
       outline-offset: 2px;
     }
@@ -2248,6 +2321,35 @@
       object-fit: contain;
       object-position: top center;
     }
+    /* Ideate steps 1–3 — same content height as Wireframes; assets centered in that band */
+    .present-slide--p1-exploration .exploration-wizard__step[data-step-panel="1"] .exploration-wizard__asset-slot,
+    .present-slide--p1-exploration .exploration-wizard__step[data-step-panel="2"] .exploration-wizard__asset-slot,
+    .present-slide--p1-exploration .exploration-wizard__step[data-step-panel="3"] .exploration-wizard__asset-slot,
+    .present-slide--p3-ideation .exploration-wizard__step[data-step-panel="1"] .exploration-wizard__asset-slot,
+    .present-slide--p3-ideation .exploration-wizard__step[data-step-panel="2"] .exploration-wizard__asset-slot,
+    .present-slide--p3-ideation .exploration-wizard__step[data-step-panel="3"] .exploration-wizard__asset-slot {
+      flex: 0 0 var(--exploration-wireframe-h);
+      height: var(--exploration-wireframe-h);
+      min-height: var(--exploration-wireframe-h);
+      max-height: var(--exploration-wireframe-h);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .present-slide--p1-exploration .exploration-wizard__step[data-step-panel="1"] .exploration-wizard__asset--img,
+    .present-slide--p1-exploration .exploration-wizard__step[data-step-panel="2"] .exploration-wizard__asset--img,
+    .present-slide--p1-exploration .exploration-wizard__step[data-step-panel="3"] .exploration-wizard__asset--img,
+    .present-slide--p3-ideation .exploration-wizard__step[data-step-panel="1"] .exploration-wizard__asset--img,
+    .present-slide--p3-ideation .exploration-wizard__step[data-step-panel="2"] .exploration-wizard__asset--img,
+    .present-slide--p3-ideation .exploration-wizard__step[data-step-panel="3"] .exploration-wizard__asset--img {
+      width: auto;
+      max-width: 100%;
+      height: auto;
+      max-height: 100%;
+      min-height: 0;
+      object-fit: contain;
+      object-position: center;
+    }
     .present-slide--p1-exploration .exploration-wizard__variant-media .trade-off-switcher__media[hidden],
     .present-slide--p3-ideation .exploration-wizard__variant-media .trade-off-switcher__media[hidden] {
       display: none !important;
@@ -2347,6 +2449,18 @@
       min-height: 0;
       max-height: var(--exploration-wireframe-h);
       height: var(--exploration-wireframe-h);
+    }
+    .present-slide--p1-exploration .exploration-wizard__step[data-step-panel="1"] .exploration-wizard__asset,
+    .present-slide--p1-exploration .exploration-wizard__step[data-step-panel="2"] .exploration-wizard__asset,
+    .present-slide--p1-exploration .exploration-wizard__step[data-step-panel="3"] .exploration-wizard__asset,
+    .present-slide--p3-ideation .exploration-wizard__step[data-step-panel="1"] .exploration-wizard__asset,
+    .present-slide--p3-ideation .exploration-wizard__step[data-step-panel="2"] .exploration-wizard__asset,
+    .present-slide--p3-ideation .exploration-wizard__step[data-step-panel="3"] .exploration-wizard__asset {
+      width: auto;
+      max-width: 100%;
+      height: auto;
+      max-height: 100%;
+      min-height: 0;
     }
     .present-slide--p1-exploration .exploration-wizard__asset.placeholder-image,
     .present-slide--p3-ideation .exploration-wizard__asset.placeholder-image,
@@ -3117,6 +3231,32 @@
       line-height: 1.4;
       color: var(--ink-soft);
     }
+
+    .present-deck [data-post-mvp-carousel] .post-mvp-carousel__dot {
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+    .present-deck [data-post-mvp-carousel] .post-mvp-carousel__dot-fill {
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 0%;
+      height: 100%;
+      border-radius: inherit;
+      background: var(--accent);
+      pointer-events: none;
+    }
+    .present-deck [data-post-mvp-carousel] .post-mvp-carousel__dot.is-active,
+    .present-deck [data-post-mvp-carousel] .post-mvp-carousel__dot[aria-current="true"] {
+      background: color-mix(in srgb, var(--ink) 22%, transparent);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .present-deck [data-post-mvp-carousel] .post-mvp-carousel__dot.is-active .post-mvp-carousel__dot-fill,
+      .present-deck [data-post-mvp-carousel] .post-mvp-carousel__dot[aria-current="true"] .post-mvp-carousel__dot-fill {
+        width: 100%;
+      }
+    }
+
     .present-slide.post-mvp-card[class*="present-slide--p2-release-"] .post-mvp-carousel,
     .present-slide.post-mvp-card[class*="present-slide--p2-release-"] .post-mvp-card__visual {
       grid-column: 2;
@@ -3181,7 +3321,6 @@
     .present-slide.post-mvp-card[class*="present-slide--p2-release-"] .post-mvp-carousel__dot.is-active,
     .present-slide.post-mvp-card[class*="present-slide--p2-release-"] .post-mvp-carousel__dot[aria-current="true"] {
       width: 1.35rem;
-      background: var(--accent);
     }
     .present-slide.post-mvp-card[class*="present-slide--p2-release-"] .post-mvp-carousel__slide img,
     .present-slide.post-mvp-card[class*="present-slide--p2-release-"]:not(.present-slide--p2-release-03) .post-mvp-card__visual img,
@@ -3578,6 +3717,18 @@
     .present-slide--p3-visual-system .trade-off-switcher--split.trade-off-switcher--visual-left .exploration-wizard__right {
       margin-top: 0;
     }
+    .present-slide--p1-exploration .trade-off-switcher__right.exploration-wizard__right,
+    .present-slide--p3-ideation .trade-off-switcher__right.exploration-wizard__right {
+      justify-content: flex-start;
+      gap: var(--present-tabs-to-content-gap, var(--exploration-wizard-tabs-stage-gap));
+    }
+    .present-slide--p3-ideation .mobile-ideation-concepts .trade-off-switcher__right {
+      justify-content: flex-start;
+      gap: var(
+        --present-tabs-to-content-gap,
+        clamp(calc(var(--sp-sm) * 1.1), calc(1.45vh * 1.1), calc(1.1rem * 1.1))
+      );
+    }
     .present-slide--p3-ideation .trade-off-switcher__left,
     .present-slide--p3-visual-system .trade-off-switcher__left,
     .present-slide--p3-maze .trade-off-switcher__left.present-split__copy {
@@ -3722,17 +3873,19 @@
         height: auto;
       }
     }
-    .present-slide--p3-shipped .mobile-journey__visual--launch-carousel {
+    .present-slide--p3-shipped .mobile-journey__visual.mobile-journey__visual--launch-carousel {
       grid-column: 1;
       min-height: 0;
       margin: 0;
       padding: 0;
+      padding-inline: 0;
+      max-width: none;
+      overflow: visible;
       display: flex;
       align-items: center;
       justify-content: center;
       width: 100%;
       max-height: min(calc(var(--present-vh) - var(--present-bottom) - var(--present-top) - 2rem), 40rem);
-      overflow: visible;
     }
     .present-slide--p3-shipped .mobile-launch-carousel {
       width: 100%;
@@ -3742,15 +3895,27 @@
     .present-slide--p3-shipped .mobile-launch-carousel .post-mvp-carousel__viewport {
       max-height: min(calc((var(--present-vh) - var(--present-bottom) - var(--present-top) - 5rem) * 1.2), 40.8rem);
       overflow: hidden;
-      border-radius: var(--radius-sm);
+      border-radius: 0;
+    }
+    .present-slide--p3-shipped .mobile-launch-carousel .post-mvp-carousel__slide {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      box-sizing: border-box;
     }
     .present-slide--p3-shipped .mobile-launch-carousel .post-mvp-carousel__slide img {
-      width: 100%;
+      display: block;
+      width: auto;
+      max-width: 100%;
       height: auto;
       max-height: min(calc((var(--present-vh) - var(--present-bottom) - var(--present-top) - 5rem) * 1.2), 40.8rem);
-      object-fit: contain;
+      margin-inline: auto;
+      object-fit: unset;
       object-position: center top;
-      border-radius: var(--radius-sm);
+      border-radius: 16px;
     }
     .present-slide--p3-shipped .mobile-launch-carousel .post-mvp-carousel__nav {
       margin-top: clamp(0.75rem, 1.35vh, 1.05rem);
@@ -3775,33 +3940,53 @@
       line-height: 1.35;
     }
     .present-slide--p3-shipped .mobile-shipped-reviews__grid {
-      gap: clamp(0.45rem, 0.85vh, 0.65rem);
+      gap: clamp(0.35rem, 0.65vh, 0.55rem);
+    }
+    .present-slide--p3-shipped .mobile-shipped-reviews__quote {
+      margin: 0;
+      padding: clamp(0.35rem, 0.65vh, 0.5rem);
     }
     .present-slide--p3-shipped .mobile-shipped-reviews__quote p {
-      font-size: clamp(0.72rem, 1.2vh, 0.84rem);
-      line-height: 1.38;
+      font-size: clamp(0.72rem, 1.05vw, 0.84rem);
+      line-height: 1.36;
+      font-weight: 500;
     }
     .present-slide--p3-shipped .mobile-shipped-reviews__quote .wealth-hub-impact__quote-source {
-      font-size: clamp(0.65rem, 1.05vh, 0.74rem);
+      margin: 0.45rem 0 0;
+      font-size: var(--fs-2xs);
+      color: var(--muted);
+      letter-spacing: 0.02em;
     }
-    .present-slide--p3-desk-research .device-story__copy .beat__title,
-    .present-slide--p3-parity .device-story__copy .beat__title,
-    .present-slide--p3-visual-system .trade-off-switcher__left .beat__title,
-    .present-slide--p3-shipped .device-story__copy .beat__title {
+    .present-slide--p3-shipped .device-story__copy .beat__title,
+    .present-slide--p4-lab-tools .ai-journey__tools-head .device-story__title,
+    .present-slide--p4-one-data .device-story__copy .device-story__title,
+    .present-slide--p4-toolkit .ai-toolkit-copy .device-story__title,
+    .present-slide--p4-coaching .device-story__copy .device-story__title {
       font-size: var(--present-title-size);
       font-weight: 600;
       line-height: 1.18;
       letter-spacing: -0.01em;
       max-width: none;
     }
-    /* Mobile journey (6 slides) — timeline · title · support · body */
+    /* Mobile journey + Enablement beats — eyebrow · title · support · body */
     .present-slide--p3-desk-research .device-story__copy.present-split__copy,
     .present-slide--p3-parity .device-story__copy.present-split__copy,
     .present-slide--p3-ideation .trade-off-switcher__left.present-split__copy,
     .present-slide--p3-maze .trade-off-switcher__left.present-split__copy,
     .present-slide--p3-visual-system .trade-off-switcher__left.present-split__copy,
-    .present-slide--p3-shipped .device-story__copy.present-split__copy {
+    .present-slide--p3-shipped .device-story__copy.present-split__copy,
+    .present-slide--p4-one-data .device-story__copy.present-split__copy,
+    .present-slide--p4-toolkit .ai-toolkit-copy.present-split__copy {
       gap: var(--present-split-stack-gap);
+      justify-content: center;
+      align-self: center;
+    }
+    .present-slide--p4-lab-tools .ai-journey__tools-head.present-split__copy {
+      gap: var(--present-split-stack-gap);
+      justify-content: center;
+      align-self: stretch;
+      width: 100%;
+      min-height: 100%;
     }
     .present-slide--p3-desk-research .device-story__copy.present-split__copy > .wealth-hub-journey,
     .present-slide--p3-parity .device-story__copy.present-split__copy > .wealth-hub-journey,
@@ -3821,6 +4006,22 @@
     .present-slide--p3-maze .trade-off-switcher__left.present-split__copy > .beat__support,
     .present-slide--p3-visual-system .trade-off-switcher__left.present-split__copy > .beat__support,
     .present-slide--p3-shipped .device-story__copy.present-split__copy > .beat__support,
+    .present-slide--p4-lab-tools .ai-journey__tools-head.present-split__copy > .device-story__eyebrow,
+    .present-slide--p4-lab-tools .ai-journey__tools-head.present-split__copy > .device-story__title,
+    .present-slide--p4-lab-tools .ai-journey__tools-head.present-split__copy > .beat__support,
+    .present-slide--p4-lab-tools .ai-journey__tools-head.present-split__copy > .device-story__text,
+    .present-slide--p4-one-data .device-story__copy.present-split__copy > .device-story__eyebrow,
+    .present-slide--p4-one-data .device-story__copy.present-split__copy > .device-story__title,
+    .present-slide--p4-one-data .device-story__copy.present-split__copy > .beat__support,
+    .present-slide--p4-one-data .device-story__copy.present-split__copy > .device-story__text,
+    .present-slide--p4-toolkit .ai-toolkit-copy.present-split__copy > .device-story__eyebrow,
+    .present-slide--p4-toolkit .ai-toolkit-copy.present-split__copy > .device-story__title,
+    .present-slide--p4-toolkit .ai-toolkit-copy.present-split__copy > .beat__support,
+    .present-slide--p4-toolkit .ai-toolkit-copy.present-split__copy > .device-story__text,
+    .present-slide--p4-coaching .device-story__copy.present-split__copy > .device-story__eyebrow,
+    .present-slide--p4-coaching .device-story__copy.present-split__copy > .device-story__title,
+    .present-slide--p4-coaching .device-story__copy.present-split__copy > .beat__support,
+    .present-slide--p4-coaching .device-story__copy.present-split__copy > .device-story__text,
     .present-slide--p3-desk-research .device-story__copy.present-split__copy > .beat__text.beat__text--present,
     .present-slide--p3-parity .device-story__copy.present-split__copy > .beat__text.beat__text--present,
     .present-slide--p3-ideation .trade-off-switcher__left.present-split__copy > .beat__text.beat__text--present,
@@ -3835,6 +4036,16 @@
     .present-slide--p3-maze .trade-off-switcher__left.present-split__copy > .beat__title + .beat__support,
     .present-slide--p3-visual-system .trade-off-switcher__left.present-split__copy > .beat__title + .beat__support,
     .present-slide--p3-shipped .device-story__copy > .beat__title + .beat__support {
+      margin-top: calc(var(--present-split-stack-gap-tight) - var(--present-split-stack-gap));
+    }
+    .present-slide--p4-lab-tools .ai-journey__tools-head > .device-story__title + .beat__support,
+    .present-slide--p4-lab-tools .ai-journey__tools-head > .beat__support + .device-story__text--present,
+    .present-slide--p4-one-data .device-story__copy > .device-story__title + .beat__support,
+    .present-slide--p4-one-data .device-story__copy > .beat__support + .device-story__text--present,
+    .present-slide--p4-toolkit .ai-toolkit-copy > .device-story__title + .beat__support,
+    .present-slide--p4-toolkit .ai-toolkit-copy > .beat__support + .device-story__text--present,
+    .present-slide--p4-coaching .device-story__copy > .device-story__title + .beat__support,
+    .present-slide--p4-coaching .device-story__copy > .beat__support + .device-story__text--present {
       margin-top: calc(var(--present-split-stack-gap-tight) - var(--present-split-stack-gap));
     }
     .present-slide--p3-desk-research .present-split-pane--visual .mobile-journey__visual,
@@ -4045,13 +4256,13 @@
       }
     }
 
-    /* Lab tools — 50/50 copy + tool grid */
+    /* Lab tools — 50/50 carousel + copy */
     .present-slide--p4-lab-tools.ai-journey__tools {
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
       gap: var(--present-split-gap);
-      align-items: center;
-      align-content: center;
+      align-items: stretch;
+      align-content: stretch;
       width: 100%;
       min-height: calc(var(--present-vh) - var(--present-bottom));
       padding: var(--present-top) var(--present-inset) var(--present-bottom);
@@ -4060,54 +4271,98 @@
     }
     .present-slide--p4-lab-tools .ai-journey__tools-head {
       grid-column: 2;
+      grid-row: 1;
       margin-bottom: 0;
       max-width: none;
-      align-self: center;
-      justify-content: center;
-    }
-    .present-slide--p4-lab-tools .device-story__title + .device-story__text--present {
-      margin-top: calc(var(--present-split-stack-gap-tight) - var(--present-split-stack-gap));
-    }
-    .present-slide--p4-lab-tools .ai-tools-grid {
-      grid-column: 1;
-      align-self: center;
-      width: 100%;
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: clamp(0.45rem, 0.85vh, 0.7rem);
-      max-height: min(calc(var(--present-vh) - var(--present-top) - var(--present-bottom) - 1rem), 38rem);
-    }
-    .present-slide--p4-lab-tools .ai-tools-grid__frame {
-      display: flex;
-      align-items: center;
+      align-self: stretch;
+      justify-self: stretch;
       justify-content: center;
       min-height: 0;
-    }
-    .present-slide--p4-lab-tools .ai-tools-grid__frame img {
-      width: 100%;
       height: auto;
-      max-height: min(21vh, 13.5rem);
-      object-fit: contain;
+      padding-block: clamp(0.5rem, 2vh, 1.25rem);
+      box-sizing: border-box;
     }
-    .present-slide--p4-lab-tools .ai-tools-grid__caption {
-      margin: clamp(0.25rem, 0.5vh, 0.4rem) 0 0;
+    .present-slide--p4-lab-tools .ai-journey__tools-head .device-story__text--present {
+      display: block;
+      -webkit-line-clamp: unset;
+      overflow: visible;
+    }
+    .present-slide--p4-lab-tools .ai-lab-tools-carousel {
+      grid-column: 1;
+      grid-row: 1;
+      align-self: center;
+      justify-self: center;
+      width: 100%;
+      max-width: min(100%, 39.2rem);
+      margin: 0 auto;
+    }
+    .present-slide--p4-lab-tools .ai-lab-tools-carousel .post-mvp-carousel__viewport {
+      overflow: hidden;
+      border: none;
+      border-radius: 0;
+      background: transparent;
+    }
+    .present-slide--p4-lab-tools .ai-lab-tools-carousel .post-mvp-carousel__slide.ai-lab-tools-carousel__slide {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(0.35rem, 0.75vh, 0.55rem);
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      box-sizing: border-box;
+      border: none;
+      background: transparent;
+    }
+    .present-slide--p4-lab-tools .ai-lab-tools-carousel .post-mvp-carousel__slide img {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      max-height: min(
+        calc((var(--present-vh) - var(--present-top) - var(--present-bottom) - 5rem) * 1.4),
+        30.8rem
+      );
+      margin-inline: auto;
+      object-fit: contain;
+      object-position: center top;
+      border: none;
+      border-radius: 16px;
+      background: transparent;
+    }
+    .present-slide--p4-lab-tools .ai-lab-tools-carousel .ai-tools-grid__caption {
+      margin: 0;
+      padding: 0 clamp(0.25rem, 0.5vw, 0.5rem);
       font-size: clamp(0.72rem, 1.1vw, 0.82rem);
       line-height: 1.35;
       color: var(--muted);
       text-align: center;
+      border: none;
     }
-    .present-slide--p4-lab-tools .ai-tools-grid__frame {
-      cursor: pointer;
+    .present-slide--p4-lab-tools .ai-lab-tools-carousel .post-mvp-carousel__nav {
+      margin-top: clamp(0.75rem, 1.35vh, 1.05rem);
     }
-    .present-slide--p4-lab-tools .ai-tools-grid__frame img[data-lightbox] {
-      cursor: pointer;
+    .present-slide--p4-lab-tools .ai-lab-tools-carousel .post-mvp-carousel__nav,
+    .present-slide--p4-lab-tools .ai-lab-tools-carousel .post-mvp-carousel__nav--dots-only {
+      justify-content: center;
+    }
+    .present-slide--p4-lab-tools .ai-lab-tools-carousel .post-mvp-carousel__dots {
+      gap: clamp(0.6rem, 1.15vh, 0.9rem);
+    }
+    .present-slide--p4-lab-tools .ai-lab-tools-carousel .post-mvp-carousel__prev,
+    .present-slide--p4-lab-tools .ai-lab-tools-carousel .post-mvp-carousel__next {
+      display: none;
+    }
+    .present-slide--p4-lab-tools .ai-lab-tools-carousel .post-mvp-carousel__slide img[data-lightbox] {
+      cursor: zoom-in;
     }
     @media (max-width: 900px) {
       .present-slide--p4-lab-tools.ai-journey__tools {
         grid-template-columns: 1fr;
         align-items: center;
       }
-      .present-slide--p4-lab-tools .ai-tools-grid {
+      .present-slide--p4-lab-tools .ai-lab-tools-carousel {
         order: 1;
         grid-column: 1;
       }
@@ -4131,19 +4386,48 @@
       box-sizing: border-box;
       overflow: hidden;
     }
-    .present-slide--p4-toolkit .ai-toolkit-copy {
+    .present-slide--p4-toolkit .ai-toolkit-visual {
+      grid-column: 1;
+      align-self: center;
+      justify-self: center;
+      margin: 0;
+      min-width: 0;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .present-slide--p4-toolkit .ai-toolkit-visual img {
+      width: 70%;
+      height: auto;
+      max-height: min(calc(58vh * 0.7), calc(32rem * 0.7));
+      object-fit: contain;
+      object-position: center;
+    }
+    .present-slide--p4-toolkit .ai-toolkit-right {
       grid-column: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-self: center;
+      gap: clamp(0.65rem, 1.2vh, 0.95rem);
+      min-width: 0;
+      width: 100%;
+    }
+    .present-slide--p4-toolkit .ai-toolkit-copy {
       justify-content: center;
       align-self: center;
       min-width: 0;
       padding-right: 0;
+      margin-bottom: clamp(1.35rem, 2.75vh, 2rem);
+    }
+    .present-slide--p4-toolkit .ai-toolkit-copy .device-story__text--present {
+      display: block;
+      -webkit-line-clamp: unset;
+      overflow: visible;
     }
     .present-slide--p4-toolkit .ai-toolkit-copy > * {
       margin: 0;
-    }
-    .present-slide--p4-toolkit .device-story__title + .device-story__text--present,
-    .present-slide--p4-toolkit .device-story__title + .present-p4-toolkit-stat {
-      margin-top: calc(var(--present-split-stack-gap-tight) - var(--present-split-stack-gap));
     }
     .present-slide--p4-toolkit .present-p4-toolkit-stat {
       margin: 0;
@@ -4175,18 +4459,17 @@
     }
     .present-slide--p4-toolkit .ai-toolkit-panel {
       --present-toolkit-card-size: clamp(4.85rem, 9.5vw, 6.35rem);
-      grid-column: 1;
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      align-items: center;
+      justify-content: flex-start;
+      align-items: flex-start;
       gap: clamp(0.45rem, 0.9vh, 0.65rem);
-      align-self: center;
+      align-self: stretch;
       min-width: 0;
       width: 100%;
       height: auto;
-      margin: clamp(0.35rem, 0.75vh, 0.65rem);
-      padding: clamp(0.45rem, 0.9vh, 0.7rem);
+      margin: 0;
+      padding: 0;
       box-sizing: border-box;
     }
     .present-slide--p4-toolkit .ai-toolkit-grid {
@@ -4198,9 +4481,10 @@
       width: fit-content;
       max-width: 100%;
       height: auto;
-      margin: 0 auto;
-      align-content: center;
-      justify-content: center;
+      margin: 0;
+      align-content: start;
+      justify-content: start;
+      justify-items: stretch;
     }
     .present-slide--p4-toolkit .ai-toolkit-card {
       display: flex;
@@ -4242,22 +4526,130 @@
         grid-template-columns: 1fr;
         gap: clamp(0.75rem, 1.5vh, 1rem);
       }
-      .present-slide--p4-toolkit .ai-toolkit-copy,
-      .present-slide--p4-toolkit .ai-toolkit-panel {
+      .present-slide--p4-toolkit .ai-toolkit-visual,
+      .present-slide--p4-toolkit .ai-toolkit-right {
         grid-column: 1;
       }
-      .present-slide--p4-toolkit .ai-toolkit-panel {
+      .present-slide--p4-toolkit .ai-toolkit-visual {
         order: 1;
-        height: auto;
-        margin-inline: auto;
       }
-      .present-slide--p4-toolkit .ai-toolkit-copy {
+      .present-slide--p4-toolkit .ai-toolkit-right {
         order: 2;
       }
       .present-slide--p4-toolkit .ai-toolkit-grid {
         grid-template-columns: repeat(2, var(--present-toolkit-card-size));
         grid-template-rows: repeat(3, var(--present-toolkit-card-size));
         height: auto;
+      }
+    }
+
+    /* One Data — prototype left · copy right */
+    .present-slide--p4-one-data.ai-journey__one-data {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 100%;
+      min-height: calc(var(--present-vh) - var(--present-bottom));
+      padding: var(--present-top) var(--present-inset) var(--present-bottom);
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+    .present-slide--p4-one-data .device-story__row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: var(--present-split-gap);
+      align-items: center;
+      width: 100%;
+      margin: 0;
+    }
+    .present-slide--p4-one-data .ai-journey__prototype.mobile-journey__prototype {
+      grid-column: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      width: min(100%, 25.9375rem);
+      max-width: min(100%, 25.9375rem);
+      margin: 0;
+      justify-self: center;
+      align-self: center;
+    }
+    .present-slide--p4-one-data .prototype-persona-switcher.visual-tabs__stepper {
+      flex: 0 0 auto;
+      flex-shrink: 0;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(0.5rem, 1.35vw, 0.85rem);
+      width: 100%;
+      margin: 0 0 clamp(0.65rem, 1.2vh, 0.85rem);
+      padding: 0;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      box-sizing: border-box;
+    }
+    .present-slide--p4-one-data .prototype-persona-switcher.visual-tabs__stepper .trade-off-switcher__tab {
+      flex: 1 1 0;
+      min-width: 0;
+      padding: 0.45rem 0.5rem;
+      font-size: clamp(0.68rem, 1.05vw, var(--fs-xs, 0.8125rem));
+      white-space: nowrap;
+    }
+    .present-slide--p4-one-data .ai-journey__visual.ai-journey__visual--prototype {
+      width: 90%;
+      max-width: 90%;
+      margin-inline: auto;
+      height: auto !important;
+      min-height: 0 !important;
+      max-height: none;
+      aspect-ratio: 415 / 800;
+      flex: none;
+      position: relative;
+      padding: 0;
+      overflow: hidden;
+      background: transparent;
+      border: 0.6875rem solid var(--ink);
+      border-radius: 3.625rem;
+      box-sizing: border-box;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+    }
+    .present-slide--p4-one-data .ai-journey__visual--prototype iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+      background: transparent;
+    }
+    .present-slide--p4-one-data .device-story__copy {
+      grid-column: 2;
+      align-self: center;
+    }
+    .present-slide--p4-one-data .device-story__copy .device-story__text--present {
+      display: block;
+      -webkit-line-clamp: unset;
+      overflow: visible;
+    }
+    .present-slide--p4-one-data .device-story__copy.present-split__copy > .device-story__title + .beat__support {
+      margin-top: calc(var(--present-split-stack-gap-tight) - var(--present-split-stack-gap));
+    }
+    .present-slide--p4-one-data .device-story__copy.present-split__copy > .beat__support + .device-story__text--present {
+      margin-top: calc(var(--present-split-stack-gap-tight) - var(--present-split-stack-gap));
+    }
+    @media (max-width: 900px) {
+      .present-slide--p4-one-data .device-story__row {
+        grid-template-columns: 1fr;
+      }
+      .present-slide--p4-one-data .tabs-compare.mobile-journey__prototype,
+      .present-slide--p4-one-data .ai-journey__prototype.mobile-journey__prototype {
+        grid-column: 1;
+        order: 1;
+      }
+      .present-slide--p4-one-data .device-story__copy {
+        grid-column: 1;
+        order: 2;
       }
     }
 
@@ -4281,10 +4673,14 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      gap: clamp(0.85rem, 1.75vh, 1.25rem);
+      align-items: flex-start;
+      gap: clamp(0.75rem, 1.5vh, 1.1rem);
       min-width: 0;
       min-height: 0;
-      align-self: center;
+      align-self: stretch;
+      justify-self: stretch;
+      padding-block: clamp(0.35rem, 1.25vh, 0.85rem);
+      box-sizing: border-box;
     }
     .present-slide--p4-coaching .present-coaching__visual {
       grid-column: 1;
@@ -4298,21 +4694,18 @@
       margin: 0;
       padding: 0;
     }
-    .present-slide--p4-coaching .device-story__copy {
+    .present-slide--p4-coaching .device-story__copy.present-split__copy {
       flex: 0 0 auto;
-      align-self: center;
+      align-self: stretch;
       width: 100%;
       min-width: 0;
-      gap: var(--present-copy-gap);
+      gap: var(--present-split-stack-gap);
+      justify-content: flex-start;
     }
-    .present-slide--p4-coaching .device-story__eyebrow {
-      margin: 0;
-    }
-    .present-slide--p4-coaching .device-story__title {
-      margin: 0;
-    }
-    .present-slide--p4-coaching .beat__stat {
-      margin: 0;
+    .present-slide--p4-coaching .device-story__copy .device-story__text--present {
+      display: block;
+      -webkit-line-clamp: unset;
+      overflow: visible;
     }
     .present-slide--p4-coaching .present-coaching__visual .ai-journey__visual--image,
     .present-slide--p4-coaching .present-coaching__visual .mobile-journey__mockup--solo {
@@ -4321,15 +4714,15 @@
       justify-content: center;
       width: 100%;
       height: 100%;
-      max-height: min(calc(var(--present-vh) - var(--present-top) - var(--present-bottom)), 42rem);
+      max-height: min(calc(var(--present-vh) - var(--present-top) - var(--present-bottom)), 33.6rem);
       margin: 0;
-      transform: translateY(calc(var(--present-vh) * 0.05));
+      transform: translateY(calc(var(--present-vh) * 0.04));
     }
     .present-slide--p4-coaching .present-coaching__visual img {
       width: auto;
       max-width: 100%;
       height: auto;
-      max-height: min(calc(var(--present-vh) - var(--present-top) - var(--present-bottom)), 42rem);
+      max-height: min(calc(var(--present-vh) - var(--present-top) - var(--present-bottom)), 33.6rem);
       object-fit: contain;
       object-position: center;
     }
@@ -4338,42 +4731,65 @@
       min-height: 0;
       display: flex;
       flex-direction: column;
+      align-items: flex-start;
+      align-self: flex-start;
+      width: 100%;
+      max-width: min(100%, 32rem);
       margin: 0;
       overflow: visible;
     }
     .present-slide--p4-coaching .ai-cadence__label {
       flex: 0 0 auto;
-      margin: 0 0 clamp(0.35rem, 0.7vh, 0.5rem);
-      font-size: var(--present-eyebrow-size);
+      margin: 0 0 clamp(0.3rem, 0.55vh, 0.45rem);
+      font-size: clamp(0.62rem, 0.9vw, 0.72rem);
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-align: left;
     }
     .present-slide--p4-coaching .ai-cadence-grid {
       flex: 0 0 auto;
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: clamp(0.5rem, 1vw, 0.75rem);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(0.35rem, 0.65vw, 0.5rem);
       align-items: stretch;
+      justify-items: stretch;
       min-height: 0;
       margin: 0;
       padding: 0;
+      width: 100%;
     }
     .present-slide--p4-coaching .ai-cadence-card {
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      gap: clamp(0.2rem, 0.4vh, 0.3rem);
-      padding: clamp(0.6rem, 1.2vh, 0.85rem) clamp(0.65rem, 1.15vw, 0.9rem);
-      min-height: clamp(3.75rem, 9vh, 5.25rem);
-      height: 100%;
+      align-items: flex-start;
+      justify-content: flex-start;
+      gap: clamp(0.15rem, 0.35vh, 0.25rem);
+      padding: clamp(0.4rem, 0.85vh, 0.55rem) clamp(0.45rem, 0.85vw, 0.6rem);
+      min-height: 0;
+      height: auto;
+      border: var(--border);
+      border-radius: var(--radius-md);
+      background: var(--paper);
+      text-align: left;
     }
     .present-slide--p4-coaching .ai-cadence-card__phase {
-      font-size: var(--present-eyebrow-size);
-      letter-spacing: 0.08em;
+      display: none;
     }
     .present-slide--p4-coaching .ai-cadence-card__title {
-      font-size: var(--present-card-title-size);
-      font-weight: 600;
-      line-height: 1.22;
       margin: 0;
+      font-size: clamp(0.68rem, 0.95vw, 0.78rem);
+      font-weight: 600;
+      line-height: 1.28;
+      color: var(--ink);
+    }
+    .present-slide--p4-coaching .ai-cadence-card__text {
+      margin: 0;
+      font-size: clamp(0.62rem, 0.88vw, 0.72rem);
+      font-weight: 400;
+      line-height: 1.38;
+      color: var(--ink-soft);
     }
     @media (max-width: 900px) {
       .present-slide--p4-coaching.present-beat-coaching {
@@ -4979,7 +5395,7 @@
         <h2 class="h-display h-2 period__title">A home for their wealth</h2>
         <p class="lede period__thesis period__thesis--present">This chapter turns the web dashboard into a single home for wealth across savings, investments, and retirement, and carries the new brand into a live, multi-market product.</p>
         <p class="lede period__thesis">This chapter turns the web dashboard into a single home for wealth across savings, investments, and retirement, and carries the new brand into a live, multi-market product.</p>
-        <p class="period__role"><strong>I planned</strong> the research and ran interviews with the design team, <strong>I facilitated</strong> co-creation workshops, and validated the hypotheses. <strong>I synthesized</strong> findings and designed solutions — then <strong>We shipped</strong> the MVP with product and engineering across 12 markets.</p>
+        <p class="period__role"><strong>I planned</strong> the research and ran interviews with the design team, <strong>I facilitated</strong> co-creation workshops, and validated the hypotheses. <strong>I synthesised</strong> findings and designed solutions — then <strong>We shipped</strong> the MVP with product and engineering across 12 markets.</p>
         <dl class="present-darci" aria-label="DARCI — programme governance">
           <div class="present-darci__row">
             <dt class="present-darci__letter" title="Decision-Maker">D</dt>
@@ -5120,7 +5536,7 @@
                     </div>
                     <div class="exploration-wizard__step exploration-wizard__step--stacked-caption" data-step-panel="2" hidden>
                       <div class="exploration-wizard__asset-slot">
-                        <img class="exploration-wizard__asset exploration-wizard__asset--img" src="raisin-assets/assets/img/dashboard-web/principal.webp" alt="Jobs to be done and design principles from the brief" loading="lazy" data-lightbox>
+                        <img class="exploration-wizard__asset exploration-wizard__asset--img" src="raisin-assets/assets/img/dashboard-web/design-principles-from-brief.webp" alt="Jobs to be done and design principles from the brief" loading="lazy" data-lightbox>
                       </div>
                       <p class="exploration-wizard__caption exploration-wizard__caption--below">Jobs to be done and design principles from the brief.</p>
                     </div>
@@ -5390,7 +5806,6 @@
                 <nav class="workflow-strip wealth-hub-journey" aria-label="Wealth Hub journey" data-journey-step="6"></nav>
                 <h3 class="beat__title">Launch proof: adoption held, customers felt the structure.</h3>
                 <p class="beat__support beat__support--present">After MVP launch · against targets declared before design</p>
-                <p class="beat__eyebrow">After MVP launch · against targets declared before design</p>
                 <p class="beat__text beat__text--present">Customers used Wealth Hub as a home for their wealth, not a product catalogue.</p>
                 <ul class="wealth-hub-constraints" aria-label="Constraints declared before design">
                   <li>Fixed API surface — design within existing endpoints, not a new data model</li>
@@ -5553,13 +5968,13 @@
               </div>
               <figure class="post-mvp-card__visual post-mvp-card__visual--wrapped">
                 <div class="post-mvp-card__visual-row post-mvp-card__visual-row--trio">
-                  <img src="raisin-assets/assets/img/brand/wrapped-1-welcome.png" alt="Raisin Wrapped — welcome screen" loading="lazy" data-lightbox>
-                  <img src="raisin-assets/assets/img/brand/wrapped-2-deposit.png" alt="Raisin Wrapped — deposits over the year" loading="lazy" data-lightbox>
+                  <img src="raisin-assets/assets/img/brand/wrapped-1-welcome.webp" alt="Raisin Wrapped — welcome screen" loading="lazy" data-lightbox>
+                  <img src="raisin-assets/assets/img/brand/wrapped-2-deposit.webp" alt="Raisin Wrapped — deposits over the year" loading="lazy" data-lightbox>
                   <img src="raisin-assets/assets/img/brand/wrapped-ipp.webp" alt="Raisin Wrapped — IPP screen" loading="lazy" data-lightbox>
                 </div>
                 <div class="post-mvp-card__visual-row post-mvp-card__visual-row--duo">
-                  <img src="raisin-assets/assets/img/brand/wrapped-3-top-banks.png" alt="Raisin Wrapped — top banks screen" loading="lazy" data-lightbox>
-                  <img src="raisin-assets/assets/img/brand/wrapped-6-outro.png" alt="Raisin Wrapped — closing screen" loading="lazy" data-lightbox>
+                  <img src="raisin-assets/assets/img/brand/wrapped-3-top-banks.webp" alt="Raisin Wrapped — top banks screen" loading="lazy" data-lightbox>
+                  <img src="raisin-assets/assets/img/brand/wrapped-6-outro.webp" alt="Raisin Wrapped — closing screen" loading="lazy" data-lightbox>
                 </div>
               </figure>
             </article>
@@ -5588,19 +6003,19 @@
                         <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/wow/workshop.webp" alt="" width="1919" height="1041"></div>
                       </div>
                       <div class="wow-beat__slide" style="--slide-ar: 1688 / 3356">
-                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/wow/page-setup.png" alt="" width="1688" height="3356"></div>
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/wow/page-setup.webp" alt="" width="1688" height="3356"></div>
                       </div>
                       <div class="wow-beat__slide" style="--slide-ar: 2367 / 3356">
-                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/wow/tables-links.png" alt="" width="2367" height="3356"></div>
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/wow/tables-links.webp" alt="" width="2367" height="3356"></div>
                       </div>
                       <div class="wow-beat__slide" style="--slide-ar: 2906 / 3356">
-                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/wow/status-quo.png" alt="" width="2906" height="3356"></div>
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/wow/status-quo.webp" alt="" width="2906" height="3356"></div>
                       </div>
                       <div class="wow-beat__slide" style="--slide-ar: 3915 / 3356">
-                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/wow/discovery-tools.png" alt="" width="3915" height="3356"></div>
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/wow/discovery-tools.webp" alt="" width="3915" height="3356"></div>
                       </div>
                       <div class="wow-beat__slide" style="--slide-ar: 3526 / 3356">
-                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/wow/cover-component.png" alt="" width="1800" height="1713"></div>
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/wow/cover-component.webp" alt="" width="1800" height="1713"></div>
                       </div>
                     </div>
                     <div class="wow-beat__marquee-set" aria-hidden="true">
@@ -5608,19 +6023,19 @@
                         <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/wow/workshop.webp" alt="" width="1919" height="1041"></div>
                       </div>
                       <div class="wow-beat__slide" style="--slide-ar: 1688 / 3356">
-                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/wow/page-setup.png" alt="" width="1688" height="3356"></div>
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/wow/page-setup.webp" alt="" width="1688" height="3356"></div>
                       </div>
                       <div class="wow-beat__slide" style="--slide-ar: 2367 / 3356">
-                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/wow/tables-links.png" alt="" width="2367" height="3356"></div>
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/wow/tables-links.webp" alt="" width="2367" height="3356"></div>
                       </div>
                       <div class="wow-beat__slide" style="--slide-ar: 2906 / 3356">
-                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/wow/status-quo.png" alt="" width="2906" height="3356"></div>
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/wow/status-quo.webp" alt="" width="2906" height="3356"></div>
                       </div>
                       <div class="wow-beat__slide" style="--slide-ar: 3915 / 3356">
-                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/wow/discovery-tools.png" alt="" width="3915" height="3356"></div>
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/wow/discovery-tools.webp" alt="" width="3915" height="3356"></div>
                       </div>
                       <div class="wow-beat__slide" style="--slide-ar: 3526 / 3356">
-                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/wow/cover-component.png" alt="" width="1800" height="1713"></div>
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/wow/cover-component.webp" alt="" width="1800" height="1713"></div>
                       </div>
                     </div>
                   </div>
@@ -5630,7 +6045,7 @@
                   <div class="wow-beat__marquee-track wow-beat__marquee-track--ltr">
                     <div class="wow-beat__marquee-set">
                       <div class="wow-beat__slide" style="--slide-ar: 16 / 9">
-                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/prototyping/principal-of-prototyping.webp" alt="" width="1920" height="1179"></div>
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/prototyping/principles-of-prototyping.webp" alt="" width="1920" height="1179"></div>
                       </div>
                       <div class="wow-beat__slide" style="--slide-ar: 16 / 9">
                         <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/prototyping/slide-2.webp" alt="" width="1920" height="1179"></div>
@@ -5659,7 +6074,7 @@
                     </div>
                     <div class="wow-beat__marquee-set" aria-hidden="true">
                       <div class="wow-beat__slide" style="--slide-ar: 16 / 9">
-                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/prototyping/principal-of-prototyping.webp" alt="" width="1920" height="1179"></div>
+                        <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/prototyping/principles-of-prototyping.webp" alt="" width="1920" height="1179"></div>
                       </div>
                       <div class="wow-beat__slide" style="--slide-ar: 16 / 9">
                         <div class="wow-beat__frame"><img loading="lazy" decoding="async" src="raisin-assets/assets/img/prototyping/slide-2.webp" alt="" width="1920" height="1179"></div>
@@ -5717,7 +6132,7 @@
                 <span class="workflow-strip__step">Recruit</span>
                 <span class="workflow-strip__step">Interview</span>
                 <span class="workflow-strip__step">Incentivise</span>
-                <span class="workflow-strip__step">Synthesize</span>
+                <span class="workflow-strip__step">Synthesise</span>
               </div>
               <aside class="enablement-callout enablement-surface beat__enablement" aria-label="Enablement — research operating model">
                 <p class="enablement-label">
@@ -5769,9 +6184,7 @@
         </div>
         <h2 class="h-display h-2 period__title">Mobile and the horizon</h2>
         <p class="lede period__thesis period__thesis--present">This chapter is about taking mobile from a stalled redesign to a shipped Wealth Hub — without redoing twelve markets of web research.</p>
-        <p class="lede period__thesis period__thesis--present">Desk research, web parity, in-flow prototyping, and Maze validation on the path to a four-tab experience with product and engineering.</p>
         <p class="lede period__thesis">This chapter is about taking mobile from a stalled redesign to a shipped Wealth Hub — without redoing twelve markets of web research.</p>
-        <p class="lede period__thesis">Desk research, web parity, in-flow prototyping, and Maze validation on the path to a four-tab experience with product and engineering.</p>
         <dl class="present-darci" aria-label="DARCI — programme governance">
           <div class="present-darci__row">
             <dt class="present-darci__letter" title="Decision-Maker">D</dt>
@@ -5901,24 +6314,24 @@
                 </div>
                 <div class="trade-off-switcher__left wealth-hub-story__copy present-split__copy">
                   <nav class="workflow-strip wealth-hub-journey" aria-label="Mobile journey" data-journey-program="mobile" data-journey-step="4"></nav>
-                  <h3 class="beat__title">Portfolio-card home won validation.</h3>
+                  <h3 class="beat__title">Tabbed IA won validation.</h3>
                   <p class="beat__support beat__support--present">Maze · two weeks unmoderated · <strong>92.9%</strong> vs <strong>71.4%</strong> task success</p>
                   <p class="beat__eyebrow">MOBILE · VALIDATION</p>
                   <p class="beat__text beat__text--present">Once the hypotheses were set, I documented what we needed to learn, started automated recruitment through the live web dashboard, and brought Maze into Raisin to run Voice-AI–hosted, unmoderated concept testing on both prototypes.</p>
                   <p class="beat__text">Full setup and results are in Confluence — <a href="https://raisin-jira.atlassian.net/wiki/spaces/Design/pages/5093687339/Mobile+app+dashboard+Maze+Study" target="_blank" rel="noopener">Mobile app dashboard Maze Study</a>. The web dashboard was the recruitment surface; Maze carried the two-week, unmoderated Voice-AI study after I introduced it as Raisin’s research tool for this program.</p>
-                  <div class="trade-off trade-off--compact ideate-conflict-tradeoff" aria-label="Validation outcome — hypothesis B selected">
-                    <p class="trade-off__label present-block-label">Selected concept · Hypothesis B</p>
+                  <div class="trade-off trade-off--compact ideate-conflict-tradeoff" aria-label="Validation outcome — hypothesis A selected">
+                    <p class="trade-off__label present-block-label">Selected concept · Hypothesis A</p>
                     <div class="trade-off__options">
-                      <div class="trade-off__option">
-                        <p class="trade-off__option-label">A · Tabbed IA</p>
-                        <p class="trade-off__option-text"><strong>71.4%</strong> task success — workable, but more navigation to feel “at home”</p>
-                      </div>
                       <div class="trade-off__option trade-off__option--chosen">
                         <span class="ideate-conflict-tradeoff__check" aria-hidden="true">
                           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
                         </span>
+                        <p class="trade-off__option-label">A · Tabbed IA</p>
+                        <p class="trade-off__option-text"><strong>92.9%</strong> task success — clearer section model; taken into visual design</p>
+                      </div>
+                      <div class="trade-off__option">
                         <p class="trade-off__option-label">B · Portfolio-card home</p>
-                        <p class="trade-off__option-text"><strong>92.9%</strong> task success — wealth clarity at landing; taken into visual design</p>
+                        <p class="trade-off__option-text"><strong>71.4%</strong> task success — strong landing clarity, but less legible primary sections in testing</p>
                       </div>
                     </div>
                   </div>
@@ -5997,7 +6410,7 @@
                 <div class="trade-off-switcher__left wealth-hub-story__copy present-split__copy">
                   <nav class="workflow-strip wealth-hub-journey" aria-label="Mobile journey" data-journey-program="mobile" data-journey-step="5"></nav>
                   <h3 class="beat__title">Paired on the mobile design system.</h3>
-                  <p class="beat__support beat__support--present">Freelance designer · foundation tokens · core components</p>
+                  <p class="beat__support beat__support--present">Collaborate with freelance designer · Mobile design-system refresh</p>
                   <p class="beat__eyebrow">MOBILE · VISUAL DESIGN</p>
                   <p class="beat__text beat__text--present">I ran the final visual-design pass with a freelance designer — together we revised foundational mobile design-system tokens and the components themselves, so the shipped UI sat on the library instead of one-off screens.</p>
                   <p class="beat__text">That pairing covered token updates and component work in Figma: light and dark on the Wealth Hub colour map, four-tab IA from validation, and patterns other squads could reuse — not a separate mobile skin.</p>
@@ -6016,19 +6429,19 @@
                     <div class="post-mvp-carousel__viewport">
                       <div class="post-mvp-carousel__track">
                         <figure class="post-mvp-carousel__slide">
-                          <img src="raisin-assets/assets/img/dashboard-mobile/Feature-discovery_%20slide-1@2x.png" alt="In-app feature discovery — screen 1" loading="lazy" data-lightbox>
+                          <img src="raisin-assets/assets/img/dashboard-mobile/feature-discovery-slide-1.webp" alt="In-app feature discovery — screen 1" loading="lazy" data-lightbox>
                         </figure>
                         <figure class="post-mvp-carousel__slide">
-                          <img src="raisin-assets/assets/img/dashboard-mobile/Feature-discovery_%20slide-2@2x.png" alt="In-app feature discovery — screen 2" loading="lazy" data-lightbox>
+                          <img src="raisin-assets/assets/img/dashboard-mobile/feature-discovery-slide-2.webp" alt="In-app feature discovery — screen 2" loading="lazy" data-lightbox>
                         </figure>
                         <figure class="post-mvp-carousel__slide">
-                          <img src="raisin-assets/assets/img/dashboard-mobile/Feature-discovery_%20slide-3@2x.png" alt="In-app feature discovery — screen 3" loading="lazy" data-lightbox>
+                          <img src="raisin-assets/assets/img/dashboard-mobile/feature-discovery-slide-3.webp" alt="In-app feature discovery — screen 3" loading="lazy" data-lightbox>
                         </figure>
                         <figure class="post-mvp-carousel__slide">
-                          <img src="raisin-assets/assets/img/dashboard-mobile/Feature-discovery_%20slide-4@2x.png" alt="In-app feature discovery — screen 4" loading="lazy" data-lightbox>
+                          <img src="raisin-assets/assets/img/dashboard-mobile/feature-discovery-slide-4.webp" alt="In-app feature discovery — screen 4" loading="lazy" data-lightbox>
                         </figure>
                         <figure class="post-mvp-carousel__slide">
-                          <img src="raisin-assets/assets/img/dashboard-mobile/Feature-discovery_%20slide-5@2x.png" alt="In-app feature discovery — screen 5" loading="lazy" data-lightbox>
+                          <img src="raisin-assets/assets/img/dashboard-mobile/feature-discovery-slide-5.webp" alt="In-app feature discovery — screen 5" loading="lazy" data-lightbox>
                         </figure>
                       </div>
                     </div>
@@ -6039,7 +6452,7 @@
                   <h3 class="beat__title">A clearer mental model for wealth on mobile.</h3>
                   <p class="beat__support beat__support--present"><strong>12 B2C markets</strong> · four-tab IA · light and dark</p>
                   <p class="device-story__eyebrow">Shipped · mobile dashboard</p>
-                  <p class="beat__text beat__text--present">The new mobile dashboard isn’t a visual refresh alone — it gives customers a clearer way to understand their assets on platform: what they hold, how it’s performing, and where to act next across Overview, Portfolio, Products, and Wallet. Same Wealth Hub spine we validated on web and in Maze, rolling out market by market.</p>
+                  <p class="beat__text beat__text--present">Beyond a visual refresh: clearer holdings, performance, and next steps across Overview, Portfolio, Products, and Wallet. Same Wealth Hub spine from web and Maze validation — rolling out market by market.</p>
                   <p class="device-story__text">Early App Store signal backs the structure — reviewers call out overview and clarity before polish. Design NPS and task metrics are still being recorded post-launch.</p>
                   <p class="beat__stat">Maze-validated · shipping now · early reviews 5/5</p>
                   <div class="mobile-shipped-reviews reveal-stagger" aria-label="Early app-store reviews">
@@ -6085,10 +6498,9 @@
             <span class="chip">Design Org</span>
           </div>
         </div>
-        <h2 class="h-display h-2 period__title">Design × AI</h2>
-        <p class="lede period__thesis period__thesis--present">What started as a prototyping workshop became design's 180-day operating plan. As one of four org-wide AI Champions, I built four tools for daily production use, championed the operating plan, and led Showcase and Clinic until the workflows stuck — then co-authored the design vision for where Raisin must evolve next.</p>
-        <p class="lede period__thesis">What started as a prototyping workshop became design's 180-day operating plan. As one of four org-wide AI Champions, I built four tools for daily production use, championed the operating plan, and led Showcase and Clinic until the workflows stuck — then co-authored the design vision for where Raisin must evolve next.</p>
-        <p class="period__role">On a VP mandate for design, <strong>I built</strong> the Cursor toolkit and <strong>I facilitated</strong> the enablement programme. <strong>I championed</strong> coaching as one of four AI Champions — and <strong>I co-authored</strong> the design vision for an AI-first wealth OS.</p>
+        <h2 class="h-display h-2 period__title">AI Enablement Highlights</h2>
+        <p class="lede period__thesis period__thesis--present">What started as a prototyping workshop became design's 180-day AI Enablement plan. As one of four org-wide AI Champions, I built four tools for daily production use, championed the operating plan, and led Showcase and Clinic until the workflows stuck.</p>
+        <p class="lede period__thesis">What started as a prototyping workshop became design's 180-day AI Enablement plan. As one of four org-wide AI Champions, I built four tools for daily production use, championed the operating plan, and led Showcase and Clinic until the workflows stuck — then co-authored the design vision for where Raisin must evolve next.</p>
       </div>
       <figure class="period__head-visual period__head-visual--ai">
         <img src="raisin-assets/assets/img/ai-enablement/program-overview.webp" alt="Design × AI programme overview" width="1600" height="1067" loading="lazy" data-lightbox>
@@ -6124,21 +6536,18 @@
             </div>
 
             <div class="ai-journey__toolkit reveal" aria-label="Design × Cursor toolkit">
-              <div class="ai-toolkit-copy present-split__copy">
-                <p class="device-story__eyebrow">Design × Cursor toolkit</p>
-                <h4 class="device-story__title">Established an infrastructure every designer could run.</h4>
-                <p class="beat__stat present-p4-toolkit-stat">1 of 4 AI Champions · Kick-start Lab → Showcase + Clinic · 180 days</p>
-                <aside class="enablement-callout enablement-surface beat__enablement present-p4-toolkit-enablement" aria-label="Enablement — 180-day operating plan">
-                  <p class="enablement-label">
-                    <svg class="enablement-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-                    Enablement
-                  </p>
-                  <p class="enablement-surface__title">Turned a VP mandate into design’s operating plan.</p>
-                  <p class="enablement-surface__text">Lab → Showcase → Clinic documented in Confluence. I championed design’s slice until the workflows stuck.</p>
-                  <p class="enablement-surface__stat">Confluence · 180-day plan · Showcase + Clinic</p>
-                </aside>
-              </div>
-              <div class="ai-toolkit-panel">
+              <figure class="ai-journey__visual ai-journey__visual--image ai-toolkit-visual">
+                <img src="raisin-assets/assets/img/ai-enablement/workflow.webp" alt="Design × Cursor toolkit workflow" width="1400" height="875" loading="lazy" data-lightbox>
+              </figure>
+              <div class="ai-toolkit-right">
+                <div class="ai-toolkit-copy present-split__copy">
+                  <p class="device-story__eyebrow">Design × Cursor toolkit</p>
+                  <h4 class="device-story__title">Established an infrastructure every designer could run.</h4>
+                  <p class="beat__support beat__support--present">Playbook in Confluence — Setup through Workflow, then weekly coaching on real work.</p>
+                  <p class="device-story__text device-story__text--present">To coach the team, I documented the playbook in Confluence first — then used it to get designers set up on Cursor, explain core programming ideas, vibe-code through live examples, and unblock them in three 60-minute sessions each week.</p>
+                  <p class="device-story__text">The playbook covered Setup through Workflow — install, shared rules, skills, subagents, commands, and iteration loops. Confluence held the source of truth; coaching turned it into muscle memory on real work.</p>
+                </div>
+                <div class="ai-toolkit-panel">
               <div class="ai-toolkit-grid reveal-stagger">
                 <div class="ai-toolkit-card">
                   <span class="ai-toolkit-card__icon-wrap" aria-hidden="true">
@@ -6185,40 +6594,75 @@
               </div>
               <p class="ai-toolkit-grid__note">Project Registry · Examples · Confluence</p>
               </div>
+              </div>
+            </div>
+
+            <div class="ai-journey__one-data reveal" aria-label="One Data — show don't tell">
+              <div class="device-story__row device-story__row--visual-left ai-journey__row ai-journey__row--one-data">
+                <figure class="ai-journey__prototype mobile-journey__prototype" data-prototype-shell>
+                  <div class="prototype-persona-switcher trade-off-switcher__tabs phase-wizard__stepper phase-wizard__stepper--secondary visual-tabs__stepper" data-prototype-personas data-fm-widget="raisin-persona" role="tablist" aria-label="Switch One Data persona">
+                    <button type="button" class="prototype-persona-tab trade-off-switcher__tab" role="tab" aria-selected="false" tabindex="-1" data-persona-id="retail-young">Retail Young</button>
+                    <button type="button" class="prototype-persona-tab trade-off-switcher__tab" role="tab" aria-selected="false" tabindex="-1" data-persona-id="affluent-core">Affluent</button>
+                    <button type="button" class="prototype-persona-tab trade-off-switcher__tab" role="tab" aria-selected="false" tabindex="-1" data-persona-id="hnw-core">HNW</button>
+                    <button type="button" class="prototype-persona-tab trade-off-switcher__tab trade-off-switcher__tab--active prototype-persona-tab--active" role="tab" aria-selected="true" tabindex="0" data-persona-id="uhnw-core">UHNW</button>
+                  </div>
+                  <div class="ai-journey__visual ai-journey__visual--prototype">
+                    <iframe
+                      data-prototype-frame
+                      data-src="raisin-assets/prototypes/mobile-dashboard-ideation/index.html?embed=portfolio"
+                      title="One Data dashboard — interactive prototype with tabs and search"
+                      loading="lazy"
+                      tabindex="-1"
+                    ></iframe>
+                  </div>
+                  <figcaption class="period-split__caption">Working prototype — tabs, search, One Data personas</figcaption>
+                </figure>
+                <div class="device-story__copy present-split__copy">
+                  <p class="device-story__eyebrow">One Data · Show don't tell</p>
+                  <h4 class="device-story__title">From dummy prototypes to believable demos</h4>
+                  <p class="beat__support beat__support--present">Persona-true portfolios for design — later the org's shared simulation layer.</p>
+                  <p class="device-story__text device-story__text--present">I vibe-coded Raisin's first believable dashboard demo on One Data — persona-matched data I documented in Confluence — and reused that stack to ship experimental ideas like Search against staging APIs, not Figma alone.</p>
+                  <p class="device-story__text">What started as dummy portfolios for design reviews became the shared simulation layer — consistent figures across tabs, themes, and markets, published for the org and adopted beyond mobile.</p>
+                </div>
+              </div>
             </div>
 
             <div class="ai-journey__tools">
               <div class="device-story__copy present-split__copy ai-journey__tools-head">
-                <p class="device-story__eyebrow">Lab · 4-week sprint</p>
+                <p class="device-story__eyebrow">AI Lab · Velocity enhancing tools</p>
                 <h4 class="device-story__title">Four tools the team uses every day.</h4>
-                <p class="device-story__text device-story__text--present">Design QA, copy, typography, annotation — four tools in daily production.</p>
+                <p class="beat__support beat__support--present">Design QA, Copy-writing, Typography-hosting, and annotation, all in daily use.</p>
+                <p class="device-story__text device-story__text--present">I built all four from scratch in a four-week Lab sprint — each one grounded in Raisin's knowledge base: our design system and QA bar, writing principles, typography hosting, and how we annotate and hand off review.</p>
                 <p class="device-story__text">A structured build sprint — Design QA, copywriting, typography, and prototype annotation — all in production use.</p>
               </div>
-              <div class="ai-tools-grid reveal-stagger" aria-label="Shipped AI tools">
-                <figure class="ai-tools-grid__item">
-                  <div class="ai-tools-grid__frame">
-                    <img src="raisin-assets/assets/img/ai-enablement/tool-1.webp" alt="Design QA tool — compare Figma and developed screens for visual drift" width="678" height="604" loading="lazy" data-lightbox>
+              <div
+                class="post-mvp-carousel ai-lab-tools-carousel"
+                data-post-mvp-carousel
+                data-carousel-dots-only
+                data-interval="4500"
+                aria-roledescription="carousel"
+                aria-label="AI Lab — shipped tools"
+              >
+                <div class="post-mvp-carousel__viewport">
+                  <div class="post-mvp-carousel__track">
+                    <figure class="post-mvp-carousel__slide ai-lab-tools-carousel__slide">
+                      <img src="raisin-assets/assets/img/ai-enablement/tool-1.webp" alt="Design QA tool — compare Figma and developed screens for visual drift" width="678" height="604" loading="lazy" data-lightbox>
+                      <figcaption class="ai-tools-grid__caption">Design QA — Figma link + developed screen to catch visual drift</figcaption>
+                    </figure>
+                    <figure class="post-mvp-carousel__slide ai-lab-tools-carousel__slide">
+                      <img src="raisin-assets/assets/img/ai-enablement/tool-2.webp" alt="Copywriting tool — Raisin writing principles applied from a Figma link" width="687" height="611" loading="lazy" data-lightbox>
+                      <figcaption class="ai-tools-grid__caption">Copywriting — Raisin voice from a Figma link</figcaption>
+                    </figure>
+                    <figure class="post-mvp-carousel__slide ai-lab-tools-carousel__slide">
+                      <img src="raisin-assets/assets/img/ai-enablement/tool-3.webp" alt="Raisin typography system for safe prototyping with premium fonts" width="687" height="611" loading="lazy" data-lightbox>
+                      <figcaption class="ai-tools-grid__caption">Typography — prototype safely with Raisin premium fonts</figcaption>
+                    </figure>
+                    <figure class="post-mvp-carousel__slide ai-lab-tools-carousel__slide">
+                      <img src="raisin-assets/assets/img/ai-enablement/tool-4.webp" alt="Annotation tool — stakeholder comments on prototypes synced to GitLab issues" width="687" height="611" loading="lazy" data-lightbox>
+                      <figcaption class="ai-tools-grid__caption">Annotation — comments synced as GitLab issues</figcaption>
+                    </figure>
                   </div>
-                  <figcaption class="ai-tools-grid__caption">Design QA — Figma link + developed screen to catch visual drift</figcaption>
-                </figure>
-                <figure class="ai-tools-grid__item">
-                  <div class="ai-tools-grid__frame">
-                    <img src="raisin-assets/assets/img/ai-enablement/tool-2.webp" alt="Copywriting tool — Raisin writing principles applied from a Figma link" width="687" height="611" loading="lazy" data-lightbox>
-                  </div>
-                  <figcaption class="ai-tools-grid__caption">Copywriting — Raisin voice from a Figma link</figcaption>
-                </figure>
-                <figure class="ai-tools-grid__item">
-                  <div class="ai-tools-grid__frame">
-                    <img src="raisin-assets/assets/img/ai-enablement/tool-3.webp" alt="Raisin typography system for safe prototyping with premium fonts" width="687" height="611" loading="lazy" data-lightbox>
-                  </div>
-                  <figcaption class="ai-tools-grid__caption">Typography — prototype safely with Raisin premium fonts</figcaption>
-                </figure>
-                <figure class="ai-tools-grid__item">
-                  <div class="ai-tools-grid__frame">
-                    <img src="raisin-assets/assets/img/ai-enablement/tool-4.webp" alt="Annotation tool — stakeholder comments on prototypes synced to GitLab issues" width="687" height="611" loading="lazy" data-lightbox>
-                  </div>
-                  <figcaption class="ai-tools-grid__caption">Annotation — comments synced as GitLab issues</figcaption>
-                </figure>
+                </div>
               </div>
             </div>
 
@@ -6226,7 +6670,8 @@
               <div class="device-story__copy present-split__copy">
                 <p class="device-story__eyebrow">Coaching · applied</p>
                 <h4 class="device-story__title">Coached 8 designers on Cursor.</h4>
-                <p class="device-story__text device-story__text--present">Eight designers — Cursor foundations to shipping on live work.</p>
+                <p class="beat__support beat__support--present">Eight designers · daily support inside the 180-day AI enablement programme.</p>
+                <p class="device-story__text device-story__text--present">I supported them on a daily basis to unblock setup, prompts, and reviews — and to push beyond the shared toolkit: build their own Cursor workflows and small tools so design velocity compounds across the org.</p>
                 <p class="device-story__text">Coached eight designers from Cursor foundations to autonomy on live work — setup, prompts, reviews, and shipping. One example: a cumulative earnings exploration with Deposits, vibe-coded in the open. The feedback-loop plugin made reviews native — Figma-style comments on the prototype (press c), synced as GitLab issues with file and line metadata, so PM notes landed on the exact line of code in Cursor.</p>
                 <p class="beat__stat">8 designers · foundations → live work</p>
               </div>
@@ -6239,24 +6684,24 @@
               <p class="ai-cadence__label">Cadence</p>
               <ol class="ai-cadence-grid reveal-stagger" aria-label="Programme cadence">
                 <li class="ai-cadence-card">
-                  <span class="ai-cadence-card__phase">Coaching</span>
-                  <h4 class="ai-cadence-card__title">Not just tooling.</h4>
-                  <p class="ai-cadence-card__text">Eight designers coached on AI workflows — foundations first, then autonomy on live work. Still running regularly.</p>
-                </li>
-                <li class="ai-cadence-card">
-                  <span class="ai-cadence-card__phase">Showcase</span>
-                  <h4 class="ai-cadence-card__title">Demo sessions</h4>
-                  <p class="ai-cadence-card__text">Weekly sessions I led — what we'd built, what was working, and how to adopt it on live work.</p>
-                </li>
-                <li class="ai-cadence-card">
                   <span class="ai-cadence-card__phase">Clinic</span>
-                  <h4 class="ai-cadence-card__title">Office hours</h4>
-                  <p class="ai-cadence-card__text">Open troubleshooting for Cursor setup, prompts, and workflow questions.</p>
+                  <h4 class="ai-cadence-card__title">Weekly clinic calls</h4>
+                  <p class="ai-cadence-card__text">Open to join — drop in, unblock, and go.</p>
                 </li>
                 <li class="ai-cadence-card">
-                  <span class="ai-cadence-card__phase">MonoRepo</span>
-                  <h4 class="ai-cadence-card__title">Design → Storybook → MR</h4>
-                  <p class="ai-cadence-card__text">Enabled designers to contribute to the mono-repo — pipeline to Storybook, gradually moving to MR-based contribution.</p>
+                  <span class="ai-cadence-card__phase">Monorepo</span>
+                  <h4 class="ai-cadence-card__title">Monorepo</h4>
+                  <p class="ai-cadence-card__text">Designers pushing MRs for UI fixes through Storybook.</p>
+                </li>
+                <li class="ai-cadence-card">
+                  <span class="ai-cadence-card__phase">Registry</span>
+                  <h4 class="ai-cadence-card__title">Tools &amp; skills registry</h4>
+                  <p class="ai-cadence-card__text">Registry admin — kept the live catalogue current as we shipped.</p>
+                </li>
+                <li class="ai-cadence-card">
+                  <span class="ai-cadence-card__phase">Workflow</span>
+                  <h4 class="ai-cadence-card__title">AI workflow</h4>
+                  <p class="ai-cadence-card__text">Evangelised AI workflows and kept documentation alive for the team.</p>
                 </li>
               </ol>
             </div>
@@ -6432,7 +6877,7 @@
 <!-- ============================== BRAND FINALE ============================== -->
 <section class="brand-finale" aria-label="Raisin brand in context">
   <div class="brand-finale__media" aria-hidden="true">
-    <video data-src="raisin-assets/assets/video/brand/brand-motion-summary.mp4" muted loop playsinline data-autoplay-inview preload="none" title=""></video>
+    <video data-src="raisin-assets/assets/video/brand/brand-motion-summary.mp4" muted loop playsinline data-autoplay-inview preload="none" title="Raisin brand motion — built out across product touchpoints"></video>
   </div>
   <div class="brand-finale__scrim" aria-hidden="true"></div>
   <div class="container brand-finale__content reveal">
@@ -6461,7 +6906,7 @@
   <div class="shell-inner shell-bar">
   <div class="chapter-tabs" id="chapters" aria-label="Chapters"></div>
   <div class="ctrl-end">
-    <span class="counter"><span id="curNum">01</span> <span class="sep">/</span> <span id="totNum">23</span></span>
+    <span class="counter"><span id="curNum">01</span> <span class="sep">/</span> <span id="totNum">25</span></span>
     <button type="button" class="nav-btn" data-prev aria-label="Previous slide">←</button>
     <button type="button" class="nav-btn" data-next aria-label="Next slide">→</button>
     <a href="raisin.html" class="nav-btn nav-btn--text is-hidden" id="backToCase" aria-label="Back to case study">Back to case study</a>

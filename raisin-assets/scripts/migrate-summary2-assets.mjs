@@ -264,7 +264,7 @@ const MAPPING = {
 
   // ── Prototyping carousel (1920px) ─────────────────────────────────────────
   "Resource/Principal of prototyping/Principal of Prototyping.jpg": {
-    out: "assets/img/prototyping/principal-of-prototyping.webp",
+    out: "assets/img/prototyping/principles-of-prototyping.webp",
     action: "process",
     maxEdge: 1920,
     quality: 90,
