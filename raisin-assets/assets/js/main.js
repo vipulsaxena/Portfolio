@@ -158,7 +158,11 @@
 
   /* ------------------------------- Lightbox -------------------------------- */
   var lightbox = document.querySelector(".lightbox");
-  if (lightbox && !document.getElementById("present-stage")) {
+  if (
+    lightbox &&
+    !document.getElementById("present-stage") &&
+    !document.querySelector('script[src*="portfolio-lightbox"]')
+  ) {
     var lightboxImg = lightbox.querySelector(".lightbox__img") || lightbox.querySelector("img");
     var closeBtn = lightbox.querySelector(".lightbox__close");
     var prevBtn = lightbox.querySelector(".lightbox__prev");

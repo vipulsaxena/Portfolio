@@ -277,6 +277,9 @@
     if (kind === "why" || kind === "proto" || kind === "tip" || kind === "chips") {
       return root.getAttribute("data-fm-value") || "none";
     }
+    if (kind === "phase") {
+      return root.getAttribute("data-fm-value") || root.getAttribute("data-default") || "1";
+    }
     if (kind === "variant") {
       return root.getAttribute("data-fm-value") || root.getAttribute("data-default") || "a";
     }
@@ -410,6 +413,18 @@
         applyTip(root, want);
         return;
       }
+      if (kind === "phase") {
+        var phaseTab = root.querySelector(
+          '.exploration-wizard__stepper .trade-off-switcher__tab[data-step="' +
+            want +
+            '"], .phase-wizard__stepper .trade-off-switcher__tab[data-step="' +
+            want +
+            '"]'
+        );
+        if (phaseTab) phaseTab.click();
+        root.setAttribute("data-fm-value", want);
+        return;
+      }
       if (kind === "variant" || root.hasAttribute("data-trade-off-switcher")) {
         applyTradeOff(root, want);
         return;
@@ -442,6 +457,12 @@
     });
   }
 
+  function stampLightboxKeys() {
+    if (!global.PortfolioLightbox || typeof global.PortfolioLightbox.stampSyncKeys !== "function") return;
+    var scope = widgetSearchRoot();
+    global.PortfolioLightbox.stampSyncKeys(scope || document);
+  }
+
   function stampHighlightIds() {
     if (!isCaseStudyPage()) return;
     var scope = widgetSearchRoot();
@@ -467,6 +488,7 @@
       }
       n++;
     }
+    stampLightboxKeys();
   }
 
   function readLightbox() {
@@ -477,9 +499,23 @@
   function applyLightbox(id, deferMs) {
     if (!global.PortfolioLightbox) return;
     if (id === undefined) return;
+    var attempts = 0;
     var run = function () {
       holdRemote(500);
-      global.PortfolioLightbox.apply(id || null);
+      stampLightboxKeys();
+      if (!id) {
+        global.PortfolioLightbox.apply(null);
+        return;
+      }
+      var found =
+        global.PortfolioLightbox.findMediaBySyncKey &&
+        global.PortfolioLightbox.findMediaBySyncKey(id);
+      if (!found && attempts < 6) {
+        attempts++;
+        setTimeout(run, attempts * 100);
+        return;
+      }
+      global.PortfolioLightbox.apply(id);
     };
     if (deferMs) setTimeout(run, deferMs);
     else run();
@@ -1733,6 +1769,7 @@
   /* boot */
   function boot() {
     stampHighlightIds();
+    stampLightboxKeys();
     wirePage();
 
     if (isPresentPage()) {

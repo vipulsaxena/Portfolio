@@ -945,6 +945,16 @@
         var on = item.getAttribute("data-step") === s;
         item.classList.toggle("wh-phase-breakdown__item--active", on);
       });
+      var wid = wizardRoot.getAttribute("data-fm-widget");
+      if (wid) {
+        wizardRoot.setAttribute("data-fm-value", s);
+        document.dispatchEvent(
+          new CustomEvent("portfolio:widget-change", {
+            bubbles: true,
+            detail: { id: wid, value: s },
+          })
+        );
+      }
     }
 
     activateStep(wizardRoot.getAttribute("data-default") || "1");

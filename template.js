@@ -176,6 +176,12 @@
     const box = $("#lightbox");
     if (!box) return;
 
+    if (window.PortfolioLightbox) {
+      const img = box.querySelector("img");
+      if (img) window.PortfolioLightbox.mountSimple(box, img);
+      return;
+    }
+
     const close = () => {
       box.classList.remove("open");
       box.setAttribute("aria-hidden", "true");

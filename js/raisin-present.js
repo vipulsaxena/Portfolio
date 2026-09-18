@@ -63,6 +63,22 @@
     if (!host.getAttribute("data-fm-value")) host.setAttribute("data-fm-value", "none");
   }
 
+  function ensurePhaseWizardWidgets(root) {
+    root.querySelectorAll("[data-phase-wizard]").forEach(function (wizardRoot) {
+      if (wizardRoot.getAttribute("data-fm-widget")) return;
+      if (wizardRoot.classList.contains("visual-system-wizard")) {
+        wizardRoot.setAttribute("data-fm-widget", "raisin-visual-steps");
+      } else if (wizardRoot.classList.contains("exploration-wizard")) {
+        wizardRoot.setAttribute("data-fm-widget", "raisin-ideate-steps");
+      }
+      if (!wizardRoot.getAttribute("data-fm-widget")) return;
+      wizardRoot.setAttribute("data-fm-kind", "phase");
+      if (!wizardRoot.getAttribute("data-fm-value")) {
+        wizardRoot.setAttribute("data-fm-value", wizardRoot.getAttribute("data-default") || "1");
+      }
+    });
+  }
+
   function ensureTradeoffWidgets(root) {
     root.querySelectorAll("[data-trade-off-switcher]").forEach(function (switchRoot) {
       if (switchRoot.getAttribute("data-fm-widget")) return;
@@ -873,6 +889,11 @@
         if (activePanel && activePanel.querySelector(".exploration-wizard__variant-switcher")) {
           syncWireframeVariantSwitcher(wizardRoot);
         }
+        var wid = wizardRoot.getAttribute("data-fm-widget");
+        if (wid) {
+          wizardRoot.setAttribute("data-fm-value", s);
+          emitWidgetChange(wid, s);
+        }
       }
 
       var slideId = presentSlideIdFromNode(wizardRoot);
@@ -1364,6 +1385,7 @@
   function initPresentSlide(root) {
     if (!root) return;
     ensureWhyWidget(root);
+    ensurePhaseWizardWidgets(root);
     ensureTradeoffWidgets(root);
     revealAll(root);
     root.querySelectorAll("[data-trade-off-switcher]").forEach(function (el) {

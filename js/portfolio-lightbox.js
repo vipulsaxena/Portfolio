@@ -1,4 +1,4 @@
-/* Shared page-level lightbox (not browser fullscreen). Follow Me sync via data-fm-id. */
+/* Shared page-level lightbox (not browser fullscreen). Follow Me sync via data-fm-lb-key (media path). */
 (function (global) {
   "use strict";
 
@@ -13,8 +13,67 @@
     document.dispatchEvent(new CustomEvent("portfolio:lightbox-change", { bubbles: true }));
   }
 
+  function mediaSrc(el) {
+    if (!el || !el.getAttribute) return "";
+    if (el.tagName === "VIDEO") {
+      return el.getAttribute("data-src") || el.getAttribute("src") || el.currentSrc || "";
+    }
+    return el.getAttribute("data-full") || el.getAttribute("data-src") || el.getAttribute("src") || el.currentSrc || "";
+  }
+
+  function syncKeyForElement(el) {
+    if (!el || !el.getAttribute) return "";
+    var existing = el.getAttribute("data-fm-lb-key");
+    if (existing) return existing;
+    var src = mediaSrc(el);
+    if (!src) return "";
+    try {
+      var u = new URL(src, location.href);
+      src = decodeURIComponent(u.pathname);
+    } catch (e) {
+      src = src.split("#")[0].split("?")[0];
+      try {
+        src = decodeURIComponent(src);
+      } catch (e2) {}
+    }
+    return src.replace(/^\/+/, "").toLowerCase();
+  }
+
+  function ensureSyncKey(el) {
+    if (!el) return "";
+    var key = syncKeyForElement(el);
+    if (key) el.setAttribute("data-fm-lb-key", key);
+    return key;
+  }
+
+  function stampSyncKeys(root) {
+    if (!root || !root.querySelectorAll) return;
+    root.querySelectorAll("[data-lightbox], video[data-lightbox]").forEach(function (el) {
+      ensureSyncKey(el);
+    });
+  }
+
+  function cssEscape(value) {
+    if (typeof CSS !== "undefined" && CSS.escape) return CSS.escape(value);
+    return String(value).replace(/\\/g, "\\\\").replace(/"/g, '\\"');
+  }
+
+  function findMediaBySyncKey(key) {
+    if (!key) return null;
+    var esc = cssEscape(key);
+    var el = document.querySelector('[data-fm-lb-key="' + esc + '"]');
+    if (el) return el;
+    stampSyncKeys(document);
+    el = document.querySelector('[data-fm-lb-key="' + esc + '"]');
+    if (el) return el;
+    return document.querySelector('[data-fm-id="' + esc + '"]');
+  }
+
   function fmIdOf(el) {
-    return el && el.getAttribute ? el.getAttribute("data-fm-id") : null;
+    if (!el || !el.getAttribute) return null;
+    var key = el.getAttribute("data-fm-lb-key");
+    if (key) return key;
+    return el.getAttribute("data-fm-id");
   }
 
   function imagesInContainer(container) {
@@ -61,7 +120,11 @@
   }
 
   function setCurrentFromGallery(gallery, index) {
-    currentFmId = gallerySlideFmId(gallery, index);
+    if (!gallery || index < 0 || index >= gallery.length) {
+      currentFmId = null;
+      return;
+    }
+    currentFmId = ensureSyncKey(gallery[index]) || gallerySlideFmId(gallery, index);
   }
 
   function isOpenGallery(lightbox) {
@@ -306,6 +369,7 @@
       root.querySelectorAll("img[data-lightbox]").forEach(function (img) {
         if (img.dataset.portfolioLbInit && !force) return;
         img.dataset.portfolioLbInit = "1";
+        ensureSyncKey(img);
         img.style.cursor = "pointer";
         img.addEventListener(
           "click",
@@ -338,6 +402,7 @@
       root.querySelectorAll("video[data-lightbox]").forEach(function (video) {
         if (video.dataset.portfolioLbInit && !force) return;
         video.dataset.portfolioLbInit = "1";
+        ensureSyncKey(video);
         video.style.cursor = "zoom-in";
         video.addEventListener(
           "click",
@@ -419,7 +484,7 @@
       lbImg.alt = img.alt || "";
       lb.classList.add("open");
       lb.setAttribute("aria-hidden", "false");
-      currentFmId = fmIdOf(img);
+      currentFmId = ensureSyncKey(img) || fmIdOf(img);
       if (!opts.silent && !applyingRemote) emitChange();
     }
 
@@ -485,7 +550,7 @@
           });
           return;
         }
-        var el = document.querySelector('[data-fm-id="' + fmId + '"]');
+        var el = findMediaBySyncKey(fmId);
         if (!el) return;
         mounted.forEach(function (api) {
           if (api.isOpen()) api.close({ silent: true });
@@ -518,6 +583,9 @@
     mountGallery: mountGallery,
     mountSimple: mountSimple,
     getGalleryImages: getGalleryImages,
+    stampSyncKeys: stampSyncKeys,
+    findMediaBySyncKey: findMediaBySyncKey,
+    syncKeyForElement: syncKeyForElement,
   };
 
   function autoMountLegacy() {
