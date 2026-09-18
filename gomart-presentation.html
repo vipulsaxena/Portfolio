@@ -3,8 +3,6 @@
 
 <head>
     <meta charset="utf-8">
-    <!-- Analytics (GA + Clarity) — skipped on localhost; see js/gtag-init.js -->
-    <script src="js/gtag-init.js"></script>
     <meta http-equiv="x-ua-compatible" content="ie=edge; chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
@@ -498,6 +496,8 @@
         if (!allow) document.documentElement.classList.add("gomart-locked");
       })();
     </script>
+    <!-- Analytics (GA + Clarity) — after gate; deferred until unlock on protected pages -->
+    <script defer src="js/gtag-init.js"></script>
 </head>
 
 <body class="bg-base text-ink font-sans antialiased">
@@ -1195,6 +1195,7 @@
         try { sessionStorage.setItem("gomartAccessGranted", "1"); } catch(_){}
         document.documentElement.classList.remove("gomart-locked");
         gate.remove();
+        try { window.dispatchEvent(new Event("portfolio-unlocked")); } catch (_) {}
         window.dispatchEvent(new Event("resize"));
       } else {
         error.hidden = false; input.focus(); input.select();

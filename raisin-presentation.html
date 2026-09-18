@@ -5243,6 +5243,8 @@
       .present-slide, .progress { transition: none; }
     }
   </style>
+  <!-- Analytics (GA + Clarity) — after gate; deferred until unlock on protected pages -->
+  <script defer src="js/gtag-init.js"></script>
 </head>
 
 <body class="summary-v2">
@@ -7000,6 +7002,7 @@
         try { sessionStorage.setItem(KEY, "1"); } catch (_) {}
         document.documentElement.classList.remove("raisin-present-locked");
         gate.remove();
+        try { window.dispatchEvent(new Event("portfolio-unlocked")); } catch (_) {}
       } else {
         error.hidden = false;
         input.focus();

@@ -2,7 +2,6 @@
 <html lang="en" class="summary-v2">
 <head>
     <meta charset="utf-8">
-    <script src="js/gtag-init.js"></script>
     <meta http-equiv="x-ua-compatible" content="ie=edge; chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>N26 — Multi-Activity Feed Across 24 Markets · Vipul Saxena</title>
@@ -69,6 +68,8 @@
         if (!allow) document.documentElement.classList.add("n26-locked");
       })();
     </script>
+    <!-- Analytics (GA + Clarity) — after gate; deferred until unlock on protected pages -->
+    <script defer src="js/gtag-init.js"></script>
 </head>
 <body class="summary-v2 has-shell n26-web">
 
@@ -579,6 +580,7 @@
         try { sessionStorage.setItem("n26AccessGranted", "1"); } catch(_){}
         document.documentElement.classList.remove("n26-locked");
         gate.remove();
+        try { window.dispatchEvent(new Event("portfolio-unlocked")); } catch (_) {}
       } else {
         error.hidden = false; input.focus(); input.select();
       }
