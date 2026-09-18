@@ -84,8 +84,9 @@ async function main() {
       throw new Error(`long-thread failed at ${i + 1} (total ${thread.length + i + 1}): ${err.message}`);
     }
   }
-  const expectedTotal = thread.length + 40;
-  console.log(`Posted ${expectedTotal} messages total (including long-thread test)`);
+  const skippedPreEngagement = 1;
+  const expectedTotal = thread.length + 40 - skippedPreEngagement;
+  console.log(`Posted ${expectedTotal} persisted messages total (including long-thread test)`);
 
   await request("/api/chat/session", {
     method: "PATCH",
@@ -138,10 +139,7 @@ async function main() {
   ]);
   const parallelIds = parallel.map((r) => r.sessionId);
   const uniqueParallel = new Set(parallelIds);
-  console.log("\nParallel session POST (old client bug):", parallelIds.length, "requests,", uniqueParallel.size, "unique IDs");
-  if (uniqueParallel.size !== 3) {
-    console.log("  Note: server creates new ID per POST — client must dedupe (sessionEnsurePromise)");
-  }
+  console.log("\nParallel session POST:", parallelIds.length, "requests,", uniqueParallel.size, "unique IDs (IDs only; no D1 row until engage)");
 
   console.log("\nPASS: full thread persisted and retrievable via admin API");
   console.log("Session ID for manual check:", sessionId);

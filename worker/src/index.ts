@@ -119,14 +119,17 @@ function checkIpRateLimit(request: Request): boolean {
   return true;
 }
 
-async function ensureSession(env: Env, sessionId: string, page?: string) {
+async function sessionExists(env: Env, sessionId: string): Promise<boolean> {
   const existing = await env.DB.prepare(
     "SELECT id FROM sessions WHERE id = ?"
   )
     .bind(sessionId)
     .first();
+  return Boolean(existing);
+}
 
-  if (existing) return;
+async function ensureSession(env: Env, sessionId: string, page?: string) {
+  if (await sessionExists(env, sessionId)) return;
 
   const ts = nowIso();
   await env.DB.prepare(
@@ -135,6 +138,10 @@ async function ensureSession(env: Env, sessionId: string, page?: string) {
   )
     .bind(sessionId, page || null, ts, ts)
     .run();
+}
+
+function isEngagingUserMessage(role: string, content: string): boolean {
+  return role === "user" && content.trim().length > 0;
 }
 
 async function updateSessionHighlights(
@@ -168,7 +175,6 @@ async function handleChatSession(
   };
 
   const sessionId = body.sessionId || crypto.randomUUID();
-  await ensureSession(env, sessionId, body.page);
 
   return json({ sessionId }, 200, request, env);
 }
@@ -193,7 +199,12 @@ async function handleChatMessage(
     return json({ error: "Rate limit exceeded" }, 429, request, env);
   }
 
-  await ensureSession(env, body.sessionId, body.page);
+  const content = String(body.content);
+  if (isEngagingUserMessage(body.role, content)) {
+    await ensureSession(env, body.sessionId, body.page);
+  } else if (!(await sessionExists(env, body.sessionId))) {
+    return json({ ok: true, skipped: true }, 200, request, env);
+  }
 
   const tags = detectHighlights(
     body.content,

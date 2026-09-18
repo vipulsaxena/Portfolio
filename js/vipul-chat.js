@@ -180,43 +180,22 @@
     });
   }
 
-  var sessionEnsurePromise = null;
+  var sessionCommitted = false;
 
-  function ensureSession() {
-    if (sessionId) return Promise.resolve(sessionId);
-
+  function allocSessionId() {
+    if (sessionId) return sessionId;
     var stored = getSessionId();
     if (stored) {
       sessionId = stored;
-      return Promise.resolve(sessionId);
+      return sessionId;
     }
+    var id = crypto.randomUUID();
+    setSessionId(id);
+    return id;
+  }
 
-    if (sessionEnsurePromise) return sessionEnsurePromise;
-
-    sessionEnsurePromise = apiFetch("/api/chat/session", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ page: getPageName() }),
-    })
-      .then(function (res) {
-        if (!res || !res.ok) {
-          var fallbackId = crypto.randomUUID();
-          setSessionId(fallbackId);
-          return fallbackId;
-        }
-        return res.json().then(function (data) {
-          setSessionId(data.sessionId);
-          return data.sessionId;
-        });
-      })
-      .catch(function () {
-        sessionEnsurePromise = null;
-        var fallbackId = crypto.randomUUID();
-        setSessionId(fallbackId);
-        return fallbackId;
-      });
-
-    return sessionEnsurePromise;
+  function markSessionCommitted() {
+    sessionCommitted = true;
   }
 
   function delay(ms) {
@@ -231,21 +210,24 @@
 
   function syncMessage(role, content, tags, attempt) {
     if (restoringTranscript) return Promise.resolve(true);
+    if (role !== "user" && !sessionCommitted) return Promise.resolve(true);
     attempt = attempt || 0;
-    return ensureSession().then(function () {
-      return apiFetch("/api/chat/message", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          sessionId: sessionId,
-          role: role,
-          content: content,
-          tags: tags || [],
-          page: getPageName(),
-        }),
-      });
+    allocSessionId();
+    return apiFetch("/api/chat/message", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        sessionId: sessionId,
+        role: role,
+        content: content,
+        tags: tags || [],
+        page: getPageName(),
+      }),
     }).then(function (res) {
-      if (res && res.ok) return true;
+      if (res && res.ok) {
+        if (role === "user" && String(content).trim()) markSessionCommitted();
+        return true;
+      }
       if (isRetryableSyncResponse(res) && attempt < 4) {
         return delay(Math.min(1000 * Math.pow(2, attempt), 8000)).then(function () {
           return syncMessage(role, content, tags, attempt + 1);
@@ -258,14 +240,16 @@
 
   function syncPatchSession(patch, attempt) {
     attempt = attempt || 0;
-    return ensureSession().then(function () {
-      return apiFetch("/api/chat/session", {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(Object.assign({ sessionId: sessionId, page: getPageName() }, patch)),
-      });
+    allocSessionId();
+    return apiFetch("/api/chat/session", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(Object.assign({ sessionId: sessionId, page: getPageName() }, patch)),
     }).then(function (res) {
-      if (res && res.ok) return true;
+      if (res && res.ok) {
+        markSessionCommitted();
+        return true;
+      }
       if (isRetryableSyncResponse(res) && attempt < 4) {
         return delay(Math.min(1000 * Math.pow(2, attempt), 8000)).then(function () {
           return syncPatchSession(patch, attempt + 1);
@@ -981,7 +965,6 @@
     if (wrapEl) wrapEl.classList.toggle("is-open", isOpen);
     if (els.badge) els.badge.setAttribute("aria-expanded", isOpen ? "true" : "false");
     if (isOpen) {
-      ensureSession();
       if (pendingLockedCompany) {
         var lockedCompany = pendingLockedCompany;
         var fromRequest = pendingLockedFromRequest;
@@ -1053,7 +1036,6 @@
     });
 
     sessionId = getSessionId();
-    ensureSession();
 
     document.addEventListener("click", function (e) {
       var trigger = e.target.closest("#footer-contact-trigger, [data-chat-open]");
