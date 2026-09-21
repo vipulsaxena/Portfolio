@@ -5906,6 +5906,24 @@ body.summary-v2 .footer-base {
   width: 100%;
   height: auto;
 }
+.period-split__visual .visual-system-wizard .exploration-wizard__stepper.phase-wizard__stepper--secondary {
+  flex-wrap: nowrap;
+  gap: 0.2rem;
+}
+.period-split__visual .visual-system-wizard .exploration-wizard__stepper.phase-wizard__stepper--secondary .trade-off-switcher__tab {
+  flex: 1 1 0;
+  min-width: 0;
+  white-space: nowrap;
+  font-size: clamp(0.62rem, 1.35vw, 0.78rem);
+  padding: 0.35rem 0.42rem;
+  line-height: 1.2;
+}
+.period-split__visual .visual-system-wizard .exploration-wizard__stepper .exploration-wizard__arrow-static {
+  flex: 0 0 auto;
+  flex-shrink: 0;
+  font-size: 0.65rem;
+  padding-inline: 0.02rem;
+}
 
 .trade-off-switcher--split.trade-off-switcher--visual-left {
   align-items: start;
@@ -5962,6 +5980,47 @@ body.summary-v2 .footer-base {
   border-radius: var(--radius-sm);
   overflow: hidden;
   background: var(--paper);
+}
+.visual-system-wizard .exploration-wizard__step--stacked-caption {
+  align-items: center;
+}
+.visual-system-wizard .exploration-wizard__step--stacked-caption .exploration-wizard__caption--below {
+  align-self: stretch;
+  width: 100%;
+}
+.exploration-wizard__asset-slot--visual-critique-video {
+  --visual-critique-video-max-h: min(40vh, 22rem);
+  border: var(--border);
+  box-shadow: 0 8px 20px -16px rgba(0, 0, 0, 0.28);
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  height: auto;
+  margin-inline: auto;
+  align-self: center;
+}
+.visual-system-wizard .exploration-wizard__asset-slot--visual-critique-video .wealth-hub-video-frame.exploration-wizard__asset {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  min-height: 0;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--paper);
+  border: none;
+  box-shadow: none;
+  line-height: 0;
+}
+.visual-system-wizard .exploration-wizard__asset-slot--visual-critique-video .wealth-hub-video-frame.exploration-wizard__asset video {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  max-height: var(--visual-critique-video-max-h);
+  height: auto;
+  vertical-align: top;
+  pointer-events: auto;
+  cursor: zoom-in;
 }
 .exploration-wizard__asset--img {
   display: block;

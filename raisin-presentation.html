@@ -2308,15 +2308,26 @@
     }
     .present-slide--p1-exploration .exploration-wizard__step--stacked-caption .exploration-wizard__asset-slot,
     .present-slide--p3-ideation .exploration-wizard__step--stacked-caption .exploration-wizard__asset-slot,
-    .present-slide--p1-visual-system .exploration-wizard__step--stacked-caption .exploration-wizard__asset-slot,
-    .present-slide--p3-visual-system .exploration-wizard__step--stacked-caption .exploration-wizard__asset-slot {
+    .present-slide--p1-visual-system .exploration-wizard__step--stacked-caption .exploration-wizard__asset-slot:not(.exploration-wizard__asset-slot--visual-critique-video),
+    .present-slide--p3-visual-system .exploration-wizard__step--stacked-caption .exploration-wizard__asset-slot:not(.exploration-wizard__asset-slot--visual-critique-video) {
       flex: 0 0 var(--exploration-asset-h);
       width: 100%;
       height: var(--exploration-asset-h);
       min-height: var(--exploration-asset-h);
       max-height: var(--exploration-asset-h);
     }
-    /* Wireframes step — 20% larger video area, top-aligned, centered */
+    .present-slide--p1-visual-system .exploration-wizard__step--stacked-caption .exploration-wizard__asset-slot--visual-critique-video,
+    .present-slide--p3-visual-system .exploration-wizard__step--stacked-caption .exploration-wizard__asset-slot--visual-critique-video {
+      flex: 0 0 auto;
+      width: max-content;
+      max-width: 100%;
+      height: auto;
+      min-height: 0;
+      max-height: none;
+      margin-inline: auto;
+      align-self: center;
+    }
+    /* Explorations step — 20% larger video area, top-aligned, centered */
     .present-slide--p1-exploration .exploration-wizard__step[data-step-panel="4"] .exploration-wizard__asset-slot--wireframe-compare,
     .present-slide--p3-ideation .exploration-wizard__step[data-step-panel="4"] .exploration-wizard__asset-slot--wireframe-compare {
       --exploration-wireframe-h: min(55.2vh, 30.36rem);
@@ -2362,7 +2373,7 @@
       object-fit: contain;
       object-position: top center;
     }
-    /* Ideate steps 1–3 — same content height as Wireframes; assets centered in that band */
+    /* Ideate steps 1–3 — same content height as Explorations; assets centered in that band */
     .present-slide--p1-exploration .exploration-wizard__step[data-step-panel="1"] .exploration-wizard__asset-slot,
     .present-slide--p1-exploration .exploration-wizard__step[data-step-panel="2"] .exploration-wizard__asset-slot,
     .present-slide--p1-exploration .exploration-wizard__step[data-step-panel="3"] .exploration-wizard__asset-slot,
@@ -2468,8 +2479,8 @@
     }
     .present-slide--p1-exploration .exploration-wizard__asset-slot,
     .present-slide--p3-ideation .exploration-wizard__asset-slot,
-    .present-slide--p1-visual-system .exploration-wizard__asset-slot,
-    .present-slide--p3-visual-system .exploration-wizard__asset-slot {
+    .present-slide--p1-visual-system .exploration-wizard__asset-slot:not(.exploration-wizard__asset-slot--visual-critique-video),
+    .present-slide--p3-visual-system .exploration-wizard__asset-slot:not(.exploration-wizard__asset-slot--visual-critique-video) {
       width: 100%;
       height: var(--exploration-asset-h);
       min-height: var(--exploration-asset-h);
@@ -2520,6 +2531,27 @@
       justify-content: center;
       overflow: hidden;
     }
+    .present-slide--p1-visual-system .exploration-wizard__asset-slot--visual-critique-video .wealth-hub-video-frame.exploration-wizard__asset,
+    .present-slide--p3-visual-system .exploration-wizard__asset-slot--visual-critique-video .wealth-hub-video-frame.exploration-wizard__asset {
+      display: block;
+      width: auto;
+      max-width: 100%;
+      height: auto;
+      min-height: 0;
+      max-height: none;
+      border-radius: var(--radius-sm);
+      border: none;
+      box-shadow: none;
+      background: var(--paper);
+      line-height: 0;
+    }
+    .present-slide--p1-visual-system .exploration-wizard__asset-slot--visual-critique-video .exploration-wizard__asset,
+    .present-slide--p3-visual-system .exploration-wizard__asset-slot--visual-critique-video .exploration-wizard__asset {
+      width: auto;
+      height: auto;
+      min-height: 0;
+      max-height: none;
+    }
     .present-slide--p1-exploration .exploration-wizard__asset video,
     .present-slide--p3-ideation .exploration-wizard__asset video,
     .present-slide--p1-visual-system .exploration-wizard__asset video,
@@ -2528,6 +2560,20 @@
       height: 100%;
       max-height: 100%;
       object-fit: contain;
+    }
+    .present-slide--p1-visual-system .exploration-wizard__asset-slot--visual-critique-video video,
+    .present-slide--p3-visual-system .exploration-wizard__asset-slot--visual-critique-video video {
+      display: block;
+      width: auto;
+      max-width: 100%;
+      max-height: var(--exploration-asset-h);
+      height: auto;
+      object-fit: unset;
+    }
+    .present-slide--p1-visual-system .exploration-wizard__asset-slot--visual-critique-video video[data-lightbox],
+    .present-slide--p3-visual-system .exploration-wizard__asset-slot--visual-critique-video video[data-lightbox] {
+      pointer-events: auto;
+      cursor: zoom-in;
     }
     .placeholder-image {
       background: #f5f5f5;
@@ -2949,6 +2995,18 @@
       }
     }
 
+    .present-slide--p1-visual-system .exploration-wizard__asset-slot--visual-critique-video,
+    .present-slide--p3-visual-system .exploration-wizard__asset-slot--visual-critique-video {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      box-shadow: 0 8px 20px -16px rgba(0, 0, 0, 0.28);
+      overflow: hidden;
+      background: var(--paper);
+      width: max-content;
+      max-width: 100%;
+      align-self: center;
+      margin-inline: auto;
+    }
     .present-slide--p1-visual-system .exploration-wizard__asset--colour-map,
     .present-slide--p3-visual-system .exploration-wizard__asset--colour-map {
       border-radius: var(--radius-sm);
@@ -2964,10 +3022,15 @@
     }
     .present-slide--p1-visual-system .exploration-wizard__step--stacked-caption,
     .present-slide--p3-visual-system .exploration-wizard__step--stacked-caption {
-      align-items: stretch;
+      align-items: center;
     }
-    .present-slide--p1-visual-system .exploration-wizard__step--stacked-caption .exploration-wizard__asset-slot,
-    .present-slide--p3-visual-system .exploration-wizard__step--stacked-caption .exploration-wizard__asset-slot {
+    .present-slide--p1-visual-system .exploration-wizard__step--stacked-caption .exploration-wizard__caption--below,
+    .present-slide--p3-visual-system .exploration-wizard__step--stacked-caption .exploration-wizard__caption--below {
+      align-self: stretch;
+      width: 100%;
+    }
+    .present-slide--p1-visual-system .exploration-wizard__step--stacked-caption .exploration-wizard__asset-slot:not(.exploration-wizard__asset-slot--visual-critique-video),
+    .present-slide--p3-visual-system .exploration-wizard__step--stacked-caption .exploration-wizard__asset-slot:not(.exploration-wizard__asset-slot--visual-critique-video) {
       display: flex;
       flex-direction: column;
       align-items: stretch;
@@ -2975,6 +3038,14 @@
       width: 100%;
       max-width: 100%;
       align-self: stretch;
+    }
+    .present-slide--p1-visual-system .exploration-wizard__step--stacked-caption .exploration-wizard__asset-slot--visual-critique-video,
+    .present-slide--p3-visual-system .exploration-wizard__step--stacked-caption .exploration-wizard__asset-slot--visual-critique-video {
+      display: block;
+      width: max-content;
+      max-width: 100%;
+      align-self: center;
+      margin-inline: auto;
     }
     .present-slide--p1-visual-system .exploration-wizard__step--stacked-caption .exploration-wizard__asset-slot .exploration-wizard__asset--img,
     .present-slide--p3-visual-system .exploration-wizard__step--stacked-caption .exploration-wizard__asset-slot .exploration-wizard__asset--img {
@@ -5350,7 +5421,7 @@
 <section class="why-hero" id="why" style="padding-block:var(--sp-2xl);">
     <div class="container" style="position:relative; z-index:1;">
     <div class="present-gaps__kicker">
-      <span class="chip">Identified overarching gaps</span>
+      <span class="chip">Overarching problem</span>
     </div>
     <h2 class="why-hero__statement present-gaps__title">Raisin was evolving its brand — but the product, the practice, and the team hadn't caught up.</h2>
 
@@ -5571,11 +5642,11 @@
                     <div class="exploration-wizard__stepper phase-wizard__stepper phase-wizard__stepper--secondary" role="tablist" aria-label="Ideate sub-steps">
                       <button type="button" class="trade-off-switcher__tab trade-off-switcher__tab--active" role="tab" aria-selected="true" data-step="1" tabindex="0">Competitive analysis</button>
                       <span class="exploration-wizard__arrow-static" aria-hidden="true">→</span>
-                      <button type="button" class="trade-off-switcher__tab" role="tab" aria-selected="false" data-step="2" tabindex="-1">Principles &amp; JTBD</button>
+                      <button type="button" class="trade-off-switcher__tab" role="tab" aria-selected="false" data-step="2" tabindex="-1">Stakeholder interviews</button>
                       <span class="exploration-wizard__arrow-static" aria-hidden="true">→</span>
-                      <button type="button" class="trade-off-switcher__tab" role="tab" aria-selected="false" data-step="3" tabindex="-1">Stakeholder Interviews</button>
+                      <button type="button" class="trade-off-switcher__tab" role="tab" aria-selected="false" data-step="3" tabindex="-1">Principles &amp; JTBD</button>
                       <span class="exploration-wizard__arrow-static" aria-hidden="true">→</span>
-                      <button type="button" class="trade-off-switcher__tab" role="tab" aria-selected="false" data-step="4" tabindex="-1">Wireframes</button>
+                      <button type="button" class="trade-off-switcher__tab" role="tab" aria-selected="false" data-step="4" tabindex="-1">Explorations</button>
                     </div>
                   </div>
                   <div class="exploration-wizard__stage">
@@ -5587,20 +5658,20 @@
                     </div>
                     <div class="exploration-wizard__step exploration-wizard__step--stacked-caption" data-step-panel="2" hidden>
                       <div class="exploration-wizard__asset-slot">
-                        <img class="exploration-wizard__asset exploration-wizard__asset--img" src="raisin-assets/assets/img/dashboard-web/design-principles-from-brief.webp" alt="Jobs to be done and design principles from the brief" loading="lazy" data-lightbox>
-                      </div>
-                      <p class="exploration-wizard__caption exploration-wizard__caption--below">Jobs to be done and design principles from the brief.</p>
-                    </div>
-                    <div class="exploration-wizard__step exploration-wizard__step--stacked-caption" data-step-panel="3" hidden>
-                      <div class="exploration-wizard__asset-slot">
                         <img class="exploration-wizard__asset exploration-wizard__asset--img" src="raisin-assets/assets/img/dashboard-web/stake.webp" alt="Stakeholder review — hierarchy taken to research" loading="lazy" data-lightbox>
                       </div>
                       <p class="exploration-wizard__caption exploration-wizard__caption--below">Critique with PM, HoD, and engineering — one hierarchy taken to research.</p>
                     </div>
+                    <div class="exploration-wizard__step exploration-wizard__step--stacked-caption" data-step-panel="3" hidden>
+                      <div class="exploration-wizard__asset-slot">
+                        <img class="exploration-wizard__asset exploration-wizard__asset--img" src="raisin-assets/assets/img/dashboard-web/design-principles-from-brief.webp" alt="Jobs to be done and design principles from the brief" loading="lazy" data-lightbox>
+                      </div>
+                      <p class="exploration-wizard__caption exploration-wizard__caption--below">Jobs to be done and design principles from the brief.</p>
+                    </div>
                     <div class="exploration-wizard__step exploration-wizard__step--stacked-caption" data-step-panel="4" hidden>
                       <div class="exploration-wizard__asset-slot exploration-wizard__asset-slot--wireframe-compare">
                         <div class="exploration-wizard__variant-switcher" data-trade-off-switcher data-trade-off-visual-only data-default="b" aria-label="Flat list vs structured hierarchy">
-                          <div class="exploration-wizard__variant-tabs trade-off-switcher__tabs phase-wizard__stepper phase-wizard__stepper--secondary exploration-wizard__variant-tabs--overlay" role="tablist" aria-label="Wireframe hierarchy — A or B">
+                          <div class="exploration-wizard__variant-tabs trade-off-switcher__tabs phase-wizard__stepper phase-wizard__stepper--secondary exploration-wizard__variant-tabs--overlay" role="tablist" aria-label="Explorations — A or B">
                             <button type="button" class="trade-off-switcher__tab" role="tab" aria-selected="false" data-variant="a" tabindex="-1">A</button>
                             <button type="button" class="trade-off-switcher__tab trade-off-switcher__tab--active exploration-wizard__variant-tab--chosen" role="tab" aria-selected="true" data-variant="b" tabindex="0" aria-label="B — chosen">
                               B
@@ -5651,9 +5722,9 @@
                   </div>
                   <ol class="wh-phase-breakdown" aria-label="Ideate sub-steps">
                     <li class="wh-phase-breakdown__item wh-phase-breakdown__item--active" data-step="1"><span class="wh-phase-breakdown__n">3.1</span> Competitive analysis</li>
-                    <li class="wh-phase-breakdown__item" data-step="2"><span class="wh-phase-breakdown__n">3.2</span> Principles &amp; JTBD</li>
-                    <li class="wh-phase-breakdown__item" data-step="3"><span class="wh-phase-breakdown__n">3.3</span> Stakeholder Interviews</li>
-                    <li class="wh-phase-breakdown__item" data-step="4"><span class="wh-phase-breakdown__n">3.4</span> Wireframes</li>
+                    <li class="wh-phase-breakdown__item" data-step="2"><span class="wh-phase-breakdown__n">3.2</span> Stakeholder interviews</li>
+                    <li class="wh-phase-breakdown__item" data-step="3"><span class="wh-phase-breakdown__n">3.3</span> Principles &amp; JTBD</li>
+                    <li class="wh-phase-breakdown__item" data-step="4"><span class="wh-phase-breakdown__n">3.4</span> Explorations</li>
                   </ol>
                 </div>
               </div>
@@ -5783,31 +5854,41 @@
             </div>
 
             <div class="wealth-hub-beat reveal" aria-label="Wealth Hub visual system">
-              <div class="trade-off-switcher trade-off-switcher--split trade-off-switcher--visual-left exploration-wizard visual-system-wizard" data-phase-wizard data-fm-widget="raisin-visual-steps" data-fm-kind="phase" data-fm-value="1" data-journey-anchor="5" data-default="1" aria-label="Visual design — colour map, listing anatomy, final interface">
+              <div class="trade-off-switcher trade-off-switcher--split trade-off-switcher--visual-left exploration-wizard visual-system-wizard" data-phase-wizard data-fm-widget="raisin-visual-steps" data-fm-kind="phase" data-fm-value="1" data-journey-anchor="5" data-default="1" aria-label="Visual design — exploration and critique, colour map, listing anatomy, final interface">
                 <div class="trade-off-switcher__right exploration-wizard__right">
                   <div class="exploration-wizard__controls">
                     <div class="exploration-wizard__stepper phase-wizard__stepper phase-wizard__stepper--secondary" role="tablist" aria-label="Visual system sub-steps">
-                      <button type="button" class="trade-off-switcher__tab trade-off-switcher__tab--active" role="tab" aria-selected="true" data-step="1" tabindex="0">Product colour map</button>
+                      <button type="button" class="trade-off-switcher__tab trade-off-switcher__tab--active" role="tab" aria-selected="true" data-step="1" tabindex="0">Exploration &amp; critique</button>
                       <span class="exploration-wizard__arrow-static" aria-hidden="true">→</span>
-                      <button type="button" class="trade-off-switcher__tab" role="tab" aria-selected="false" data-step="2" tabindex="-1">Listing component anatomy</button>
+                      <button type="button" class="trade-off-switcher__tab" role="tab" aria-selected="false" data-step="2" tabindex="-1">Product colour map</button>
                       <span class="exploration-wizard__arrow-static" aria-hidden="true">→</span>
-                      <button type="button" class="trade-off-switcher__tab" role="tab" aria-selected="false" data-step="3" tabindex="-1">Final interface</button>
+                      <button type="button" class="trade-off-switcher__tab" role="tab" aria-selected="false" data-step="3" tabindex="-1">Anatomy</button>
+                      <span class="exploration-wizard__arrow-static" aria-hidden="true">→</span>
+                      <button type="button" class="trade-off-switcher__tab" role="tab" aria-selected="false" data-step="4" tabindex="-1">Final interface</button>
                     </div>
                   </div>
                   <div class="exploration-wizard__stage">
                     <div class="exploration-wizard__step exploration-wizard__step--stacked-caption is-active" data-step-panel="1">
+                      <div class="exploration-wizard__asset-slot exploration-wizard__asset-slot--visual-critique-video">
+                        <div class="wealth-hub-video-frame exploration-wizard__asset">
+                          <video data-src="raisin-assets/assets/video/dashboard-web/wealthhub.mp4" muted loop playsinline data-autoplay-inview data-lightbox preload="none" title="Wealth Hub — visual exploration and critique"></video>
+                        </div>
+                      </div>
+                      <p class="exploration-wizard__caption exploration-wizard__caption--below">Visual exploration and critique — type, layout, and hierarchy before system lock-in.</p>
+                    </div>
+                    <div class="exploration-wizard__step exploration-wizard__step--stacked-caption" data-step-panel="2" hidden>
                       <div class="exploration-wizard__asset-slot">
                         <img class="exploration-wizard__asset exploration-wizard__asset--img exploration-wizard__asset--colour-map" src="raisin-assets/assets/img/dashboard-web/color_map.webp" alt="Product colour map — market types, hierarchy, and landing-page application" loading="lazy" data-lightbox>
                       </div>
                       <p class="exploration-wizard__caption exploration-wizard__caption--below">Asset-class hues · savings-only remaps · donut child shades — 12 markets, light + dark.</p>
                     </div>
-                    <div class="exploration-wizard__step exploration-wizard__step--stacked-caption" data-step-panel="2" hidden>
+                    <div class="exploration-wizard__step exploration-wizard__step--stacked-caption" data-step-panel="3" hidden>
                       <div class="exploration-wizard__asset-slot">
                         <img class="exploration-wizard__asset exploration-wizard__asset--img" src="raisin-assets/assets/img/dashboard-web/anatomy.webp" alt="Listing component anatomy — structure, labels, and hierarchy on dashboard rows" loading="lazy" data-lightbox>
                       </div>
                       <p class="exploration-wizard__caption exploration-wizard__caption--below">Listing row anatomy — hierarchy, metadata, and actions aligned to the component library.</p>
                     </div>
-                    <div class="exploration-wizard__step exploration-wizard__step--stacked-caption" data-step-panel="3" hidden>
+                    <div class="exploration-wizard__step exploration-wizard__step--stacked-caption" data-step-panel="4" hidden>
                       <div class="exploration-wizard__asset-slot">
                         <img class="exploration-wizard__asset exploration-wizard__asset--img" src="raisin-assets/assets/img/dashboard-web/final_vd.webp" alt="Final Wealth Hub interface — validated visual design in product context" loading="lazy" data-lightbox>
                       </div>
@@ -5818,7 +5899,7 @@
                 <div class="trade-off-switcher__left wealth-hub-story__copy present-split__copy">
                   <nav class="workflow-strip wealth-hub-journey" aria-label="Wealth Hub journey" data-journey-step="5"></nav>
                   <h3 class="beat__title">The system behind the surface.</h3>
-                  <p class="beat__support beat__support--present">Product colour map · Listing anatomy · Final interface · 12 markets</p>
+                  <p class="beat__support beat__support--present">Exploration &amp; critique · Product colour map · Listing anatomy · Final interface · 12 markets</p>
                   <p class="beat__eyebrow">WEALTH HUB · VISUAL DESIGN</p>
                   <p class="beat__text beat__text--present">Type, colour, layout, and components — one system for twelve markets. The colour map settled brand debate; typography, spacing, and components shipped in parallel with Foundation-fix.</p>
                   <p class="beat__text">12 markets · 3 market-type rules · light + dark token specs · web component library built from scratch.</p>
