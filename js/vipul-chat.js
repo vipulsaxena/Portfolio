@@ -24,6 +24,7 @@
   var pendingEmail = "";
   var isOpen = false;
   var isResponding = false;
+  var speakQueue = [];
   var lastBotChunkId = null;
   var topicCompany = null;
   var recentHistory = [];
@@ -297,11 +298,9 @@
 
   function clearActiveChips() {
     if (!els.messages) return;
-    var turns = els.messages.querySelectorAll(".vipul-chat-turn");
-    if (!turns.length) return;
-    var last = turns[turns.length - 1];
-    var chips = last.querySelector(".vipul-chat-chips");
-    if (chips) chips.remove();
+    els.messages.querySelectorAll(".vipul-chat-chips").forEach(function (node) {
+      node.remove();
+    });
   }
 
   function addBotTurn(text, chips, chunkId) {
@@ -368,7 +367,13 @@
   }
 
   function deliverBotResponse(getResponse) {
-    if (isResponding) return Promise.resolve();
+    if (isResponding) {
+      return new Promise(function (resolve) {
+        speakQueue.push(function () {
+          deliverBotResponse(getResponse).then(resolve, resolve);
+        });
+      });
+    }
     isResponding = true;
     setSendEnabled(false);
     showTyping();
@@ -392,6 +397,10 @@
         isResponding = false;
         setSendEnabled(true);
         if (els.input && isOpen) els.input.focus();
+        if (speakQueue.length) {
+          var next = speakQueue.shift();
+          next();
+        }
       });
   }
 
@@ -401,6 +410,15 @@
     });
   }
 
+  function historyForModel(query) {
+    var history = recentHistory.slice(-6);
+    var last = history[history.length - 1];
+    if (last && last.role === "user" && last.content === query) {
+      history = history.slice(0, -1);
+    }
+    return history;
+  }
+
   function fetchAIComplete(query) {
     return apiFetch("/api/chat/complete", {
       method: "POST",
@@ -408,7 +426,7 @@
       body: JSON.stringify({
         message: query,
         unlocked: isUnlocked() || currentState === STATE.UNLOCKED,
-        history: recentHistory.slice(-6),
+        history: historyForModel(query),
         topicCompany: topicCompany,
       }),
     }).then(function (res) {
@@ -432,6 +450,7 @@
   }
 
   function startAccessRequestFlow(companyId) {
+    clearActiveChips();
     accessRequestActive = true;
     accessRequestCompany = companyId || topicCompany || null;
     if (accessRequestCompany) {
@@ -455,6 +474,7 @@
   }
 
   function startContactFlow(prefill) {
+    clearActiveChips();
     accessRequestActive = false;
     accessRequestCompany = null;
     if (getCapturedEmail()) {
@@ -477,6 +497,7 @@
   }
 
   function startPasswordFlow() {
+    clearActiveChips();
     if (isUnlocked()) {
       botSay(
         "You're already unlocked in this browser session — ask me anything about Raisin, OLX, N26, or GoMart.",
@@ -704,14 +725,110 @@
     }
 
     var intent = KNOWLEDGE.matchIntent(rawText);
-    if (intent) {
+    if (intent && intent.action) {
       answerFromIntent(intent, rawText);
       return;
     }
 
-    if (answerFromTopic(rawText)) return;
+    answerWithModel(rawText);
+  }
 
-    fallbackAnswer(rawText);
+  function syncLocalPayload(query) {
+    var unlocked = isUnlocked() || currentState === STATE.UNLOCKED;
+    var intent = KNOWLEDGE.matchIntent(query);
+
+    if (intent && !intent.action) {
+      if (intent.id === "work_impact") {
+        var impactCompany = KNOWLEDGE.getCompanyFromQuery(query) || topicCompany;
+        if (impactCompany && KNOWLEDGE.isLockedProject(impactCompany)) {
+          var impactChunkId = KNOWLEDGE.getImpactChunkId(impactCompany);
+          if (!unlocked) {
+            return {
+              text:
+                getPublicTeaser(impactCompany) +
+                " Impact details are in the password-gated case study — enter the portfolio password to go deeper, or request access.",
+              chips: ["Enter password", "Request access"],
+              chunkId: KNOWLEDGE.getPublicChunkId(impactCompany),
+            };
+          }
+          if (KNOWLEDGE.CHUNKS[impactChunkId]) {
+            return { text: KNOWLEDGE.CHUNKS[impactChunkId], chunkId: impactChunkId };
+          }
+        }
+      } else if (intent.locked || (intent.chunkId && KNOWLEDGE.COMPANIES.indexOf(intent.chunkId) !== -1)) {
+        var companyId = intent.chunkId;
+        var detailId = KNOWLEDGE.pickCompanyChunkId(companyId, query, unlocked);
+        if (KNOWLEDGE.isLockedProject(companyId) && !unlocked) {
+          return {
+            text:
+              getPublicTeaser(companyId) +
+              " The full case study is password-gated — enter the portfolio password to go deeper, or request access.",
+            chips: ["Enter password", "Request access"],
+            chunkId: KNOWLEDGE.getPublicChunkId(companyId),
+          };
+        }
+        if (detailId && KNOWLEDGE.CHUNKS[detailId]) {
+          return { text: KNOWLEDGE.CHUNKS[detailId], chunkId: detailId };
+        }
+        if (KNOWLEDGE.CHUNKS[companyId]) {
+          return { text: KNOWLEDGE.CHUNKS[companyId], chunkId: companyId };
+        }
+      } else if (intent.answer) {
+        return { text: intent.answer, chunkId: intent.id };
+      } else if (intent.chunkId && KNOWLEDGE.CHUNKS[intent.chunkId]) {
+        return { text: KNOWLEDGE.CHUNKS[intent.chunkId], chunkId: intent.chunkId };
+      }
+    }
+
+    if (topicCompany && KNOWLEDGE.wantsTopicFollowUp(query)) {
+      var topicChunk = KNOWLEDGE.pickCompanyChunkId(topicCompany, query, unlocked);
+      if (topicChunk && KNOWLEDGE.CHUNKS[topicChunk]) {
+        if (KNOWLEDGE.isLockedProject(topicCompany) && !unlocked) {
+          return {
+            text:
+              getPublicTeaser(topicCompany) +
+              " The full case study is password-gated — enter the portfolio password to go deeper, or request access.",
+            chips: ["Enter password", "Request access"],
+            chunkId: KNOWLEDGE.getPublicChunkId(topicCompany),
+          };
+        }
+        return { text: KNOWLEDGE.CHUNKS[topicChunk], chunkId: topicChunk };
+      }
+    }
+
+    var results = KNOWLEDGE.searchChunks(query, unlocked, lastBotChunkId, topicCompany);
+    if (results.length && results[0].score >= 1) {
+      var top = results[0];
+      var topCompany = KNOWLEDGE.getCompanyFromChunkId(top.id);
+      var named = KNOWLEDGE.getCompanyFromQuery(query);
+      var weakSticky =
+        topCompany && !named && !KNOWLEDGE.wantsTopicFollowUp(query) && top.score < 2;
+      if (!weakSticky) return { text: top.text, chunkId: top.id };
+    }
+
+    return {
+      text: "I'm not sure I have a sharp answer for that on the site — try asking about my work, case studies, or how to get in touch.",
+      chips: KNOWLEDGE.SUGGESTED_CHIPS.slice(0, 3),
+    };
+  }
+
+  function answerWithModel(query) {
+    var intent = KNOWLEDGE.matchIntent(query);
+    deliverBotResponse(function () {
+      return fetchAIComplete(query)
+        .then(function (aiReply) {
+          if (aiReply) {
+            return {
+              text: aiReply,
+              chunkId: intent && intent.chunkId ? intent.chunkId : null,
+            };
+          }
+          return syncLocalPayload(query);
+        })
+        .catch(function () {
+          return syncLocalPayload(query);
+        });
+    });
   }
 
   function looksLikePassword(text) {
@@ -728,6 +845,7 @@
 
   function attemptPasswordIfApplicable(text) {
     if (isUnlocked()) return false;
+    if (isConversationalAsk(text)) return false;
     if (currentState === STATE.COLLECT_EMAIL || currentState === STATE.COLLECT_INTENT) {
       return false;
     }
@@ -774,6 +892,62 @@
 
   function isEmail(str) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(str.trim());
+  }
+
+  function isFlowControl(text) {
+    return /^(request access|enter password|i have the password|yes, get in touch|cancel|never mind|nevermind|stop)$/i.test(
+      text.trim()
+    );
+  }
+
+  function isSuggestedPrompt(text) {
+    var normalized = text.trim().toLowerCase();
+    var chips = KNOWLEDGE.SUGGESTED_CHIPS || [];
+    for (var i = 0; i < chips.length; i++) {
+      if (chips[i].toLowerCase() === normalized) return true;
+    }
+    return (
+      /^tell me about\b/i.test(text) ||
+      /^what are you working on\b/i.test(text) ||
+      /^what was the customer problem\??$/i.test(text) ||
+      /^olx monetisation work$/i.test(text)
+    );
+  }
+
+  function isConversationalAsk(text) {
+    if (!text || isFlowControl(text) || isEmail(text)) return false;
+    if (isSuggestedPrompt(text)) return true;
+    if (/\?/.test(text)) return true;
+    if (KNOWLEDGE.looksLikeWorkQuestion(text)) return true;
+    var intent = KNOWLEDGE.matchIntent(text);
+    return !!(intent && !intent.action);
+  }
+
+  function isFormState() {
+    return (
+      currentState === STATE.COLLECT_EMAIL ||
+      currentState === STATE.COLLECT_INTENT ||
+      currentState === STATE.AWAIT_PASSWORD
+    );
+  }
+
+  function exitFormMode() {
+    pendingEmail = "";
+    accessRequestActive = false;
+    accessRequestCompany = null;
+    if (isFormState()) {
+      currentState = isUnlocked() ? STATE.UNLOCKED : STATE.IDLE;
+    }
+  }
+
+  function leaveFormAndAnswer(text) {
+    var email = pendingEmail;
+    if (email) {
+      syncPatchSession({ email: email, intent: text });
+      setCapturedEmail(email);
+    }
+    exitFormMode();
+    processQuery(text, false);
   }
 
   function handleUserInput(raw) {
@@ -827,13 +1001,23 @@
         startPasswordFlow();
         return;
       }
-      if (currentState === STATE.COLLECT_EMAIL && looksLikePassword(text)) {
+      if (currentState === STATE.COLLECT_EMAIL && looksLikePassword(text) && !isConversationalAsk(text)) {
         accessRequestActive = false;
         accessRequestCompany = null;
         currentState = STATE.IDLE;
         tryPassword(text);
         return;
       }
+    }
+
+    if (
+      isConversationalAsk(text) &&
+      (currentState === STATE.COLLECT_EMAIL ||
+        currentState === STATE.COLLECT_INTENT ||
+        currentState === STATE.AWAIT_PASSWORD)
+    ) {
+      leaveFormAndAnswer(text);
+      return;
     }
 
     if (currentState === STATE.COLLECT_EMAIL) {
@@ -852,17 +1036,6 @@
     }
 
     if (currentState === STATE.COLLECT_INTENT) {
-      if (!accessRequestActive && KNOWLEDGE.looksLikeWorkQuestion(text)) {
-        var email = pendingEmail;
-        if (email) {
-          syncPatchSession({ email: email, intent: text });
-          setCapturedEmail(email);
-        }
-        pendingEmail = "";
-        currentState = isUnlocked() ? STATE.UNLOCKED : STATE.IDLE;
-        processQuery(text, false);
-        return;
-      }
       completeContactFlow(text);
       return;
     }
@@ -958,7 +1131,8 @@
     );
   }
 
-  function toggle(open) {
+  function toggle(open, options) {
+    options = options || {};
     if (!els.panel) return;
     isOpen = open !== undefined ? open : !isOpen;
     els.panel.classList.toggle("panel-active", isOpen);
@@ -986,7 +1160,7 @@
         } else {
           greetLockedCaseStudy(lockedCompany);
         }
-      } else if (els.messages && !els.messages.childElementCount && !hasGreetedThisTab() && !hasTranscript()) {
+      } else if (!options.skipGreet && els.messages && !els.messages.childElementCount && !hasGreetedThisTab() && !hasTranscript()) {
         markGreetedThisTab();
         botSay(
           "Hey — I'm Vipul. Ask me about my work, how I got to Berlin, case studies, or how to get in touch.",
@@ -1006,17 +1180,36 @@
       toggle(true);
       return;
     }
-    toggle(true);
-    if (opts.intent === "password" || opts.intent === "request_access") {
+    var intent = opts.intent || "chat";
+    var formOpen = intent === "password" || intent === "request_access" || intent === "contact";
+
+    if (intent === "chat") {
+      var stuckInForm = isFormState();
+      if (stuckInForm) {
+        exitFormMode();
+        clearActiveChips();
+      }
+      toggle(true);
+      if (stuckInForm) {
+        botSay(
+          "Ask me anything about the work. If you still want a follow-up, leave your email whenever you're ready.",
+          KNOWLEDGE.SUGGESTED_CHIPS.slice(0, 3)
+        );
+      }
+      return;
+    }
+
+    toggle(true, { skipGreet: formOpen });
+    if (intent === "password" || intent === "request_access") {
       setTimeout(function () {
-        if (opts.intent === "password") startPasswordFlow();
+        if (intent === "password") startPasswordFlow();
         else if (isUnlocked()) {
           botSay("You already have portfolio access in this session.", ["Tell me about Raisin"]);
         } else {
           startAccessRequestFlow(topicCompany);
         }
       }, 300);
-    } else if (opts.intent === "contact") {
+    } else if (intent === "contact") {
       setTimeout(function () { startContactFlow(); }, 300);
     } else if (opts.prefill) {
       setTimeout(function () { handleUserInput(opts.prefill); }, 300);
@@ -1041,7 +1234,7 @@
       var trigger = e.target.closest("#footer-contact-trigger, [data-chat-open]");
       if (trigger) {
         e.preventDefault();
-        open({ intent: trigger.getAttribute("data-chat-intent") || "contact" });
+        open({ intent: trigger.getAttribute("data-chat-intent") || "chat" });
       }
     });
 
