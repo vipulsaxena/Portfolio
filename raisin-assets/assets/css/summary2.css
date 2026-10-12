@@ -1095,6 +1095,40 @@ html.journey-nav-scrolling {
   color: var(--ink-soft);
   max-width: 48ch;
 }
+.track-key__impact {
+  margin: var(--sp-sm) 0 0;
+  font-size: var(--fs-xs);
+  line-height: 1.45;
+  color: var(--ink);
+  max-width: none;
+}
+.track-key__item--enablement .track-key__impact {
+  color: var(--enablement-surface-text);
+}
+.track-key__impact strong {
+  font-weight: 600;
+}
+#journey-intro .journey-product-brief {
+  margin: var(--sp-lg) 0 0;
+  padding: var(--sp-md) var(--sp-lg);
+  border-left: 3px solid var(--accent);
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+#journey-intro .journey-product-brief p {
+  margin: 0;
+  font-size: var(--fs-md);
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--ink);
+  max-width: none;
+}
+#journey-intro .journey-product-brief footer {
+  margin: var(--sp-xs) 0 0;
+  font-size: var(--fs-2xs);
+  color: var(--muted);
+  font-style: normal;
+}
 
 /* ----- Enablement surface (yellow-family fill, readable ink) ----- */
 .enablement-surface {
@@ -2624,6 +2658,9 @@ html.journey-nav-scrolling {
 }
 .period-split__main > .beat__caption + .wealth-hub-impact {
   margin-top: calc(var(--sp-2xs, var(--sp-xs)) - var(--sp-md));
+}
+.period-split__main > .wealth-hub-impact + .wealth-hub-impact__quotes {
+  margin-top: 1.5rem;
 }
 .period-split__main > .wealth-hub-impact + .beat__text {
   margin-top: var(--sp-sm);

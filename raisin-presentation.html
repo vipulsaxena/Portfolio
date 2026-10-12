@@ -703,15 +703,28 @@
     .present-slide--journey .track-key__label {
       font-size: var(--present-eyebrow-size);
     }
+    .present-slide--journey .track-key__text {
+      font-size: calc(1.2 * var(--fs-sm));
+      line-height: 1.35;
+      font-weight: 500;
+      color: var(--ink);
+      max-width: none;
+    }
+    .present-slide--journey .track-key__item--enablement.enablement-surface .track-key__text {
+      color: var(--enablement-surface-text);
+    }
     .present-slide--journey .track-key__impact {
       margin: clamp(0.5rem, 1vh, 0.75rem) 0 0;
       font-size: clamp(0.78rem, 1.45vh, 0.88rem);
       line-height: 1.4;
-      color: var(--ink-soft);
+      color: var(--ink);
       max-width: none;
     }
+    .present-slide--journey .track-key__item--enablement.enablement-surface .track-key__impact {
+      color: var(--enablement-surface-text);
+    }
     .present-slide--journey .track-key__impact strong {
-      color: var(--ink);
+      color: inherit;
       font-weight: 600;
     }
     .present-slide--journey .track-key__title {
@@ -2749,10 +2762,20 @@
       object-fit: cover;
       object-position: top center;
     }
+    /* 24px between metrics card and quote row (flex stack gap + margin = 1.5rem total) */
+    .present-slide--p1-outcomes .period-split__main > .beat__text + .wealth-hub-impact__quotes,
+    .present-slide--p1-outcomes .period-split__main.present-split__copy > .wealth-hub-impact + .wealth-hub-impact__quotes,
+    .present-slide--p1-outcomes .period-split__main.present-split__copy > .wealth-hub-impact__quotes {
+      margin-top: max(0px, calc(1.5rem - var(--present-split-stack-gap)));
+    }
     .present-slide--p1-outcomes .wealth-hub-impact__quotes {
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: clamp(0.35rem, 0.65vh, 0.55rem);
-      margin-top: clamp(0.25rem, 0.5vh, 0.4rem);
+    }
+    .present-slide--p1-outcomes .present-p1-measurement .enablement-surface__stat {
+      font-size: clamp(0.68rem, 1.05vh, 0.78rem);
+      line-height: 1.4;
+      font-weight: 500;
     }
     .present-slide--p1-outcomes .wealth-hub-impact__quote {
       margin: 0;
@@ -5473,20 +5496,20 @@
 <section class="section section--tight" id="journey-intro" data-period="journey-intro">
   <div class="container">
     <div class="section-head reveal">
-      <p class="eyebrow">Closing the gaps</p>
+      <p class="eyebrow">— Product brief</p>
       <h2 class="h-display h-2">Journey</h2>
       <p class="lede">Two programmes, run in parallel — not one tidy sequence.</p>
       <p class="lede lede--remit">My remit: close the three gaps — <strong>brand evolution</strong> into live product (absorb the agency handoff and carry it into the surfaces customers use; redesign web, mobile, and communication into one home for their wealth), and <strong>enablement</strong> in parallel (ways of working, research and critique rituals, craft standards, and the AI programme) so the team could sustain it. <strong>Practice</strong> = customer outcomes. <strong>Enablement</strong> = team capability. <strong>I</strong> where I owned it; <strong>we</strong> at tribe scale.</p>
     </div>
     <blockquote class="present-pullquote reveal">
-      <p>&ldquo;Redesign the dashboard experience. Make Raisin feel like one product.&rdquo;</p>
-      <footer>&mdash; Head of Product brief</footer>
+      <p>&ldquo;Redesign the Raisin B2C Dashboard in alignment with Global Re-Branding &amp; Domain Unification that drives customers to protect, grow, and reinvest their wealth within Raisin.&rdquo;</p>
+      <footer>&mdash; Head of Product (B2C Growth)</footer>
     </blockquote>
     <div class="track-key reveal-stagger">
       <div class="track-key__item track-key__item--practice">
         <p class="track-key__label">Practice</p>
         <p class="track-key__text">Research-led decisions, shipped screens, measured outcomes.</p>
-        <p class="track-key__impact track-key__impact--present"><strong>Impact:</strong> NPS, task success, adoption, AuM, and retention all moved on the customer side. Measured honestly in Proof; not everything lifted.</p>
+        <p class="track-key__impact track-key__impact--present"><strong>Impact:</strong> Support Global Growth, Enhance Customer Engagement, AuM Growth &amp; Retention, Cross-Selling &amp; Margin Diversification</p>
       </div>
       <div class="track-key__item track-key__item--enablement enablement-surface">
         <p class="track-key__label enablement-label">
@@ -5956,8 +5979,8 @@
                       <p class="wealth-hub-impact__desc">Task completion target · Not systematically measured pre-ship</p>
                     </div>
                     <div class="wealth-hub-impact__item">
-                      <div class="wealth-hub-impact__value mono-stat">72–87%</div>
-                      <p class="wealth-hub-impact__desc">Agree they can better understand and manage their wealth</p>
+                      <div class="wealth-hub-impact__value mono-stat">+6.3%</div>
+                      <p class="wealth-hub-impact__desc">AuM increase over 9 months of launch</p>
                     </div>
                     <div class="wealth-hub-impact__item">
                       <div class="wealth-hub-impact__value mono-stat">+23 → +53</div>
@@ -5965,8 +5988,6 @@
                     </div>
                   </div>
                 </div>
-                <p class="beat__text">Business context: AuM reached ~€77bn by end 2024; the dashboard migration protected NPS and HNW loyalty through the rebrand.</p>
-                <p class="beat__text">What customers praised wasn’t polish — it was the structure:</p>
                 <div class="wealth-hub-impact__quotes" aria-label="Customer quotes — Brand Evolution survey">
                   <blockquote class="wealth-hub-impact__quote">
                     <p>“Everything works great. I especially like the drill-down graphics — Overview → Fixed deposit → individual bank. That’s how every website should work.”</p>
@@ -5977,6 +5998,8 @@
                     <footer class="wealth-hub-impact__quote-source">🇫🇷 France · Brand Evolution survey</footer>
                   </blockquote>
                 </div>
+                <p class="beat__text">Business context: AuM reached ~€77bn by end 2024; the dashboard migration protected NPS and HNW loyalty through the rebrand.</p>
+                <p class="beat__text">What customers praised wasn’t polish — it was the structure:</p>
                 <aside class="enablement-callout enablement-surface beat__enablement present-p1-measurement" aria-label="Enablement — UX measurement framework">
                   <p class="enablement-label">
                     <svg class="enablement-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
@@ -5984,7 +6007,7 @@
                   </p>
                   <p class="enablement-surface__title">Multi-market qualitative &amp; quantitative reporting · UX measurement framework</p>
                   <p class="enablement-surface__text">Business KPIs, product adoption, and experience metrics — one pyramid so every release could be measured on its own terms.</p>
-                  <p class="enablement-surface__stat">Business · Product · Experience · still in use</p>
+                  <p class="enablement-surface__stat">NPS / customer sentiment, Trustpilot, Dashboard-specific conversion, Session frequency / duration / FE performance, Dashboard adoption / task completion and AuM</p>
                 </aside>
               </div>
             </div>
