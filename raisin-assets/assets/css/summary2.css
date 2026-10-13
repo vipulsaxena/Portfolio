@@ -10,6 +10,33 @@ body.summary-v2 {
   overflow-x: clip;
 }
 
+/* Case study / full-page scroll — thumb flush to viewport edge, darker than global base */
+html.summary-v2 {
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--ink) 58%, var(--line-strong)) transparent;
+}
+html.summary-v2::-webkit-scrollbar {
+  width: 11px;
+}
+html.summary-v2::-webkit-scrollbar-track {
+  background: transparent;
+}
+html.summary-v2::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--ink) 52%, var(--muted));
+  border-radius: 999px;
+  border: 2px solid transparent;
+  border-right-width: 5px;
+  background-clip: padding-box;
+}
+html.summary-v2::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--ink) 68%, var(--muted));
+  background-clip: padding-box;
+}
+html.summary-v2:fullscreen {
+  scrollbar-color: color-mix(in srgb, var(--ink) 58%, var(--line-strong)) transparent;
+}
+
 /* Page layout — generous side insets, scales with viewport */
 body.summary-v2 {
   --page-inset: clamp(2.5rem, 10vw, 15rem);
@@ -5756,6 +5783,52 @@ html.journey-nav-scrolling {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.lightbox.is-scroll {
+  align-items: stretch;
+  justify-content: flex-start;
+  padding-top: calc(3.25rem + env(safe-area-inset-top, 0px));
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  padding-inline: 0;
+}
+.lightbox.is-scroll .lightbox__stage {
+  flex: 1;
+  width: 100%;
+  max-width: 100%;
+  max-height: none;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  align-items: flex-start;
+  justify-content: center;
+  padding-block: var(--sp-sm) calc(var(--sp-2xl) + 1.5rem);
+  padding-inline: max(var(--gutter), env(safe-area-inset-left, 0px))
+    max(0.35rem, env(safe-area-inset-right, 0px));
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.5) transparent;
+}
+.lightbox.is-scroll .lightbox__stage::-webkit-scrollbar {
+  width: 10px;
+}
+.lightbox.is-scroll .lightbox__stage::-webkit-scrollbar-track {
+  background: transparent;
+}
+.lightbox.is-scroll .lightbox__stage::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.46);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  border-right-width: 4px;
+  background-clip: padding-box;
+}
+.lightbox.is-scroll .lightbox__stage::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.62);
+  background-clip: padding-box;
+}
+.lightbox.is-scroll .lightbox__img {
+  max-width: min(100%, 72rem);
+  max-height: none;
+  width: 100%;
+  height: auto;
 }
 .lightbox__img {
   max-width: 100%;

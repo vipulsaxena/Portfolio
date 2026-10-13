@@ -1690,7 +1690,7 @@
     }
     .wealth-hub-journey .workflow-strip__step--done .workflow-strip__n {
       background: var(--accent-ink);
-      color: var(--accent);
+      color: #fff;
     }
     .wealth-hub-journey .workflow-strip__step--active {
       background: var(--accent);
@@ -2195,6 +2195,72 @@
       outline: 2px solid var(--accent);
       outline-offset: 2px;
     }
+    /* Wealth Hub sub-steps (3.x / 5.x) — same pill states as the journey strip */
+    .present-slide .phase-wizard__stepper--secondary.exploration-wizard__stepper--journey {
+      gap: 0.2rem;
+      width: auto;
+      max-width: 100%;
+      flex-wrap: wrap;
+      row-gap: 0.3rem;
+      justify-content: center;
+      align-self: center;
+      margin-inline: auto;
+    }
+    .present-slide .phase-wizard__stepper--secondary.exploration-wizard__stepper--journey .trade-off-switcher__tab {
+      flex: 0 0 auto;
+      min-width: auto;
+      white-space: nowrap;
+      gap: 0.3rem;
+      padding: var(--wh-journey-pill-pad-y, 0.4rem) 0.45rem;
+      border: var(--border);
+      background: var(--paper);
+      color: var(--ink-soft);
+      font-weight: 600;
+      line-height: 1.2;
+      box-shadow: none;
+      transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    }
+    .present-slide .phase-wizard__stepper--secondary.exploration-wizard__stepper--journey .trade-off-switcher__tab:not(.trade-off-switcher__tab--active):not([aria-selected="true"]):hover {
+      background: var(--paper);
+      border-color: color-mix(in srgb, var(--ink) 22%, var(--line));
+      color: var(--ink);
+      box-shadow: none;
+    }
+    .present-slide .phase-wizard__stepper--secondary.exploration-wizard__stepper--journey .trade-off-switcher__tab.is-done {
+      color: var(--accent-ink);
+      border-color: color-mix(in srgb, var(--accent) 40%, var(--line));
+      background: color-mix(in srgb, var(--accent-wash) 50%, var(--paper));
+    }
+    .present-slide .phase-wizard__stepper--secondary.exploration-wizard__stepper--journey .trade-off-switcher__tab.trade-off-switcher__tab--active,
+    .present-slide .phase-wizard__stepper--secondary.exploration-wizard__stepper--journey .trade-off-switcher__tab.trade-off-switcher__tab--active:hover {
+      background: var(--accent);
+      color: var(--accent-ink);
+      border-color: var(--accent);
+      font-weight: 600;
+      box-shadow: none;
+    }
+    .present-slide .phase-wizard__stepper--secondary.exploration-wizard__stepper--journey .exploration-wizard__tab-n {
+      display: inline-flex !important;
+      min-width: 1.6rem;
+      height: 1.25rem;
+      padding: 0 0.25rem;
+      box-sizing: border-box;
+      font-size: 0.68em;
+      background: color-mix(in srgb, var(--ink) 10%, transparent);
+      color: var(--ink-soft);
+    }
+    .present-slide .phase-wizard__stepper--secondary.exploration-wizard__stepper--journey .trade-off-switcher__tab.is-done .exploration-wizard__tab-n {
+      background: var(--accent-ink);
+      color: #fff;
+    }
+    .present-slide .phase-wizard__stepper--secondary.exploration-wizard__stepper--journey .trade-off-switcher__tab.trade-off-switcher__tab--active .exploration-wizard__tab-n {
+      background: var(--accent-ink);
+      color: var(--paper);
+    }
+    .present-slide .phase-wizard__stepper--secondary.exploration-wizard__stepper--journey .exploration-wizard__arrow-static {
+      font-size: 0.7rem;
+    }
+
     .present-slide--p1-exploration .exploration-wizard__variant-tabs--overlay.phase-wizard__stepper--secondary,
     .present-slide--p3-ideation .exploration-wizard__variant-tabs--overlay.phase-wizard__stepper--secondary {
       flex-direction: column;
@@ -5662,14 +5728,14 @@
               <div class="trade-off-switcher trade-off-switcher--split trade-off-switcher--visual-left exploration-wizard" data-phase-wizard data-fm-widget="raisin-ideate-steps" data-fm-kind="phase" data-fm-value="1" data-journey-anchor="3" data-default="1" aria-label="Ideate — competitive analysis to stakeholder review">
                 <div class="trade-off-switcher__right exploration-wizard__right">
                   <div class="exploration-wizard__controls">
-                    <div class="exploration-wizard__stepper phase-wizard__stepper phase-wizard__stepper--secondary" role="tablist" aria-label="Ideate sub-steps">
-                      <button type="button" class="trade-off-switcher__tab trade-off-switcher__tab--active" role="tab" aria-selected="true" data-step="1" tabindex="0">Competitive analysis</button>
+                    <div class="exploration-wizard__stepper exploration-wizard__stepper--journey phase-wizard__stepper phase-wizard__stepper--secondary" role="tablist" aria-label="Ideate sub-steps">
+                      <button type="button" class="trade-off-switcher__tab trade-off-switcher__tab--active" role="tab" aria-selected="true" data-step="1" tabindex="0"><span class="exploration-wizard__tab-n" aria-hidden="true">3.1</span> Competitive analysis</button>
                       <span class="exploration-wizard__arrow-static" aria-hidden="true">→</span>
-                      <button type="button" class="trade-off-switcher__tab" role="tab" aria-selected="false" data-step="2" tabindex="-1">Stakeholder interviews</button>
+                      <button type="button" class="trade-off-switcher__tab" role="tab" aria-selected="false" data-step="2" tabindex="-1"><span class="exploration-wizard__tab-n" aria-hidden="true">3.2</span> Stakeholder interviews</button>
                       <span class="exploration-wizard__arrow-static" aria-hidden="true">→</span>
-                      <button type="button" class="trade-off-switcher__tab" role="tab" aria-selected="false" data-step="3" tabindex="-1">Principles &amp; JTBD</button>
+                      <button type="button" class="trade-off-switcher__tab" role="tab" aria-selected="false" data-step="3" tabindex="-1"><span class="exploration-wizard__tab-n" aria-hidden="true">3.3</span> Principles &amp; JTBD</button>
                       <span class="exploration-wizard__arrow-static" aria-hidden="true">→</span>
-                      <button type="button" class="trade-off-switcher__tab" role="tab" aria-selected="false" data-step="4" tabindex="-1">Explorations</button>
+                      <button type="button" class="trade-off-switcher__tab" role="tab" aria-selected="false" data-step="4" tabindex="-1"><span class="exploration-wizard__tab-n" aria-hidden="true">3.4</span> Explorations</button>
                     </div>
                   </div>
                   <div class="exploration-wizard__stage">
@@ -5880,14 +5946,14 @@
               <div class="trade-off-switcher trade-off-switcher--split trade-off-switcher--visual-left exploration-wizard visual-system-wizard" data-phase-wizard data-fm-widget="raisin-visual-steps" data-fm-kind="phase" data-fm-value="1" data-journey-anchor="5" data-default="1" aria-label="Visual design — exploration and critique, colour map, listing anatomy, final interface">
                 <div class="trade-off-switcher__right exploration-wizard__right">
                   <div class="exploration-wizard__controls">
-                    <div class="exploration-wizard__stepper phase-wizard__stepper phase-wizard__stepper--secondary" role="tablist" aria-label="Visual system sub-steps">
-                      <button type="button" class="trade-off-switcher__tab trade-off-switcher__tab--active" role="tab" aria-selected="true" data-step="1" tabindex="0">Exploration &amp; critique</button>
+                    <div class="exploration-wizard__stepper exploration-wizard__stepper--journey phase-wizard__stepper phase-wizard__stepper--secondary" role="tablist" aria-label="Visual system sub-steps">
+                      <button type="button" class="trade-off-switcher__tab trade-off-switcher__tab--active" role="tab" aria-selected="true" data-step="1" tabindex="0"><span class="exploration-wizard__tab-n" aria-hidden="true">5.1</span> Critique &amp; Co-Creation</button>
                       <span class="exploration-wizard__arrow-static" aria-hidden="true">→</span>
-                      <button type="button" class="trade-off-switcher__tab" role="tab" aria-selected="false" data-step="2" tabindex="-1">Product colour map</button>
+                      <button type="button" class="trade-off-switcher__tab" role="tab" aria-selected="false" data-step="2" tabindex="-1"><span class="exploration-wizard__tab-n" aria-hidden="true">5.2</span> Product colour map</button>
                       <span class="exploration-wizard__arrow-static" aria-hidden="true">→</span>
-                      <button type="button" class="trade-off-switcher__tab" role="tab" aria-selected="false" data-step="3" tabindex="-1">Anatomy</button>
+                      <button type="button" class="trade-off-switcher__tab" role="tab" aria-selected="false" data-step="3" tabindex="-1"><span class="exploration-wizard__tab-n" aria-hidden="true">5.3</span> Anatomy</button>
                       <span class="exploration-wizard__arrow-static" aria-hidden="true">→</span>
-                      <button type="button" class="trade-off-switcher__tab" role="tab" aria-selected="false" data-step="4" tabindex="-1">Final interface</button>
+                      <button type="button" class="trade-off-switcher__tab" role="tab" aria-selected="false" data-step="4" tabindex="-1"><span class="exploration-wizard__tab-n" aria-hidden="true">5.4</span> Final interface</button>
                     </div>
                   </div>
                   <div class="exploration-wizard__stage">
@@ -5913,16 +5979,16 @@
                     </div>
                     <div class="exploration-wizard__step exploration-wizard__step--stacked-caption" data-step-panel="4" hidden>
                       <div class="exploration-wizard__asset-slot">
-                        <img class="exploration-wizard__asset exploration-wizard__asset--img" src="raisin-assets/assets/img/dashboard-web/final_vd.webp" alt="Final Wealth Hub interface — validated visual design in product context" loading="lazy" data-lightbox>
+                        <img class="exploration-wizard__asset exploration-wizard__asset--img" src="raisin-assets/assets/img/dashboard-web/final_vd.webp" alt="Final Wealth Hub interface — validated visual design in product context" loading="lazy" data-lightbox data-lightbox-full="raisin-assets/assets/img/dashboard-web/final_vd_full.webp">
                       </div>
-                      <p class="exploration-wizard__caption exploration-wizard__caption--below">Final interface — colour map and components applied across the landing experience.</p>
+                      <p class="exploration-wizard__caption exploration-wizard__caption--below">Final interface — click to enlarge into scrollable view</p>
                     </div>
                   </div>
                 </div>
                 <div class="trade-off-switcher__left wealth-hub-story__copy present-split__copy">
                   <nav class="workflow-strip wealth-hub-journey" aria-label="Wealth Hub journey" data-journey-step="5"></nav>
                   <h3 class="beat__title">The system behind the surface.</h3>
-                  <p class="beat__support beat__support--present">Exploration &amp; critique · Product colour map · Listing anatomy · Final interface · 12 markets</p>
+                  <p class="beat__support beat__support--present">Critique &amp; Co-Creation · Product colour map · Listing anatomy · Final interface · 12 markets</p>
                   <p class="beat__eyebrow">WEALTH HUB · VISUAL DESIGN</p>
                   <p class="beat__text beat__text--present">Type, colour, layout, and components — one system for twelve markets. The colour map settled brand debate; typography, spacing, and components shipped in parallel with Foundation-fix.</p>
                   <p class="beat__text">12 markets · 3 market-type rules · light + dark token specs · web component library built from scratch.</p>
@@ -5975,12 +6041,12 @@
                       <p class="wealth-hub-impact__desc">Adoption target · 3 months post-launch · Met</p>
                     </div>
                     <div class="wealth-hub-impact__item">
-                      <div class="wealth-hub-impact__value mono-stat">90%</div>
-                      <p class="wealth-hub-impact__desc">Task completion target · Not systematically measured pre-ship</p>
+                      <div class="wealth-hub-impact__value mono-stat">87%</div>
+                      <p class="wealth-hub-impact__desc">Better understand their wealth (PL 87 · ES 81 · DE 73 · NL 72)</p>
                     </div>
                     <div class="wealth-hub-impact__item">
-                      <div class="wealth-hub-impact__value mono-stat">+6.3%</div>
-                      <p class="wealth-hub-impact__desc">AuM increase over 9 months of launch</p>
+                      <div class="wealth-hub-impact__value mono-stat">€57.4bn → ~€77bn</div>
+                      <p class="wealth-hub-impact__desc">AuM +35% YoY by end-2024 · ~€85–88bn by H1 2026</p>
                     </div>
                     <div class="wealth-hub-impact__item">
                       <div class="wealth-hub-impact__value mono-stat">+23 → +53</div>
@@ -7061,7 +7127,7 @@
   <div class="shell-inner shell-bar">
   <div class="chapter-tabs" id="chapters" aria-label="Chapters"></div>
   <div class="ctrl-end">
-    <span class="counter"><span id="curNum">01</span> <span class="sep">/</span> <span id="totNum">25</span></span>
+    <span class="counter"><span id="curNum">1</span> <span class="sep">/</span> <span id="totNum">25</span></span>
     <button type="button" class="nav-btn" data-prev aria-label="Previous slide">←</button>
     <button type="button" class="nav-btn" data-next aria-label="Next slide">→</button>
     <a href="raisin.html" class="nav-btn nav-btn--text is-hidden" id="backToCase" aria-label="Back to case study">Back to case study</a>
@@ -7081,7 +7147,7 @@
 </div>
 
 <script src="raisin-assets/assets/js/main.js"></script>
-<script src="js/portfolio-lightbox.js?v=7"></script>
+<script src="js/portfolio-lightbox.js?v=8"></script>
 <script src="raisin-assets/assets/js/summary2.js"></script>
 <script src="js/raisin-present.js"></script>
 <script src="js/portfolio-gate-previews.js"></script>

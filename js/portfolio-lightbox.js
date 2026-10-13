@@ -203,6 +203,7 @@
     var wrapGallery = !!options.wrapGallery;
 
     var lightboxImg = lightbox.querySelector(".lightbox__img") || lightbox.querySelector("img");
+    var lightboxStage = lightbox.querySelector(".lightbox__stage");
     var lightboxVideo = lightbox.querySelector(".lightbox__video");
     var closeBtn = lightbox.querySelector(".lightbox__close");
     var prevBtn = lightbox.querySelector(".lightbox__prev");
@@ -221,6 +222,11 @@
       return slide && slide.tagName === "VIDEO";
     }
 
+    function resetScrollMode() {
+      lightbox.classList.remove("is-scroll");
+      if (lightboxStage) lightboxStage.scrollTop = 0;
+    }
+
     function resetLightboxMedia() {
       if (lightboxVideo) {
         lightboxVideo.pause();
@@ -232,14 +238,24 @@
       lightboxImg.removeAttribute("src");
       lightboxImg.alt = "";
       lightbox.classList.remove("is-video");
+      resetScrollMode();
     }
 
     function updateNav() {
       var multi = gallery && gallery.length > 1;
+      var scrollFull =
+        gallery && gallery[galleryIndex] ? gallery[galleryIndex].getAttribute("data-lightbox-full") : "";
       lightbox.classList.toggle("is-gallery", !!multi);
       if (counter) {
-        counter.hidden = !multi;
-        if (multi) counter.textContent = galleryIndex + 1 + " / " + gallery.length;
+        if (scrollFull) {
+          counter.hidden = false;
+          counter.textContent = multi
+            ? galleryIndex + 1 + " / " + gallery.length + " · scroll to explore"
+            : "Scroll to explore";
+        } else {
+          counter.hidden = !multi;
+          if (multi) counter.textContent = galleryIndex + 1 + " / " + gallery.length;
+        }
       }
       if (prevBtn) {
         if (wrapGallery) {
@@ -267,6 +283,7 @@
       if (!gallery || !gallery.length) return;
       var slide = gallery[galleryIndex];
       if (isVideoSlide(slide) && lightboxVideo) {
+        resetScrollMode();
         lightbox.classList.add("is-video");
         lightboxImg.hidden = true;
         lightboxVideo.hidden = false;
@@ -287,8 +304,26 @@
           lightboxVideo.load();
         }
         lightboxImg.hidden = false;
-        lightboxImg.src = slide.getAttribute("data-full") || slide.src;
+        var scrollFull = slide.getAttribute("data-lightbox-full");
+        if (scrollFull) {
+          lightbox.classList.add("is-scroll");
+          if (lightboxStage) lightboxStage.scrollTop = 0;
+          lightboxImg.src = scrollFull;
+        } else {
+          resetScrollMode();
+          lightboxImg.src = slide.getAttribute("data-full") || slide.src;
+        }
         lightboxImg.alt = slide.alt || "";
+        if (scrollFull && lightboxStage) {
+          lightboxImg.addEventListener(
+            "load",
+            function onScrollImgLoad() {
+              lightboxImg.removeEventListener("load", onScrollImgLoad);
+              lightboxStage.scrollTop = 0;
+            },
+            { once: true }
+          );
+        }
       }
       setCurrentFromGallery(gallery, galleryIndex);
       updateNav();
@@ -312,7 +347,7 @@
         currentFmId = null;
         return;
       }
-      lightbox.classList.remove("is-open", "is-gallery", "is-video");
+      lightbox.classList.remove("is-open", "is-gallery", "is-video", "is-scroll");
       resetLightboxMedia();
       gallery = null;
       galleryIndex = 0;

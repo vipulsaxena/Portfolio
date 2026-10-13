@@ -68,7 +68,7 @@
 
   if (!window.PortfolioLightbox) {
     var lb = document.createElement("script");
-    lb.src = "/js/portfolio-lightbox.js?v=7";
+    lb.src = "/js/portfolio-lightbox.js?v=8";
     (document.body || document.head).appendChild(lb);
   }
   var s = document.createElement("script");

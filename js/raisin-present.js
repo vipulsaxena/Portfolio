@@ -851,8 +851,10 @@
 
       function activateStep(step) {
         var s = String(step);
+        var sNum = parseInt(s, 10);
         tabs.forEach(function (tab) {
           var on = tab.getAttribute("data-step") === s;
+          tab.classList.toggle("is-done", parseInt(tab.getAttribute("data-step"), 10) < sNum);
           tab.classList.toggle("trade-off-switcher__tab--active", on);
           tab.setAttribute("aria-selected", on ? "true" : "false");
           tab.tabIndex = on ? 0 : -1;
@@ -894,7 +896,19 @@
           wizardRoot.setAttribute("data-fm-value", s);
           emitWidgetChange(wid, s);
         }
+        updateSlideCounter();
       }
+
+      wizardRoot._presentStepper = {
+        count: tabs.length,
+        current: function () {
+          var active = tabs.filter(function (t) {
+            return t.classList.contains("trade-off-switcher__tab--active");
+          })[0];
+          return active ? parseInt(active.getAttribute("data-step"), 10) : 1;
+        },
+        activate: activateStep
+      };
 
       var slideId = presentSlideIdFromNode(wizardRoot);
       var savedStep =
@@ -1592,7 +1606,7 @@
 
   var chapterTabs = chapWrap ? Array.prototype.slice.call(chapWrap.querySelectorAll(".chapter-tab")) : [];
 
-  if (totNum) totNum.textContent = pad(N);
+  if (totNum) totNum.textContent = String(N);
 
   function updateChrome() {
     var ch = chapterOf(i);
@@ -1605,7 +1619,7 @@
         dot.setAttribute("aria-current", String(cur && slideIdx === i));
       });
     });
-    if (curNum) curNum.textContent = pad(i + 1);
+    updateSlideCounter();
     if (progress) progress.style.width = ((i + 1) / N) * 100 + "%";
     prevBtns.forEach(function (b) {
       b.classList.toggle("is-hidden", i === 0);
@@ -1637,11 +1651,43 @@
     updateChrome();
   }
 
+  /* Wealth Hub slides whose sub-steps are walked one by one with next / prev */
+  var SUBSTEP_SLIDES = { "p1-exploration": true, "p1-visual-system": true };
+
+  function activeSubstepper() {
+    var entry = SLIDE_MANIFEST[i];
+    if (!entry || !SUBSTEP_SLIDES[entry.id] || !currentSlideEl) return null;
+    var wizardRoot = currentSlideEl.querySelector("[data-phase-wizard]");
+    return wizardRoot && wizardRoot._presentStepper ? wizardRoot._presentStepper : null;
+  }
+
+  function updateSlideCounter() {
+    if (!curNum) return;
+    var stepper = activeSubstepper();
+    curNum.textContent = String(i + 1) + (stepper ? "." + stepper.current() : "");
+  }
+
+  function enterSlide(n, step) {
+    var entry = SLIDE_MANIFEST[n];
+    if (entry && SUBSTEP_SLIDES[entry.id]) presentInteractiveState[entry.id + ":phase-step"] = step;
+    go(n);
+  }
+
   var next = function () {
-    go(i + 1);
+    var stepper = activeSubstepper();
+    if (stepper && stepper.current() < stepper.count) {
+      stepper.activate(stepper.current() + 1);
+      return;
+    }
+    if (i + 1 < N) enterSlide(i + 1, "1");
   };
   var prev = function () {
-    go(i - 1);
+    var stepper = activeSubstepper();
+    if (stepper && stepper.current() > 1) {
+      stepper.activate(stepper.current() - 1);
+      return;
+    }
+    if (i > 0) enterSlide(i - 1, "4");
   };
 
   prevBtns.forEach(function (b) {
@@ -1671,6 +1717,7 @@
       }
       return;
     }
+    if (e.defaultPrevented) return;
     if (e.target.closest("input, textarea, iframe, [contenteditable]")) return;
     switch (e.key) {
       case "ArrowRight":
