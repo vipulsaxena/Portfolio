@@ -2834,7 +2834,32 @@
     .present-slide--p1-outcomes .period-split__main.present-split__copy > .wealth-hub-impact__quotes {
       margin-top: max(0px, calc(1.5rem - var(--present-split-stack-gap)));
     }
-    .present-slide--p1-outcomes .wealth-hub-impact__quotes {
+    .present-slide--p1-outcomes .wealth-hub-impact__metrics,
+    .present-slide--p3-shipped .wealth-hub-impact__metrics {
+      gap: var(--sp-sm) var(--sp-md);
+    }
+    .present-slide--p1-outcomes .wealth-hub-impact__value,
+    .present-slide--p3-shipped .wealth-hub-impact__value {
+      font-family: var(--font-display);
+      font-size: clamp(1.2rem, 1.8vw, 1.55rem);
+      line-height: 1.1;
+      color: var(--ink);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.02em;
+    }
+    .present-slide--p1-outcomes .wealth-hub-impact__desc,
+    .present-slide--p3-shipped .wealth-hub-impact__desc {
+      margin: 0.3rem 0 0;
+      font-size: var(--fs-2xs);
+      line-height: 1.35;
+      color: var(--muted);
+    }
+    .present-slide--p1-outcomes .period-split__main.present-split__copy > .wealth-hub-impact + .wealth-hub-impact__quotes,
+    .present-slide--p3-shipped .device-story__copy.present-split__copy > .wealth-hub-impact + .wealth-hub-impact__quotes {
+      margin-top: max(0px, calc(1.5rem - var(--present-split-stack-gap)));
+    }
+    .present-slide--p1-outcomes .wealth-hub-impact__quotes,
+    .present-slide--p3-shipped .wealth-hub-impact__quotes {
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: clamp(0.35rem, 0.65vh, 0.55rem);
     }
@@ -2843,14 +2868,22 @@
       line-height: 1.4;
       font-weight: 500;
     }
-    .present-slide--p1-outcomes .wealth-hub-impact__quote {
+    .present-slide--p1-outcomes .wealth-hub-impact__quote,
+    .present-slide--p3-shipped .wealth-hub-impact__quote {
       margin: 0;
       padding: clamp(0.35rem, 0.65vh, 0.5rem);
     }
-    .present-slide--p1-outcomes .wealth-hub-impact__quote p {
+    .present-slide--p1-outcomes .wealth-hub-impact__quote p,
+    .present-slide--p3-shipped .wealth-hub-impact__quote p {
       font-size: clamp(0.72rem, 1.05vw, 0.84rem);
       line-height: 1.36;
       font-weight: 500;
+    }
+    .present-slide--p3-shipped .wealth-hub-impact__quote .wealth-hub-impact__quote-source {
+      margin: 0.45rem 0 0;
+      font-size: var(--fs-2xs);
+      color: var(--muted);
+      letter-spacing: 0.02em;
     }
     .present-slide--p1-outcomes .period-split__main,
     .present-slide--p1-outcomes .period-split__visual {
@@ -3792,6 +3825,74 @@
       max-width: none;
       color: var(--muted);
     }
+    .present-slide--proof .proof-practice-metrics {
+      flex: 1 1 auto;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      gap: clamp(0.4rem, 0.85vh, 0.65rem);
+      overflow: hidden;
+    }
+    .present-slide--proof .proof-practice-platform {
+      flex: 1 1 0;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      gap: clamp(0.2rem, 0.45vh, 0.35rem);
+    }
+    .present-slide--proof .proof-track--practice .proof-track__lede {
+      font-size: clamp(1rem, 1.65vw, 1.2rem);
+    }
+    .present-slide--proof .proof-practice-platform__label {
+      margin: 0;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.35rem 0.45rem;
+      font-size: clamp(0.82rem, 1.45vh, 0.96rem);
+      line-height: 1.32;
+      font-weight: 500;
+      color: var(--muted);
+    }
+    .present-slide--proof .proof-practice-platform__chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.22rem 0.52rem;
+      border-radius: 999px;
+      border: 1px solid color-mix(in srgb, var(--ink) 18%, transparent);
+      background: color-mix(in srgb, var(--paper) 92%, var(--ink));
+      font-size: clamp(0.72rem, 1.25vh, 0.84rem);
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+    .present-slide--proof .proof-practice-platform__chip--mobile {
+      border-color: color-mix(in srgb, var(--accent-deep) 35%, transparent);
+      background: color-mix(in srgb, var(--accent) 12%, var(--paper));
+      color: var(--accent-deep);
+    }
+    .present-slide--proof .proof-practice-platform .metric-banner {
+      flex: 1 1 auto;
+      min-height: 0;
+    }
+    .present-slide--proof .proof-practice-platform .metric-banner__item {
+      padding: clamp(0.45rem, 1vh, 0.7rem) clamp(0.55rem, 1.1vw, 0.8rem);
+      gap: clamp(0.2rem, 0.45vh, 0.35rem);
+    }
+    .present-slide--proof .proof-practice-platform .metric-banner__value {
+      font-size: clamp(1.35rem, 2.45vw, 1.85rem);
+      line-height: 1.06;
+    }
+    .present-slide--proof .proof-practice-platform .metric-banner__value--compact {
+      font-size: clamp(1.12rem, 2vw, 1.5rem);
+      letter-spacing: -0.02em;
+      line-height: 1.08;
+    }
+    .present-slide--proof .proof-practice-platform .metric-banner__label {
+      font-size: clamp(0.82rem, 1.35vh, 0.98rem);
+      line-height: 1.36;
+    }
     .present-proof-quotes {
       flex: none;
       width: 100%;
@@ -4127,44 +4228,46 @@
       border-radius: 16px;
     }
     .present-slide--p3-shipped .mobile-launch-carousel .post-mvp-carousel__nav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: clamp(0.55rem, 1.1vw, 0.85rem);
       margin-top: clamp(0.75rem, 1.35vh, 1.05rem);
     }
-    .present-slide--p3-shipped .mobile-launch-carousel .post-mvp-carousel__nav--dots-only,
-    .present-slide--p3-shipped .mobile-launch-carousel .post-mvp-carousel__nav {
-      justify-content: center;
-    }
     .present-slide--p3-shipped .mobile-launch-carousel .post-mvp-carousel__dots {
+      display: flex;
+      justify-content: center;
+      align-items: center;
       gap: clamp(0.6rem, 1.15vh, 0.9rem);
+      margin-top: 0;
     }
     .present-slide--p3-shipped .mobile-launch-carousel .post-mvp-carousel__prev,
     .present-slide--p3-shipped .mobile-launch-carousel .post-mvp-carousel__next {
-      display: none !important;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2rem;
+      height: 2rem;
+      padding: 0;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--paper);
+      color: var(--ink);
+      font-size: 1rem;
+      line-height: 1;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: border-color 0.2s ease, background 0.2s ease;
     }
-    .present-slide--p3-shipped .device-story__copy .mobile-shipped-reviews {
-      margin-top: clamp(0.75rem, 1.35vh, 1.1rem);
+    .present-slide--p3-shipped .mobile-launch-carousel .post-mvp-carousel__prev:hover,
+    .present-slide--p3-shipped .mobile-launch-carousel .post-mvp-carousel__next:hover {
+      border-color: color-mix(in srgb, var(--ink) 24%, transparent);
+      background: color-mix(in srgb, var(--paper) 88%, var(--ink));
     }
-    .present-slide--p3-shipped .mobile-shipped-reviews__lead {
-      margin: 0 0 clamp(0.45rem, 0.85vh, 0.65rem);
-      font-size: clamp(0.72rem, 1.25vh, 0.84rem);
-      line-height: 1.35;
-    }
-    .present-slide--p3-shipped .mobile-shipped-reviews__grid {
-      gap: clamp(0.35rem, 0.65vh, 0.55rem);
-    }
-    .present-slide--p3-shipped .mobile-shipped-reviews__quote {
-      margin: 0;
-      padding: clamp(0.35rem, 0.65vh, 0.5rem);
-    }
-    .present-slide--p3-shipped .mobile-shipped-reviews__quote p {
-      font-size: clamp(0.72rem, 1.05vw, 0.84rem);
-      line-height: 1.36;
-      font-weight: 500;
-    }
-    .present-slide--p3-shipped .mobile-shipped-reviews__quote .wealth-hub-impact__quote-source {
-      margin: 0.45rem 0 0;
-      font-size: var(--fs-2xs);
-      color: var(--muted);
-      letter-spacing: 0.02em;
+    .present-slide--p3-shipped .mobile-launch-carousel .post-mvp-carousel__prev:focus-visible,
+    .present-slide--p3-shipped .mobile-launch-carousel .post-mvp-carousel__next:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
     }
     .present-slide--p3-shipped .device-story__copy .beat__title,
     .present-slide--p4-lab-tools .ai-journey__tools-head .device-story__title,
@@ -5759,7 +5862,7 @@
                     </div>
                     <div class="exploration-wizard__step exploration-wizard__step--stacked-caption" data-step-panel="4" hidden>
                       <div class="exploration-wizard__asset-slot exploration-wizard__asset-slot--wireframe-compare">
-                        <div class="exploration-wizard__variant-switcher" data-trade-off-switcher data-trade-off-visual-only data-default="b" aria-label="Flat list vs structured hierarchy">
+                        <div class="exploration-wizard__variant-switcher" data-trade-off-switcher data-trade-off-visual-only data-default="b" data-fm-widget="raisin-ideate-wireframe" data-fm-kind="variant" data-fm-value="b" aria-label="Flat list vs structured hierarchy">
                           <div class="exploration-wizard__variant-tabs trade-off-switcher__tabs phase-wizard__stepper phase-wizard__stepper--secondary exploration-wizard__variant-tabs--overlay" role="tablist" aria-label="Explorations — A or B">
                             <button type="button" class="trade-off-switcher__tab" role="tab" aria-selected="false" data-variant="a" tabindex="-1">A</button>
                             <button type="button" class="trade-off-switcher__tab trade-off-switcher__tab--active exploration-wizard__variant-tab--chosen" role="tab" aria-selected="true" data-variant="b" tabindex="0" aria-label="B — chosen">
@@ -6046,7 +6149,7 @@
                     </div>
                     <div class="wealth-hub-impact__item">
                       <div class="wealth-hub-impact__value mono-stat">€57.4bn → ~€77bn</div>
-                      <p class="wealth-hub-impact__desc">AuM +35% YoY by end-2024 · ~€85–88bn by H1 2026</p>
+                      <p class="wealth-hub-impact__desc">AuM +35% YoY by end-2024</p>
                     </div>
                     <div class="wealth-hub-impact__item">
                       <div class="wealth-hub-impact__value mono-stat">+23 → +53</div>
@@ -6646,7 +6749,7 @@
             <div class="mobile-journey__shipped reveal" aria-label="Mobile — launch">
               <div class="device-story__row device-story__row--visual-left mobile-journey__row mobile-journey__row--shipped">
                 <div class="mobile-journey__visual mobile-journey__visual--launch-carousel">
-                  <div class="post-mvp-carousel mobile-launch-carousel" data-post-mvp-carousel data-carousel-dots-only data-interval="4500" aria-roledescription="carousel" aria-label="In-app feature discovery — launch screens">
+                  <div class="post-mvp-carousel mobile-launch-carousel" data-post-mvp-carousel data-interval="4500" aria-roledescription="carousel" aria-label="In-app feature discovery — launch screens">
                     <div class="post-mvp-carousel__viewport">
                       <div class="post-mvp-carousel__track">
                         <figure class="post-mvp-carousel__slide">
@@ -6674,28 +6777,37 @@
                   <p class="beat__support beat__support--present"><strong>12 B2C markets</strong> · four-tab IA · light and dark</p>
                   <p class="device-story__eyebrow">Shipped · mobile dashboard</p>
                   <p class="beat__text beat__text--present">Beyond a visual refresh: clearer holdings, performance, and next steps across Overview, Portfolio, Products, and Wallet. Same Wealth Hub spine from web and Maze validation — rolling out market by market.</p>
-                  <p class="device-story__text">Early App Store signal backs the structure — reviewers call out overview and clarity before polish. Design NPS and task metrics are still being recorded post-launch.</p>
+                  <p class="device-story__text">Early App Store signal backs the structure — reviewers call out overview and clarity before polish.</p>
                   <p class="beat__stat">Maze-validated · shipping now · early reviews 5/5</p>
-                  <div class="mobile-shipped-reviews reveal-stagger" aria-label="Early app-store reviews">
-                    <p class="mobile-shipped-reviews__lead">What customers say first:</p>
-                    <div class="mobile-shipped-reviews__grid">
-                      <blockquote class="wealth-hub-impact__quote mobile-shipped-reviews__quote">
-                        <p>“Clear and informative — exactly what I need at a glance.”</p>
-                        <footer class="wealth-hub-impact__quote-source">🇩🇪 Germany · App Store · 5/5</footer>
-                      </blockquote>
-                      <blockquote class="wealth-hub-impact__quote mobile-shipped-reviews__quote">
-                        <p>“Clear and easy to overview — everything in one place.”</p>
-                        <footer class="wealth-hub-impact__quote-source">🇳🇱 Netherlands · App Store · 5/5</footer>
-                      </blockquote>
-                      <blockquote class="wealth-hub-impact__quote mobile-shipped-reviews__quote">
-                        <p>“Easy to invest and move money between products and my linked account — best way to stay in control of savings.”</p>
-                        <footer class="wealth-hub-impact__quote-source">🇪🇸 Spain · App Store · 5/5</footer>
-                      </blockquote>
-                      <blockquote class="wealth-hub-impact__quote mobile-shipped-reviews__quote">
-                        <p>“Finally a dashboard that shows my full portfolio in one place — much clearer than before.”</p>
-                        <footer class="wealth-hub-impact__quote-source">🇫🇷 France · App Store · 5/5</footer>
-                      </blockquote>
+                  <div class="wealth-hub-impact" aria-label="Mobile launch — measured against targets">
+                    <div class="wealth-hub-impact__metrics">
+                      <div class="wealth-hub-impact__item">
+                        <div class="wealth-hub-impact__value mono-stat">74%</div>
+                        <p class="wealth-hub-impact__desc">Adoption target · 4 months post-launch</p>
+                      </div>
+                      <div class="wealth-hub-impact__item">
+                        <div class="wealth-hub-impact__value mono-stat">+9%</div>
+                        <p class="wealth-hub-impact__desc">Active customers per week</p>
+                      </div>
+                      <div class="wealth-hub-impact__item">
+                        <div class="wealth-hub-impact__value mono-stat">+26% / +11%</div>
+                        <p class="wealth-hub-impact__desc">Starting an order &amp; successful top-up · per 100 active customers</p>
+                      </div>
+                      <div class="wealth-hub-impact__item">
+                        <div class="wealth-hub-impact__value mono-stat">~€85bn</div>
+                        <p class="wealth-hub-impact__desc">AuM increase by H1 2026</p>
+                      </div>
                     </div>
+                  </div>
+                  <div class="wealth-hub-impact__quotes reveal-stagger" aria-label="Early app-store reviews">
+                    <blockquote class="wealth-hub-impact__quote">
+                      <p>“Clear and easy to overview — everything in one place.”</p>
+                      <footer class="wealth-hub-impact__quote-source">🇳🇱 Netherlands · App Store · 5/5</footer>
+                    </blockquote>
+                    <blockquote class="wealth-hub-impact__quote">
+                      <p>“Easy to invest and move money between products and my linked account — best way to stay in control of savings.”</p>
+                      <footer class="wealth-hub-impact__quote-source">🇪🇸 Spain · App Store · 5/5</footer>
+                    </blockquote>
                   </div>
                 </div>
               </div>
@@ -7023,27 +7135,53 @@
       <div class="proof-track__head">
         <div class="proof-track__titles">
           <p class="proof-label">Practice</p>
-          <p class="proof-track__lede">Customer outcomes.</p>
+          <p class="proof-track__lede">Web and mobile — customer outcomes.</p>
         </div>
         <span class="proof-track__badge proof-track__badge--practice">Practice</span>
       </div>
-      <div class="metric-banner metric-banner--4 reveal-stagger">
-        <div class="metric-banner__item">
-          <div class="metric-banner__value mono-stat metric-banner__value--text">+23 → +53</div>
-          <div class="metric-banner__label metric-banner__label--wide">Design NPS increase — measured in DE, NL, ES, PL · launched across 12 markets</div>
-        </div>
-        <div class="metric-banner__item">
-          <div class="metric-banner__value mono-stat metric-banner__value--text">80% adoption</div>
-          <div class="metric-banner__label metric-banner__label--wide">Post-MVP dashboard filtering — met at 3 months · all-deposits view drove uptake</div>
-        </div>
-        <div class="metric-banner__item">
-          <div class="metric-banner__value mono-stat metric-banner__value--text">92.9%</div>
-          <div class="metric-banner__label metric-banner__label--wide">Mobile task success — Maze-validated IA · shipping now</div>
-        </div>
-        <div class="metric-banner__item">
-          <div class="metric-banner__value mono-stat metric-banner__value--text">72–87%</div>
-          <div class="metric-banner__label metric-banner__label--wide">Agree they can better understand and manage their wealth — Brand Evolution survey</div>
-        </div>
+      <div class="proof-practice-metrics reveal-stagger" aria-label="Launch metrics by platform">
+        <section class="proof-practice-platform" aria-labelledby="proof-practice-web-label">
+          <p class="proof-practice-platform__label" id="proof-practice-web-label"><span class="proof-practice-platform__chip">Web</span> Wealth Hub · 12 B2C markets</p>
+          <div class="metric-banner metric-banner--4 proof-practice-platform__grid">
+            <div class="metric-banner__item">
+              <div class="metric-banner__value mono-stat">80%</div>
+              <div class="metric-banner__label metric-banner__label--wide">Adoption target · 3 months post-launch · Met</div>
+            </div>
+            <div class="metric-banner__item">
+              <div class="metric-banner__value mono-stat">87%</div>
+              <div class="metric-banner__label metric-banner__label--wide">Better understand their wealth (PL 87 · ES 81 · DE 73 · NL 72)</div>
+            </div>
+            <div class="metric-banner__item">
+              <div class="metric-banner__value mono-stat metric-banner__value--compact">€57.4bn → ~€77bn</div>
+              <div class="metric-banner__label metric-banner__label--wide">AuM +35% YoY by end-2024</div>
+            </div>
+            <div class="metric-banner__item">
+              <div class="metric-banner__value mono-stat">+23 → +53</div>
+              <div class="metric-banner__label metric-banner__label--wide">Dashboard / design NPS (DE +35 · NL +23 · ES/PL +53)</div>
+            </div>
+          </div>
+        </section>
+        <section class="proof-practice-platform" aria-labelledby="proof-practice-mobile-label">
+          <p class="proof-practice-platform__label" id="proof-practice-mobile-label"><span class="proof-practice-platform__chip proof-practice-platform__chip--mobile">Mobile</span> Dashboard · rolling launch</p>
+          <div class="metric-banner metric-banner--4 proof-practice-platform__grid">
+            <div class="metric-banner__item">
+              <div class="metric-banner__value mono-stat">74%</div>
+              <div class="metric-banner__label metric-banner__label--wide">Adoption target · 4 months post-launch</div>
+            </div>
+            <div class="metric-banner__item">
+              <div class="metric-banner__value mono-stat">+9%</div>
+              <div class="metric-banner__label metric-banner__label--wide">Active customers per week</div>
+            </div>
+            <div class="metric-banner__item">
+              <div class="metric-banner__value mono-stat metric-banner__value--compact">+26% / +11%</div>
+              <div class="metric-banner__label metric-banner__label--wide">Starting an order &amp; successful top-up · per 100 active customers</div>
+            </div>
+            <div class="metric-banner__item">
+              <div class="metric-banner__value mono-stat metric-banner__value--compact">~€85bn</div>
+              <div class="metric-banner__label metric-banner__label--wide">AuM increase by H1 2026</div>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
 

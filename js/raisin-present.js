@@ -82,7 +82,17 @@
   function ensureTradeoffWidgets(root) {
     root.querySelectorAll("[data-trade-off-switcher]").forEach(function (switchRoot) {
       if (switchRoot.getAttribute("data-fm-widget")) return;
-      if (switchRoot.closest(".exploration-wizard__variant-switcher")) return;
+      if (switchRoot.closest(".exploration-wizard__variant-switcher")) {
+        var slideId = presentSlideIdFromNode(switchRoot);
+        var wireframeWidgetId =
+          slideId === "p3-ideation" ? "raisin-mobile-ideate-wireframe" : "raisin-ideate-wireframe";
+        switchRoot.setAttribute("data-fm-widget", wireframeWidgetId);
+        switchRoot.setAttribute("data-fm-kind", "variant");
+        if (!switchRoot.getAttribute("data-fm-value")) {
+          switchRoot.setAttribute("data-fm-value", switchRoot.getAttribute("data-default") || "b");
+        }
+        return;
+      }
       var beat = switchRoot.closest('[aria-label*="Trade-off 01"]');
       if (beat) {
         switchRoot.setAttribute("data-fm-widget", "raisin-tradeoff-01");
