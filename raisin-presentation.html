@@ -436,11 +436,29 @@
     .present-slide--p3-ideation .ideate-conflict-tradeoff .trade-off__option--chosen,
     .present-slide--p1-tradeoff-01 .ideate-conflict-tradeoff .trade-off__option--chosen,
     .present-slide--p3-maze .ideate-conflict-tradeoff .trade-off__option--chosen {
-      border-color: var(--line);
-      border-width: 1px;
-      background: color-mix(in srgb, var(--ink) 7%, var(--paper));
-      box-shadow: none;
+      border-color: var(--accent);
+      border-width: 2px;
+      background: var(--paper);
+      box-shadow: 0 8px 20px -16px rgba(0, 0, 0, 0.35);
       padding-right: clamp(2rem, 3.5vw, 2.35rem);
+    }
+    .present-slide--p1-exploration .ideate-conflict-tradeoff .trade-off__option--chosen .trade-off__option-label,
+    .present-slide--p3-ideation .ideate-conflict-tradeoff .trade-off__option--chosen .trade-off__option-label,
+    .present-slide--p1-tradeoff-01 .ideate-conflict-tradeoff .trade-off__option--chosen .trade-off__option-label,
+    .present-slide--p3-maze .ideate-conflict-tradeoff .trade-off__option--chosen .trade-off__option-label {
+      color: var(--accent-ink);
+    }
+    .present-slide--p1-exploration .ideate-conflict-tradeoff .trade-off__option--chosen .trade-off__option-text,
+    .present-slide--p3-ideation .ideate-conflict-tradeoff .trade-off__option--chosen .trade-off__option-text,
+    .present-slide--p1-tradeoff-01 .ideate-conflict-tradeoff .trade-off__option--chosen .trade-off__option-text,
+    .present-slide--p3-maze .ideate-conflict-tradeoff .trade-off__option--chosen .trade-off__option-text {
+      color: var(--ink);
+    }
+    .present-slide--p1-exploration .ideate-conflict-tradeoff .trade-off__option--chosen .ideate-conflict-tradeoff__check,
+    .present-slide--p3-ideation .ideate-conflict-tradeoff .trade-off__option--chosen .ideate-conflict-tradeoff__check,
+    .present-slide--p1-tradeoff-01 .ideate-conflict-tradeoff .trade-off__option--chosen .ideate-conflict-tradeoff__check,
+    .present-slide--p3-maze .ideate-conflict-tradeoff .trade-off__option--chosen .ideate-conflict-tradeoff__check {
+      color: var(--accent-ink);
     }
     .present-slide--p1-exploration .ideate-conflict-tradeoff .trade-off__option-label,
     .present-slide--p3-ideation .ideate-conflict-tradeoff .trade-off__option-label,
@@ -549,19 +567,20 @@
     .present-slide--p3-ideation .exploration-wizard__variant-tabs--overlay .trade-off-switcher__tab--active,
     .present-slide--p1-exploration .exploration-wizard__variant-tabs--overlay .trade-off-switcher__tab[aria-selected="true"],
     .present-slide--p3-ideation .exploration-wizard__variant-tabs--overlay .trade-off-switcher__tab[aria-selected="true"] {
-      background: transparent;
-      color: var(--ink);
-      border-color: transparent;
+      background: var(--accent);
+      color: var(--accent-ink);
+      border-color: var(--accent);
       font-weight: 700;
-      box-shadow: 0 0 0 2px color-mix(in srgb, var(--ink) 32%, var(--line));
+      box-shadow: none;
     }
     .present-slide--p1-exploration .exploration-wizard__variant-tabs--overlay .trade-off-switcher__tab--active:hover,
     .present-slide--p3-ideation .exploration-wizard__variant-tabs--overlay .trade-off-switcher__tab--active:hover,
     .present-slide--p1-exploration .exploration-wizard__variant-tabs--overlay .trade-off-switcher__tab[aria-selected="true"]:hover,
     .present-slide--p3-ideation .exploration-wizard__variant-tabs--overlay .trade-off-switcher__tab[aria-selected="true"]:hover {
-      background: transparent;
-      color: var(--ink);
-      box-shadow: 0 0 0 2px color-mix(in srgb, var(--ink) 40%, var(--line));
+      background: var(--accent);
+      color: var(--accent-ink);
+      border-color: var(--accent);
+      box-shadow: none;
     }
     .present-slide--p1-exploration .exploration-wizard__variant-media,
     .present-slide--p3-ideation .exploration-wizard__variant-media {
@@ -2329,19 +2348,26 @@
     .present-slide--p3-maze .tradeoff-01__concept-stepper .trade-off-switcher__tab--active,
     .present-slide--p1-tradeoff-01 .tradeoff-01__concept-stepper .trade-off-switcher__tab[aria-selected="true"],
     .present-slide--p3-maze .tradeoff-01__concept-stepper .trade-off-switcher__tab[aria-selected="true"] {
-      background: transparent;
-      color: var(--ink);
-      border-color: transparent;
+      background: var(--accent);
+      color: var(--accent-ink);
+      border-color: var(--accent);
       font-weight: 700;
-      box-shadow: 0 0 0 2px color-mix(in srgb, var(--ink) 32%, var(--line));
+      box-shadow: none;
     }
     .present-slide--p1-tradeoff-01 .tradeoff-01__concept-stepper .trade-off-switcher__tab--active:hover,
     .present-slide--p3-maze .tradeoff-01__concept-stepper .trade-off-switcher__tab--active:hover,
     .present-slide--p1-tradeoff-01 .tradeoff-01__concept-stepper .trade-off-switcher__tab[aria-selected="true"]:hover,
     .present-slide--p3-maze .tradeoff-01__concept-stepper .trade-off-switcher__tab[aria-selected="true"]:hover {
-      background: transparent;
-      color: var(--ink);
-      box-shadow: 0 0 0 2px color-mix(in srgb, var(--ink) 40%, var(--line));
+      background: var(--accent);
+      color: var(--accent-ink);
+      border-color: var(--accent);
+      box-shadow: none;
+    }
+    .present-slide--p1-tradeoff-01 .tradeoff-01__concept-stepper .trade-off-switcher__tab--active .tradeoff-01__concept-tab-check,
+    .present-slide--p3-maze .tradeoff-01__concept-stepper .trade-off-switcher__tab--active .tradeoff-01__concept-tab-check,
+    .present-slide--p1-tradeoff-01 .tradeoff-01__concept-stepper .trade-off-switcher__tab[aria-selected="true"] .tradeoff-01__concept-tab-check,
+    .present-slide--p3-maze .tradeoff-01__concept-stepper .trade-off-switcher__tab[aria-selected="true"] .tradeoff-01__concept-tab-check {
+      color: var(--accent-ink);
     }
     .present-slide--p1-tradeoff-01 .tradeoff-01__concept-stepper .trade-off-switcher__tab:focus-visible,
     .present-slide--p3-maze .tradeoff-01__concept-stepper .trade-off-switcher__tab:focus-visible {
@@ -2359,6 +2385,23 @@
       flex-shrink: 0;
       color: var(--ink-soft);
       pointer-events: none;
+    }
+
+    /* Slide 7 — ideate stepper: active step uses accent (not gray ring) */
+    .present-slide--p1-exploration .exploration-wizard__stepper.phase-wizard__stepper--secondary:not(.exploration-wizard__stepper--journey) .trade-off-switcher__tab--active,
+    .present-slide--p1-exploration .exploration-wizard__stepper.phase-wizard__stepper--secondary:not(.exploration-wizard__stepper--journey) .trade-off-switcher__tab[aria-selected="true"] {
+      background: var(--accent);
+      color: var(--accent-ink);
+      border-color: var(--accent);
+      font-weight: 700;
+      box-shadow: none;
+    }
+    .present-slide--p1-exploration .exploration-wizard__stepper.phase-wizard__stepper--secondary:not(.exploration-wizard__stepper--journey) .trade-off-switcher__tab--active:hover,
+    .present-slide--p1-exploration .exploration-wizard__stepper.phase-wizard__stepper--secondary:not(.exploration-wizard__stepper--journey) .trade-off-switcher__tab[aria-selected="true"]:hover {
+      background: var(--accent);
+      color: var(--accent-ink);
+      border-color: var(--accent);
+      box-shadow: none;
     }
 
     .present-slide--p1-exploration .exploration-wizard__stage,
