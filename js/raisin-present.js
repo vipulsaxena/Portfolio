@@ -4,6 +4,7 @@
 (function () {
   "use strict";
 
+  /** Slide crossfade — keep in sync with css/portfolio-deck-motion.css (--deck-dur) */
   var FADE_MS = 380;
   /** Coarse layout blocks only — mirrors OLX data-anim (not every copy line). */
   var PRESENT_ANIM_BLOCKS = [

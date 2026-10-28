@@ -22,6 +22,7 @@
   <link rel="stylesheet" href="css/hl.css">
   <link rel="stylesheet" href="css/custom-cursor.css">
   <link rel="stylesheet" href="css/portfolio-gate-previews.css">
+  <link rel="stylesheet" href="css/portfolio-deck-motion.css">
 
   <script src="js/follow-me-bootstrap.js"></script>
   <script>
@@ -58,11 +59,6 @@
   <style>
     :root {
       --deck-top: 3.5rem;
-      --present-ease: cubic-bezier(0.7, 0, 0.2, 1);
-      --present-dur: 380ms;
-      --present-anim-dur: 0.38s;
-      --present-stagger: 55ms;
-      --fade-ms: var(--present-dur);
       --ink: #262626;
       --muted: #6e6e6e;
       --line: #e7e7e7;
@@ -113,7 +109,7 @@
       overflow: hidden;
     }
     #present-source { display: none !important; }
-    /* Slide crossfade — OLX-style easing, no in-slide layout motion */
+    /* Motion: css/portfolio-deck-motion.css */
     .present-slide {
       position: absolute;
       inset: 0;
@@ -123,39 +119,14 @@
       max-height: 100%;
       box-sizing: border-box;
       padding: 0;
-      opacity: 0;
-      transition: opacity var(--present-dur) var(--present-ease);
       overflow: hidden;
       z-index: 1;
-      pointer-events: none;
     }
     .present-slide.is-active {
-      opacity: 1;
       z-index: 2;
-      pointer-events: auto;
     }
     .present-slide.is-leaving {
-      opacity: 0;
       z-index: 1;
-      pointer-events: none;
-    }
-    /* OLX-style reveal — major blocks only (data-anim), not every text line */
-    .present-slide .reveal,
-    .present-slide .reveal-stagger,
-    .present-slide .reveal-stagger > * {
-      opacity: 1 !important;
-      transform: none !important;
-      transition: none !important;
-    }
-    .present-slide [data-anim] {
-      opacity: 0;
-      transform: translateY(26px);
-      transition: opacity var(--present-anim-dur) ease, transform var(--present-anim-dur) ease;
-    }
-    .present-slide.is-active [data-anim] {
-      opacity: 1;
-      transform: none;
-      transition-delay: calc(var(--i, 0) * var(--present-stagger));
     }
     /* Unified horizontal inset — slides that don't manage their own padding */
     body.summary-v2 .present-slide.container:not(.present-slide--p4-cura):not(.present-slide--p4-toolkit):not(.present-slide--p4-one-data):not(.present-slide--p4-coaching):not(.present-slide--proof):not(.present-beat-proof):not(.present-beat-coaching):not(.period__head--split):not(.present-slide--p1-outcomes):not(.present-slide--p1-visual-system):not(.present-slide--p3-visual-system):not(.present-slide--hero):not(.present-thanks) {
@@ -5409,7 +5380,6 @@
       z-index: 950;
       background: var(--accent);
       width: 0;
-      transition: width var(--present-dur) var(--present-ease);
     }
     .deck-title {
       font-size: 0.9rem;
@@ -5565,22 +5535,6 @@
       }
       .chapter-tab[aria-current="true"] {
         max-width: min(22rem, 78vw);
-      }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .present-slide,
-      .present-slide [data-anim],
-      .progress {
-        transition: none !important;
-      }
-      .present-slide,
-      .present-slide.is-active,
-      .present-slide.is-leaving {
-        opacity: 1 !important;
-      }
-      .present-slide [data-anim] {
-        opacity: 1 !important;
-        transform: none !important;
       }
     }
   </style>

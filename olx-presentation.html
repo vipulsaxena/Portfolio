@@ -78,6 +78,7 @@
     <link rel="stylesheet" href="css/hl.css">
     <link rel="stylesheet" href="css/custom-cursor.css">
     <link rel="stylesheet" href="css/portfolio-gate-previews.css">
+    <link rel="stylesheet" href="css/portfolio-deck-motion.css">
 
     <!-- Tailwind (Play CDN) + theme config -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -122,10 +123,9 @@
 
       /* ---------- Deck viewport ---------- */
       .deck{ position:fixed; inset:0; top:var(--deck-top); overflow:hidden; }
-      .deck-track{ display:flex; height:100%; width:100%;
-        transition:transform .6s cubic-bezier(.7,0,.2,1); will-change:transform; }
-      .slide{ flex:0 0 100%; height:100%; width:100%; overflow-y:auto;
-        display:flex; flex-direction:column; position:relative; }
+      .deck-track{ height:100%; width:100%; }
+      .slide{ height:100%; width:100%; overflow-y:auto;
+        display:flex; flex-direction:column; }
       .slide-inner{
         margin:0 auto; width:100%; max-width:100%;
         padding-top:var(--present-top);
@@ -188,9 +188,7 @@
         .deck .md\:mt-2{ margin-top:var(--deck-space-sm) !important; }
       }
 
-      /* Per-slide reveal */
-      .slide [data-anim]{ opacity:0; transform:translateY(26px); transition:opacity .6s ease, transform .6s ease; }
-      .slide.is-active [data-anim]{ opacity:1; transform:none; transition-delay:calc(var(--i,0) * 80ms); }
+      /* Per-slide reveal — css/portfolio-deck-motion.css */
 
       /* Highlights breadcrumb */
       .crumb{ display:inline-flex; flex-wrap:wrap; align-items:center; gap:.5rem; font-size:.95rem; color:#6e6e6e; font-weight:600; }
@@ -803,7 +801,7 @@
         .ml-auto{ flex:0 0 auto; }
       }
 
-      .progress{ position:fixed; top:var(--deck-top); left:0; height:3px; z-index:950; background:#ffda08; width:0; transition:width .6s cubic-bezier(.7,0,.2,1); }
+      .progress{ position:fixed; top:var(--deck-top); left:0; height:3px; z-index:950; background:#ffda08; width:0; }
       .deck-title{ font-size:.9rem; font-weight:600; color:#6e6e6e; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
       .kbd{ display:inline-flex; align-items:center; gap:.35rem; font-size:.75rem; color:#6e6e6e; }
       .key{ display:inline-block; min-width:1.5rem; padding:.15rem .4rem; text-align:center; font-size:.7rem; font-weight:700; border:1px solid #e7e7e7; border-bottom-width:2px; border-radius:.4rem; background:#fff; color:#262626; }
@@ -849,8 +847,6 @@
       }
 
       @media (prefers-reduced-motion: reduce){
-        .deck-track{ transition:none; } .progress{ transition:none; }
-        .slide [data-anim]{ opacity:1 !important; transform:none !important; transition:none !important; }
         .csat-arc{ stroke-dashoffset:0 !important; transition:none !important; }
         .note-when, .note-job, .note-catalyst{ transform:none !important; }
       }
@@ -1645,6 +1641,7 @@
 </script>
 
 <!-- Deck engine — chapters (Highlights / Case study), grouped dots, skip, lightbox -->
+<script src="js/portfolio-deck-crossfade.js"></script>
 <script>
 (function () {
   "use strict";
@@ -1668,6 +1665,7 @@
     "highlights": '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>'
   };
   let i = 0;
+  let lastSlideIdx = 0;
 
   /* ---------- build chapters from data-chapter ---------- */
   const chapters = [];
@@ -1723,12 +1721,16 @@
 
   /* ---------- render ---------- */
   function render() {
-    track.style.transform = "translateX(-" + i * 100 + "%)";
-    slides.forEach((s, idx) => {
-      const active = idx === i;
-      s.classList.toggle("is-active", active);
-      if (active) s.scrollTop = 0;
-    });
+    if (window.PortfolioDeckCrossfade) {
+      window.PortfolioDeckCrossfade.apply(slides, lastSlideIdx, i);
+    } else {
+      slides.forEach((s, idx) => {
+        const active = idx === i;
+        s.classList.toggle("is-active", active);
+        if (active) s.scrollTop = 0;
+      });
+    }
+    lastSlideIdx = i;
     dots.forEach((d, idx) => d.setAttribute("aria-current", String(idx === i)));
     const homePos = homeIndices.indexOf(i);
     const onHome = homePos >= 0;
@@ -2027,6 +2029,7 @@
   /* ---------- init from hash ---------- */
   const start = parseInt((location.hash || "").replace("#", ""), 10);
   if (!isNaN(start) && start >= 1 && start <= N) i = start - 1;
+  lastSlideIdx = i;
   render();
 })();
 </script>

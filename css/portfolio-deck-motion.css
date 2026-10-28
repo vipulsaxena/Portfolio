@@ -1,0 +1,137 @@
+/**
+ * Portfolio presentation decks — shared motion baseline (Raisin).
+ * Full-page decks: stacked opacity crossfade (380ms). Raisin uses .present-slide.
+ * JS: js/portfolio-deck-crossfade.js + js/raisin-present.js FADE_MS match --deck-dur.
+ */
+:root {
+  --deck-ease: cubic-bezier(0.7, 0, 0.2, 1);
+  --deck-dur: 380ms;
+  --deck-anim-dur: 0.38s;
+  --deck-stagger: 55ms;
+  /* Aliases used by Raisin present deck */
+  --present-ease: var(--deck-ease);
+  --present-dur: var(--deck-dur);
+  --present-anim-dur: var(--deck-anim-dur);
+  --present-stagger: var(--deck-stagger);
+  --fade-ms: var(--deck-dur);
+}
+
+/* ---------- Full-page deck: stacked crossfade (OLX, N26, GoMart) ---------- */
+.deck > .deck-track {
+  display: block;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  transform: none !important;
+  transition: none !important;
+  will-change: auto;
+}
+
+.deck > .deck-track > .slide {
+  position: absolute;
+  inset: 0;
+  flex: none;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+  transition: opacity var(--deck-dur) var(--deck-ease);
+}
+
+.deck > .deck-track > .slide.is-active {
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 2;
+}
+
+.deck > .deck-track > .slide.is-leaving {
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.progress {
+  transition: width var(--deck-dur) var(--deck-ease);
+}
+
+.slide [data-anim] {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity var(--deck-anim-dur) ease,
+    transform var(--deck-anim-dur) ease;
+}
+
+.slide.is-active [data-anim] {
+  opacity: 1;
+  transform: none;
+  transition-delay: calc(var(--i, 0) * var(--deck-stagger));
+}
+
+/* ---------- Raisin: stacked slide crossfade ---------- */
+.present-slide {
+  opacity: 0;
+  transition: opacity var(--present-dur) var(--present-ease);
+  pointer-events: none;
+}
+
+.present-slide.is-active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.present-slide.is-leaving {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.present-slide .reveal,
+.present-slide .reveal-stagger,
+.present-slide .reveal-stagger > * {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+.present-slide [data-anim] {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity var(--present-anim-dur) ease,
+    transform var(--present-anim-dur) ease;
+}
+
+.present-slide.is-active [data-anim] {
+  opacity: 1;
+  transform: none;
+  transition-delay: calc(var(--i, 0) * var(--present-stagger));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .deck > .deck-track > .slide,
+  .progress,
+  .present-slide,
+  .present-slide [data-anim] {
+    transition: none !important;
+  }
+
+  .slide [data-anim],
+  .present-slide [data-anim] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .deck > .deck-track > .slide:not(.is-active) {
+    opacity: 0 !important;
+    visibility: hidden;
+  }
+
+  .deck > .deck-track > .slide.is-active,
+  .present-slide,
+  .present-slide.is-active,
+  .present-slide.is-leaving {
+    opacity: 1 !important;
+    visibility: visible;
+  }
+}

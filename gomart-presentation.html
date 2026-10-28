@@ -36,6 +36,7 @@
     <link rel="stylesheet" href="css/hl.css">
     <link rel="stylesheet" href="css/custom-cursor.css">
     <link rel="stylesheet" href="css/portfolio-gate-previews.css">
+    <link rel="stylesheet" href="css/portfolio-deck-motion.css">
 
     <!-- Tailwind (Play CDN) + theme config (identical to template-2.html) -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -78,13 +79,11 @@
       /* ---------- Deck viewport ---------- */
       .deck{ position:fixed; inset:0; top:var(--deck-top); overflow:hidden; }
       .deck-track{
-        display:flex; height:100%; width:100%;
-        transition:transform .6s cubic-bezier(.7,0,.2,1);
-        will-change:transform;
+        height:100%; width:100%;
       }
       .slide{
-        flex:0 0 100%; height:100%; width:100%; overflow-y:auto;
-        display:flex; flex-direction:column; position:relative;
+        height:100%; width:100%; overflow-y:auto;
+        display:flex; flex-direction:column;
       }
       .slide-inner{
         margin:0 auto; width:100%; max-width:100%;
@@ -117,10 +116,7 @@
         max-width:100%;
       }
 
-      /* Per-slide reveal: children fade-up only while the slide is active */
-      .slide [data-anim]{ opacity:0; transform:translateY(26px); transition:opacity .6s ease, transform .6s ease; }
-      .slide.is-active [data-anim]{ opacity:1; transform:none; }
-      .slide.is-active [data-anim]{ transition-delay:calc(var(--i,0) * 90ms); }
+      /* Per-slide reveal — css/portfolio-deck-motion.css */
 
       /* Minimal iPhone mock for recorded prototypes */
       .phone-mock{ position:relative; width:100%; max-width:260px; margin-inline:auto; padding:5px; background:#1c1c1e; border-radius:2rem; box-shadow:0 16px 38px -22px rgba(0,0,0,.45); }
@@ -216,7 +212,7 @@
 
       /* Scroll progress bar (top of viewport, under header) */
       .progress{ position:fixed; top:var(--deck-top); left:0; height:3px; z-index:950;
-        background:#ffda08; width:0; transition:width .6s cubic-bezier(.7,0,.2,1); }
+        background:#ffda08; width:0; }
 
       /* Deck title in header */
       .deck-title{ font-size:.9rem; font-weight:600; color:#6e6e6e; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
@@ -230,12 +226,6 @@
       #lightbox{ position:fixed; inset:0; z-index:2000; display:none; align-items:center; justify-content:center; background:rgb(255 255 255 / 90%); padding:5vw; }
       #lightbox.open{ display:flex; }
       #lightbox img{ max-width:100%; max-height:90vh; border-radius:.75rem; box-shadow:0 24px 60px -20px rgba(0,0,0,.35); }
-
-      @media (prefers-reduced-motion: reduce){
-        .deck-track{ transition:none; }
-        .progress{ transition:none; }
-        .slide [data-anim]{ opacity:1 !important; transform:none !important; transition:none !important; }
-      }
 
       /* ===== Password gate (secure entry) ===== */
       #gomartGate{ display:none; }
@@ -1205,6 +1195,7 @@
 </script>
 
 <!-- ===================== Full-page slideshow (vanilla JS) ===================== -->
+<script src="js/portfolio-deck-crossfade.js"></script>
 <script>
 (function () {
   "use strict";
@@ -1230,6 +1221,7 @@
   };
 
   let i = 0;
+  let lastSlideIdx = 0;
 
   /* ---------- build chapters from data-chapter ---------- */
   const chapters = [];
@@ -1286,12 +1278,16 @@
 
   /* ---------- render current state ---------- */
   function render() {
-    track.style.transform = `translateX(-${i * 100}%)`;
-    slides.forEach((s, idx) => {
-      const active = idx === i;
-      s.classList.toggle("is-active", active);
-      if (active) s.scrollTop = 0;
-    });
+    if (window.PortfolioDeckCrossfade) {
+      window.PortfolioDeckCrossfade.apply(slides, lastSlideIdx, i);
+    } else {
+      slides.forEach((s, idx) => {
+        const active = idx === i;
+        s.classList.toggle("is-active", active);
+        if (active) s.scrollTop = 0;
+      });
+    }
+    lastSlideIdx = i;
     dots.forEach((d, idx) => d.setAttribute("aria-current", String(idx === i)));
     const homePos = homeIndices.indexOf(i);
     const onHome = homePos >= 0;
@@ -1381,6 +1377,7 @@
   /* ---------- init from hash ---------- */
   const start = parseInt((location.hash || "").replace("#", ""), 10);
   if (!isNaN(start) && start >= 1 && start <= N) i = start - 1;
+  lastSlideIdx = i;
   render();
 })();
 </script>
