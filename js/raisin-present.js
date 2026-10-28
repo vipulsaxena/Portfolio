@@ -258,7 +258,6 @@
         "#period-4 .ai-cadence"
       ]
     },
-    { id: "p4-cura", chapter: "period-3", selector: "#period-4 .beat--cura" },
     {
       id: "proof",
       chapter: "proof",
