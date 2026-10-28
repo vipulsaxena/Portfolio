@@ -108,6 +108,21 @@
   transition-delay: calc(var(--i, 0) * var(--present-stagger));
 }
 
+/* Hero bento — grid hover must keep its own transitions (not slide entrance shorthand) */
+.present-slide--hero .hero-bento,
+.present-slide--hero .hero-bento[data-anim] {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+@media (min-width: 901px) {
+  .present-slide--hero .hero-bento {
+    transition:
+      grid-template-columns 0.35s ease-in-out,
+      grid-template-rows 0.35s ease-in-out !important;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .deck > .deck-track > .slide,
   .progress,

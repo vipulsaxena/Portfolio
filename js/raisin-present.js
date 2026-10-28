@@ -9,7 +9,6 @@
   /** Coarse layout blocks only — mirrors OLX data-anim (not every copy line). */
   var PRESENT_ANIM_BLOCKS = [
     ".hero-split__content",
-    ".hero-bento",
     ".present-gaps__stack",
     ".present-pullquote",
     ".track-key",
