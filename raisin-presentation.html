@@ -25,36 +25,9 @@
   <link rel="stylesheet" href="css/portfolio-deck-motion.css">
 
   <script src="js/follow-me-bootstrap.js"></script>
-  <script>
-    (function () {
-      var KEY = "raisinAccessGranted";
-      function navType() {
-        try {
-          var e = performance.getEntriesByType && performance.getEntriesByType("navigation");
-          if (e && e.length) return e[0].type;
-          if (performance.navigation) return ["navigate", "reload", "back_forward"][performance.navigation.type] || "navigate";
-        } catch (_) {}
-        return "navigate";
-      }
-      var internal = false;
-      try { internal = !!document.referrer && new URL(document.referrer).origin === location.origin; } catch (_) {}
-      var t = navType();
-      var external = (t !== "reload" && t !== "back_forward") && !internal;
-      var allow = false;
-      try {
-        if (sessionStorage.getItem("vipulFollow") || sessionStorage.getItem("vipulPresent")) {
-          sessionStorage.setItem(KEY, "1");
-          allow = true;
-        } else if (external) {
-          sessionStorage.removeItem(KEY);
-        } else {
-          allow = sessionStorage.getItem(KEY) === "1";
-        }
-      } catch (_) {}
-      window.__gateAllow = allow;
-      if (!allow) document.documentElement.classList.add("raisin-present-locked");
-    })();
-  </script>
+  <script src="js/portfolio-gate.js"></script>
+  <script src="js/portfolio-access-bootstrap.js"></script>
+  <script>PortfolioAccessBootstrap.run({ key: "raisinAccessGranted", lockedClass: "raisin-present-locked" });</script>
 
   <style>
     :root {
@@ -1786,6 +1759,16 @@
       max-height: var(--present-vh);
       overflow: hidden;
       box-sizing: border-box;
+    }
+    .present-slide--p3-visual-system.present-slide--layout-viewport {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      min-height: calc(var(--present-vh) - var(--present-bottom));
+      max-height: var(--present-vh);
+      overflow: hidden;
+      box-sizing: border-box;
+      padding-top: var(--present-top);
     }
     .present-slide--p1-exploration .exploration-wizard--split,
     .present-slide--p3-ideation .exploration-wizard--split,
@@ -4060,11 +4043,16 @@
       justify-content: center;
     }
     .present-slide--p3-ideation .trade-off-switcher--split,
-    .present-slide--p3-visual-system .trade-off-switcher--split,
     .present-slide--p3-maze .trade-off-switcher--split {
       align-items: stretch;
       min-height: 0;
       height: 100%;
+    }
+    .present-slide--p3-visual-system .trade-off-switcher--split {
+      align-items: flex-start;
+      min-height: 0;
+      height: auto;
+      max-height: calc(var(--present-vh) - var(--present-bottom) - var(--present-top));
     }
     .present-slide--p3-ideation .trade-off-switcher__left,
     .present-slide--p3-ideation .trade-off-switcher__right,
@@ -4095,10 +4083,12 @@
         clamp(calc(var(--sp-sm) * 1.1), calc(1.45vh * 1.1), calc(1.1rem * 1.1))
       );
     }
-    .present-slide--p3-ideation .trade-off-switcher__left,
     .present-slide--p3-visual-system .trade-off-switcher__left,
     .present-slide--p3-maze .trade-off-switcher__left.present-split__copy {
       justify-content: center;
+    }
+    .present-slide--p3-visual-system .trade-off-switcher--split.trade-off-switcher--visual-left .trade-off-switcher__right {
+      justify-content: flex-start;
     }
     .present-slide--p3-shipped .device-story__row {
       align-items: stretch;
@@ -4119,7 +4109,7 @@
     .present-slide--p3-visual-system .tabs-compare {
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
       width: 100%;
     }
@@ -4127,20 +4117,22 @@
       min-width: 0;
       width: 100%;
       min-height: 0;
-      max-height: 100%;
-      height: 100%;
+      max-height: none;
+      height: auto;
     }
     .present-slide--p3-visual-system .trade-off-switcher--split.trade-off-switcher--visual-left .trade-off-switcher__right {
       margin-top: 0;
-      padding-top: 5%;
+      padding-top: 0;
       box-sizing: border-box;
       justify-content: flex-start;
       align-items: center;
-      align-self: stretch;
+      align-self: flex-start;
       gap: 0;
       overflow: visible;
       min-height: 0;
-      max-height: 100%;
+      height: auto;
+      max-height: none;
+      flex: 0 1 auto;
     }
     .present-slide--p3-visual-system .trade-off-switcher__left.present-split__copy {
       gap: var(--present-split-stack-gap);
@@ -4161,12 +4153,15 @@
       margin-top: clamp(0.75rem, 1.35vh, 1.1rem);
     }
     .present-slide--p3-visual-system .tabs-compare {
-      flex: 1 1 0;
+      flex: 0 1 auto;
       min-height: 0;
-      max-height: 100%;
+      max-height: min(
+        calc(var(--present-vh) - var(--present-bottom) - var(--present-top) - 7rem),
+        100%
+      );
       width: 100%;
       overflow: visible;
-      gap: clamp(1rem, 1.85vh, 1.35rem);
+      gap: clamp(0.75rem, 1.35vh, 1.1rem);
     }
     .present-slide--p3-visual-system .tabs-compare__nav.visual-tabs__stepper {
       flex: 0 0 auto;
@@ -4225,17 +4220,17 @@
     }
     .present-slide--p3-visual-system .tabs-compare .compare--tabs {
       aspect-ratio: 552 / 1140;
-      width: min(100cqw, 20.5rem, calc(100cqh * 552 / 1140));
+      width: min(100cqw, 19rem, calc(100cqh * 552 / 1140));
       height: auto;
       max-height: 100cqh;
-      max-width: min(100%, 20.5rem);
+      max-width: min(100%, 19rem);
       margin-inline: auto;
-      flex-shrink: 0;
+      flex-shrink: 1;
     }
     @supports not (container-type: size) {
       .present-slide--p3-visual-system .tabs-compare .compare--tabs {
-        width: min(100%, 20.5rem);
-        max-height: calc(var(--present-vh) - var(--present-bottom) - var(--present-top) - 12rem);
+        width: min(100%, 19rem);
+        max-height: calc(var(--present-vh) - var(--present-bottom) - var(--present-top) - 11rem);
         height: auto;
       }
     }
@@ -7398,6 +7393,7 @@
     });
   })();
 </script>
+<script defer src="js/portfolio-access-links.js"></script>
 <script defer src="js/custom-cursor.js"></script>
 <script defer src="js/vipul-chat.js"></script>
 </body>

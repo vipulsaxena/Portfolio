@@ -141,7 +141,7 @@
                 <span class="date" id="featured-work">Featured work</span>
                 <hr>
                 <div class="post-item post featured trg_cnt liquid" role="button" tabindex="0" data-company="raisin">
-                    <a target="_blank" rel="noopener">
+                    <a href="#" rel="noopener" tabindex="-1" aria-hidden="true">
                         <ul>
                             <li class="cover">
                                 <figure>
@@ -551,6 +551,20 @@
     <script src="js/portfolio-gate-previews.js"></script>
 
     <script>
+      window.portfolioNavTo = function (path) {
+        try {
+          var pw = new URLSearchParams(location.search).get("password");
+          if (pw) {
+            var u = new URL(path, location.href);
+            u.searchParams.set("password", pw);
+            return u.pathname + u.search + u.hash;
+          }
+        } catch (_) {}
+        return path;
+      };
+    </script>
+
+    <script>
       (function(){
         var PASSWORD = "portfolio26";
         var card    = document.querySelector('.trg_cnt[data-company="raisin"]');
@@ -586,7 +600,7 @@
           e.preventDefault();
           if (input.value === PASSWORD) {
             try { sessionStorage.setItem("raisinAccessGranted", "1"); } catch(_){}
-            window.location.href = "raisin.html";
+            window.location.href = window.portfolioNavTo("raisin.html");
           } else {
             error.hidden = false; input.focus(); input.select();
           }
@@ -632,7 +646,7 @@
             try {
               sessionStorage.setItem("olxAccessGranted", "1");
             } catch(_){}
-            window.location.replace("olx.html");
+            window.location.replace(window.portfolioNavTo("olx.html"));
           } else {
             error.hidden = false; input.focus(); input.select();
           }
@@ -676,7 +690,7 @@
           e.preventDefault();
           if (input.value === PASSWORD) {
             try { sessionStorage.setItem("n26AccessGranted", "1"); } catch(_){}
-            window.location.href = "n26.html";
+            window.location.href = window.portfolioNavTo("n26.html");
           } else {
             error.hidden = false; input.focus(); input.select();
           }
@@ -721,7 +735,7 @@
           error.hidden = true;
           if (input.value === PASSWORD) {
             try { sessionStorage.setItem("gomartAccessGranted", "1"); } catch(_){}
-            window.location.href = "gomart.html";
+            window.location.href = window.portfolioNavTo("gomart.html");
           } else {
             error.hidden = false; input.focus(); input.select();
           }
@@ -746,6 +760,8 @@
 
     <script defer src="js/lazy-third-party.js"></script>
     <script defer src="js/portfolio-gate.js"></script>
+    <script defer src="js/portfolio-access-index.js"></script>
+    <script defer src="js/portfolio-access-links.js"></script>
     <script defer src="js/vipul-chat-config.js?v=16"></script>
     <script defer src="js/vipul-chat-knowledge.js?v=16"></script>
     <script defer src="js/vipul-chat.js?v=17"></script>

@@ -54,33 +54,9 @@
       .pw-btn:hover{ filter:brightness(1.05); transform:translateY(-1px); }
     </style>
     <script src="js/follow-me-bootstrap.js"></script>
-    <script>
-      (function(){
-        var KEY = "gomartAccessGranted";
-        function navType(){
-          try {
-            var e = performance.getEntriesByType && performance.getEntriesByType("navigation");
-            if (e && e.length) return e[0].type;
-            if (performance.navigation) return ["navigate","reload","back_forward"][performance.navigation.type] || "navigate";
-          } catch(_){}
-          return "navigate";
-        }
-        var internal = false;
-        try { internal = !!document.referrer && new URL(document.referrer).origin === location.origin; } catch(_){}
-        var t = navType();
-        var external = (t !== "reload" && t !== "back_forward") && !internal;
-        var allow = false;
-        try {
-          if (sessionStorage.getItem("vipulFollow") || sessionStorage.getItem("vipulPresent")) {
-            sessionStorage.setItem(KEY, "1");
-            allow = true;
-          } else if (external) sessionStorage.removeItem(KEY);
-          else allow = sessionStorage.getItem(KEY) === "1";
-        } catch(_){}
-        window.__gateAllow = allow;
-        if (!allow) document.documentElement.classList.add("gomart-locked");
-      })();
-    </script>
+    <script src="js/portfolio-gate.js"></script>
+    <script src="js/portfolio-access-bootstrap.js"></script>
+    <script>PortfolioAccessBootstrap.run({ key: "gomartAccessGranted", lockedClass: "gomart-locked" });</script>
     <!-- Analytics (GA + Clarity) — after gate; deferred until unlock on protected pages -->
     <script defer src="js/gtag-init.js"></script>
 </head>
@@ -779,6 +755,6 @@
 </script>
 <script defer src="js/custom-cursor.js"></script>
 <script defer src="template.js"></script>
-<script defer src="js/portfolio-gate.js"></script>
+<script defer src="js/portfolio-access-links.js"></script>
 </body>
 </html>
