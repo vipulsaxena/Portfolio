@@ -37,15 +37,23 @@
   function navigateToCaseStudy(company) {
     var G = gate();
     var dest = COMPANY_PAGES[company];
-    if (!G || !dest) return;
-    var href = G.appendAccessParam ? G.appendAccessParam(dest) : dest;
-    if (typeof window.portfolioNavTo === "function" && !G.activeUrlPassword()) {
-      href = window.portfolioNavTo(dest);
-    }
+    if (!dest) return;
+    var href = G && G.appendAccessParam ? G.appendAccessParam(dest) : dest;
     location.assign(href);
   }
 
   onReady(function () {
+    document.addEventListener(
+      "click",
+      function (e) {
+        var a = e.target.closest(".trg_cnt[data-company] a");
+        if (a && (a.getAttribute("href") === "#" || a.getAttribute("href") === "")) {
+          e.preventDefault();
+        }
+      },
+      true
+    );
+
     var G = gate();
     if (!G) return;
 
