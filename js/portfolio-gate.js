@@ -166,13 +166,16 @@
     }
   }
 
+  /** True when this page load has a valid ?password= (does not write sessionStorage). */
+  function hasUrlAccess(loc) {
+    return !!activeUrlPassword(loc);
+  }
+
   function applyUrlAccessGrant(loc) {
     loc = loc || global.location;
-    var pw = passwordFromSearch(loc.search);
-    if (!pw || !verifySync(pw)) return false;
-    grantAllGates();
-    global.__portfolioUrlAccess = true;
-    return true;
+    var ok = hasUrlAccess(loc);
+    global.__portfolioUrlAccess = ok;
+    return ok;
   }
 
   global.PortfolioGate = {
@@ -185,6 +188,7 @@
     grantAll: grantAllGates,
     passwordFromSearch: passwordFromSearch,
     activeUrlPassword: activeUrlPassword,
+    hasUrlAccess: hasUrlAccess,
     appendAccessParam: appendAccessParam,
     applyUrlAccessGrant: applyUrlAccessGrant,
   };

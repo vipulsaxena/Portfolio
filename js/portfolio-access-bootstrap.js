@@ -20,7 +20,7 @@
   }
 
   function resolveAllow(storageKey) {
-    if (Gate.applyUrlAccessGrant()) return true;
+    if (Gate.activeUrlPassword && Gate.activeUrlPassword()) return true;
 
     var allow = false;
     try {

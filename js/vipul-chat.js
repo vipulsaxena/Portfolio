@@ -66,6 +66,8 @@
   }
 
   function isUnlocked() {
+    var gate = global.PortfolioGate;
+    if (gate && gate.hasUrlAccess && gate.hasUrlAccess()) return true;
     return (
       storageGet(CONFIG.UNLOCK_KEY, false) === "1" ||
       storageGet(CONFIG.UNLOCK_KEY, true) === "1"

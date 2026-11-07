@@ -26,7 +26,8 @@
   }
 
   function portfolioUnlocked(G) {
-    return !!window.__portfolioUrlAccess || (G && hasGateSession(G));
+    if (G && G.hasUrlAccess && G.hasUrlAccess()) return true;
+    return G && hasGateSession(G);
   }
 
   function onReady(fn) {
