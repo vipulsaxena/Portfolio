@@ -796,7 +796,7 @@
     { n: 2, label: "Parity" },
     { n: 3, label: "Ideate" },
     { n: 4, label: "Validation" },
-    { n: 5, label: "Visual design" },
+    { n: 5, label: "Final pass" },
     { n: 6, label: "Launch" }
   ];
 

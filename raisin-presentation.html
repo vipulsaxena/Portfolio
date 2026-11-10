@@ -1481,14 +1481,20 @@
     .present-slide--p3-visual-system .trade-off-switcher__left.present-split__copy {
       gap: var(--present-split-stack-gap);
     }
+    .present-slide--p3-maze {
+      --p3-maze-visual-lift: calc(
+        0.15 * (var(--present-vh) - var(--present-bottom) - var(--present-top))
+      );
+    }
     .present-slide--p3-maze .mobile-validation-maze__visual {
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       gap: clamp(0.5rem, 1.1vh, 0.75rem);
       width: 100%;
       min-height: 0;
+      margin-top: calc(-1 * var(--p3-maze-visual-lift));
     }
     .present-slide--p3-maze .mobile-journey__visual--maze {
       margin: 0;
@@ -6127,11 +6133,11 @@
             </div>
 
             <div class="wealth-hub-beat reveal" aria-label="Wealth Hub visual system">
-              <div class="trade-off-switcher trade-off-switcher--split trade-off-switcher--visual-left exploration-wizard visual-system-wizard" data-phase-wizard data-fm-widget="raisin-visual-steps" data-fm-kind="phase" data-fm-value="1" data-journey-anchor="5" data-default="1" aria-label="Visual design — exploration and critique, colour map, listing anatomy, final interface">
+              <div class="trade-off-switcher trade-off-switcher--split trade-off-switcher--visual-left exploration-wizard visual-system-wizard" data-phase-wizard data-fm-widget="raisin-visual-steps" data-fm-kind="phase" data-fm-value="1" data-journey-anchor="5" data-default="1" aria-label="Visual design — design critique, product colour map, listing anatomy, final interface, 12 markets">
                 <div class="trade-off-switcher__right exploration-wizard__right">
                   <div class="exploration-wizard__controls">
                     <div class="exploration-wizard__stepper exploration-wizard__stepper--journey phase-wizard__stepper phase-wizard__stepper--secondary" role="tablist" aria-label="Visual system sub-steps">
-                      <button type="button" class="trade-off-switcher__tab trade-off-switcher__tab--active" role="tab" aria-selected="true" data-step="1" tabindex="0"><span class="exploration-wizard__tab-n" aria-hidden="true">5.1</span> Critique &amp; Co-Creation</button>
+                      <button type="button" class="trade-off-switcher__tab trade-off-switcher__tab--active" role="tab" aria-selected="true" data-step="1" tabindex="0"><span class="exploration-wizard__tab-n" aria-hidden="true">5.1</span> Design Critique</button>
                       <span class="exploration-wizard__arrow-static" aria-hidden="true">→</span>
                       <button type="button" class="trade-off-switcher__tab" role="tab" aria-selected="false" data-step="2" tabindex="-1"><span class="exploration-wizard__tab-n" aria-hidden="true">5.2</span> Product colour map</button>
                       <span class="exploration-wizard__arrow-static" aria-hidden="true">→</span>
@@ -6172,7 +6178,7 @@
                 <div class="trade-off-switcher__left wealth-hub-story__copy present-split__copy">
                   <nav class="workflow-strip wealth-hub-journey" aria-label="Wealth Hub journey" data-journey-step="5"></nav>
                   <h3 class="beat__title">The system behind the surface.</h3>
-                  <p class="beat__support beat__support--present">Critique &amp; Co-Creation · Product colour map · Listing anatomy · Final interface · 12 markets</p>
+                  <p class="beat__support beat__support--present">Design Critique · Product colour map · Listing anatomy · Final interface · 12 markets</p>
                   <p class="beat__eyebrow">WEALTH HUB · VISUAL DESIGN</p>
                   <p class="beat__text beat__text--present">Type, colour, layout, and components — one system for twelve markets. The colour map settled brand debate; typography, spacing, and components shipped in parallel with Foundation-fix.</p>
                   <p class="beat__text">12 markets · 3 market-type rules · light + dark token specs · web component library built from scratch.</p>
@@ -6814,7 +6820,7 @@
                 </div>
                 <div class="trade-off-switcher__left wealth-hub-story__copy present-split__copy">
                   <nav class="workflow-strip wealth-hub-journey" aria-label="Mobile journey" data-journey-program="mobile" data-journey-step="5"></nav>
-                  <h3 class="beat__title">Paired on the mobile design system.</h3>
+                  <h3 class="beat__title">Design all core components in 2 themes.</h3>
                   <p class="beat__support beat__support--present">Mobile design-system refresh</p>
                   <p class="beat__eyebrow">MOBILE · VISUAL DESIGN</p>
                   <p class="beat__text beat__text--present">I ran the final visual-design pass to revise foundational mobile design-system tokens and the components themselves, so the shipped UI sat on the library instead of one-off screens.</p>
