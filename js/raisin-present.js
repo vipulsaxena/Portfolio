@@ -262,7 +262,12 @@
   var SLIDE_MANIFEST = [
     { id: "hero", chapter: "setup", selector: "#hero" },
     { id: "gaps", chapter: "setup", selector: "#why" },
-    { id: "journey", chapter: "setup", selector: "#journey-intro" },
+    {
+      id: "journey",
+      chapter: "setup",
+      selector: "#journey-intro",
+      title: "One goal · Three chapters · Two tracks"
+    },
     { id: "p1-intro", chapter: "period-1", selector: "#period-1 .period__head" },
     { id: "p1-baseline", chapter: "period-1", selector: '[aria-label="Baseline research"]' },
     { id: "p1-co-creation", chapter: "period-1", selector: '[aria-label="Co-creation sprint"]' },
@@ -290,6 +295,7 @@
         "#period-4 .ai-cadence"
       ]
     },
+    { id: "p4-cura", chapter: "period-3", selector: "#period-4 .beat--cura" },
     {
       id: "proof",
       chapter: "proof",

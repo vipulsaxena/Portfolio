@@ -698,7 +698,7 @@
       font-size: var(--present-display-size);
       line-height: 1.12;
       letter-spacing: -0.02em;
-      margin: 0;
+      margin: 0 0 clamp(1.2rem, 2.8vh, 1.8rem);
     }
     .present-slide--journey .track-key__label {
       font-size: var(--present-eyebrow-size);
@@ -1039,17 +1039,23 @@
       align-items: center;
       gap: 0.5rem;
     }
-    .present-slide--hero .hero__sub {
-      margin: clamp(0.5rem, 1.2vh, 0.85rem) 0 0;
-      max-width: 36ch;
+    .present-slide--hero .hero__brand-lockup {
+      gap: 0;
     }
-    .present-slide--hero .hero__role {
-      margin: clamp(0.5rem, 1.2vh, 0.85rem) 0 0;
+    .present-slide--hero .hero__brand-lockup .hero__title-logo {
+      margin-bottom: clamp(0.85rem, 1.65vh, 1.15rem);
+    }
+    .present-slide--hero .hero__brand-lockup .hero__title {
+      margin: 0;
+    }
+    .present-slide--hero .hero__brand-lockup .hero__title + .hero__sub {
+      margin: clamp(0.35rem, 0.75vh, 0.5rem) 0 0;
       max-width: none;
       width: 100%;
-      font-size: var(--present-body-size, 1rem);
-      line-height: 1.45;
-      color: var(--muted);
+    }
+    .present-slide--hero .hero__sub {
+      margin: 0;
+      max-width: 36ch;
     }
     @media (min-width: 901px) {
       .present-slide--hero .hero-split--stage {
@@ -1140,7 +1146,7 @@
       width: 100%;
     }
     .present-slide--journey .present-pullquote {
-      margin: 0;
+      margin: clamp(0.6rem, 1.4vh, 0.9rem) 0 0;
       padding: clamp(0.75rem, 1.5vh, 1rem) clamp(1rem, 2vw, 1.25rem);
       border-left: 3px solid var(--accent, #ffda08);
       background: color-mix(in srgb, var(--accent, #ffda08) 8%, transparent);
@@ -1197,6 +1203,68 @@
       color: var(--ink);
       background: color-mix(in srgb, var(--paper, #fff) 92%, transparent);
       border-color: color-mix(in srgb, var(--ink) 22%, transparent);
+    }
+    .present-slide--journey .journey-case-map {
+      display: block;
+      margin: 0;
+      width: 100%;
+    }
+    .present-slide--journey .journey-case-map__list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(0.5rem, 1vw, 0.75rem);
+    }
+    @media (max-width: 900px) {
+      .present-slide--journey .journey-case-map__list {
+        grid-template-columns: 1fr;
+      }
+    }
+    .present-slide--journey .journey-case-map__item {
+      display: flex;
+      gap: clamp(0.45rem, 0.9vw, 0.65rem);
+      align-items: flex-start;
+      margin: 0;
+      padding: clamp(0.55rem, 1.1vh, 0.75rem) clamp(0.65rem, 1.2vw, 0.85rem);
+      border: var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--paper-dim);
+      min-width: 0;
+    }
+    .present-slide--journey .journey-case-map__num {
+      flex: 0 0 auto;
+      font-family: var(--font-display);
+      font-size: clamp(1.1rem, 2.2vh, 1.35rem);
+      font-weight: 600;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      color: var(--line-strong);
+    }
+    .present-slide--journey .journey-case-map__body {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+    .present-slide--journey .journey-case-map__title {
+      margin: 0;
+      font-size: clamp(0.78rem, 1.35vh, 0.9rem);
+      font-weight: 600;
+      line-height: 1.25;
+      color: var(--ink);
+    }
+    .present-slide--journey .journey-case-map__meta {
+      font-weight: 500;
+      color: var(--ink-soft);
+    }
+    .present-slide--journey .journey-case-map__desc {
+      margin: 0;
+      font-size: clamp(0.72rem, 1.15vh, 0.8rem);
+      line-height: 1.35;
+      color: var(--ink-soft);
     }
     .present-slide--p1-intro .period__role,
     .present-slide--p3-intro .period__role,
@@ -5711,15 +5779,14 @@
     <div class="container hero-split hero-split--stage">
       <div class="hero-split__content">
         <div class="hero__kicker">
-          <span class="tag tag--outline">Brand evolution</span>
-          <span class="chip">Lead Designer</span>
+          <span class="tag tag--outline">Lead Designer - B2C</span>
+          <span class="chip">Case study</span>
         </div>
         <div class="hero__brand-lockup">
           <img class="hero__title-logo" src="raisin-assets/assets/img/branding/raisin-logo-white.svg" alt="Raisin" width="908" height="211">
-          <h1 class="hero__title">Raisin is a European savings and investment marketplace — with ~€80bn in assets under management.</h1>
+          <h1 class="hero__title">Brand evolution at Raisin</h1>
+          <p class="hero__sub hero__sub--thesis">Raisin is a European savings and investment marketplace — with ~€80bn in assets under management.</p>
         </div>
-        <p class="hero__role">Solo designer embedded in the B2C Growth and Engagement tribes — reporting to VP Design, taking project brief from Head of Product.</p>
-        <p class="hero__sub">I lead B2C design in Growth &amp; Engagement — evolving Raisin’s brand across web and mobile, and the practice that makes multi-market change stick.</p>
       </div>
       <div class="hero-bento" aria-hidden="true" data-fm-widget="raisin-hero" data-fm-kind="hero">
         <div class="hero-bento__item"><img src="raisin-assets/assets/img/hero-bento/iphone-17-pink-table.webp" alt="" width="2400" height="1600" decoding="async" fetchpriority="high"></div>
@@ -5736,7 +5803,7 @@
 <section class="why-hero" id="why" style="padding-block:var(--sp-2xl);">
     <div class="container" style="position:relative; z-index:1;">
     <div class="present-gaps__kicker">
-      <span class="chip">Overarching problem</span>
+      <span class="chip">Context</span>
     </div>
     <h2 class="why-hero__statement present-gaps__title">Raisin was evolving its brand — but the product, the practice, and the team hadn't caught up.</h2>
 
@@ -5788,23 +5855,45 @@
 <section class="section section--tight" id="journey-intro" data-period="journey-intro">
   <div class="container">
     <div class="section-head reveal">
-      <p class="eyebrow">— Product brief</p>
-      <h2 class="h-display h-2">Journey</h2>
+      <p class="eyebrow">Journey</p>
+      <h2 class="h-display h-2">One goal · Three chapters · Two tracks</h2>
       <p class="lede">Two programmes, run in parallel — not one tidy sequence.</p>
       <p class="lede lede--remit">My remit: close the three gaps — <strong>brand evolution</strong> into live product (absorb the agency handoff and carry it into the surfaces customers use; redesign web, mobile, and communication into one home for their wealth), and <strong>enablement</strong> in parallel (ways of working, research and critique rituals, craft standards, and the AI programme) so the team could sustain it. <strong>Practice</strong> = customer outcomes. <strong>Enablement</strong> = team capability. <strong>I</strong> where I owned it; <strong>we</strong> at tribe scale.</p>
     </div>
+    <nav class="journey-case-map reveal" aria-label="Case structure — three chapters">
+      <ol class="journey-case-map__list">
+        <li class="journey-case-map__item">
+          <span class="journey-case-map__num" aria-hidden="true">01</span>
+          <div class="journey-case-map__body">
+            <p class="journey-case-map__title">Wealth Hub <span class="journey-case-map__meta">· web · 7 months</span></p>
+            <p class="journey-case-map__desc">Home for wealth — not a product catalogue.</p>
+          </div>
+        </li>
+        <li class="journey-case-map__item">
+          <span class="journey-case-map__num" aria-hidden="true">02</span>
+          <div class="journey-case-map__body">
+            <p class="journey-case-map__title">Mobile <span class="journey-case-map__meta">· 5 months</span></p>
+            <p class="journey-case-map__desc">Inherit the system; redesign the surface.</p>
+          </div>
+        </li>
+        <li class="journey-case-map__item">
+          <span class="journey-case-map__num" aria-hidden="true">03</span>
+          <div class="journey-case-map__body">
+            <p class="journey-case-map__title">Enablement (Parallel track) <span class="journey-case-map__meta">· design org</span></p>
+            <p class="journey-case-map__desc">Rituals, research OS, AI — measured on the proof slide.</p>
+          </div>
+        </li>
+      </ol>
+    </nav>
     <blockquote class="present-pullquote reveal">
       <p>&ldquo;Improve the post-login experience so customers can understand and manage their wealth, discover products, and take action—building trust and supporting AuM growth.&rdquo;</p>
-      <footer>&mdash; Head of Product (B2C Growth)</footer>
+      <footer>Business goal</footer>
       <div class="journey-brief-criteria" role="group" aria-label="Success criteria">
         <span class="journey-brief-criteria__label">Success criteria:</span>
         <div class="chip-row journey-brief-criteria__tags" role="list">
-          <span class="chip" role="listitem">Adoption</span>
-          <span class="chip" role="listitem">Wealth understanding</span>
-          <span class="chip" role="listitem">Exploration → Conversion</span>
-          <span class="chip" role="listitem">Task completion</span>
-          <span class="chip" role="listitem">NPS</span>
-          <span class="chip" role="listitem">AuM growth</span>
+          <span class="chip" role="listitem">AuM Growth</span>
+          <span class="chip" role="listitem">Retention</span>
+          <span class="chip" role="listitem">Margin Diversification</span>
         </div>
       </div>
     </blockquote>
@@ -5812,15 +5901,15 @@
       <div class="track-key__item track-key__item--practice">
         <p class="track-key__label">Practice</p>
         <p class="track-key__text">Research-led decisions, shipped screens, measured outcomes.</p>
-        <p class="track-key__impact track-key__impact--present"><strong>Impact:</strong> Support Global Growth, Enhance Customer Engagement, AuM Growth &amp; Retention, Cross-Selling &amp; Margin Diversification</p>
+        <p class="track-key__impact track-key__impact--present"><strong>Impact:</strong> Adoption, Engagement, Satisfaction, Conversion and User Delight</p>
       </div>
       <div class="track-key__item track-key__item--enablement enablement-surface">
         <p class="track-key__label enablement-label">
           <svg class="enablement-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-          Enablement
+          Enablement (Parallel track)
         </p>
-        <p class="track-key__text">Rituals, research OS, docs, tooling, coaching — I built; the org adopted.</p>
-        <p class="track-key__impact track-key__impact--present"><strong>Impact:</strong> Research rituals, playbooks, AI workflows, and coaching the org adopted.</p>
+        <p class="track-key__text">Rituals, Research operations, Playbooks, AI Enablement, Hiring and coaching.</p>
+        <p class="track-key__impact track-key__impact--present"><strong>Impact:</strong> Design maturity, Velocity and Quality</p>
       </div>
     </div>
     <hr class="rule rule--thick" aria-hidden="true">
