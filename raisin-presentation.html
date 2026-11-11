@@ -834,6 +834,21 @@
       height: var(--gaps-visual-h);
       max-height: var(--gaps-visual-h);
     }
+    .present-slide--gaps .why-proof--gap-brand .why-proof__media--video {
+      grid-column: 1 / -1;
+      width: 100%;
+      justify-self: stretch;
+    }
+    .present-slide--gaps .why-proof--gap-brand .why-proof__frame--video {
+      width: min(100%, calc(var(--gaps-visual-h) * 16 / 9));
+      height: var(--gaps-visual-h);
+      max-height: var(--gaps-visual-h);
+      aspect-ratio: 16 / 9;
+    }
+    .present-slide--gaps .why-proof--gap-brand .why-proof__frame--video video {
+      object-fit: contain;
+      object-position: center;
+    }
     .present-slide--gap-02 .why-proof__frame--video video,
     .present-slide--gaps .why-proof__frame--video video {
       width: 100%;
@@ -1139,34 +1154,97 @@
     .present-slide--journey .section-head .lede--present-short {
       max-width: none;
     }
+    .present-slide--journey {
+      --journey-stack-gap: clamp(1.25rem, 2.75vh, 1.85rem);
+      --journey-north-star-bg: color-mix(in srgb, var(--ink) 76%, var(--paper, #fff));
+      --journey-north-star-ink: color-mix(in srgb, var(--paper, #fff) 94%, var(--ink));
+      --journey-north-star-muted: color-mix(in srgb, var(--paper, #fff) 68%, var(--ink));
+      --journey-north-star-line: color-mix(in srgb, var(--paper, #fff) 22%, var(--ink));
+    }
     .present-slide--journey .section-head {
-      margin-bottom: clamp(0.6rem, 1.4vh, 0.9rem);
+      margin-bottom: var(--journey-stack-gap);
     }
     .present-slide--journey .track-key {
       width: 100%;
+      margin: 0;
     }
-    .present-slide--journey .present-pullquote {
-      margin: clamp(0.6rem, 1.4vh, 0.9rem) 0 0;
-      padding: clamp(0.75rem, 1.5vh, 1rem) clamp(1rem, 2vw, 1.25rem);
-      border-left: 3px solid var(--accent, #ffda08);
-      background: color-mix(in srgb, var(--accent, #ffda08) 8%, transparent);
+    .present-slide--journey .journey-north-star {
+      margin: 0;
+      padding: clamp(1.2rem, 2.5vh, 1.75rem) clamp(1.35rem, 2.4vw, 2rem);
+      border: 1px solid color-mix(in srgb, var(--ink) 14%, var(--line));
+      border-radius: var(--radius-sm, 0.5rem);
+      background: var(--journey-north-star-bg);
+      color: var(--journey-north-star-ink);
       width: 100%;
       max-width: none;
       box-sizing: border-box;
+      position: relative;
+      overflow: visible;
     }
-    .present-slide--journey .present-pullquote p {
+    .present-slide--journey .journey-north-star::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto auto 0;
+      width: 100%;
+      height: 3px;
+      background: var(--accent);
+    }
+    .present-slide--journey .journey-north-star__label {
+      margin: 0 0 clamp(0.55rem, 1.1vh, 0.8rem);
+      font-size: clamp(0.78rem, 1.2vh, 0.9rem);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .present-slide--journey .journey-north-star__quote {
       margin: 0;
-      font-size: clamp(1.05rem, 2.2vh, 1.25rem);
-      font-weight: 500;
-      line-height: 1.35;
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 3.15vh, 2.2rem);
+      font-weight: 600;
+      line-height: 1.16;
+      letter-spacing: -0.025em;
       max-width: none;
       width: 100%;
+      color: var(--journey-north-star-ink);
     }
-    .present-slide--journey .present-pullquote footer {
-      margin: 0.5rem 0 0;
-      font-size: var(--present-eyebrow-size, 0.75rem);
-      color: var(--muted);
+    .present-slide--journey .journey-north-star__attribution {
+      margin: clamp(0.7rem, 1.35vh, 1rem) 0 0;
+      font-size: clamp(0.88rem, 1.35vh, 1rem);
+      font-weight: 500;
+      color: var(--journey-north-star-muted);
       font-style: normal;
+    }
+    .present-slide--journey .journey-north-star .journey-brief-criteria {
+      margin-top: clamp(0.85rem, 1.6vh, 1.15rem);
+      padding-top: 0;
+      border-top: none;
+    }
+    .present-slide--journey .journey-north-star .journey-brief-criteria--split {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: flex-start;
+      gap: clamp(0.65rem, 1.5vw, 1.25rem);
+      width: 100%;
+    }
+    .present-slide--journey .journey-north-star .journey-brief-criteria__group {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: clamp(0.4rem, 0.75vh, 0.55rem);
+      flex: 1 1 auto;
+      min-width: min(100%, 14rem);
+    }
+    .present-slide--journey .journey-north-star .journey-brief-criteria__label {
+      flex: 0 0 auto;
+      margin: 0;
+      font-size: clamp(0.72rem, 1.1vh, 0.82rem);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--journey-north-star-muted);
+      white-space: nowrap;
     }
     .present-slide--journey .journey-brief-criteria {
       display: flex;
@@ -1188,7 +1266,7 @@
     .present-slide--journey .journey-brief-criteria__tags {
       flex: 1 1 auto;
       display: flex;
-      flex-wrap: nowrap;
+      flex-wrap: wrap;
       align-items: center;
       gap: clamp(0.28rem, 0.5vw, 0.38rem);
       min-width: 0;
@@ -1204,10 +1282,52 @@
       background: color-mix(in srgb, var(--paper, #fff) 92%, transparent);
       border-color: color-mix(in srgb, var(--ink) 22%, transparent);
     }
+    .present-slide--journey .journey-north-star .journey-brief-criteria__tags {
+      width: 100%;
+      flex: 0 0 auto;
+      min-width: 0;
+      gap: clamp(0.35rem, 0.65vw, 0.5rem);
+    }
+    .present-slide--journey .journey-north-star .journey-brief-criteria__tags .chip {
+      font-size: clamp(0.68rem, 1.1vh, 0.78rem);
+      line-height: 1.35;
+      padding: 0.32rem 0.55rem;
+      border: 1px solid transparent;
+      white-space: normal;
+      overflow: visible;
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+    .present-slide--journey .journey-north-star .journey-brief-criteria__tags .chip--criteria-primary {
+      flex: 0 0 auto;
+      color: var(--accent-ink, #262626);
+      background: var(--accent);
+      border-color: color-mix(in srgb, var(--accent) 70%, var(--ink));
+      font-weight: 700;
+    }
+    .present-slide--journey .journey-north-star .journey-brief-criteria__tags .chip--criteria-secondary {
+      flex: 0 0 auto;
+      color: var(--accent-ink, #262626);
+      font-weight: 600;
+      background: color-mix(in srgb, var(--accent-soft, #fff3b0) 72%, var(--paper, #fff));
+      border-color: color-mix(in srgb, var(--accent) 45%, var(--journey-north-star-bg));
+    }
+    .present-slide--journey .journey-north-star + .journey-case-map,
+    .present-slide--journey .journey-case-map + .track-key {
+      margin-top: var(--journey-stack-gap);
+    }
     .present-slide--journey .journey-case-map {
       display: block;
       margin: 0;
       width: 100%;
+    }
+    .present-slide--journey .journey-case-map__label {
+      margin: 0 0 clamp(0.55rem, 1vh, 0.75rem);
+      font-size: clamp(0.72rem, 1.1vh, 0.82rem);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink);
     }
     .present-slide--journey .journey-case-map__list {
       list-style: none;
@@ -1225,10 +1345,10 @@
     }
     .present-slide--journey .journey-case-map__item {
       display: flex;
-      gap: clamp(0.45rem, 0.9vw, 0.65rem);
+      gap: clamp(0.5rem, 1vw, 0.75rem);
       align-items: flex-start;
       margin: 0;
-      padding: clamp(0.55rem, 1.1vh, 0.75rem) clamp(0.65rem, 1.2vw, 0.85rem);
+      padding: clamp(0.65rem, 1.25vh, 0.9rem) clamp(0.75rem, 1.35vw, 1rem);
       border: var(--border);
       border-radius: var(--radius-sm);
       background: var(--paper-dim);
@@ -1237,9 +1357,9 @@
     .present-slide--journey .journey-case-map__num {
       flex: 0 0 auto;
       font-family: var(--font-display);
-      font-size: clamp(1.1rem, 2.2vh, 1.35rem);
+      font-size: clamp(1.05rem, 2vh, 1.28rem);
       font-weight: 600;
-      line-height: 1;
+      line-height: 1.15;
       letter-spacing: -0.02em;
       color: var(--line-strong);
     }
@@ -1247,24 +1367,27 @@
       min-width: 0;
       display: flex;
       flex-direction: column;
-      gap: 0.2rem;
+      gap: clamp(0.32rem, 0.55vh, 0.45rem);
     }
     .present-slide--journey .journey-case-map__title {
       margin: 0;
-      font-size: clamp(0.78rem, 1.35vh, 0.9rem);
+      font-size: clamp(0.98rem, 1.48vh, 1.08rem);
       font-weight: 600;
-      line-height: 1.25;
+      line-height: 1.3;
       color: var(--ink);
     }
     .present-slide--journey .journey-case-map__meta {
+      font-size: clamp(0.78rem, 1.12vh, 0.88rem);
       font-weight: 500;
+      line-height: 1.25;
       color: var(--ink-soft);
     }
     .present-slide--journey .journey-case-map__desc {
       margin: 0;
-      font-size: clamp(0.72rem, 1.15vh, 0.8rem);
-      line-height: 1.35;
-      color: var(--ink-soft);
+      font-size: clamp(0.92rem, 1.42vh, 1.02rem);
+      line-height: 1.38;
+      font-weight: 500;
+      color: var(--ink);
     }
     .present-slide--p1-intro .period__role,
     .present-slide--p3-intro .period__role,
@@ -3447,6 +3570,11 @@
       gap: clamp(2rem, 4.5vw, 3.5rem);
       align-items: stretch;
     }
+    .present-slide--gaps .present-gaps__grid--three {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(1.15rem, 2.6vw, 2rem);
+      align-items: stretch;
+    }
     .present-slide--gaps .present-gaps__card {
       display: grid;
       grid-template-columns: auto minmax(0, 1fr);
@@ -3470,8 +3598,8 @@
       letter-spacing: -0.03em;
       color: var(--line-strong);
       display: flex;
-      align-items: center;
-      align-self: center;
+      align-items: flex-start;
+      align-self: start;
       margin: 0;
     }
     .present-slide--gaps .why-proof__content {
@@ -3480,7 +3608,8 @@
       display: flex;
       flex-direction: column;
       gap: clamp(0.35rem, 0.8vh, 0.5rem);
-      justify-content: center;
+      justify-content: flex-start;
+      align-self: start;
       min-width: 0;
     }
     .present-slide--gaps .why-proof__title {
@@ -3493,6 +3622,11 @@
       margin: 0;
       font-size: clamp(0.8rem, 1.5vh, 0.9rem);
       line-height: 1.4;
+    }
+    .present-slide--gaps .why-proof__text--present {
+      display: block;
+      overflow: visible;
+      -webkit-line-clamp: unset;
     }
     .present-slide--gaps .why-proof__media {
       grid-column: 2;
@@ -3509,6 +3643,128 @@
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 0.35rem;
       align-items: start;
+    }
+    .present-slide--gaps .why-proof__media--duo {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 0.35rem;
+      align-items: stretch;
+    }
+    .present-slide--gaps .why-proof--zoom.why-proof--gap-card {
+      --why-proof-img-h: var(--gaps-visual-h);
+      --why-proof-hover-mult: 1.2;
+      --proof-hover-height: min(
+        calc(var(--why-proof-img-h) * var(--why-proof-hover-mult)),
+        70vh
+      );
+      --proof-rest-scale: calc(var(--why-proof-img-h) / var(--proof-hover-height));
+      position: relative;
+      z-index: 2;
+      transition: z-index 0s linear var(--why-proof-hover-dur, 0.55s);
+    }
+    .present-slide--gaps .why-proof--zoom.why-proof--gap-card:has(.why-proof__frame:hover),
+    .present-slide--gaps .why-proof--zoom.why-proof--gap-card:has(.why-proof__frame.is-remote-hover) {
+      z-index: 8;
+      transition: z-index 0s linear 0s;
+    }
+    .present-slide--gaps .why-proof--zoom .why-proof__media--duo .why-proof__frame {
+      background: var(--paper-dim);
+      opacity: 1;
+      z-index: 1;
+      transition:
+        opacity var(--why-proof-hover-dur, 0.55s) var(--why-proof-hover-ease, cubic-bezier(0.22, 1, 0.36, 1)),
+        z-index 0s linear var(--why-proof-hover-dur, 0.55s);
+    }
+    .present-slide--gaps .why-proof--crop-top.why-proof--zoom .why-proof__media--duo .why-proof__frame--hug img {
+      object-position: top center;
+      transform-origin: top center;
+    }
+    .present-slide--gaps .why-proof--zoom .why-proof__media--duo.is-duo-zoom-locked .why-proof__frame {
+      pointer-events: none;
+    }
+    .present-slide--gaps .why-proof--zoom .why-proof__media--duo .why-proof__frame.is-duo-zoom-leaving {
+      z-index: 11;
+      opacity: 1;
+      pointer-events: none;
+    }
+    .present-slide--gaps .why-proof--zoom .why-proof__media--duo .why-proof__frame.is-duo-zoom-active {
+      z-index: 12;
+      overflow: visible;
+      background: transparent;
+      border-color: transparent;
+      opacity: 1;
+      transition: z-index 0s linear 0s;
+    }
+    .present-slide--gaps .why-proof--zoom .why-proof__media--duo {
+      --gaps-duo-hover-shadow: 0 1.25rem 2.75rem rgba(0, 0, 0, 0.18);
+    }
+    .present-slide--gaps .why-proof--zoom .why-proof__media--duo .why-proof__frame.is-duo-zoom-active img {
+      border-color: var(--line-strong);
+      box-shadow: var(--gaps-duo-hover-shadow);
+    }
+    .present-slide--gaps .why-proof--zoom .why-proof__media--duo .why-proof__frame.is-duo-zoom-active:not(.why-proof__frame--hug) img {
+      transform: scale(1);
+    }
+    .present-slide--gaps .why-proof--zoom .why-proof__media--duo .why-proof__frame--hug.is-duo-zoom-active img {
+      transform: scale(1.2);
+      border: var(--border);
+      border-radius: var(--radius-sm);
+    }
+    .present-slide--gaps .why-proof--zoom .why-proof__media--duo:has(.is-duo-zoom-active) .why-proof__frame:not(.is-duo-zoom-active):not(.is-duo-zoom-leaving) {
+      opacity: 1;
+    }
+    .present-slide--gaps .why-proof__media--duo .why-proof__frame--hug {
+      display: block;
+      width: fit-content;
+      max-width: 100%;
+      height: var(--why-proof-img-h);
+      padding: 0;
+      line-height: 0;
+      background: transparent;
+      border: var(--border);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      container-type: normal;
+    }
+    .present-slide--gaps .why-proof__media--duo .why-proof__frame--hug img {
+      position: static;
+      top: auto;
+      left: auto;
+      right: auto;
+      bottom: auto;
+      display: block;
+      width: auto;
+      height: var(--why-proof-img-h);
+      max-width: 100%;
+      max-height: var(--why-proof-img-h);
+      aspect-ratio: var(--proof-ratio);
+      object-fit: contain;
+      object-position: top center;
+      transform: none;
+      transform-origin: top center;
+      border: none;
+      border-radius: 0;
+      background: none;
+      box-shadow: none;
+      will-change: transform;
+      transition:
+        transform var(--why-proof-hover-dur, 0.55s) var(--why-proof-hover-ease, cubic-bezier(0.22, 1, 0.36, 1)),
+        box-shadow var(--why-proof-hover-dur, 0.55s) var(--why-proof-hover-ease, cubic-bezier(0.22, 1, 0.36, 1)),
+        border-color var(--why-proof-hover-dur, 0.55s) var(--why-proof-hover-ease, cubic-bezier(0.22, 1, 0.36, 1));
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .present-slide--gaps .why-proof--zoom .why-proof__media--duo:has(.why-proof__frame:hover) .why-proof__frame:not(:hover) {
+        opacity: 1;
+      }
+      .present-slide--gaps .why-proof--zoom .why-proof__media--duo .why-proof__frame:hover:not(.is-duo-zoom-active):not(.is-duo-zoom-leaving) {
+        z-index: 1;
+      }
+      .present-slide--gaps .why-proof--zoom .why-proof__media--duo .why-proof__frame--hug.is-duo-zoom-active {
+        overflow: visible;
+      }
+      .present-slide--gaps .why-proof--zoom .why-proof__media--duo .why-proof__frame:not(.why-proof__frame--hug).is-duo-zoom-active {
+        overflow: visible;
+      }
     }
     .present-slide--gaps .why-proof__media--solo {
       display: block;
@@ -3543,6 +3799,9 @@
     }
     @media (max-width: 900px) {
       .present-slide--gaps .present-gaps__grid {
+        grid-template-columns: 1fr;
+      }
+      .present-slide--gaps .present-gaps__grid--three {
         grid-template-columns: 1fr;
       }
     }
@@ -5785,7 +6044,7 @@
         <div class="hero__brand-lockup">
           <img class="hero__title-logo" src="raisin-assets/assets/img/branding/raisin-logo-white.svg" alt="Raisin" width="908" height="211">
           <h1 class="hero__title">Brand evolution at Raisin</h1>
-          <p class="hero__sub hero__sub--thesis">Raisin is a European savings and investment marketplace — with ~€80bn in assets under management.</p>
+          <p class="hero__sub hero__sub--thesis">Raisin is a European savings and investment marketplace with ~€80bn in AuM. This case study uncovers my design process of building trust and bringing financial peace of mind for investors across 12 markets through the Raisin B2C dashboard.</p>
         </div>
       </div>
       <div class="hero-bento" aria-hidden="true" data-fm-widget="raisin-hero" data-fm-kind="hero">
@@ -5803,17 +6062,17 @@
 <section class="why-hero" id="why" style="padding-block:var(--sp-2xl);">
     <div class="container" style="position:relative; z-index:1;">
     <div class="present-gaps__kicker">
-      <span class="chip">Context</span>
+      <span class="chip">Early observations</span>
     </div>
-    <h2 class="why-hero__statement present-gaps__title">Raisin was evolving its brand — but the product, the practice, and the team hadn't caught up.</h2>
+    <h2 class="why-hero__statement present-gaps__title">Rebranding was underway—but the product experience was weak and design maturity was low.</h2>
 
-    <div class="present-gaps__grid why-proofs" data-fm-widget="raisin-why" data-fm-kind="why" data-fm-value="none">
+    <div class="present-gaps__grid present-gaps__grid--three why-proofs" data-fm-widget="raisin-why" data-fm-kind="why" data-fm-value="none">
       <article class="why-proof why-proof--gap-card why-proof--gap-brand present-gaps__card">
         <div class="present-gaps__card-head">
           <span class="present-gaps__num" aria-hidden="true">01</span>
           <div class="why-proof__content">
             <h4 class="why-proof__title">A brand handed over, not built out</h4>
-            <p class="why-proof__text why-proof__text--present">Koto delivered a static identity. The product still said Weltsparen. Web, mobile, and email each spoke a different visual language.</p>
+            <p class="why-proof__text why-proof__text--present">Koto handed off our unique visual identity but not a redesigned product experience.</p>
           </div>
         </div>
         <div class="why-proof__media why-proof__media--video">
@@ -5822,12 +6081,25 @@
           </div>
         </div>
       </article>
-      <article class="why-proof why-proof--gap-card present-gaps__card">
+      <article class="why-proof why-proof--zoom why-proof--crop-top why-proof--gap-card present-gaps__card">
         <div class="present-gaps__card-head">
           <span class="present-gaps__num" aria-hidden="true">02</span>
           <div class="why-proof__content">
+            <h4 class="why-proof__title">A fragmented product experience</h4>
+            <p class="why-proof__text why-proof__text--present">Web experience felt like a catalogue with outdated UI and hard sell and mobile app with the same job met a different product.</p>
+          </div>
+        </div>
+        <div class="why-proof__media why-proof__media--duo">
+          <div class="why-proof__frame" data-fm-why="0" style="--proof-ratio: 1320 / 1448"><img src="raisin-assets/assets/img/proof/dash-old.webp" alt="Legacy web dashboard — separate savings cockpit" loading="lazy"></div>
+          <div class="why-proof__frame why-proof__frame--hug" data-fm-why="1" style="--proof-ratio: 828 / 1800"><img src="raisin-assets/assets/img/proof/pull-to-refresh.webp" alt="Legacy mobile app — disconnected from web" loading="lazy"></div>
+        </div>
+      </article>
+      <article class="why-proof why-proof--gap-card present-gaps__card">
+        <div class="present-gaps__card-head">
+          <span class="present-gaps__num" aria-hidden="true">03</span>
+          <div class="why-proof__content">
             <h4 class="why-proof__title">A design practice without shared conventions</h4>
-            <p class="why-proof__text why-proof__text--present">User studies were rare. Critiques weren't happening, and design impact wasn't measured and reported. Every project paid a tax for it.</p>
+            <p class="why-proof__text why-proof__text--present">Design team had loosely shared craft conventions, and siloed workflows so every initiative paid a tax.</p>
           </div>
         </div>
         <div class="why-proof__media why-proof__media--solo">
@@ -5856,62 +6128,59 @@
   <div class="container">
     <div class="section-head reveal">
       <p class="eyebrow">Journey</p>
-      <h2 class="h-display h-2">One goal · Three chapters · Two tracks</h2>
-      <p class="lede">Two programmes, run in parallel — not one tidy sequence.</p>
-      <p class="lede lede--remit">My remit: close the three gaps — <strong>brand evolution</strong> into live product (absorb the agency handoff and carry it into the surfaces customers use; redesign web, mobile, and communication into one home for their wealth), and <strong>enablement</strong> in parallel (ways of working, research and critique rituals, craft standards, and the AI programme) so the team could sustain it. <strong>Practice</strong> = customer outcomes. <strong>Enablement</strong> = team capability. <strong>I</strong> where I owned it; <strong>we</strong> at tribe scale.</p>
+      <h2 class="h-display h-2">How I structured the work</h2>
+      <p class="lede lede--remit">My remit: close the three gaps — <strong>brand evolution</strong> into live product (absorb the agency handoff and carry it into the surfaces customers use; redesign web, mobile, and communication into one home for their wealth), and <strong>enablement</strong> in parallel (ways of working, research and critique rituals, craft standards, and the AI programme) so the team could sustain it. I co-created the north star with our VP Design and sequenced practice (dashboard before mobile) because mobile sat in a separate squad, the mobile tribe was already under tech constraints, and a full redesign demanded we establish the system on web before inheriting it on mobile. <strong>Practice</strong> = customer outcomes. <strong>Enablement</strong> = team capability. <strong>I</strong> where I owned it; <strong>we</strong> at tribe scale.</p>
     </div>
+    <blockquote class="present-pullquote journey-north-star reveal" aria-label="North star">
+      <p class="journey-north-star__label">North star</p>
+      <p class="journey-north-star__quote">&ldquo;Help customers understand and manage their wealth after login—discover what fits them, take action they trust, and grow with Raisin.&rdquo;</p>
+      <footer class="journey-north-star__attribution">Co-created with VP Design</footer>
+      <div class="journey-brief-criteria journey-brief-criteria--split">
+        <div class="journey-brief-criteria__group" role="group" aria-label="Success criteria">
+          <span class="journey-brief-criteria__label">Success criteria:</span>
+          <div class="chip-row journey-brief-criteria__tags" role="list">
+            <span class="chip chip--criteria-primary" role="listitem">Adoption</span>
+            <span class="chip chip--criteria-primary" role="listitem">Engagement</span>
+            <span class="chip chip--criteria-primary" role="listitem">Satisfaction</span>
+          </div>
+        </div>
+        <div class="journey-brief-criteria__group" role="group" aria-label="Business metrics to observe">
+          <span class="journey-brief-criteria__label">Business metrics to observe:</span>
+          <div class="chip-row journey-brief-criteria__tags" role="list">
+            <span class="chip chip--criteria-secondary" role="listitem">Conversion</span>
+            <span class="chip chip--criteria-secondary" role="listitem">Retention</span>
+            <span class="chip chip--criteria-secondary" role="listitem">Asset diversification</span>
+            <span class="chip chip--criteria-secondary" role="listitem">AuM Growth</span>
+          </div>
+        </div>
+      </div>
+    </blockquote>
     <nav class="journey-case-map reveal" aria-label="Case structure — three chapters">
+      <p class="journey-case-map__label">Chapter sequence</p>
       <ol class="journey-case-map__list">
         <li class="journey-case-map__item">
           <span class="journey-case-map__num" aria-hidden="true">01</span>
           <div class="journey-case-map__body">
             <p class="journey-case-map__title">Wealth Hub <span class="journey-case-map__meta">· web · 7 months</span></p>
-            <p class="journey-case-map__desc">Home for wealth — not a product catalogue.</p>
+            <p class="journey-case-map__desc">Web first — one squad, limited team, scope we could ship end-to-end. Establish the system on Wealth Hub (home for wealth, not a product catalogue) before a second full redesign.</p>
           </div>
         </li>
         <li class="journey-case-map__item">
           <span class="journey-case-map__num" aria-hidden="true">02</span>
           <div class="journey-case-map__body">
             <p class="journey-case-map__title">Mobile <span class="journey-case-map__meta">· 5 months</span></p>
-            <p class="journey-case-map__desc">Inherit the system; redesign the surface.</p>
+            <p class="journey-case-map__desc">Mobile second — separate squad and tech load. Inherit the system from web; redesign the surface for how customers use wealth on the go.</p>
           </div>
         </li>
         <li class="journey-case-map__item">
           <span class="journey-case-map__num" aria-hidden="true">03</span>
           <div class="journey-case-map__body">
-            <p class="journey-case-map__title">Enablement (Parallel track) <span class="journey-case-map__meta">· design org</span></p>
-            <p class="journey-case-map__desc">Rituals, research OS, AI — measured on the proof slide.</p>
+            <p class="journey-case-map__title">Enablement <span class="journey-case-map__meta">· Parallel track</span></p>
+            <p class="journey-case-map__desc">Enablement in parallel — rituals, research OS, and AI throughout so practice could sustain at tribe scale while chapters 01 and 02 ship; proof on the last slide.</p>
           </div>
         </li>
       </ol>
     </nav>
-    <blockquote class="present-pullquote reveal">
-      <p>&ldquo;Improve the post-login experience so customers can understand and manage their wealth, discover products, and take action—building trust and supporting AuM growth.&rdquo;</p>
-      <footer>Business goal</footer>
-      <div class="journey-brief-criteria" role="group" aria-label="Success criteria">
-        <span class="journey-brief-criteria__label">Success criteria:</span>
-        <div class="chip-row journey-brief-criteria__tags" role="list">
-          <span class="chip" role="listitem">AuM Growth</span>
-          <span class="chip" role="listitem">Retention</span>
-          <span class="chip" role="listitem">Margin Diversification</span>
-        </div>
-      </div>
-    </blockquote>
-    <div class="track-key reveal-stagger">
-      <div class="track-key__item track-key__item--practice">
-        <p class="track-key__label">Practice</p>
-        <p class="track-key__text">Research-led decisions, shipped screens, measured outcomes.</p>
-        <p class="track-key__impact track-key__impact--present"><strong>Impact:</strong> Adoption, Engagement, Satisfaction, Conversion and User Delight</p>
-      </div>
-      <div class="track-key__item track-key__item--enablement enablement-surface">
-        <p class="track-key__label enablement-label">
-          <svg class="enablement-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-          Enablement (Parallel track)
-        </p>
-        <p class="track-key__text">Rituals, Research operations, Playbooks, AI Enablement, Hiring and coaching.</p>
-        <p class="track-key__impact track-key__impact--present"><strong>Impact:</strong> Design maturity, Velocity and Quality</p>
-      </div>
-    </div>
     <hr class="rule rule--thick" aria-hidden="true">
   </div>
 </section>

@@ -141,7 +141,7 @@
   /* Presentation trim — hide web-depth copy; thesis/body max ~2 lines in deck. */
   var PRESENT_TRIM = {
     hero: [".hero__sub:not(.hero__sub--thesis)"],
-    journey: [".lede--remit", ".rule--thick", ".lede:not(.lede--present-short)"],
+    journey: [".lede--remit", ".rule--thick"],
     "p1-intro": [
       ".period__thesis:not(.period__thesis--present)",
       ".period__role",
@@ -266,7 +266,7 @@
       id: "journey",
       chapter: "setup",
       selector: "#journey-intro",
-      title: "One goal · Three chapters · Two tracks"
+      title: "How I structured the work"
     },
     { id: "p1-intro", chapter: "period-1", selector: "#period-1 .period__head" },
     { id: "p1-baseline", chapter: "period-1", selector: '[aria-label="Baseline research"]' },
@@ -1480,6 +1480,103 @@
     });
   }
 
+  var DUO_ZOOM_MS = 550;
+
+  function listenTransformEnd(el, cb) {
+    if (!el) {
+      cb();
+      return;
+    }
+    var done = false;
+    function finish() {
+      if (done) return;
+      done = true;
+      el.removeEventListener("transitionend", onEnd);
+      cb();
+    }
+    function onEnd(e) {
+      if (e.propertyName !== "transform") return;
+      finish();
+    }
+    el.addEventListener("transitionend", onEnd);
+    setTimeout(finish, DUO_ZOOM_MS + 100);
+  }
+
+  function initGapsDuoZoom(root) {
+    if (!root || !root.classList.contains("present-slide--gaps")) return;
+    var media = root.querySelector(".why-proof__media--duo");
+    if (!media || media.dataset.presentDuoZoom === "1") return;
+    media.dataset.presentDuoZoom = "1";
+    var frames = Array.prototype.slice.call(media.querySelectorAll(".why-proof__frame"));
+    if (frames.length < 2) return;
+
+    var active = null;
+    var leaving = null;
+    var locked = false;
+
+    function setLocked(on) {
+      locked = on;
+      media.classList.toggle("is-duo-zoom-locked", on);
+    }
+
+    function clearClasses(frame) {
+      if (!frame) return;
+      frame.classList.remove("is-duo-zoom-active", "is-duo-zoom-leaving", "is-remote-hover");
+    }
+
+    function deactivate(frame, onDone) {
+      if (!frame) {
+        onDone();
+        return;
+      }
+      leaving = frame;
+      frame.classList.remove("is-duo-zoom-active", "is-remote-hover");
+      frame.classList.add("is-duo-zoom-leaving");
+      var animEl = frame.querySelector("img") || frame;
+      listenTransformEnd(animEl, function () {
+        clearClasses(frame);
+        if (leaving === frame) leaving = null;
+        onDone();
+      });
+    }
+
+    function activate(frame) {
+      frames.forEach(function (f) {
+        if (f !== frame) clearClasses(f);
+      });
+      active = frame;
+      frame.classList.add("is-duo-zoom-active", "is-remote-hover");
+      frame.classList.remove("is-duo-zoom-leaving");
+    }
+
+    frames.forEach(function (frame) {
+      frame.addEventListener("pointerenter", function () {
+        if (locked) return;
+        if (active === frame) return;
+        if (active) {
+          setLocked(true);
+          var prev = active;
+          active = null;
+          deactivate(prev, function () {
+            setLocked(false);
+            activate(frame);
+          });
+          return;
+        }
+        activate(frame);
+      });
+      frame.addEventListener("pointerleave", function () {
+        if (active !== frame || locked) return;
+        setLocked(true);
+        var prev = frame;
+        active = null;
+        deactivate(prev, function () {
+          setLocked(false);
+        });
+      });
+    });
+  }
+
   function initPresentSlide(root) {
     if (!root) return;
     ensureWhyWidget(root);
@@ -1501,6 +1598,7 @@
     initPrototypePersonas(root);
     initCarousels(root);
     initWowMarquees(root);
+    initGapsDuoZoom(root);
     if (root.classList.contains("present-slide--hero")) {
       var bento = root.querySelector(".hero-bento");
       if (bento) {
