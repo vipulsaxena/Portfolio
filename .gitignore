@@ -24,3 +24,16 @@ raisin-assets/scripts/node_modules/
 
 # Agent / chat artifacts (audits, slide extracts, local review tools)
 review/
+
+# Raisin — local masters (PNG/MOV); ship webp + mp4 from assets/ only
+raisin-assets/_sources/
+
+# Stray masters that should not land in deploy paths
+raisin-assets/assets/img/dashboard-web/*.png
+raisin-assets/assets/img/dashboard-web/*.mov
+raisin-assets/assets/img/proof/*.png
+raisin-assets/assets/video/**/*.mov
+
+# local scratch (screenshots, OCR venv)
+.tmp-shots/
+.tmp-ocr/

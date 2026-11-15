@@ -280,6 +280,9 @@
     if (kind === "phase") {
       return root.getAttribute("data-fm-value") || root.getAttribute("data-default") || "1";
     }
+    if (kind === "validation" || kind === "panzoom") {
+      return root.getAttribute("data-fm-value") || "";
+    }
     if (kind === "variant") {
       return root.getAttribute("data-fm-value") || root.getAttribute("data-default") || "a";
     }
@@ -370,9 +373,11 @@
       ? root
       : root.querySelector("[data-trade-off-switcher]");
     if (!switchRoot) return;
-    var v = want === "b" ? "b" : "a";
+    var v = want === "b" || want === "a" ? want : String(want);
     var tab = switchRoot.querySelector('.trade-off-switcher__tab[data-variant="' + v + '"]');
+    var option = switchRoot.querySelector('.trade-off__option[data-tradeoff-variant="' + v + '"]');
     if (tab) tab.click();
+    else if (option) option.click();
     switchRoot.setAttribute("data-fm-value", v);
   }
 
@@ -425,6 +430,15 @@
         root.setAttribute("data-fm-value", want);
         return;
       }
+      if (kind === "validation" || kind === "panzoom") {
+        if (global.PortfolioPresentFm && typeof global.PortfolioPresentFm.apply === "function") {
+          global.PortfolioPresentFm.apply(id, want);
+        } else if (typeof root._fmApply === "function") {
+          root._fmApply(want);
+        }
+        root.setAttribute("data-fm-value", want);
+        return;
+      }
       if (kind === "variant" || root.hasAttribute("data-trade-off-switcher")) {
         applyTradeOff(root, want);
         return;
@@ -464,7 +478,7 @@
   }
 
   function stampHighlightIds() {
-    if (!isCaseStudyPage()) return;
+    if (!isCaseStudyPage() && !isDeckPage()) return;
     var scope = widgetSearchRoot();
     var nodes;
     if (scope) {
@@ -1491,7 +1505,11 @@
       }
       return;
     }
-    if (e.target.closest("[data-audit], [data-fm-kind=hero], [data-fm-kind=audit], [data-fm-kind=variant], [data-trade-off-switcher]")) {
+    if (
+      e.target.closest(
+        "[data-audit], [data-fm-kind=hero], [data-fm-kind=audit], [data-fm-kind=variant], [data-trade-off-switcher], [data-validation-conflicts], [data-phase-wizard], [data-conflict-tab]"
+      )
+    ) {
       setTimeout(function () {
         broadcastLocal(true);
       }, 0);
@@ -1532,7 +1550,12 @@
   function onPresenterCompare(e) {
     if (role !== "presenter" || ended || applyingRemote) return;
     if (!e.target || !e.target.closest) return;
-    if (!e.target.closest('[data-fm-kind="compare"], [data-compare], .compare')) return;
+    if (
+      !e.target.closest(
+        '[data-fm-kind="compare"], [data-compare], .compare, [data-vs-viewport], [data-wizard-scroll-viewport]'
+      )
+    )
+      return;
     clearTimeout(scrollTimer);
     scrollTimer = setTimeout(function () {
       broadcastLocal(true);
@@ -1587,7 +1610,9 @@
     document.addEventListener("pointerup", function (e) {
       if (role !== "presenter" || ended) return;
       var t = e.target && e.target.closest
-        ? e.target.closest('[data-fm-kind="hero"], [data-fm-kind="compare"], [data-fm-kind="carousel"], [data-carousel], [data-compare], .compare')
+        ? e.target.closest(
+            '[data-fm-kind="hero"], [data-fm-kind="compare"], [data-fm-kind="carousel"], [data-carousel], [data-compare], .compare, [data-vs-viewport], [data-wizard-scroll-viewport], [data-validation-conflicts]'
+          )
         : null;
       if (!t && !document.querySelector('[data-fm-kind="hero"], [data-fm-kind="compare"]')) return;
       setTimeout(function () {

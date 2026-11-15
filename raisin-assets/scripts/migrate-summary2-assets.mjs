@@ -364,7 +364,7 @@ const MAPPING = {
 
   // ── Video (converted separately; mapping for HTML replace) ────────────────
   "Resource/proof-of-old-world/wireframe_solution.mov": {
-    out: "assets/video/proof/wireframe-solution.mp4",
+    out: "assets/video/dashboard-web/wireframe-solution.mp4",
     action: "reuse",
   },
 };

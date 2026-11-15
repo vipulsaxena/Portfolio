@@ -530,6 +530,16 @@
       var show = panel.getAttribute("data-tab-panel") === id;
       panel.hidden = !show;
     });
+    var wid = root.getAttribute("data-fm-widget");
+    if (wid) {
+      root.setAttribute("data-fm-value", id || "");
+      document.dispatchEvent(
+        new CustomEvent("portfolio:widget-change", {
+          bubbles: true,
+          detail: { id: wid, value: id || "" },
+        })
+      );
+    }
   }
 
   tabs.forEach(function (tab) {
@@ -691,6 +701,11 @@
       });
     });
     root.setAttribute("data-fm-value", v);
+    root.querySelectorAll(".trade-off__option[data-tradeoff-variant]").forEach(function (opt) {
+      var on = opt.getAttribute("data-tradeoff-variant") === v;
+      opt.classList.toggle("trade-off__option--active", on);
+      opt.setAttribute("aria-pressed", on ? "true" : "false");
+    });
     if (silent) return;
     var wid = root.getAttribute("data-fm-widget");
     if (wid) {
@@ -710,6 +725,11 @@
     activateVariant(root, root.getAttribute("data-default") || "a", true);
 
     root.addEventListener("click", function (e) {
+      var option = e.target.closest(".trade-off__option[data-tradeoff-variant]");
+      if (option && root.contains(option)) {
+        activateVariant(root, option.getAttribute("data-tradeoff-variant"));
+        return;
+      }
       var tab = e.target.closest(".trade-off-switcher__tab");
       if (!tab || !root.contains(tab)) return;
       if (tab.hasAttribute("data-step")) return;
@@ -717,6 +737,12 @@
     });
 
     root.addEventListener("keydown", function (e) {
+      var option = e.target.closest(".trade-off__option[data-tradeoff-variant]");
+      if (option && root.contains(option) && (e.key === "Enter" || e.key === " ")) {
+        e.preventDefault();
+        activateVariant(root, option.getAttribute("data-tradeoff-variant"));
+        return;
+      }
       var tab = e.target.closest(".trade-off-switcher__tab");
       if (!tab || !root.contains(tab)) return;
       var idx = tabs.indexOf(tab);

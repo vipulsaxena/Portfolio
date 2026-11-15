@@ -133,6 +133,15 @@
       before.style.clipPath = "inset(0 " + (100 - pct) + "% 0 0)";
       handle.style.left = pct + "%";
       el.setAttribute("data-fm-value", String(Math.round(pct)));
+      var wid = el.getAttribute("data-fm-widget");
+      if (wid) {
+        document.dispatchEvent(
+          new CustomEvent("portfolio:widget-change", {
+            bubbles: true,
+            detail: { id: wid, value: String(Math.round(pct)) },
+          })
+        );
+      }
     }
     var dragging = false;
     function posFromEvent(e) {

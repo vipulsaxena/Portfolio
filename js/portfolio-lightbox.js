@@ -468,6 +468,26 @@
           true
         );
       });
+      root.querySelectorAll(".trade-off-switcher__media .wealth-hub-video-frame").forEach(function (frame) {
+        if (frame.dataset.portfolioLbFrameInit && !force) return;
+        var video = frame.querySelector("video[data-lightbox]");
+        if (!video) return;
+        frame.dataset.portfolioLbFrameInit = "1";
+        frame.style.cursor = "zoom-in";
+        frame.addEventListener(
+          "click",
+          function (e) {
+            var mediaWrap = frame.closest(".trade-off-switcher__media");
+            if (mediaWrap && mediaWrap.hidden) return;
+            if (e.target.closest("video[data-lightbox]") && e.target !== video) return;
+            if (e.target === video) return;
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            openFromElement(video);
+          },
+          true
+        );
+      });
     }
 
     if (closeBtn) {
