@@ -887,8 +887,9 @@
   function initValidationConflicts(root) {
     if (!root) return;
     var host = root.querySelector("[data-validation-conflicts]");
-    if (!host || host.dataset.validationInit) return;
-    host.dataset.validationInit = "1";
+    /* present-prefixed: summary2.js stamps `validationInit` on the source DOM, which this clone inherits */
+    if (!host || host.dataset.presentValidationInit) return;
+    host.dataset.presentValidationInit = "1";
     host.setAttribute("data-fm-widget", "raisin-validation-board");
     host.setAttribute("data-fm-kind", "validation");
 
@@ -1322,8 +1323,9 @@
   function initWizardScrollExplore(root) {
     if (!root) return;
     root.querySelectorAll("[data-wizard-scroll-viewport]").forEach(function (viewport) {
-      if (viewport.dataset.wizardScrollInit) return;
-      viewport.dataset.wizardScrollInit = "1";
+      /* present-prefixed: summary2.js also stamps `wizardScrollInit` on the source DOM */
+      if (viewport.dataset.presentWizardScrollInit) return;
+      viewport.dataset.presentWizardScrollInit = "1";
       viewport.setAttribute("data-fm-widget", "raisin-visual-final-zoom");
       viewport.setAttribute("data-fm-kind", "panzoom");
       var canvas = viewport.querySelector("[data-wizard-scroll-canvas]");

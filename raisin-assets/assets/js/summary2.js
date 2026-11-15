@@ -654,6 +654,19 @@
 
   shells.forEach(initPrototypePersonas);
 
+  /* Wide / narrow toggle (mirrors the deck) — wide view is off by default */
+  document.querySelectorAll("[data-proto-wide-toggle]").forEach(function (toggle) {
+    if (toggle.dataset.wideInit) return;
+    toggle.dataset.wideInit = "1";
+    var row = toggle.closest(".device-story__row");
+    if (!row) return;
+    toggle.addEventListener("click", function () {
+      var on = toggle.getAttribute("aria-checked") !== "true";
+      toggle.setAttribute("aria-checked", on ? "true" : "false");
+      row.classList.toggle("is-proto-wide", on);
+    });
+  });
+
   if ("IntersectionObserver" in window) {
     var io = new IntersectionObserver(
       function (entries) {
@@ -704,6 +717,18 @@
 (function () {
   "use strict";
 
+  function tradeoffOptionsContainer(switchRoot) {
+    if (!switchRoot) return null;
+    var sel = switchRoot.getAttribute("data-trade-off-options");
+    if (!sel) return switchRoot;
+    var wizard = switchRoot.closest(".exploration-wizard");
+    if (wizard) {
+      var scoped = wizard.querySelector(sel);
+      if (scoped) return scoped;
+    }
+    return document.querySelector(sel) || switchRoot;
+  }
+
   function activateVariant(root, variant, silent) {
     var v = variant === "b" ? "b" : "a";
     root.querySelectorAll("[data-variant]").forEach(function (tab) {
@@ -742,7 +767,10 @@
       });
     });
     root.setAttribute("data-fm-value", v);
-    root.querySelectorAll(".trade-off__option[data-tradeoff-variant]").forEach(function (opt) {
+    var optContainer = tradeoffOptionsContainer(root);
+  Array.prototype.slice
+    .call((optContainer || root).querySelectorAll(".trade-off__option[data-tradeoff-variant]"))
+    .forEach(function (opt) {
       var on = opt.getAttribute("data-tradeoff-variant") === v;
       opt.classList.toggle("trade-off__option--active", on);
       opt.setAttribute("aria-pressed", on ? "true" : "false");
@@ -761,15 +789,37 @@
 
   document.querySelectorAll("[data-trade-off-switcher]").forEach(function (root) {
     var tabs = Array.prototype.slice.call(root.querySelectorAll(".trade-off-switcher__tab"));
-    if (!tabs.length) return;
+    var optContainer = tradeoffOptionsContainer(root);
+    var hasOptions =
+      optContainer && optContainer.querySelector(".trade-off__option[data-tradeoff-variant]");
+    if (!tabs.length && !hasOptions) return;
 
     activateVariant(root, root.getAttribute("data-default") || "a", true);
 
+    /* Concept cards that live outside the media root (e.g. in the copy column) */
+    if (hasOptions && optContainer !== root) {
+      optContainer.addEventListener("click", function (e) {
+        var option = e.target.closest(".trade-off__option[data-tradeoff-variant]");
+        if (!option || !optContainer.contains(option)) return;
+        activateVariant(root, option.getAttribute("data-tradeoff-variant"));
+      });
+      optContainer.addEventListener("keydown", function (e) {
+        var option = e.target.closest(".trade-off__option[data-tradeoff-variant]");
+        if (!option || !optContainer.contains(option)) return;
+        if (e.key !== "Enter" && e.key !== " ") return;
+        e.preventDefault();
+        activateVariant(root, option.getAttribute("data-tradeoff-variant"));
+      });
+    }
+
     root.addEventListener("click", function (e) {
       var option = e.target.closest(".trade-off__option[data-tradeoff-variant]");
-      if (option && root.contains(option)) {
-        activateVariant(root, option.getAttribute("data-tradeoff-variant"));
-        return;
+      if (option) {
+        var optRoot = tradeoffOptionsContainer(root);
+        if (optRoot && optRoot.contains(option)) {
+          activateVariant(root, option.getAttribute("data-tradeoff-variant"));
+          return;
+        }
       }
       var tab = e.target.closest(".trade-off-switcher__tab");
       if (!tab || !root.contains(tab)) return;
@@ -1012,6 +1062,22 @@
         var on = item.getAttribute("data-step") === s;
         item.classList.toggle("wh-phase-breakdown__item--active", on);
       });
+      wizardRoot.querySelectorAll("[data-step-headline]").forEach(function (el) {
+        var on = el.getAttribute("data-step-headline") === s;
+        el.hidden = !on;
+      });
+      wizardRoot.querySelectorAll("[data-step-caption]").forEach(function (el) {
+        var on = el.getAttribute("data-step-caption") === s;
+        el.hidden = !on;
+      });
+      wizardRoot.querySelectorAll("[data-step-copy]").forEach(function (el) {
+        var on = el.getAttribute("data-step-copy") === s;
+        el.hidden = !on;
+      });
+      wizardRoot.querySelectorAll("[data-step-context]").forEach(function (el) {
+        var on = el.getAttribute("data-step-context") === s;
+        el.hidden = !on;
+      });
       var wid = wizardRoot.getAttribute("data-fm-widget");
       if (wid) {
         wizardRoot.setAttribute("data-fm-value", s);
@@ -1064,5 +1130,400 @@
       activateStep(next.getAttribute("data-step"));
       next.focus();
     });
+  });
+})();
+
+/* ==========================================================================
+   Validation rail + board / prototype toggle (Wealth Hub)
+   ========================================================================== */
+(function () {
+  "use strict";
+
+  document.querySelectorAll("[data-validation-conflicts]").forEach(function (host) {
+    if (host.dataset.validationInit) return;
+    host.dataset.validationInit = "1";
+
+    var beat = host.closest(".wealth-hub-beat");
+    var stage = beat ? beat.querySelector("[data-validation-stage]") : null;
+    var videoWrap = stage ? stage.querySelector("[data-vs-video]") : null;
+    var video = videoWrap ? videoWrap.querySelector("video") : null;
+    var modeToggle = stage ? stage.querySelector("[data-vs-mode-toggle]") : null;
+    var modeLabel = stage ? stage.querySelector("[data-vs-mode-label]") : null;
+    var viewport = stage ? stage.querySelector("[data-vs-viewport]") : null;
+    var canvas = stage ? stage.querySelector("[data-vs-canvas]") : null;
+    var chip = stage ? stage.querySelector("[data-validation-chip]") : null;
+    var rail = host.querySelector("[data-vs-rail]");
+    var cards = Array.prototype.slice.call(host.querySelectorAll("[data-conflict-tab]"));
+    var detailCopies = Array.prototype.slice.call(host.querySelectorAll("[data-conflict-detail]"));
+    var resultsPanel = host.querySelector("[data-validation-results]");
+    var researchEnablement = host.querySelector("[data-validation-research-enablement]");
+    var reduceMq = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : null;
+    var VS_MAX_SCALE = 8;
+
+    function syncColumns() {
+      var showResearch = stage && stage.getAttribute("data-mode") === "video";
+      if (resultsPanel) resultsPanel.hidden = showResearch;
+      if (researchEnablement) researchEnablement.hidden = !showResearch;
+    }
+
+    /* View state is resize-proof: scale + visible centre as fractions of the board */
+    var view = { s: 1, cx: 0.5, cy: 0.5 };
+
+    function clampView(v) {
+      var s = Math.max(1, Math.min(VS_MAX_SCALE, v.s));
+      var half = 0.5 / s;
+      return {
+        s: s,
+        cx: Math.max(half, Math.min(1 - half, v.cx)),
+        cy: Math.max(half, Math.min(1 - half, v.cy))
+      };
+    }
+
+    function paint(animate) {
+      if (!canvas || !viewport) return;
+      var w = viewport.clientWidth;
+      var h = viewport.clientHeight;
+      var tx = w * (0.5 - view.cx * view.s);
+      var ty = h * (0.5 - view.cy * view.s);
+      var calm = reduceMq && reduceMq.matches;
+      canvas.style.transition = animate && !calm ? "transform 0.6s cubic-bezier(0.22, 0.7, 0.2, 1)" : "none";
+      canvas.style.transform = "translate(" + tx + "px," + ty + "px) scale(" + view.s + ")";
+    }
+
+    function setView(v, animate) {
+      view = clampView(v);
+      paint(animate);
+    }
+
+    function markFree() {
+      if (chip) chip.classList.add("is-free");
+    }
+
+    function zoomAt(factor, px, py, animate) {
+      /* px, py: pointer position inside the viewport as 0–1 */
+      var s2 = Math.max(1, Math.min(VS_MAX_SCALE, view.s * factor));
+      var ix = view.cx + (px - 0.5) / view.s;
+      var iy = view.cy + (py - 0.5) / view.s;
+      setView({ s: s2, cx: ix - (px - 0.5) / s2, cy: iy - (py - 0.5) / s2 }, animate);
+      markFree();
+    }
+
+    function zoneView(card) {
+      var direct = (card.getAttribute("data-view") || "").split(",").map(parseFloat);
+      if (direct.length === 3 && !direct.some(isNaN)) {
+        return { s: Math.max(1, Math.min(VS_MAX_SCALE, direct[0])), cx: direct[1], cy: direct[2] };
+      }
+      return { s: 1, cx: 0.5, cy: 0.5 };
+    }
+
+    function selectCard(id, opts) {
+      opts = opts || {};
+      var card = cards.filter(function (c) {
+        return c.getAttribute("data-conflict-tab") === id;
+      })[0];
+      if (!card) return;
+      cards.forEach(function (c) {
+        var on = c === card;
+        c.classList.toggle("is-active", on);
+        c.setAttribute("aria-selected", on ? "true" : "false");
+        c.tabIndex = on ? 0 : -1;
+      });
+      detailCopies.forEach(function (copy) {
+        var on = copy.getAttribute("data-conflict-detail") === id;
+        copy.classList.toggle("is-active", on);
+        copy.setAttribute("aria-hidden", on ? "false" : "true");
+      });
+      if (stage && stage.getAttribute("data-mode") === "video") setMode("board");
+      if (chip) {
+        chip.textContent = card.getAttribute("data-chip") || "";
+        chip.classList.remove("is-free");
+      }
+      setView(zoneView(card), opts.animate !== false);
+    }
+
+    function setMode(mode) {
+      if (!stage) return;
+      var isVideo = mode === "video";
+      stage.setAttribute("data-mode", isVideo ? "video" : "board");
+      if (modeToggle) modeToggle.setAttribute("aria-checked", isVideo ? "true" : "false");
+      if (modeLabel) modeLabel.textContent = isVideo ? "Winning prototype" : "Research board";
+      if (videoWrap) videoWrap.hidden = !isVideo;
+      if (video) {
+        if (isVideo) {
+          var ds = video.getAttribute("data-src");
+          if (ds && !video.getAttribute("src")) {
+            video.src = ds;
+            video.removeAttribute("data-src");
+          }
+          var p = video.play();
+          if (p && p.catch) p.catch(function () {});
+        } else {
+          video.pause();
+        }
+      }
+      syncColumns();
+    }
+
+    if (modeToggle) {
+      modeToggle.addEventListener("click", function () {
+        var isVideo = stage.getAttribute("data-mode") === "video";
+        setMode(isVideo ? "board" : "video");
+      });
+    }
+
+    cards.forEach(function (card) {
+      card.addEventListener("click", function () {
+        selectCard(card.getAttribute("data-conflict-tab"));
+      });
+      card.addEventListener("keydown", function (e) {
+        var idx = cards.indexOf(card);
+        var target = null;
+        if (e.key === "ArrowRight" || e.key === "ArrowDown") target = (idx + 1) % cards.length;
+        else if (e.key === "ArrowLeft" || e.key === "ArrowUp") target = (idx - 1 + cards.length) % cards.length;
+        else if (e.key === "Home") target = 0;
+        else if (e.key === "End") target = cards.length - 1;
+        if (target === null) return;
+        e.preventDefault();
+        selectCard(cards[target].getAttribute("data-conflict-tab"));
+        cards[target].focus();
+      });
+    });
+
+    /* Pan + zoom gestures on the board (drag, pinch, ctrl/⌘-wheel, keys, controls) */
+    if (viewport && stage) {
+      var pointers = {};
+      var gesture = null;
+      var inVideo = function () {
+        return stage.getAttribute("data-mode") === "video";
+      };
+      var activePointers = function () {
+        return Object.keys(pointers).map(function (k) { return pointers[k]; });
+      };
+      var pinchMetrics = function (pts) {
+        var dx = pts[0].x - pts[1].x;
+        var dy = pts[0].y - pts[1].y;
+        return { dist: Math.hypot(dx, dy) || 1, mx: (pts[0].x + pts[1].x) / 2, my: (pts[0].y + pts[1].y) / 2 };
+      };
+      var beginGesture = function () {
+        var pts = activePointers();
+        if (pts.length >= 2) {
+          var m = pinchMetrics(pts);
+          gesture = { type: "pinch", dist: m.dist, mx: m.mx, my: m.my };
+        } else if (pts.length === 1) {
+          gesture = { type: "pan", x: pts[0].x, y: pts[0].y };
+        } else {
+          gesture = null;
+        }
+      };
+
+      viewport.addEventListener("pointerdown", function (e) {
+        if (inVideo()) return;
+        if (e.target.closest("[data-vs-controls]")) return;
+        if (e.pointerType === "mouse" && e.button !== 0) return;
+        pointers[e.pointerId] = { x: e.clientX, y: e.clientY };
+        try { viewport.setPointerCapture(e.pointerId); } catch (_) {}
+        viewport.classList.add("is-dragging");
+        beginGesture();
+      });
+      viewport.addEventListener("pointermove", function (e) {
+        if (!pointers[e.pointerId] || !gesture) return;
+        pointers[e.pointerId] = { x: e.clientX, y: e.clientY };
+        var rect = viewport.getBoundingClientRect();
+        var pts = activePointers();
+        if (gesture.type === "pan" && pts.length === 1) {
+          var dx = pts[0].x - gesture.x;
+          var dy = pts[0].y - gesture.y;
+          gesture.x = pts[0].x;
+          gesture.y = pts[0].y;
+          setView({ s: view.s, cx: view.cx - dx / (rect.width * view.s), cy: view.cy - dy / (rect.height * view.s) }, false);
+          markFree();
+        } else if (gesture.type === "pinch" && pts.length >= 2) {
+          var m = pinchMetrics(pts);
+          var factor = m.dist / gesture.dist;
+          var px = (gesture.mx - rect.left) / rect.width;
+          var py = (gesture.my - rect.top) / rect.height;
+          var s2 = Math.max(1, Math.min(VS_MAX_SCALE, view.s * factor));
+          var ix = view.cx + (px - 0.5) / view.s;
+          var iy = view.cy + (py - 0.5) / view.s;
+          var cx2 = ix - (px - 0.5) / s2 - (m.mx - gesture.mx) / (rect.width * s2);
+          var cy2 = iy - (py - 0.5) / s2 - (m.my - gesture.my) / (rect.height * s2);
+          setView({ s: s2, cx: cx2, cy: cy2 }, false);
+          gesture.dist = m.dist;
+          gesture.mx = m.mx;
+          gesture.my = m.my;
+          markFree();
+        }
+      });
+      var endPointer = function (e) {
+        if (!pointers[e.pointerId]) return;
+        delete pointers[e.pointerId];
+        try { viewport.releasePointerCapture(e.pointerId); } catch (_) {}
+        beginGesture();
+        if (!gesture) viewport.classList.remove("is-dragging");
+      };
+      viewport.addEventListener("pointerup", endPointer);
+      viewport.addEventListener("pointercancel", endPointer);
+
+      /* Plain wheel scrolls the page; pinch / ctrl / ⌘ + wheel zooms the board */
+      viewport.addEventListener(
+        "wheel",
+        function (e) {
+          if (inVideo() || !(e.ctrlKey || e.metaKey)) return;
+          e.preventDefault();
+          var rect = viewport.getBoundingClientRect();
+          var px = (e.clientX - rect.left) / rect.width;
+          var py = (e.clientY - rect.top) / rect.height;
+          var unit = e.deltaMode === 1 ? 16 : 1;
+          zoomAt(Math.exp(-e.deltaY * unit * (e.ctrlKey ? 0.012 : 0.0025)), px, py, false);
+        },
+        { passive: false }
+      );
+
+      viewport.addEventListener("dblclick", function (e) {
+        if (inVideo() || e.target.closest("[data-vs-controls]")) return;
+        var rect = viewport.getBoundingClientRect();
+        var px = (e.clientX - rect.left) / rect.width;
+        var py = (e.clientY - rect.top) / rect.height;
+        if (view.s > 1.6) {
+          setView({ s: 1, cx: 0.5, cy: 0.5 }, true);
+          markFree();
+        } else {
+          zoomAt(2.5, px, py, true);
+        }
+      });
+
+      viewport.addEventListener("keydown", function (e) {
+        if (inVideo()) return;
+        var step = 0.12 / view.s;
+        var handled = true;
+        if (e.key === "+" || e.key === "=") zoomAt(1.4, 0.5, 0.5, true);
+        else if (e.key === "-" || e.key === "_") zoomAt(1 / 1.4, 0.5, 0.5, true);
+        else if (e.key === "0") { setView({ s: 1, cx: 0.5, cy: 0.5 }, true); markFree(); }
+        else if (e.key === "ArrowLeft") { setView({ s: view.s, cx: view.cx - step, cy: view.cy }, true); markFree(); }
+        else if (e.key === "ArrowRight") { setView({ s: view.s, cx: view.cx + step, cy: view.cy }, true); markFree(); }
+        else if (e.key === "ArrowUp") { setView({ s: view.s, cx: view.cx, cy: view.cy - step }, true); markFree(); }
+        else if (e.key === "ArrowDown") { setView({ s: view.s, cx: view.cx, cy: view.cy + step }, true); markFree(); }
+        else handled = false;
+        if (handled) e.preventDefault();
+      });
+
+      stage.querySelectorAll("[data-vs-zoom]").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          var kind = btn.getAttribute("data-vs-zoom");
+          if (kind === "in") zoomAt(1.5, 0.5, 0.5, true);
+          else if (kind === "out") zoomAt(1 / 1.5, 0.5, 0.5, true);
+          else { setView({ s: 1, cx: 0.5, cy: 0.5 }, true); markFree(); }
+        });
+      });
+
+      if (typeof ResizeObserver === "function") {
+        new ResizeObserver(function () { paint(false); }).observe(viewport);
+      } else {
+        window.addEventListener("resize", function () { paint(false); });
+      }
+    }
+
+    /* Initial state: first card active, board already panned to it */
+    var initial = cards.filter(function (c) { return c.classList.contains("is-active"); })[0] || cards[0];
+    if (initial) selectCard(initial.getAttribute("data-conflict-tab"), { animate: false, scroll: false });
+    syncColumns();
+  });
+})();
+
+/* ==========================================================================
+   Web-parity prototype scale + Final-interface scroll / zoom
+   ========================================================================== */
+(function () {
+  "use strict";
+
+  /* Scale the 1440-wide prototype to fit its frame (no cropped desktop layout) */
+  document.querySelectorAll("[data-prototype-viewport]").forEach(function (viewport) {
+    if (viewport.dataset.scaleInit) return;
+    viewport.dataset.scaleInit = "1";
+    var designWidth = parseFloat(viewport.getAttribute("data-viewport-width")) || 1440;
+    function apply() {
+      var w = viewport.clientWidth;
+      if (w) viewport.style.setProperty("--proto-scale", String(w / designWidth));
+    }
+    apply();
+    if ("ResizeObserver" in window) new ResizeObserver(apply).observe(viewport);
+    else window.addEventListener("resize", apply);
+  });
+
+  /* Final interface: native scroll + button / keyboard zoom + drag-to-pan */
+  var MAX_SCALE = 3;
+  document.querySelectorAll("[data-wizard-scroll-viewport]").forEach(function (viewport) {
+    if (viewport.dataset.wizardScrollInit) return;
+    viewport.dataset.wizardScrollInit = "1";
+    var canvas = viewport.querySelector("[data-wizard-scroll-canvas]");
+    var slot = viewport.parentElement;
+    var controls = slot ? slot.querySelector("[data-wizard-scroll-controls]") : null;
+    if (!canvas) return;
+    var scale = 1;
+
+    function setScale(next) {
+      var prev = scale;
+      scale = Math.max(1, Math.min(MAX_SCALE, next));
+      var cx = (viewport.scrollLeft + viewport.clientWidth / 2) / (canvas.offsetWidth || 1);
+      var cy = (viewport.scrollTop + viewport.clientHeight / 2) / (canvas.offsetHeight || 1);
+      canvas.style.width = scale * 100 + "%";
+      viewport.classList.toggle("is-zoomed", scale > 1.01);
+      if (scale === prev) return;
+      viewport.scrollLeft = cx * canvas.offsetWidth - viewport.clientWidth / 2;
+      viewport.scrollTop = cy * canvas.offsetHeight - viewport.clientHeight / 2;
+    }
+    function reset() {
+      setScale(1);
+      viewport.scrollLeft = 0;
+      viewport.scrollTop = 0;
+    }
+
+    if (controls) {
+      controls.addEventListener("click", function (e) {
+        var btn = e.target.closest("[data-wizard-zoom]");
+        if (!btn) return;
+        var kind = btn.getAttribute("data-wizard-zoom");
+        if (kind === "in") setScale(scale * 1.35);
+        else if (kind === "out") setScale(scale / 1.35);
+        else reset();
+      });
+    }
+
+    viewport.addEventListener("keydown", function (e) {
+      if (e.key === "+" || e.key === "=") { e.preventDefault(); setScale(scale * 1.35); }
+      else if (e.key === "-" || e.key === "_") { e.preventDefault(); setScale(scale / 1.35); }
+      else if (e.key === "0") { e.preventDefault(); reset(); }
+    });
+
+    viewport.addEventListener(
+      "wheel",
+      function (e) {
+        if (!e.ctrlKey) return;
+        e.preventDefault();
+        setScale(scale * Math.exp(-e.deltaY * 0.01));
+      },
+      { passive: false }
+    );
+
+    var drag = null;
+    viewport.addEventListener("pointerdown", function (e) {
+      if (e.pointerType === "mouse" && e.button !== 0) return;
+      drag = { x: e.clientX, y: e.clientY, l: viewport.scrollLeft, t: viewport.scrollTop };
+      viewport.classList.add("is-dragging");
+      try { viewport.setPointerCapture(e.pointerId); } catch (_) {}
+    });
+    viewport.addEventListener("pointermove", function (e) {
+      if (!drag) return;
+      viewport.scrollLeft = drag.l - (e.clientX - drag.x);
+      viewport.scrollTop = drag.t - (e.clientY - drag.y);
+    });
+    function end(e) {
+      if (!drag) return;
+      drag = null;
+      viewport.classList.remove("is-dragging");
+      try { viewport.releasePointerCapture(e.pointerId); } catch (_) {}
+    }
+    viewport.addEventListener("pointerup", end);
+    viewport.addEventListener("pointercancel", end);
   });
 })();
