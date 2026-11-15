@@ -1,0 +1,30 @@
+/* Portfolio embed — prototype keeps its own proto-bar; host page scales the iframe */
+html.portfolio-embed-root,
+body.portfolio-embed {
+  margin: 0;
+  padding: 0 !important;
+  background: #fff;
+}
+
+/* Keep scrolling, drop the visible scrollbars inside the zoomed frame */
+html.portfolio-embed-root,
+html.portfolio-embed-root * {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+html.portfolio-embed-root::-webkit-scrollbar,
+html.portfolio-embed-root *::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+/* Report pages and annotate are not shipped with the portfolio copy */
+body.portfolio-embed [data-proto-menu],
+body.portfolio-embed .proto-hint--feedback,
+body.portfolio-embed .proto-hint--feedback ~ .proto-hint__sep,
+body.portfolio-embed .proto-hint__sep:has(+ .proto-hint--feedback),
+body.portfolio-embed .annotate-embed-banner,
+body.portfolio-embed .annotate-auth-shell {
+  display: none !important;
+}

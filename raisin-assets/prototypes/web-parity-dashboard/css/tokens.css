@@ -1,0 +1,71 @@
+:root {
+  /* themeV2 aliases used by older prototype screens */
+  --raisin-navy: #00183c;
+  --raisin-navy-muted: #2a3f5f;
+  --raisin-teal: #1abc9c;
+  --raisin-teal-dark: #0d9b82;
+  --raisin-bg: #f7f5f3;
+  --raisin-surface: #ffffff;
+  --raisin-tile: #edebe9;
+  --raisin-border: #e9ecef;
+  --raisin-text: #02193d;
+  --raisin-text-muted: #314562;
+  --raisin-red: #f04438;
+  --raisin-red-bg: #fef3f2;
+  --raisin-amber: #f79009;
+  --raisin-amber-bg: #fffaeb;
+  --raisin-green: #12b76a;
+  --raisin-blue: #2e90fa;
+  --raisin-savings: #3096ff;
+  --raisin-invest: #eea854;
+  --raisin-retire: #60995b;
+
+  /* typographyV2 — Basier Square UI, Lay Grotesk display (Figma Web-Dashboard-Parity) */
+  --font-body: "Basier Square", Verdana, sans-serif;
+  --font-display: "Lay Grotesk", Verdana, sans-serif;
+  --font-family-headline: var(--font-display);
+  --font-family: var(--font-body);
+
+  /* Display — Lay Grotesk Regular */
+  --type-display-lg: 3rem;
+  --type-display-lg-lh: 3.75rem;
+  --type-display-md: 2.25rem;
+  --type-display-md-lh: 2.75rem;
+  --type-display-sm: 1.875rem;
+  --type-display-sm-lh: 2.375rem;
+  --type-display-xs: 1.5rem;
+  --type-display-xs-lh: 2rem;
+  /* Titles & body — Basier Square */
+  --type-xl: 1.25rem;
+  --type-xl-lh: 1.875rem;
+  --type-lg: 1.125rem;
+  --type-lg-lh: 1.75rem;
+  --type-md: 1rem;
+  --type-md-lh: 1.5rem;
+  --type-sm: 0.875rem;
+  --type-sm-lh: 1.25rem;
+  --type-xs: 0.75rem;
+  --type-xs-lh: 1rem;
+  /* Letter-spacing from Figma (px → em at reference size) */
+  --track-display-lg: -0.00917em; /* −0.44px @ 48px (H3 Display lg) */
+  --track-display-md: -0.00667em;
+  --track-display-sm: -0.008em;
+  --track-display-xs: 0;
+  --track-subtitle-1: -0.012em;
+  --track-subtitle-2: -0.00667em;
+  --track-body: -0.0075em;
+  --track-label-sm: 0;
+  --track-tight: var(--track-subtitle-1);
+  --track-tighter: var(--track-body);
+
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-pill: 999px;
+  --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.06);
+  --shadow-md: 0 4px 12px rgba(16, 24, 40, 0.08);
+  --content-max: 82.5rem;
+  --primary-col: 52.5rem;
+  --rail-col: 25.5rem;
+  --nav-width: 14.5rem;
+}

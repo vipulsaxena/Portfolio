@@ -582,33 +582,74 @@
     frame.contentWindow.postMessage({ type: "persona-select", personaId: personaId }, "*");
   }
 
+  function sendVariantToFrame(frame, variantId) {
+    if (!frame || !frame.contentWindow) return;
+    frame.contentWindow.postMessage({ type: "variant-select", variant: variantId }, "*");
+  }
+
   function initPrototypePersonas(shell) {
-    var switcher = shell.querySelector("[data-prototype-personas]");
+    var personaSwitcher = shell.querySelector("[data-prototype-personas]");
+    var variantSwitcher = shell.querySelector("[data-prototype-variants]");
     var frame = shell.querySelector("[data-prototype-frame]");
-    if (!switcher || !frame) return;
+    if (!frame || (!personaSwitcher && !variantSwitcher)) return;
 
-    var tabs = Array.prototype.slice.call(switcher.querySelectorAll("[data-persona-id]"));
-    if (!tabs.length) return;
-
-    function activateTab(tab) {
-      tabs.forEach(function (btn) {
-        var isActive = btn === tab;
-        btn.classList.toggle("prototype-persona-tab--active", isActive);
-        btn.setAttribute("aria-selected", isActive ? "true" : "false");
-      });
-      sendPersonaToFrame(frame, tab.getAttribute("data-persona-id"));
+    function syncFrameState() {
+      if (variantSwitcher) {
+        var vActive =
+          variantSwitcher.querySelector("[data-variant-id].trade-off-switcher__tab--active") ||
+          variantSwitcher.querySelector("[data-variant-id][aria-selected='true']") ||
+          variantSwitcher.querySelector("[data-variant-id]");
+        if (vActive) sendVariantToFrame(frame, vActive.getAttribute("data-variant-id"));
+      }
+      if (personaSwitcher) {
+        var pActive =
+          personaSwitcher.querySelector(".prototype-persona-tab--active") ||
+          personaSwitcher.querySelector("[data-persona-id]");
+        if (pActive) sendPersonaToFrame(frame, pActive.getAttribute("data-persona-id"));
+      }
     }
 
-    switcher.addEventListener("click", function (e) {
-      var tab = e.target.closest("[data-persona-id]");
-      if (!tab || tabs.indexOf(tab) < 0) return;
-      activateTab(tab);
-    });
+    if (personaSwitcher) {
+      var tabs = Array.prototype.slice.call(personaSwitcher.querySelectorAll("[data-persona-id]"));
+      if (tabs.length) {
+        function activateTab(tab) {
+          tabs.forEach(function (btn) {
+            var isActive = btn === tab;
+            btn.classList.toggle("prototype-persona-tab--active", isActive);
+            btn.setAttribute("aria-selected", isActive ? "true" : "false");
+          });
+          sendPersonaToFrame(frame, tab.getAttribute("data-persona-id"));
+        }
 
-    frame.addEventListener("load", function () {
-      var active = switcher.querySelector(".prototype-persona-tab--active") || tabs[0];
-      if (active) sendPersonaToFrame(frame, active.getAttribute("data-persona-id"));
-    });
+        personaSwitcher.addEventListener("click", function (e) {
+          var tab = e.target.closest("[data-persona-id]");
+          if (!tab || tabs.indexOf(tab) < 0) return;
+          activateTab(tab);
+        });
+      }
+    }
+
+    if (variantSwitcher) {
+      var variantTabs = Array.prototype.slice.call(variantSwitcher.querySelectorAll("[data-variant-id]"));
+      if (variantTabs.length) {
+        function activateVariant(tab) {
+          variantTabs.forEach(function (btn) {
+            var isActive = btn === tab;
+            btn.classList.toggle("trade-off-switcher__tab--active", isActive);
+            btn.setAttribute("aria-selected", isActive ? "true" : "false");
+          });
+          sendVariantToFrame(frame, tab.getAttribute("data-variant-id"));
+        }
+
+        variantSwitcher.addEventListener("click", function (e) {
+          var tab = e.target.closest("[data-variant-id]");
+          if (!tab || variantTabs.indexOf(tab) < 0) return;
+          activateVariant(tab);
+        });
+      }
+    }
+
+    frame.addEventListener("load", syncFrameState);
   }
 
   shells.forEach(initPrototypePersonas);

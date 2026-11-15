@@ -1,0 +1,5016 @@
+/* Prototype only. themeV2 tokens — lengths are spacing steps (4px base), not one-off pixels. */
+
+:root {
+  --color-bg: #f7f5f3;
+  --color-paper: #ffffff;
+  --color-text: #02193d;
+  --color-text-secondary: #314562;
+  --color-grey-100: #e9ecef;
+  --color-grey-200: #c9ced6;
+  --color-grey-400: #818d9e;
+  --color-grey-700: #314562;
+  --color-grey-800: #1b3051;
+  --color-blue-100: #dfefff;
+  --color-blue-300: #62afff;
+  --color-blue-400: #3096ff;
+  --color-blue-500: #2471c1;
+  --color-blue-600: #1d5a9a;
+  --color-blue-700: #164576;
+  --color-blue-800: #103154;
+  --color-yellow-300: #ffc36b;
+  --color-yellow-400: #eea854;
+  --color-green-300: #75bb6f;
+  --color-green-400: #60995b;
+  --color-green-600: #3d613a;
+  --color-red-100: #f9e8e8;
+  --color-red-600: #b40909;
+  --color-orange-100: #fde6c8;
+  --color-orange-700: #8a5300;
+  --color-blue-200: #a7d2ff;
+  --color-navy: #00183c;
+  --color-cream-100: #edebe9;
+  --color-cream-600: #595858;
+  --color-grey-500: #627187;
+  --color-yellow-100: #ffe2b7;
+  --color-green-100: #d5f4d2;
+  --color-blue-10: #e8f0f9;
+  --color-blue-60: #156cc4;
+  --color-progress: #62b3ff;
+  --color-input-label: #314562;
+  --color-border-subtle: #edebe9;
+  --color-border-accent: #c9ced6;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  /* DS Icon Container — General (Figma 40007724:1485): 48×48, 24px glyph */
+  --ds-icon-container-size: 3rem;
+  --ds-icon-container-glyph: 1.5rem;
+  /* Wallet quick actions — Icon button Big (Figma 12:23105 / 390:20445): 52×52, 14px inset */
+  --ds-wallet-quick-icon-size: 3.25rem;
+  --ds-wallet-quick-icon-glyph: 1.5rem;
+  --ds-wallet-quick-icon-padding: 0.875rem;
+  --ds-wallet-quick-icon-label-gap: var(--space-2);
+  --radius-card: 1rem;
+  --radius-card-lg: 2rem;
+  --radius-pill: 999px;
+  --header-h: 5rem;
+  --proto-bar-h: 2.75rem;
+  --ds-tab-bar-h: 3.5rem;
+}
+
+body:has(.app-shell--ds),
+body:has(.app-shell--control) {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+}
+
+.app-shell--ds {
+  background: var(--color-bg);
+  min-height: 100vh;
+}
+
+.app-shell--control {
+  background: var(--color-bg);
+}
+
+.app-shell--a,
+.app-shell--b {
+  background: var(--color-bg);
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+.app-shell--a .app-main,
+.app-shell--b .app-main {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+.app-shell--a .ds-main,
+.app-shell--b .ds-main {
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+.app-shell--a .ds-page,
+.app-shell--b .ds-page {
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* Negative bleed is Control-only; on A/B it widens the page past the column. */
+.app-shell--a .ds-alloc-row,
+.app-shell--b .ds-alloc-row {
+  margin-inline: 0;
+}
+
+.app-shell--a .ds-card--popular,
+.app-shell--b .ds-card--popular {
+  overflow-x: clip;
+}
+
+/* Figma "Bacground_grad" — full-bleed blue wash behind Hypothesis A/B chrome (≈591px). */
+.app-shell--hyp-gradient .app-main {
+  position: relative;
+}
+
+.app-shell--hyp-gradient .app-main::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 0;
+  width: 100%;
+  height: 36.9375rem;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      ellipse 30.5625rem 18.25rem at calc(100% - 12.5rem) 0%,
+      color-mix(in srgb, var(--color-blue-200) 75%, transparent) 0%,
+      transparent 70%
+    ),
+    linear-gradient(
+      180deg,
+      var(--color-blue-100) 0%,
+      color-mix(in srgb, var(--color-blue-100) 50%, var(--color-bg)) 50%,
+      var(--color-bg) 100%
+    );
+}
+
+.app-shell--hyp-gradient .ds-main {
+  position: relative;
+  z-index: 1;
+}
+
+.ds-header {
+  position: sticky;
+  top: var(--proto-bar-h);
+  z-index: 50;
+  overflow: visible;
+  background: color-mix(in srgb, var(--color-paper) 92%, transparent);
+  border-bottom: 1px solid var(--color-grey-100);
+  backdrop-filter: blur(10px);
+}
+
+/* Production top nav on Hypothesis B — same chrome as Control (12:11178), stays under proto bar */
+.app-shell--b .ctl-header.ds-top-header {
+  position: sticky;
+  top: var(--proto-bar-h);
+  z-index: 50;
+}
+
+.app-shell--ds .dashboard-chrome {
+  position: sticky;
+  top: calc(var(--proto-bar-h) + var(--header-h));
+  z-index: 45;
+  background: color-mix(in srgb, var(--color-bg) 88%, transparent);
+  backdrop-filter: blur(8px);
+}
+
+/* Match Control `.ctl-shell` — 82.5rem column + horizontal padding */
+.ds-header__inner,
+.ds-page,
+.app-shell--ds .dashboard-chrome {
+  width: min(var(--content-max, 82.5rem), 100%);
+  margin-inline: auto;
+  padding-inline: var(--space-6);
+  box-sizing: border-box;
+}
+
+/* Product tabs share the same column as .ds-page (Figma 70% rail), not full-bleed chrome padding */
+.app-shell--ds .dashboard-chrome {
+  padding: var(--space-6) 0 0;
+}
+
+.ds-header__inner {
+  position: relative;
+  z-index: 1;
+  min-height: var(--header-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.ds-header__menu {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin-left: auto;
+  border: 1px solid var(--color-grey-100);
+  border-radius: var(--radius-pill);
+  background: var(--color-paper);
+  color: var(--color-text);
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.ds-header__menu:focus-visible {
+  outline: 2px solid var(--color-blue-400);
+  outline-offset: 2px;
+}
+
+.ds-logo {
+  display: block;
+  width: 8.6875rem;
+  height: 2rem;
+}
+
+.ds-header__nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-left: auto;
+}
+
+.ds-header--a .ds-header__nav--pill {
+  padding: var(--space-1);
+  gap: var(--space-1);
+  background: color-mix(in srgb, var(--color-paper) 72%, var(--color-blue-100));
+  border-radius: var(--radius-pill);
+}
+
+.ds-header--a .ds-header__link {
+  min-height: 2.75rem;
+  padding: 0 var(--space-3);
+}
+
+.ds-avatar--menu {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  width: auto;
+  height: auto;
+  padding: var(--space-1) var(--space-2) var(--space-1) var(--space-1);
+  border: 1px solid var(--color-grey-100);
+  background: var(--color-paper);
+}
+
+.ds-avatar__initials {
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--radius-pill);
+  display: grid;
+  place-items: center;
+  background: var(--color-blue-100);
+  color: var(--color-blue-700);
+  font-size: var(--type-sm);
+  font-weight: 500;
+}
+
+.ds-avatar__chev {
+  font-size: 0.625rem;
+  color: var(--color-text-secondary);
+  line-height: 1;
+}
+
+.ds-header__link,
+.ds-header__pill,
+.ds-tab,
+.ds-filter,
+.ds-textbtn,
+.ds-btn,
+.ds-avatar,
+.ds-offer {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--color-text);
+}
+
+.ds-header__link,
+.ds-header__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 3rem;
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-pill);
+  text-decoration: none;
+}
+
+.ds-header__pill.is-active,
+.ds-header__link.is-active {
+  background: var(--color-blue-100);
+  color: var(--color-blue-700);
+  font-weight: 500;
+}
+
+.ds-header__link:not(.is-active):hover,
+.ds-header__pill:not(.is-active):hover {
+  background: var(--color-grey-100);
+}
+
+.ds-header__link--static {
+  cursor: default;
+}
+
+.ds-header__link--static:hover {
+  background: transparent;
+}
+
+.ds-avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--color-blue-100);
+  color: var(--color-blue-700);
+  font-weight: 500;
+}
+
+.ds-page {
+  padding-block: var(--space-12);
+}
+
+.ds-tabs,
+.ds-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.ds-tab,
+.ds-filter {
+  border: 0;
+  background: transparent;
+  border-radius: var(--radius-pill);
+  min-height: 3rem;
+  padding: 0 var(--space-4);
+  cursor: pointer;
+}
+
+.ds-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.ds-tab__chevron {
+  font-size: 0.75rem;
+  line-height: 1;
+  color: var(--color-text-secondary);
+}
+
+.ds-tab-wrap {
+  position: relative;
+}
+
+.ds-tab-menu {
+  position: absolute;
+  top: calc(100% + 0.375rem);
+  left: 0;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  min-width: 16.5rem;
+  background: var(--color-paper);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 0.75rem;
+  box-shadow: 0 0.75rem 2rem rgb(2 25 61 / 12%);
+  overflow: hidden;
+}
+
+.ds-tab-menu[hidden] {
+  display: none;
+}
+
+.ds-tab-menu__item {
+  padding: 0.8125rem var(--space-4);
+  border: 0;
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: var(--type-md);
+  line-height: var(--type-md-lh);
+  letter-spacing: var(--track-tighter);
+  color: var(--color-text);
+  text-align: left;
+  cursor: pointer;
+}
+
+.ds-tab-menu__item.is-current {
+  background: var(--color-blue-100);
+}
+
+.ds-tab-menu__item:not(.is-current):hover {
+  background: var(--color-grey-100);
+}
+
+.ds-tab.is-active,
+.ds-filter.is-active {
+  background: var(--color-blue-100);
+  color: var(--color-blue-700);
+  font-weight: 500;
+}
+
+.ds-tab:not(.is-active):hover,
+.ds-filter:not(.is-active):hover {
+  background: var(--color-grey-100);
+}
+
+.ds-tab.is-disabled,
+.ds-tab:disabled {
+  cursor: not-allowed;
+  color: var(--color-text-secondary);
+  opacity: 0.55;
+}
+
+.ds-tab.is-disabled:hover,
+.ds-tab:disabled:hover {
+  background: transparent;
+}
+
+/* Match Control `.ctl-split` ratio (52.5 : 25.5) — fluid columns, no horizontal overflow */
+.ds-split {
+  display: grid;
+  grid-template-columns: minmax(0, 2.06fr) minmax(12rem, 1fr);
+  gap: var(--space-6);
+  align-items: start;
+  margin-top: var(--space-6);
+  max-width: min(var(--content-max, 82.5rem), 100%);
+}
+
+.app-shell--a .ds-split,
+.app-shell--b .ds-split {
+  justify-content: start;
+}
+
+.ds-split > * {
+  min-width: 0;
+}
+
+.ds-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.ds-stack--sections {
+  gap: var(--space-8);
+}
+
+.ds-section,
+.ds-rail-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.ds-rail-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.ds-rail-head .ds-h {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.ds-rail-head .ds-textbtn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-blue-600);
+  font-size: var(--type-md);
+  line-height: var(--type-md-lh);
+  letter-spacing: var(--track-tighter);
+}
+
+.ds-textbtn--trailing {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.ds-textbtn--trailing img {
+  display: block;
+  flex: none;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.ds-amount--tight {
+  margin-bottom: 0;
+}
+
+.ds-card--portfolio {
+  padding-block: 0;
+}
+
+.ds-card--portfolio .ds-alloc-row:first-of-type {
+  border-top: 0;
+}
+
+.ds-card--stack .ds-deposit {
+  border-bottom: 1px solid var(--color-grey-100);
+}
+
+.ds-card--stack .ds-deposit:last-child {
+  border-bottom: 0;
+}
+
+.ds-card--alerts {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* Flex gap handles vertical rhythm — avoid stacking margin-top on alert tiles. */
+.ds-card--alerts > .ds-alert {
+  margin-top: 0;
+}
+
+.ds-performance-chart {
+  position: relative;
+  margin-top: var(--space-4);
+  padding-top: var(--space-6);
+}
+
+.ds-performance-chart__plot {
+  position: relative;
+}
+
+.ds-performance-chart__line {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.ds-performance-chart__baseline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+}
+
+.ds-performance-chart__axis {
+  position: absolute;
+  right: 0;
+  font-size: var(--type-xs);
+  line-height: var(--type-xs-lh);
+  color: var(--color-text-secondary);
+  background: var(--color-paper);
+  padding: 0 var(--space-1);
+}
+
+.ds-performance-chart__axis--top {
+  top: 0;
+}
+
+.ds-performance-chart__axis--bottom {
+  bottom: 0;
+}
+
+.ds-performance-chart.ds-performance {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.ds-earnings-widget .earnings-widget__head-copy {
+  min-width: 0;
+}
+
+.ds-earnings-widget__metric-label {
+  margin: 0 0 var(--space-1);
+  font-size: var(--type-sm);
+  line-height: var(--type-sm-lh);
+  color: var(--color-grey-700);
+}
+
+/* Performance widget — Display xs (Lay Grotesk 24/32), blue-600 */
+.ds-earnings-widget__amount {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--type-display-xs);
+  line-height: var(--type-display-xs-lh);
+  letter-spacing: var(--track-display-xs);
+  color: var(--color-blue-600);
+}
+
+.ds-earnings-widget:not(.ds-earnings-widget--home) .ds-performance-chart--widget-inner {
+  margin-top: var(--space-2);
+  padding-top: var(--space-6);
+}
+
+.ds-performance-chart--widget-inner {
+  position: relative;
+  min-height: 10.1875rem;
+}
+
+.ds-performance-chart--widget-inner .ds-performance-chart__plot {
+  position: relative;
+  min-height: 9.375rem;
+}
+
+/* Hypothesis A/B home — shared compact chart height + future-zone gradient (Figma performance rail). */
+.ds-earnings-widget--home .ds-performance-chart--widget-inner {
+  margin-top: 0;
+  padding-top: var(--space-5);
+  min-height: calc(5.5rem + 1.5rem);
+  height: auto;
+}
+
+.ds-earnings-widget--home .earnings-widget__plot,
+.ds-earnings-widget--home .ds-performance-chart--widget-inner .ds-performance-chart__plot {
+  min-height: 5.5rem;
+  height: 5.5rem;
+}
+
+.ds-earnings-widget--home .lifetime-earnings-chart--widget .lifetime-earnings-chart__ticker {
+  display: none;
+}
+
+.ds-earnings-widget--home .ds-performance-chart__axis--bottom {
+  bottom: 0;
+  top: auto;
+}
+
+.ds-earnings-widget--home .ds-card__head {
+  margin-bottom: var(--space-2);
+}
+
+.ds-performance-chart--widget-inner .ds-performance-chart__baseline {
+  bottom: 0;
+}
+
+.lifetime-earnings-chart--widget .lifetime-earnings-chart__ticker {
+  margin-top: var(--space-1);
+}
+
+.app-shell--a .ds-earnings-widget--home.ds-performance {
+  padding-block: var(--space-6);
+}
+
+.app-shell--a .ds-earnings-widget--home.ds-earnings-widget--external-head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.app-shell--a .ds-page--a-home .ds-rail-section--performance .ds-earnings-widget--home.ds-performance {
+  padding: var(--space-4);
+}
+
+.app-shell--a .ds-earnings-widget--external-head .earnings-widget__value-block {
+  margin: 0;
+}
+
+.app-shell--a .ds-earnings-widget--home .earnings-widget__value-block {
+  padding-bottom: calc(var(--type-xs-lh) + var(--space-1));
+}
+
+.app-shell--a .ds-earnings-widget--external-head .earnings-widget__value-block {
+  padding-bottom: 0;
+}
+
+.ds-earnings-widget__amount-row {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.ds-earnings-widget__amount-row .ds-earnings-widget__amount {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ds-earnings-widget__amount-row .ds-textbtn--trailing {
+  display: inline-flex;
+  flex: none;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--space-1);
+  white-space: nowrap;
+  color: var(--color-blue-600);
+  font-size: var(--type-md);
+  line-height: var(--type-md-lh);
+  letter-spacing: var(--track-tighter);
+}
+
+/* A home — overview hero and performance rail card share one row height */
+.app-shell--a .ds-page--a-home .ds-stack--sections > .ds-section:first-child > .ds-savings-hero {
+  box-sizing: border-box;
+  min-height: 11rem;
+}
+
+/* Compact performance rail — fixed 11rem card; header tight, chart gets remaining space */
+.app-shell--a .ds-page--a-home .ds-rail-section--performance .ds-earnings-widget--home.ds-performance.ds-earnings-widget--external-head {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: var(--space-1);
+  min-height: 11rem;
+  max-height: 11rem;
+  overflow: hidden;
+}
+
+.app-shell--a .ds-page--a-home .ds-rail-section--performance .ds-earnings-widget--external-head .earnings-widget__value-block {
+  margin-top: 0;
+}
+
+.app-shell--a .ds-page--a-home .ds-rail-section--performance .ds-earnings-widget__metric-label {
+  margin: 0;
+  line-height: 1.25;
+}
+
+.app-shell--a .ds-page--a-home .ds-rail-section--performance .lifetime-earnings-chart--widget {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-shell--a .ds-page--a-home .ds-rail-section--performance .ds-performance-chart--widget-inner {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  margin: 0;
+  padding-top: 1.125rem;
+  padding-bottom: 1.125rem;
+}
+
+.app-shell--a .ds-page--a-home .ds-rail-section--performance .ds-earnings-widget--external-head .earnings-widget__plot,
+.app-shell--a .ds-page--a-home .ds-rail-section--performance .ds-earnings-widget--external-head .ds-performance-chart__plot.earnings-widget__plot {
+  flex: 1 1 auto;
+  min-height: 3.25rem;
+  height: auto;
+}
+
+/* Area fill under the curve — same geometry as the line so it tracks it exactly. */
+.earnings-widget__shade {
+  display: none;
+}
+
+.ds-earnings-widget--home .earnings-widget__shade {
+  position: absolute;
+  top: 7.36%;
+  bottom: 1.84%;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 90.8%;
+  z-index: 0;
+  pointer-events: none;
+  object-fit: fill;
+}
+
+.ds-page--earnings {
+  max-width: 52.5rem;
+  margin-inline: auto;
+}
+
+.ds-card {
+  background: var(--color-paper);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-card);
+  padding: var(--space-6);
+  box-shadow: none;
+}
+
+.ds-card--flat {
+  padding: var(--space-4);
+}
+
+.ds-card__head,
+.ds-card__head--plain {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.ds-card__head--plain {
+  margin-bottom: 0;
+}
+
+/* Section heading — Subtitle 1 (Basier Medium 20/30). Lay Grotesk is for amounts only. */
+.ds-h {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: var(--type-xl);
+  line-height: var(--type-xl-lh);
+  letter-spacing: var(--track-tight);
+  color: var(--color-text);
+}
+
+.ds-h--page {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--type-display-sm);
+  line-height: var(--type-display-sm-lh);
+  letter-spacing: var(--track-display-sm);
+}
+
+/* Subtitle 2 — Basier Medium 18/28 */
+.ds-sub {
+  margin: var(--space-4) 0 var(--space-2);
+  font-family: var(--font-body);
+  font-size: var(--type-lg);
+  line-height: var(--type-lg-lh);
+  font-weight: 500;
+  letter-spacing: var(--track-subtitle-2);
+}
+
+.ds-kicker,
+.ds-donut__center span,
+.ds-savings-hero__amount span {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--type-sm);
+  line-height: var(--type-sm-lh);
+  letter-spacing: var(--track-label-sm);
+  font-weight: 400;
+}
+
+/* Amounts — Lay Grotesk display scale */
+.ds-amount,
+.ds-savings-hero__amount strong,
+.ds-donut__center strong {
+  font-family: var(--font-display);
+  font-weight: 400;
+  color: var(--color-text);
+}
+
+.ds-amount {
+  margin: var(--space-2) 0 var(--space-4);
+  font-size: var(--type-display-xs);
+  line-height: var(--type-display-xs-lh);
+  letter-spacing: var(--track-display-xs);
+}
+
+/* Legacy alias — card totals use Display xs */
+.ds-amount--md {
+  font-size: var(--type-display-xs);
+  line-height: var(--type-display-xs-lh);
+  letter-spacing: var(--track-display-xs);
+}
+
+.ds-amount--sm {
+  font-size: var(--type-display-sm);
+  line-height: var(--type-display-sm-lh);
+  letter-spacing: var(--track-display-sm);
+}
+
+/* Total wealth — Lay Grotesk H3 / Display lg (Hypothesis A hero) */
+.app-shell--a .ds-savings-hero__amount strong {
+  font-family: var(--font-family-headline, var(--font-display));
+  color: var(--color-text);
+  text-align: center;
+  font-style: normal;
+  font-weight: 400;
+  font-size: calc(var(--type-display-lg) * 0.8);
+  line-height: calc(var(--type-display-lg-lh) * 0.8);
+  letter-spacing: var(--track-display-lg);
+  font-variant-numeric: tabular-nums;
+}
+
+/* B overview donut — Display xs so AOP fits the 80% ring hole */
+.app-shell--b .ds-donut--overview .ds-donut__center strong {
+  font-family: var(--font-display);
+  color: var(--color-text);
+  text-align: center;
+  font-style: normal;
+  font-weight: 400;
+  font-size: var(--type-display-xs);
+  line-height: var(--type-display-xs-lh);
+  letter-spacing: var(--track-display-xs);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+/* B donut — slice read-out while hovering */
+.app-shell--b .ds-overview-chart.is-reading .ds-donut--overview .ds-donut__center strong {
+  font-size: var(--type-xl);
+  line-height: var(--type-xl-lh);
+  letter-spacing: var(--track-subtitle-1);
+}
+
+.ds-overview__body {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--space-10);
+  flex-wrap: wrap;
+}
+
+.ds-overview-chart {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--space-10);
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: clip;
+}
+
+.ds-overview-chart .ds-legend {
+  flex: 1;
+  min-width: 10rem;
+}
+
+/* Donut read-out — same interaction model as Control (11031:109895). */
+.ds-donut__arc {
+  transition: stroke 120ms ease;
+  cursor: pointer;
+}
+
+.ds-legend__item {
+  cursor: pointer;
+  transition: color 120ms ease;
+}
+
+.ds-overview-chart.is-reading .ds-donut__arc:not(.is-active),
+.ds-overview-chart.is-reading .ds-legend__item:not(.is-active) {
+  stroke: var(--color-grey-200);
+  color: var(--color-grey-200);
+}
+
+.ds-overview-chart.is-reading .ds-legend__item:not(.is-active) strong {
+  color: var(--color-grey-200);
+}
+
+.ds-overview-chart.is-reading .ds-legend__item:not(.is-active) .ds-dot {
+  background: var(--color-grey-200);
+}
+
+.ds-savings-hero {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+/* A overview hero — 50/50 split, amount block centred (frame 203:98005) */
+.ds-savings-hero {
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-6);
+  flex-wrap: wrap;
+  max-width: 100%;
+}
+
+.ds-savings-hero__amount {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.1875rem;
+  padding: var(--space-6) 0;
+  text-align: center;
+}
+
+.ds-savings-hero .ds-alloc-list {
+  flex: 1 1 0;
+  gap: var(--space-4);
+}
+
+.ds-savings-hero .ds-alloc-list li {
+  gap: var(--space-3);
+  padding: 0;
+  cursor: default;
+  pointer-events: none;
+}
+
+.ds-donut {
+  position: relative;
+  width: 13.75rem;
+  height: 13.75rem;
+  flex: none;
+}
+
+/* B overview — 80% of Figma 342px donut (390:20569) */
+.app-shell--b .ds-donut--overview {
+  width: 17.1rem;
+  height: 17.1rem;
+}
+
+.ds-donut svg {
+  width: 100%;
+  height: 100%;
+}
+
+.ds-donut__center {
+  position: absolute;
+  inset: 22%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.app-shell--b .ds-donut--overview .ds-donut__center {
+  inset: 15%;
+  padding: var(--space-2) var(--space-3);
+  gap: 0.375rem; /* 50% of previous --space-3 */
+}
+
+.ds-donut__center strong {
+  font-size: var(--type-display-xs);
+  line-height: var(--type-display-xs-lh);
+  letter-spacing: var(--track-display-xs);
+}
+
+.ds-legend {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  font-size: var(--type-md);
+  line-height: var(--type-md-lh);
+  letter-spacing: var(--track-body);
+}
+
+.ds-legend--row {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--space-4) var(--space-6);
+  margin-top: var(--space-4);
+}
+
+.ds-legend li,
+.ds-alloc-list li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.ds-dot {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: var(--radius-pill);
+  display: inline-block;
+}
+
+.ds-dot--savings,
+.ds-dot--s1 { background: var(--color-blue-300); }
+.ds-dot--invest { background: var(--color-yellow-300); }
+.ds-dot--retire,
+.ds-dot--s3 { background: var(--color-blue-800); }
+.ds-dot--s2 { background: var(--color-blue-500); }
+.ds-dot--wallet { background: var(--color-grey-400); }
+
+.ds-alloc-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.ds-alloc-list div {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.ds-alloc-list div span,
+.ds-legend__label {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: var(--type-lg);
+  line-height: var(--type-lg-lh);
+  letter-spacing: var(--track-subtitle-2);
+}
+
+.ds-alloc-list small {
+  color: var(--color-text-secondary);
+  font-size: var(--type-sm);
+  line-height: var(--type-sm-lh);
+  letter-spacing: var(--track-label-sm);
+  font-weight: 400;
+}
+
+.ds-alloc-list li strong,
+.ds-overview-chart .ds-legend li strong {
+  margin-left: auto;
+  white-space: nowrap;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: var(--type-md);
+  line-height: var(--type-md-lh);
+  letter-spacing: var(--track-body);
+}
+
+.ds-overview-chart .ds-legend li {
+  font-family: var(--font-body);
+  font-size: var(--type-md);
+  line-height: var(--type-md-lh);
+  letter-spacing: var(--track-body);
+}
+
+.ds-legend__label {
+  flex: 1;
+  min-width: 0;
+}
+
+.ds-bar {
+  display: flex;
+  height: 1.5rem;
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  gap: var(--space-1);
+}
+
+.ds-bar span {
+  border-radius: var(--radius-pill);
+}
+
+.ds-bar__seg--fixed-term { background: var(--color-blue-300); }
+.ds-bar__seg--overnight { background: var(--color-blue-500); }
+.ds-bar__seg--notice { background: var(--color-blue-800); }
+
+/* Savings-only markets reuse the three hue families per product type (Raisin Product Colors). */
+[data-market-type="savings-only"] .ds-bar__seg--overnight,
+[data-market-type="savings-only"] .ds-dot--s2 { background: var(--color-yellow-300); }
+[data-market-type="savings-only"] .ds-bar__seg--notice,
+[data-market-type="savings-only"] .ds-dot--s3 { background: var(--color-green-300); }
+
+/* B · Savings — sticky summary sits 16px below the site header (product tabs scroll away). */
+.ds-savings-summary {
+  position: sticky;
+  top: calc(var(--proto-bar-h) + var(--header-h) + var(--space-4));
+  z-index: 12;
+  transition:
+    padding 180ms ease,
+    box-shadow 180ms ease,
+    top 180ms ease,
+    margin-bottom 180ms ease;
+}
+
+.ds-savings-summary .ds-amount,
+.ds-savings-summary .ds-savings-summary__head .ds-kicker {
+  transition:
+    font-size 180ms ease,
+    line-height 180ms ease,
+    margin 180ms ease;
+}
+
+.ds-savings-summary .ds-bar {
+  transition: height 180ms ease;
+}
+
+.ds-savings-summary--total-only .ds-savings-summary__head {
+  margin-bottom: 0;
+}
+
+.ds-savings-summary--total-only.is-condensed {
+  display: block;
+}
+
+.ds-savings-summary.is-condensed {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  column-gap: var(--space-6);
+  row-gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  box-shadow: 0 0.5rem 1rem rgba(2, 25, 61, 0.08);
+}
+
+.ds-savings-summary.is-condensed .ds-savings-summary__head {
+  grid-area: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.125rem;
+}
+
+.ds-savings-summary.is-condensed .ds-savings-summary__head .ds-kicker {
+  margin: 0;
+  font-size: var(--type-xs);
+  line-height: var(--type-xs-lh);
+}
+
+.ds-savings-summary.is-condensed .ds-amount {
+  margin: 0;
+  font-size: var(--type-lg);
+  line-height: var(--type-lg-lh);
+}
+
+.ds-savings-summary.is-condensed .ds-bar {
+  grid-area: 2 / 1 / 3 / -1;
+  height: 0.5rem;
+}
+
+.ds-savings-summary.is-condensed .ds-savings-summary__legend {
+  grid-area: 1 / 2;
+  margin: 0;
+  justify-self: end;
+  flex-wrap: nowrap;
+  gap: var(--space-4);
+  font-size: var(--type-sm);
+  line-height: var(--type-sm-lh);
+}
+
+.ds-savings-summary.is-condensed .ds-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-savings-summary,
+  .ds-savings-summary .ds-amount,
+  .ds-savings-summary .ds-savings-summary__head .ds-kicker,
+  .ds-savings-summary .ds-bar {
+    transition: none;
+  }
+
+  .ds-page--b-savings .ds-savings-summary.is-condensed {
+    transition: none;
+  }
+
+  .ds-skeleton {
+    animation: none;
+    background: var(--color-grey-100);
+  }
+}
+
+.ds-alert {
+  background: var(--color-blue-100);
+  border-radius: 0.75rem;
+  padding: var(--space-4);
+  margin-top: var(--space-3);
+}
+
+.ds-card__head--attention {
+  justify-content: flex-start;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+}
+
+.ds-card__head--attention .ds-h {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.ds-card__head--attention .ds-chip--alert {
+  min-width: 1.5rem;
+  height: 1.5rem;
+  padding: 0 var(--space-2);
+  font-size: 0.875rem;
+}
+
+.ds-card__head--attention + .ds-alert {
+  margin-top: 0;
+}
+
+.ds-alert p {
+  margin: 0 0 var(--space-2);
+}
+
+.ds-alert--inset {
+  margin-left: 3.5rem;
+}
+
+.ds-btn,
+.ds-textbtn,
+.ds-offer,
+.ds-filter,
+.ds-tab,
+.ds-avatar {
+  cursor: pointer;
+}
+
+.ds-btn {
+  border: 0;
+  background: var(--color-blue-400);
+  color: #fff;
+  border-radius: var(--radius-pill);
+  min-height: 3.25rem;
+  padding: 0 var(--space-5);
+  font-weight: 500;
+}
+
+.ds-btn--ghost {
+  background: transparent;
+  color: var(--color-blue-700);
+  border: 1px solid var(--color-grey-200);
+}
+
+.ds-textbtn,
+.ds-back {
+  border: 0;
+  background: transparent;
+  color: var(--color-blue-400);
+  font-weight: 500;
+  padding: 0;
+}
+
+.ds-textbtn:hover {
+  color: var(--color-blue-600);
+  text-decoration: underline;
+}
+
+.ds-textbtn:active {
+  color: var(--color-blue-700);
+}
+
+.ds-showmore {
+  display: block;
+  margin: var(--space-4) auto 0;
+}
+
+.ds-deposit {
+  padding: var(--space-4) 0;
+  border-top: 1px solid var(--color-grey-100);
+}
+
+.ds-deposit__main {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: var(--space-4);
+  align-items: center;
+}
+
+.ds-deposit__main .ds-bank-avatar {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 0.75rem;
+}
+
+.ds-page--a-savings .ds-back,
+.ds-page--b-savings .ds-savings-summary {
+  margin-bottom: var(--space-2);
+}
+
+.ds-page--b-savings .ds-savings-summary.is-condensed {
+  top: calc(var(--proto-bar-h) + var(--header-h) + var(--space-2));
+  margin-bottom: var(--space-1);
+}
+
+.ds-deposit__meta-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin: var(--space-1) 0 0;
+  color: var(--color-text-secondary);
+}
+
+.ds-deposit__copy p,
+.ds-deposit__note,
+.ds-offer p,
+.ds-closed p,
+.ds-refer p,
+.ds-grow p {
+  margin: var(--space-1) 0 0;
+  color: var(--color-text-secondary);
+}
+
+.ds-deposit__amount {
+  text-align: right;
+}
+
+.ds-deposit__note,
+.ds-deposit__actions {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin: var(--space-2) 0 0 3.5rem;
+}
+
+.ds-deposit__actions {
+  justify-content: flex-start;
+}
+
+.ds-progress {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin: var(--space-3) 0 0 3.5rem;
+}
+
+.ds-progress__track {
+  flex: 1;
+  height: 0.5rem;
+  background: var(--color-grey-100);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+
+.ds-progress__fill {
+  display: block;
+  height: 100%;
+  background: var(--color-blue-300);
+}
+
+.ds-sparkwrap {
+  color: var(--color-blue-600);
+}
+
+.ds-allocation-ring {
+  position: relative;
+  flex: none;
+  width: 3.5rem;
+  height: 3.5rem;
+}
+
+.ds-allocation-ring svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.ds-allocation-ring__icon {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--color-text);
+  pointer-events: none;
+}
+
+.ds-allocation-ring__icon svg,
+.ds-allocation-ring__icon .ds-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.ds-mark .ds-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  display: block;
+}
+
+.ds-portfolio-product__icon .ds-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.ds-wallet-promo__icon .ds-icon {
+  display: block;
+}
+
+.ds-mark {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.75rem;
+  display: grid;
+  place-items: center;
+  font-weight: 500;
+  background: var(--color-blue-100);
+  color: var(--color-blue-700);
+}
+
+.ds-mark--blue { background: #dfefff; color: var(--color-blue-700); }
+
+.ds-mark--pink { background: #f9e8e8; color: #8c0707; }
+.ds-mark--red { background: #f9e8e8; color: #b40909; }
+.ds-mark--green { background: #d5f4d2; color: #2f4a2c; }
+.ds-mark--yellow { background: #fff4e0; color: #8a5a00; }
+.ds-mark--navy { background: var(--color-grey-100); color: var(--color-navy); }
+.ds-mark--purple { background: #edebe9; color: var(--color-grey-800); }
+
+/* Bank logo tiles stand in for brand marks we cannot export from Figma. */
+.ds-mark--brand-pink { background: #ffb3c7; color: #0a0a0a; }
+.ds-mark--brand-magenta { background: #fff; color: #e6007e; box-shadow: inset 0 0 0 1px var(--color-border-subtle); }
+.ds-mark--brand-red { background: #d0021b; color: #fff; }
+.ds-mark--brand-navy { background: var(--color-navy); color: #fff; }
+.ds-mark--brand-outline { background: #fff; color: var(--color-text); box-shadow: inset 0 0 0 1px var(--color-border-subtle); }
+
+.ds-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.5rem;
+  height: 1.5rem;
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-pill);
+  background: var(--color-grey-100);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.ds-chip--count,
+.ds-chip--alert {
+  background: var(--color-red-100);
+  color: var(--color-red-600);
+}
+
+.ds-chip--muted {
+  background: var(--color-grey-100);
+  color: var(--color-text);
+}
+
+.ds-chip--danger {
+  background: var(--color-red-600);
+  color: #fff;
+}
+
+.ds-status {
+  display: inline-block;
+  margin-top: var(--space-1);
+  color: var(--color-blue-500);
+  font-size: 0.875rem;
+}
+
+.ds-select {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+}
+
+.ds-select select {
+  min-height: 3rem;
+  border: 1px solid var(--color-grey-200);
+  border-radius: 0.75rem;
+  padding: 0 var(--space-3);
+  background: var(--color-paper);
+  font: inherit;
+  color: var(--color-text);
+}
+
+.ds-offer {
+  width: 100%;
+  display: flex;
+  gap: var(--space-4);
+  text-align: left;
+  border: 0;
+  background: transparent;
+  padding: var(--space-4) 0;
+  border-top: 1px solid var(--color-grey-100);
+}
+
+.ds-offer__rate {
+  color: var(--color-text);
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--type-display-xs);
+  line-height: var(--type-display-xs-lh);
+  letter-spacing: var(--track-display-xs);
+}
+
+.ds-offer__rate span {
+  font-family: var(--font-body);
+  font-size: var(--type-md);
+  line-height: var(--type-md-lh);
+  letter-spacing: var(--track-body);
+  color: var(--color-text-secondary);
+}
+
+.ds-offer-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+.ds-offer-grid--3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.ds-offer--tile {
+  border: 1px solid var(--color-grey-100);
+  border-radius: 0.75rem;
+  padding: var(--space-4);
+  flex-direction: column;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.ds-offer--tile:hover {
+  background: var(--color-bg);
+  border-color: var(--color-blue-200);
+}
+
+.ds-offer--tile:active {
+  background: var(--color-blue-100);
+}
+
+.ds-promo-row,
+.ds-offer-grid {
+  margin-top: var(--space-4);
+}
+
+.ds-promo-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+}
+
+.ds-promo {
+  background: var(--color-bg);
+  border-radius: 0.75rem;
+  padding: var(--space-4);
+  min-height: 8rem;
+}
+
+.ds-promo h3,
+.ds-refer h2,
+.ds-grow h2 {
+  margin-top: 0;
+}
+
+.ds-promo--wide {
+  margin-top: var(--space-4);
+}
+
+.ds-sparkwrap {
+  color: var(--color-blue-400);
+}
+
+.ds-spark {
+  width: 100%;
+  height: 4.5rem;
+}
+
+.ds-wallet-link {
+  width: 100%;
+  text-align: left;
+  border: 1px solid var(--color-grey-100);
+  border-radius: 0.75rem;
+  background: var(--color-bg);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+/* Popular products — wallet row + horizontal carousels (Figma ProductSuggestionCard rail) */
+.ds-card--popular > .ds-h {
+  margin-bottom: var(--space-4);
+}
+
+.ds-wallet-promo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  padding: 0 0 var(--space-4);
+  margin: 0 0 var(--space-2);
+  border: 0;
+  border-bottom: 1px solid var(--color-grey-100);
+  background: transparent;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+@media (hover: hover) {
+  .ds-wallet-promo:hover .ds-wallet-promo__amount,
+  .ds-wallet-promo:hover .ds-wallet-promo__copy strong {
+    color: var(--color-blue-700);
+  }
+}
+
+.ds-wallet-promo__icon {
+  flex: none;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.5rem;
+  background: var(--color-navy);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ds-wallet-promo__icon .ds-icon--raisin-symbol {
+  filter: brightness(0) invert(1);
+}
+
+.ds-wallet-promo__copy {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.ds-wallet-promo__copy strong {
+  font-weight: 500;
+  font-size: var(--type-md);
+  line-height: var(--type-md-lh);
+}
+
+.ds-wallet-promo__copy small {
+  color: var(--color-text-secondary);
+  font-size: var(--type-sm);
+  line-height: var(--type-sm-lh);
+}
+
+.ds-wallet-promo__amount {
+  flex: none;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: var(--type-md);
+  line-height: var(--type-md-lh);
+  letter-spacing: var(--track-tighter);
+  color: var(--color-text);
+  white-space: nowrap;
+}
+
+.ds-card--popular .ds-catalog-note {
+  margin: var(--space-2) 0 0;
+}
+
+.ds-product-carousel {
+  margin-inline: calc(-1 * var(--space-6));
+  padding-inline: var(--space-6);
+  overflow: hidden;
+  max-width: calc(100% + 2 * var(--space-6));
+}
+
+.ds-product-carousel__track {
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-3);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  padding-bottom: var(--space-1);
+}
+
+.ds-product-carousel__track::-webkit-scrollbar {
+  display: none;
+}
+
+.ds-product-carousel__track > .ds-product-card,
+.ds-product-carousel__track > .ds-media-card--carousel {
+  flex: 0 0 11.75rem;
+  scroll-snap-align: start;
+}
+
+.ds-product-carousel__track > .ds-marketing--carousel {
+  flex: 0 0 14.25rem;
+  scroll-snap-align: start;
+}
+
+.ds-wallet-link:hover {
+  border-color: var(--color-blue-200);
+  background: var(--color-blue-100);
+}
+
+.ds-wallet-link__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+  width: 100%;
+}
+
+.ds-wallet-link__label {
+  color: var(--color-text);
+}
+
+.ds-wallet-link__amount {
+  font-family: var(--font-display);
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.ds-wallet-link__hint {
+  color: var(--color-text-secondary);
+  font-size: 0.875rem;
+}
+
+.ds-dots {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+}
+
+.ds-dots span {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: var(--radius-pill);
+  background: var(--color-grey-200);
+}
+
+.ds-dots .is-active {
+  background: var(--color-blue-400);
+}
+
+.ds-closed__row,
+.ds-alloc-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.ds-closed__row {
+  justify-content: space-between;
+  margin-top: var(--space-4);
+}
+
+.ds-closed__copy {
+  margin-left: auto;
+  flex: none;
+  text-align: right;
+}
+
+.ds-section--closed .ds-card.ds-closed .ds-closed__row,
+.ds-section .ds-card.ds-closed .ds-closed__row {
+  margin-top: 0;
+}
+
+.app-shell--b .ds-section--closed,
+.app-shell--a .ds-section--closed {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.ds-closed__marks {
+  display: flex;
+  align-items: center;
+  flex: none;
+}
+
+.ds-closed__marks .ds-mark {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 0.625rem;
+  margin-left: -0.5rem;
+  border: 2px solid var(--color-paper);
+}
+
+.ds-closed__marks .ds-mark:first-child,
+.ds-closed__marks .ds-bank-avatar:first-child {
+  margin-left: 0;
+}
+
+.ds-closed__marks .ds-bank-avatar {
+  flex: none;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin-left: -0.5rem;
+  border: 2px solid var(--color-paper);
+  border-radius: 0.625rem;
+  overflow: hidden;
+  background: var(--color-paper);
+}
+
+.ds-closed__marks .ds-bank-avatar img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.ds-closed__marks .ds-chip {
+  margin-left: var(--space-2);
+  min-width: 2rem;
+  height: 2rem;
+  background: var(--color-blue-100);
+  color: var(--color-text);
+  font-size: 0.8125rem;
+}
+
+.ds-closed__copy strong {
+  display: block;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: var(--type-lg);
+  line-height: var(--type-lg-lh);
+}
+
+.ds-closed__copy p {
+  margin: var(--space-1) 0 0;
+  color: var(--color-text-secondary);
+  font-size: var(--type-sm);
+  line-height: var(--type-sm-lh);
+}
+
+.ds-alloc-row {
+  width: 100%;
+  text-align: left;
+  border: 0;
+  border-top: 1px solid var(--color-grey-100);
+  background: transparent;
+  padding: var(--space-4);
+  margin-inline: calc(-1 * var(--space-6));
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  border-radius: 0.75rem;
+  transition: background 0.15s ease;
+}
+
+.ds-alloc-row:first-of-type {
+  border-top: 0;
+}
+
+.ds-alloc-row:hover {
+  background: var(--color-blue-100);
+}
+
+.ds-alloc-row:active {
+  background: color-mix(in srgb, var(--color-blue-100) 65%, var(--color-blue-200));
+}
+
+.ds-alloc-row--static {
+  cursor: default;
+  pointer-events: none;
+}
+
+.ds-alloc-row--static:hover,
+.ds-alloc-row--static:active {
+  background: transparent;
+}
+
+.ds-alloc-row p {
+  margin: var(--space-1) 0 0;
+  color: var(--color-text-secondary);
+}
+
+.ds-alloc-row:not(.ds-portfolio-row) strong:last-child,
+.ds-deposit__amount {
+  margin-left: auto;
+}
+
+/* Portfolio / deposit performance deltas — theme blue-600 (#1D5A9A) */
+.ds-earn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  color: var(--color-blue-600);
+  font-family: var(--font-body);
+  font-size: var(--type-sm);
+  line-height: var(--type-sm-lh);
+  font-weight: 500;
+  letter-spacing: var(--track-label-sm);
+}
+
+.ds-earn__info {
+  flex: none;
+  opacity: 0.7;
+}
+
+.ds-earn--down {
+  color: var(--color-text-secondary);
+  font-weight: 400;
+}
+
+.ds-alert--danger,
+.ds-alert--warn,
+.ds-alert--info {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+}
+
+.ds-alert__icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: var(--radius-pill);
+  display: grid;
+  place-items: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  flex: none;
+}
+
+.ds-alert--danger {
+  background: var(--color-red-100);
+}
+
+.ds-alert--danger .ds-alert__icon {
+  background: #efc3c3;
+  color: var(--color-red-600);
+}
+
+.ds-alert--warn {
+  background: #ffe2b7;
+}
+
+.ds-alert--warn .ds-alert__icon {
+  background: #ffd28f;
+  color: #93602c;
+}
+
+.ds-alert--info {
+  background: var(--color-blue-100);
+}
+
+.ds-alert--info .ds-alert__icon {
+  background: var(--color-blue-200);
+  color: var(--color-blue-600);
+}
+
+.ds-sparkwrap {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--space-2);
+  align-items: stretch;
+  color: var(--color-grey-700);
+}
+
+.ds-spark-axis {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  padding: var(--space-1) 0;
+}
+
+.ds-carousel-head {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--space-4);
+  margin: var(--space-4) 0 var(--space-3);
+}
+
+.ds-card--popular .ds-carousel-head:first-of-type {
+  margin-top: 0;
+}
+
+.ds-carousel-head .ds-sub {
+  margin: 0;
+  flex: 1 1 auto;
+  min-width: 0;
+  text-align: left;
+}
+
+.ds-carousel-head__title {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex: 1 1 auto;
+  min-width: 0;
+  text-align: left;
+}
+
+.ds-carousel-head__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--space-1);
+  max-width: 100%;
+  text-align: left;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  font-weight: 500;
+  font-size: var(--type-lg);
+  line-height: var(--type-lg-lh);
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.ds-carousel-head__link:hover {
+  color: var(--color-blue-700);
+}
+
+.ds-carousel-head__link .ds-chevron {
+  font-size: 1.125rem;
+  color: var(--color-text-secondary);
+}
+
+.ds-carousel-head__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex: none;
+  margin-left: auto;
+}
+
+.ds-carousel-nav {
+  display: inline-flex;
+  gap: var(--space-2);
+}
+
+.ds-carousel-btn {
+  width: 2rem;
+  height: 2rem;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--color-blue-100);
+  color: var(--color-blue-600);
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.ds-carousel-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.ds-carousel-btn:not(:disabled):hover {
+  background: var(--color-blue-100);
+}
+
+.ds-offer-badge {
+  display: inline-block;
+  margin-bottom: var(--space-2);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-pill);
+  background: var(--color-blue-100);
+  color: var(--color-blue-700);
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.ds-offer--media {
+  text-align: left;
+}
+
+.ds-offer__visual {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 0.75rem;
+  margin-bottom: var(--space-3);
+  background: linear-gradient(145deg, var(--color-blue-100), #edebe9);
+}
+
+.ds-portfolio-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.ds-chevron {
+  color: var(--color-text-secondary);
+  font-size: 1.25rem;
+}
+
+.ds-portfolio-product {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  width: 100%;
+  padding: var(--space-4) 0;
+  border: 0;
+  border-top: 1px solid var(--color-grey-100);
+  background: transparent;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+.ds-portfolio-product:first-of-type {
+  border-top: 0;
+}
+
+.ds-portfolio-product:hover {
+  background: var(--color-blue-100);
+  border-radius: 0.75rem;
+}
+
+.ds-portfolio-product--static {
+  cursor: default;
+}
+
+.ds-portfolio-product--static:hover {
+  background: transparent;
+  border-radius: 0;
+}
+
+/* Portfolio rows — DS icon container: 24px glyph + 16px inset (56px tile) */
+.ds-portfolio-product__icon {
+  box-sizing: border-box;
+  width: 3.5rem;
+  height: 3.5rem;
+  padding: var(--space-4);
+  border-radius: 0.75rem;
+  flex: none;
+  font-size: 1rem;
+}
+
+.ds-portfolio-product__icon.ds-mark--blue {
+  background: #dfefff;
+  color: var(--color-blue-700);
+}
+
+.ds-portfolio-product__icon.ds-mark--pink {
+  background: #ffe2b7;
+  color: var(--color-text);
+}
+
+.ds-portfolio-product__icon.ds-mark--green {
+  background: #d5f4d2;
+  color: #2f4a2c;
+}
+
+.ds-portfolio-product__icon.ds-mark--yellow {
+  background: var(--color-yellow-100);
+  color: var(--color-text);
+}
+
+[data-market-type="savings-only"] .ds-portfolio-product__icon.ds-mark--yellow {
+  background: var(--color-yellow-100);
+}
+
+.ds-portfolio-product__copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.ds-portfolio-product__copy small {
+  color: var(--color-text-secondary);
+  font-size: var(--type-sm);
+  line-height: var(--type-sm-lh);
+  letter-spacing: var(--track-label-sm);
+}
+
+/* Portfolio rows — shared A (category) + B (product type) */
+.ds-portfolio-row__copy strong,
+.ds-portfolio-product__copy strong {
+  display: block;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: var(--type-lg);
+  line-height: var(--type-lg-lh);
+  letter-spacing: var(--track-subtitle-2);
+}
+
+.ds-portfolio-row__copy p {
+  margin: var(--space-1) 0 0;
+  font-size: var(--type-sm);
+  line-height: var(--type-sm-lh);
+  color: var(--color-text-secondary);
+  letter-spacing: var(--track-label-sm);
+}
+
+.ds-portfolio-row__value,
+.ds-portfolio-product__amount strong {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: var(--type-md);
+  line-height: var(--type-md-lh);
+  letter-spacing: var(--track-body);
+  white-space: nowrap;
+}
+
+.ds-portfolio-product__amount {
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.125rem;
+  text-align: right;
+}
+
+.ds-portfolio-product__amount strong {
+  display: block;
+}
+
+.ds-portfolio-product__period {
+  font-size: var(--type-sm);
+  line-height: var(--type-sm-lh);
+  font-weight: 400;
+  font-style: normal;
+  color: var(--color-text-secondary);
+}
+
+.ds-deposit__copy strong {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: var(--type-lg);
+  line-height: var(--type-lg-lh);
+  letter-spacing: var(--track-subtitle-2);
+}
+
+.ds-deposit__amount strong {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: var(--type-md);
+  line-height: var(--type-md-lh);
+  letter-spacing: var(--track-body);
+}
+
+.ds-promo-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: var(--space-4) 0;
+}
+
+.ds-promo-hero {
+  display: grid;
+  grid-template-columns: 1fr minmax(8rem, 12rem);
+  gap: var(--space-4);
+  align-items: stretch;
+  padding: var(--space-5);
+  border-radius: 1rem;
+  background: #edebe9;
+}
+
+.ds-promo-hero--blue {
+  background: var(--color-blue-100);
+}
+
+.ds-promo-hero__copy h3 {
+  margin: var(--space-2) 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+}
+
+.ds-promo-hero__visual {
+  border-radius: 0.75rem;
+  background: linear-gradient(160deg, #c9ced6, #f7f5f3 55%, #a7d2ff);
+  min-height: 8rem;
+}
+
+.ds-promo-hero__visual--sm {
+  width: 100%;
+  min-height: 6rem;
+  margin-bottom: var(--space-4);
+  border-radius: 0.75rem;
+}
+
+.ds-promo-hero__visual--portrait {
+  width: 100%;
+  min-height: 7rem;
+  margin-bottom: var(--space-4);
+  border-radius: 0.75rem;
+  background: linear-gradient(180deg, #dfefff, #edebe9);
+}
+
+.ds-for-you__media {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 0.75rem;
+  margin: var(--space-3) 0 var(--space-4);
+  background: linear-gradient(135deg, #dfefff 0%, #edebe9 45%, #d5f4d2 100%);
+}
+
+.ds-mark svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+/* ── Popular deposits card (ProductSuggestionCard) ── */
+.ds-product-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  width: 100%;
+  min-height: 11.75rem;
+  padding: var(--space-4);
+  border: 1px solid var(--color-grey-100);
+  border-radius: 0.75rem;
+  background: var(--color-paper);
+  text-align: left;
+  font: inherit;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.ds-product-card:hover {
+  border-color: var(--color-blue-300);
+  background: var(--color-bg);
+}
+
+.ds-product-card__head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+}
+
+/* BankAvatar — logo tile (48px) or navy monogram fallback */
+.ds-bank-avatar {
+  flex: none;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  background: var(--color-navy);
+  display: grid;
+  place-items: center;
+}
+
+.ds-bank-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.ds-product-card__head .ds-mark,
+.ds-product-card__head .ds-bank-avatar {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.5rem;
+  flex: none;
+}
+
+.ds-product-card__head .ds-mark {
+  background: var(--color-navy);
+  color: #fff;
+  font-size: var(--type-lg);
+}
+
+.ds-product-card__name {
+  display: flex;
+  flex-direction: column;
+}
+
+.ds-product-card__name strong {
+  font-weight: 500;
+  font-size: var(--type-md);
+  line-height: var(--type-md-lh);
+}
+
+.ds-product-card__name small,
+.ds-product-card__meta {
+  color: var(--color-text-secondary);
+  font-size: var(--type-sm);
+  line-height: var(--type-sm-lh);
+}
+
+.ds-product-card__rate {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--type-display-xs);
+  line-height: var(--type-display-xs-lh);
+  letter-spacing: var(--track-display-xs);
+  color: var(--color-blue-600);
+}
+
+.ds-product-card__rate span {
+  font-family: var(--font-body);
+  font-size: var(--type-xs);
+  line-height: var(--type-xs-lh);
+  margin-left: 0.125rem;
+}
+
+.ds-product-card__meta {
+  color: var(--color-blue-600);
+}
+
+.ds-product-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.ds-label-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-top: auto;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-pill);
+  background: var(--color-cream-100);
+  color: var(--color-text);
+  font-size: var(--type-xs);
+  line-height: var(--type-xs-lh);
+  font-weight: 500;
+}
+
+.ds-label-chip__icon {
+  flex: none;
+}
+
+.ds-label-chip--lg {
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--type-sm);
+  line-height: var(--type-sm-lh);
+}
+
+/* ── Investment & pension card (96px image + TextCombo XS) ── */
+.ds-media-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 0.5rem;
+  background: var(--color-paper);
+  text-align: left;
+  font: inherit;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+
+.ds-media-card:hover {
+  border-color: var(--color-blue-300);
+}
+
+.ds-media-card__image {
+  width: 6rem;
+  height: 6rem;
+  border-radius: 0.25rem;
+  object-fit: cover;
+}
+
+.ds-media-card--carousel {
+  box-sizing: border-box;
+  height: 14.5rem;
+  min-height: 14.5rem;
+  border-radius: 0.75rem;
+}
+
+.ds-media-card--carousel .ds-media-card__image {
+  width: 100%;
+  height: 6rem;
+  aspect-ratio: auto;
+  flex: none;
+  border-radius: 0.5rem;
+  object-fit: cover;
+}
+
+.ds-media-card--carousel .ds-media-card__copy {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+}
+
+.ds-media-card--carousel .ds-media-card__copy strong {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.ds-media-card--carousel .ds-media-card__copy small {
+  color: var(--color-text-secondary);
+  font-size: var(--type-sm);
+  line-height: var(--type-sm-lh);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.ds-media-card__copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.ds-media-card__copy strong {
+  font-weight: 500;
+  font-size: var(--type-md);
+  line-height: var(--type-md-lh);
+}
+
+.ds-media-card__copy small {
+  color: var(--color-text);
+  font-size: var(--type-md);
+  line-height: var(--type-md-lh);
+}
+
+/* ── Marketing card (Control category promo) ── */
+.ds-marketing {
+  display: flex;
+  gap: var(--space-6);
+  align-items: flex-start;
+  padding: var(--space-4);
+  border: 1px solid var(--color-border-accent);
+  border-radius: 0.5rem;
+  background: var(--color-paper);
+}
+
+.ds-marketing__copy {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.ds-marketing__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.ds-product-section__cards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 100%;
+  margin-top: var(--space-4);
+}
+
+.ds-product-section__cards .ds-marketing {
+  width: 100%;
+}
+
+.ds-marketing__copy h3 {
+  margin: 0;
+  font-size: var(--type-lg);
+  line-height: var(--type-lg-lh);
+  font-weight: 500;
+  letter-spacing: var(--track-tighter);
+}
+
+.ds-marketing__copy p,
+.ds-marketing__body {
+  margin: calc(-1 * var(--space-2)) 0 0;
+  font-size: var(--type-md);
+  line-height: var(--type-md-lh);
+}
+
+button.ds-marketing.ds-marketing--carousel {
+  width: 100%;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 0.5rem;
+  background: var(--color-paper);
+  font: inherit;
+  color: var(--color-text);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+button.ds-marketing.ds-marketing--carousel:hover {
+  border-color: var(--color-blue-300);
+}
+
+button.ds-marketing.ds-marketing--carousel:focus-visible {
+  outline: 2px solid var(--color-blue-400);
+  outline-offset: 2px;
+}
+
+/* Figma 543:64121 — OV card: 228×auto, 16px pad, 96px 1:1 image, TextCombo XS */
+.ds-marketing--carousel {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: stretch;
+  height: auto;
+  min-height: 100%;
+  overflow: hidden;
+  gap: var(--space-2);
+  padding: var(--space-4);
+}
+
+.ds-marketing--carousel .ds-marketing__image {
+  width: 6rem;
+  height: 6rem;
+  aspect-ratio: 1;
+  border-radius: 0.25rem;
+  object-fit: cover;
+  flex: none;
+}
+
+.ds-marketing--carousel .ds-marketing__copy {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+}
+
+.ds-marketing--carousel .ds-marketing__copy h3 {
+  margin: 0;
+  flex: none;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: var(--type-md);
+  line-height: var(--type-md-lh);
+  letter-spacing: var(--track-tighter);
+  color: var(--color-text);
+}
+
+.ds-marketing--carousel .ds-marketing__body {
+  margin: 0;
+  flex: none;
+  color: var(--color-text);
+  font-size: var(--type-md);
+  line-height: var(--type-md-lh);
+  letter-spacing: var(--track-tighter);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+.ds-marketing__image {
+  width: 12.5rem;
+  height: 12.5rem;
+  border-radius: 0.5rem;
+  object-fit: cover;
+  flex: none;
+}
+
+/* ── Ad banner (image header + chip + CTA) ── */
+.ds-ad {
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 2rem;
+  background: var(--color-paper);
+  overflow: hidden;
+}
+
+.ds-ad__image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 443 / 249;
+  object-fit: cover;
+}
+
+.ds-ad__content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
+  padding: var(--space-6);
+}
+
+.ds-btn--block {
+  width: 100%;
+}
+
+/* ── For you (Ad Banner 194:20121) ── */
+.ds-for-you__head,
+.ds-rail-head:has(+ .ds-for-you) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.ds-for-you__head .ds-h {
+  margin: 0;
+  flex: 1;
+  min-width: 0;
+}
+
+.ds-rail-head .ds-carousel-nav,
+.ds-for-you__head .ds-carousel-nav {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.ds-for-you__body {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+}
+
+.ds-for-you--no-head .ds-for-you__body {
+  margin-top: 0;
+}
+
+.ds-for-you__copy {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.ds-for-you__copy h3 {
+  margin: 0;
+  font-size: var(--type-lg);
+  line-height: var(--type-lg-lh);
+  font-weight: 500;
+  letter-spacing: var(--track-tighter);
+}
+
+.ds-for-you__copy p {
+  margin: 0;
+  font-size: var(--type-md);
+  line-height: var(--type-md-lh);
+}
+
+.ds-for-you__media {
+  width: 6.25rem;
+  height: 6.25rem;
+  border-radius: 0.5rem;
+  object-fit: cover;
+  flex: none;
+}
+
+.ds-for-you__pager {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: var(--space-4);
+}
+
+.ds-for-you .ds-dots {
+  justify-content: center;
+  margin-top: 0;
+}
+
+.ds-for-you__arrow {
+  flex: none;
+}
+
+.ds-for-you__dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--color-grey-200);
+  cursor: pointer;
+}
+
+.ds-for-you__dot.is-active {
+  background: var(--color-blue-400);
+}
+
+.ds-for-you__dot:focus-visible,
+.ds-for-you__arrow:focus-visible {
+  outline: 2px solid var(--color-blue-500);
+  outline-offset: 2px;
+}
+
+/* ── Leading icon tile ── */
+.ds-mark--plain {
+  background: var(--color-cream-100);
+  color: var(--color-text);
+}
+
+/* ── Account activity row (Wallet / Raisin Account) ── */
+.ds-activity-row,
+.ds-nav-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-3);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 0.5rem;
+  background: var(--color-paper);
+  text-align: left;
+  font: inherit;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.ds-activity-row + .ds-activity-row,
+.ds-nav-row + .ds-nav-row {
+  margin-top: var(--space-2);
+}
+
+.ds-activity-row:hover,
+.ds-nav-row:hover {
+  border-color: var(--color-blue-300);
+  background: var(--color-bg);
+}
+
+.ds-activity-row__copy,
+.ds-nav-row__copy {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+
+.ds-activity-row__copy strong,
+.ds-nav-row__copy strong {
+  font-weight: 500;
+  font-size: var(--type-md);
+  line-height: var(--type-md-lh);
+}
+
+.ds-activity-row__copy small,
+.ds-nav-row__copy small {
+  color: var(--color-text-secondary);
+  font-size: var(--type-sm);
+  line-height: var(--type-sm-lh);
+}
+
+.ds-activity-row__amount {
+  white-space: nowrap;
+  font-weight: 500;
+  font-size: var(--type-md);
+  line-height: var(--type-md-lh);
+}
+
+.ds-nav-row__chevron {
+  color: var(--color-blue-400);
+  font-size: var(--type-xl);
+  line-height: 1;
+}
+
+/* ── Alerts screen (A 169:63322 · B 395:56704) ── */
+.ds-alert-item {
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-4) 0;
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+.ds-alerts .ds-alert-item:first-of-type {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.ds-alerts--boxed .ds-alert-item {
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 0.5rem;
+  padding: var(--space-4);
+}
+
+.ds-alerts--boxed .ds-alert-item + .ds-alert-item {
+  margin-top: var(--space-3);
+}
+
+.ds-alert-item__copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.ds-alert-item__copy strong {
+  font-weight: 500;
+  font-size: var(--type-md);
+  line-height: var(--type-md-lh);
+}
+
+.ds-alert-item__copy p {
+  margin: 0;
+  font-size: var(--type-md);
+  line-height: var(--type-md-lh);
+}
+
+.ds-alert__icon--danger {
+  background: var(--color-red-100);
+  color: var(--color-red-600);
+}
+
+.ds-alert__icon--warn {
+  background: var(--color-orange-100);
+  color: var(--color-orange-700);
+}
+
+.ds-alert__icon--info {
+  background: var(--color-blue-100);
+  color: var(--color-blue-600);
+}
+
+.ds-alert-item .ds-alert__icon {
+  flex: none;
+  width: 2rem;
+  height: 2rem;
+  font-size: var(--type-md);
+}
+
+/* ── Products screen sections (A 163:21990 · B 395:56288) ── */
+.ds-product-section__promo {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+.ds-product-section__copy {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.ds-product-section__copy strong {
+  font-weight: 500;
+  font-size: var(--type-md);
+  line-height: var(--type-md-lh);
+}
+
+.ds-product-section__copy p {
+  margin: 0;
+  font-size: var(--type-sm);
+  line-height: var(--type-sm-lh);
+}
+
+.ds-product-section__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.ds-product-section__promo img {
+  width: 5rem;
+  height: 4.0625rem;
+  border-radius: 0.25rem;
+  object-fit: cover;
+  flex: none;
+}
+
+/* ── Popular deposits rail list ── */
+.ds-deposit-offer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  width: 100%;
+  padding: var(--space-4) 0;
+  border: 0;
+  border-top: 1px solid var(--color-border-subtle);
+  background: none;
+  text-align: left;
+  font: inherit;
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.ds-card > .ds-deposit-offer:first-of-type {
+  border-top: 0;
+}
+
+@media (hover: hover) {
+  .ds-deposit-offer:hover .ds-deposit-offer__head strong {
+    text-decoration: underline;
+  }
+
+  .ds-wallet-link:hover,
+  .ds-wallet-promo:hover .ds-wallet-promo__amount,
+  .ds-wallet-promo:hover .ds-wallet-promo__copy strong {
+    text-decoration: underline;
+  }
+}
+
+.ds-deposit-offer:focus-visible .ds-deposit-offer__head strong,
+.ds-wallet-link:focus-visible {
+  text-decoration: underline;
+}
+
+.ds-deposit-offer__head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.ds-deposit-offer__head .ds-mark,
+.ds-deposit-offer__head .ds-bank-avatar {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.5rem;
+  flex: none;
+}
+
+.ds-deposit-offer__head .ds-mark {
+  font-size: var(--type-sm);
+}
+
+.ds-deposit-offer__head .ds-bank-avatar img {
+  object-fit: cover;
+}
+
+/* Product-section tabs are underline tabs in the Figma frames, not pills. */
+.ds-promo-tabs--underline {
+  gap: 0;
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.ds-promo-tabs--underline .ds-filter {
+  border-radius: 0;
+  padding: 0 var(--space-3);
+  min-height: 2.75rem;
+  border-bottom: 2px solid transparent;
+}
+
+.ds-promo-tabs--underline .ds-filter.is-active {
+  background: transparent;
+  color: var(--color-blue-600);
+  border-bottom-color: var(--color-blue-400);
+}
+
+/* Nested underline tabs (Savings portfolio panel, product promos). */
+.ds-filters--underline {
+  flex-wrap: nowrap;
+  gap: 0;
+  margin: calc(-1 * var(--space-4)) calc(-1 * var(--space-4)) var(--space-4);
+  padding: 0 var(--space-4);
+  border-bottom: 1px solid var(--color-border-subtle);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.ds-filters--underline .ds-filter {
+  flex: none;
+  border-radius: 0;
+  min-height: 2.75rem;
+  padding: 0 var(--space-3);
+  margin-bottom: -1px;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  font-size: var(--type-sm);
+  line-height: var(--type-sm-lh);
+}
+
+.ds-filters--underline .ds-filter.is-active {
+  background: transparent;
+  color: var(--color-blue-600);
+  font-weight: 500;
+  border-bottom-color: var(--color-blue-400);
+}
+
+.ds-filters--underline .ds-filter:not(.is-active):hover {
+  background: transparent;
+  color: var(--color-text);
+}
+
+.ds-card--portfolio-panel {
+  padding: var(--space-4);
+  overflow: hidden;
+}
+
+.ds-portfolio-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.ds-portfolio-toolbar .ds-sub {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: var(--type-lg);
+  line-height: var(--type-lg-lh);
+}
+
+.ds-select--toolbar {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-3);
+  flex: none;
+  margin: 0;
+  font-size: var(--type-sm);
+  line-height: var(--type-sm-lh);
+  color: var(--color-text-secondary);
+}
+
+.ds-select__label {
+  white-space: nowrap;
+}
+
+.ds-select--toolbar select {
+  min-width: 10.5rem;
+  min-height: 2.5rem;
+  padding: 0 var(--space-8) 0 var(--space-3);
+  border-radius: 0.5rem;
+  font-size: var(--type-sm);
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' viewBox='0 0 16 16'%3E%3Cpath stroke='%23818D9E' stroke-width='1.5' d='M4 6l4 4 4-4'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+}
+
+/* B savings portfolio — sorting field (Control Tabs 2.0 / ctl-select) */
+.app-shell--b .ds-savings-portfolio__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.app-shell--b .ds-savings-portfolio__title {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.app-shell--b .ds-select--sort {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: none;
+  width: 18.75rem;
+  max-width: 100%;
+  min-height: 3.5rem;
+  margin: 0;
+  padding: 0 var(--space-8) 0 var(--space-4);
+  border: 2px solid var(--color-grey-400);
+  border-radius: 0.75rem;
+  background: var(--color-paper);
+  font-size: var(--type-sm);
+  line-height: var(--type-sm-lh);
+  color: var(--color-input-label, var(--color-text-secondary));
+}
+
+.app-shell--b .ds-select--sort .ds-select__label {
+  font-weight: 500;
+  letter-spacing: var(--track-tighter);
+}
+
+.app-shell--b .ds-select--sort select {
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  padding-right: var(--space-6);
+  border: 0;
+  border-radius: 0;
+  background-color: transparent;
+  font-family: var(--font-body);
+  font-size: var(--type-md);
+  line-height: var(--type-md-lh);
+  letter-spacing: var(--track-tighter);
+  color: var(--color-text);
+  appearance: none;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none' viewBox='0 0 24 24'%3E%3Cpath stroke='%23818D9E' stroke-width='1.5' d='M7 10l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0 center;
+}
+
+.ds-portfolio-deposits {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* Savings overview — main column stacks Overview → Portfolio; rail top-aligns with Overview. */
+.ds-page--a-savings .ds-split--savings-overview {
+  align-items: start;
+  margin-top: 0;
+}
+
+.ds-page--a-savings .ds-split--savings-overview > .ds-stack--sections:first-child {
+  min-width: 0;
+}
+
+.ds-page--a-savings .ds-savings-overview-rail {
+  align-self: start;
+  /* Offset rail so deposit cards line up with the Overview hero (left column includes Back). */
+  margin-top: 15%;
+}
+
+.app-shell--a .ds-card--nested-list.ds-card--popular-deposits {
+  gap: var(--space-3);
+}
+
+.app-shell--a .ds-card--nested-list.ds-card--popular-deposits .ds-product-card {
+  width: 100%;
+  min-height: 0;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 0.5rem;
+  padding: var(--space-4);
+}
+
+.app-shell--a .ds-card--nested-list.ds-card--popular-deposits .ds-product-card__head {
+  width: 100%;
+  margin-bottom: var(--space-3);
+}
+
+.app-shell--a .ds-card--nested-list.ds-card--popular-deposits .ds-product-card__rate {
+  margin-top: 0;
+}
+
+.app-shell--a .ds-card--nested-list.ds-card--popular-deposits .ds-product-card__meta {
+  margin-top: var(--space-1);
+  color: var(--color-text-secondary);
+}
+
+.ds-deposit-offer__head strong {
+  font-weight: 500;
+  font-size: var(--type-md);
+  line-height: var(--type-md-lh);
+}
+
+.ds-deposit-offer__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.ds-deposit__amount-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-2);
+}
+
+/* Pending savings — grey amount; not included in Total Wealth (see .ds-savings-pending-note). */
+.ds-deposit__amount strong.is-muted {
+  color: var(--color-grey-400); /* #818D9E */
+}
+
+.ds-deposit__amount-row .ds-status {
+  margin-top: 0;
+}
+
+.ds-status--chip {
+  padding: 0.125rem 0.625rem;
+  border-radius: var(--radius-pill);
+  background: var(--color-blue-100);
+  color: var(--color-blue-600);
+  font-size: var(--type-sm);
+  line-height: var(--type-sm-lh);
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.ds-savings-pending-note {
+  margin: var(--space-4) 0 0;
+  color: var(--color-text-secondary);
+  font-size: var(--type-sm);
+  line-height: var(--type-sm-lh);
+}
+
+.ds-textbtn--center {
+  align-self: center;
+  margin-inline: auto;
+}
+
+.ds-back {
+  align-self: flex-start;
+  margin-bottom: var(--space-2);
+}
+
+.ds-footer-social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.ds-footer-social a {
+  color: var(--color-blue-400);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.ds-footer-social a:hover {
+  text-decoration: underline;
+}
+
+.ds-footer__badges img {
+  height: 2.5rem;
+  width: auto;
+}
+
+.ds-footer__badges {
+  display: flex;
+  gap: var(--space-4);
+  color: var(--color-text-secondary);
+  font-size: 0.875rem;
+}
+
+/* Wallet rail (Figma 194:19660) */
+.app-shell--a .ds-wallet-card.ds-wallet-card--rail {
+  padding: var(--space-5);
+}
+
+.app-shell--a .ds-wallet-card:not(.ds-wallet-card--tab):not(.ds-wallet-card--home):not(.ds-wallet-card--rail) {
+  padding: var(--space-6);
+}
+
+.ds-wallet-card__hero {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.ds-wallet-card__hero--rail {
+  margin-bottom: 0;
+}
+
+/* Overview rail — Total_balance (Figma 194:19663). */
+.ds-wallet-card__rail-top {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  width: 100%;
+}
+
+.ds-wallet-card__rail-activity {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 100%;
+  margin-top: var(--space-6);
+}
+
+.ds-wallet-rail-summary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  width: 100%;
+}
+
+.ds-wallet-card__label--rail {
+  margin: 0;
+  width: 100%;
+  color: var(--color-grey-700);
+  font-weight: 400;
+}
+
+.ds-amount--wallet-rail {
+  width: 100%;
+  margin: 0;
+  font-size: var(--type-display-sm);
+  line-height: var(--type-display-sm-lh);
+  letter-spacing: var(--track-display-sm);
+}
+
+.ds-mark--raisin {
+  flex: none;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.75rem;
+  background: var(--color-orange-100);
+}
+
+.ds-mark--raisin .ds-icon--raisin-symbol {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+.ds-wallet-card__balance {
+  flex: 1;
+  min-width: 0;
+}
+
+.ds-wallet-card__label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin: 0 0 var(--space-1);
+  color: var(--color-text-secondary);
+  font-size: var(--type-sm);
+  line-height: var(--type-sm-lh);
+}
+
+.ds-wallet-card__info {
+  flex: none;
+  opacity: 0.85;
+}
+
+.ds-wallet-card__subrows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.ds-wallet-balance-rows--nested {
+  gap: var(--space-3);
+}
+
+.ds-wallet-balance-rows--nested .ds-wallet-balance-row {
+  align-items: center;
+  padding: var(--space-3);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 0.5rem;
+  background: var(--color-paper);
+}
+
+.ds-wallet-card .ds-wallet-actions {
+  margin-top: var(--space-5);
+  margin-bottom: 0;
+}
+
+.ds-wallet-card--rail .ds-wallet-actions {
+  margin: 0;
+}
+
+.ds-wallet-card--rail .ds-wallet-actions--rail {
+  margin: 0;
+  padding: 0;
+  justify-content: space-between;
+}
+
+.ds-wallet-card--rail .ds-wallet-actions--rail .ds-wallet-action {
+  padding: 0 var(--space-4);
+  flex: 1 1 0;
+  max-width: none;
+}
+
+
+.ds-wallet-card--rail .ds-wallet-card__activity-title {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.ds-wallet-card--rail .ds-wallet-card__footer-link {
+  margin-top: 0;
+}
+
+.ds-amount--wallet {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--type-display-xs);
+  line-height: var(--type-display-xs-lh);
+  letter-spacing: var(--track-display-xs);
+  color: var(--color-text);
+}
+
+.ds-wallet-actions {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0;
+  margin: var(--space-5) 0 var(--space-6);
+}
+
+.ds-wallet-action {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ds-wallet-quick-icon-label-gap);
+  min-width: 0;
+  border: 0;
+  padding: 0 var(--space-4);
+  background: transparent;
+  font: inherit;
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+/* Available balance quick actions — Icon button Primary Big, Blue300 */
+.ds-wallet-card .ds-wallet-action__btn {
+  box-sizing: border-box;
+  width: var(--ds-wallet-quick-icon-size);
+  height: var(--ds-wallet-quick-icon-size);
+  padding: var(--ds-wallet-quick-icon-padding);
+  border-radius: var(--radius-pill);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  background: var(--color-blue-300);
+  color: #fff;
+  transition: background 0.15s ease;
+}
+
+.ds-wallet-action:focus-visible .ds-wallet-action__btn {
+  outline: 2px solid var(--color-blue-400);
+  outline-offset: 2px;
+}
+
+.ds-wallet-action__btn {
+  box-sizing: border-box;
+  width: var(--ds-wallet-quick-icon-size);
+  height: var(--ds-wallet-quick-icon-size);
+  padding: var(--ds-wallet-quick-icon-padding);
+  border-radius: var(--radius-pill);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  background: var(--color-blue-100);
+  color: var(--color-blue-700);
+  transition: background 0.15s ease;
+}
+
+.ds-wallet-action__glyph {
+  display: block;
+  width: var(--ds-wallet-quick-icon-glyph);
+  height: var(--ds-wallet-quick-icon-glyph);
+  max-width: none;
+  flex: none;
+  object-fit: contain;
+}
+
+/* Figma Quick-actions (390:20445): shared arrow asset, −90° Add / +90° Withdraw */
+.ds-wallet-action__glyph--add {
+  transform: rotate(-90deg);
+}
+
+.ds-wallet-action__glyph--withdraw {
+  transform: rotate(90deg);
+}
+
+.ds-wallet-card .ds-wallet-action__glyph {
+  filter: brightness(0) invert(1);
+}
+
+.ds-wallet-card .ds-wallet-action:hover .ds-wallet-action__btn {
+  background: var(--color-blue-400);
+}
+
+.ds-wallet-action:hover .ds-wallet-action__btn {
+  background: var(--color-blue-200);
+}
+
+.ds-wallet-action__label {
+  font-size: var(--type-sm);
+  line-height: var(--type-sm-lh);
+  color: var(--color-text-secondary);
+}
+
+.ds-wallet-card .ds-wallet-action__label {
+  color: var(--color-text);
+}
+
+.ds-wallet-card--tab .ds-wallet-central {
+  align-items: flex-start;
+  text-align: left;
+}
+
+.ds-wallet-card--tab .ds-wallet-central__label {
+  justify-content: flex-start;
+}
+
+.ds-wallet-card--tab .ds-wallet-central__amount {
+  text-align: left;
+}
+
+/* B · Wallet tab — central unit + flat balance rows (Figma 344:55302) */
+.ds-wallet-central {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
+
+.ds-wallet-central__label {
+  justify-content: center;
+}
+
+.ds-wallet-central__amount {
+  width: 100%;
+  text-align: center;
+}
+
+.ds-wallet-balance-rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 100%;
+}
+
+.ds-wallet-balance-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: default;
+}
+
+button.ds-wallet-balance-row {
+  cursor: pointer;
+}
+
+.ds-wallet-balance-row__icon {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.ds-wallet-balance-row__icon .ds-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.ds-wallet-balance-row__copy {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.ds-wallet-balance-row__copy strong {
+  font-weight: 500;
+  font-size: var(--type-md);
+  line-height: var(--type-md-lh);
+  letter-spacing: var(--track-tighter);
+}
+
+.ds-wallet-balance-row__copy span {
+  color: var(--color-text-secondary);
+  font-size: var(--type-md);
+  line-height: var(--type-md-lh);
+}
+
+.ds-wallet-balance-row__amount {
+  flex: none;
+  font-weight: 500;
+  font-size: var(--type-md);
+  line-height: var(--type-md-lh);
+  letter-spacing: var(--track-tighter);
+  white-space: nowrap;
+}
+
+.ds-wallet-activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.ds-wallet-activity-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-3);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 0.5rem;
+  background: var(--color-paper);
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  cursor: default;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.ds-wallet-activity-item:hover {
+  border-color: var(--color-blue-300);
+  background: var(--color-bg);
+}
+
+.ds-card--wallet-activity .ds-textbtn--center {
+  margin-top: var(--space-4);
+}
+
+.ds-wallet-more-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  width: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+.ds-wallet-more-row .ds-mark {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.75rem;
+}
+
+.ds-wallet-more-row + .ds-wallet-more-row {
+  margin-top: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-grey-100);
+}
+
+.ds-page--b-wallet .ds-stack--sections,
+.ds-page--a-wallet .ds-stack--sections {
+  gap: var(--space-8);
+}
+
+.app-shell--a .ds-wallet-card--tab {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.app-shell--a .ds-wallet-card--tab .ds-wallet-balance-rows {
+  margin-top: 0;
+}
+
+/* B · Home — wallet module (Figma 338:24291) */
+.ds-wallet-card--home {
+  position: relative;
+}
+
+.ds-wallet-card--home .ds-wallet-home-head {
+  width: 100%;
+  margin-bottom: var(--space-6);
+  padding-right: calc(1.5rem + var(--space-4));
+}
+
+.ds-wallet-central--home {
+  align-items: flex-start;
+  text-align: left;
+  flex: 1;
+  min-width: 0;
+}
+
+.ds-wallet-home__label {
+  margin: 0 0 var(--space-1);
+  font-size: var(--type-lg);
+  line-height: var(--type-lg-lh);
+  font-weight: 500;
+  letter-spacing: var(--track-tighter);
+  color: var(--color-text-secondary);
+}
+
+.ds-wallet-card--home .ds-amount--md {
+  text-align: left;
+}
+
+.ds-wallet-home-chevron {
+  position: absolute;
+  top: var(--space-6);
+  right: var(--space-6);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  line-height: 0;
+}
+
+.ds-wallet-home-chevron:hover {
+  opacity: 0.85;
+}
+
+.ds-wallet-home-chevron:focus-visible {
+  outline: 2px solid var(--color-blue-500);
+  outline-offset: 2px;
+  border-radius: 0.25rem;
+}
+
+.ds-icon--flip-y {
+  transform: rotate(180deg);
+}
+
+.ds-wallet-card__activity-title {
+  margin: var(--space-6) 0 var(--space-3);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: var(--type-lg);
+  line-height: var(--type-lg-lh);
+  letter-spacing: var(--track-tighter);
+}
+
+.ds-wallet-card__footer-link {
+  display: block;
+  width: 100%;
+  margin-top: var(--space-4);
+  text-align: center;
+}
+
+.ds-activity-row__amount--credit {
+  color: var(--color-green-600);
+}
+
+.ds-activity-row__amount--debit {
+  color: var(--color-text);
+}
+
+.ds-wallet-activity-list .ds-wallet-activity-item .ds-bank-avatar,
+.ds-wallet-activity-list .ds-wallet-activity-item .ds-mark--raisin {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.75rem;
+}
+
+.ds-wallet-activity-list .ds-wallet-activity-item .ds-mark--raisin .ds-icon--raisin-symbol {
+  width: 1rem;
+  height: 1rem;
+}
+
+.ds-activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.ds-activity-row--wallet {
+  margin-top: 0;
+}
+
+.ds-bank-avatar-wrap {
+  position: relative;
+  flex: none;
+  width: 3rem;
+  height: 3rem;
+}
+
+.ds-bank-avatar__badge {
+  position: absolute;
+  right: -0.125rem;
+  bottom: -0.125rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: var(--radius-pill);
+  background: var(--color-paper);
+  border: 1px solid var(--color-grey-100);
+  display: grid;
+  place-items: center;
+  box-shadow: 0 1px 2px rgba(2, 25, 61, 0.08);
+}
+
+.ds-bank-avatar--topup {
+  background: var(--color-blue-100);
+  color: var(--color-blue-700);
+}
+
+.ds-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin: var(--space-4) 0;
+}
+
+.ds-action {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  border: 0;
+  background: transparent;
+  color: var(--color-text);
+  font: inherit;
+  cursor: pointer;
+}
+
+.ds-action {
+  transition: opacity 0.15s ease;
+}
+
+.ds-action span {
+  width: var(--ds-icon-container-size);
+  height: var(--ds-icon-container-size);
+  border-radius: var(--radius-pill);
+  display: grid;
+  place-items: center;
+  background: var(--color-blue-100);
+  color: var(--color-blue-700);
+  font-size: var(--ds-icon-container-glyph);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.ds-action:hover span {
+  background: var(--color-blue-200);
+  color: var(--color-blue-800);
+}
+
+.ds-action:active span {
+  background: var(--color-blue-300);
+  color: #fff;
+}
+
+.ds-btn:hover {
+  background: var(--color-blue-500);
+}
+
+.ds-btn:active {
+  background: var(--color-blue-600);
+}
+
+.ds-btn--ghost:hover {
+  background: var(--color-blue-100);
+  border-color: var(--color-blue-300);
+}
+
+.ds-footer {
+  padding: var(--space-8) 0 var(--space-10);
+  color: var(--color-text-secondary);
+}
+
+.ds-footer__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.ds-page button:focus-visible,
+.ds-page a:focus-visible,
+.ds-header a:focus-visible,
+.ds-header button:focus-visible,
+.ds-footer a:focus-visible {
+  outline: 2px solid var(--color-blue-400);
+  outline-offset: 2px;
+}
+
+/* ── Hypothesis A vs B composition (Figma section patterns) ──
+   A: section titles outside white cards; nested borders on child rows/tiles.
+   B: titles inside cards; list children separated by dividers, not nested boxes. */
+
+.app-shell--a .ds-section,
+.app-shell--a .ds-rail-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.app-shell--a .ds-stack--sections {
+  gap: var(--space-8);
+}
+
+.app-shell--b .ds-main .ds-stack:not(.ds-stack--sections),
+.app-shell--b .ds-split > aside.ds-stack {
+  gap: var(--space-6);
+}
+
+/* Figma B — product tabs scroll with the page (not sticky under the site header). */
+.app-shell--b .dashboard-chrome {
+  position: relative;
+  top: auto;
+  z-index: 5;
+  padding: var(--space-6) var(--space-6) 0;
+  background: transparent;
+  backdrop-filter: none;
+  box-sizing: border-box;
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+/* B product tabs — Tabs 2.0 (12:12074), match Control `.ctl-tab` */
+.app-shell--b .ds-tabs .ds-tab {
+  border-radius: 0.75rem;
+  min-height: 3rem;
+  padding: 0.75rem var(--space-4);
+  font-size: var(--type-md);
+  line-height: var(--type-md-lh);
+  font-weight: 500;
+  letter-spacing: var(--track-tighter);
+  color: var(--color-text);
+  background: transparent;
+  cursor: default;
+}
+
+.app-shell--b .ds-tabs .ds-tab.is-active {
+  background: var(--color-blue-200);
+  backdrop-filter: blur(10px);
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+.app-shell--b .ds-tabs .ds-tab--interactive,
+.app-shell--b .ds-tab-menu__item {
+  cursor: pointer;
+}
+
+.app-shell--b .ds-tabs .ds-tab--interactive:not(.is-active):hover {
+  background: var(--color-blue-100);
+}
+
+.app-shell--b .ds-tabs .ds-tab:not(.ds-tab--interactive):not(.is-active):hover {
+  background: transparent;
+}
+
+.app-shell--b .ds-tabs .ds-tab[aria-disabled="true"] {
+  opacity: 1;
+  color: var(--color-text);
+}
+
+.app-shell--b .ds-page {
+  padding-top: var(--space-4);
+}
+
+.app-shell--b .ds-page > .ds-back {
+  margin-bottom: var(--space-4);
+}
+
+.app-shell--b .ds-split {
+  margin-top: 0;
+}
+
+/* B home / savings — portfolio card title, total, and group blocks */
+.ds-card--portfolio-groups > .ds-amount {
+  margin-top: 0;
+  margin-bottom: var(--space-4);
+}
+
+.ds-card--portfolio-groups .ds-sub.ds-portfolio-group {
+  margin: var(--space-4) 0 var(--space-2);
+}
+
+.ds-card--portfolio-groups .ds-sub.ds-portfolio-group:first-of-type {
+  margin-top: 0;
+}
+
+.ds-savings-summary:not(.is-condensed) .ds-savings-summary__head {
+  margin-bottom: var(--space-4);
+}
+
+.ds-savings-summary .ds-bar {
+  margin-bottom: var(--space-4);
+}
+
+.ds-savings-summary--total-only:not(.is-condensed) .ds-savings-summary__head {
+  margin-bottom: 0;
+}
+
+.app-shell--a .ds-split {
+  margin-top: var(--space-6);
+}
+
+/* Hypothesis A — bordered tiles: hover/active = blue outline only (no fill shift) */
+.app-shell--a .ds-product-card:hover,
+.app-shell--a .ds-product-card:active,
+.app-shell--a .ds-media-card:hover,
+.app-shell--a button.ds-marketing.ds-marketing--carousel:hover,
+.app-shell--a button.ds-marketing.ds-marketing--carousel:active,
+.app-shell--a .ds-activity-row:hover,
+.app-shell--a .ds-activity-row:active,
+.app-shell--a .ds-nav-row:hover,
+.app-shell--a .ds-nav-row:active,
+.app-shell--a .ds-wallet-activity-item:hover,
+.app-shell--a .ds-wallet-link:hover,
+.app-shell--a .ds-wallet-link:active,
+.app-shell--a .ds-offer--tile:hover,
+.app-shell--a .ds-offer--tile:active,
+.app-shell--a .ds-alloc-row:hover:not(.ds-alloc-row--static),
+.app-shell--a .ds-alloc-row:active:not(.ds-alloc-row--static),
+.app-shell--a .ds-portfolio-product:hover:not(.ds-portfolio-product--static),
+.app-shell--a .ds-portfolio-product:active:not(.ds-portfolio-product--static) {
+  border-color: var(--color-blue-300);
+  background: var(--color-paper);
+}
+
+.app-shell--a .ds-alloc-row:hover:not(.ds-alloc-row--static),
+.app-shell--a .ds-alloc-row:active:not(.ds-alloc-row--static) {
+  background: var(--color-paper);
+}
+
+@media (hover: hover) {
+  .app-shell--a .ds-deposit-offer:hover .ds-deposit-offer__head strong,
+  .app-shell--a .ds-wallet-promo:hover .ds-wallet-promo__amount,
+  .app-shell--a .ds-wallet-promo:hover .ds-wallet-promo__copy strong {
+    text-decoration: none;
+  }
+}
+
+/* Hypothesis B — interactive rows/cards: light blue fill on hover/active */
+.app-shell--b .ds-product-card:hover,
+.app-shell--b .ds-product-card:active,
+.app-shell--b .ds-media-card:hover,
+.app-shell--b .ds-media-card:active,
+.app-shell--b button.ds-marketing.ds-marketing--carousel:hover,
+.app-shell--b button.ds-marketing.ds-marketing--carousel:active,
+.app-shell--b .ds-activity-row:hover,
+.app-shell--b .ds-activity-row:active,
+.app-shell--b .ds-nav-row:hover,
+.app-shell--b .ds-nav-row:active,
+.app-shell--b .ds-wallet-activity-item:hover,
+.app-shell--b .ds-wallet-activity-item:active,
+.app-shell--b .ds-wallet-link:hover,
+.app-shell--b .ds-wallet-link:active,
+.app-shell--b .ds-offer--tile:hover,
+.app-shell--b .ds-offer--tile:active,
+.app-shell--b .ds-deposit-offer:hover,
+.app-shell--b .ds-deposit-offer:active,
+.app-shell--b .ds-wallet-promo:hover,
+.app-shell--b .ds-wallet-promo:active,
+.app-shell--b .ds-alloc-row:hover:not(.ds-alloc-row--static),
+.app-shell--b .ds-alloc-row:active:not(.ds-alloc-row--static),
+.app-shell--b .ds-portfolio-product:hover:not(.ds-portfolio-product--static),
+.app-shell--b .ds-portfolio-product:active:not(.ds-portfolio-product--static),
+.app-shell--b button.ds-marketing.ds-marketing--products:hover,
+.app-shell--b button.ds-marketing.ds-marketing--products:active,
+.ds-page--products button.ds-marketing.ds-marketing--products:hover,
+.ds-page--products button.ds-marketing.ds-marketing--products:active {
+  background: var(--color-blue-100);
+}
+
+.app-shell--b .ds-tab-menu__item:not(.is-current):hover {
+  background: var(--color-blue-100);
+}
+
+.app-shell--b .ds-filter:not(.is-active):hover {
+  background: var(--color-blue-100);
+}
+
+.app-shell--b .ds-deposit-offer,
+.app-shell--b .ds-wallet-promo {
+  transition: background 0.15s ease;
+}
+
+@media (hover: hover) {
+  .app-shell--b .ds-deposit-offer:hover .ds-deposit-offer__head strong,
+  .app-shell--b .ds-wallet-link:hover,
+  .app-shell--b .ds-wallet-promo:hover .ds-wallet-promo__amount,
+  .app-shell--b .ds-wallet-promo:hover .ds-wallet-promo__copy strong {
+    text-decoration: none;
+    color: inherit;
+  }
+}
+
+/* A — nested child tiles inside white containers */
+.app-shell--a .ds-card .ds-alloc-row {
+  margin-inline: 0;
+  width: 100%;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 0.5rem;
+  margin-bottom: var(--space-3);
+}
+
+.app-shell--a .ds-card .ds-alloc-row:last-child {
+  margin-bottom: 0;
+}
+
+.app-shell--a .ds-card--portfolio {
+  padding: var(--space-4);
+}
+
+.app-shell--a .ds-portfolio-row--add {
+  gap: var(--space-4);
+}
+
+.ds-portfolio-row__add-icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border: 1px solid var(--color-grey-200);
+  border-radius: var(--radius-pill);
+  color: var(--color-text);
+}
+
+.app-shell--a .ds-card--portfolio-products {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.app-shell--a .ds-card--portfolio-products .ds-savings-portfolio__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-1);
+}
+
+.app-shell--a .ds-card--portfolio-products .ds-deposit,
+.app-shell--a .ds-card--portfolio-products .ds-alloc-row {
+  margin: 0;
+}
+
+.app-shell--a .ds-card--portfolio .ds-portfolio-row {
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+}
+
+.app-shell--a .ds-card--portfolio .ds-allocation-ring {
+  width: 3.5rem;
+  height: 3.5rem;
+}
+
+.app-shell--a .ds-card--portfolio .ds-allocation-ring__icon .ds-icon,
+.app-shell--a .ds-card--portfolio .ds-allocation-ring__icon .ds-icon--ring {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.app-shell--a .ds-portfolio-row__copy {
+  flex: 1;
+  min-width: 0;
+}
+
+.app-shell--a .ds-portfolio-row__copy p {
+  color: var(--color-text-secondary);
+}
+
+.app-shell--a .ds-portfolio-row__trail {
+  margin-left: auto;
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.125rem;
+  text-align: right;
+}
+
+.app-shell--a .ds-portfolio-row__earn-line {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-1);
+  max-width: 100%;
+}
+
+.app-shell--a .ds-portfolio-row__earn,
+.app-shell--b .ds-portfolio-row__earn {
+  color: var(--color-blue-600);
+  font-weight: 500;
+  font-size: var(--type-sm);
+  line-height: var(--type-sm-lh);
+  white-space: nowrap;
+}
+
+.app-shell--a .ds-portfolio-row__earn-info {
+  display: block;
+  flex: none;
+  opacity: 0.85;
+}
+
+.app-shell--a .ds-earn-tooltip {
+  position: relative;
+  display: inline-flex;
+  flex: none;
+}
+
+.app-shell--a .ds-earn-tooltip__trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: help;
+  line-height: 0;
+}
+
+.app-shell--a .ds-earn-tooltip__trigger:focus-visible {
+  outline: 2px solid var(--color-blue-400);
+  outline-offset: 2px;
+  border-radius: 0.25rem;
+}
+
+.app-shell--a .ds-earn-tooltip__bubble {
+  position: absolute;
+  z-index: 20;
+  right: 0;
+  bottom: calc(100% + 0.375rem);
+  width: max-content;
+  max-width: 14rem;
+  padding: var(--space-2) var(--space-3);
+  border-radius: 0.5rem;
+  background: var(--color-text);
+  color: var(--color-paper);
+  font-size: var(--type-sm);
+  line-height: var(--type-sm-lh);
+  font-weight: 400;
+  text-align: left;
+  white-space: normal;
+  box-shadow: 0 0.5rem 1.25rem rgb(2 25 61 / 18%);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.12s ease, visibility 0.12s ease;
+}
+
+.app-shell--a .ds-earn-tooltip:hover .ds-earn-tooltip__bubble,
+.app-shell--a .ds-earn-tooltip:focus-within .ds-earn-tooltip__bubble {
+  opacity: 1;
+  visibility: visible;
+}
+
+.app-shell--a .ds-card .ds-deposit,
+.app-shell--a .ds-card--stack .ds-deposit {
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 0.5rem;
+  padding: var(--space-4);
+  margin-top: var(--space-3);
+}
+
+.app-shell--a .ds-card .ds-deposit:first-of-type,
+.app-shell--a .ds-card--stack .ds-deposit:first-child {
+  margin-top: 0;
+}
+
+.app-shell--a .ds-portfolio-deposits .ds-deposit {
+  margin-top: 0;
+}
+
+.app-shell--a .ds-card--nested-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4);
+}
+
+.app-shell--a .ds-card--nested-list .ds-deposit-offer {
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 0.5rem;
+  padding: var(--space-4);
+  margin: 0;
+}
+
+.app-shell--a .ds-card--alerts.ds-alerts--boxed {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4);
+}
+
+.app-shell--a .ds-product-section .ds-promo-tabs {
+  margin-bottom: 0;
+}
+
+.app-shell--a .ds-product-section__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.app-shell--a .ds-product-section[data-ds-product-section] .ds-product-section__tabs {
+  margin: calc(-1 * var(--space-6)) calc(-1 * var(--space-6)) 0;
+  padding: 0 var(--space-6);
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.app-shell--a .ds-page--a-products .ds-product-section[data-ds-product-section] .ds-product-section__tabs {
+  padding-top: var(--space-4);
+}
+
+.app-shell--a .ds-product-section[data-ds-product-section] .ds-product-section__tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.app-shell--a .ds-product-section[data-ds-product-section] .ds-product-section__tabs .ds-filter {
+  flex: none;
+  white-space: nowrap;
+}
+
+.app-shell--a .ds-product-section .ds-promo-tabs--underline .ds-filter:not(.is-active):hover,
+.app-shell--a .ds-product-section .ds-promo-tabs--underline .ds-filter.is-active {
+  background: transparent;
+}
+
+.app-shell--a .ds-product-section[data-ds-product-section] .ds-product-section__panels {
+  margin-top: 0;
+}
+
+.app-shell--a .ds-page--a-products .ds-rail-section .ds-catalog-note {
+  margin: 0;
+}
+
+.app-shell--a .ds-marketing--products {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: var(--space-6);
+  width: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+.app-shell--a .ds-marketing--products:focus-visible {
+  outline: 2px solid var(--color-blue-400);
+  outline-offset: 2px;
+  border-radius: 0.5rem;
+}
+
+.app-shell--a .ds-marketing--products .ds-marketing__copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1;
+  min-width: 0;
+  gap: var(--space-4);
+}
+
+.app-shell--a .ds-page--a-products .ds-marketing--products .ds-marketing__chips {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+}
+
+.app-shell--a .ds-page--a-products .ds-marketing--products .ds-marketing__chips .ds-label-chip {
+  margin-top: 0;
+}
+
+.app-shell--a .ds-marketing--products .ds-marketing__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.app-shell--a .ds-marketing--products h3 {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: var(--type-lg);
+  line-height: var(--type-lg-lh);
+  letter-spacing: var(--track-tighter);
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
+}
+
+.app-shell--a .ds-marketing--products .ds-marketing__body {
+  margin: 0;
+  font-size: var(--type-md);
+  line-height: var(--type-md-lh);
+  letter-spacing: var(--track-tighter);
+  color: var(--color-text);
+}
+
+.app-shell--a .ds-marketing--products .ds-marketing__image {
+  width: 8.25rem;
+  height: 8.25rem;
+  border-radius: 0.25rem;
+  object-fit: cover;
+  flex: none;
+}
+
+/* B — in-card headings; dividers between siblings (no nested row borders) */
+.app-shell--b .ds-card > .ds-h:first-child {
+  margin-bottom: var(--space-4);
+}
+
+.app-shell--b .ds-card .ds-alloc-row {
+  border-radius: 0;
+  margin-inline: 0;
+  width: 100%;
+}
+
+.app-shell--b .ds-card .ds-deposit {
+  border: 0;
+  border-radius: 0;
+  margin-top: 0;
+}
+
+.app-shell--b .ds-card .ds-activity-row,
+.app-shell--b .ds-card .ds-nav-row {
+  border: 0;
+  border-radius: 0;
+  padding: var(--space-4) 0;
+  margin: 0;
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+.app-shell--b .ds-card > .ds-activity-row:first-of-type,
+.app-shell--b .ds-card > .ds-nav-row:first-of-type {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.app-shell--b .ds-card .ds-deposit-offer {
+  padding: var(--space-4) 0;
+}
+
+.app-shell--b .ds-portfolio-single {
+  margin-top: var(--space-3);
+  border: 1px solid var(--color-grey-100);
+  border-radius: 0.5rem;
+}
+
+.app-shell--b .ds-card .ds-portfolio-single .ds-deposit {
+  padding: var(--space-4);
+}
+
+.app-shell--b .ds-card--portfolio .ds-deposit,
+.app-shell--b .ds-card > .ds-deposit {
+  padding: var(--space-4) 0;
+}
+
+.app-shell--b .ds-alerts .ds-alert-item {
+  padding: var(--space-4) 0;
+}
+
+.app-shell--b .ds-product-section__promo {
+  margin-top: var(--space-2);
+}
+
+/* B Products (Figma 395:56288) */
+.app-shell--b .ds-page--products > .ds-back {
+  margin-bottom: var(--space-4);
+}
+
+.app-shell--b .ds-page--products .ds-card {
+  border-color: var(--color-grey-100);
+}
+
+.app-shell--b .ds-page--products .ds-split > .ds-stack--sections {
+  gap: var(--space-6);
+}
+
+.app-shell--b .ds-card.ds-product-section > .ds-h:first-child {
+  margin-bottom: 0;
+}
+
+.app-shell--b .ds-product-section__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+}
+
+.app-shell--b .ds-product-section .ds-product-section__tabs {
+  width: auto;
+  max-width: 100%;
+  align-self: flex-start;
+  margin: 0;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.app-shell--b .ds-product-section .ds-product-section__tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.app-shell--b .ds-product-section .ds-promo-tabs--underline .ds-filter {
+  flex: none;
+  white-space: nowrap;
+}
+
+.app-shell--b .ds-product-section .ds-promo-tabs--underline .ds-filter:not(.is-active):hover {
+  background: transparent;
+}
+
+.app-shell--b .ds-product-section .ds-promo-tabs--underline .ds-filter.is-active:hover {
+  background: transparent;
+}
+
+.app-shell--b .ds-product-section__panels {
+  margin: 0;
+}
+
+.ds-product-section__panel[hidden] {
+  display: none !important;
+}
+
+/* Offers / Products — promo cards (B + Control #…/products) */
+.ds-page--products .ds-marketing--products {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: var(--space-6);
+  width: 100%;
+  box-sizing: border-box;
+  padding: var(--space-2);
+  margin: calc(-1 * var(--space-2));
+  border: 0;
+  border-radius: 0.5rem;
+  background: transparent;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.ds-page--products .ds-marketing--products:focus-visible {
+  outline: 2px solid var(--color-blue-400);
+  outline-offset: 2px;
+  border-radius: 0.5rem;
+}
+
+.ds-page--products .ds-marketing--products .ds-marketing__copy {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  gap: var(--space-4);
+  align-items: flex-start;
+  text-align: left;
+}
+
+.ds-page--products .ds-marketing--products .ds-marketing__chips {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--space-2);
+  width: 100%;
+}
+
+.ds-page--products .ds-marketing--products .ds-marketing__text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  width: 100%;
+  text-align: left;
+}
+
+.ds-page--products .ds-marketing--products .ds-label-chip {
+  margin-top: 0;
+}
+
+.ds-page--products .ds-marketing--products h3 {
+  margin: 0;
+  width: 100%;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: var(--type-lg);
+  line-height: var(--type-lg-lh);
+  letter-spacing: var(--track-tighter);
+  text-align: left;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
+}
+
+.ds-page--products .ds-marketing--products .ds-marketing__body {
+  margin: 0;
+  width: 100%;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: var(--type-md);
+  line-height: var(--type-md-lh);
+  letter-spacing: var(--track-tighter);
+  color: var(--color-text);
+  text-align: left;
+}
+
+.ds-page--products .ds-marketing--products .ds-marketing__image {
+  width: 8.25rem;
+  height: 8.25rem;
+  border-radius: 0.25rem;
+  object-fit: cover;
+  flex: none;
+}
+
+.ds-page--products .ds-product-section__promo {
+  align-items: flex-start;
+  text-align: left;
+}
+
+.ds-page--products .ds-product-section__copy {
+  align-items: flex-start;
+  text-align: left;
+}
+
+.app-shell--b .ds-page--products .ds-card--popular-deposits-rail .ds-card__head {
+  align-items: center;
+  margin-bottom: var(--space-4);
+}
+
+.app-shell--b .ds-page--products .ds-card--popular-deposits-rail .ds-deposit-offer {
+  border-top-color: var(--color-grey-100);
+}
+
+.app-shell--b .ds-page--products .ds-card--popular-deposits-rail > .ds-deposit-offer:first-of-type {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.app-shell--b .ds-page--products .ds-card--popular-deposits-rail .ds-catalog-note {
+  margin: var(--space-4) 0 0;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-grey-100);
+}
+
+/* Long bank / product names — ellipsis inside cards (A & B) */
+.ds-product-card__name,
+.ds-deposit__copy,
+.ds-deposit-offer__head,
+.ds-nav-row__copy,
+.ds-alloc-row > div:first-of-type {
+  min-width: 0;
+}
+
+.ds-product-card__name strong,
+.ds-deposit__copy strong,
+.ds-deposit-offer__head strong,
+.ds-nav-row__copy strong,
+.ds-product-section__copy strong {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ds-product-section__copy p {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+/* Catalog loading — avoid blank “no offers” flash before snapshot/API */
+.ds-skeleton {
+  display: block;
+  border-radius: 0.375rem;
+  background: linear-gradient(
+    90deg,
+    var(--color-grey-100) 0%,
+    color-mix(in srgb, var(--color-grey-100) 55%, var(--color-paper)) 50%,
+    var(--color-grey-100) 100%
+  );
+  background-size: 200% 100%;
+  animation: ds-skeleton-shimmer 1.2s ease-in-out infinite;
+}
+
+@keyframes ds-skeleton-shimmer {
+  0% { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+
+.ds-skeleton--avatar {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.5rem;
+  flex: none;
+}
+
+.ds-skeleton--avatar-sm {
+  width: 2rem;
+  height: 2rem;
+}
+
+.ds-skeleton--line {
+  height: 0.75rem;
+  margin-top: var(--space-2);
+}
+
+.ds-skeleton--md {
+  width: 72%;
+  height: 0.875rem;
+  margin-top: 0;
+}
+
+.ds-skeleton--sm {
+  width: 48%;
+}
+
+.ds-skeleton--rate {
+  width: 40%;
+  height: 1.25rem;
+  margin-top: var(--space-3);
+}
+
+.ds-product-card--skeleton {
+  pointer-events: none;
+  border: 1px solid var(--color-border-subtle);
+}
+
+.ds-deposit-offer--skeleton {
+  pointer-events: none;
+}
+
+.ds-btn:focus-visible {
+  outline: 2px solid var(--color-blue-700);
+  outline-offset: 2px;
+}
+
+@media (max-width: 40rem) {
+  .ds-header__inner,
+  .ds-page,
+  .app-shell--ds .dashboard-chrome {
+    padding-inline: var(--space-4);
+  }
+
+  .ds-product-carousel {
+    margin-inline: calc(-1 * var(--space-4));
+    padding-inline: var(--space-4);
+  }
+
+  .app-shell--b .ds-card .ds-alloc-row {
+    margin-inline: 0;
+  }
+}
+
+@media (max-width: 68rem) {
+  .app-shell--a .ds-split,
+  .app-shell--b .ds-split {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .ds-page--a-savings .ds-savings-overview-rail {
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 60rem) {
+  .ds-promo-row,
+  .ds-overview__body,
+  .ds-savings-hero,
+  .ds-offer-grid {
+    grid-template-columns: 1fr;
+    display: grid;
+  }
+
+  .ds-overview__body,
+  .ds-savings-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .ds-header__menu {
+    display: inline-flex;
+    flex-shrink: 0;
+  }
+
+  .ds-header--b .ctl-header__inner {
+    gap: var(--space-2);
+    flex-wrap: wrap;
+  }
+
+  .ds-header--b .ds-header__menu {
+    order: 10;
+    margin-left: auto;
+    margin-right: 0;
+  }
+
+  .ds-header--b .ctl-nav__account {
+    order: 11;
+    flex-shrink: 0;
+  }
+
+  .ds-header--b .ctl-nav {
+    order: 5;
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .ds-header--b .ctl-nav__tabs,
+  .ds-header__nav {
+    display: none;
+    position: absolute;
+    top: calc(100% + var(--space-2));
+    left: var(--space-4);
+    right: var(--space-4);
+    z-index: 60;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-1);
+    padding: var(--space-3);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-card);
+    background: var(--color-paper);
+    box-shadow: var(--shadow-md);
+  }
+
+  .ds-header--b .ctl-nav__tabs.is-open,
+  .ds-header__nav.is-open {
+    display: flex;
+  }
+
+  .ds-header--a .ds-header__nav--pill.is-open {
+    border-radius: var(--radius-card);
+  }
+
+  .ds-header__link,
+  .ds-header__pill {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .ds-savings-summary.is-condensed {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .ds-savings-summary.is-condensed .ds-bar {
+    grid-area: 2 / 1;
+  }
+
+  .ds-savings-summary.is-condensed .ds-savings-summary__legend {
+    display: none;
+  }
+}

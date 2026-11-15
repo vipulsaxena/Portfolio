@@ -1,0 +1,261 @@
+{
+  "_source": {
+    "endpoint": "GET /v1/public/products",
+    "service": "deposit-catalog-management-service",
+    "definition": "https://dev.raisin.systems/catalog/default/api/deposit-catalog-management-service-api/definition#/Deposit%20product/get-v1-public-products",
+    "query": {
+      "distributor_id": "Raisin",
+      "distribution_channel_id": "raisin_direct_retail_deu",
+      "country_code": "DEU"
+    },
+    "note": "Offline snapshot in the live response shape. Refresh from the real API with `npm run catalog:refresh` (needs Raisin network access); the prototype reads whichever is available."
+  },
+  "entries": [
+    {
+      "id": "KLA201",
+      "product_type": "TERM",
+      "marketed_as_product_type": "TERM",
+      "currency": "EUR",
+      "term": { "unit": "months", "period": 24 },
+      "interest_rate_modality": "FIXED",
+      "interest_rates": {
+        "interest_rate_nominal": "2.70",
+        "interest_rate_effective": "2.73",
+        "headline_interest_rate": "NOMINAL"
+      },
+      "conditions": {
+        "minimum_balance_decimal": 0,
+        "maximum_balance_decimal": 100000,
+        "opening": { "accepting_fresh_orders": true, "minimum_amount": "1000" }
+      },
+      "deposit_taking_bank": {
+        "id": "KLABSE12",
+        "name": "Klarna Bank",
+        "branch_country": { "id": "SWE", "name": "Sweden", "rating": "AAA", "source_tax_applicable": false }
+      },
+      "display": { "labels": ["finanztest_best_list", "top_offers_mobile_dashboard"] }
+    },
+    {
+      "id": "ILL101",
+      "product_type": "TERM",
+      "marketed_as_product_type": "TERM",
+      "currency": "EUR",
+      "term": { "unit": "months", "period": 12 },
+      "interest_rate_modality": "FIXED",
+      "interest_rates": {
+        "interest_rate_nominal": "2.55",
+        "interest_rate_effective": "2.55",
+        "headline_interest_rate": "NOMINAL"
+      },
+      "conditions": {
+        "minimum_balance_decimal": 0,
+        "maximum_balance_decimal": 100000,
+        "opening": { "accepting_fresh_orders": true, "minimum_amount": "10000" }
+      },
+      "deposit_taking_bank": {
+        "id": "ILLBIT22",
+        "name": "Illimity Bank",
+        "branch_country": { "id": "ITA", "name": "Italy", "rating": "BBB", "source_tax_applicable": true }
+      },
+      "display": { "labels": ["top_offers_mobile_offer_table"] }
+    },
+    {
+      "id": "BPR301",
+      "product_type": "TERM",
+      "marketed_as_product_type": "TERM",
+      "currency": "EUR",
+      "term": { "unit": "months", "period": 36 },
+      "interest_rate_modality": "FIXED",
+      "interest_rates": {
+        "interest_rate_nominal": "2.80",
+        "interest_rate_effective": "2.84",
+        "headline_interest_rate": "NOMINAL"
+      },
+      "conditions": {
+        "minimum_balance_decimal": 0,
+        "maximum_balance_decimal": 100000,
+        "opening": { "accepting_fresh_orders": true, "minimum_amount": "5000" }
+      },
+      "deposit_taking_bank": {
+        "id": "BPRGIT33",
+        "name": "Banca Progetto",
+        "branch_country": { "id": "ITA", "name": "Italy", "rating": "BBB", "source_tax_applicable": true }
+      },
+      "display": { "labels": ["top_offers_mobile_dashboard"] }
+    },
+    {
+      "id": "BLU401",
+      "product_type": "TERM",
+      "marketed_as_product_type": "TERM",
+      "currency": "EUR",
+      "term": { "unit": "months", "period": 48 },
+      "interest_rate_modality": "FIXED",
+      "interest_rates": {
+        "interest_rate_nominal": "2.85",
+        "interest_rate_effective": "2.89",
+        "headline_interest_rate": "NOMINAL"
+      },
+      "conditions": {
+        "minimum_balance_decimal": 0,
+        "maximum_balance_decimal": 100000,
+        "opening": { "accepting_fresh_orders": true, "minimum_amount": "1000" }
+      },
+      "deposit_taking_bank": {
+        "id": "BLUOLV22",
+        "name": "BluOr Bank",
+        "branch_country": { "id": "LVA", "name": "Latvia", "rating": "A−", "source_tax_applicable": false }
+      },
+      "display": { "labels": ["no_source_tax"] }
+    },
+    {
+      "id": "RIE501",
+      "product_type": "TERM",
+      "marketed_as_product_type": "TERM",
+      "currency": "EUR",
+      "term": { "unit": "months", "period": 60 },
+      "interest_rate_modality": "FIXED",
+      "interest_rates": {
+        "interest_rate_nominal": "2.90",
+        "interest_rate_effective": "2.94",
+        "headline_interest_rate": "NOMINAL"
+      },
+      "conditions": {
+        "minimum_balance_decimal": 0,
+        "maximum_balance_decimal": 100000,
+        "opening": { "accepting_fresh_orders": true, "minimum_amount": "2000" }
+      },
+      "deposit_taking_bank": {
+        "id": "RIELLV22",
+        "name": "Rietumu Banka",
+        "branch_country": { "id": "LVA", "name": "Latvia", "rating": "A−", "source_tax_applicable": false }
+      },
+      "display": { "labels": ["no_source_tax", "top_offers_mobile_offer_table"] }
+    },
+    {
+      "id": "YOU501",
+      "product_type": "TERM",
+      "marketed_as_product_type": "TERM",
+      "currency": "EUR",
+      "term": { "unit": "months", "period": 6 },
+      "interest_rate_modality": "FIXED",
+      "interest_rates": {
+        "interest_rate_nominal": "2.40",
+        "interest_rate_effective": "2.40",
+        "headline_interest_rate": "NOMINAL"
+      },
+      "conditions": {
+        "minimum_balance_decimal": 0,
+        "maximum_balance_decimal": 100000,
+        "opening": { "accepting_fresh_orders": true, "minimum_amount": "1000" }
+      },
+      "deposit_taking_bank": {
+        "id": "YOUNFR21",
+        "name": "Younited",
+        "branch_country": { "id": "FRA", "name": "France", "rating": "AA", "source_tax_applicable": true }
+      },
+      "display": { "labels": [] }
+    },
+    {
+      "id": "COL101",
+      "product_type": "OVERNIGHT",
+      "marketed_as_product_type": "OVERNIGHT",
+      "currency": "EUR",
+      "term": { "unit": null, "period": null },
+      "interest_rate_modality": "VARIABLE",
+      "interest_rates": {
+        "interest_rate_nominal": "1.85",
+        "interest_rate_effective": "1.86",
+        "headline_interest_rate": "NOMINAL"
+      },
+      "conditions": {
+        "minimum_balance_decimal": 0,
+        "maximum_balance_decimal": 85000,
+        "opening": { "accepting_fresh_orders": true, "minimum_amount": "500" }
+      },
+      "deposit_taking_bank": {
+        "id": "COBASE12",
+        "name": "Collector Bank",
+        "branch_country": { "id": "SWE", "name": "Sweden", "rating": "AAA", "source_tax_applicable": false }
+      },
+      "display": { "labels": ["finanztest_best_list", "top_offers_mobile_dashboard"] }
+    },
+    {
+      "id": "BSI201",
+      "product_type": "OVERNIGHT",
+      "marketed_as_product_type": "OVERNIGHT",
+      "currency": "EUR",
+      "term": { "unit": null, "period": null },
+      "interest_rate_modality": "VARIABLE",
+      "interest_rates": {
+        "interest_rate_nominal": "2.05",
+        "interest_rate_effective": "2.07",
+        "headline_interest_rate": "NOMINAL"
+      },
+      "conditions": {
+        "minimum_balance_decimal": 0,
+        "maximum_balance_decimal": 100000,
+        "opening": { "accepting_fresh_orders": true, "minimum_amount": "1" }
+      },
+      "deposit_taking_bank": {
+        "id": "BSISIT22",
+        "name": "Banca Sistema",
+        "branch_country": { "id": "ITA", "name": "Italy", "rating": "BBB", "source_tax_applicable": true }
+      },
+      "display": { "labels": ["top_offers_mobile_dashboard"] }
+    },
+    {
+      "id": "HOI301",
+      "product_type": "NOTICE",
+      "marketed_as_product_type": "NOTICE",
+      "currency": "EUR",
+      "term": { "unit": null, "period": null },
+      "interest_rate_modality": "VARIABLE",
+      "interest_rates": {
+        "interest_rate_nominal": "2.15",
+        "interest_rate_effective": "2.17",
+        "headline_interest_rate": "NOMINAL"
+      },
+      "conditions": {
+        "minimum_balance_decimal": 0,
+        "maximum_balance_decimal": 100000,
+        "opening": { "accepting_fresh_orders": true, "minimum_amount": "500" },
+        "termination": { "notice_period": { "unit": "days", "period": 31 } }
+      },
+      "deposit_taking_bank": {
+        "id": "HOISSE22",
+        "name": "HoistSpar",
+        "branch_country": { "id": "SWE", "name": "Sweden", "rating": "AAA", "source_tax_applicable": false }
+      },
+      "display": { "labels": ["no_source_tax"] }
+    },
+    {
+      "id": "MED401",
+      "product_type": "NOTICE",
+      "marketed_as_product_type": "NOTICE",
+      "currency": "EUR",
+      "term": { "unit": null, "period": null },
+      "interest_rate_modality": "VARIABLE",
+      "interest_rates": {
+        "interest_rate_nominal": "2.30",
+        "interest_rate_effective": "2.32",
+        "headline_interest_rate": "NOMINAL"
+      },
+      "conditions": {
+        "minimum_balance_decimal": 0,
+        "maximum_balance_decimal": 100000,
+        "opening": { "accepting_fresh_orders": true, "minimum_amount": "1000" },
+        "termination": { "notice_period": { "unit": "days", "period": 90 } }
+      },
+      "deposit_taking_bank": {
+        "id": "MEDBLT21",
+        "name": "Medicinos Bankas",
+        "branch_country": { "id": "LTU", "name": "Lithuania", "rating": "A", "source_tax_applicable": false }
+      },
+      "display": { "labels": ["no_source_tax", "top_offers_mobile_offer_table"] }
+    }
+  ],
+  "total": 10,
+  "offset": 0,
+  "limit": 100,
+  "num_found": 10
+}

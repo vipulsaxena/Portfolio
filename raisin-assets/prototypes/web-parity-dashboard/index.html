@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Dashboard Parity — Component-led rerun</title>
+  <meta name="description" content="Gate 2 prototype: Control, Hypothesis A (mobile parity), B (donut + tabs), C (products upfront) — UHNW data.">
+  <script>
+    if (/[?&]embed=portfolio(?:&|$)/i.test(location.search)) {
+      document.documentElement.classList.add("portfolio-embed-root");
+      document.write('<link rel="stylesheet" href="./portfolio-embed.css" data-portfolio-embed />');
+    }
+  </script>
+  <!-- Prototype only — production version needs loading/error/empty states, i18n, a11y -->
+  <link rel="stylesheet" href="css/fonts.css">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/ds-screens.css">
+  <link rel="stylesheet" href="css/control.css">
+  <link rel="stylesheet" href="css/persona-review.css">
+  <link rel="stylesheet" href="css/truncation.css">
+</head>
+<body>
+  <script>
+    if (document.documentElement.classList.contains("portfolio-embed-root")) {
+      document.body.classList.add("portfolio-embed");
+      window.__ANNOTATE_EMBEDDED__ = true;
+    }
+  </script>
+  <div id="app" aria-live="polite"></div>
+
+  <!--
+    Deposit Catalog (GET /v1/public/products). The API is only routable from the Raisin
+    network, so baseUrl stays null by default and the prototype serves
+    data/catalog-snapshot.json. Set a reachable host to pull live rates instead.
+  -->
+  <script>
+    window.RAISIN_CATALOG = {
+      baseUrl: null,
+      query: { distributor_id: "Raisin", distribution_channel_id: "raisin_direct_retail_deu", country_code: "DEU" }
+    };
+  </script>
+
+  <script type="module" src="js/app.js"></script>
+
+  <script>
+    if (!document.body.classList.contains("portfolio-embed")) {
+      window.ANNOTATE_CONFIG = {
+        gitlabProjectId: "raisin-global/raisin-gmbh/poc/design/playground/web-parity-dashboard"
+      };
+      document.write('<script src="vendor/annotate.js"><\/script>');
+    }
+  </script>
+</body>
+</html>

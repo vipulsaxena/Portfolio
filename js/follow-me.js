@@ -176,13 +176,14 @@
       el.getAttribute("data-persona") ||
       el.getAttribute("data-research-view") ||
       el.getAttribute("data-variant") ||
+      el.getAttribute("data-variant-id") ||
       ""
     );
   }
 
   function widgetTabs(root) {
     return root.querySelectorAll(
-      '[role="tab"], [data-tab], [data-bg], [data-audit], [data-persona-id], [data-persona], [data-research-view]'
+      '[role="tab"], [data-tab], [data-bg], [data-audit], [data-persona-id], [data-persona], [data-research-view], [data-variant-id]'
     );
   }
 

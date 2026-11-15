@@ -210,7 +210,7 @@
       ".beat__support:not(.beat__support--present)",
       ".beat__eyebrow"
     ],
-    "p4-cura": [".beat__text", ".beat__enablement"],
+    "p4-cura": [".beat__text:not(.beat__text--present)", ".beat__enablement"],
     "p3-intro": [".period__thesis:not(.period__thesis--present)", ".period__role"],
     "p3-desk-research": [
       ".device-story__eyebrow",
@@ -313,6 +313,7 @@
         "#period-4 .ai-cadence"
       ]
     },
+    { id: "p4-cura", chapter: "period-3", selector: "#period-4 .beat--cura" },
     {
       id: "proof",
       chapter: "proof",
@@ -2074,41 +2075,117 @@
     });
   }
 
+  function initPrototypeScale(root) {
+    root.querySelectorAll("[data-prototype-viewport]").forEach(function (viewport) {
+      if (viewport.dataset.presentScaleInit) return;
+      viewport.dataset.presentScaleInit = "1";
+      var designWidth = parseFloat(viewport.getAttribute("data-viewport-width")) || 1440;
+      function apply() {
+        var w = viewport.clientWidth;
+        if (w) viewport.style.setProperty("--proto-scale", String(w / designWidth));
+      }
+      apply();
+      if ("ResizeObserver" in window) {
+        new ResizeObserver(apply).observe(viewport);
+      } else {
+        window.addEventListener("resize", apply);
+      }
+    });
+    root.querySelectorAll("[data-proto-wide-toggle]").forEach(function (toggle) {
+      if (toggle.dataset.presentWideInit) return;
+      toggle.dataset.presentWideInit = "1";
+      var row = toggle.closest(".device-story__row");
+      if (!row) return;
+      toggle.addEventListener("click", function () {
+        var on = toggle.getAttribute("aria-checked") !== "true";
+        toggle.setAttribute("aria-checked", on ? "true" : "false");
+        row.classList.toggle("is-proto-wide", on);
+      });
+    });
+  }
+
   function initPrototypePersonas(root) {
     root.querySelectorAll("[data-prototype-shell]").forEach(function (shell) {
       if (shell.dataset.presentProtoInit) return;
       shell.dataset.presentProtoInit = "1";
-      var switcher = shell.querySelector("[data-prototype-personas]");
+      var personaSwitcher = shell.querySelector("[data-prototype-personas]");
+      var variantSwitcher = shell.querySelector("[data-prototype-variants]");
       var frame = shell.querySelector("[data-prototype-frame]");
-      if (!switcher || !frame) return;
-      var tabs = Array.prototype.slice.call(switcher.querySelectorAll("[data-persona-id]"));
-      if (!tabs.length) return;
+      if (!frame || (!personaSwitcher && !variantSwitcher)) return;
+
       function sendPersona(personaId) {
         if (!frame.contentWindow) return;
         frame.contentWindow.postMessage({ type: "persona-select", personaId: personaId }, "*");
       }
-      function activateTab(tab) {
-        tabs.forEach(function (btn) {
-          var isActive = btn === tab;
-          btn.classList.toggle("prototype-persona-tab--active", isActive);
-          btn.classList.toggle("trade-off-switcher__tab--active", isActive);
-          btn.setAttribute("aria-selected", isActive ? "true" : "false");
-          btn.tabIndex = isActive ? 0 : -1;
-        });
-        var personaId = tab.getAttribute("data-persona-id");
-        sendPersona(personaId);
-        switcher.setAttribute("data-fm-value", personaId || "");
-        emitWidgetChange(switcher.getAttribute("data-fm-widget"), personaId || "");
+      function sendVariant(variantId) {
+        if (!frame.contentWindow) return;
+        frame.contentWindow.postMessage({ type: "variant-select", variant: variantId }, "*");
       }
-      switcher.addEventListener("click", function (e) {
-        var tab = e.target.closest("[data-persona-id]");
-        if (!tab || tabs.indexOf(tab) < 0) return;
-        activateTab(tab);
-      });
-      frame.addEventListener("load", function () {
-        var active = switcher.querySelector(".prototype-persona-tab--active") || tabs[0];
-        if (active) sendPersona(active.getAttribute("data-persona-id"));
-      });
+      function syncFrameState() {
+        if (variantSwitcher) {
+          var vActive =
+            variantSwitcher.querySelector("[data-variant-id].trade-off-switcher__tab--active") ||
+            variantSwitcher.querySelector("[data-variant-id][aria-selected='true']") ||
+            variantSwitcher.querySelector("[data-variant-id]");
+          if (vActive) sendVariant(vActive.getAttribute("data-variant-id"));
+        }
+        if (personaSwitcher) {
+          var pActive =
+            personaSwitcher.querySelector(".prototype-persona-tab--active") ||
+            personaSwitcher.querySelector("[data-persona-id][aria-selected='true']") ||
+            personaSwitcher.querySelector("[data-persona-id]");
+          if (pActive) sendPersona(pActive.getAttribute("data-persona-id"));
+        }
+      }
+
+      if (personaSwitcher) {
+        var tabs = Array.prototype.slice.call(personaSwitcher.querySelectorAll("[data-persona-id]"));
+        if (tabs.length) {
+          function activatePersonaTab(tab) {
+            tabs.forEach(function (btn) {
+              var isActive = btn === tab;
+              btn.classList.toggle("prototype-persona-tab--active", isActive);
+              btn.classList.toggle("trade-off-switcher__tab--active", isActive);
+              btn.setAttribute("aria-selected", isActive ? "true" : "false");
+              btn.tabIndex = isActive ? 0 : -1;
+            });
+            var personaId = tab.getAttribute("data-persona-id");
+            sendPersona(personaId);
+            personaSwitcher.setAttribute("data-fm-value", personaId || "");
+            emitWidgetChange(personaSwitcher.getAttribute("data-fm-widget"), personaId || "");
+          }
+          personaSwitcher.addEventListener("click", function (e) {
+            var tab = e.target.closest("[data-persona-id]");
+            if (!tab || tabs.indexOf(tab) < 0) return;
+            activatePersonaTab(tab);
+          });
+        }
+      }
+
+      if (variantSwitcher) {
+        var variantTabs = Array.prototype.slice.call(variantSwitcher.querySelectorAll("[data-variant-id]"));
+        if (variantTabs.length) {
+          function activateVariantTab(tab) {
+            variantTabs.forEach(function (btn) {
+              var isActive = btn === tab;
+              btn.classList.toggle("trade-off-switcher__tab--active", isActive);
+              btn.setAttribute("aria-selected", isActive ? "true" : "false");
+              btn.tabIndex = isActive ? 0 : -1;
+            });
+            var variantId = tab.getAttribute("data-variant-id");
+            sendVariant(variantId);
+            variantSwitcher.setAttribute("data-fm-value", variantId || "");
+            emitWidgetChange(variantSwitcher.getAttribute("data-fm-widget"), variantId || "");
+          }
+          variantSwitcher.addEventListener("click", function (e) {
+            var tab = e.target.closest("[data-variant-id]");
+            if (!tab || variantTabs.indexOf(tab) < 0) return;
+            activateVariantTab(tab);
+          });
+        }
+      }
+
+      frame.addEventListener("load", syncFrameState);
     });
   }
 
@@ -2573,6 +2650,7 @@
     initCompareSliders(root);
     initTabsCompare(root);
     initPrototypePersonas(root);
+    initPrototypeScale(root);
     initCarousels(root);
     initWowMarquees(root);
     initGapsDuoZoom(root);

@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+
+# Editor / tooling
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+npm-debug.log*
+
+# Local serve caches (if any)
+.cache/
+
+# Local visual diff / verify captures
+.tmp-verify/
+.tmp-figma/
+.tmp-audit/
+.raisin-fonts/
+.tmp-shots/
+
+# Local script / MCP payloads (not for CI)
+scripts/.confluence_update_args.json
+scripts/.mcp_update_args.json
+scripts/confluence_payload.json

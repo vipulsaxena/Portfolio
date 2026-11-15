@@ -6504,67 +6504,131 @@
       align-items: center;
       width: 100%;
       margin: 0;
+      transition: grid-template-columns 0.4s cubic-bezier(0.22, 1, 0.36, 1);
     }
-    .present-slide--p4-one-data .ai-journey__prototype.mobile-journey__prototype {
+    .present-slide--p4-one-data .device-story__row.is-proto-wide {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 3fr);
+    }
+    .present-slide--p4-one-data .ai-journey__prototype.web-parity-prototype {
       grid-column: 1;
       display: flex;
       flex-direction: column;
       align-items: stretch;
-      width: min(100%, 25.9375rem);
-      max-width: min(100%, 25.9375rem);
+      width: min(100%, calc((var(--present-vh) - var(--present-top) - var(--present-bottom) - 5rem) * 1.6));
+      max-width: 100%;
       margin: 0;
       justify-self: center;
       align-self: center;
     }
-    .present-slide--p4-one-data .prototype-persona-switcher.visual-tabs__stepper {
-      flex: 0 0 auto;
-      flex-shrink: 0;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: center;
-      gap: clamp(0.5rem, 1.35vw, 0.85rem);
+    .present-slide--p4-one-data .ai-journey__visual.ai-journey__visual--prototype.ai-journey__visual--web {
+      --proto-scale: 0.5;
       width: 100%;
-      margin: 0 0 clamp(0.65rem, 1.2vh, 0.85rem);
-      padding: 0;
-      background: transparent;
-      border: none;
-      box-shadow: none;
-      box-sizing: border-box;
-    }
-    .present-slide--p4-one-data .prototype-persona-switcher.visual-tabs__stepper .trade-off-switcher__tab {
-      flex: 1 1 0;
-      min-width: 0;
-      padding: 0.45rem 0.5rem;
-      font-size: clamp(0.68rem, 1.05vw, var(--fs-xs, 0.8125rem));
-      white-space: nowrap;
-    }
-    .present-slide--p4-one-data .ai-journey__visual.ai-journey__visual--prototype {
-      width: 90%;
-      max-width: 90%;
-      margin-inline: auto;
+      max-width: 100%;
       height: auto !important;
       min-height: 0 !important;
       max-height: none;
-      aspect-ratio: 415 / 800;
+      aspect-ratio: 1440 / 900;
       flex: none;
       position: relative;
       padding: 0;
       overflow: hidden;
-      background: transparent;
-      border: 0.6875rem solid var(--ink);
-      border-radius: 3.625rem;
+      background: #fff;
+      border: 1px solid rgba(15, 23, 42, 0.14);
+      border-radius: 0.75rem;
       box-sizing: border-box;
-      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
     }
-    .present-slide--p4-one-data .ai-journey__visual--prototype iframe {
+    .present-slide--p4-one-data .ai-journey__visual--web iframe {
       position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
+      top: 0;
+      left: 0;
+      width: 1440px;
+      height: 900px;
       border: 0;
       display: block;
+      background: #fff;
+      zoom: var(--proto-scale);
+    }
+    .present-slide--p4-one-data .web-parity-prototype > .ai-journey__visual--web {
+      order: 1;
+    }
+    .present-slide--p4-one-data .web-parity-prototype > .proto-width-toggle {
+      order: 2;
+      position: static;
+      display: flex;
+      flex: none;
+      align-self: stretch;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(0.55rem, 1vw, 0.75rem);
+      width: 100%;
+      margin: clamp(1.25rem, 2.6vh, 1.75rem) 0 0;
+    }
+    .present-slide--p4-one-data .web-parity-prototype > figcaption {
+      order: 3;
+    }
+    .present-slide--p4-one-data .proto-width-toggle__label {
+      font-size: var(--wh-journey-pill-fs, clamp(0.72rem, 1.35vh, 0.84rem));
+      font-weight: 600;
+      line-height: 1.2;
+      color: var(--ink-soft);
+    }
+    .present-slide--p4-one-data .proto-width-toggle__switch {
+      position: relative;
+      flex: none;
+      width: 2.75rem;
+      height: 1.625rem;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      border-radius: 999px;
       background: transparent;
+      cursor: pointer;
+    }
+    .present-slide--p4-one-data .proto-width-toggle__switch:focus-visible {
+      outline: 2px solid var(--accent-ink, var(--ink));
+      outline-offset: 2px;
+    }
+    .present-slide--p4-one-data .proto-width-toggle__track {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border-radius: inherit;
+      background: color-mix(in srgb, var(--muted) 35%, var(--line));
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 8%, transparent);
+      transition: background-color 0.28s ease;
+    }
+    .present-slide--p4-one-data .proto-width-toggle__switch[aria-checked="true"] .proto-width-toggle__track {
+      background: var(--accent);
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent-ink) 12%, transparent);
+    }
+    .present-slide--p4-one-data .proto-width-toggle__thumb {
+      position: absolute;
+      top: 0.125rem;
+      left: 0.125rem;
+      width: 1.375rem;
+      height: 1.375rem;
+      border-radius: 50%;
+      background: var(--paper);
+      box-shadow:
+        0 0.125rem 0.25rem rgba(0, 0, 0, 0.18),
+        0 0 0 0.5px rgba(0, 0, 0, 0.04);
+      transition: transform 0.28s cubic-bezier(0.34, 1.15, 0.64, 1);
+      pointer-events: none;
+    }
+    .present-slide--p4-one-data .proto-width-toggle__switch[aria-checked="true"] .proto-width-toggle__thumb {
+      transform: translateX(1.125rem);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .present-slide--p4-one-data .device-story__row,
+      .present-slide--p4-one-data .proto-width-toggle__track,
+      .present-slide--p4-one-data .proto-width-toggle__thumb {
+        transition: none;
+      }
+    }
+    @media (max-width: 900px) {
+      .present-slide--p4-one-data .proto-width-toggle {
+        display: none;
+      }
     }
     .present-slide--p4-one-data .device-story__copy {
       grid-column: 2;
@@ -6586,7 +6650,7 @@
         grid-template-columns: 1fr;
       }
       .present-slide--p4-one-data .tabs-compare.mobile-journey__prototype,
-      .present-slide--p4-one-data .ai-journey__prototype.mobile-journey__prototype {
+      .present-slide--p4-one-data .ai-journey__prototype.web-parity-prototype {
         grid-column: 1;
         order: 1;
       }
@@ -8340,7 +8404,7 @@
           </div>
         </div>
         <h2 class="h-display h-2 period__title">Mobile and the horizon</h2>
-        <p class="lede period__thesis period__thesis--present">This chapter is about taking mobile from a stalled redesign to a shipped Wealth Hub — without redoing twelve markets of web research.</p>
+        <p class="lede period__thesis period__thesis--present">Stalled mobile redesign → shipped Wealth Hub: fresh desk evidence and Maze validation — not a repeat of twelve markets of web research.</p>
         <p class="lede period__thesis">This chapter is about taking mobile from a stalled redesign to a shipped Wealth Hub — without redoing twelve markets of web research.</p>
         <dl class="present-darci" aria-label="DARCI — programme governance">
           <div class="present-darci__row">
@@ -8387,7 +8451,7 @@
                   <h3 class="beat__title">Read the stall before redesigning.</h3>
                   <p class="beat__support beat__support--present">Launch survey · Frontend event tracking · Segment composition</p>
                   <p class="device-story__eyebrow">Desk research</p>
-                  <p class="beat__text beat__text--present">I combined the survey, click data, and segments in one read — on legacy mobile, taps split between tabs, the donut, and the portfolio card, with no clear home.</p>
+                  <p class="beat__text beat__text--present">Survey, clickstream, and segments in one baseline read — legacy mobile split attention across tabs, donut, and portfolio card; no winning home pattern.</p>
                   <p class="device-story__text">Web Wealth Hub earned its structure through customer research. Mobile didn’t have that yet — only a stalled redesign and pressure to copy across. I gathered new evidence instead: <strong>recorded sessions</strong> from the live web dashboard and <strong>survey responses</strong> from customers, alongside <strong>legacy mobile interaction patterns</strong> (<strong>42% / 25% / 33%</strong>). Together they showed why the shortcut failed: real usage didn’t match web’s model, and no single mobile pattern had won.</p>
                   <p class="beat__stat">Legacy mobile · interaction data · pre-ideation baseline</p>
                   <p class="beat__subtitle">Customer problem</p>
@@ -8411,7 +8475,7 @@
                   <h3 class="beat__title">Re-ground, don't restart.</h3>
                   <p class="beat__support beat__support--present">Web · mWeb · legacy app compared · inherit the system, redesign the surface</p>
                   <p class="device-story__eyebrow">Web ↔ mobile parity</p>
-                  <p class="beat__text beat__text--present">I compared the new evidence against web, mWeb, and the legacy app — then set the rule: inherit the system, redesign the surface.</p>
+                  <p class="beat__text beat__text--present">Evidence set against web, mWeb, and legacy app. Tribe rule: inherit Wealth Hub system and hierarchy; redesign the mobile surface.</p>
                   <p class="device-story__text">Web had earned its structure through research and shipped across 12 markets. Mobile’s job wasn’t to repeat that work — it was to <strong>translate</strong> it. I put the new data side by side with the <strong>web dashboard</strong>, <strong>mWeb</strong>, and the <strong>current mobile app</strong> to see what carried and what broke. That comparison set a simple rule the tribe could align on: inherit the <strong>Wealth Hub concept and system</strong>, redesign the <strong>mobile surface</strong> — unblocking ideation without discarding what was already validated.</p>
                   <p class="beat__stat">Inherited: hierarchy + colour system · Redesigned: tabs + Home</p>
                 </div>
@@ -8444,7 +8508,7 @@
                   <h3 class="beat__title">Two concepts for the mobile home dashboard.</h3>
                   <p class="beat__support beat__support--present">High-fidelity prototypes · 4th iteration</p>
                   <p class="beat__eyebrow">MOBILE · IDEATE</p>
-                  <p class="beat__text beat__text--present">Recognizing the constraints of limited mobile screen real estate, I restructured and redistributed key dashboard sections to create a more focused, mobile-first experience tailored to user needs and context.</p>
+                  <p class="beat__text beat__text--present">Two clickable home concepts — same wealth jobs, different IA: tabbed sections vs portfolio-card landing. Structured for mobile estate, not a resized web dashboard.</p>
                   <p class="beat__text">Grounded in the <a href="https://raisin-jira.atlassian.net/wiki/spaces/Design/pages/5093687339/Mobile+app+dashboard+Maze+Study" target="_blank" rel="noopener">Mobile app dashboard Maze Study</a> brief: asset-on-platform clarity, Portfolio for owned products, and legible primary sections. Neither concept was pre-selected — both went into validation as Hypothesis A and B.</p>
                   <div class="trade-off trade-off--compact ideate-conflict-tradeoff" data-mobile-ideate-concept-options aria-label="Concept validation — hypothesis A vs B">
                     <p class="trade-off__label present-block-label">Concept validation · Hypothesis A vs B</p>
@@ -8476,7 +8540,7 @@
                   <h3 class="beat__title">Tabbed IA won validation.</h3>
                   <p class="beat__support beat__support--present">Maze · two weeks unmoderated · <strong>92.9%</strong> vs <strong>71.4%</strong> task success</p>
                   <p class="beat__eyebrow">MOBILE · VALIDATION</p>
-                  <p class="beat__text beat__text--present">Once the hypotheses were set, I documented what we needed to learn, started automated recruitment through the live web dashboard, and brought Maze into Raisin to run Voice-AI–hosted, unmoderated concept testing on both prototypes.</p>
+                  <p class="beat__text beat__text--present">Learning goals documented; recruitment through the live web dashboard. Two-week unmoderated Maze study (Voice-AI hosted) on Hypothesis A and B — tabbed IA selected for visual design.</p>
                   <p class="beat__text">Full setup and results are in Confluence — <a href="https://raisin-jira.atlassian.net/wiki/spaces/Design/pages/5093687339/Mobile+app+dashboard+Maze+Study" target="_blank" rel="noopener">Mobile app dashboard Maze Study</a>. The web dashboard was the recruitment surface; Maze carried the two-week, unmoderated Voice-AI study after I introduced it as Raisin’s research tool for this program.</p>
                   <div class="trade-off trade-off--compact ideate-conflict-tradeoff" aria-label="Validation outcome — hypothesis A selected">
                     <p class="trade-off__label present-block-label">Selected concept · Hypothesis A</p>
@@ -8571,11 +8635,11 @@
                   <h3 class="beat__title">Design all core components in 2 themes.</h3>
                   <p class="beat__support beat__support--present">Mobile design-system refresh</p>
                   <p class="beat__eyebrow">MOBILE · VISUAL DESIGN</p>
-                  <p class="beat__text beat__text--present">I ran the final visual-design pass to revise foundational mobile design-system tokens and the components themselves, so the shipped UI sat on the library instead of one-off screens.</p>
+                  <p class="beat__text beat__text--present">Final visual pass: mobile tokens and components aligned to the design system — four-tab IA in light and dark, library-backed UI, not one-off screens.</p>
                   <p class="beat__text">That pairing covered token updates and component work in Figma: light and dark on the Wealth Hub colour map, four-tab IA from validation, and patterns other squads could reuse — not a separate mobile skin.</p>
                   <aside class="discovery-callout beat__discovery" aria-label="Products tab — parallel discovery">
                     <p class="discovery-callout__label trade-off__option-label">Parallel discovery · Products tab · 2 weeks</p>
-                    <p class="discovery-callout__text beat__text--present">Legacy Explore tab with static cards turned into intuitive product-discovery to order new savings and investments while A/B testing different cataloging models.</p>
+                    <p class="discovery-callout__text beat__text--present">Parallel discovery on Products: static Explore → order flow for savings and investments; catalog models A/B-tested in market.</p>
                   </aside>
             </div>
           </div>
@@ -8611,7 +8675,7 @@
                   <h3 class="beat__title">A clearer mental model for wealth on mobile.</h3>
                   <p class="beat__support beat__support--present"><strong>12 B2C markets</strong> · four-tab IA · light and dark</p>
                   <p class="device-story__eyebrow">Shipped · mobile dashboard</p>
-                  <p class="beat__text beat__text--present">Same wealth jobs as web — tabbed IA for mobile screen estate (web landed portfolio-first; Maze picked tabs). Clearer holdings, performance, and next steps across Overview, Portfolio, Products, and Wallet — rolling out market by market.</p>
+                  <p class="beat__text beat__text--present">Same wealth jobs as web; validation selected tabbed IA over portfolio-first home. Overview, Portfolio, Products, Wallet — holdings, performance, next steps — rolling out across <strong>12 B2C markets</strong>.</p>
                   <p class="device-story__text">Early App Store signal backs the structure — reviewers call out overview and clarity before polish.</p>
                   <p class="beat__stat">Maze-validated · shipping now · early reviews 5/5</p>
                   <div class="wealth-hub-impact" aria-label="Mobile launch — measured against targets">
@@ -8663,7 +8727,7 @@
           </div>
         </div>
         <h2 class="h-display h-2 period__title">AI Enablement Highlights</h2>
-        <p class="lede period__thesis period__thesis--present">What started as a prototyping workshop became design's 180-day AI Enablement plan. As one of four org-wide AI Champions, I built four tools for daily production use, championed the operating plan, and led Showcase and Clinic until the workflows stuck.</p>
+        <p class="lede period__thesis period__thesis--present">Prototyping workshop → design's 180-day AI enablement plan. One of four org Champions: four production tools, Confluence operating plan, Showcase and Clinic until workflows stuck.</p>
         <p class="lede period__thesis">What started as a prototyping workshop became design's 180-day AI Enablement plan. As one of four org-wide AI Champions, I built four tools for daily production use, championed the operating plan, and led Showcase and Clinic until the workflows stuck — then co-authored the design vision for where Raisin must evolve next.</p>
       </div>
       <figure class="period__head-visual period__head-visual--ai">
@@ -8708,7 +8772,7 @@
                   <p class="device-story__eyebrow">Design × Cursor toolkit</p>
                   <h4 class="device-story__title">Established an infrastructure every designer could run.</h4>
                   <p class="beat__support beat__support--present">Playbook in Confluence — Setup through Workflow, then weekly coaching on real work.</p>
-                  <p class="device-story__text device-story__text--present">To coach the team, I documented the playbook in Confluence first — then used it to get designers set up on Cursor, explain core programming ideas, vibe-code through live examples, and unblock them in three 60-minute sessions each week.</p>
+                  <p class="device-story__text device-story__text--present">Confluence playbook first (Setup → Workflow), then weekly coaching: Cursor setup, core dev concepts, live vibe-coding, three 60-minute unblock sessions per week.</p>
                   <p class="device-story__text">The playbook covered Setup through Workflow — install, shared rules, skills, subagents, commands, and iteration loops. Confluence held the source of truth; coaching turned it into muscle memory on real work.</p>
               </div>
               <div class="ai-toolkit-panel">
@@ -8761,32 +8825,41 @@
               </div>
             </div>
 
-            <div class="ai-journey__one-data reveal" aria-label="One Data — show don't tell">
+            <div class="ai-journey__one-data reveal" aria-label="One Data — web parity prototypes">
               <div class="device-story__row device-story__row--visual-left ai-journey__row ai-journey__row--one-data">
-                <figure class="ai-journey__prototype mobile-journey__prototype" data-prototype-shell>
-                  <div class="prototype-persona-switcher trade-off-switcher__tabs phase-wizard__stepper phase-wizard__stepper--secondary visual-tabs__stepper" data-prototype-personas data-fm-widget="raisin-persona" role="tablist" aria-label="Switch One Data persona">
-                    <button type="button" class="prototype-persona-tab trade-off-switcher__tab" role="tab" aria-selected="false" tabindex="-1" data-persona-id="retail-young">Retail Young</button>
-                    <button type="button" class="prototype-persona-tab trade-off-switcher__tab" role="tab" aria-selected="false" tabindex="-1" data-persona-id="affluent-core">Affluent</button>
-                    <button type="button" class="prototype-persona-tab trade-off-switcher__tab" role="tab" aria-selected="false" tabindex="-1" data-persona-id="hnw-core">HNW</button>
-                    <button type="button" class="prototype-persona-tab trade-off-switcher__tab trade-off-switcher__tab--active prototype-persona-tab--active" role="tab" aria-selected="true" tabindex="0" data-persona-id="uhnw-core">UHNW</button>
-                  </div>
-                  <div class="ai-journey__visual ai-journey__visual--prototype">
+                <figure class="ai-journey__prototype web-parity-prototype" data-prototype-shell>
+                  <div class="ai-journey__visual ai-journey__visual--prototype ai-journey__visual--web" data-prototype-viewport data-viewport-width="1440" data-viewport-height="900">
                     <iframe
                       data-prototype-frame
-                      data-src="raisin-assets/prototypes/mobile-dashboard-ideation/index.html?embed=portfolio"
-                      title="One Data dashboard — interactive prototype with tabs and search"
+                      data-src="raisin-assets/prototypes/web-parity-dashboard/index.html?embed=portfolio#control/overview?p=uhnw"
+                      title="Web dashboard parity — Control, Hypothesis A and B on One Data"
                       loading="lazy"
-                      tabindex="-1"
                     ></iframe>
                   </div>
-                  <figcaption class="period-split__caption">Working prototype — tabs, search, One Data personas</figcaption>
+                  <div class="proto-width-toggle">
+                    <button type="button" class="proto-width-toggle__switch" role="switch" aria-checked="false" data-proto-wide-toggle aria-label="Widen prototype to 70% of the slide">
+                      <span class="proto-width-toggle__track" aria-hidden="true"></span>
+                      <span class="proto-width-toggle__thumb" aria-hidden="true"></span>
+                    </button>
+                    <span class="proto-width-toggle__label">Wide view</span>
+                  </div>
+                  <figcaption class="period-split__caption">Gate 2 prototypes — one portfolio, three hypotheses</figcaption>
                 </figure>
                 <div class="device-story__copy present-split__copy">
-                  <p class="device-story__eyebrow">One Data · Show don't tell</p>
-                  <h4 class="device-story__title">From dummy prototypes to believable demos</h4>
-                  <p class="beat__support beat__support--present">Persona-true portfolios for design — later the org's shared simulation layer.</p>
-                  <p class="device-story__text device-story__text--present">I vibe-coded Raisin's first believable dashboard demo on One Data — persona-matched data I documented in Confluence — and reused that stack to ship experimental ideas like Search against staging APIs, not Figma alone.</p>
-                  <p class="device-story__text">What started as dummy portfolios for design reviews became the shared simulation layer — consistent figures across tabs, themes, and markets, published for the org and adopted beyond mobile.</p>
+                  <p class="device-story__eyebrow">Web parity · AI workflows</p>
+                  <h4 class="device-story__title">Web parity — an AI workflow, end to end.</h4>
+                  <p class="beat__support beat__support--present">Control vs two parity hypotheses — vibe-coded on One Data, reviewed with AI personas.</p>
+                  <p class="device-story__text device-story__text--present">Workflow end to end: Figma → Cursor on shared One Data; AI personas stress-test variants so Gate 2 debates structure, not mismatched data, before customer sessions.</p>
+                  <p class="device-story__text">Three Figma-faithful variants share one persona dataset — UHNW to Retail Young — so Gate 2 compared structure, not mismatched figures.</p>
+                  <aside class="enablement-callout enablement-surface beat__enablement" aria-label="Enablement — persona review skill">
+                    <p class="enablement-label">
+                      <svg class="enablement-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                      Enablement
+                    </p>
+                    <p class="enablement-surface__title">Persona review skill — synthetic research on demand.</p>
+                    <p class="enablement-surface__text">Raisin personas attempt real jobs on each prototype and score where they stall. Shipped as a shared skill — other designers now run it on their own work.</p>
+                    <p class="enablement-surface__stat">Cursor skill · synthetic user research · team-wide</p>
+                  </aside>
                 </div>
               </div>
             </div>
@@ -8796,7 +8869,7 @@
                 <p class="device-story__eyebrow">AI Lab · Velocity enhancing tools</p>
                 <h4 class="device-story__title">Four tools the team uses every day.</h4>
                 <p class="beat__support beat__support--present">Design QA, Copy-writing, Typography-hosting, and annotation, all in daily use.</p>
-                <p class="device-story__text device-story__text--present">I built all four from scratch in a four-week Lab sprint — each one grounded in Raisin's knowledge base: our design system and QA bar, writing principles, typography hosting, and how we annotate and hand off review.</p>
+                <p class="device-story__text device-story__text--present">Four-week Lab sprint — four tools in daily use: design QA, copy voice, typography hosting, annotation handoff. Each anchored in design-system bar, writing principles, and review workflow.</p>
                 <p class="device-story__text">A structured build sprint — Design QA, copywriting, typography, and prototype annotation — all in production use.</p>
               </div>
               <div
@@ -8834,7 +8907,7 @@
                 <p class="device-story__eyebrow">Coaching · applied</p>
                 <h4 class="device-story__title">Coached 8 designers on Cursor.</h4>
                 <p class="beat__support beat__support--present">Eight designers · daily support inside the 180-day AI enablement programme.</p>
-                <p class="device-story__text device-story__text--present">I supported them on a daily basis to unblock setup, prompts, and reviews — and to push beyond the shared toolkit: build their own Cursor workflows and small tools so design velocity compounds across the org.</p>
+                <p class="device-story__text device-story__text--present">Daily coaching for eight designers — setup, prompts, reviews — and path beyond shared toolkit toward individual Cursor workflows so design velocity compounds org-wide.</p>
                 <p class="device-story__text">Coached eight designers from Cursor foundations to autonomy on live work — setup, prompts, reviews, and shipping. One example: a cumulative earnings exploration with Deposits, vibe-coded in the open. The feedback-loop plugin made reviews native — Figma-style comments on the prototype (press c), synced as GitLab issues with file and line metadata, so PM notes landed on the exact line of code in Cursor.</p>
                 <p class="beat__stat">8 designers · foundations → live work</p>
               </div>
@@ -8937,9 +9010,10 @@
             <div class="cura-beat__stage">
             <div class="cura-beat__inner">
               <div class="cura-beat__copy reveal">
-                <p class="beat__eyebrow">Design vision · VP mandate · I authored the narrative</p>
+                <p class="beat__eyebrow">Design vision · VP mandate · authored narrative</p>
                 <h3 class="beat__title">Design vision for where Raisin must evolve.</h3>
                 <p class="beat__text">VP initiated the vision exercise. I owned the work inside it — Gather, Envision, Plan — and authored the 8-slide Cura deck: from reporting the past to helping savers decide next.</p>
+                <p class="beat__text beat__text--present">VP-led Gather → Envision → Plan. Eight-slide Cura narrative: shift from reporting the past to guiding the next saving decision.</p>
                 <p class="beat__stat">Gather → Envision → Plan · 8-slide narrative authored solo</p>
               </div>
             </div>
@@ -8957,7 +9031,7 @@
     <div class="proof-intro reveal">
       <p class="eyebrow">Proof</p>
       <h2 class="h-display h-2 proof-intro__title">What it produced — measured honestly, market by market.</h2>
-      <p class="lede proof-intro__lede proof-intro__lede--present">Adoption and engagement moved; zero-state conversion and Wrapped AuM didn't — I measured both.</p>
+      <p class="lede proof-intro__lede proof-intro__lede--present">Adoption and engagement moved; zero-state conversion and Wrapped AuM did not — both tracked against pre-declared targets, market by market.</p>
       <p class="lede proof-intro__lede">Some numbers moved (NPS, task success, loyalty). Some didn't: zero-state — no conversion lift; Wrapped — soft AuM, not significant. I measured both.</p>
     </div>
 
@@ -9096,7 +9170,7 @@
   <div class="shell-inner shell-bar">
   <div class="chapter-tabs" id="chapters" aria-label="Chapters"></div>
   <div class="ctrl-end">
-    <span class="counter"><span id="curNum">1</span> <span class="sep">/</span> <span id="totNum">25</span></span>
+    <span class="counter"><span id="curNum">1</span> <span class="sep">/</span> <span id="totNum">26</span></span>
     <button type="button" class="nav-btn" data-prev aria-label="Previous slide">←</button>
     <button type="button" class="nav-btn" data-next aria-label="Next slide">→</button>
     <a href="raisin.html" class="nav-btn nav-btn--text is-hidden" id="backToCase" aria-label="Back to case study">Back to case study</a>
@@ -9117,8 +9191,8 @@
 
 <script src="raisin-assets/assets/js/main.js"></script>
 <script src="js/portfolio-lightbox.js?v=8"></script>
-<script src="raisin-assets/assets/js/summary2.js"></script>
-<script src="js/raisin-present.js"></script>
+<script src="raisin-assets/assets/js/summary2.js?v=3"></script>
+<script src="js/raisin-present.js?v=20261115"></script>
 <script src="js/portfolio-gate-previews.js"></script>
 <script>
   (function () {

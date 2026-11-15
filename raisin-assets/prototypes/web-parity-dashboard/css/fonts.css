@@ -1,0 +1,94 @@
+/* Raisin typography — self-hosted (see assets/fonts/). Do not use the SSO-gated GitLab Pages CDN. */
+
+/* Lay Grotesk — display / amounts (Regular 400 only; ships tabular figures) */
+@font-face {
+  font-family: "Lay Grotesk";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src:
+    url("../assets/fonts/lay-grotesk/LayGrotesk-Regular.woff2") format("woff2"),
+    url("../assets/fonts/lay-grotesk/LayGrotesk-Regular.woff") format("woff"),
+    url("../assets/fonts/lay-grotesk/LayGrotesk-Regular.otf") format("opentype");
+}
+
+/* Basier Square — UI / body (400–700 + italics) */
+@font-face {
+  font-family: "Basier Square";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../assets/fonts/basier-square/BasierSquare-Regular.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Basier Square";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../assets/fonts/basier-square/BasierSquare-RegularItalic.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Basier Square";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("../assets/fonts/basier-square/BasierSquare-Medium.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Basier Square";
+  font-style: italic;
+  font-weight: 500;
+  font-display: swap;
+  src: url("../assets/fonts/basier-square/BasierSquare-MediumItalic.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Basier Square";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("../assets/fonts/basier-square/BasierSquare-SemiBold.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Basier Square";
+  font-style: italic;
+  font-weight: 600;
+  font-display: swap;
+  src: url("../assets/fonts/basier-square/BasierSquare-SemiBoldItalic.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Basier Square";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../assets/fonts/basier-square/BasierSquare-Bold.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Basier Square";
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../assets/fonts/basier-square/BasierSquare-BoldItalic.otf") format("opentype");
+}
+
+/* Lay Grotesk financial surfaces — lock tabular figures */
+.font-lay-nums,
+.ds-amount,
+.ds-savings-hero__amount strong,
+.ds-donut__center strong,
+.ds-overview-chart .ds-donut__center strong,
+.ds-earnings-widget__amount,
+.ds-offer__rate,
+.ds-product-card__rate,
+.ctl-donut__amount,
+.ctl-account__amount,
+.ctl-earnings__amount,
+.ctl-earnings__head .ctl-earnings__amount {
+  font-variant-numeric: tabular-nums;
+}

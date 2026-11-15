@@ -1,0 +1,68 @@
+/*
+ * Text truncation for bound UI.
+ *
+ * Translated copy (DE, FI, NL, PL …) is routinely 30–50 % longer than English. Single-line
+ * labels — row names, metadata, legend entries, chips, tabs, buttons — end in an ellipsis
+ * instead of overflowing or breaking their container. Paragraph copy is never clamped, so
+ * no content is lost; truncated labels also carry the full text in `title` (see js/truncate.js).
+ */
+
+/* Block-level labels: a flex/grid parent must be allowed to shrink them. */
+.ctl-row__name,
+.ctl-row__meta,
+.ctl-group-head .ctl-subtitle,
+.ctl-select__label,
+.ctl-legend__item,
+.ds-portfolio-row__copy strong,
+.ds-portfolio-row__copy p,
+.ds-portfolio-product__copy strong,
+.ds-portfolio-product__copy small,
+.ds-legend__label,
+.ds-offer strong,
+.ds-offer p,
+.ds-alloc-list li > div span,
+.ds-alloc-list li > div small,
+.ds-nav-row__copy p,
+.ds-deposit__copy p {
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  /* `overflow: hidden` would clip descenders and sub-pixel glyph edges at tight line-heights.
+   * `overflow: clip` + a clip margin keeps ellipsis but leaves a little room around the glyphs. */
+  overflow: clip;
+  overflow-clip-margin: 0.25em;
+}
+
+/* Their flex parents need `min-width: 0`, or the ellipsis never engages. */
+.ctl-row__copy,
+.ds-portfolio-row__copy,
+.ds-offer > div,
+.ds-alloc-list li > div,
+.ds-legend li {
+  min-width: 0;
+}
+
+.ctl-legend__item {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+/* Flex-based chips, buttons and tabs: js/truncate.js wraps the label in this span, but
+ * only when the control really overflows, so nothing changes while the text fits. */
+.trunc-host {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.trunc-text {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: clip;
+  overflow-clip-margin: 0.25em;
+}
