@@ -1,7 +1,7 @@
 /* ==========================================================================
    Raisin presentation deck — clone beats from #present-source, one per slide.
    ========================================================================== */
-(function () {
+(function (global) {
   "use strict";
 
   /** Slide crossfade — keep in sync with css/portfolio-deck-motion.css (--deck-dur) */
@@ -2999,4 +2999,4 @@
   if (!isNaN(start) && start >= 1 && start <= N) i = start - 1;
 
   go(i);
-})();
+})(window);
