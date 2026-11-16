@@ -2081,12 +2081,17 @@
     root.querySelectorAll("[data-prototype-viewport]").forEach(function (viewport) {
       if (viewport.dataset.presentScaleInit) return;
       viewport.dataset.presentScaleInit = "1";
+      delete viewport.dataset.scaleInit;
       var designWidth = parseFloat(viewport.getAttribute("data-viewport-width")) || 1440;
       function apply() {
         var w = viewport.clientWidth;
         if (w) viewport.style.setProperty("--proto-scale", String(w / designWidth));
       }
       apply();
+      requestAnimationFrame(function () {
+        apply();
+        requestAnimationFrame(apply);
+      });
       if ("ResizeObserver" in window) {
         new ResizeObserver(apply).observe(viewport);
       } else {

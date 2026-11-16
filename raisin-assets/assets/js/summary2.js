@@ -1437,7 +1437,9 @@
   "use strict";
 
   /* Scale the 1440-wide prototype to fit its frame (no cropped desktop layout) */
+  var presentStage = document.getElementById("present-stage");
   document.querySelectorAll("[data-prototype-viewport]").forEach(function (viewport) {
+    if (presentStage && viewport.closest("#present-source")) return;
     if (viewport.dataset.scaleInit) return;
     viewport.dataset.scaleInit = "1";
     var designWidth = parseFloat(viewport.getAttribute("data-viewport-width")) || 1440;

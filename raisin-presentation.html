@@ -676,7 +676,7 @@
       display: flex;
       flex-direction: column;
       align-items: stretch;
-      justify-content: flex-end;
+      justify-content: flex-start;
       background: var(--paper);
       overflow: hidden;
     }
@@ -684,13 +684,12 @@
       display: none;
     }
     .present-slide--p1-tradeoff-01 .validation-stage__locked-banner {
-      flex: 1 1 auto;
+      flex: 0 0 auto;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-height: 0;
-      padding: clamp(0.85rem, 1.6vh, 1.15rem) clamp(1rem, 2vw, 1.35rem);
+      padding: clamp(0.55rem, 1vh, 0.75rem) clamp(0.85rem, 1.5vw, 1.1rem);
       text-align: center;
       background: #ffe62a;
       border-bottom: 1px solid color-mix(in srgb, #000 12%, #ffe62a);
@@ -706,12 +705,13 @@
       color: #000;
     }
     .present-slide--p1-tradeoff-01 .validation-stage__video-frame {
-      flex: 0 0 auto;
+      flex: 1 1 auto;
       width: 100%;
+      min-height: 0;
       display: flex;
       align-items: flex-end;
       justify-content: center;
-      margin-top: auto;
+      margin-top: 0;
       background: var(--paper);
       box-sizing: border-box;
       overflow: hidden;
@@ -720,7 +720,7 @@
       display: block;
       width: 100%;
       height: auto;
-      max-height: min(62vh, 34rem);
+      max-height: 100%;
       aspect-ratio: 1436 / 1042;
       object-fit: contain;
       object-position: bottom center;
@@ -2400,6 +2400,9 @@
       height: auto;
       max-height: min(69vh, 36rem);
       object-fit: contain;
+    }
+    .present-slide--p1-tradeoff-01 .validation-stage__video-frame.wealth-hub-video-frame video {
+      max-height: 100%;
     }
     .present-slide--p1-tradeoff-01 .wealth-hub-video-frame:has(video[data-lightbox]) {
       cursor: zoom-in;
@@ -6514,10 +6517,10 @@
       display: flex;
       flex-direction: column;
       align-items: stretch;
-      width: min(100%, calc((var(--present-vh) - var(--present-top) - var(--present-bottom) - 5rem) * 1.6));
+      width: 100%;
       max-width: 100%;
       margin: 0;
-      justify-self: center;
+      justify-self: stretch;
       align-self: center;
     }
     .present-slide--p4-one-data .ai-journey__visual.ai-journey__visual--prototype.ai-journey__visual--web {
@@ -6546,7 +6549,8 @@
       border: 0;
       display: block;
       background: #fff;
-      zoom: var(--proto-scale);
+      transform: scale(var(--proto-scale));
+      transform-origin: 0 0;
     }
     .present-slide--p4-one-data .web-parity-prototype > .ai-journey__visual--web {
       order: 1;
