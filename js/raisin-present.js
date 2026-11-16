@@ -2083,9 +2083,17 @@
       viewport.dataset.presentScaleInit = "1";
       delete viewport.dataset.scaleInit;
       var designWidth = parseFloat(viewport.getAttribute("data-viewport-width")) || 1440;
+      var scaleRaf = 0;
       function apply() {
         var w = viewport.clientWidth;
         if (w) viewport.style.setProperty("--proto-scale", String(w / designWidth));
+      }
+      function scheduleApply() {
+        if (scaleRaf) cancelAnimationFrame(scaleRaf);
+        scaleRaf = requestAnimationFrame(function () {
+          scaleRaf = 0;
+          apply();
+        });
       }
       apply();
       requestAnimationFrame(function () {
@@ -2093,9 +2101,9 @@
         requestAnimationFrame(apply);
       });
       if ("ResizeObserver" in window) {
-        new ResizeObserver(apply).observe(viewport);
+        new ResizeObserver(scheduleApply).observe(viewport);
       } else {
-        window.addEventListener("resize", apply);
+        window.addEventListener("resize", scheduleApply);
       }
     });
     root.querySelectorAll("[data-proto-wide-toggle]").forEach(function (toggle) {
@@ -2107,6 +2115,15 @@
         var on = toggle.getAttribute("aria-checked") !== "true";
         toggle.setAttribute("aria-checked", on ? "true" : "false");
         row.classList.toggle("is-proto-wide", on);
+        var viewport = row.querySelector("[data-prototype-viewport]");
+        if (!viewport) return;
+        var designW = parseFloat(viewport.getAttribute("data-viewport-width")) || 1440;
+        function snapScale() {
+          var w = viewport.clientWidth;
+          if (w) viewport.style.setProperty("--proto-scale", String(w / designW));
+        }
+        snapScale();
+        requestAnimationFrame(snapScale);
       });
     });
   }
@@ -2226,6 +2243,21 @@
     });
     root.querySelectorAll(".wow-beat, .cura-filmstrip, .quote-marquee, .present-proof-quotes").forEach(function (el) {
       el.classList.remove("is-animation-paused");
+    });
+    root.querySelectorAll(".cura-filmstrip__track--rtl").forEach(function (track) {
+      track.classList.remove("is-animation-paused");
+      syncMarqueeSpeed(track);
+    });
+    root.querySelectorAll(".cura-filmstrip__frame img").forEach(function (img) {
+      if (img.complete) return;
+      img.addEventListener(
+        "load",
+        function () {
+          var track = img.closest(".cura-filmstrip__track--rtl");
+          if (track) syncMarqueeSpeed(track);
+        },
+        { once: true }
+      );
     });
     initProofQuotesMarquee(root);
   }

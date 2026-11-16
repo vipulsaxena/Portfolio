@@ -6500,41 +6500,72 @@
       box-sizing: border-box;
       overflow: hidden;
     }
+    .present-slide--p4-one-data.ai-journey__one-data:has(.device-story__row.is-proto-wide) {
+      justify-content: flex-start;
+      padding-top: clamp(0.45rem, 0.9vh, 0.75rem);
+    }
     .present-slide--p4-one-data .device-story__row {
+      --present-proto-chrome: 5rem;
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
       gap: var(--present-split-gap);
       align-items: center;
       width: 100%;
+      max-height: calc(var(--present-vh) - var(--present-top) - var(--present-bottom));
       margin: 0;
-      transition: grid-template-columns 0.4s cubic-bezier(0.22, 1, 0.36, 1);
     }
     .present-slide--p4-one-data .device-story__row.is-proto-wide {
-      grid-template-columns: minmax(0, 7fr) minmax(0, 3fr);
+      grid-template-columns: minmax(0, 7.25fr) minmax(0, 2.75fr);
+      align-items: start;
+      gap: clamp(0.65rem, 1.25vw, 1rem);
+      /* toggle row + clearance above fixed deck .ctrl (figcaption hidden in wide) */
+      --present-proto-chrome: calc(2.75rem + clamp(3.25rem, 4.5vh, 4rem) + 0.35rem);
+    }
+    .present-slide--p4-one-data .device-story__row.is-proto-wide .device-story__copy,
+    .present-slide--p4-one-data .device-story__row.is-proto-wide .device-story__copy.present-split__copy {
+      align-self: start;
+      justify-content: flex-start;
     }
     .present-slide--p4-one-data .ai-journey__prototype.web-parity-prototype {
       grid-column: 1;
       display: flex;
       flex-direction: column;
       align-items: stretch;
+      gap: clamp(0.65rem, 1.2vh, 0.9rem);
       width: 100%;
       max-width: 100%;
+      min-height: 0;
+      max-height: calc(var(--present-vh) - var(--present-top) - var(--present-bottom));
       margin: 0;
       justify-self: stretch;
       align-self: center;
+      position: relative;
+      isolation: isolate;
+    }
+    .present-slide--p4-one-data .device-story__row.is-proto-wide .ai-journey__prototype.web-parity-prototype {
+      align-self: start;
+      gap: clamp(0.35rem, 0.6vh, 0.5rem);
+      max-height: calc(var(--present-vh) - var(--present-top) - var(--present-bottom));
+      overflow: hidden;
     }
     .present-slide--p4-one-data .ai-journey__visual.ai-journey__visual--prototype.ai-journey__visual--web {
       --proto-scale: 0.5;
-      width: 100%;
+      --proto-max-h: calc(
+        var(--present-vh) - var(--present-top) - var(--present-bottom) - var(--present-proto-chrome)
+      );
+      width: min(100%, calc(var(--proto-max-h) * 1440 / 900));
       max-width: 100%;
       height: auto !important;
       min-height: 0 !important;
-      max-height: none;
+      max-height: var(--proto-max-h);
       aspect-ratio: 1440 / 900;
-      flex: none;
+      align-self: center;
+      flex: 0 0 auto;
       position: relative;
+      z-index: 0;
       padding: 0;
       overflow: hidden;
+      contain: paint;
       background: #fff;
       border: 1px solid rgba(15, 23, 42, 0.14);
       border-radius: 0.75rem;
@@ -6557,18 +6588,40 @@
     }
     .present-slide--p4-one-data .web-parity-prototype > .proto-width-toggle {
       order: 2;
-      position: static;
+      position: relative;
+      z-index: 5;
       display: flex;
-      flex: none;
+      flex: 0 0 auto;
+      flex-shrink: 0;
       align-self: stretch;
       align-items: center;
       justify-content: center;
       gap: clamp(0.55rem, 1vw, 0.75rem);
       width: 100%;
-      margin: clamp(1.25rem, 2.6vh, 1.75rem) 0 0;
+      margin: 0;
+      padding-block: 0.15rem;
+      pointer-events: auto;
+    }
+    .present-slide--p4-one-data .device-story__row.is-proto-wide .web-parity-prototype > .proto-width-toggle {
+      padding-bottom: clamp(0.5rem, 1vh, 0.75rem);
     }
     .present-slide--p4-one-data .web-parity-prototype > figcaption {
       order: 3;
+      flex: 0 0 auto;
+      flex-shrink: 0;
+      margin: 0;
+    }
+    .present-slide--p4-one-data .device-story__row.is-proto-wide .web-parity-prototype > figcaption {
+      display: none;
+    }
+    .present-slide--p4-one-data .device-story__row.is-proto-wide .ai-journey__visual.ai-journey__visual--prototype.ai-journey__visual--web {
+      flex: 1 1 auto;
+      min-height: 0;
+      align-self: stretch;
+      width: 100%;
+      max-height: calc(
+        var(--present-vh) - var(--present-top) - var(--present-bottom) - var(--present-proto-chrome)
+      );
     }
     .present-slide--p4-one-data .proto-width-toggle__label {
       font-size: var(--wh-journey-pill-fs, clamp(0.72rem, 1.35vh, 0.84rem));

@@ -87,10 +87,22 @@
 }
 
 .present-slide .reveal,
-.present-slide .reveal-stagger,
-.present-slide .reveal-stagger > * {
+.present-slide .reveal-stagger {
   opacity: 1 !important;
   transform: none !important;
+  transition: none !important;
+}
+
+/* Stagger children — but not CSS marquee/filmstrip tracks (they animate via transform). */
+.present-slide .reveal-stagger > *:not(.cura-filmstrip__track):not(.marquee__track):not(.wow-beat__marquee-track) {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+.present-slide .cura-filmstrip__track--rtl,
+.present-slide .quote-marquee .marquee__track,
+.present-slide .wow-beat__marquee-track {
   transition: none !important;
 }
 
